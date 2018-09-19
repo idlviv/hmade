@@ -1,0 +1,78 @@
+@import './material';
+
+.theme-light {
+  @include angular-material-theme($theme-dark);
+  $background: map-get($theme-dark, background);
+  background-color: mat-color($background, background);
+}
+
+$_primary: mat-color($primary);
+$_accent: mat-color($accent);
+$_warn: mat-color($warn);
+
+$primary-light50: mat-color($primary, 50);
+$primary-light: mat-color($primary, 100);
+$primary-dark: mat-color($primary, 900);
+
+$accent-light50: mat-color($accent, 50);
+$accent-light: mat-color($accent, 100);
+$accent-dark: mat-color($accent, 900);
+
+.primary {
+  color: $_primary;
+}
+
+.primary-light {
+  color: $primary-light !important;
+}
+
+.primary-dark {
+  color: $primary-dark;
+}
+
+.primary-background {
+  background-color: $_primary;
+}
+
+.primary-background-light {
+  background-color: $primary-light;
+}
+
+.primary-background-dark {
+  background-color: $primary-dark;
+}
+
+.accent{
+  color: $_accent;
+}
+
+.accent-background{
+  background-color: $_accent;
+}
+
+.warn {
+  color: $_warn;
+}
+
+.warn-background {
+  background-color: $_warn;
+}
+
+// old
+
+$muted: rgba(0, 0, 0, 0.65);
+$border: rgba(0, 0, 0, 0.12);
+$light-gray: #D6E7F7;
+
+.muted {
+  color: $muted;
+}
+
+.light-gray-background {
+  background-color: $light-gray;
+}
+
+.danger {
+  color: $_warn;
+}
+

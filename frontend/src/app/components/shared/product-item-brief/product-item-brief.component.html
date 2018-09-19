@@ -1,0 +1,77 @@
+<mat-card>
+  <mat-card-content>
+    <div class="mat-card-wide-image" fxLayout="row">
+
+      <!-- product level (no children)-->
+      <div *ngIf="product" fxFlex="100">
+
+        <img *ngIf="media.isActive('gt-sm')" class="responsive-image-stretch" src="{{
+              config.imgPath +
+              config.cloudinary.cloud_name +
+              '/c_fill,w_400,h_200,f_auto/' +
+              product.menuImage}}"
+             alt="Image">
+        <img *ngIf="media.isActive('sm')" class="responsive-image-stretch" src="{{
+              config.imgPath +
+              config.cloudinary.cloud_name +
+              '/c_fill,w_460,h_230,f_auto/' +
+              product.menuImage}}"
+             alt="Image">
+        <img *ngIf="media.isActive('xs')" class="responsive-image-stretch" src="{{
+            config.imgPath +
+            config.cloudinary.cloud_name +
+            '/c_fill,w_590,h_295,f_auto/' +
+            product.menuImage}}"
+             alt="Image">
+      </div>
+
+      <!-- catalog level -->
+      <div *ngIf="child" fxFlex="100">
+        <img *ngIf="media.isActive('gt-sm')" class="responsive-image-stretch" src="{{
+              config.imgPath +
+              config.cloudinary.cloud_name +
+              '/c_fill,w_400,h_200,f_auto/' +
+              child.assets[0]}}"
+             alt="Image">
+        <img *ngIf="media.isActive('sm')" class="responsive-image-stretch" src="{{
+              config.imgPath +
+              config.cloudinary.cloud_name +
+              '/c_fill,w_460,h_230,f_auto/' +
+              child.assets[0]}}"
+             alt="Image">
+        <img *ngIf="media.isActive('xs')" class="responsive-image-stretch" src="{{
+            config.imgPath +
+            config.cloudinary.cloud_name +
+            '/c_fill,w_590,h_295,f_auto/' +
+            child.assets[0]}}"
+             alt="Image">
+      </div>
+    </div>
+
+  </mat-card-content>
+  <mat-card-actions fxLayout="row">
+    <div fxFlex>
+      <!--using with catalog, when no children (product level)
+      category_id for breadcrumb-->
+      <a *ngIf="!child && category_id" mat-button
+         [routerLink]="['/products', 'ch', {outlets: {primary: [category_id, 'details', product._id],
+         breadcrumb: [category_id, 'details', product._id]}}]"
+         [queryParams]="{name: product.name}"
+         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
+        {{product.name}}
+      </a>
+      <!--using with dashboard-->
+      <a *ngIf="!child && !category_id" mat-button
+         [routerLink]="['/dashboard', 'products_editor_edit', parentCategory_id, parentCategoryName, product._id]"
+         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
+        {{product.name}}
+      </a>
+      <!--using with catalog, when children present-->
+      <a *ngIf="child" mat-button
+         [routerLink]="['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]"
+         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
+        {{child.name}}
+      </a>
+    </div>
+  </mat-card-actions>
+</mat-card>
