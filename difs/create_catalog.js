@@ -75,7 +75,7 @@ db.getCollection('catalogs')
         auth: 'guest', order: 1, assets:['catalog'],  description:''},
         {_id: 'profile', name: 'Профіль', ancestors: ['home', 'system', 'dashboard'], parent: 'dashboard',
           auth: 'guest', order: 1, assets: ['catalog'],description: ''},
-        {_id: 'product-edit', name: 'Редактор виробів', ancestors: ['home', 'system', 'dashboard'], parent: 'dashboard',
+        {_id: 'product-editor', name: 'Редактор виробів', ancestors: ['home', 'system', 'dashboard'], parent: 'dashboard',
           auth: 'manager', order: 2, assets: ['catalog'], description: ''},
         {_id: 'tools', name: 'Інструменти', ancestors: ['home', 'system', 'dashboard'], parent: 'dashboard',
           auth: 'manager', order: 5, assets: ['catalog'],description: ''},

@@ -229,20 +229,7 @@ export class ProductService {
 
 
 
-  getProductById(_id, displayFilter) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      params: new HttpParams()
-        .set('_id', _id)
-        .set('displayFilter', displayFilter)
-    };
-    return this.http.get<IResponse>(
-      'api/product/get-product-by-id',
-      httpOptions
-    );
-  }
+
 
   productAddMainImage(file, _id): Observable<IResponse> {
     console.log('file', file);
@@ -343,16 +330,15 @@ export class ProductService {
     );
   }
 
-
   /**
    *
    *
-   * @param {string} category
+   * @param {string} _id
    * @param {boolean} [displayFilter]
    * @returns {Observable<IResponse>}
    * @memberof ProductService
    */
-  getProductsByCategory(category: string, displayFilter?: boolean): Observable<IResponse> {
+  getProductById(_id: string, displayFilter?: boolean): Observable<IResponse>  {
     if (!displayFilter) {
       displayFilter = false;
     }
@@ -361,11 +347,37 @@ export class ProductService {
         'Content-Type': 'application/json',
       }),
       params: new HttpParams()
-        .set('category', category)
+        .set('_id', _id)
         .set('displayFilter', displayFilter + '')
     };
     return this.http.get<IResponse>(
-      'api/product/get-products-by-category',
+      'api/product/get-product-by-id',
+      httpOptions
+    );
+  }
+
+  /**
+   *
+   *
+   * @param {string} parent
+   * @param {boolean} [displayFilter]
+   * @returns {Observable<IResponse>}
+   * @memberof ProductService
+   */
+  getProductsByParent(parent: string, displayFilter?: boolean): Observable<IResponse> {
+    if (!displayFilter) {
+      displayFilter = false;
+    }
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      params: new HttpParams()
+        .set('parent', parent)
+        .set('displayFilter', displayFilter + '')
+    };
+    return this.http.get<IResponse>(
+      'api/product/get-products-by-parent',
       httpOptions
     );
   }

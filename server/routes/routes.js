@@ -56,10 +56,6 @@ router.get('/product/get-products',
   productController.getProducts
 );
 
-router.get('/product/get-product-by-id',
-  productController.getProductById
-);
-
 router.get('/product/get-main-page-products',
   productController.getMainPageProducts
 );
@@ -93,23 +89,18 @@ router.post('/product/add-image',
   productController.productAddImage
 );
 
-router.get('/product/get-products-by-category',
-  productController.getProductsByCategory
+//hmade
+router.get('/product/get-product-by-id',
+  productController.getProductById
 );
+
+router.get('/product/get-products-by-parent',
+  productController.getProductsByParent
+);
+
 /**
  * catalog routes
  */
-router.get('/catalog/get-category-by-id',
-  catalogController.getCategoryById
-);
-
-router.get('/catalog/get-all-descendants',
-  catalogController.getAllDescendants
-);
-
-router.get('/catalog/get-children',
-  catalogController.getChildren
-);
 
 router.get('/catalog/get-main-menu',
   catalogController.getMainMenu
@@ -117,6 +108,19 @@ router.get('/catalog/get-main-menu',
 
 router.get('/catalog/get-all-parents',
   catalogController.getAllParents
+);
+
+// hmade
+router.get('/catalog/get-category-by-id',
+  catalogController.getCategoryById
+);
+
+router.get('/catalog/get-descendants',
+  catalogController.getDescendants
+);
+
+router.get('/catalog/get-children',
+  catalogController.getChildren
 );
 
 /**

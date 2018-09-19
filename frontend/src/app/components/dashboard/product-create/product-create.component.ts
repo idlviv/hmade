@@ -41,7 +41,7 @@ export class ProductCreateComponent implements OnInit {
   ngOnInit() {
 
     this.productCreateForm = new FormGroup({
-      parents : new FormArray([this.initCategories()]),
+      parents : new FormArray([this.initParents()]),
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
@@ -80,9 +80,10 @@ export class ProductCreateComponent implements OnInit {
       ]),
     });
 
-    this.catalogService.getAllDescendants('products', 0)
-      .subscribe(categories => {
-        this.categories = categories.data;
+    this.catalogService.getDescendants('products', 0)
+      .subscribe( descendants => {
+        console.log('descendants.data', descendants.data);
+        this.categories = descendants.data;
       },
         err => this.matSnackBar.open(err.error, '',
           {duration: 3000, panelClass: 'snack-bar-danger'})
@@ -99,11 +100,11 @@ export class ProductCreateComponent implements OnInit {
             .subscribe(product => {
 
               for (let i = 1; i < product.data.categories.length; i++) {
-                this.addCategory();
+                this.addParents();
               }
 
               for (let i = 0; i < product.data.files.length; i++) {
-                this.addFile();
+                this.addAssets();
               }
 
               this.productCreateForm.patchValue(product.data);
@@ -119,24 +120,24 @@ export class ProductCreateComponent implements OnInit {
     if (this.productCreateFormDirective) {
 
       // enabling disabled fields
-      this.productCreateForm.get('sku').enable();
-      this.productCreateForm.get('categories')['controls'][0].enable();
+      this.productCreateForm.get('_id').enable();
+      this.productCreateForm.get('parents')['controls'][0].enable();
 
       // deleting needless controls
       // categories controls array has one item on init
-      for (let i = this.productCreateForm.get('categories')['controls'].length; i > 1 ; i--) {
-        this.removeCategory(i - 1);
+      for (let i = this.productCreateForm.get('parents')['controls'].length; i > 1 ; i--) {
+        this.removeParents(i - 1);
       }
       // files controls array don't has elems on init
-      for (let i = this.productCreateForm.get('files')['controls'].length; i > 0 ; i--) {
-        this.removeFile(i - 1);
+      for (let i = this.productCreateForm.get('assets')['controls'].length; i > 0 ; i--) {
+        this.removeAssets(i - 1);
       }
       this.productCreateFormDirective.resetForm();
     }
   }
 
   addPictures(event) {
-      this.processingLoadFile = this.productCreateForm.get('files').value.length;
+      this.processingLoadFile = this.productCreateForm.get('assets').value.length;
       const file = event.target.files[0];
       const checkFile = this.productService.checkFile(file);
 
@@ -146,17 +147,17 @@ export class ProductCreateComponent implements OnInit {
           {duration: 3000, panelClass: 'snack-bar-danger'});
         this.processingLoadFile = -1;
       } else {
-        const filesLinks = this.productCreateForm.get('files').value;
+        const filesLinks = this.productCreateForm.get('assets').value;
         filesLinks.push(config.imgPath + config.cloudinary + config.defaultProductImg);
-        this.addFile();
-        this.productCreateForm.get('files').setValue(filesLinks);
-        this.productService.productAddImage(file, this.productCreateForm.get('sku').value)
+        this.addAssets();
+        this.productCreateForm.get('assets').setValue(filesLinks);
+        this.productService.productAddImage(file, this.productCreateForm.get('_id').value)
           .subscribe(result => {
               // this.previewProductImages.pop();
               filesLinks.pop();
               filesLinks.push(result.data);
-              this.productCreateForm.get('files').setValue(filesLinks);
-              console.log('this.productCreateForm.get(\'files\').value', this.productCreateForm.get('files').value);
+              this.productCreateForm.get('assets').setValue(filesLinks);
+              console.log('this.productCreateForm.get(\'files\').value', this.productCreateForm.get('assets').value);
               // this.previewProductImages = filesLinks;
               // console.log('this.previewProductImages', this.previewProductImages);
               console.log(result);
@@ -165,7 +166,7 @@ export class ProductCreateComponent implements OnInit {
             err => {
               this.matSnackBar.open(err.error || 'Помилка', '',
                 {duration: 3000, panelClass: 'snack-bar-danger'});
-              this.removeFile(this.productCreateForm.get('files').value.length - 1);
+              this.removeAssets(this.productCreateForm.get('assets').value.length - 1);
               // this.previewProductImages.pop();
               filesLinks.pop();
               this.processingLoadFile = -1;
@@ -177,21 +178,21 @@ export class ProductCreateComponent implements OnInit {
 
   onProductCreateSubmit() {
     // remove duplicates
-    const uniqueCategories = [];
-    this.productCreateForm.getRawValue().categories
+    const uniqueParents = [];
+    this.productCreateForm.getRawValue().parents
       .forEach((item) => {
-        if (uniqueCategories.indexOf(item) === -1) {
-          uniqueCategories.push(item);
+        if (uniqueParents.indexOf(item) === -1) {
+          uniqueParents.push(item);
         }
     });
 
     this.product = <IProduct>{
-      parents: uniqueCategories,
-      _id: this.productCreateForm.getRawValue().sku, // raw because may be disabled
+      parents: uniqueParents,
+      _id: this.productCreateForm.getRawValue()._id, // raw because may be disabled
       name: this.productCreateForm.get('name').value,
       price: this.productCreateForm.get('price').value,
       discount: this.productCreateForm.get('discount').value,
-      assets : this.productCreateForm.get('files').value,
+      assets : this.productCreateForm.get('assets').value,
       description : this.productCreateForm.get('description').value,
       onMainPage: this.productCreateForm.get('onMainPage').value || false,
       dimensions: {
@@ -228,7 +229,7 @@ export class ProductCreateComponent implements OnInit {
 
   }
 
-  onSelectCategory(event) {
+  onSelectParents(event) {
     if (event.source.ngControl.name === '0') {
       this.createSku(event.value);
     }
@@ -269,34 +270,34 @@ export class ProductCreateComponent implements OnInit {
       );
   }
 
-  addCategory() {
-    const control = <FormArray>this.productCreateForm.get('categories');
-    control.push(this.initCategories());
+  addParents() {
+    const control = <FormArray>this.productCreateForm.get('parents');
+    control.push(this.initParents());
   }
 
-  removeCategory(i: number) {
-    const control = <FormArray>this.productCreateForm.get('categories');
+  removeParents(i: number) {
+    const control = <FormArray>this.productCreateForm.get('parents');
     control.removeAt(i);
   }
 
-  initCategories() {
+  initParents() {
     return new FormControl('', [
         Validators.required,
       ])
     ;
   }
 
-  addFile() {
-    const control = <FormArray>this.productCreateForm.get('files');
-    control.push(this.initFiles());
+  addAssets() {
+    const control = <FormArray>this.productCreateForm.get('assets');
+    control.push(this.initAssets());
   }
 
-  removeFile(i: number) {
-    const control = <FormArray>this.productCreateForm.get('files');
+  removeAssets(i: number) {
+    const control = <FormArray>this.productCreateForm.get('assets');
     control.removeAt(i);
   }
 
-  initFiles() {
+  initAssets() {
     return new FormControl('file', [
         // Validators.required,
       ]);

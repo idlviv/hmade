@@ -30,7 +30,7 @@ export class ProductsDetailComponent implements OnInit {
         this.product_id = paramMap.get('product_id');
         return forkJoin (
           this.productService.getProductById(this.product_id, true),
-          this.productService.getProductsByCategory(this.category_id, true)
+          this.productService.getProductsByParent(this.category_id, true)
         );
       })
     )

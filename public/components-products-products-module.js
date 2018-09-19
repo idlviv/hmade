@@ -100,7 +100,7 @@ var BreadcrumbComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--<a *ngFor=\"let sibling of siblings\" mat-button-->\n   <!--[routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', sibling._id],-->\n     <!--breadcrumb: [category_id, 'details', sibling._id]}}]\"-->\n   <!--[queryParams]=\"{name: sibling.name}\"-->\n   <!--[routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">-->\n  <!--{{sibling.name}}-->\n<!--</a>-->\n\n<mat-nav-list>\n    <a mat-list-item *ngFor=\"let sibling of siblings\"\n       [routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', sibling._id],\n     breadcrumb: [category_id, 'details', sibling._id]}}]\"\n       [queryParams]=\"{name: sibling.name}\"\n       [routerLinkActive]=\"['primary']\" [routerLinkActiveOptions]=\"{exact: true}\">\n      {{sibling.name}}\n    </a>\n</mat-nav-list>"
+module.exports = "<!--<a *ngFor=\"let sibling of siblings\" mat-button-->\r\n   <!--[routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', sibling._id],-->\r\n     <!--breadcrumb: [category_id, 'details', sibling._id]}}]\"-->\r\n   <!--[queryParams]=\"{name: sibling.name}\"-->\r\n   <!--[routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">-->\r\n  <!--{{sibling.name}}-->\r\n<!--</a>-->\r\n\r\n<mat-nav-list>\r\n    <a mat-list-item *ngFor=\"let sibling of siblings\"\r\n       [routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', sibling._id],\r\n     breadcrumb: [category_id, 'details', sibling._id]}}]\"\r\n       [queryParams]=\"{name: sibling.name}\"\r\n       [routerLinkActive]=\"['primary']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n      {{sibling.name}}\r\n    </a>\r\n</mat-nav-list>"
 
 /***/ }),
 
@@ -228,7 +228,7 @@ var ProductsDetailComponent = /** @class */ (function () {
         this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function (paramMap) {
             _this.category_id = paramMap.get('category_id');
             _this.product_id = paramMap.get('product_id');
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["forkJoin"])(_this.productService.getProductById(_this.product_id, true), _this.productService.getProductsByCategory(_this.category_id, true));
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["forkJoin"])(_this.productService.getProductById(_this.product_id, true), _this.productService.getProductsByParent(_this.category_id, true));
         }))
             .subscribe(function (result) {
             _this.product = result[0].data;
@@ -336,10 +336,10 @@ var ProductsListComponent = /** @class */ (function () {
             _this.children = children.data;
             if (!_this.children.length) {
                 // if no children - show products
-                return _this.productService.getProductsByCategory(_this.category_id, true);
+                return _this.productService.getProductsByParent(_this.category_id, true);
             }
             else {
-                return _this.productService.getProductsByCategory(null, true);
+                return _this.productService.getProductsByParent(null, true);
             }
         }))
             .subscribe(function (products) { return _this.products = products.data; }, function (err) { return console.log('error', err); });

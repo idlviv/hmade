@@ -30,19 +30,7 @@ export class CatalogService {
 
 
 
-  getAllDescendants(category, depth): Observable<IResponse> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      }),
-      params: new HttpParams({ fromObject: {
-        category, depth
-      }})
-    };    return this.http.get<IResponse>(
-      'api/catalog/get-all-descendants',
-      httpOptions
-    );
-  }
+
 
   getMainMenu(): Observable<IResponse> {
     const httpOptions = {
@@ -65,6 +53,29 @@ export class CatalogService {
     };
     return this.http.get<IResponse>(
       'api/catalog/get-all-parents',
+      httpOptions
+    );
+  }
+
+  /**
+   *
+   *
+   * @param {string} parent
+   * @param {number} depth
+   * @returns {Observable<IResponse>}
+   * @memberof CatalogService
+   */
+  getDescendants(parent: string, depth: number): Observable<IResponse> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      }),
+      params: new HttpParams({ fromObject: {
+        parent,
+        depth: depth + ''
+      }})
+    };    return this.http.get<IResponse>(
+      'api/catalog/get-descendants',
       httpOptions
     );
   }

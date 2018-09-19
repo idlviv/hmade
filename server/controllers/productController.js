@@ -11,23 +11,7 @@ const log = require('../config/winston')(module);
 const cloudinary = require('../config/cloudinary');
 const catalogController = require('../controllers/catalogController');
 
-module.exports.getProductById = function(req, res, next) {
-  const _id = req.query._id;
-  const displayFilter = req.query.displayFilter;
 
-  let query;
-
-  displayFilter === 'true' ? query = {_id, display: true} : query = {_id};
-
-  // let categories =  [];
-  ProductModel.findById(query)
-
-    .then(result => {
-      return res.status(200).json(new ResObj(true, 'Товар', result));
-    })
-    .catch(err => next(new DbError())
-    );
-};
 
 module.exports.getProductsWithGallery = function(req, res, next) {
 
@@ -62,7 +46,7 @@ module.exports.getProductsByDesignId = function(req, res, next) {
 module.exports.getProducts = function(req, res, next) {
   let category = req.query.category;
   let categories = [];
-  catalogController.getCategoryDescendants(category, 1)
+  catalogController._getDescendants(category, 1)
     .then(result => {
       if(result.length > 0) {
         categories = result.map(function(item) {
@@ -336,16 +320,31 @@ module.exports.productUpsert = function(req, res, next) {
 
 
 // hmade
+module.exports.getProductById = function(req, res, next) {
+  const _id = req.query._id;
+  const displayFilter = req.query.displayFilter;
 
-module.exports.getProductsByCategory = function(req, res, next) {
-  const category = req.query.category;
-  const displayFilter = req.query.display
   let query;
-  displayFilter === 'true' ? query = {parents: category, display: true} : query = {parents: category};
+  displayFilter === 'true' ? query = {_id, display: true} : query = {_id};
+  
+  ProductModel.findById(query)
+    .then(result => {
+      return res.status(200).json(new ResObj(true, 'Товар', result));
+    })
+    .catch(err => next(new DbError())
+    );
+};
+
+module.exports.getProductsByParent = function(req, res, next) {
+  const parent = req.query.parent;
+  const displayFilter = req.query.display;
+
+  let query;
+  displayFilter === 'true' ? query = {parents: parent, display: true} : query = {parents: parent};
   ProductModel.find(query)
     .sort({order: 1})
     .then(result => {
-      return res.status(200).json(new ResObj(true, 'Продукти категорії' + category, result));
+      return res.status(200).json(new ResObj(true, 'Продукти категорії' + parent, result));
     })
     .catch(err => next(new DbError())
     );

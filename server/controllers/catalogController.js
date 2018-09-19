@@ -16,44 +16,9 @@ const log = require('../config/winston')(module);
 
 
 
-getCategoryDescendants = function(category, depth) {
-  return new Promise(function(resolve, reject) {
-    CatalogModel.aggregate([
-      {
-        $match: {parent: category}
-      },
-      {
-        $sort: {order: 1}
-      },
-      {
-        $graphLookup: {
-          from: 'catalogs',
-          startWith: '$_id',
-          connectFromField: '_id',
-          connectToField: 'parent',
-          as: 'children',
-          maxDepth: depth
-        }
-      },
-      {
-        $addFields: {numOfChildren: {$size: '$children'}}
-      }
-    ]).then(result => resolve(result))
-      .catch(err => reject(new DbError()));
-  })
-};
-module.exports.getCategoryDescendants = getCategoryDescendants;
 
-module.exports.getAllDescendants = function(req, res, next) {
-  // const item = ObjectId(req.query.item);
-  const category = req.query.category;
-  const depth = +req.query.depth;
-  getCategoryDescendants(category, depth)
-    .then(result => {
-      return res.status(200).json(new ResObj(true, 'Каталог', result));
-    })
-    .catch(err => next(err));
-};
+
+
 
 
 
@@ -158,6 +123,45 @@ module.exports.getAllParents = function(req, res, next) {
 };
 
 // hmade
+
+_getDescendants = function(parent, depth) {
+  return new Promise(function(resolve, reject) {
+    CatalogModel.aggregate([
+      {
+        $match: {parent}
+      },
+      {
+        $sort: {order: 1}
+      },
+      {
+        $graphLookup: {
+          from: 'catalogs',
+          startWith: '$_id',
+          connectFromField: '_id',
+          connectToField: 'parent',
+          as: 'children',
+          maxDepth: depth
+        }
+      },
+      {
+        $addFields: {numOfChildren: {$size: '$children'}}
+      }
+    ]).then(result => resolve(result))
+      .catch(err => reject(new DbError()));
+  })
+};
+module.exports._getDescendants = _getDescendants;
+
+module.exports.getDescendants = function(req, res, next) {
+
+  const parent = req.query.parent;
+  const depth = +req.query.depth;
+  _getDescendants(parent, depth)
+    .then(result => {
+      return res.status(200).json(new ResObj(true, 'Каталог', result));
+    })
+    .catch(err => next(err));
+};
 
 module.exports.getCategoryById = function(req, res, next) {
   const _id = req.query._id;

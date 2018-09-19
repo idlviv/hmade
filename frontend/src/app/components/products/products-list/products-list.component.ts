@@ -51,9 +51,9 @@ export class ProductsListComponent implements OnInit {
         this.children = children.data;
         if (!this.children.length) {
           // if no children - show products
-          return this.productService.getProductsByCategory(this.category_id, true);
+          return this.productService.getProductsByParent(this.category_id, true);
         } else {
-          return this.productService.getProductsByCategory(null, true);
+          return this.productService.getProductsByParent(null, true);
         }
       }))
       .subscribe(

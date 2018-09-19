@@ -9,6 +9,8 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ToolsComponent } from './tools/tools.component';
 import { ProductCreateComponent } from './product-create/product-create.component';
+import { ProductEditorComponent } from './product-editor/product-editor.component';
+import { ProductEditorFormComponent } from './product-editor-form/product-editor-form.component';
 
 @NgModule({
   imports: [
@@ -18,14 +20,15 @@ import { ProductCreateComponent } from './product-create/product-create.componen
     MaterialModule,
     DashboardRoutingModule,
     UserModule,
-    // CloudinaryModule,
     SharedModule,
   ],
   declarations: [
     DashboardComponent,
     DashboardSidenavComponent,
     ToolsComponent,
-    ProductCreateComponent
+    ProductCreateComponent,
+    ProductEditorComponent,
+    ProductEditorFormComponent
   ]
 })
 export class DashboardModule { }
