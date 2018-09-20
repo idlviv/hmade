@@ -115,48 +115,12 @@ module.exports.getAllParents = function(req, res, next) {
             hierarchy: {$push: '$hierarchy'},
             name: {$first: '$name'}
           }
-
       }
-
     ]).then(result => res.status(200).json(new ResObj(true, 'Каталог', result)))
       .catch(err => next(new DbError()));
 };
 
 // hmade
-// db.getCollection('catalogs').aggregate([
-//   {
-//      $match: {_id: 'products'}
-//    },
-//    {
-//      $sort: {order: 1}
-//    },
-//    {
-//      $graphLookup: {
-//        from: 'catalogs',
-//        startWith: '$_id',
-//        connectFromField: '_id',
-//        connectToField: 'parent',
-//        as: 'children',
-
-//      }
-//    },
-//      {
-//    $unwind: '$children'
-//  },
-//  {
-//    $replaceRoot: {newRoot: '$children'}  
-//  },
-//      {
-//    $group: {
-//      _id: '$parent',
-//      sub: {$addToSet: {name: '$name', _id: '$_id'}},
-//    }
-//  }
-// //       {
-// //         $addFields: {numOfChildren: {$size: '$children'}}
-// //       }
-
-//  ])
 module.exports.getSiblings = function(req, res, next) {
   const _id = req.query._id;
   CatalogModel.aggregate([

@@ -14,7 +14,7 @@
           <div class="container">
 
             <form [formGroup]="productForm" #f="ngForm" novalidate>
-
+<!-- 
                 <div class="row padding-bottom" fxLayout="row">
                     <div class="cell" fxFlex="25" fxFlex.lt-md="50" formArrayName="parents" 
                     *ngFor="let parent of productForm.get('parents')['controls']; let i = index">
@@ -26,7 +26,7 @@
                     </mat-select>
                       
                     </div>
-                  </div>
+                  </div> -->
 
               <div class="row padding-bottom" fxLayout="row">
                     <div class="cell" fxFlex="25" fxFlex.lt-md="50">
@@ -75,6 +75,23 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
+                    <div class="cell" fxFlex="25" fxFlex.lt-md="50">
+                        <mat-form-field>
+                          <mat-select placeholder="На головній" formControlName="onMainPage" required>
+                            <mat-option [value]="true">
+                              Так
+                            </mat-option>
+                            <mat-option [value]="false">
+                              Ні
+                            </mat-option>
+                          </mat-select>
+                          <mat-error
+                            *ngIf="productForm.get('display').errors?.required &&
+                                    productForm.get('display').touched">
+                            Обов'язкове поле
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
               </div>
 
             </form>

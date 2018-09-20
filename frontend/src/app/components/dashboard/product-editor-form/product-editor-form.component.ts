@@ -24,7 +24,6 @@ export class ProductEditorFormComponent implements OnInit {
   paramEdited_id: string;
   paramParent_id: string;
   paramParentName: string;
-  siblingsOfParent: string[];
   parents: string[];
 
   constructor(
@@ -42,8 +41,8 @@ export class ProductEditorFormComponent implements OnInit {
 
       _id: new FormControl({value: '', disabled: false}, [
         Validators.pattern('[a-z0-9]+'),
-        Validators.minLength(6),
-        Validators.maxLength(6),
+        Validators.minLength(7),
+        Validators.maxLength(7),
       ]),
       name: new FormControl('', [
         Validators.required,
@@ -51,6 +50,9 @@ export class ProductEditorFormComponent implements OnInit {
         Validators.maxLength(30),
       ]),
       display: new FormControl('', [
+        Validators.required,
+      ]),
+      onMainPage: new FormControl('', [
         Validators.required,
       ]),
       // description: new FormControl('', [
@@ -84,11 +86,6 @@ export class ProductEditorFormComponent implements OnInit {
         this.paramEdited_id = params.get('_id');
         this.paramParent_id = params.get('parentCategory_id');
         this.paramParentName = params.get('parentCategoryName');
-
-        return this.catalogService.getSiblings(this.paramParent_id);
-      }),
-      mergeMap((result) => {
-        this.siblingsOfParent = result.data;
         if (!this.paramEdited_id) {
           return of(null);
         }
@@ -118,7 +115,6 @@ export class ProductEditorFormComponent implements OnInit {
       },
       err => console.log('Помилка', err)
     );
-
   }
 
   resetForm() {
