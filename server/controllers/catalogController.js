@@ -123,6 +123,71 @@ module.exports.getAllParents = function(req, res, next) {
 };
 
 // hmade
+// db.getCollection('catalogs').aggregate([
+//   {
+//      $match: {_id: 'products'}
+//    },
+//    {
+//      $sort: {order: 1}
+//    },
+//    {
+//      $graphLookup: {
+//        from: 'catalogs',
+//        startWith: '$_id',
+//        connectFromField: '_id',
+//        connectToField: 'parent',
+//        as: 'children',
+
+//      }
+//    },
+//      {
+//    $unwind: '$children'
+//  },
+//  {
+//    $replaceRoot: {newRoot: '$children'}  
+//  },
+//      {
+//    $group: {
+//      _id: '$parent',
+//      sub: {$addToSet: {name: '$name', _id: '$_id'}},
+//    }
+//  }
+// //       {
+// //         $addFields: {numOfChildren: {$size: '$children'}}
+// //       }
+
+//  ])
+module.exports.getSiblings = function(req, res, next) {
+  const _id = req.query._id;
+  CatalogModel.aggregate([
+    {
+      $match: {_id: 'toys'}
+    },
+    {
+      $graphLookup: {
+        from: 'catalogs',
+        startWith: '$parent',
+        connectToField: 'parent',
+        connectFromField: '_id',
+        as: 'siblings',
+        maxDepth: 0
+      }
+    },
+    {
+      $unwind: '$siblings'
+    },
+    {
+      $replaceRoot: {newRoot: '$siblings'}  
+    },
+    {
+     $sort: {order: 1}
+    }
+  ])
+    .then(result => {
+      return res.status(200).json(new ResObj(true, 'Siblings', result));
+    })
+    .catch(err => next(new DbError()));
+};
 
 _getDescendants = function(parent, depth) {
   return new Promise(function(resolve, reject) {
@@ -153,7 +218,6 @@ _getDescendants = function(parent, depth) {
 module.exports._getDescendants = _getDescendants;
 
 module.exports.getDescendants = function(req, res, next) {
-
   const parent = req.query.parent;
   const depth = +req.query.depth;
   _getDescendants(parent, depth)

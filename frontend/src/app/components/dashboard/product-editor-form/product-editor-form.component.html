@@ -1,3 +1,86 @@
-<p>
-  product-editor-form works!
-</p>
+<div class="row" fxLayout="row">
+  <div class="cell" fxFlex="100">
+    <div class="full-width-container">
+      <mat-card  class="form-block">
+        <mat-card-header></mat-card-header>
+        <mat-card-title>
+          <h2 *ngIf="editMode" class="mat-h2">Редагувати колекцію
+            <span class="accent">{{productForm.get('name').value}}</span> у розділі
+            <span class="accent">{{paramParentName}}</span></h2>
+          <h2 *ngIf="!editMode" class="mat-h2">Створити колекцію у розділі <span class="accent">{{paramParentName}}</span></h2>
+        </mat-card-title>
+
+        <mat-card-content>
+          <div class="container">
+
+            <form [formGroup]="productForm" #f="ngForm" novalidate>
+
+                <div class="row padding-bottom" fxLayout="row">
+                    <div class="cell" fxFlex="25" fxFlex.lt-md="50" formArrayName="parents" 
+                    *ngFor="let parent of productForm.get('parents')['controls']; let i = index">
+            
+                        <mat-select placeholder="Виберіть категорію" formControlName="{{i}}" required>
+                          <mat-option *ngFor="let siblingOfParent of siblingsOfParent" [value]="siblingOfParent._id">
+                            {{siblingOfParent.name}}
+                          </mat-option>
+                    </mat-select>
+                      
+                    </div>
+                  </div>
+
+              <div class="row padding-bottom" fxLayout="row">
+                    <div class="cell" fxFlex="25" fxFlex.lt-md="50">
+                      <mat-form-field>
+                        <input matInput placeholder="Ідентифікатор" formControlName="_id" required>
+                        <mat-error
+                          *ngIf="(productForm.get('_id').errors?.minlength ||
+                                  productForm.get('_id').errors?.maxlength ||
+                                  productForm.get('_id').errors?.required) &&
+                                  productForm.get('_id').touched">
+                          Довжина повинна бути 6 символів
+                        </mat-error>
+                        <mat-error
+                        *ngIf="productForm.get('_id').errors?.pattern &&
+                                productForm.get('_id').touched">
+                        Довжина повинна бути 6 символів
+                      </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="cell" fxFlex="25" fxFlex.lt-md="50">
+                      <mat-form-field>
+                        <input matInput placeholder="Назва" formControlName="name" required>
+                        <mat-error
+                          *ngIf="(productForm.get('name').errors?.minlength ||
+                                  productForm.get('name').errors?.maxlength ||
+                                  productForm.get('name').errors?.required) &&
+                                  productForm.get('name').touched">
+                          Довжина повинна бути від 4 до 50 символів
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+                    <div class="cell" fxFlex="25" fxFlex.lt-md="50">
+                      <mat-form-field>
+                        <mat-select placeholder="Публікувати" formControlName="display" required>
+                          <mat-option [value]="true">
+                            Так
+                          </mat-option>
+                          <mat-option [value]="false">
+                            Ні
+                          </mat-option>
+                        </mat-select>
+                        <mat-error
+                          *ngIf="productForm.get('display').errors?.required &&
+                                  productForm.get('display').touched">
+                          Обов'язкове поле
+                        </mat-error>
+                      </mat-form-field>
+                    </div>
+              </div>
+
+            </form>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

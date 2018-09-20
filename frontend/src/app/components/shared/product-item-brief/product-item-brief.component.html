@@ -62,7 +62,7 @@
       </a>
       <!--using with dashboard-->
       <a *ngIf="!child && !category_id" mat-button
-         [routerLink]="['/dashboard', 'products_editor_edit', parentCategory_id, parentCategoryName, product._id]"
+         [routerLink]="['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]"
          [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
         {{product.name}}
       </a>

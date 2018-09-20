@@ -72,12 +72,12 @@ var dashboardRoutes = [
                 canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
-            // {
-            //   path: 'products_editor_edit/:parentCategory_id/:parentCategoryName/:_id',
-            //   component: ProductEditorFormComponent,
-            //   canActivate: [AuthGuard],
-            //   data: { auth: 'manager' },
-            // },
+            {
+                path: 'product-editor-edit/:parentCategory_id/:parentCategoryName/:_id',
+                component: _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_9__["ProductEditorFormComponent"],
+                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                data: { auth: 'manager' },
+            },
             // {
             //   path: 'product-create',
             //   component: ProductCreateComponent,
@@ -659,7 +659,7 @@ var ProductCreateComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  product-editor-form works!\n</p>\n"
+module.exports = "<div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n    <div class=\"full-width-container\">\n      <mat-card  class=\"form-block\">\n        <mat-card-header></mat-card-header>\n        <mat-card-title>\n          <h2 *ngIf=\"editMode\" class=\"mat-h2\">Редагувати колекцію\n            <span class=\"accent\">{{productForm.get('name').value}}</span> у розділі\n            <span class=\"accent\">{{paramParentName}}</span></h2>\n          <h2 *ngIf=\"!editMode\" class=\"mat-h2\">Створити колекцію у розділі <span class=\"accent\">{{paramParentName}}</span></h2>\n        </mat-card-title>\n\n        <mat-card-content>\n          <div class=\"container\">\n\n            <form [formGroup]=\"productForm\" #f=\"ngForm\" novalidate>\n\n                <div class=\"row padding-bottom\" fxLayout=\"row\">\n                    <div class=\"cell\" fxFlex=\"25\" fxFlex.lt-md=\"50\" formArrayName=\"parents\" \n                    *ngFor=\"let parent of productForm.get('parents')['controls']; let i = index\">\n            \n                        <mat-select placeholder=\"Виберіть категорію\" formControlName=\"{{i}}\" required>\n                          <mat-option *ngFor=\"let siblingOfParent of siblingsOfParent\" [value]=\"siblingOfParent._id\">\n                            {{siblingOfParent.name}}\n                          </mat-option>\n                    </mat-select>\n                      \n                    </div>\n                  </div>\n\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\n                    <div class=\"cell\" fxFlex=\"25\" fxFlex.lt-md=\"50\">\n                      <mat-form-field>\n                        <input matInput placeholder=\"Ідентифікатор\" formControlName=\"_id\" required>\n                        <mat-error\n                          *ngIf=\"(productForm.get('_id').errors?.minlength ||\n                                  productForm.get('_id').errors?.maxlength ||\n                                  productForm.get('_id').errors?.required) &&\n                                  productForm.get('_id').touched\">\n                          Довжина повинна бути 6 символів\n                        </mat-error>\n                        <mat-error\n                        *ngIf=\"productForm.get('_id').errors?.pattern &&\n                                productForm.get('_id').touched\">\n                        Довжина повинна бути 6 символів\n                      </mat-error>\n                      </mat-form-field>\n                    </div>\n                    <div class=\"cell\" fxFlex=\"25\" fxFlex.lt-md=\"50\">\n                      <mat-form-field>\n                        <input matInput placeholder=\"Назва\" formControlName=\"name\" required>\n                        <mat-error\n                          *ngIf=\"(productForm.get('name').errors?.minlength ||\n                                  productForm.get('name').errors?.maxlength ||\n                                  productForm.get('name').errors?.required) &&\n                                  productForm.get('name').touched\">\n                          Довжина повинна бути від 4 до 50 символів\n                        </mat-error>\n                      </mat-form-field>\n                    </div>\n                    <div class=\"cell\" fxFlex=\"25\" fxFlex.lt-md=\"50\">\n                      <mat-form-field>\n                        <mat-select placeholder=\"Публікувати\" formControlName=\"display\" required>\n                          <mat-option [value]=\"true\">\n                            Так\n                          </mat-option>\n                          <mat-option [value]=\"false\">\n                            Ні\n                          </mat-option>\n                        </mat-select>\n                        <mat-error\n                          *ngIf=\"productForm.get('display').errors?.required &&\n                                  productForm.get('display').touched\">\n                          Обов'язкове поле\n                        </mat-error>\n                      </mat-form-field>\n                    </div>\n              </div>\n\n            </form>\n          </div>\n        </mat-card-content>\n      </mat-card>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -685,13 +685,15 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductEditorFormComponent", function() { return ProductEditorFormComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/product.service */ "./src/app/services/product.service.ts");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/product.service */ "./src/app/services/product.service.ts");
+/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -709,77 +711,69 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var ProductEditorFormComponent = /** @class */ (function () {
-    function ProductEditorFormComponent(matSnackBar, route, location, productService) {
+    function ProductEditorFormComponent(matSnackBar, route, location, productService, catalogService) {
         this.matSnackBar = matSnackBar;
         this.route = route;
         this.location = location;
         this.productService = productService;
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"];
+        this.catalogService = catalogService;
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_3__["config"];
         this.editMode = false;
     }
     ProductEditorFormComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.productForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
-            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormArray"]([this.initParentsControl()]),
-            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(30),
+        this.productForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
+            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormArray"]([]),
+            assets: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormArray"]([]),
+            _id: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]({ value: '', disabled: false }, [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[a-z0-9]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(6),
             ]),
-            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(150),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(30),
             ]),
-            dimensions: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
-                width: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('[0-9]+'),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(3),
-                ]),
-                height: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('[0-9]+'),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(3),
-                ]),
-            }),
-            _id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]({ value: '', disabled: false }, [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ]+'),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(6),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(6),
-            ]),
-            price: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^\\d*\\.?\\d+$'),
-            ]),
-            discount: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^\\d*\\.?\\d+$'),
-            ]),
-            assets: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormArray"]([]),
-            onMainPage: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-            // Validators.required,
+            display: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
             ]),
         });
-        this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["mergeMap"])(function (params) {
-            _this.edited_id = params.get('_id');
-            _this.parentCategory_id = params.get('parentCategory_id');
-            _this.parentCategoryName = params.get('parentCategoryName');
-            if (!_this.edited_id) {
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
+        this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["mergeMap"])(function (params) {
+            _this.paramEdited_id = params.get('_id');
+            _this.paramParent_id = params.get('parentCategory_id');
+            _this.paramParentName = params.get('parentCategoryName');
+            return _this.catalogService.getSiblings(_this.paramParent_id);
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["mergeMap"])(function (result) {
+            _this.siblingsOfParent = result.data;
+            if (!_this.paramEdited_id) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_9__["of"])(null);
             }
-            return _this.productService.getProductById(_this.edited_id, false);
+            return _this.productService.getProductById(_this.paramEdited_id, false);
         }))
             .subscribe(function (result) {
             if (result) {
+                // edit product
+                console.log('result edit', result);
                 _this.editMode = true;
-                _this.parentCategories = result.parent;
+                _this.parents = result.data.parents;
                 for (var i = 0; i < result.data.assets.length; i++) {
                     _this.addAssetsControl();
+                }
+                console.log(' result.data.parents.length', result.data.parents.length);
+                for (var i = 0; i < result.data.parents.length; i++) {
+                    _this.addParentsControl();
                 }
                 _this.productForm.patchValue(result.data);
                 _this.productForm.get('_id').disable();
             }
             else {
-                _this.parentCategories = [_this.parentCategory_id];
+                // new product
+                console.log('result new', result);
+                _this.parents = [_this.paramParent_id];
             }
         }, function (err) { return console.log('Помилка', err); });
     };
@@ -798,8 +792,8 @@ var ProductEditorFormComponent = /** @class */ (function () {
         control.removeAt(i);
     };
     ProductEditorFormComponent.prototype.initParentsControl = function () {
-        return new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-            _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
+            _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
         ]);
     };
     ProductEditorFormComponent.prototype.addAssetsControl = function () {
@@ -811,13 +805,13 @@ var ProductEditorFormComponent = /** @class */ (function () {
         control.removeAt(i);
     };
     ProductEditorFormComponent.prototype.initAssetsControl = function () {
-        return new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('file', [
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('file', [
         // Validators.required,
         ]);
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('f'),
-        __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"])
+        __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroupDirective"])
     ], ProductEditorFormComponent.prototype, "productFormDirective", void 0);
     ProductEditorFormComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -825,10 +819,11 @@ var ProductEditorFormComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./product-editor-form.component.html */ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.html"),
             styles: [__webpack_require__(/*! ./product-editor-form.component.scss */ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.scss")]
         }),
-        __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"],
-            Location,
-            _services_product_service__WEBPACK_IMPORTED_MODULE_5__["ProductService"]])
+        __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSnackBar"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_1__["Location"],
+            _services_product_service__WEBPACK_IMPORTED_MODULE_6__["ProductService"],
+            _services_catalog_service__WEBPACK_IMPORTED_MODULE_7__["CatalogService"]])
     ], ProductEditorFormComponent);
     return ProductEditorFormComponent;
 }());

@@ -1,9 +1,11 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { Location } from '@angular/common';
 import { FormGroupDirective, FormGroup, FormArray, FormControl, Validators } from '@angular/forms';
 import { config } from '../../../app.config';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
+import { CatalogService } from '../../../services/catalog.service';
 import { mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 
@@ -19,81 +21,99 @@ export class ProductEditorFormComponent implements OnInit {
   productForm: FormGroup;
 
   editMode = false;
-  edited_id: string;
-  parentCategory_id: string;
-  parentCategories: string[];
-  parentCategoryName: string;
+  paramEdited_id: string;
+  paramParent_id: string;
+  paramParentName: string;
+  siblingsOfParent: string[];
+  parents: string[];
 
   constructor(
     private matSnackBar: MatSnackBar,
     private route: ActivatedRoute,
     private location: Location,
     private productService: ProductService,
+    private catalogService: CatalogService,
   ) { }
 
   ngOnInit() {
     this.productForm = new FormGroup({
-      parents : new FormArray([this.initParentsControl()]),
+      parents : new FormArray([]),
+      assets: new FormArray([]),
+
+      _id: new FormControl({value: '', disabled: false}, [
+        Validators.pattern('[a-z0-9]+'),
+        Validators.minLength(6),
+        Validators.maxLength(6),
+      ]),
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
         Validators.maxLength(30),
       ]),
-      description: new FormControl('', [
+      display: new FormControl('', [
         Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(150),
-        Validators.pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
       ]),
-      dimensions: new FormGroup({
-        width: new FormControl('', [
-          Validators.pattern('[0-9]+'),
-          Validators.maxLength(3),
-        ]),
-        height: new FormControl('', [
-          Validators.pattern('[0-9]+'),
-          Validators.maxLength(3),
-        ]),
-      }),
-      _id: new FormControl({value: '', disabled: false}, [
-        Validators.pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ]+'),
-        Validators.minLength(6),
-        Validators.maxLength(6),
-      ]),
-      price: new FormControl('', [
-        Validators.pattern('^\\d*\\.?\\d+$'),
-      ]),
-      discount: new FormControl('', [
-        Validators.pattern('^\\d*\\.?\\d+$'),
-      ]),
-      assets: new FormArray([]),
-      onMainPage: new FormControl('', [
-        // Validators.required,
-      ]),
+      // description: new FormControl('', [
+      //   Validators.required,
+      //   Validators.minLength(4),
+      //   Validators.maxLength(150),
+      //   Validators.pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+      // ]),
+      // dimensions: new FormGroup({
+      //   width: new FormControl('', [
+      //     Validators.pattern('[0-9]+'),
+      //     Validators.maxLength(3),
+      //   ]),
+      //   height: new FormControl('', [
+      //     Validators.pattern('[0-9]+'),
+      //     Validators.maxLength(3),
+      //   ]),
+      // }),
+      // price: new FormControl('', [
+      //   Validators.pattern('^\\d*\\.?\\d+$'),
+      // ]),
+      // discount: new FormControl('', [
+      //   Validators.pattern('^\\d*\\.?\\d+$'),
+      // ]),
+      // onMainPage: new FormControl('', [
+      // ]),
     });
 
     this.route.paramMap.pipe(
       mergeMap(params => {
-        this.edited_id = params.get('_id');
-        this.parentCategory_id = params.get('parentCategory_id');
-        this.parentCategoryName = params.get('parentCategoryName');
-        if (!this.edited_id) {
+        this.paramEdited_id = params.get('_id');
+        this.paramParent_id = params.get('parentCategory_id');
+        this.paramParentName = params.get('parentCategoryName');
+
+        return this.catalogService.getSiblings(this.paramParent_id);
+      }),
+      mergeMap((result) => {
+        this.siblingsOfParent = result.data;
+        if (!this.paramEdited_id) {
           return of(null);
         }
-        return this.productService.getProductById(this.edited_id, false);
+        return this.productService.getProductById(this.paramEdited_id, false);
       })
     )
     .subscribe(result => {
         if (result) {
+          // edit product
+          console.log('result edit', result);
           this.editMode = true;
-          this.parentCategories = result.parent;
+          this.parents = result.data.parents;
           for (let i = 0; i < result.data.assets.length; i++) {
             this.addAssetsControl();
+          }
+          console.log(' result.data.parents.length',  result.data.parents.length);
+          for (let i = 0; i < result.data.parents.length; i++) {
+            this.addParentsControl();
           }
           this.productForm.patchValue(result.data);
           this.productForm.get('_id').disable();
         } else {
-          this.parentCategories = [this.parentCategory_id];
+          // new product
+          console.log('result new', result);
+          this.parents = [this.paramParent_id];
         }
       },
       err => console.log('Помилка', err)

@@ -57,6 +57,19 @@ export class CatalogService {
     );
   }
 
+  getSiblings(_id: string): Observable<IResponse> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      }),
+      params: new HttpParams().set('_id', _id)
+    };
+    return this.http.get<IResponse>(
+      'api/catalog/get-siblings',
+      httpOptions
+    );
+  }
+
   /**
    *
    *
@@ -74,7 +87,8 @@ export class CatalogService {
         parent,
         depth: depth + ''
       }})
-    };    return this.http.get<IResponse>(
+    };
+    return this.http.get<IResponse>(
       'api/catalog/get-descendants',
       httpOptions
     );

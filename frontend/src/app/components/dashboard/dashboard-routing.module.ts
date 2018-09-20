@@ -47,12 +47,12 @@ const dashboardRoutes: Routes = [
         canActivate: [AuthGuard],
         data: { auth: 'manager' },
       },
-      // {
-      //   path: 'products_editor_edit/:parentCategory_id/:parentCategoryName/:_id',
-      //   component: ProductEditorFormComponent,
-      //   canActivate: [AuthGuard],
-      //   data: { auth: 'manager' },
-      // },
+      {
+        path: 'product-editor-edit/:parentCategory_id/:parentCategoryName/:_id',
+        component: ProductEditorFormComponent,
+        canActivate: [AuthGuard],
+        data: { auth: 'manager' },
+      },
 
       // {
       //   path: 'product-create',

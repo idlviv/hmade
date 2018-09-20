@@ -111,6 +111,10 @@ router.get('/catalog/get-all-parents',
 );
 
 // hmade
+router.get('/catalog/get-siblings',
+  catalogController.getSiblings
+);
+
 router.get('/catalog/get-category-by-id',
   catalogController.getCategoryById
 );
