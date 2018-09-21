@@ -9,6 +9,7 @@ import { CatalogService } from '../../../services/catalog.service';
 import { mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { forkJoin as observableForkJoin,  Observable } from 'rxjs';
+import { IProduct } from '../../../interfaces/product-interface';
 
 @Component({
   selector: 'app-product-editor-form',
@@ -22,10 +23,14 @@ export class ProductEditorFormComponent implements OnInit {
   productForm: FormGroup;
 
   editMode = false;
+  processingLoadAssets = -1;
+
   paramEdited_id: string;
   paramParent_id: string;
   paramParentName: string;
   parents: string[];
+
+  product: IProduct;
 
   constructor(
     private matSnackBar: MatSnackBar,
@@ -41,6 +46,7 @@ export class ProductEditorFormComponent implements OnInit {
       assets: new FormArray([]),
 
       _id: new FormControl({value: '', disabled: false}, [
+        Validators.required,
         Validators.pattern('[a-z0-9]+'),
         Validators.minLength(7),
         Validators.maxLength(7),
@@ -51,35 +57,31 @@ export class ProductEditorFormComponent implements OnInit {
         Validators.maxLength(30),
       ]),
       display: new FormControl('', [
-        Validators.required,
       ]),
       onMainPage: new FormControl('', [
-        Validators.required,
       ]),
-      // description: new FormControl('', [
-      //   Validators.required,
-      //   Validators.minLength(4),
-      //   Validators.maxLength(150),
-      //   Validators.pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
-      // ]),
-      // dimensions: new FormGroup({
-      //   width: new FormControl('', [
-      //     Validators.pattern('[0-9]+'),
-      //     Validators.maxLength(3),
-      //   ]),
-      //   height: new FormControl('', [
-      //     Validators.pattern('[0-9]+'),
-      //     Validators.maxLength(3),
-      //   ]),
-      // }),
-      // price: new FormControl('', [
-      //   Validators.pattern('^\\d*\\.?\\d+$'),
-      // ]),
-      // discount: new FormControl('', [
-      //   Validators.pattern('^\\d*\\.?\\d+$'),
-      // ]),
-      // onMainPage: new FormControl('', [
-      // ]),
+      description: new FormControl('', [
+        Validators.required,
+        Validators.minLength(4),
+        Validators.maxLength(200),
+        Validators.pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+      ]),
+      dimensions: new FormGroup({
+        width: new FormControl('', [
+          Validators.pattern('[0-9]+'),
+          Validators.maxLength(3),
+        ]),
+        height: new FormControl('', [
+          Validators.pattern('[0-9]+'),
+          Validators.maxLength(3),
+        ]),
+      }),
+      price: new FormControl('', [
+        Validators.pattern('^\\d*\\.?\\d+$'),
+      ]),
+      discount: new FormControl('', [
+        Validators.pattern('[0-9]{1,2}'),
+      ]),
     });
 
     this.route.paramMap.pipe(
@@ -98,7 +100,8 @@ export class ProductEditorFormComponent implements OnInit {
           // edit product
           console.log('result edit', result);
           this.editMode = true;
-          this.parents = result.data.parents;
+          // this.parents = result.data.parents;
+          this.productForm.get('parents').setValue(result.data.parents);
           for (let i = 0; i < result.data.assets.length; i++) {
             this.addAssetsControl();
           }
@@ -111,7 +114,7 @@ export class ProductEditorFormComponent implements OnInit {
         } else {
           // new product
           console.log('result new', result);
-          this.parents = [this.paramParent_id];
+          // this.parents = [this.paramParent_id];
           this._createSku(this.paramParent_id);
         }
       },
@@ -152,6 +155,66 @@ export class ProductEditorFormComponent implements OnInit {
           err => this.matSnackBar.open(err.error, '',
             {duration: 3000, panelClass: 'snack-bar-danger'})
       );
+  }
+
+  onProductCreateSubmit() {
+
+    this.product = <IProduct>{
+      parents: this.productForm.get('parents').value,
+      _id: this.productForm.getRawValue()._id, // raw because may be disabled
+      name: this.productForm.get('name').value,
+      price: this.productForm.get('price').value,
+      discount: this.productForm.get('discount').value,
+      // assets : this.productForm.get('assets').value,
+      description : this.productForm.get('description').value,
+      onMainPage: this.productForm.get('onMainPage').value || false,
+      display: this.productForm.get('display').value || true,
+      dimensions: {
+        width: this.productForm.get('dimensions.width').value,
+        height: this.productForm.get('dimensions.height').value,
+      }
+    };
+
+    this.productService.productUpsert(this.product)
+    .subscribe(result => {
+        this.matSnackBar.open(result.message, '',
+          {duration: 3000});
+        this.resetForm();
+        if (this.editMode) {
+        this.editMode = false;
+        }
+      },
+      err => this.matSnackBar.open(err.error, '',
+        {duration: 3000, panelClass: 'snack-bar-danger'})
+    );
+
+
+    // if (this.editMode) {
+    //   // edit
+    //   // this.product._id = this.paramEdited_id;
+    //   this.productService.productEdit(this.product)
+    //     .subscribe(result => {
+    //         this.matSnackBar.open(result.message, '',
+    //           {duration: 3000});
+    //         this.resetForm();
+    //         this.editMode = false;
+    //       },
+    //       err => this.matSnackBar.open(err.error, '',
+    //         {duration: 3000, panelClass: 'snack-bar-danger'})
+    //     );
+
+    // } else {
+    //   this.productService.productCreate(this.product)
+    //     .subscribe(result => {
+    //         this.matSnackBar.open(result.message, '',
+    //           {duration: 3000});
+    //         this.resetForm();
+    //       },
+    //       err => this.matSnackBar.open(err.error, '',
+    //         {duration: 3000, panelClass: 'snack-bar-danger'})
+    //     );
+    // }
+
   }
 
   resetForm() {

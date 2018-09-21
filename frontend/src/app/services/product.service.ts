@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { IResponse, IRes } from '../interfaces/server-response-interface';
+import { IResponse } from '../interfaces/server-response-interface';
 import { Observable, of } from 'rxjs';
 import { IProduct } from '../interfaces/product-interface';
 import { UserService } from './user.service';
@@ -298,7 +298,15 @@ export class ProductService {
     );
   }
 
-  productUpsert(product): Observable<IResponse> {
+
+  /**
+   *
+   *
+   * @param {IProduct} product
+   * @returns {Observable<IResponse>}
+   * @memberof ProductService
+   */
+  productUpsert(product: IProduct): Observable<IResponse> {
     const token = this.userService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
@@ -316,7 +324,7 @@ export class ProductService {
   /**
    *
    *
-   * @returns {Observable<IRes>}
+   * @returns {Observable<{_id: string}[]>}
    * @memberof ProductService
    */
   getSkuList():  Observable<{_id: string}[]> {

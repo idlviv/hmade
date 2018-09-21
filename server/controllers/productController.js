@@ -294,6 +294,10 @@ module.exports.productAddTechAssets = function(req, res, next) {
   });
 };
 
+
+
+
+// hmade
 module.exports.productUpsert = function(req, res, next) {
   const product = req.body;
 
@@ -308,8 +312,6 @@ module.exports.productUpsert = function(req, res, next) {
     .catch(err => next(new DbError()));
 };
 
-
-// hmade
 module.exports.getSkuList = function(req, res, next) {
   ProductModel.find({}, {_id: 1})
     .sort({_id: 1})

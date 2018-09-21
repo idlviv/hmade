@@ -14,22 +14,9 @@
           <div class="container">
 
             <form [formGroup]="productForm" #f="ngForm" novalidate>
-<!-- 
-                <div class="row padding-bottom" fxLayout="row">
-                    <div class="cell" fxFlex="25" fxFlex.lt-md="50" formArrayName="parents" 
-                    *ngFor="let parent of productForm.get('parents')['controls']; let i = index">
-            
-                        <mat-select placeholder="Виберіть категорію" formControlName="{{i}}" required>
-                          <mat-option *ngFor="let siblingOfParent of siblingsOfParent" [value]="siblingOfParent._id">
-                            {{siblingOfParent.name}}
-                          </mat-option>
-                    </mat-select>
-                      
-                    </div>
-                  </div> -->
 
               <div class="row padding-bottom" fxLayout="row">
-                    <div class="cell" fxFlex="25" fxFlex.lt-md="50">
+                    <div class="cell" fxFlex="100" fxFlex.sm="50" fxFlex.gt-sm="25">
                       <mat-form-field>
                         <input matInput placeholder="Ідентифікатор" formControlName="_id" required>
                         <mat-error
@@ -46,7 +33,7 @@
                       </mat-error>
                       </mat-form-field>
                     </div>
-                    <div class="cell" fxFlex="25" fxFlex.lt-md="50">
+                    <div class="cell" fxFlex="100" fxFlex.sm="50" fxFlex.gt-sm="25">
                       <mat-form-field>
                         <input matInput placeholder="Назва" formControlName="name" required>
                         <mat-error
@@ -58,9 +45,9 @@
                         </mat-error>
                       </mat-form-field>
                     </div>
-                    <div class="cell" fxFlex="25" fxFlex.lt-md="50">
+                    <div class="cell" fxFlex="100" fxFlex.sm="50" fxFlex.gt-sm="25">
                       <mat-form-field>
-                        <mat-select placeholder="Публікувати" formControlName="display" required>
+                        <mat-select placeholder="Публікувати" formControlName="display">
                           <mat-option [value]="true">
                             Так
                           </mat-option>
@@ -68,16 +55,16 @@
                             Ні
                           </mat-option>
                         </mat-select>
-                        <mat-error
+                        <!-- <mat-error
                           *ngIf="productForm.get('display').errors?.required &&
                                   productForm.get('display').touched">
                           Обов'язкове поле
-                        </mat-error>
+                        </mat-error> -->
                       </mat-form-field>
                     </div>
-                    <div class="cell" fxFlex="25" fxFlex.lt-md="50">
+                    <div class="cell" fxFlex="100" fxFlex.sm="50" fxFlex.gt-sm="25">
                         <mat-form-field>
-                          <mat-select placeholder="На головній" formControlName="onMainPage" required>
+                          <mat-select placeholder="На головній" formControlName="onMainPage">
                             <mat-option [value]="true">
                               Так
                             </mat-option>
@@ -85,15 +72,116 @@
                               Ні
                             </mat-option>
                           </mat-select>
-                          <mat-error
+                          <!-- <mat-error
                             *ngIf="productForm.get('display').errors?.required &&
                                     productForm.get('display').touched">
                             Обов'язкове поле
-                          </mat-error>
+                          </mat-error> -->
                         </mat-form-field>
                       </div>
               </div>
+              <div class="row padding-bottom" fxLayout="row">
+                <div class="cell" fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="50">
+                  <mat-form-field>
+                    <textarea matInput placeholder="Опис" formControlName="description" required></textarea>
+                    <mat-error
+                      *ngIf="(productForm.get('description').errors?.minlength ||
+                        productForm.get('description').errors?.maxlength ||
+                        productForm.get('description').errors?.required) &&
+                        productForm.get('description').touched">
+                      Довжина повинна бути від 4 до 200 символів
+                    </mat-error>
+                    <mat-error
+                      *ngIf="productForm.get('description').errors?.pattern &&
+                        productForm.get('description').touched">
+                      Не використовуйте спецыальны символи
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="cell wrap" fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="50" formGroupName="dimensions">
+                    <div class="item" fxFlex="100" fxFlex.gt-xs="50">
+                        <mat-form-field>
+                          <input matInput placeholder="Ширина" formControlName="width">
+                          <span matSuffix>см</span>
+                          <mat-error
+                            *ngIf="productForm.get('dimensions.width').errors?.maxlength &&
+                            productForm.get('dimensions').get('width').touched">
+                            Використовуйте не більше ніж три символа
+                          </mat-error>
+                          <mat-error
+                            *ngIf="productForm.get('dimensions').get('width').errors?.pattern &&
+                            productForm.get('dimensions').get('width').touched">
+                            Використовуйте тількі цифри
+                          </mat-error>
+                        </mat-form-field>
+                      </div>
+                  <div class="item" fxFlex="100" fxFlex.gt-xs="50">
+                    <mat-form-field>
+                      <input matInput placeholder="Висота" formControlName="height">
+                      <span matSuffix>см</span>
+                      <mat-error
+                        *ngIf="productForm.get('dimensions.height').errors?.maxlength &&
+                        productForm.get('dimensions').get('height').touched">
+                        Використовуйте не більше ніж три символа
+                      </mat-error>
+                      <mat-error
+                        *ngIf="productForm.get('dimensions').get('height').errors?.pattern &&
+                        productForm.get('dimensions').get('height').touched">
+                        Використовуйте тількі цифри
+                      </mat-error>
+                    </mat-form-field>
+                  </div>
 
+                </div>
+
+                <div class="cell wrap" fxFlex="100" fxFlex.sm="100" fxFlex.gt-sm="50">
+                    <div class="item" fxFlex="100" fxFlex.gt-xs="50">
+                        <mat-form-field>
+                            <input matInput placeholder="Ціна" formControlName="price" >
+                            <span matSuffix>грн</span>
+                            <mat-error
+                              *ngIf="productForm.get('price').errors?.pattern &&
+                              productForm.get('price').touched">
+                              Використовуйте тількі цифри більші 0
+                            </mat-error>
+                        </mat-form-field>
+                      </div>
+                  <div class="item" fxFlex="100" fxFlex.gt-xs="50">
+                      <mat-form-field>
+                          <input matInput placeholder="Знижка" formControlName="discount" >
+                          <span matSuffix>%</span>
+                          <mat-error
+                            *ngIf="productForm.get('discount').errors?.pattern &&
+                            productForm.get('discount').touched">
+                            Використовуйте тількі цифри більші 0
+                          </mat-error>
+                      </mat-form-field>
+                  </div>
+
+                </div>
+              </div>
+              <div class="submit-button-wrapper row" fxLayout="row">
+                  <div class="cell" fxFlex="40">
+  
+                    <button *ngIf="editMode" mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(false)"
+                            [disabled]="!productForm.valid || processingLoadAssets >=0">
+                      Зберегти</button>
+                  </div>
+                  <div class="cell" fxFlex="40">
+  
+                    <button *ngIf="editMode" mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(true)"
+                              [disabled]="!productForm.valid || processingLoadAssets >=0">
+                      Зберегти і повернутись</button>
+                    <button *ngIf="!editMode" mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(true)"
+                            [disabled]="!productForm.valid || processingLoadAssets >=0">
+                      Створити і повернутись</button>
+                  </div>
+                    <div class="cell" fxFlex="20">
+                    <button mat-raised-button  type="button" (click)="goBack()" class="full-width"
+                            [disabled]="processingLoadAssets >=0">Повернутись</button>
+                  </div>
+  
+                </div>
             </form>
           </div>
         </mat-card-content>

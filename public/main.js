@@ -2308,6 +2308,13 @@ var ProductService = /** @class */ (function () {
         };
         return this.http.post('api/product/add-techassets', formData, httpOptions);
     };
+    /**
+     *
+     *
+     * @param {IProduct} product
+     * @returns {Observable<IResponse>}
+     * @memberof ProductService
+     */
     ProductService.prototype.productUpsert = function (product) {
         var token = this.userService.userLocalGetToken('token');
         var httpOptions = {
@@ -2321,7 +2328,7 @@ var ProductService = /** @class */ (function () {
     /**
      *
      *
-     * @returns {Observable<IRes>}
+     * @returns {Observable<{_id: string}[]>}
      * @memberof ProductService
      */
     ProductService.prototype.getSkuList = function () {
