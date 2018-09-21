@@ -5,25 +5,6 @@ const ApplicationError = require('../errors/applicationError');
 const ObjectId = require('../config/mongoose').Types.ObjectId;
 const log = require('../config/winston')(module);
 
-// module.exports.getPrefix = function(req, res, next) {
-//   const _id = req.query.category;
-//   CatalogModel.findOne({_id}, {prefix: 1, _id: 0})
-//     .then(result => {
-//     return res.status(200).json(new ResObj(true, 'Префікс', result));
-//   })
-//     .catch(err => next(new DbError()));
-// };
-
-
-
-
-
-
-
-
-
-
-
 module.exports.getMainMenu = function(req, res, next) {
   // const item = ObjectId(req.query.item);
   // item = req.query.item;
@@ -52,7 +33,7 @@ module.exports.getMainMenu = function(req, res, next) {
   ]).then(result => {
     return res.status(200).json(new ResObj(true, 'Каталог', result[0]));
   })
-    .catch(err => next(new DbError()));
+    .catch(ersrr => next(new DbError()));
 };
 
 // New
@@ -121,6 +102,16 @@ module.exports.getAllParents = function(req, res, next) {
 };
 
 // hmade
+
+module.exports.getPrefix = function(req, res, next) {
+  const _id = req.query._id;
+  CatalogModel.findOne({_id}, {prefix: 1, _id: 0})
+    .then(result => {
+    return res.status(200).json(new ResObj(true, 'Префікс', result));
+  })
+    .catch(err => next(new DbError()));
+};
+
 module.exports.getSiblings = function(req, res, next) {
   const _id = req.query._id;
   CatalogModel.aggregate([

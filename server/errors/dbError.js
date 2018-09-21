@@ -1,4 +1,3 @@
-
 /**
  * custom mongoose error
  * 
@@ -6,7 +5,6 @@
  * @param code
  * @constructor
  */
-
 function DbError(message, code) {
   Error.call(this);
   if (Error.captureStackTrace) {
@@ -19,15 +17,13 @@ function DbError(message, code) {
   this.name = 'DbError';
 }
 
-/*!
+/**
  * Inherits from Error.
  */
-
 DbError.prototype = Object.create(Error.prototype);
 DbError.prototype.constructor = Error;
 
-/*!
+/**
  * Module exports.
  */
-
 module.exports = DbError;

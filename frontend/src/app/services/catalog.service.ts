@@ -11,27 +11,6 @@ export class CatalogService {
     private http: HttpClient
   ) { }
 
-  getPrefix(category: string) {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      }),
-      params: new HttpParams({ fromObject: {
-        category
-      }})
-    };
-    return this.http.get<IResponse>(
-      'api/catalog/get-prefix',
-      httpOptions
-    );
-  }
-
-
-
-
-
-
-
   getMainMenu(): Observable<IResponse> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -57,12 +36,43 @@ export class CatalogService {
     );
   }
 
+  /**
+   *
+   *
+   * @param {string} _id
+   * @returns
+   * @memberof CatalogService
+   */
+  getPrefix(_id: string) {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      }),
+      params: new HttpParams({ fromObject: {
+        _id
+      }})
+    };
+    return this.http.get<IResponse>(
+      'api/catalog/get-prefix',
+      httpOptions
+    );
+  }
+
+    /**
+   *
+   *
+   * @param {string} _id
+   * @returns {Observable<IResponse>}
+   * @memberof CatalogService
+   */
   getSiblings(_id: string): Observable<IResponse> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
       }),
-      params: new HttpParams().set('_id', _id)
+      params: new HttpParams({ fromObject: {
+        _id
+      }})
     };
     return this.http.get<IResponse>(
       'api/catalog/get-siblings',

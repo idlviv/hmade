@@ -60,10 +60,7 @@ router.get('/product/get-main-page-products',
   productController.getMainPageProducts
 );
 
-router.get('/product/get-sku-list',
-  passport.authenticate('jwt', {session: false}),
-  productController.getSkuList
-);
+
 
 router.post('/product/create',
   passport.authenticate('jwt', {session: false}),
@@ -90,6 +87,11 @@ router.post('/product/add-image',
 );
 
 //hmade
+router.get('/product/get-sku-list',
+  passport.authenticate('jwt', {session: false}),
+  productController.getSkuList
+);
+
 router.get('/product/get-product-by-id',
   productController.getProductById
 );
@@ -111,6 +113,10 @@ router.get('/catalog/get-all-parents',
 );
 
 // hmade
+router.get('/catalog/get-prefix',
+  catalogController.getPrefix
+);
+
 router.get('/catalog/get-siblings',
   catalogController.getSiblings
 );

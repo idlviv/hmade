@@ -237,37 +237,37 @@ export class ProductCreateComponent implements OnInit {
 
   createSku(category) {
 
-    const getPrefix$ = this.catalogService.getPrefix(category);
-    const getSkuList$ = this.productService.getSkuList(category);
+    // const getPrefix$ = this.catalogService.getPrefix(category);
+    // const getSkuList$ = this.productService.getSkuList(category);
 
-    observableForkJoin(getPrefix$, getSkuList$).subscribe(result => {
-      const prefix = result[0].data.prefix;
-      const skuList = result[1].data
-        .map(item => item.sku) // create [] from {}
-        .filter(item => item.slice(0, 2) === prefix) // take elems with needed prefix
-        .map(item => +item.slice(2)); // concat prefix, take only numbers
+    // observableForkJoin(getPrefix$, getSkuList$).subscribe(result => {
+    //   const prefix = result[0].data.prefix;
+    //   const skuList = result[1].data
+    //     .map(item => item.sku) // create [] from {}
+    //     .filter(item => item.slice(0, 2) === prefix) // take elems with needed prefix
+    //     .map(item => +item.slice(2)); // concat prefix, take only numbers
 
-        console.log('skuList', skuList);
-        let freeNumber = 1;
-        for (let i = 0; i < skuList.length; i++) {
-          if (skuList[i] - (i + 1) >= 1) {
-            freeNumber = i + 1;
-            break;
-          }
-          if (i === skuList.length - 1) {
-            freeNumber = skuList.length + 1;
-          }
-        }
-        let sku = freeNumber.toString();
-        while (sku.length < 4) {
-          sku = '0' + sku;
-        }
-        sku = prefix + sku;
-        this.productCreateForm.patchValue({sku});
-    },
-          err => this.matSnackBar.open(err.error, '',
-            {duration: 3000, panelClass: 'snack-bar-danger'})
-      );
+    //     console.log('skuList', skuList);
+    //     let freeNumber = 1;
+    //     for (let i = 0; i < skuList.length; i++) {
+    //       if (skuList[i] - (i + 1) >= 1) {
+    //         freeNumber = i + 1;
+    //         break;
+    //       }
+    //       if (i === skuList.length - 1) {
+    //         freeNumber = skuList.length + 1;
+    //       }
+    //     }
+    //     let sku = freeNumber.toString();
+    //     while (sku.length < 4) {
+    //       sku = '0' + sku;
+    //     }
+    //     sku = prefix + sku;
+    //     this.productCreateForm.patchValue({sku});
+    // },
+    //       err => this.matSnackBar.open(err.error, '',
+    //         {duration: 3000, panelClass: 'snack-bar-danger'})
+    //   );
   }
 
   addParents() {

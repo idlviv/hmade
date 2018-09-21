@@ -8,6 +8,7 @@ import { ProductService } from '../../../services/product.service';
 import { CatalogService } from '../../../services/catalog.service';
 import { mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { forkJoin as observableForkJoin,  Observable } from 'rxjs';
 
 @Component({
   selector: 'app-product-editor-form',
@@ -111,10 +112,46 @@ export class ProductEditorFormComponent implements OnInit {
           // new product
           console.log('result new', result);
           this.parents = [this.paramParent_id];
+          this._createSku(this.paramParent_id);
         }
       },
       err => console.log('Помилка', err)
     );
+  }
+
+  _createSku(parent) {
+
+    const getPrefix$ = this.catalogService.getPrefix(parent);
+    const getSkuList$ = this.productService.getSkuList();
+
+    observableForkJoin(getPrefix$, getSkuList$).subscribe(result => {
+      const prefix = result[0].data.prefix;
+
+      const skuList = result[1]
+        .map(item => item._id) // create [] from {}
+        .filter(item => item.slice(0, 3) === prefix) // take elems with needed prefix
+        .map(item => +item.slice(3)); // concat prefix, take only numbers
+
+        let freeNumber = 1;
+        for (let i = 0; i < skuList.length; i++) {
+          if (skuList[i] - (i + 1) >= 1) {
+            freeNumber = i + 1;
+            break;
+          }
+          if (i === skuList.length - 1) {
+            freeNumber = skuList.length + 1;
+          }
+        }
+        let sku = freeNumber.toString();
+        while (sku.length < 4) {
+          sku = '0' + sku;
+        }
+        sku = prefix + sku;
+        this.productForm.patchValue({_id: sku});
+    },
+          err => this.matSnackBar.open(err.error, '',
+            {duration: 3000, panelClass: 'snack-bar-danger'})
+      );
   }
 
   resetForm() {

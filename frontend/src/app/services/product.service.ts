@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { IResponse } from '../interfaces/server-response-interface';
+import { IResponse, IRes } from '../interfaces/server-response-interface';
 import { Observable, of } from 'rxjs';
 import { IProduct } from '../interfaces/product-interface';
 import { UserService } from './user.service';
@@ -17,24 +17,7 @@ export class ProductService {
     private userService: UserService,
   ) { }
 
-  getSkuList(category) {
-    const token = this.userService.userLocalGetToken('token');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-        'Authorization': token
-      }),
-      params: new HttpParams({
-        fromObject: {
-          category
-        }
-      })
-    };
-    return this.http.get<IResponse>(
-      'api/product/get-sku-list',
-      httpOptions
-    );
-  }
+
 
   // getProductById(_id) {
   //   const httpOptions = {
@@ -326,6 +309,26 @@ export class ProductService {
     return this.http.post<IResponse>(
       'api/product/upsert',
       product,
+      httpOptions
+    );
+  }
+
+  /**
+   *
+   *
+   * @returns {Observable<IRes>}
+   * @memberof ProductService
+   */
+  getSkuList():  Observable<{_id: string}[]> {
+    const token = this.userService.userLocalGetToken('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      })
+    };
+    return this.http.get<{_id: string}[]>(
+      'api/product/get-sku-list',
       httpOptions
     );
   }

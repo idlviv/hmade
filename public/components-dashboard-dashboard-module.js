@@ -377,14 +377,13 @@ module.exports = ""
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductCreateComponent", function() { return ProductCreateComponent; });
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/product.service */ "./src/app/services/product.service.ts");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/product.service */ "./src/app/services/product.service.ts");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -401,55 +400,54 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var ProductCreateComponent = /** @class */ (function () {
     function ProductCreateComponent(catalogService, productService, matSnackBar, route) {
         this.catalogService = catalogService;
         this.productService = productService;
         this.matSnackBar = matSnackBar;
         this.route = route;
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_6__["config"];
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
         this.processingLoadFile = -1;
         this.editMode = false;
     }
     ProductCreateComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.productCreateForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
-            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormArray"]([this.initParents()]),
-            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(4),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(30),
+        this.productCreateForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormArray"]([this.initParents()]),
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(30),
             ]),
-            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(4),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(150),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(150),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
             ]),
-            dimensions: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
-                width: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[0-9]+'),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(3),
+            dimensions: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
+                width: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('[0-9]+'),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(3),
                 ]),
-                height: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[0-9]+'),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(3),
+                height: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('[0-9]+'),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(3),
                 ]),
             }),
-            _id: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]({ value: '', disabled: false }, [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ]+'),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(6),
+            _id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]({ value: '', disabled: false }, [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(6),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(6),
             ]),
-            price: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('^\\d*\\.?\\d+$'),
+            price: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^\\d*\\.?\\d+$'),
             ]),
-            discount: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('^\\d*\\.?\\d+$'),
+            discount: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^\\d*\\.?\\d+$'),
             ]),
-            assets: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormArray"]([]),
-            onMainPage: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
+            assets: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormArray"]([]),
+            onMainPage: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
             // Validators.required,
             ]),
         });
@@ -505,7 +503,7 @@ var ProductCreateComponent = /** @class */ (function () {
         }
         else {
             var filesLinks_1 = this.productCreateForm.get('assets').value;
-            filesLinks_1.push(_app_config__WEBPACK_IMPORTED_MODULE_6__["config"].imgPath + _app_config__WEBPACK_IMPORTED_MODULE_6__["config"].cloudinary + _app_config__WEBPACK_IMPORTED_MODULE_6__["config"].defaultProductImg);
+            filesLinks_1.push(_app_config__WEBPACK_IMPORTED_MODULE_5__["config"].imgPath + _app_config__WEBPACK_IMPORTED_MODULE_5__["config"].cloudinary + _app_config__WEBPACK_IMPORTED_MODULE_5__["config"].defaultProductImg);
             this.addAssets();
             this.productCreateForm.get('assets').setValue(filesLinks_1);
             this.productService.productAddImage(file, this.productCreateForm.get('_id').value)
@@ -576,33 +574,35 @@ var ProductCreateComponent = /** @class */ (function () {
         }
     };
     ProductCreateComponent.prototype.createSku = function (category) {
-        var _this = this;
-        var getPrefix$ = this.catalogService.getPrefix(category);
-        var getSkuList$ = this.productService.getSkuList(category);
-        Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["forkJoin"])(getPrefix$, getSkuList$).subscribe(function (result) {
-            var prefix = result[0].data.prefix;
-            var skuList = result[1].data
-                .map(function (item) { return item.sku; }) // create [] from {}
-                .filter(function (item) { return item.slice(0, 2) === prefix; }) // take elems with needed prefix
-                .map(function (item) { return +item.slice(2); }); // concat prefix, take only numbers
-            console.log('skuList', skuList);
-            var freeNumber = 1;
-            for (var i = 0; i < skuList.length; i++) {
-                if (skuList[i] - (i + 1) >= 1) {
-                    freeNumber = i + 1;
-                    break;
-                }
-                if (i === skuList.length - 1) {
-                    freeNumber = skuList.length + 1;
-                }
-            }
-            var sku = freeNumber.toString();
-            while (sku.length < 4) {
-                sku = '0' + sku;
-            }
-            sku = prefix + sku;
-            _this.productCreateForm.patchValue({ sku: sku });
-        }, function (err) { return _this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }); });
+        // const getPrefix$ = this.catalogService.getPrefix(category);
+        // const getSkuList$ = this.productService.getSkuList(category);
+        // observableForkJoin(getPrefix$, getSkuList$).subscribe(result => {
+        //   const prefix = result[0].data.prefix;
+        //   const skuList = result[1].data
+        //     .map(item => item.sku) // create [] from {}
+        //     .filter(item => item.slice(0, 2) === prefix) // take elems with needed prefix
+        //     .map(item => +item.slice(2)); // concat prefix, take only numbers
+        //     console.log('skuList', skuList);
+        //     let freeNumber = 1;
+        //     for (let i = 0; i < skuList.length; i++) {
+        //       if (skuList[i] - (i + 1) >= 1) {
+        //         freeNumber = i + 1;
+        //         break;
+        //       }
+        //       if (i === skuList.length - 1) {
+        //         freeNumber = skuList.length + 1;
+        //       }
+        //     }
+        //     let sku = freeNumber.toString();
+        //     while (sku.length < 4) {
+        //       sku = '0' + sku;
+        //     }
+        //     sku = prefix + sku;
+        //     this.productCreateForm.patchValue({sku});
+        // },
+        //       err => this.matSnackBar.open(err.error, '',
+        //         {duration: 3000, panelClass: 'snack-bar-danger'})
+        //   );
     };
     ProductCreateComponent.prototype.addParents = function () {
         var control = this.productCreateForm.get('parents');
@@ -613,8 +613,8 @@ var ProductCreateComponent = /** @class */ (function () {
         control.removeAt(i);
     };
     ProductCreateComponent.prototype.initParents = function () {
-        return new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
-            _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
+            _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
         ]);
     };
     ProductCreateComponent.prototype.addAssets = function () {
@@ -626,24 +626,24 @@ var ProductCreateComponent = /** @class */ (function () {
         control.removeAt(i);
     };
     ProductCreateComponent.prototype.initAssets = function () {
-        return new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('file', [
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('file', [
         // Validators.required,
         ]);
     };
     __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('f'),
-        __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroupDirective"])
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('f'),
+        __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"])
     ], ProductCreateComponent.prototype, "productCreateFormDirective", void 0);
     ProductCreateComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-product-create',
             template: __webpack_require__(/*! ./product-create.component.html */ "./src/app/components/dashboard/product-create/product-create.component.html"),
             styles: [__webpack_require__(/*! ./product-create.component.scss */ "./src/app/components/dashboard/product-create/product-create.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_catalog_service__WEBPACK_IMPORTED_MODULE_3__["CatalogService"],
-            _services_product_service__WEBPACK_IMPORTED_MODULE_5__["ProductService"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSnackBar"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"]])
+        __metadata("design:paramtypes", [_services_catalog_service__WEBPACK_IMPORTED_MODULE_2__["CatalogService"],
+            _services_product_service__WEBPACK_IMPORTED_MODULE_4__["ProductService"],
+            _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_6__["ActivatedRoute"]])
     ], ProductCreateComponent);
     return ProductCreateComponent;
 }());
@@ -703,6 +703,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
 
 
 
@@ -774,8 +775,37 @@ var ProductEditorFormComponent = /** @class */ (function () {
                 // new product
                 console.log('result new', result);
                 _this.parents = [_this.paramParent_id];
+                _this._createSku(_this.paramParent_id);
             }
         }, function (err) { return console.log('Помилка', err); });
+    };
+    ProductEditorFormComponent.prototype._createSku = function (parent) {
+        var _this = this;
+        var getPrefix$ = this.catalogService.getPrefix(parent);
+        var getSkuList$ = this.productService.getSkuList();
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_9__["forkJoin"])(getPrefix$, getSkuList$).subscribe(function (result) {
+            var prefix = result[0].data.prefix;
+            var skuList = result[1]
+                .map(function (item) { return item._id; }) // create [] from {}
+                .filter(function (item) { return item.slice(0, 3) === prefix; }) // take elems with needed prefix
+                .map(function (item) { return +item.slice(3); }); // concat prefix, take only numbers
+            var freeNumber = 1;
+            for (var i = 0; i < skuList.length; i++) {
+                if (skuList[i] - (i + 1) >= 1) {
+                    freeNumber = i + 1;
+                    break;
+                }
+                if (i === skuList.length - 1) {
+                    freeNumber = skuList.length + 1;
+                }
+            }
+            var sku = freeNumber.toString();
+            while (sku.length < 4) {
+                sku = '0' + sku;
+            }
+            sku = prefix + sku;
+            _this.productForm.patchValue({ _id: sku });
+        }, function (err) { return _this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }); });
     };
     ProductEditorFormComponent.prototype.resetForm = function () {
         this.productFormDirective.resetForm();
@@ -839,7 +869,7 @@ var ProductEditorFormComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"cell\">\r\n          <h2 class=\"mat-h2\">Редактор виробів</h2>\r\n        </div>\r\n      </div>\r\n      <form [formGroup]=\"catalogForm\" #f=\"ngForm\" (submit)=\"onCatalogFormSubmit()\">\r\n        <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n          <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\r\n               *ngFor=\"let categoryBlock of catalogForm.get('parents')['controls']; let i = index\">\r\n\r\n                <mat-select placeholder=\"Виберіть категорію\" formControlName=\"{{i}}\" required\r\n                            (selectionChange)=\"onSelectCategory($event, i)\">\r\n                  <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\r\n                    {{child.name}}\r\n                  </mat-option>\r\n            </mat-select>\r\n          </div>\r\n\r\n        </div>\r\n      </form>\r\n\r\n      <div *ngIf=\"noMoreChildren\" class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n        <div class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"20\">\r\n          <div class=\"preview-img-wrapper\">\r\n            <img src=\"{{\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_180,h_180,f_auto/' +\r\n                        config.defaultProductImg}}\" alt=\"product\">\r\n            <div class=\"preview-div-processing\">\r\n              <div class=\"button-wrapper\">\r\n                <button mat-mini-fab color=\"primary\" type=\"button\"\r\n                        [routerLink]=\"['/dashboard', 'product-editor-new', parentCategory_id, parentCategoryName]\"\r\n                        [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n                  <mat-icon>add</mat-icon>\r\n                </button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div *ngFor=\"let product of products\"  class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"20\">\r\n          <app-product-item-brief [product]=\"product\" [parentCategory_id]=\"parentCategory_id\" [parentCategoryName]=\"parentCategoryName\"></app-product-item-brief>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n\n    <div class=\"container\">\n      <div class=\"row\">\n        <div class=\"cell\">\n          <h2 class=\"mat-h2\">Редактор виробів</h2>\n        </div>\n      </div>\n      <form [formGroup]=\"catalogForm\" #f=\"ngForm\" (submit)=\"onCatalogFormSubmit()\">\n        <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n          <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\n               *ngFor=\"let categoryBlock of catalogForm.get('parents')['controls']; let i = index\">\n\n                <mat-select placeholder=\"Виберіть категорію\" formControlName=\"{{i}}\" required\n                            (selectionChange)=\"onSelectCategory($event, i)\">\n                  <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\n                    {{child.name}}\n                  </mat-option>\n            </mat-select>\n          </div>\n\n        </div>\n      </form>\n\n      <div *ngIf=\"noMoreChildren\" class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n        <div class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"20\">\n          <div class=\"preview-img-wrapper\">\n            <img src=\"{{\n                        config.imgPath +\n                        config.cloudinary.cloud_name +\n                        '/c_fill,w_180,h_180,f_auto/' +\n                        config.defaultProductImg}}\" alt=\"product\">\n            <div class=\"preview-div-processing\">\n              <div class=\"button-wrapper\">\n                <button mat-mini-fab color=\"primary\" type=\"button\"\n                        [routerLink]=\"['/dashboard', 'product-editor-new', parentCategory_id, parentCategoryName]\"\n                        [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\n                  <mat-icon>add</mat-icon>\n                </button>\n              </div>\n            </div>\n          </div>\n        </div>\n        <div *ngFor=\"let product of products\"  class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"20\">\n          <app-product-item-brief [product]=\"product\" [parentCategory_id]=\"parentCategory_id\" [parentCategoryName]=\"parentCategoryName\"></app-product-item-brief>\n        </div>\n\n      </div>\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -985,7 +1015,7 @@ var ProductEditorComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n\n    <div class=\"container\">\n      <div class=\"row\">\n        <div class=\"cell\">\n          <h2 class=\"mat-h2\">Інструменти</h2>\n        </div>\n      </div>\n\n      <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">favicon32x32</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_32,h_32/' +\n                faviconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n      </div>\n\n      <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">Grabo Logo 250x90</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_250,h_90/' +\n                logoFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">Grabo Logo 140x50</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_140,h_50/' +\n                logoFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n      </div>\n\n      <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">512x512</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_512,h_512/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">384x384</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_384,h_384/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">192x192</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_192,h_192/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">152x152</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_152,h_152/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">144x144</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_144,h_144/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">128x128</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_128,h_128/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">96x96</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_96,h_96/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">72x72</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_72,h_72/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n\n\n      </div>\n    </div>\n\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"cell\">\r\n          <h2 class=\"mat-h2\">Інструменти</h2>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">favicon32x32</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_32,h_32/' +\r\n                faviconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">Grabo Logo 250x90</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_250,h_90/' +\r\n                logoFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">Grabo Logo 140x50</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_140,h_50/' +\r\n                logoFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">512x512</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_512,h_512/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">384x384</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_384,h_384/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">192x192</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_192,h_192/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">152x152</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_152,h_152/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">144x144</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_144,h_144/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">128x128</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_128,h_128/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">96x96</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_96,h_96/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"column\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">72x72</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_72,h_72/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n\r\n\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 

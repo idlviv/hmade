@@ -2,6 +2,8 @@ const CatalogModel = require('../models/catalogModel');
 const ProductModel = require('../models/productModel');
 
 const ResObj = require('../libs/responseObject');
+const ResData = require('../libs/responseData');
+
 const DbError = require('../errors/dbError');
 const ApplicationError = require('../errors/applicationError');
 const ObjectId = require('../config/mongoose').Types.ObjectId;
@@ -10,8 +12,6 @@ util = require('util');
 const log = require('../config/winston')(module);
 const cloudinary = require('../config/cloudinary');
 const catalogController = require('../controllers/catalogController');
-
-
 
 module.exports.getProductsWithGallery = function(req, res, next) {
 
@@ -78,17 +78,7 @@ module.exports.getMainPageProducts = function(req, res, next) {
     .catch(err => next(new DbError()));
 };
 
-module.exports.getSkuList = function(req, res, next) {
-  const category = req.query.category;
-  ProductModel.find({},
-    // {categories: category},
-    {sku: 1, _id: 0})
-    .sort({sku: 1})
-    .then(result => {
-      return res.status(200).json(new ResObj(true, 'Масив артикулів', result));
-    })
-    .catch(err => next(new DbError()));
-};
+
 
 module.exports.productAddImage = function(req, res, next) {
   let form = new formidable.IncomingForm({maxFileSize: 10500000});
@@ -320,6 +310,15 @@ module.exports.productUpsert = function(req, res, next) {
 
 
 // hmade
+module.exports.getSkuList = function(req, res, next) {
+  ProductModel.find({}, {_id: 1})
+    .sort({_id: 1})
+    .then(result => {
+      return res.status(200).json(result);
+    })
+    .catch(err => next(new DbError()));
+};
+
 module.exports.getProductById = function(req, res, next) {
   const _id = req.query._id;
   const displayFilter = req.query.displayFilter;
