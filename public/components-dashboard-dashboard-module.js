@@ -781,7 +781,6 @@ var ProductEditorFormComponent = /** @class */ (function () {
                 console.log('result edit', result);
                 _this.editMode = true;
                 // this.parents = result.data.parents;
-                _this.productForm.get('parents').setValue(result.data.parents);
                 for (var i = 0; i < result.data.assets.length; i++) {
                     _this.addAssetsControl();
                 }
@@ -796,6 +795,8 @@ var ProductEditorFormComponent = /** @class */ (function () {
                 // new product
                 console.log('result new', result);
                 // this.parents = [this.paramParent_id];
+                _this.addParentsControl();
+                _this.productForm.get('parents').setValue([_this.paramParent_id]);
                 _this._createSku(_this.paramParent_id);
             }
         }, function (err) { return console.log('Помилка', err); });
@@ -828,7 +829,7 @@ var ProductEditorFormComponent = /** @class */ (function () {
             _this.productForm.patchValue({ _id: sku });
         }, function (err) { return _this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }); });
     };
-    ProductEditorFormComponent.prototype.onProductCreateSubmit = function () {
+    ProductEditorFormComponent.prototype.onProductFormSubmit = function (goBack) {
         var _this = this;
         this.product = {
             parents: this.productForm.get('parents').value,
@@ -851,6 +852,9 @@ var ProductEditorFormComponent = /** @class */ (function () {
             _this.resetForm();
             if (_this.editMode) {
                 _this.editMode = false;
+            }
+            if (goBack) {
+                _this.goBack();
             }
         }, function (err) { return _this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }); });
         // if (this.editMode) {

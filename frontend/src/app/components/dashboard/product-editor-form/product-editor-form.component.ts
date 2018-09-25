@@ -16,6 +16,7 @@ import { IProduct } from '../../../interfaces/product-interface';
   templateUrl: './product-editor-form.component.html',
   styleUrls: ['./product-editor-form.component.scss']
 })
+
 export class ProductEditorFormComponent implements OnInit {
   @ViewChild('f') productFormDirective: FormGroupDirective;
   config = config;
@@ -100,7 +101,7 @@ export class ProductEditorFormComponent implements OnInit {
           console.log('result edit', result);
           this.editMode = true;
           // this.parents = result.data.parents;
-          this.productForm.get('parents').setValue(result.data.parents);
+
           for (let i = 0; i < result.data.assets.length; i++) {
             this.addAssetsControl();
           }
@@ -114,6 +115,8 @@ export class ProductEditorFormComponent implements OnInit {
           // new product
           console.log('result new', result);
           // this.parents = [this.paramParent_id];
+          this.addParentsControl();
+          this.productForm.get('parents').setValue([this.paramParent_id]);
           this._createSku(this.paramParent_id);
         }
       },
@@ -156,7 +159,7 @@ export class ProductEditorFormComponent implements OnInit {
       );
   }
 
-  onProductCreateSubmit() {
+  onProductFormSubmit(goBack) {
 
     this.product = <IProduct>{
       parents: this.productForm.get('parents').value,
@@ -181,6 +184,9 @@ export class ProductEditorFormComponent implements OnInit {
         this.resetForm();
         if (this.editMode) {
         this.editMode = false;
+        }
+        if (goBack) {
+          this.goBack();
         }
       },
       err => this.matSnackBar.open(err.error, '',
