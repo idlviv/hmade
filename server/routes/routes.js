@@ -24,11 +24,7 @@ router.get('/product/get-products-by-design-id',
 
 
 
-router.post('/product/add-main-image',
-  passport.authenticate('jwt', {session: false}),
-  authorization('manager'),
-  productController.productAddMainImage
-);
+
 
 router.post('/product/add-brief-image',
   passport.authenticate('jwt', {session: false}),
@@ -83,6 +79,12 @@ router.post('/product/add-image',
 );
 
 //hmade
+router.post('/product/add-main-image',
+  passport.authenticate('jwt', {session: false}),
+  authorization('manager'),
+  productController.productAddMainImage
+);
+
 router.post('/product/upsert',
   passport.authenticate('jwt', {session: false}),
   authorization('manager'),

@@ -840,29 +840,15 @@ var ProductEditorFormComponent = /** @class */ (function () {
         if (!checkFile.success) {
             this.matSnackBar.open(checkFile.message || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
             this.processingLoadMainImage = false;
-            // if (!this.editMode) {
-            //   this.productForm.get('_id').enable();
-            // }
-            // this.designForm.get('structure').enable();
         }
         else {
-            // this.designForm.get('image').setValue(file);
-            console.log('added file', this.productForm.get('mainImage').value);
             this.productService.productAddMainImage(file, this.productForm.get('_id').value)
                 .subscribe(function (result) {
                 _this.productForm.get('mainImage').setValue(result.data);
                 _this.processingLoadMainImage = false;
-                // if (!this.editMode) {
-                //   this.designForm.get('_id').enable();
-                // }
-                // this.designForm.get('structure').enable();
             }, function (err) {
                 _this.matSnackBar.open(err.error || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
                 _this.processingLoadMainImage = false;
-                // if (!this.editMode) {
-                //   this.designForm.get('_id').enable();
-                // }
-                // this.designForm.get('structure').enable();
             });
         }
     };

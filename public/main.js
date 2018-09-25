@@ -2229,40 +2229,6 @@ var ProductService = /** @class */ (function () {
         };
         return this.http.delete('api/product/delete/' + _id, httpOptions);
     };
-    ProductService.prototype.checkFile = function (file) {
-        if (!file) {
-            return ({ success: false, message: 'Файл не вибрано' });
-        }
-        else if (file.size > 10485760) { // 10 * 1024 * 1024
-            return ({ success: false, message: 'Розмір файлу повинен бути менше 10Мб' });
-        }
-        else if (file.type !== 'image/jpg' &&
-            file.type !== 'image/jpe' &&
-            file.type !== 'image/gif' &&
-            file.type !== 'image/jpeg' &&
-            file.type !== 'image/bmp' &&
-            file.type !== 'image/png' &&
-            file.type !== 'image/svg+xml' &&
-            file.type !== 'image/webp') {
-            return ({ success: false, message: 'Виберіть інший тип файлу' });
-        }
-        else {
-            return ({ success: true, message: '' });
-        }
-    };
-    ProductService.prototype.productAddMainImage = function (file, _id) {
-        console.log('file', file);
-        var formData = new FormData();
-        formData.append('file', file, file.name);
-        formData.append('_id', _id);
-        var token = this.userService.userLocalGetToken('token');
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Authorization': token
-            })
-        };
-        return this.http.post('api/product/add-main-image', formData, httpOptions);
-    };
     ProductService.prototype.productAddBriefImage = function (file, _id) {
         console.log('file', file);
         var formData = new FormData();
@@ -2307,6 +2273,55 @@ var ProductService = /** @class */ (function () {
             })
         };
         return this.http.post('api/product/add-techassets', formData, httpOptions);
+    };
+    /**
+     *
+     *
+     * @param {File} file
+     * @param {string} _id
+     * @returns {Observable<IResponse>}
+     * @memberof ProductService
+     */
+    ProductService.prototype.productAddMainImage = function (file, _id) {
+        console.log('file', file);
+        var formData = new FormData();
+        formData.append('file', file, file.name);
+        formData.append('_id', _id);
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Authorization': token
+            })
+        };
+        return this.http.post('api/product/add-main-image', formData, httpOptions);
+    };
+    /**
+     *
+     *
+     * @param {File} file
+     * @returns {IResponse}
+     * @memberof ProductService
+     */
+    ProductService.prototype.checkFile = function (file) {
+        if (!file) {
+            return ({ success: false, message: 'Файл не вибрано' });
+        }
+        else if (file.size > 10485760) { // 10 * 1024 * 1024
+            return ({ success: false, message: 'Розмір файлу повинен бути менше 10Мб' });
+        }
+        else if (file.type !== 'image/jpg' &&
+            file.type !== 'image/jpe' &&
+            file.type !== 'image/gif' &&
+            file.type !== 'image/jpeg' &&
+            file.type !== 'image/bmp' &&
+            file.type !== 'image/png' &&
+            file.type !== 'image/svg+xml' &&
+            file.type !== 'image/webp') {
+            return ({ success: false, message: 'Виберіть інший тип файлу' });
+        }
+        else {
+            return ({ success: true, message: '' });
+        }
     };
     /**
      *

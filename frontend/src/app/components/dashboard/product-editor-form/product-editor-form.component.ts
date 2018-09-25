@@ -170,31 +170,16 @@ export class ProductEditorFormComponent implements OnInit {
       this.matSnackBar.open(checkFile.message || 'Помилка', '',
         {duration: 3000, panelClass: 'snack-bar-danger'});
       this.processingLoadMainImage = false;
-      // if (!this.editMode) {
-      //   this.productForm.get('_id').enable();
-      // }
-      // this.designForm.get('structure').enable();
     } else {
-
-      // this.designForm.get('image').setValue(file);
-      console.log('added file', this.productForm.get('mainImage').value);
       this.productService.productAddMainImage(file, this.productForm.get('_id').value)
         .subscribe(result => {
             this.productForm.get('mainImage').setValue(result.data);
             this.processingLoadMainImage = false;
-            // if (!this.editMode) {
-            //   this.designForm.get('_id').enable();
-            // }
-            // this.designForm.get('structure').enable();
           },
           err => {
             this.matSnackBar.open(err.error || 'Помилка', '',
               {duration: 3000, panelClass: 'snack-bar-danger'});
             this.processingLoadMainImage = false;
-            // if (!this.editMode) {
-            //   this.designForm.get('_id').enable();
-            // }
-            // this.designForm.get('structure').enable();
           }
         );
     }

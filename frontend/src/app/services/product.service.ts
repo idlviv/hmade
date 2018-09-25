@@ -188,50 +188,9 @@ export class ProductService {
     );
   }
 
-  checkFile(file): IResponse {
-    if (!file) {
-      return ({ success: false, message: 'Файл не вибрано' });
-    } else if (file.size > 10485760) { // 10 * 1024 * 1024
-      return ({ success: false, message: 'Розмір файлу повинен бути менше 10Мб' });
-    } else if (
-      file.type !== 'image/jpg' &&
-      file.type !== 'image/jpe' &&
-      file.type !== 'image/gif' &&
-      file.type !== 'image/jpeg' &&
-      file.type !== 'image/bmp' &&
-      file.type !== 'image/png' &&
-      file.type !== 'image/svg+xml' &&
-      file.type !== 'image/webp') {
-      return ({ success: false, message: 'Виберіть інший тип файлу' });
-    } else {
-      return ({ success: true, message: '' });
-    }
-  }
 
 
 
-
-
-
-
-  productAddMainImage(file, _id): Observable<IResponse> {
-    console.log('file', file);
-    const formData: FormData = new FormData();
-    formData.append('file', file, file.name);
-    formData.append('_id', _id);
-
-    const token = this.userService.userLocalGetToken('token');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': token
-      })
-    };
-    return this.http.post<IResponse>(
-      'api/product/add-main-image',
-      formData,
-      httpOptions
-    );
-  }
 
   productAddBriefImage(file, _id): Observable<IResponse> {
     console.log('file', file);
@@ -298,6 +257,59 @@ export class ProductService {
     );
   }
 
+  /**
+   *
+   *
+   * @param {File} file
+   * @param {string} _id
+   * @returns {Observable<IResponse>}
+   * @memberof ProductService
+   */
+  productAddMainImage(file: File, _id: string): Observable<IResponse> {
+    console.log('file', file);
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    formData.append('_id', _id);
+
+    const token = this.userService.userLocalGetToken('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': token
+      })
+    };
+    return this.http.post<IResponse>(
+      'api/product/add-main-image',
+      formData,
+      httpOptions
+    );
+  }
+
+  /**
+   *
+   *
+   * @param {File} file
+   * @returns {IResponse}
+   * @memberof ProductService
+   */
+  checkFile(file: File): IResponse {
+    if (!file) {
+      return ({ success: false, message: 'Файл не вибрано' });
+    } else if (file.size > 10485760) { // 10 * 1024 * 1024
+      return ({ success: false, message: 'Розмір файлу повинен бути менше 10Мб' });
+    } else if (
+      file.type !== 'image/jpg' &&
+      file.type !== 'image/jpe' &&
+      file.type !== 'image/gif' &&
+      file.type !== 'image/jpeg' &&
+      file.type !== 'image/bmp' &&
+      file.type !== 'image/png' &&
+      file.type !== 'image/svg+xml' &&
+      file.type !== 'image/webp') {
+      return ({ success: false, message: 'Виберіть інший тип файлу' });
+    } else {
+      return ({ success: true, message: '' });
+    }
+  }
 
   /**
    *
