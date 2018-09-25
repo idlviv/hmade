@@ -24,6 +24,7 @@ export class ProductEditorFormComponent implements OnInit {
 
   editMode = false;
   processingLoadAssets = -1;
+  processingLoadMainImage = false;
 
   paramEdited_id: string;
   paramParent_id: string;
@@ -56,9 +57,9 @@ export class ProductEditorFormComponent implements OnInit {
         Validators.minLength(4),
         Validators.maxLength(30),
       ]),
-      display: new FormControl('', [
+      display: new FormControl(true, [
       ]),
-      onMainPage: new FormControl('', [
+      onMainPage: new FormControl(false, [
       ]),
       description: new FormControl('', [
         Validators.required,
@@ -79,9 +80,11 @@ export class ProductEditorFormComponent implements OnInit {
       price: new FormControl('', [
         Validators.pattern('^\\d*\\.?\\d+$'),
       ]),
-      discount: new FormControl('', [
+      discount: new FormControl(0, [
         Validators.pattern('[0-9]{1,2}'),
       ]),
+      mainImage: new FormControl(this.config.defaultProductImg, []),
+      menuImage: new FormControl(this.config.defaultProductImg, []),
     });
 
     this.route.paramMap.pipe(
@@ -124,8 +127,7 @@ export class ProductEditorFormComponent implements OnInit {
     );
   }
 
-  _createSku(parent) {
-
+  _createSku(parent: string) {
     const getPrefix$ = this.catalogService.getPrefix(parent);
     const getSkuList$ = this.productService.getSkuList();
 
@@ -159,7 +161,46 @@ export class ProductEditorFormComponent implements OnInit {
       );
   }
 
-  onProductFormSubmit(goBack) {
+  addMainImage(event) {
+    this.processingLoadMainImage = true;
+    const file = event.target.files[0];
+    const checkFile = this.productService.checkFile(file);
+
+    if (!checkFile.success) {
+      this.matSnackBar.open(checkFile.message || 'Помилка', '',
+        {duration: 3000, panelClass: 'snack-bar-danger'});
+      this.processingLoadMainImage = false;
+      // if (!this.editMode) {
+      //   this.productForm.get('_id').enable();
+      // }
+      // this.designForm.get('structure').enable();
+    } else {
+
+      // this.designForm.get('image').setValue(file);
+      console.log('added file', this.productForm.get('mainImage').value);
+      this.productService.productAddMainImage(file, this.productForm.get('_id').value)
+        .subscribe(result => {
+            this.productForm.get('mainImage').setValue(result.data);
+            this.processingLoadMainImage = false;
+            // if (!this.editMode) {
+            //   this.designForm.get('_id').enable();
+            // }
+            // this.designForm.get('structure').enable();
+          },
+          err => {
+            this.matSnackBar.open(err.error || 'Помилка', '',
+              {duration: 3000, panelClass: 'snack-bar-danger'});
+            this.processingLoadMainImage = false;
+            // if (!this.editMode) {
+            //   this.designForm.get('_id').enable();
+            // }
+            // this.designForm.get('structure').enable();
+          }
+        );
+    }
+  }
+
+  onProductFormSubmit(goBackAndReset: boolean): void {
 
     this.product = <IProduct>{
       parents: this.productForm.get('parents').value,
@@ -169,8 +210,10 @@ export class ProductEditorFormComponent implements OnInit {
       discount: this.productForm.get('discount').value,
       // assets : this.productForm.get('assets').value,
       description : this.productForm.get('description').value,
-      onMainPage: this.productForm.get('onMainPage').value || false,
-      display: this.productForm.get('display').value || true,
+      onMainPage: this.productForm.get('onMainPage').value,
+      display: this.productForm.get('display').value,
+      mainImage: this.productForm.get('mainImage').value,
+      menuImage: this.productForm.get('menuImage').value,
       dimensions: {
         width: this.productForm.get('dimensions.width').value,
         height: this.productForm.get('dimensions.height').value,
@@ -181,18 +224,17 @@ export class ProductEditorFormComponent implements OnInit {
     .subscribe(result => {
         this.matSnackBar.open(result.message, '',
           {duration: 3000});
-        this.resetForm();
-        if (this.editMode) {
-        this.editMode = false;
-        }
-        if (goBack) {
+        if (goBackAndReset) {
           this.goBack();
+          this.resetForm();
+          this.editMode = false;
+        } else {
+          this.editMode = true;
         }
       },
       err => this.matSnackBar.open(err.error, '',
         {duration: 3000, panelClass: 'snack-bar-danger'})
     );
-
 
     // if (this.editMode) {
     //   // edit

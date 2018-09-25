@@ -160,10 +160,53 @@
 
                 </div>
               </div>
+
+              <div class="row padding-bottom" fxLayout="row">
+                    <div class="cell-header" fxLayout="row" fxFlex="100">
+                        <h3 class="mat-h3 margin-0">Головне зображення колекції</h3>
+                      </div>
+                      <div class="cell" fxFlex.xs="100" fxFlex="25">
+                        <div class="preview-img-wrapper" >
+                          <img *ngIf="productForm.get('mainImage').value" src="{{
+                              config.imgPath +
+                              config.cloudinary.cloud_name +
+                               '/c_fill,w_260,h_170,f_auto/' + productForm.get('mainImage').value}}"
+                               alt="Main Image">
+        
+        
+        
+                          <img *ngIf="!productForm.get('mainImage').value"
+                               src="{{
+                               config.imgPath +
+                              config.cloudinary.cloud_name +
+                               '/c_fill,w_180,h_180,f_auto/'+
+                               config.defaultProductImg}}" alt="Main Image">
+                          <input #inputMainImage type="file" (change)="addMainImage($event)"
+                                 accept=".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif, .svg" style="display:none;">
+                          <div class="preview-div-processing">
+                            <div *ngIf="processingLoadMainImage" class="spinner-wrapper">
+                              <mat-spinner [diameter]="24"></mat-spinner>
+                            </div>
+        
+        
+                            <div *ngIf="!processingLoadMainImage" class="button-wrapper">
+                              <button mat-mini-fab color="primary" type="button"
+                                      (click)="inputMainImage.click();"
+                                      [disabled]="processingLoadMainImage">
+                                <mat-icon *ngIf="!productForm.get('mainImage').value && !processingLoadMainImage">add</mat-icon>
+                                <mat-icon *ngIf="productForm.get('mainImage').value && !processingLoadMainImage">redo</mat-icon>
+                              </button>
+        
+                            </div>
+                          </div>
+                        </div>
+                        </div>
+              </div>
+
               <div class="submit-button-wrapper row" fxLayout="row">
                   <div class="cell" fxFlex="40">
   
-                    <button *ngIf="editMode" mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(false)"
+                    <button mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(false)"
                             [disabled]="!productForm.valid || processingLoadAssets >=0">
                       Зберегти</button>
                   </div>
