@@ -18,7 +18,6 @@ import { IProduct } from '../../../interfaces/product-interface';
 })
 export class ProductEditorFormComponent implements OnInit {
   @ViewChild('f') productFormDirective: FormGroupDirective;
-
   config = config;
   productForm: FormGroup;
 
