@@ -87,6 +87,7 @@ module.exports.productAddImage = function(req, res, next) {
     }
 
     log.verbose('fields', fields);
+    
     // log.verbose('files', files);
     log.verbose('date', Date.now());
     log.verbose('date-slice', String(Date.now()).slice(0, 7));
