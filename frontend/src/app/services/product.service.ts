@@ -257,6 +257,21 @@ export class ProductService {
     );
   }
 
+  increaseViews(_id: string): Observable<IResponse> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      params: new HttpParams()
+      .set('_id', _id)
+    };
+
+    return this.http.get<IResponse>(
+      'api/product/increase-views',
+      httpOptions
+    );
+  }
+
   /**
    *
    *

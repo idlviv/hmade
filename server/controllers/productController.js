@@ -87,7 +87,7 @@ module.exports.productAddImage = function(req, res, next) {
     }
 
     log.verbose('fields', fields);
-    
+
     // log.verbose('files', files);
     log.verbose('date', Date.now());
     log.verbose('date-slice', String(Date.now()).slice(0, 7));
@@ -146,7 +146,6 @@ module.exports.productEdit = function(req, res, next) {
 
 module.exports.productDelete = function(req, res, next) {
   const _id = req.params._id;
-  // product.createdAt = Date.now();
   // const productModel = new ProductModel(product);
 
   // res.status(200).json(new ResObj(true, 'FAKE !! Продукт видалено'));
@@ -253,24 +252,52 @@ module.exports.productAddTechAssets = function(req, res, next) {
             );
           }
           console.log('product_img_cloudinary result', result);
-          return res.status(200).json(new ResObj(true, 'Зображення завнтажене', result.public_id)); // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
+          return res.status(200).json(
+              new ResObj(true, 'Зображення завнтажене', result.public_id)
+          ); // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
         });
   });
 };
 
 
 // hmade
+
+
+module.exports.increaseViews = function(req, res, next) {
+  const _id = req.query._id;
+
+  ProductModel.findOneAndUpdate(
+      {_id},
+      {$inc: {views: 1}},
+      {new: true} // return updated object
+  )
+      .then((result) => {
+        return res.status(200).json(
+            new ResObj(true, 'Кількість переглядів збільшено на 1', result)
+        );
+      })
+      .catch((err) => next(new DbError()));
+}
+
 module.exports.productAddMainImage = function(req, res, next) {
   let form = new formidable.IncomingForm({maxFileSize: 10500000});
   form.parse(req, function(err, fields, files) {
     if (err) {
-      return next(new ApplicationError('Помилка завантаження зображення - form parse', 400));
+      return next(
+          new ApplicationError(
+              'Помилка завантаження зображення - form parse', 400
+          )
+      );
     }
 
     cloudinary.v2.uploader.upload(
         files.file.path,
         {
-          public_id: 'main_image_' + fields._id + '_' + Date.now(), // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
+          public_id:
+              'main_image_' +
+              fields._id + '_' +
+              Date.now(),
+          // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
           eager: [
             {width: 535, height: 350, crop: 'fill', fetch_format: 'auto'},
             {width: 260, height: 170, crop: 'fill', fetch_format: 'auto'},
@@ -280,10 +307,14 @@ module.exports.productAddMainImage = function(req, res, next) {
         function(err, result) {
           if (err) {
             return next(
-                new ApplicationError('Помилка завантаження - product mainImage', 400)
+                new ApplicationError(
+                    'Помилка завантаження - product mainImage', 400
+                )
             );
           }
-          return res.status(200).json(new ResObj(true, 'Зображення завнтажене', result.public_id)); // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
+          return res.status(200).json(
+              new ResObj(true, 'Зображення завнтажене', result.public_id)
+          ); // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
         });
   });
 };
@@ -291,15 +322,35 @@ module.exports.productAddMainImage = function(req, res, next) {
 module.exports.productUpsert = function(req, res, next) {
   const product = req.body;
 
-  ProductModel.findOneAndUpdate(
-      {_id: product._id},
-      {$set: product},
-      {upsert: true, new: true} // upsert + return updated object
-  )
+  ProductModel.findOne({_id: product._id})
       .then((result) => {
-        return res.status(200).json(new ResObj(true, 'Колекцію додано/змінено', result));
+        if (result !== null && result._doc) {
+          product.updatedAt = Date.now();
+        } else {
+          product.createdAt = Date.now();
+        }
+        return ProductModel.findOneAndUpdate(  
+            {_id: product._id},
+            {$set: product},
+            {upsert: true, new: true}
+        ); // upsert + return updated object)
       })
+      .then((result) => res.status(200).json(
+          new ResObj(true, 'Колекцію додано/змінено', result)
+      ))
       .catch((err) => next(new DbError()));
+
+  // ProductModel.findOneAndUpdate(
+  //     {_id: product._id},
+  //     {$set: product},
+  //     {upsert: true, new: true} // upsert + return updated object
+  // )
+  //     .then((result) => {
+  //       return res.status(200).json(
+  //           new ResObj(true, 'Колекцію додано/змінено', result)
+  //       );
+  //     })
+  //     .catch((err) => next(new DbError()));
 };
 
 module.exports.getSkuList = function(req, res, next) {

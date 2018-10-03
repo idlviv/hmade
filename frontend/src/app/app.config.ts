@@ -7,6 +7,15 @@ export const config = {
   logoLight: 'hmade_logo_light',
   logoDark: 'hmade_logo_dark',
 
+  social: {
+    useSocial: true,
+    showLikes: true,
+    showViews: true,
+    showComments: true,
+  },
+  commercial: {
+    useCommercial: true,
+  },
   blogOptions: {
     showViews: true,
     showComments: true,

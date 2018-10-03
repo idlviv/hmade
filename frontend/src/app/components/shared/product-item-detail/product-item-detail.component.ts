@@ -31,6 +31,9 @@ export class ProductItemDetailComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
+    this.productService.increaseViews(this.product._id).subscribe(
+      (result) => this.product = result.data
+    );
   }
 
   ngOnChanges(changes: SimpleChanges) {
@@ -39,6 +42,7 @@ export class ProductItemDetailComponent implements OnInit, OnChanges {
     // console.log('got name: ', productChange.currentValue);
     // console.log('productChange: ', productChange);
     if (productChange) {
+      console.log('simple changes product');
       // this.getRecommendations();
     }
   }

@@ -36,7 +36,8 @@ body {
   }
 }
 
-.container-sidenav {
+.container-sidenav,
+.container-px0 {
   @include gt-md {
     padding: 12px 0;
   }
@@ -128,7 +129,8 @@ body {
   }
 }
 
-.cell-menu {
+.cell-menu,
+.cell-px0 {
   @include gt-md {
     padding: 12px 0;
   }
@@ -329,7 +331,8 @@ re-captcha > div{
   margin: 0 auto;
 }
 
-.text-justify {
+.text-justify,
+.text-align-justify {
   text-align: justify;
 }
 
@@ -341,12 +344,13 @@ re-captcha > div{
   text-align: right;
 };
 
-.text-align-center {
+.text-align-center,
+.text-center {
   text-align: center;
 };
 
-.text-center {
-  text-align: center;
+.text-vertical-align-middle {
+  vertical-align: middle;
 }
 
 .block-align-right {
@@ -817,6 +821,13 @@ mat-sidenav-content {
 
 // overriding materials
 
+.material-icons.mat-18 { 
+  font-size: 18px;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+}
+
 mat-card {
   border-radius: 8px !important;
 }
@@ -1029,4 +1040,21 @@ mat-card {
 
 #header {
   height: 150px;
+}
+
+.social-feed-section {
+  color: $muted;
+  font-size: 12px;
+  line-height: 20px;
+  .mat-icon {
+    font-size: 18px;
+    height: 20px;
+    width: 20px;
+    line-height: 20px;
+    vertical-align: middle;
+    padding-right: 5px;
+  }
+  .span {
+    vertical-align: middle;
+  }
 }

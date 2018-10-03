@@ -7,9 +7,8 @@
       "files": [
         "/favicon.ico",
         "/index.html",
-        "/assets/images/g_logo_animated.svg",
-        "/assets/images/grabo_logo.svg",
-        "/assets/images/grabofloors_logo.svg",
+        "/assets/images/hmade_logo_dark.svg",
+        "/assets/images/hmade_logo_light.svg",
         "/*.css",
         "/*.js"
       ]

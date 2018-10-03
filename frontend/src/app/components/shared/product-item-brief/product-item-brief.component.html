@@ -1,5 +1,28 @@
 <mat-card>
-  <mat-card-content>
+  <mat-card-content class="wrap" fxLayot="row">
+    <div *ngIf="product && config.social.useSocial" class="container-px0">
+      <div class="row" fxLayout="row">
+          <section class="cell-px0 social-feed-section" fxFlex="100" fxLayout="row">
+              <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
+                <mat-icon>thumb_up_alt</mat-icon>
+                <span>{{product.likes}}</span>
+              </div>
+              <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
+                  <mat-icon>thumb_down_alt</mat-icon>
+                  <span>{{product.dislikes}}</span>
+              </div>
+              <div *ngIf="config.social.showViews" class="item text-align-center muted" fxFlex>
+                  <mat-icon>remove_red_eye</mat-icon>
+                  <span>{{product.views}}</span>
+              </div>
+              <div *ngIf="config.social.showComments" class="item text-align-center muted" fxFlex>
+                  <mat-icon>comment</mat-icon>
+                  <span>{{product.comments.length}}</span>
+              </div>
+          </section>
+        </div>
+    </div>
+    
     <div class="mat-card-wide-image" fxLayout="row">
 
       <!-- product level (no children)-->

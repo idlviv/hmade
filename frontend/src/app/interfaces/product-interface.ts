@@ -15,6 +15,7 @@ export interface IProduct {
     height: number
   };
   createdAt?: number;
+  updatedAt?: number;
   likes?: number;
   likedBy?: String;
   dislikes?: number;

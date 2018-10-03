@@ -1,24 +1,23 @@
 const mongoose = require('../config/mongoose');
 const Schema = mongoose.Schema;
-const config = require('../config');
 
 const CommentsSchema = new Schema({
   comment: {
     type: String,
   },
   commentator: {
-    type: String
+    type: String,
   },
   commentedAt: {
     type: Number,
-    default: 0
+    default: 0,
   },
 });
 
 const ProductSchema = new Schema({
   _id: {
     type: String,
-    required: true
+    required: true,
   },
   name: {
     type: String,
@@ -26,7 +25,7 @@ const ProductSchema = new Schema({
   },
   description: {
     type: String,
-    required: true
+    required: true,
   },
   parents: {
     type: [String],
@@ -35,12 +34,12 @@ const ProductSchema = new Schema({
   display: {
     type: Boolean,
     required: true,
-    default: true
+    default: true,
   },
   onMainPage: {
     type: Boolean,
     required: true,
-    default: false
+    default: false,
   },
   mainImage: {
     type: String,
@@ -57,37 +56,41 @@ const ProductSchema = new Schema({
     type: Number,
   },
   discount: {
-    type: Number
+    type: Number,
   },
   dimensions: {
     width: {
-      type: Number
+      type: Number,
     },
     height: {
-      type: Number
+      type: Number,
     },
   },
   createdAt: {
     type: Number,
-    default: 0
+    default: 0,
+  },
+  updatedAt: {
+    type: Number,
+    default: 0,
   },
   likes: {
     type: Number,
-    default: 0
+    default: 0,
   },
   likedBy: {
-    type: [String]
+    type: [String],
   },
   dislikes: {
     type: Number,
-    default: 0
+    default: 0,
   },
   dislikedBy: {
-    type: [String]
+    type: [String],
   },
   views: {
     type: Number,
-    default: 0
+    default: 0,
   },
   comments: [CommentsSchema],
 });
