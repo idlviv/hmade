@@ -32,7 +32,7 @@ export class ProductItemDetailComponent implements OnInit, OnChanges {
 
   ngOnInit() {
     this.productService.increaseViews(this.product._id).subscribe(
-      (result) => this.product = result.data5
+      (result) => this.product = result.data
     );
   }
 

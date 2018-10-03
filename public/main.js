@@ -1638,7 +1638,7 @@ var ProductItemDetailComponent = /** @class */ (function () {
     }
     ProductItemDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.productService.increaseViews(this.product._id).subscribe(function (result) { return _this.product = result.data5; });
+        this.productService.increaseViews(this.product._id).subscribe(function (result) { return _this.product = result.data; });
     };
     ProductItemDetailComponent.prototype.ngOnChanges = function (changes) {
         var productChange = changes.product;
