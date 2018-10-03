@@ -287,6 +287,10 @@ export class ProductCreateComponent implements OnInit {
     ;
   }
 
+  addCategory() {
+
+  }
+
   addAssets() {
     const control = <FormArray>this.productCreateForm.get('assets');
     control.push(this.initAssets());

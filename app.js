@@ -1,5 +1,6 @@
 // const createError = require('http-errors');
 const express = require('express');
+const compression = require('compression');
 const path = require('path');
 const passport = require('passport');
 const csrf = require('csurf');
@@ -17,6 +18,7 @@ const errorHandler = require('./server/errors/errorHandler');
 const util = require('util');
 
 const app = express();
+app.use(compression());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));

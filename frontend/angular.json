@@ -28,9 +28,12 @@
               "src/manifest.json"
             ],
             "styles": [
-              "src/styles/styles.scss"
+              "src/styles/styles.scss",
+              "./node_modules/aos/dist/aos.css"  
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/aos/dist/aos.js"
+            ]
           },
           "configurations": {
             "production": {
