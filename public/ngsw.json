@@ -1,0 +1,95 @@
+{
+  "configVersion": 1,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/1.7cfbaff197358fd71da1.js",
+        "/2.4976bb605c4a952a2bbc.js",
+        "/3.cde0fc651bc15b280294.js",
+        "/4.6fc337743afd12ed452c.js",
+        "/assets/images/hmade_logo_dark.svg",
+        "/assets/images/hmade_logo_light.svg",
+        "/common.3bae725c398f814913d0.js",
+        "/favicon.ico",
+        "/index.html",
+        "/main.1d9fbd0c43ffa1b4e222.js",
+        "/polyfills.30a5c39ffa47de6f8b03.js",
+        "/runtime.5f2e5b34aafc9841e85e.js",
+        "/scripts.d1a4a51347c220973e96.js",
+        "/styles.96abddac2056a147e441.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/images/bg.svg",
+        "/assets/images/bg2.svg",
+        "/assets/images/bg3.svg",
+        "/assets/images/loading.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/1.7cfbaff197358fd71da1.js": "890caa35dc986b987b786b1db91e6b7ba88795b1",
+    "/2.4976bb605c4a952a2bbc.js": "0a20b47845213c1ca0265d987931fa2a885c0130",
+    "/3.cde0fc651bc15b280294.js": "a779260b41548da57b99319f043de5270bd5320d",
+    "/4.6fc337743afd12ed452c.js": "5dce9557e18b4bbd045311457a37119e6ed1685d",
+    "/assets/icons/icon-128x128.png": "0889d85f094f74ae593054728191d15506245d82",
+    "/assets/icons/icon-144x144.png": "98c08fe6ced4bce773b6cc7243ca30548b6f4064",
+    "/assets/icons/icon-152x152.png": "f93fd3231dc883e2371c5b9e1e63dea50e53880f",
+    "/assets/icons/icon-192x192.png": "19097a869f8fe4ad62ec170192a8bccd07fcff4a",
+    "/assets/icons/icon-384x384.png": "d39b7494075a8e7948f08b69b770bf588c91684e",
+    "/assets/icons/icon-512x512.png": "5e261d0ddc7457a6a3eec863a86d16c88a003c86",
+    "/assets/icons/icon-72x72.png": "08930a7b614be0d0fa534c5bfd02b763f68fbb45",
+    "/assets/icons/icon-96x96.png": "04713750e0bf94e1c089c01d5cd1177981e5d3f3",
+    "/assets/images/bg.svg": "5c4ad786d3ba30fb3c2a5bfcc4c0789411788c4b",
+    "/assets/images/bg2.svg": "1537dcce26c0eb364c47c50a8a46066e449320de",
+    "/assets/images/bg3.svg": "5f469dddabb71b1b7708eb80dfe03771496a1216",
+    "/assets/images/hmade_logo_dark.svg": "3d8cdad6d5a2a9461055c5ca618d2e8b8b197b2c",
+    "/assets/images/hmade_logo_light.svg": "41855ebb46f02b658a3ff27e919f57973d4928a4",
+    "/assets/images/loading.svg": "e515b13cc79c383c3fe0594e593cc24b669ca81c",
+    "/common.3bae725c398f814913d0.js": "d5d585ab4664436518d30b64898aba45bbab9bf3",
+    "/favicon.ico": "1a707ab30f1abfe467fa07b603f68779dc5faae6",
+    "/index.html": "99a0413b26921481cbfa04756bea567851f51be4",
+    "/main.1d9fbd0c43ffa1b4e222.js": "fe1772ea046339d6d0bcae950d80f69dc835a34e",
+    "/polyfills.30a5c39ffa47de6f8b03.js": "67dc68ab1227b3190eee18e867c8bb3befd0cb6e",
+    "/runtime.5f2e5b34aafc9841e85e.js": "ed1be15386173b662b8015a9e666fdf73a34ec1f",
+    "/scripts.d1a4a51347c220973e96.js": "4932f744a454bcf073a7f1ce2af9e21dd5169b9b",
+    "/styles.96abddac2056a147e441.css": "9f14fe05cf7368e74422b6ccd6b7e6d173028c21"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}
