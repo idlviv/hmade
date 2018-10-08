@@ -13,11 +13,6 @@ const authorization = require('../middleware/authorization');
 /**
  * product routes
  */
-
-router.get('/product/get-products-with-gallery',
-    productController.getProductsWithGallery
-);
-
 router.get('/product/get-products-by-design-id',
     productController.getProductsByDesignId
 );
@@ -35,12 +30,6 @@ router.post('/product/add-assets',
     productController.productAddAssets
 );
 
-router.post('/product/add-techassets',
-    passport.authenticate('jwt', {session: false}),
-    authorization('manager'),
-    productController.productAddTechAssets
-);
-
 router.get('/product/get-products',
     productController.getProducts
 );
@@ -49,18 +38,17 @@ router.get('/product/get-main-page-products',
     productController.getMainPageProducts
 );
 
+// router.post('/product/create',
+//     passport.authenticate('jwt', {session: false}),
+//     authorization('manager'),
+//     productController.productCreate
+// );
 
-router.post('/product/create',
-    passport.authenticate('jwt', {session: false}),
-    authorization('manager'),
-    productController.productCreate
-);
-
-router.put('/product/edit',
-    passport.authenticate('jwt', {session: false}),
-    authorization('manager'),
-    productController.productEdit
-);
+// router.put('/product/edit',
+//     passport.authenticate('jwt', {session: false}),
+//     authorization('manager'),
+//     productController.productEdit
+// );
 
 router.delete('/product/delete/:_id',
     passport.authenticate('jwt', {session: false}),

@@ -162,29 +162,29 @@ export class ProductEditorFormComponent implements OnInit {
       );
   }
 
-  addMainImage(event) {
-    this.processingLoadMainImage = true;
-    const file = event.target.files[0];
-    const checkFile = this.productService.checkFile(file);
+  // addMainImage(event) {
+  //   this.processingLoadMainImage = true;
+  //   const file = event.target.files[0];
+  //   const checkFile = this.productService.checkFile(file);
 
-    if (!checkFile.success) {
-      this.matSnackBar.open(checkFile.message || 'Помилка', '',
-        {duration: 3000, panelClass: 'snack-bar-danger'});
-      this.processingLoadMainImage = false;
-    } else {
-      this.productService.productAddMainImage(file, this.productForm.get('_id').value)
-        .subscribe(result => {
-            this.productForm.get('mainImage').setValue(result.data);
-            this.processingLoadMainImage = false;
-          },
-          err => {
-            this.matSnackBar.open(err.error || 'Помилка', '',
-              {duration: 3000, panelClass: 'snack-bar-danger'});
-            this.processingLoadMainImage = false;
-          }
-        );
-    }
-  }
+  //   if (!checkFile.success) {
+  //     this.matSnackBar.open(checkFile.message || 'Помилка', '',
+  //       {duration: 3000, panelClass: 'snack-bar-danger'});
+  //     this.processingLoadMainImage = false;
+  //   } else {
+  //     this.productService.productAddMainImage(file, this.productForm.get('_id').value)
+  //       .subscribe(result => {
+  //           this.productForm.get('mainImage').setValue(result.data);
+  //           this.processingLoadMainImage = false;
+  //         },
+  //         err => {
+  //           this.matSnackBar.open(err.error || 'Помилка', '',
+  //             {duration: 3000, panelClass: 'snack-bar-danger'});
+  //           this.processingLoadMainImage = false;
+  //         }
+  //       );
+  //   }
+  // }
 
   addMenuImage(event) {
     this.processingLoadMenuImage = true;
@@ -246,32 +246,6 @@ export class ProductEditorFormComponent implements OnInit {
       err => this.matSnackBar.open(err.error, '',
         {duration: 3000, panelClass: 'snack-bar-danger'})
     );
-
-    // if (this.editMode) {
-    //   // edit
-    //   // this.product._id = this.paramEdited_id;
-    //   this.productService.productEdit(this.product)
-    //     .subscribe(result => {
-    //         this.matSnackBar.open(result.message, '',
-    //           {duration: 3000});
-    //         this.resetForm();
-    //         this.editMode = false;
-    //       },
-    //       err => this.matSnackBar.open(err.error, '',
-    //         {duration: 3000, panelClass: 'snack-bar-danger'})
-    //     );
-
-    // } else {
-    //   this.productService.productCreate(this.product)
-    //     .subscribe(result => {
-    //         this.matSnackBar.open(result.message, '',
-    //           {duration: 3000});
-    //         this.resetForm();
-    //       },
-    //       err => this.matSnackBar.open(err.error, '',
-    //         {duration: 3000, panelClass: 'snack-bar-danger'})
-    //     );
-    // }
 
   }
 

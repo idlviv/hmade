@@ -11,15 +11,6 @@ const log = require('../config/winston')(module);
 const cloudinary = require('../config/cloudinary');
 const catalogController = require('../controllers/catalogController');
 
-module.exports.getProductsWithGallery = function(req, res, next) {
-  ProductModel.find( {assets: {$exists: true, $not: {$size: 0}}})
-      .then((result) =>
-        res.status(200)
-            .json(new ResObj(true, 'Масив колекцій з галереєю', result))
-      )
-      .catch((err) => next(new DbError()));
-};
-
 module.exports.getProductsByDesignId = function(req, res, next) {
   const design_id = req.query.design_id;
 
@@ -95,61 +86,66 @@ module.exports.productAddImage = function(req, res, next) {
     cloudinary.v2.uploader.upload(
         files.file.path,
         {
-          public_id: 'product_' + fields.sku + '_' + Date.now(), // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
+          public_id: 'product_' + fields.sku + '_' +
+          Date.now(), // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
         // width: 1920, height: 1920, crop: 'fill'
         },
         function(err, result) {
           if (err) {
             return next(
-                new ApplicationError('Помилка завантаження зображення - upload', 400)
+                new ApplicationError(
+                    'Помилка завантаження зображення - upload', 400
+                )
             );
           }
           console.log('product_img_cloudinary result', result);
-          return res.status(200).json(new ResObj(true, 'Зображення завнтажене', result.public_id));
+          return res.status(200).json(
+              new ResObj(true, 'Зображення завнтажене', result.public_id)
+          );
         });
   });
 };
 
-module.exports.productCreate = function(req, res, next) {
-  const product = req.body;
-  product.createdAt = Date.now();
-  const productModel = new ProductModel(product);
+// module.exports.productCreate = function(req, res, next) {
+//   const product = req.body;
+//   product.createdAt = Date.now();
+//   const productModel = new ProductModel(product);
 
-  productModel.save()
-      .then(
-          (result) => {
-            return res.status(200).json(new ResObj(true, 'Виріб створений'));
-          },
-          (err) =>
-          // redirect to error handler
-            next(new DbError(err.message, err.code))
-      );
-};
+//   productModel.save()
+//       .then(
+//           (result) => {
+//             return res.status(200).json(new ResObj(true, 'Виріб створений'));
+//           },
+//           (err) =>
+//           // redirect to error handler
+//             next(new DbError(err.message, err.code))
+//       );
+// };
 
-module.exports.productEdit = function(req, res, next) {
-  const product = req.body;
-  // product.createdAt = Date.now();
-  // const productModel = new ProductModel(product);
+// module.exports.productEdit = function(req, res, next) {
+//   const product = req.body;
+//   // product.createdAt = Date.now();
+//   // const productModel = new ProductModel(product);
 
-  ProductModel.update({_id: ObjectId(product._id)}, product)
-      .then(
-          (result) => {
-            if (result.nModified !== 1) {
-              next(new ApplicationError('Не вдалося внести зміни', 400));
-            } else {
-              return res.status(200).json(new ResObj(true, 'Зміни внесено'));
-            }
-          },
-          (err) => next(new DbError(err.message, err.code))
-      );
-};
+//   ProductModel.update({_id: new ObjectId(product._id)}, product)
+//       .then(
+//           (result) => {
+//             if (result.nModified !== 1) {
+//               next(new ApplicationError('Не вдалося внести зміни', 400));
+//             } else {
+//               return res.status(200).json(new ResObj(true, 'Зміни внесено'));
+//             }
+//           },
+//           (err) => next(new DbError(err.message, err.code))
+//       );
+// };
 
 module.exports.productDelete = function(req, res, next) {
   const _id = req.params._id;
   // const productModel = new ProductModel(product);
 
   // res.status(200).json(new ResObj(true, 'FAKE !! Продукт видалено'));
-  ProductModel.deleteOne({_id: ObjectId(_id)})
+  ProductModel.deleteOne({_id: new ObjectId(_id)})
       .then(
           (result) => {
             if (result.n !== 1) {
@@ -162,93 +158,32 @@ module.exports.productDelete = function(req, res, next) {
       );
 };
 
-
-module.exports.productAddBriefImage = function(req, res, next) {
-  let form = new formidable.IncomingForm({maxFileSize: 15500000});
-  form.parse(req, function(err, fields, files) {
-    if (err) {
-      return next(new ApplicationError('Помилка завантаження зображення - form parse', 400));
-    }
-
-    cloudinary.v2.uploader.upload(
-        files.file.path,
-        {
-          public_id: 'menu_image_' + fields._id + '_' + Date.now(), // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
-          eager: [
-          // {width: 650, height: 650, crop: 'fill', fetch_format: 'auto'},
-            {width: 1100, height: 550, crop: 'fill', fetch_format: 'auto'},
-            {width: 590, height: 295, crop: 'fill', fetch_format: 'auto'}, // 2.12
-            {width: 460, height: 230, crop: 'fill', fetch_format: 'auto'}, // 2.12
-            {width: 400, height: 200, crop: 'fill', fetch_format: 'auto'}, // 2.12
-            {width: 180, height: 180, crop: 'fill', fetch_format: 'auto'},
-          // {width: 40, height: 40, crop: 'fill', fetch_format: 'auto'},
-          ],
-        },
-        function(err, result) {
-          if (err) {
-            return next(
-                new ApplicationError('Помилка завантаження - product assets', 400)
-            );
-          }
-          console.log('product_img_cloudinary result', result);
-          return res.status(200).json(new ResObj(true, 'Зображення завнтажене', result.public_id)); // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
-        });
-  });
-};
-
 module.exports.productAddAssets = function(req, res, next) {
   let form = new formidable.IncomingForm({maxFileSize: 10500000});
   form.parse(req, function(err, fields, files) {
     if (err) {
-      return next(new ApplicationError('Помилка завантаження зображення - form parse', 400));
+      return next(new ApplicationError(
+          'Помилка завантаження зображення - form parse', 400)
+      );
     }
 
     cloudinary.v2.uploader.upload(
         files.file.path,
         {
-          public_id: fields._id + '_assets_' + Date.now(), // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
+          public_id: fields._id + '_assets_' +
+          Date.now(), // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
           eager: [
-          // {width: 650, height: 650, crop: 'fill', fetch_format: 'auto'},
-            {width: 535, height: 350, crop: 'fill', fetch_format: 'auto'}, // 1.53
+            {width: 535, height: 350, crop: 'fill', fetch_format: 'auto'},
             {width: 260, height: 170, crop: 'fill', fetch_format: 'auto'},
             {width: 180, height: 180, crop: 'fill', fetch_format: 'auto'},
-          // {width: 40, height: 40, crop: 'fill', fetch_format: 'auto'},
           ],
         },
         function(err, result) {
           if (err) {
             return next(
-                new ApplicationError('Помилка завантаження - product assets', 400)
-            );
-          }
-          console.log('product_img_cloudinary result', result);
-          return res.status(200).json(new ResObj(true, 'Зображення завнтажене', result.public_id)); // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
-        });
-  });
-};
-
-module.exports.productAddTechAssets = function(req, res, next) {
-  let form = new formidable.IncomingForm({maxFileSize: 10500000});
-  form.parse(req, function(err, fields, files) {
-    if (err) {
-      return next(new ApplicationError('Помилка завантаження зображення - form parse', 400));
-    }
-
-    cloudinary.v2.uploader.upload(
-        files.file.path,
-        {
-          public_id: '_techassets_' + Date.now(), // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
-          eager: [
-            {width: 200, height: 200, crop: 'fill', fetch_format: 'auto'}, // 1
-            {width: 180, height: 180, crop: 'fill', fetch_format: 'auto'},
-            {width: 100, height: 100, crop: 'fill', fetch_format: 'auto'},
-            {width: 55, height: 55, crop: 'fill', fetch_format: 'auto'},
-          ],
-        },
-        function(err, result) {
-          if (err) {
-            return next(
-                new ApplicationError('Помилка завантаження - product techassets', 400)
+                new ApplicationError(
+                    'Помилка завантаження - product assets', 400
+                )
             );
           }
           console.log('product_img_cloudinary result', result);
@@ -258,7 +193,6 @@ module.exports.productAddTechAssets = function(req, res, next) {
         });
   });
 };
-
 
 // hmade
 module.exports.increaseViews = function(req, res, next) {
@@ -369,7 +303,7 @@ module.exports.productUpsert = function(req, res, next) {
         } else {
           product.createdAt = Date.now();
         }
-        return ProductModel.findOneAndUpdate(  
+        return ProductModel.findOneAndUpdate(
             {_id: product._id},
             {$set: product},
             {upsert: true, new: true}
@@ -423,10 +357,13 @@ module.exports.getProductsByParent = function(req, res, next) {
 
   let query;
   displayFilter === 'true' ? query = {parents: parent, display: true} : query = {parents: parent};
+
   ProductModel.find(query)
       .sort({order: 1})
       .then((result) => {
-        return res.status(200).json(new ResObj(true, 'Продукти категорії' + parent, result));
+        return res.status(200).json(new ResObj(
+            true, 'Продукти категорії' + parent, result)
+        );
       })
       .catch((err) => next(new DbError())
       );
