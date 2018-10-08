@@ -17,18 +17,11 @@ router.get('/product/get-products-by-design-id',
     productController.getProductsByDesignId
 );
 
-
-router.post('/product/add-brief-image',
-    passport.authenticate('jwt', {session: false}),
-    authorization('manager'),
-    productController.productAddBriefImage
-);
-
-router.post('/product/add-assets',
-    passport.authenticate('jwt', {session: false}),
-    authorization('manager'),
-    productController.productAddAssets
-);
+// router.post('/product/add-assets',
+//     passport.authenticate('jwt', {session: false}),
+//     authorization('manager'),
+//     productController.productAddAssets
+// );
 
 router.get('/product/get-products',
     productController.getProducts
