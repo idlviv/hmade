@@ -188,10 +188,6 @@ export class ProductService {
     );
   }
 
-
-
-
-
   productAddBriefImage(file, _id): Observable<IResponse> {
     console.log('file', file);
     const formData: FormData = new FormData();
@@ -257,6 +253,39 @@ export class ProductService {
     );
   }
 
+  /**
+   *
+   *
+   * @param {File} file
+   * @param {string} _id
+   * @returns {Observable<IResponse>}
+   * @memberof ProductService
+   */
+  productAddMenuImage(file: File, _id: string): Observable<IResponse> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    formData.append('_id', _id);
+
+    const token = this.userService.userLocalGetToken('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': token
+      })
+    };
+    return this.http.post<IResponse>(
+      'api/product/add-menu-image',
+      formData,
+      httpOptions
+    );
+  }
+
+  /**
+   *
+   *
+   * @param {string} _id
+   * @returns {Observable<IResponse>}
+   * @memberof ProductService
+   */
   increaseViews(_id: string): Observable<IResponse> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -281,7 +310,6 @@ export class ProductService {
    * @memberof ProductService
    */
   productAddMainImage(file: File, _id: string): Observable<IResponse> {
-    console.log('file', file);
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
     formData.append('_id', _id);

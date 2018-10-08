@@ -1058,3 +1058,12 @@ mat-card {
     vertical-align: middle;
   }
 }
+
+.product-brief-section {
+  .product-brief-description {
+    height: 100px;
+    p {
+      text-align: justify;
+    }
+  }
+}

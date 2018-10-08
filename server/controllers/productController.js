@@ -261,8 +261,6 @@ module.exports.productAddTechAssets = function(req, res, next) {
 
 
 // hmade
-
-
 module.exports.increaseViews = function(req, res, next) {
   const _id = req.query._id;
 
@@ -277,7 +275,49 @@ module.exports.increaseViews = function(req, res, next) {
         );
       })
       .catch((err) => next(new DbError()));
-}
+};
+
+module.exports.productAddMenuImage = function(req, res, next) {
+  let form = new formidable.IncomingForm({maxFileSize: 10500000});
+  form.parse(req, function(err, fields, files) {
+    if (err) {
+      return next(
+          new ApplicationError(
+              'Помилка завантаження зображення - form parse', 400
+          )
+      );
+    }
+
+    cloudinary.v2.uploader.upload(
+        files.file.path,
+        {
+          public_id:
+              'menu_image_' +
+              fields._id + '_' +
+              Date.now(),
+          // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
+          eager: [
+            {width: 1100, height: 550, crop: 'fill', fetch_format: 'auto'},
+            {width: 590, height: 295, crop: 'fill', fetch_format: 'auto'},
+            {width: 460, height: 230, crop: 'fill', fetch_format: 'auto'},
+            {width: 400, height: 200, crop: 'fill', fetch_format: 'auto'},
+            {width: 180, height: 180, crop: 'fill', fetch_format: 'auto'},
+          ],
+        },
+        function(err, result) {
+          if (err) {
+            return next(
+                new ApplicationError(
+                    'Помилка завантаження - product mainImage', 400
+                )
+            );
+          }
+          return res.status(200).json(
+              new ResObj(true, 'Зображення завнтажене', result.public_id)
+          ); // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
+        });
+  });
+};
 
 module.exports.productAddMainImage = function(req, res, next) {
   let form = new formidable.IncomingForm({maxFileSize: 10500000});

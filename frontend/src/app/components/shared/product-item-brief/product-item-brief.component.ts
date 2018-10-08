@@ -7,6 +7,7 @@ import { ObservableMedia } from '@angular/flex-layout';
   templateUrl: './product-item-brief.component.html',
   styleUrls: ['./product-item-brief.component.scss']
 })
+
 export class ProductItemBriefComponent implements OnInit {
   @Input() product;
   @Input() category_id;
@@ -21,6 +22,7 @@ export class ProductItemBriefComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+
   }
 
 }

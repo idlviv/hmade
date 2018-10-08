@@ -79,6 +79,12 @@ router.get('/product/increase-views',
     productController.increaseViews
 );
 
+router.post('/product/add-menu-image',
+    passport.authenticate('jwt', {session: false}),
+    authorization('manager'),
+    productController.productAddMenuImage
+);
+
 router.post('/product/add-main-image',
     passport.authenticate('jwt', {session: false}),
     authorization('manager'),

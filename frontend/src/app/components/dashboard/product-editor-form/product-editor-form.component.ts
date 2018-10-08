@@ -25,6 +25,7 @@ export class ProductEditorFormComponent implements OnInit {
   editMode = false;
   processingLoadAssets = -1;
   processingLoadMainImage = false;
+  processingLoadMenuImage = false;
 
   paramEdited_id: string;
   paramParent_id: string;
@@ -180,6 +181,30 @@ export class ProductEditorFormComponent implements OnInit {
             this.matSnackBar.open(err.error || 'Помилка', '',
               {duration: 3000, panelClass: 'snack-bar-danger'});
             this.processingLoadMainImage = false;
+          }
+        );
+    }
+  }
+
+  addMenuImage(event) {
+    this.processingLoadMenuImage = true;
+    const file = event.target.files[0];
+    const checkFile = this.productService.checkFile(file);
+
+    if (!checkFile.success) {
+      this.matSnackBar.open(checkFile.message || 'Помилка', '',
+        {duration: 3000, panelClass: 'snack-bar-danger'});
+      this.processingLoadMenuImage = false;
+    } else {
+      this.productService.productAddMenuImage(file, this.productForm.get('_id').value)
+        .subscribe(result => {
+            this.productForm.get('menuImage').setValue(result.data);
+            this.processingLoadMenuImage = false;
+          },
+          err => {
+            this.matSnackBar.open(err.error || 'Помилка', '',
+              {duration: 3000, panelClass: 'snack-bar-danger'});
+            this.processingLoadMenuImage = false;
           }
         );
     }
