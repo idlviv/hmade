@@ -15,8 +15,8 @@ export class ToolsComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    this.iconFilename = config.logoLight + '.png';
-    this.faviconFilename = config.logoLight + '.png';
-    this.logoFilename = config.logoLight + '.png';
+    this.iconFilename = config.icon + '.png';
+    this.faviconFilename = config.icon + '.ico';
+    this.logoFilename = config.logoDark + '.svg';
   }
 }

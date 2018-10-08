@@ -26,7 +26,7 @@ export class CatalogService {
   getAllParents(category_id): Observable<IResponse> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       }),
       params: new HttpParams().set('category_id', category_id)
     };

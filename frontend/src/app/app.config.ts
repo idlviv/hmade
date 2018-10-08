@@ -6,6 +6,7 @@ export const config = {
   defaultAvatar: 'default_avatar',
   logoLight: 'hmade_logo_light',
   logoDark: 'hmade_logo_dark',
+  icon: 'hmade_icon',
 
   social: {
     useSocial: true,
