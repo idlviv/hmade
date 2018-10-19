@@ -5,7 +5,8 @@
   "cookieCsrfOptions": {
     "secure": false,
     "httpOnly": false,
-    "maxAge": 1800000
+    "maxAge": 1800000,
+    "sameSite": "Strict"
   },
   "permissions": {
     "admin": ["casual", "guest", "user", "manager", "admin"],
