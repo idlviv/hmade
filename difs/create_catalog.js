@@ -64,7 +64,7 @@ db.getCollection('catalogs')
           { _id: 'cards', ancestors: ['home', 'common', 'products', 'scrapbooking'], parent: 'scrapbooking', order: 2,
             assets: ['default_product'], prefix: 'scc', name: 'Листівки', description: ''},
 
-  { _id: 'mc', name: 'МК', ancestors: ['home', 'common'], parent: 'common', prefix: 'mcl',
+  { _id: 'mcs', name: 'МК', ancestors: ['home', 'common'], parent: 'common', prefix: 'mcs',
         auth: 'casual', order: 3, prefix: 'to', assets: [''], description: ''},
       // { _id: 'contacts', name: 'Контакти', ancestors: ['home', 'common'], parent: 'common',
       //   auth: 'casual', order: 4, assets: [''],description: ''},

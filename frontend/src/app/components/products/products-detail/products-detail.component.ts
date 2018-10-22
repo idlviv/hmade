@@ -29,8 +29,8 @@ export class ProductsDetailComponent implements OnInit {
         this.category_id = paramMap.get('category_id');
         this.product_id = paramMap.get('product_id');
         return forkJoin (
-          this.productService.getProductById(this.product_id, true),
-          this.productService.getProductsByParent(this.category_id, true)
+          this.productService.getProductById(this.product_id, 'products', true),
+          this.productService.getProductsByParent(this.category_id, 'products', true)
         );
       })
     )

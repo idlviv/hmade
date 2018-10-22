@@ -24,7 +24,7 @@
       </form>
 
       <div *ngIf="noMoreChildren" class="row" fxLayout="column" fxLayout.gt-xs="row">
-        <div class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="20">
+        <div class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
           <div class="preview-img-wrapper">
             <img src="{{
                         config.imgPath +
@@ -42,7 +42,7 @@
             </div>
           </div>
         </div>
-        <div *ngFor="let product of products"  class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="20">
+        <div *ngFor="let product of products"  class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
           <app-product-item-brief [product]="product" [parentCategory_id]="parentCategory_id" [parentCategoryName]="parentCategoryName"></app-product-item-brief>
         </div>
 

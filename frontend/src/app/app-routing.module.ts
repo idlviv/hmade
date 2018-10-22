@@ -12,11 +12,11 @@ const appRoutes: Routes = [
     loadChildren: './components/products/products.module#ProductsModule',
   },
   {
-    path: 'about/ch',
-    component: AboutComponent
+    path: 'mcs',
+    loadChildren: './components/mcs/mcs.module#McsModule',
   },
   {
-    path: 'mk/ch',
+    path: 'about/ch',
     component: AboutComponent
   },
   {

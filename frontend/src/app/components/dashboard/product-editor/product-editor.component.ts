@@ -50,12 +50,12 @@ export class ProductEditorComponent implements OnInit {
           this.parentCategoryName = event.source.triggerValue;
           this.noMoreChildren = true;
           this.children[level + 1] = children.data;
-          return this.productService.getProductsByParent(event.value, false);
+          return this.productService.getProductsByParent(event.value, 'products', false);
        } else {
           this.children[level + 1] = children.data;
           this.noMoreChildren = false;
           this.addParents();
-          return this.productService.getProductsByParent(null, true);
+          return this.productService.getProductsByParent(null, 'products', true);
         }
       })
     )

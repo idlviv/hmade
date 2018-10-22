@@ -4,11 +4,20 @@ const ApplicationError = require('../errors/applicationError');
 const passport = require('passport');
 const userController = require('../controllers/userController');
 const catalogController = require('../controllers/catalogController');
+const mcController = require('../controllers/mcController');
 const uploadController = require('../controllers/uploadController');
 const productController = require('../controllers/productController');
 const sharedController = require('../controllers/sharedController');
 const recaptcha = require('../middleware/recaptcha');
 const authorization = require('../middleware/authorization');
+
+
+/**
+ * mc routes
+ */
+router.get('/mc/get-mcs',
+    mcController.getMcs
+);
 
 /**
  * product routes

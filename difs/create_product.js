@@ -1,15 +1,29 @@
-db.getCollection('products')
-.drop();
-db.getCollection('products')
-.insertMany([
-  {
-    _id: 'to0001',
-    name: 'Toy1',
-    description: 'Description Description Description Description Description Description Description Description ',
-    parents: ['toys'],
-    display: true,
-    onMainPage: true,
-    mainImage: 'default_product',
-    menuImage: 'default_product'
-  },
-]);
+db.getCollection('mcs')
+    .drop();
+db.getCollection('mcs')
+    .insertMany([
+      {
+        _id: 'mcs0001',
+        name: 'MK перший',
+        description: 'Description Description Description Description Description Description Description Description ',
+        parents: ['toys'],
+        createdAt: 1539004428299,
+        display: true,
+        onMainPage: true,
+        mainImage: 'default_product',
+        menuImage: 'default_product',
+        views: 5,
+      },
+      {
+        _id: 'mcs0002',
+        name: 'MK другий',
+        description: 'Description Description Description Description Description Description Description Description ',
+        parents: ['wreaths'],
+        createdAt: 1539004428272,
+        display: true,
+        onMainPage: true,
+        mainImage: 'default_product',
+        menuImage: 'default_product',
+        views: 15,
+      },
+    ]);

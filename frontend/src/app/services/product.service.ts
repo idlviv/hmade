@@ -400,11 +400,12 @@ export class ProductService {
    *
    *
    * @param {string} _id
+   * @param {string} collection
    * @param {boolean} [displayFilter]
    * @returns {Observable<IResponse>}
    * @memberof ProductService
    */
-  getProductById(_id: string, displayFilter?: boolean): Observable<IResponse>  {
+  getProductById(_id: string, collection: string, displayFilter?: boolean): Observable<IResponse>  {
     if (!displayFilter) {
       displayFilter = false;
     }
@@ -415,6 +416,7 @@ export class ProductService {
       params: new HttpParams()
         .set('_id', _id)
         .set('displayFilter', displayFilter + '')
+        .set('collection', collection)
     };
     return this.http.get<IResponse>(
       'api/product/get-product-by-id',
@@ -422,15 +424,17 @@ export class ProductService {
     );
   }
 
+
   /**
    *
    *
    * @param {string} parent
+   * @param {string} collection
    * @param {boolean} [displayFilter]
    * @returns {Observable<IResponse>}
    * @memberof ProductService
    */
-  getProductsByParent(parent: string, displayFilter?: boolean): Observable<IResponse> {
+  getProductsByParent(parent: string, collection: string, displayFilter?: boolean): Observable<IResponse> {
     if (!displayFilter) {
       displayFilter = false;
     }
@@ -441,6 +445,7 @@ export class ProductService {
       params: new HttpParams()
         .set('parent', parent)
         .set('displayFilter', displayFilter + '')
+        .set('collection', collection)
     };
     return this.http.get<IResponse>(
       'api/product/get-products-by-parent',
@@ -449,6 +454,3 @@ export class ProductService {
   }
 
 }
-
-
-

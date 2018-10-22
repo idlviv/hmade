@@ -6,12 +6,13 @@ const DbError = require('../errors/dbError');
 const ApplicationError = require('../errors/applicationError');
 const ObjectId = require('../config/mongoose').Types.ObjectId;
 const formidable = require('formidable');
-util = require('util');
+const util = require('util');
 const log = require('../config/winston')(module);
 const cloudinary = require('../config/cloudinary');
 const catalogController = require('../controllers/catalogController');
 
 module.exports.getProductsByDesignId = function(req, res, next) {
+  // eslint-disable-line no-use-before-define
   const design_id = req.query.design_id;
 
   ProductModel.aggregate([
@@ -339,32 +340,57 @@ module.exports.getSkuList = function(req, res, next) {
 module.exports.getProductById = function(req, res, next) {
   const _id = req.query._id;
   const displayFilter = req.query.displayFilter;
+  const collection = req.query.collection;
 
   let query;
   displayFilter === 'true' ? query = {_id, display: true} : query = {_id};
 
-  ProductModel.findById(query)
-      .then((result) => {
-        return res.status(200).json(new ResObj(true, 'Товар', result));
-      })
-      .catch((err) => next(new DbError())
+  switch (collection) {
+    case 'products':
+      ProductModel.findById(query)
+          .then((result) => res.status(200).json(
+              new ResObj(true, 'Товар', result)
+          ))
+          .catch((err) => next(new DbError())
+          );
+      break;
+    case 'mc':
+      res.status(200).json(new ResObj(
+          true, 'mc категорії', null)
       );
+      break;
+    default:
+      return next(new ApplicationError('Немає такої колекції' + collection));
+  }
 };
 
 module.exports.getProductsByParent = function(req, res, next) {
   const parent = req.query.parent;
   const displayFilter = req.query.display;
+  const collection = req.query.collection;
 
   let query;
-  displayFilter === 'true' ? query = {parents: parent, display: true} : query = {parents: parent};
+  displayFilter === 'true' ?
+      query = {parents: parent, display: true} : query = {parents: parent};
 
-  ProductModel.find(query)
-      .sort({order: 1})
-      .then((result) => {
-        return res.status(200).json(new ResObj(
-            true, 'Продукти категорії' + parent, result)
-        );
-      })
-      .catch((err) => next(new DbError())
+  log.debug('col', collection === 'products');
+  switch (collection) {
+    case 'products':
+      ProductModel.find(query)
+          .sort({order: 1})
+          .then((result) =>
+            res.status(200).json(new ResObj(
+                true, 'Продукти категорії' + parent, result)
+            ))
+          .catch((err) => next(new DbError())
+          );
+      break;
+    case 'mc':
+      res.status(200).json(new ResObj(
+          true, 'mc категорії', null)
       );
+      break;
+    default:
+      return next(new ApplicationError('Немає такої колекції ' + collection));
+  }
 };

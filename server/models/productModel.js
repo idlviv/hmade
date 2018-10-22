@@ -1,18 +1,7 @@
 const mongoose = require('../config/mongoose');
 const Schema = mongoose.Schema;
 
-const CommentsSchema = new Schema({
-  comment: {
-    type: String,
-  },
-  commentator: {
-    type: String,
-  },
-  commentedAt: {
-    type: Number,
-    default: 0,
-  },
-});
+const CommentSchema = require('./commentModel').CommentSchema;
 
 const ProductSchema = new Schema({
   _id: {
@@ -92,7 +81,7 @@ const ProductSchema = new Schema({
     type: Number,
     default: 0,
   },
-  comments: [CommentsSchema],
+  comments: [CommentSchema],
 });
 
 let ProductModel = mongoose.model('products', ProductSchema);

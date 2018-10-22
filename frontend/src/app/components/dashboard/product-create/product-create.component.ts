@@ -96,7 +96,7 @@ export class ProductCreateComponent implements OnInit {
           this.edited_id = paramMap.get('_id');
           this.editMode = true;
 
-          this.productService.getProductById(this.edited_id, null)
+          this.productService.getProductById(this.edited_id, 'products', null)
             .subscribe(product => {
 
               for (let i = 1; i < product.data.categories.length; i++) {
