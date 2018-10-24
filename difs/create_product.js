@@ -26,4 +26,16 @@ db.getCollection('mcs')
         menuImage: 'default_product',
         views: 15,
       },
+      {
+        _id: 'mcs0003',
+        name: 'MK третій',
+        description: 'Description Description Description Description Description Description Description Description ',
+        parents: ['wreaths'],
+        createdAt: 1539004438272,
+        display: true,
+        onMainPage: true,
+        mainImage: 'default_product',
+        menuImage: 'default_product',
+        views: 1,
+      },
     ]);

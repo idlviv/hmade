@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  mcs-filters works!\n</p>\n"
+module.exports = "<p>\r\n  mcs-filters works!\r\n</p>\r\n"
 
 /***/ }),
 
@@ -63,6 +63,136 @@ var McsFiltersComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.html":
+/*!*****************************************************************************!*\
+  !*** ./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.html ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  mcs-item-brief works!\n</p>\n{{mc | json}}\n\n<mat-card>\n  <mat-card-content>\n    <div class=\"row\">\n      <div class=\"cell\">\n        <h2 class=\"mat-h2\">\n          {{mc.name}}\n        </h2>\n      </div>\n    </div>\n    <div class=\"row\">\n      <div class=\"cell\">\n        <p class=\"mat-body\">\n          {{mc.description}}\n        </p>\n      </div>\n    </div>\n  </mat-card-content>\n</mat-card>\n\n"
+
+/***/ }),
+
+/***/ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.scss":
+/*!*****************************************************************************!*\
+  !*** ./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.scss ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.ts":
+/*!***************************************************************************!*\
+  !*** ./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.ts ***!
+  \***************************************************************************/
+/*! exports provided: McsItemBriefComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McsItemBriefComponent", function() { return McsItemBriefComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var McsItemBriefComponent = /** @class */ (function () {
+    function McsItemBriefComponent() {
+    }
+    McsItemBriefComponent.prototype.ngOnInit = function () {
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], McsItemBriefComponent.prototype, "mc", void 0);
+    McsItemBriefComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-mcs-item-brief',
+            template: __webpack_require__(/*! ./mcs-item-brief.component.html */ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.html"),
+            styles: [__webpack_require__(/*! ./mcs-item-brief.component.scss */ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], McsItemBriefComponent);
+    return McsItemBriefComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.html":
+/*!*******************************************************************************!*\
+  !*** ./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.html ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  mcs-item-detail works!\n</p>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.scss":
+/*!*******************************************************************************!*\
+  !*** ./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.scss ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.ts":
+/*!*****************************************************************************!*\
+  !*** ./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.ts ***!
+  \*****************************************************************************/
+/*! exports provided: McsItemDetailComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McsItemDetailComponent", function() { return McsItemDetailComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var McsItemDetailComponent = /** @class */ (function () {
+    function McsItemDetailComponent() {
+    }
+    McsItemDetailComponent.prototype.ngOnInit = function () {
+    };
+    McsItemDetailComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-mcs-item-detail',
+            template: __webpack_require__(/*! ./mcs-item-detail.component.html */ "./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.html"),
+            styles: [__webpack_require__(/*! ./mcs-item-detail.component.scss */ "./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], McsItemDetailComponent);
+    return McsItemDetailComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/mcs/mcs-list/mcs-list.component.html":
 /*!*****************************************************************!*\
   !*** ./src/app/components/mcs/mcs-list/mcs-list.component.html ***!
@@ -70,7 +200,7 @@ var McsFiltersComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  mcs-list works!\n</p>\n<div *ngFor=\"let mc of mcs\">\n  {{mc | json}}\n</div>\n"
+module.exports = "<p>\r\n  mcs-list works!\r\n</p>\r\n<div *ngFor=\"let mc of mcs\">\r\n  <app-mcs-item-brief [mc]=\"mc\"></app-mcs-item-brief>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -200,7 +330,7 @@ var McsRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<router-outlet name=\"mcsFilters\"></router-outlet>\n<div class=\"app-container\">\n  <div class=\"container\">\n    <router-outlet></router-outlet>\n  </div>\n</div>\n"
+module.exports = "<router-outlet name=\"mcsFilters\"></router-outlet>\r\n<div class=\"app-container\">\r\n  <div class=\"container\">\r\n    <router-outlet></router-outlet>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -268,16 +398,22 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McsModule", function() { return McsModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _mcs_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mcs.component */ "./src/app/components/mcs/mcs.component.ts");
-/* harmony import */ var _mcs_list_mcs_list_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mcs-list/mcs-list.component */ "./src/app/components/mcs/mcs-list/mcs-list.component.ts");
-/* harmony import */ var _mcs_filters_mcs_filters_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mcs-filters/mcs-filters.component */ "./src/app/components/mcs/mcs-filters/mcs-filters.component.ts");
-/* harmony import */ var _mcs_routing_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./mcs-routing.module */ "./src/app/components/mcs/mcs-routing.module.ts");
+/* harmony import */ var _material_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../material.module */ "./src/app/material.module.ts");
+/* harmony import */ var _mcs_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mcs.component */ "./src/app/components/mcs/mcs.component.ts");
+/* harmony import */ var _mcs_list_mcs_list_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mcs-list/mcs-list.component */ "./src/app/components/mcs/mcs-list/mcs-list.component.ts");
+/* harmony import */ var _mcs_filters_mcs_filters_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./mcs-filters/mcs-filters.component */ "./src/app/components/mcs/mcs-filters/mcs-filters.component.ts");
+/* harmony import */ var _mcs_routing_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./mcs-routing.module */ "./src/app/components/mcs/mcs-routing.module.ts");
+/* harmony import */ var _mcs_item_brief_mcs_item_brief_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./mcs-item-brief/mcs-item-brief.component */ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.ts");
+/* harmony import */ var _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./mcs-item-detail/mcs-item-detail.component */ "./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
 
 
 
@@ -291,9 +427,16 @@ var McsModule = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
-                _mcs_routing_module__WEBPACK_IMPORTED_MODULE_5__["McsRoutingModule"]
+                _mcs_routing_module__WEBPACK_IMPORTED_MODULE_6__["McsRoutingModule"],
+                _material_module__WEBPACK_IMPORTED_MODULE_2__["MaterialModule"],
             ],
-            declarations: [_mcs_component__WEBPACK_IMPORTED_MODULE_2__["McsComponent"], _mcs_list_mcs_list_component__WEBPACK_IMPORTED_MODULE_3__["McsListComponent"], _mcs_filters_mcs_filters_component__WEBPACK_IMPORTED_MODULE_4__["McsFiltersComponent"]]
+            declarations: [
+                _mcs_component__WEBPACK_IMPORTED_MODULE_3__["McsComponent"],
+                _mcs_list_mcs_list_component__WEBPACK_IMPORTED_MODULE_4__["McsListComponent"],
+                _mcs_filters_mcs_filters_component__WEBPACK_IMPORTED_MODULE_5__["McsFiltersComponent"],
+                _mcs_item_brief_mcs_item_brief_component__WEBPACK_IMPORTED_MODULE_7__["McsItemBriefComponent"],
+                _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_8__["McsItemDetailComponent"]
+            ]
         })
     ], McsModule);
     return McsModule;

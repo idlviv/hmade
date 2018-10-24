@@ -1,15 +1,25 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { MaterialModule } from '../../material.module';
 import { McsComponent } from './mcs.component';
 import { McsListComponent } from './mcs-list/mcs-list.component';
 import { McsFiltersComponent } from './mcs-filters/mcs-filters.component';
 import { McsRoutingModule } from './mcs-routing.module';
+import { McsItemBriefComponent } from './mcs-item-brief/mcs-item-brief.component';
+import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.component';
 
 @NgModule({
   imports: [
     CommonModule,
-    McsRoutingModule
+    McsRoutingModule,
+    MaterialModule,
   ],
-  declarations: [McsComponent, McsListComponent, McsFiltersComponent]
+  declarations: [
+    McsComponent,
+    McsListComponent,
+    McsFiltersComponent,
+    McsItemBriefComponent,
+    McsItemDetailComponent
+  ]
 })
 export class McsModule { }

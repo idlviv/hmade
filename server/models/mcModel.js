@@ -38,20 +38,32 @@ const McSchema = new Schema({
     type: String,
     required: true,
   },
-  assets: {
+  pics: {
     type: [String],
   },
-  materials: {
-    name: {
-      type: String,
+  materials: [
+    {
+      name: {
+        type: String,
+      },
+      quantity: {
+        type: Number,
+      },
+      units: {
+        type: String,
+      },
     },
-    quantity: {
-      type: Number,
+  ],
+  steps: [
+    {
+      pic: {
+        type: String,
+      },
+      description: {
+        type: String,
+      },
     },
-    units: {
-      type: String,
-    },
-  },
+  ],
   createdAt: {
     type: Number,
     default: 0,

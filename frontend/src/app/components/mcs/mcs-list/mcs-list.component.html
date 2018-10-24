@@ -2,5 +2,5 @@
   mcs-list works!
 </p>
 <div *ngFor="let mc of mcs">
-  {{mc | json}}
+  <app-mcs-item-brief [mc]="mc"></app-mcs-item-brief>
 </div>
