@@ -9,11 +9,22 @@ export const config = {
   icon: 'hmade_icon',
 
   social: {
-    useSocial: false,
+    useSocial: true,
     showLikes: true,
     showViews: true,
     showComments: true,
   },
+  mcSortOptionsDefault: 0,
+  mcSortOptions: [
+    {
+      name: 'Дата (зверху новіші)',
+      value: 'date',
+    },
+    {
+      name: 'Популярність',
+      value: 'views',
+    },
+  ],
   commercial: {
     useCommercial: true,
   },

@@ -1,19 +1,47 @@
-<p>
-  mcs-item-brief works!
-</p>
-{{mc | json}}
-
 <mat-card>
   <mat-card-content>
-    <div class="row">
-      <div class="cell">
+    <div class="row" fxLayout="row">
+      <div *ngIf="config.social.useSocial" class="container-px0" fxFlex="100">
+        <div class="row" fxLayout="row">
+          <section class="cell-px0 social-feed-section" fxFlex="100" fxLayout="row">
+              <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
+                <mat-icon>thumb_up_alt</mat-icon>
+                <span>{{mc.likes}}</span>
+              </div>
+              <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
+                  <mat-icon>thumb_down_alt</mat-icon>
+                  <span>{{mc.dislikes}}</span>
+              </div>
+              <div *ngIf="config.social.showViews" class="item text-align-center muted" fxFlex>
+                  <mat-icon>remove_red_eye</mat-icon>
+                  <span>{{mc.views}}</span>
+              </div>
+              <div *ngIf="config.social.showComments" class="item text-align-center muted" fxFlex>
+                  <mat-icon>comment</mat-icon>
+                  <span>{{mc.comments.length}}</span>
+              </div>
+               <div class="item text-align-center muted" fxFlex>
+                  <mat-icon>calendar_today</mat-icon>
+                  <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>
+              </div>
+          </section>
+        </div>
+      </div>
+    </div>
+    <div class="row" fxLayout="row">
+      <div class="cell" fxFlex="100">
         <h2 class="mat-h2">
           {{mc.name}}
         </h2>
       </div>
     </div>
-    <div class="row">
-      <div class="cell">
+    <div class="row" fxLayout="row">
+      <div class="cell" fxFlex="20">
+        <p class="mat-body">
+          {{mc | json}}
+        </p>
+      </div>
+      <div class="cell" fxFlex="80">
         <p class="mat-body">
           {{mc.description}}
         </p>

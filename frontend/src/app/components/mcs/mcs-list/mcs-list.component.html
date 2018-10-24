@@ -1,6 +1,3 @@
-<p>
-  mcs-list works!
-</p>
-<div *ngFor="let mc of mcs">
-  <app-mcs-item-brief [mc]="mc"></app-mcs-item-brief>
+<div *ngFor="let mc of mcs" class="row" fxLayout="row">
+  <app-mcs-item-brief [mc]="mc" class="cell" fxFlex="100"></app-mcs-item-brief>
 </div>

@@ -1,3 +1,17 @@
-<p>
-  mcs-filters works!
-</p>
+<div class="container">
+  <div class="row" fxLayout="row">
+  <div class="cell" fxFlex="100">
+    <form [formGroup]="filterForm" novalidate>
+      <mat-form-field>
+        <mat-select formControlName="mcSort" placeholder="Відсортувати" (selectionChange)="onSelectMcSort($event)">
+          <mat-option *ngFor="let mcSortOption of config.mcSortOptions" [value]="mcSortOption.value">
+            {{mcSortOption.name}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+
+  </div>
+</div>
+</div>
+

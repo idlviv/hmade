@@ -19,15 +19,6 @@ const mcsRoutes: Routes = [
         outlet: 'mcsFilters',
       },
     //   {
-    //     path: ':category_id',
-    //     component: ProductsListComponent,
-    //   },
-    //   {
-    //     path: ':category_id',
-    //     component: BreadcrumbComponent,
-    //     outlet: 'breadcrumb',
-    //   },
-    //   {
     //     path: ':category_id/details/:product_id',
     //     component: ProductsDetailComponent,
     //   },

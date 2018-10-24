@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { config } from '../../../app.config';
 
 @Component({
   selector: 'app-mcs-item-brief',
@@ -7,6 +8,7 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class McsItemBriefComponent implements OnInit {
 
+  config = config;
   @Input() mc;
 
   constructor() { }

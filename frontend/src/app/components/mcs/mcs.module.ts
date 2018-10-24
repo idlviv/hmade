@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MaterialModule } from '../../material.module';
+import { ReactiveFormsModule } from '@angular/forms';
 import { McsComponent } from './mcs.component';
 import { McsListComponent } from './mcs-list/mcs-list.component';
 import { McsFiltersComponent } from './mcs-filters/mcs-filters.component';
@@ -13,6 +14,7 @@ import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.compon
     CommonModule,
     McsRoutingModule,
     MaterialModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     McsComponent,

@@ -91,7 +91,7 @@ CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,
 TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
 SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
-@angular/animations@6.1.7
+@angular/animations@6.1.9
 MIT
 MIT
 
@@ -119,15 +119,15 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-@angular/common@6.1.7
+@angular/common@6.1.9
 MIT
 MIT
 
-@angular/compiler@6.1.7
+@angular/compiler@6.1.9
 MIT
 MIT
 
-@angular/core@6.1.7
+@angular/core@6.1.9
 MIT
 MIT
 
@@ -155,7 +155,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-@angular/forms@6.1.7
+@angular/forms@6.1.9
 MIT
 MIT
 
@@ -183,19 +183,19 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 THE SOFTWARE.
 
-@angular/platform-browser-dynamic@6.1.7
+@angular/platform-browser-dynamic@6.1.9
 MIT
 MIT
 
-@angular/platform-browser@6.1.7
+@angular/platform-browser@6.1.9
 MIT
 MIT
 
-@angular/router@6.1.7
+@angular/router@6.1.9
 MIT
 MIT
 
-@angular/service-worker@6.1.7
+@angular/service-worker@6.1.9
 MIT
 MIT
 
@@ -472,7 +472,7 @@ Apache License
  See the License for the specific language governing permissions and
  limitations under the License.
 
-rxjs@6.3.2
+rxjs@6.3.3
 Apache-2.0
 Apache License
                          Version 2.0, January 2004
