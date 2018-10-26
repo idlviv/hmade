@@ -4,7 +4,6 @@ const ApplicationError = require('../errors/applicationError');
 const transporter = require('../config/mailgun');
 
 module.exports.sendFeedbackMessage = function(req, res, next) {
-
   const feedback = {};
   Object.assign(feedback, req.body);
 
@@ -18,7 +17,7 @@ module.exports.sendFeedbackMessage = function(req, res, next) {
     '<p><span style="font-weight: bold">Контакти </span>' +
     feedback.contacts + '</p>' +
     '<p><span style="font-weight: bold">Ім\'я </span>' +
-    feedback.name + '</p>'
+    feedback.name + '</p>',
   };
 
   transporter.sendMail(mailOptions, (err, info) => {
@@ -27,5 +26,5 @@ module.exports.sendFeedbackMessage = function(req, res, next) {
     }
     return res.status(200).json(new ResObj(true, 'Повідомлення надіслано'));
   });
-
 };
+

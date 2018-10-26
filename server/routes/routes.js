@@ -15,9 +15,16 @@ const authorization = require('../middleware/authorization');
 /**
  * mc routes
  */
-router.get('/mc/get-mcs',
+
+
+router.get('/mc/get-mcs', // tmp
     mcController.getMcs
 );
+
+router.get('/mc/get-mcs-by-filter',
+    mcController.getMcsByFilter
+);
+
 
 /**
  * product routes

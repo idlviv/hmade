@@ -1,17 +1,30 @@
 <div class="container">
-  <div class="row" fxLayout="row">
-  <div class="cell" fxFlex="100">
-    <form [formGroup]="filterForm" novalidate>
-      <mat-form-field>
-        <mat-select formControlName="mcSort" placeholder="Відсортувати" (selectionChange)="onSelectMcSort($event)">
-          <mat-option *ngFor="let mcSortOption of config.mcSortOptions" [value]="mcSortOption.value">
-            {{mcSortOption.name}}
-          </mat-option>
-        </mat-select>
-      </mat-form-field>
-    </form>
 
-  </div>
-</div>
+
+  <form [formGroup]="filterForm" novalidate>
+    <div class="row" fxLayout="row">
+      <div class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
+        <mat-form-field>
+          <mat-select formControlName="mcSort" placeholder="Відсортувати" (selectionChange)="onSelectMcSort($event)">
+            <mat-option *ngFor="let mcSortOption of config.mcSortOptions" [value]="mcSortOption.value">
+              {{mcSortOption.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+      <div formArrayName="parents" class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25"
+          *ngFor="let categoryBlock of filterForm.get('parents')['controls']; let i = index">
+        <mat-form-field>
+          <mat-select placeholder="Фільтр" formControlName="{{i}}" required
+                      (selectionChange)="onSelectMcFilter($event, i)">
+            <mat-option *ngFor="let child of children[i]" [value]="child._id">
+              {{child.name}}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+    </div>
+
+  </form>
 </div>
 

@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n    <form [formGroup]=\"filterForm\" novalidate>\n      <mat-form-field>\n        <mat-select formControlName=\"mcSort\" placeholder=\"Відсортувати\" (selectionChange)=\"onSelectMcSort($event)\">\n          <mat-option *ngFor=\"let mcSortOption of config.mcSortOptions\" [value]=\"mcSortOption.value\">\n            {{mcSortOption.name}}\n          </mat-option>\n        </mat-select>\n      </mat-form-field>\n    </form>\n\n  </div>\n</div>\n</div>\n\n"
+module.exports = "<div class=\"container\">\n\n\n  <form [formGroup]=\"filterForm\" novalidate>\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\n        <mat-form-field>\n          <mat-select formControlName=\"mcSort\" placeholder=\"Відсортувати\" (selectionChange)=\"onSelectMcSort($event)\">\n            <mat-option *ngFor=\"let mcSortOption of config.mcSortOptions\" [value]=\"mcSortOption.value\">\n              {{mcSortOption.name}}\n            </mat-option>\n          </mat-select>\n        </mat-form-field>\n      </div>\n      <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\n          *ngFor=\"let categoryBlock of filterForm.get('parents')['controls']; let i = index\">\n        <mat-form-field>\n          <mat-select placeholder=\"Фільтр\" formControlName=\"{{i}}\" required\n                      (selectionChange)=\"onSelectMcFilter($event, i)\">\n            <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\n              {{child.name}}\n            </mat-option>\n          </mat-select>\n        </mat-form-field>\n      </div>\n    </div>\n\n  </form>\n</div>\n\n"
 
 /***/ }),
 
@@ -36,6 +36,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var src_app_services_catalog_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/catalog.service */ "./src/app/services/catalog.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -49,22 +50,88 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var McsFiltersComponent = /** @class */ (function () {
-    function McsFiltersComponent(router) {
+    function McsFiltersComponent(router, catalogService) {
         this.router = router;
+        this.catalogService = catalogService;
+        this.children = [];
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"];
+        this.noMoreChildren = false;
     }
     McsFiltersComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.filterForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]({
-            mcSort: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]([])
+            mcSort: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]([]),
+            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormArray"]([this.initParents()]),
         });
-        var initialMcSortValue = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].mcSortOptions[_app_config__WEBPACK_IMPORTED_MODULE_1__["config"].mcSortOptionsDefault].value;
-        this.filterForm.get('mcSort').setValue(initialMcSortValue);
-        this.onSelectMcSort({ value: initialMcSortValue });
+        this.catalogService.getChildren('products')
+            .subscribe(function (result) {
+            _this.children[0] = result.data;
+            // initialize select values
+            var initialMcSortValue = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].mcSortOptions[_app_config__WEBPACK_IMPORTED_MODULE_1__["config"].mcSortOptionsDefault].value;
+            _this.filterForm.get('mcSort').setValue(initialMcSortValue);
+            _this.mcSortValue = initialMcSortValue;
+            var initialMcFilterValue = result.data[0].parent;
+            _this.mcFilterValue = initialMcFilterValue;
+            _this.navigateTo();
+        }, function (err) { return console.log('помилка завантаження категорій', err); });
     };
     McsFiltersComponent.prototype.onSelectMcSort = function (event) {
-        var mcSortValue = event.value;
-        this.router.navigate(['/mcs/ch'], { queryParams: { mcSortValue: mcSortValue } });
+        // const mcSortValue = event.value;
+        this.mcSortValue = event.value;
+        this.navigateTo();
+    };
+    McsFiltersComponent.prototype.onSelectMcFilter = function (event, level) {
+        var _this = this;
+        console.log('select filter');
+        this.mcFilterValue = event.value;
+        while (level + 1 < this.filterForm.get('parents')['controls'].length) {
+            this.removeParents(this.filterForm.get('parents')['controls'].length - 1);
+        }
+        this.catalogService.getChildren(event.value)
+            .subscribe(function (children) {
+            if (!children.data.length) {
+                // if no children - show products
+                _this.parentCategory_id = event.value;
+                // this.parentCategoryName = event.source.triggerValue;
+                _this.noMoreChildren = true;
+                _this.children[level + 1] = children.data;
+                // this.mcFilterValue = this.parentCategory_id;
+                _this.navigateTo();
+                // return this.productService.getProductsByParent(event.value, 'products', false);
+            }
+            else {
+                _this.children[level + 1] = children.data;
+                _this.noMoreChildren = false;
+                _this.addParents();
+                // this.mcFilterValue = this.parentCategory_id;
+                _this.navigateTo();
+                // return this.productService.getProductsByParent(null, 'products', true);
+            }
+        }, function (err) { return console.log('помилка завантаження категорій', err); });
+    };
+    McsFiltersComponent.prototype.navigateTo = function () {
+        this.router.navigate(['/mcs/ch'], {
+            queryParams: {
+                mcSortValue: this.mcSortValue,
+                mcFilterValue: this.mcFilterValue,
+                noMoreChildren: this.noMoreChildren,
+            }
+        });
+    };
+    McsFiltersComponent.prototype.addParents = function () {
+        var control = this.filterForm.get('parents');
+        control.push(this.initParents());
+    };
+    McsFiltersComponent.prototype.removeParents = function (i) {
+        var control = this.filterForm.get('parents');
+        control.removeAt(i);
+    };
+    McsFiltersComponent.prototype.initParents = function () {
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
+        ]);
     };
     McsFiltersComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -72,7 +139,8 @@ var McsFiltersComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./mcs-filters.component.html */ "./src/app/components/mcs/mcs-filters/mcs-filters.component.html"),
             styles: [__webpack_require__(/*! ./mcs-filters.component.scss */ "./src/app/components/mcs/mcs-filters/mcs-filters.component.scss")]
         }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"]])
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
+            src_app_services_catalog_service__WEBPACK_IMPORTED_MODULE_4__["CatalogService"]])
     ], McsFiltersComponent);
     return McsFiltersComponent;
 }());
@@ -131,6 +199,16 @@ var McsItemBriefComponent = /** @class */ (function () {
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"];
     }
     McsItemBriefComponent.prototype.ngOnInit = function () {
+    };
+    McsItemBriefComponent.prototype.ngOnChanges = function (changes) {
+        var productChange = changes.mc;
+        console.log('prev value: ', productChange.previousValue);
+        console.log('got name: ', productChange.currentValue);
+        console.log('productChange: ', productChange);
+        if (productChange) {
+            console.log('simple changes product');
+            // this.getRecommendations();
+        }
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -250,6 +328,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var src_app_app_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/app.config */ "./src/app/app.config.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -263,6 +343,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var McsListComponent = /** @class */ (function () {
     function McsListComponent(mcService, route) {
         this.mcService = mcService;
@@ -271,18 +353,31 @@ var McsListComponent = /** @class */ (function () {
     McsListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.queryParams
-            .subscribe(function (queryParams) {
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function (queryParams) {
+            console.log('query params', queryParams);
             if (queryParams.mcSortValue) {
-                // if passed master classes sort value
+                // if passed mc sort value
                 _this.mcSortValue = queryParams.mcSortValue;
             }
             else {
                 // use defalt sort value
                 _this.mcSortValue = src_app_app_config__WEBPACK_IMPORTED_MODULE_3__["config"].mcSortOptions[src_app_app_config__WEBPACK_IMPORTED_MODULE_3__["config"].mcSortOptionsDefault].value;
             }
-        });
-        this.mcService.getMcs()
-            .subscribe(function (result) { return _this.mcs = result.data; }, function (err) { return console.log(err); });
+            if (queryParams.mcFilterValue) {
+                // if passed mc sort value
+                _this.mcFilterValue = queryParams.mcFilterValue;
+                console.log('not null');
+                return _this.mcService.getMcsByFilter(_this.mcFilterValue, _this.mcSortValue, -1, 0, 10, queryParams.noMoreChildren);
+            }
+            else {
+                console.log('null');
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(null);
+            }
+        }))
+            .subscribe(function (result) {
+            _this.mcs = result;
+            console.log('this.mcs', _this.mcs);
+        }, function (err) { return console.log(err); });
     };
     McsListComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -514,6 +609,12 @@ var McService = /** @class */ (function () {
     function McService(http) {
         this.http = http;
     }
+    /**
+     *
+     *
+     * @returns {Observable<IResponse>}
+     * @memberof McService
+     */
     McService.prototype.getMcs = function () {
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
@@ -521,6 +622,32 @@ var McService = /** @class */ (function () {
             }),
         };
         return this.http.get('api/mc/get-mcs', httpOptions);
+    };
+    /**
+     *
+     *
+     * @param {string} [parent='products']
+     * @param {string} sort
+     * @param {number} [sortOrder=1]
+     * @param {number} [skip=0]
+     * @param {number} [limit=10]
+     * @returns {Observable<[any]>}
+     * @memberof McService
+     */
+    McService.prototype.getMcsByFilter = function (parent, sort, sortOrder, skip, limit, noMoreChildren) {
+        if (parent === void 0) { parent = 'products'; }
+        if (sortOrder === void 0) { sortOrder = 1; }
+        if (skip === void 0) { skip = 0; }
+        if (limit === void 0) { limit = 10; }
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            }),
+            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: {
+                    parent: parent, sort: sort, sortOrder: sortOrder + '', skip: skip + '', limit: limit + '', noMoreChildren: noMoreChildren + ''
+                } }),
+        };
+        return this.http.get('api/mc/get-mcs-by-filter', httpOptions);
     };
     McService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({

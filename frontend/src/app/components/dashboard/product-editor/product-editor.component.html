@@ -7,7 +7,7 @@
           <h2 class="mat-h2">Редактор виробів</h2>
         </div>
       </div>
-      <form [formGroup]="catalogForm" #f="ngForm" (submit)="onCatalogFormSubmit()">
+      <form [formGroup]="catalogForm" #f="ngForm">
         <div class="row" fxLayout="column" fxLayout.gt-xs="row">
           <div formArrayName="parents" class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25"
                *ngFor="let categoryBlock of catalogForm.get('parents')['controls']; let i = index">

@@ -18,7 +18,7 @@ export const config = {
   mcSortOptions: [
     {
       name: 'Дата (зверху новіші)',
-      value: 'date',
+      value: 'updatedAt',
     },
     {
       name: 'Популярність',

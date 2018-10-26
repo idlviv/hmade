@@ -6,7 +6,7 @@ db.getCollection('mcs')
         _id: 'mcs0001',
         name: 'MK перший',
         description: 'Description Description Description Description Description Description Description Description ',
-        parents: ['toys'],
+        parents: ['toys', 'wreaths'],
         createdAt: 1539004428299,
         updatedAt: 1539004428299,
         display: true,

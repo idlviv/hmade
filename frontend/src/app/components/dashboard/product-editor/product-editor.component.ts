@@ -32,7 +32,8 @@ export class ProductEditorComponent implements OnInit {
     });
 
     this.catalogService.getChildren('products')
-      .subscribe(result => this.children[0] = result.data,
+      .subscribe(
+        result => this.children[0] = result.data,
         err => console.log('помилка завантаження категорій', err)
       );
   }
@@ -64,31 +65,6 @@ export class ProductEditorComponent implements OnInit {
     },
       err => console.log('помилка завантаження категорій', err)
     );
-
-    // this.catalogService.getChildren(event.value)
-    //   .subscribe(result => {
-    //     if (result.data.length) {
-    //       this.products = null;
-    //       this.children[level + 1] = result.data;
-    //       this.noMoreChildren = false;
-    //       this.addParents();
-    //     } else {
-    //       this.productService.getProductsByCategory(event.value, false)
-    //         .subscribe(res => this.products = res.data,
-    //           err => console.log('помилка завантаження категорій', err)
-    //         );
-    //       this.parentCategory_id = event.value;
-    //       this.parentCategoryName = event.source.triggerValue;
-    //       this.noMoreChildren = true;
-    //     }
-    //     this.children[level + 1] = result.data;
-    //     },
-    //     err => console.log('помилка завантаження категорій', err)
-    //   );
-  }
-
-  onCatalogFormSubmit() {
-    console.log('onCatalogFormSubmit');
   }
 
   addParents() {

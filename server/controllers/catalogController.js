@@ -144,7 +144,7 @@ module.exports.getSiblings = function(req, res, next) {
       .catch((err) => next(new DbError()));
 };
 
-_getDescendants = function(parent, depth) {
+_getDescendants = function(parent, depth = 0) {
   return new Promise(function(resolve, reject) {
     CatalogModel.aggregate([
       {

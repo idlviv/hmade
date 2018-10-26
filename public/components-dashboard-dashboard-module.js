@@ -972,7 +972,7 @@ var ProductEditorFormComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"cell\">\r\n          <h2 class=\"mat-h2\">Редактор виробів</h2>\r\n        </div>\r\n      </div>\r\n      <form [formGroup]=\"catalogForm\" #f=\"ngForm\" (submit)=\"onCatalogFormSubmit()\">\r\n        <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n          <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\r\n               *ngFor=\"let categoryBlock of catalogForm.get('parents')['controls']; let i = index\">\r\n\r\n                <mat-select placeholder=\"Виберіть категорію\" formControlName=\"{{i}}\" required\r\n                            (selectionChange)=\"onSelectCategory($event, i)\">\r\n                  <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\r\n                    {{child.name}}\r\n                  </mat-option>\r\n            </mat-select>\r\n          </div>\r\n\r\n        </div>\r\n      </form>\r\n\r\n      <div *ngIf=\"noMoreChildren\" class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n        <div class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n          <div class=\"preview-img-wrapper\">\r\n            <img src=\"{{\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_180,h_180,f_auto/' +\r\n                        config.defaultProductImg}}\" alt=\"product\">\r\n            <div class=\"preview-div-processing\">\r\n              <div class=\"button-wrapper\">\r\n                <button mat-mini-fab color=\"primary\" type=\"button\"\r\n                        [routerLink]=\"['/dashboard', 'product-editor-new', parentCategory_id, parentCategoryName]\"\r\n                        [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n                  <mat-icon>add</mat-icon>\r\n                </button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div *ngFor=\"let product of products\"  class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n          <app-product-item-brief [product]=\"product\" [parentCategory_id]=\"parentCategory_id\" [parentCategoryName]=\"parentCategoryName\"></app-product-item-brief>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"cell\">\r\n          <h2 class=\"mat-h2\">Редактор виробів</h2>\r\n        </div>\r\n      </div>\r\n      <form [formGroup]=\"catalogForm\" #f=\"ngForm\">\r\n        <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n          <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\r\n               *ngFor=\"let categoryBlock of catalogForm.get('parents')['controls']; let i = index\">\r\n\r\n                <mat-select placeholder=\"Виберіть категорію\" formControlName=\"{{i}}\" required\r\n                            (selectionChange)=\"onSelectCategory($event, i)\">\r\n                  <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\r\n                    {{child.name}}\r\n                  </mat-option>\r\n            </mat-select>\r\n          </div>\r\n\r\n        </div>\r\n      </form>\r\n\r\n      <div *ngIf=\"noMoreChildren\" class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n        <div class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n          <div class=\"preview-img-wrapper\">\r\n            <img src=\"{{\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_180,h_180,f_auto/' +\r\n                        config.defaultProductImg}}\" alt=\"product\">\r\n            <div class=\"preview-div-processing\">\r\n              <div class=\"button-wrapper\">\r\n                <button mat-mini-fab color=\"primary\" type=\"button\"\r\n                        [routerLink]=\"['/dashboard', 'product-editor-new', parentCategory_id, parentCategoryName]\"\r\n                        [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n                  <mat-icon>add</mat-icon>\r\n                </button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div *ngFor=\"let product of products\"  class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n          <app-product-item-brief [product]=\"product\" [parentCategory_id]=\"parentCategory_id\" [parentCategoryName]=\"parentCategoryName\"></app-product-item-brief>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1058,29 +1058,6 @@ var ProductEditorComponent = /** @class */ (function () {
             .subscribe(function (res) {
             _this.products = res.data;
         }, function (err) { return console.log('помилка завантаження категорій', err); });
-        // this.catalogService.getChildren(event.value)
-        //   .subscribe(result => {
-        //     if (result.data.length) {
-        //       this.products = null;
-        //       this.children[level + 1] = result.data;
-        //       this.noMoreChildren = false;
-        //       this.addParents();
-        //     } else {
-        //       this.productService.getProductsByCategory(event.value, false)
-        //         .subscribe(res => this.products = res.data,
-        //           err => console.log('помилка завантаження категорій', err)
-        //         );
-        //       this.parentCategory_id = event.value;
-        //       this.parentCategoryName = event.source.triggerValue;
-        //       this.noMoreChildren = true;
-        //     }
-        //     this.children[level + 1] = result.data;
-        //     },
-        //     err => console.log('помилка завантаження категорій', err)
-        //   );
-    };
-    ProductEditorComponent.prototype.onCatalogFormSubmit = function () {
-        console.log('onCatalogFormSubmit');
     };
     ProductEditorComponent.prototype.addParents = function () {
         var control = this.catalogForm.get('parents');
