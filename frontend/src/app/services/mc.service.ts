@@ -31,10 +31,37 @@ export class McService {
     );
   }
 
+  /**
+   * return children
+   *
+   * @param {string} parent
+   * @param {string} collection
+   * @param {boolean} [displayFilter]
+   * @returns {Observable<IResponse>}
+   * @memberof McService
+   */
+  getMcsByParent(parent: string, collection: string, displayFilter?: boolean): Observable<IResponse> {
+    if (!displayFilter) {
+      displayFilter = false;
+    }
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      params: new HttpParams()
+        .set('parent', parent)
+        .set('displayFilter', displayFilter + '')
+        .set('collection', collection)
+    };
+    return this.http.get<IResponse>(
+      'api/mc/get-mcs-by-parent',
+      httpOptions
+    );
+  }
 
 
   /**
-   *
+   *  return all descendants
    *
    * @param {string} [parent='products']
    * @param {string} sort
@@ -45,7 +72,7 @@ export class McService {
    * @memberof McService
    */
   getMcsByFilter(
-    parent = 'products', sort: string, sortOrder = 1, skip = 0, limit = 10, noMoreChildren: boolean
+    parent: string = 'products', sort: string, sortOrder: number = 1, skip: number = 0, limit: number = 10, noMoreChildren: boolean
     ): Observable<[any]> {
     const httpOptions = {
       headers: new HttpHeaders({

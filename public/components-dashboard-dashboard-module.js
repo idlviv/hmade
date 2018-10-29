@@ -20,12 +20,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_user_create_user_create_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../user/user-create/user-create.component */ "./src/app/components/user/user-create/user-create.component.ts");
 /* harmony import */ var _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./product-editor/product-editor.component */ "./src/app/components/dashboard/product-editor/product-editor.component.ts");
 /* harmony import */ var _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./product-editor-form/product-editor-form.component */ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.ts");
+/* harmony import */ var _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./mc-editor/mc-editor.component */ "./src/app/components/dashboard/mc-editor/mc-editor.component.ts");
+/* harmony import */ var _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./mc-editor-form/mc-editor-form.component */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -75,6 +79,24 @@ var dashboardRoutes = [
             {
                 path: 'product-editor-edit/:parentCategory_id/:parentCategoryName/:_id',
                 component: _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_9__["ProductEditorFormComponent"],
+                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                data: { auth: 'manager' },
+            },
+            {
+                path: 'mc-editor',
+                component: _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_10__["McEditorComponent"],
+                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                data: { auth: 'manager' },
+            },
+            {
+                path: 'mc-editor-new/:parentCategory_id/:parentCategoryName',
+                component: _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_11__["McEditorFormComponent"],
+                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                data: { auth: 'manager' },
+            },
+            {
+                path: 'mc-editor-edit/:parentCategory_id/:parentCategoryName/:_id',
+                component: _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_11__["McEditorFormComponent"],
                 canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
@@ -295,12 +317,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _product_create_product_create_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./product-create/product-create.component */ "./src/app/components/dashboard/product-create/product-create.component.ts");
 /* harmony import */ var _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./product-editor/product-editor.component */ "./src/app/components/dashboard/product-editor/product-editor.component.ts");
 /* harmony import */ var _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./product-editor-form/product-editor-form.component */ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.ts");
+/* harmony import */ var _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./mc-editor/mc-editor.component */ "./src/app/components/dashboard/mc-editor/mc-editor.component.ts");
+/* harmony import */ var _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./mc-editor-form/mc-editor-form.component */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.ts");
+/* harmony import */ var _mcs_mcs_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../mcs/mcs.module */ "./src/app/components/mcs/mcs.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
+
 
 
 
@@ -327,6 +355,7 @@ var DashboardModule = /** @class */ (function () {
                 _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_2__["DashboardRoutingModule"],
                 _user_user_module__WEBPACK_IMPORTED_MODULE_6__["UserModule"],
                 _shared_shared_module__WEBPACK_IMPORTED_MODULE_8__["SharedModule"],
+                _mcs_mcs_module__WEBPACK_IMPORTED_MODULE_15__["McsModule"],
             ],
             declarations: [
                 _dashboard_component__WEBPACK_IMPORTED_MODULE_3__["DashboardComponent"],
@@ -334,11 +363,199 @@ var DashboardModule = /** @class */ (function () {
                 _tools_tools_component__WEBPACK_IMPORTED_MODULE_9__["ToolsComponent"],
                 _product_create_product_create_component__WEBPACK_IMPORTED_MODULE_10__["ProductCreateComponent"],
                 _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_11__["ProductEditorComponent"],
-                _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_12__["ProductEditorFormComponent"]
+                _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_12__["ProductEditorFormComponent"],
+                _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_13__["McEditorComponent"],
+                _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_14__["McEditorFormComponent"]
             ]
         })
     ], DashboardModule);
     return DashboardModule;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.html":
+/*!***********************************************************************************!*\
+  !*** ./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.html ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  mc-editor-form works!\n</p>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.scss":
+/*!***********************************************************************************!*\
+  !*** ./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.scss ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.ts":
+/*!*********************************************************************************!*\
+  !*** ./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.ts ***!
+  \*********************************************************************************/
+/*! exports provided: McEditorFormComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McEditorFormComponent", function() { return McEditorFormComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var McEditorFormComponent = /** @class */ (function () {
+    function McEditorFormComponent() {
+    }
+    McEditorFormComponent.prototype.ngOnInit = function () {
+    };
+    McEditorFormComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-mc-editor-form',
+            template: __webpack_require__(/*! ./mc-editor-form.component.html */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.html"),
+            styles: [__webpack_require__(/*! ./mc-editor-form.component.scss */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], McEditorFormComponent);
+    return McEditorFormComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/dashboard/mc-editor/mc-editor.component.html":
+/*!*************************************************************************!*\
+  !*** ./src/app/components/dashboard/mc-editor/mc-editor.component.html ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n\n    <div class=\"container\">\n      <div class=\"row\">\n        <div class=\"cell\">\n          <h2 class=\"mat-h2\">Редактор виробів</h2>\n        </div>\n      </div>\n      <form [formGroup]=\"catalogForm\" #f=\"ngForm\">\n        <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n          <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\n               *ngFor=\"let categoryBlock of catalogForm.get('parents')['controls']; let i = index\">\n\n                <mat-select placeholder=\"Виберіть категорію\" formControlName=\"{{i}}\" required\n                            (selectionChange)=\"onSelectCategory($event, i)\">\n                  <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\n                    {{child.name}}\n                  </mat-option>\n            </mat-select>\n          </div>\n\n        </div>\n      </form>\n\n      <div *ngIf=\"noMoreChildren\" class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n        <div class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\n          <div class=\"preview-img-wrapper\">\n            <img src=\"{{\n                        config.imgPath +\n                        config.cloudinary.cloud_name +\n                        '/c_fill,w_180,h_180,f_auto/' +\n                        config.defaultProductImg}}\" alt=\"product\">\n            <div class=\"preview-div-processing\">\n              <div class=\"button-wrapper\">\n                <button mat-mini-fab color=\"primary\" type=\"button\"\n                        [routerLink]=\"['/dashboard', 'product-editor-new', parentCategory_id, parentCategoryName]\"\n                        [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\n                  <mat-icon>add</mat-icon>\n                </button>\n              </div>\n            </div>\n          </div>\n        </div>\n        <div *ngFor=\"let mc of mcs\"  class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\n          <app-mcs-item-brief [mc]=\"mc\" [parentCategory_id]=\"parentCategory_id\" \n          [parentCategoryName]=\"parentCategoryName\"></app-mcs-item-brief>\n        </div>\n\n      </div>\n    </div>\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/dashboard/mc-editor/mc-editor.component.scss":
+/*!*************************************************************************!*\
+  !*** ./src/app/components/dashboard/mc-editor/mc-editor.component.scss ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/dashboard/mc-editor/mc-editor.component.ts":
+/*!***********************************************************************!*\
+  !*** ./src/app/components/dashboard/mc-editor/mc-editor.component.ts ***!
+  \***********************************************************************/
+/*! exports provided: McEditorComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McEditorComponent", function() { return McEditorComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+var McEditorComponent = /** @class */ (function () {
+    function McEditorComponent(catalogService, mcService) {
+        this.catalogService = catalogService;
+        this.mcService = mcService;
+        this.children = [];
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_4__["config"];
+        this.noMoreChildren = false;
+    }
+    McEditorComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.catalogForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]({
+            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormArray"]([this.initParents()]),
+        });
+        this.catalogService.getChildren('products')
+            .subscribe(function (result) { return _this.children[0] = result.data; }, function (err) { return console.log('помилка завантаження категорій', err); });
+    };
+    McEditorComponent.prototype.onSelectCategory = function (event, level) {
+        var _this = this;
+        while (level + 1 < this.catalogForm.get('parents')['controls'].length) {
+            this.removeParents(this.catalogForm.get('parents')['controls'].length - 1);
+        }
+        this.catalogService.getChildren(event.value).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (children) {
+            if (!children.data.length) {
+                // if no children - show products
+                _this.parentCategory_id = event.value;
+                _this.parentCategoryName = event.source.triggerValue;
+                _this.noMoreChildren = true;
+                _this.children[level + 1] = children.data;
+                return _this.mcService.getMcsByParent(event.value, 'products', false);
+            }
+            else {
+                _this.children[level + 1] = children.data;
+                _this.noMoreChildren = false;
+                _this.addParents();
+                return _this.mcService.getMcsByParent(null, 'products', true);
+            }
+        }))
+            .subscribe(function (res) {
+            _this.mcs = res.data;
+        }, function (err) { return console.log('помилка завантаження категорій', err); });
+    };
+    McEditorComponent.prototype.addParents = function () {
+        var control = this.catalogForm.get('parents');
+        control.push(this.initParents());
+    };
+    McEditorComponent.prototype.removeParents = function (i) {
+        var control = this.catalogForm.get('parents');
+        control.removeAt(i);
+    };
+    McEditorComponent.prototype.initParents = function () {
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
+        ]);
+    };
+    McEditorComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-mc-editor',
+            template: __webpack_require__(/*! ./mc-editor.component.html */ "./src/app/components/dashboard/mc-editor/mc-editor.component.html"),
+            styles: [__webpack_require__(/*! ./mc-editor.component.scss */ "./src/app/components/dashboard/mc-editor/mc-editor.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_services_catalog_service__WEBPACK_IMPORTED_MODULE_2__["CatalogService"],
+            src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_5__["McService"]])
+    ], McEditorComponent);
+    return McEditorComponent;
 }());
 
 
@@ -1095,7 +1312,7 @@ var ProductEditorComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n\n    <div class=\"container\">\n      <div class=\"row\">\n        <div class=\"cell\">\n          <h2 class=\"mat-h2\">Інструменти</h2>\n        </div>\n      </div>\n\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">favicon32x32</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_32,h_32/' +\n                faviconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n      </div>\n\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\"> Logo 250x90</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_250,h_90/' +\n                logoFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">Logo 140x50</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_140,h_50/' +\n                logoFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n      </div>\n\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">512x512</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_512,h_512/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">384x384</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_384,h_384/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">192x192</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_192,h_192/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">152x152</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_152,h_152/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">144x144</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_144,h_144/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">128x128</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_128,h_128/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">96x96</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_96,h_96/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">72x72</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_72,h_72/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n\n\n      </div>\n    </div>\n\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"cell\">\r\n          <h2 class=\"mat-h2\">Інструменти</h2>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">favicon32x32</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_32,h_32/' +\r\n                faviconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\"> Logo 250x90</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_250,h_90/' +\r\n                logoFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">Logo 140x50</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_140,h_50/' +\r\n                logoFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">512x512</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_512,h_512/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">384x384</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_384,h_384/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">192x192</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_192,h_192/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">152x152</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_152,h_152/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">144x144</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_144,h_144/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">128x128</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_128,h_128/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">96x96</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_96,h_96/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">72x72</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_72,h_72/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n\r\n\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 

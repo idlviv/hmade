@@ -11,6 +11,9 @@ import { ToolsComponent } from './tools/tools.component';
 import { ProductCreateComponent } from './product-create/product-create.component';
 import { ProductEditorComponent } from './product-editor/product-editor.component';
 import { ProductEditorFormComponent } from './product-editor-form/product-editor-form.component';
+import { McEditorComponent } from './mc-editor/mc-editor.component';
+import { McEditorFormComponent } from './mc-editor-form/mc-editor-form.component';
+import { McsModule } from '../mcs/mcs.module';
 
 @NgModule({
   imports: [
@@ -21,6 +24,7 @@ import { ProductEditorFormComponent } from './product-editor-form/product-editor
     DashboardRoutingModule,
     UserModule,
     SharedModule,
+    McsModule,
   ],
   declarations: [
     DashboardComponent,
@@ -28,7 +32,9 @@ import { ProductEditorFormComponent } from './product-editor-form/product-editor
     ToolsComponent,
     ProductCreateComponent,
     ProductEditorComponent,
-    ProductEditorFormComponent
+    ProductEditorFormComponent,
+    McEditorComponent,
+    McEditorFormComponent
   ]
 })
 export class DashboardModule { }

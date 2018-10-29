@@ -16,12 +16,15 @@ import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.compon
     MaterialModule,
     ReactiveFormsModule,
   ],
+  exports: [
+    McsItemBriefComponent,
+  ],
   declarations: [
     McsComponent,
     McsListComponent,
     McsFiltersComponent,
     McsItemBriefComponent,
-    McsItemDetailComponent
+    McsItemDetailComponent,
   ]
 })
 export class McsModule { }

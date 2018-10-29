@@ -10,6 +10,8 @@ import { UserCreateComponent } from '../user/user-create/user-create.component';
 import { ProductCreateComponent } from './product-create/product-create.component';
 import { ProductEditorComponent } from './product-editor/product-editor.component';
 import { ProductEditorFormComponent } from './product-editor-form/product-editor-form.component';
+import { McEditorComponent } from './mc-editor/mc-editor.component';
+import { McEditorFormComponent } from './mc-editor-form/mc-editor-form.component';
 
 const dashboardRoutes: Routes = [
   {
@@ -50,6 +52,24 @@ const dashboardRoutes: Routes = [
       {
         path: 'product-editor-edit/:parentCategory_id/:parentCategoryName/:_id',
         component: ProductEditorFormComponent,
+        canActivate: [AuthGuard],
+        data: { auth: 'manager' },
+      },
+      {
+        path: 'mc-editor',
+        component: McEditorComponent,
+        canActivate: [AuthGuard],
+        data: { auth: 'manager' },
+      },
+      {
+        path: 'mc-editor-new/:parentCategory_id/:parentCategoryName',
+        component: McEditorFormComponent,
+        canActivate: [AuthGuard],
+        data: { auth: 'manager' },
+      },
+      {
+        path: 'mc-editor-edit/:parentCategory_id/:parentCategoryName/:_id',
+        component: McEditorFormComponent,
         canActivate: [AuthGuard],
         data: { auth: 'manager' },
       },

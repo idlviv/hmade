@@ -32,8 +32,7 @@ module.exports.getMcsByFilter = function(req, res, next) {
 
   if (noMoreChildren) {
     McModel
-        .find({parents: parent})        
-
+        .find({parents: parent})
         .sort({[sort]: sortOrder})
         .skip(skip)
         .limit(limit)
@@ -89,5 +88,41 @@ module.exports.getMcsByFilter = function(req, res, next) {
         ])
         .then((result) => res.status(200).json(result))
         .catch((err) => next(new DbError()));
+  }
+};
+
+module.exports.getMcsByParent = function(req, res, next) {
+  const parent = req.query.parent;
+  const displayFilter = req.query.display;
+  const collection = req.query.collection;
+
+  let query;
+  displayFilter === 'true' ?
+      query = {parents: parent, display: true} : query = {parents: parent};
+
+  log.debug('col', collection === 'mcs');
+  switch (collection) {
+    case 'products':
+      ProductModel.find(query)
+          .sort({order: 1})
+          .then((result) =>
+            res.status(200).json(new ResObj(
+                true, 'Продукти категорії' + parent, result)
+            ))
+          .catch((err) => next(new DbError())
+          );
+      break;
+    case 'mcs':
+      McModel.find(query)
+          .sort({order: 1})
+          .then((result) =>
+            res.status(200).json(new ResObj(
+                true, 'Майстеркласи категорії' + parent, result)
+            ))
+          .catch((err) => next(new DbError())
+          );
+      break;
+    default:
+      return next(new ApplicationError('Немає такої колекції ' + collection));
   }
 };
