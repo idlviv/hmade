@@ -299,7 +299,7 @@ var McsItemDetailComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngFor=\"let mc of mcs\" class=\"row\" fxLayout=\"row\">\r\n  <app-mcs-item-brief [mc]=\"mc\" class=\"cell\" fxFlex=\"100\"></app-mcs-item-brief>\r\n</div>\r\n"
+module.exports = "<div *ngFor=\"let mc of mcs\" class=\"row\" fxLayout=\"row\">\r\n  <app-mcs-item-brief [mc]=\"mc\" class=\"cell\" fxFlex=\"100\"></app-mcs-item-brief>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
