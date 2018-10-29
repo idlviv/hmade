@@ -1,6 +1,6 @@
 <mat-card>
   <mat-card-content class="wrap" fxLayot="row">
-    <div *ngIf="product && config.social.useSocial" class="container-px0" fxFlex="100">
+    <div *ngIf="product" class="container-px0" fxFlex="100">
       <div class="row" fxLayout="row">
           <section class="cell-px0 social-feed-section" fxFlex="100" fxLayout="row">
               <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
@@ -22,7 +22,7 @@
           </section>
         </div>
     </div>
-    
+
     <div class="mat-card-wide-image" fxLayout="row">
 
       <!-- product level (no children)-->

@@ -21,6 +21,14 @@ module.exports.getMcs = function(req, res, next) { // tmp
       .catch((err) => next(new DbError()));
 };
 
+module.exports.getMcById = function(req, res, next) {
+  _id = req.params._id;
+  McModel.findById({_id})
+      .then((result) =>
+        res.status(200).json(result))
+      .catch((err) => next(new DbError()));
+};
+
 module.exports.getMcsByFilter = function(req, res, next) {
   const parent = req.query.parent;
   const sort = req.query.sort;

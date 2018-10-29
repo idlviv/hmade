@@ -62,13 +62,13 @@ const dashboardRoutes: Routes = [
         data: { auth: 'manager' },
       },
       {
-        path: 'mc-editor-new/:parentCategory_id/:parentCategoryName',
+        path: 'mc/new/:parent_id',
         component: McEditorFormComponent,
         canActivate: [AuthGuard],
         data: { auth: 'manager' },
       },
       {
-        path: 'mc-editor-edit/:parentCategory_id/:parentCategoryName/:_id',
+        path: 'mc/edit/:_id',
         component: McEditorFormComponent,
         canActivate: [AuthGuard],
         data: { auth: 'manager' },

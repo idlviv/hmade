@@ -34,7 +34,7 @@
             <div class="preview-div-processing">
               <div class="button-wrapper">
                 <button mat-mini-fab color="primary" type="button"
-                        [routerLink]="['/dashboard', 'product-editor-new', parentCategory_id, parentCategoryName]"
+                        [routerLink]="['/dashboard', 'mc/new', parentCategory_id]"
                         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
                   <mat-icon>add</mat-icon>
                 </button>
@@ -43,8 +43,8 @@
           </div>
         </div>
         <div *ngFor="let mc of mcs"  class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
-          <app-mcs-item-brief [mc]="mc" [parentCategory_id]="parentCategory_id" 
-          [parentCategoryName]="parentCategoryName"></app-mcs-item-brief>
+          <app-mcs-item-brief [mc]="mc" [parentCategory_id]="parentCategory_id"
+          ></app-mcs-item-brief>
         </div>
 
       </div>

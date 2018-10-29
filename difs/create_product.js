@@ -14,11 +14,11 @@ db.getCollection('mcs')
         mainImage: 'default_product',
         menuImage: 'default_product',
         views: 5,
-        comments: {
+        comments: [{
           comment: 'comment comment comment comment',
           commentator: 'hsdfsjdf',
           commentedAt: 1539004428500,
-        },
+        }],
         likes: 10,
         dislikes: 10,
       },
@@ -34,11 +34,11 @@ db.getCollection('mcs')
         mainImage: 'default_product',
         menuImage: 'default_product',
         views: 15,
-        comments: {
+        comments: [{
           comment: 'comment comment comment comment',
           commentator: 'hsdfsjdf',
           commentedAt: 1539004428500,
-        },
+        }],
         likes: 10,
         dislikes: 10,
       },
@@ -54,11 +54,11 @@ db.getCollection('mcs')
         mainImage: 'default_product',
         menuImage: 'default_product',
         views: 1,
-        comments: {
+        comments: [{
           comment: 'comment comment comment comment',
           commentator: 'hsdfsjdf',
           commentedAt: 1539004428500,
-        },
+        }],
         likes: 10,
         dislikes: 10,
       },
@@ -74,11 +74,6 @@ db.getCollection('mcs')
         mainImage: 'default_product',
         menuImage: 'default_product',
         views: 1,
-        comments: {
-          comment: 'comment comment comment comment',
-          commentator: 'hsdfsjdf',
-          commentedAt: 1539004428500,
-        },
         likes: 10,
         dislikes: 10,
       },

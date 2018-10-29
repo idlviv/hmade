@@ -21,6 +21,10 @@ router.get('/mc/get-mcs', // tmp
     mcController.getMcs
 );
 
+router.get('/mc/get-mc-by-id/:_id',
+    mcController.getMcById
+);
+
 router.get('/mc/get-mcs-by-filter',
     mcController.getMcsByFilter
 );

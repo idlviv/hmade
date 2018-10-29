@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n\r\n\r\n  <form [formGroup]=\"filterForm\" novalidate>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n        <mat-form-field>\r\n          <mat-select formControlName=\"mcSort\" placeholder=\"Відсортувати\" (selectionChange)=\"onSelectMcSort($event)\">\r\n            <mat-option *ngFor=\"let mcSortOption of config.mcSortOptions\" [value]=\"mcSortOption.value\">\r\n              {{mcSortOption.name}}\r\n            </mat-option>\r\n          </mat-select>\r\n        </mat-form-field>\r\n      </div>\r\n      <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\r\n          *ngFor=\"let categoryBlock of filterForm.get('parents')['controls']; let i = index\">\r\n        <mat-form-field>\r\n          <mat-select placeholder=\"Фільтр\" formControlName=\"{{i}}\" required\r\n                      (selectionChange)=\"onSelectMcFilter($event, i)\">\r\n            <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\r\n              {{child.name}}\r\n            </mat-option>\r\n          </mat-select>\r\n        </mat-form-field>\r\n      </div>\r\n    </div>\r\n\r\n  </form>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"container\">\n\n\n  <form [formGroup]=\"filterForm\" novalidate>\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\n        <mat-form-field>\n          <mat-select formControlName=\"mcSort\" placeholder=\"Відсортувати\" (selectionChange)=\"onSelectMcSort($event)\">\n            <mat-option *ngFor=\"let mcSortOption of config.mcSortOptions\" [value]=\"mcSortOption.value\">\n              {{mcSortOption.name}}\n            </mat-option>\n          </mat-select>\n        </mat-form-field>\n      </div>\n      <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\n          *ngFor=\"let categoryBlock of filterForm.get('parents')['controls']; let i = index\">\n        <mat-form-field>\n          <mat-select placeholder=\"Фільтр\" formControlName=\"{{i}}\" required\n                      (selectionChange)=\"onSelectMcFilter($event, i)\">\n            <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\n              {{child.name}}\n            </mat-option>\n          </mat-select>\n        </mat-form-field>\n      </div>\n    </div>\n\n  </form>\n</div>\n\n"
 
 /***/ }),
 
@@ -156,7 +156,7 @@ var McsFiltersComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card>\r\n  <mat-card-content>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div *ngIf=\"config.social.useSocial\" class=\"container-px0\" fxFlex=\"100\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <section class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\">\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                <mat-icon>thumb_up_alt</mat-icon>\r\n                <span>{{mc.likes}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                  <mat-icon>thumb_down_alt</mat-icon>\r\n                  <span>{{mc.dislikes}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showViews\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>remove_red_eye</mat-icon>\r\n                  <span>{{mc.views}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showComments\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>comment</mat-icon>\r\n                  <span>{{mc.comments.length}}</span>\r\n              </div>\r\n               <div class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>calendar_today</mat-icon>\r\n                  <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>\r\n              </div>\r\n          </section>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <h2 class=\"mat-h2\">\r\n          {{mc.name}}\r\n        </h2>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"20\">\r\n        <p class=\"mat-body\">\r\n          {{mc | json}}\r\n        </p>\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"80\">\r\n        <p class=\"mat-body\">\r\n          {{mc.description}}\r\n        </p>\r\n      </div>\r\n    </div>\r\n  </mat-card-content>\r\n</mat-card>\r\n\r\n"
+module.exports = "<mat-card>\r\n  <mat-card-content>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"container-px0\" fxFlex=\"100\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <section class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\">\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                <mat-icon>thumb_up_alt</mat-icon>\r\n                <span>{{mc.likes}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                  <mat-icon>thumb_down_alt</mat-icon>\r\n                  <span>{{mc.dislikes}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showViews\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>remove_red_eye</mat-icon>\r\n                  <span>{{mc.views}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showComments\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>comment</mat-icon>\r\n                  <span>{{mc.comments?.length || 0}}</span>\r\n              </div>\r\n               <div class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>calendar_today</mat-icon>\r\n                  <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>\r\n              </div>\r\n          </section>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <h2 class=\"mat-h2\">\r\n          {{mc.name}}\r\n        </h2>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"20\">\r\n        <p class=\"mat-body\">\r\n          {{mc | json}}\r\n        </p>\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"80\">\r\n        <p class=\"mat-body\">\r\n          {{mc.description}}\r\n        </p>\r\n      </div>\r\n    </div>\r\n  </mat-card-content>\r\n  <mat-card-actions>\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <section class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\" fxLayoutAlign=\"space-around center\">\r\n          <div class=\"item text-align-center muted\" fxFlex>\r\n            <a mat-button (click)=goToMcsItemDetail(mc._id)>\r\n              <!-- [routerLink]=\"['/mcs', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]\"\r\n              [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\"> -->\r\n              Докладно\r\n           </a>\r\n\r\n          </div>\r\n          <div *ngIf=\"user\" class=\"item text-align-center muted\" fxFlex>\r\n            <a mat-button (click)=editMcsItem(mc._id)>\r\n              <mat-icon>edit</mat-icon>\r\n            </a>\r\n          </div>\r\n          <div *ngIf=\"user\" class=\"item text-align-center muted\" fxFlex>\r\n            <a mat-button (click)=deleteMcsItem(mc._id)>\r\n              <mat-icon>delete</mat-icon>\r\n            </a>\r\n          </div>\r\n\r\n        </section>\r\n    </div>\r\n  </mat-card-actions>\r\n</mat-card>\r\n\r\n"
 
 /***/ }),
 
@@ -183,6 +183,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McsItemBriefComponent", function() { return McsItemBriefComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -194,33 +196,55 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
 var McsItemBriefComponent = /** @class */ (function () {
-    function McsItemBriefComponent() {
+    function McsItemBriefComponent(userService, router) {
+        this.userService = userService;
+        this.router = router;
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"];
     }
     McsItemBriefComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.userService.getUserLocal()
+            .subscribe(function (user) { return _this.user = user; });
     };
     McsItemBriefComponent.prototype.ngOnChanges = function (changes) {
         var productChange = changes.mc;
-        console.log('prev value: ', productChange.previousValue);
-        console.log('got name: ', productChange.currentValue);
-        console.log('productChange: ', productChange);
+        // console.log('prev value: ', productChange.previousValue);
+        // console.log('got name: ', productChange.currentValue);
+        // console.log('productChange: ', productChange);
         if (productChange) {
-            console.log('simple changes product');
+            // console.log('simple changes product');
             // this.getRecommendations();
         }
+    };
+    McsItemBriefComponent.prototype.goToMcsItemDetail = function (_id) {
+        console.log("goToMcsItemDetail " + _id);
+    };
+    McsItemBriefComponent.prototype.editMcsItem = function (_id) {
+        console.log("editMcsItem " + _id);
+        this.router.navigate(['/dashboard', 'mc', 'edit', _id]);
+    };
+    McsItemBriefComponent.prototype.deleteMcsItem = function (_id) {
+        console.log("deleteMcsItem " + _id);
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Object)
     ], McsItemBriefComponent.prototype, "mc", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], McsItemBriefComponent.prototype, "parentCategory_id", void 0);
     McsItemBriefComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-mcs-item-brief',
             template: __webpack_require__(/*! ./mcs-item-brief.component.html */ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.html"),
             styles: [__webpack_require__(/*! ./mcs-item-brief.component.scss */ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
     ], McsItemBriefComponent);
     return McsItemBriefComponent;
 }());
@@ -236,7 +260,7 @@ var McsItemBriefComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  mcs-item-detail works!\n</p>\n"
+module.exports = "<p>\r\n  mcs-item-detail works!\r\n</p>\r\n"
 
 /***/ }),
 
@@ -463,7 +487,7 @@ var McsRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container\">\r\n  <div class=\"container\">\r\n    <router-outlet name=\"mcsFilters\"></router-outlet>\r\n  </div>\r\n</div>\r\n<div class=\"app-container\">\r\n  <div class=\"container\">\r\n    <router-outlet></router-outlet>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"app-container\">\n  <div class=\"container\">\n    <router-outlet name=\"mcsFilters\"></router-outlet>\n  </div>\n</div>\n<div class=\"app-container\">\n  <div class=\"container\">\n    <router-outlet></router-outlet>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -625,6 +649,21 @@ var McService = /** @class */ (function () {
             }),
         };
         return this.http.get('api/mc/get-mcs', httpOptions);
+    };
+    /**
+     *
+     *
+     * @param {string} _id
+     * @returns {Observable<any>}
+     * @memberof McService
+     */
+    McService.prototype.getMcById = function (_id) {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            }),
+        };
+        return this.http.get('api/mc/get-mc-by-id/' + _id, httpOptions);
     };
     /**
      * return children

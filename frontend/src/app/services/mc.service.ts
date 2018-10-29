@@ -31,6 +31,26 @@ export class McService {
     );
   }
 
+
+  /**
+   *
+   *
+   * @param {string} _id
+   * @returns {Observable<any>}
+   * @memberof McService
+   */
+  getMcById(_id: string): Observable<any>  {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http.get<any>(
+      'api/mc/get-mc-by-id/' + _id,
+      httpOptions
+    );
+  }
+
   /**
    * return children
    *

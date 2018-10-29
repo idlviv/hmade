@@ -9,7 +9,6 @@ export const config = {
   icon: 'hmade_icon',
 
   social: {
-    useSocial: true,
     showLikes: true,
     showViews: true,
     showComments: true,

@@ -1,7 +1,7 @@
 <mat-card>
   <mat-card-content>
     <div class="row" fxLayout="row">
-      <div *ngIf="config.social.useSocial" class="container-px0" fxFlex="100">
+      <div class="container-px0" fxFlex="100">
         <div class="row" fxLayout="row">
           <section class="cell-px0 social-feed-section" fxFlex="100" fxLayout="row">
               <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
@@ -18,7 +18,7 @@
               </div>
               <div *ngIf="config.social.showComments" class="item text-align-center muted" fxFlex>
                   <mat-icon>comment</mat-icon>
-                  <span>{{mc.comments.length}}</span>
+                  <span>{{mc.comments?.length || 0}}</span>
               </div>
                <div class="item text-align-center muted" fxFlex>
                   <mat-icon>calendar_today</mat-icon>
@@ -48,5 +48,30 @@
       </div>
     </div>
   </mat-card-content>
+  <mat-card-actions>
+      <div class="row" fxLayout="row">
+        <section class="cell-px0 social-feed-section" fxFlex="100" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="item text-align-center muted" fxFlex>
+            <a mat-button (click)=goToMcsItemDetail(mc._id)>
+              <!-- [routerLink]="['/mcs', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]"
+              [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}"> -->
+              Докладно
+           </a>
+
+          </div>
+          <div *ngIf="user" class="item text-align-center muted" fxFlex>
+            <a mat-button (click)=editMcsItem(mc._id)>
+              <mat-icon>edit</mat-icon>
+            </a>
+          </div>
+          <div *ngIf="user" class="item text-align-center muted" fxFlex>
+            <a mat-button (click)=deleteMcsItem(mc._id)>
+              <mat-icon>delete</mat-icon>
+            </a>
+          </div>
+
+        </section>
+    </div>
+  </mat-card-actions>
 </mat-card>
 
