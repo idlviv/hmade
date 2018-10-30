@@ -265,7 +265,7 @@ var McsItemBriefComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  mcs-item-detail works!\n</p>\n"
+module.exports = "<p>\r\n  mcs-item-detail works!\r\n</p>\r\n"
 
 /***/ }),
 
@@ -383,7 +383,6 @@ var McsListComponent = /** @class */ (function () {
         var _this = this;
         this.route.queryParams
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function (queryParams) {
-            console.log('query params', queryParams);
             if (queryParams.mcSortValue) {
                 // if passed mc sort value
                 _this.mcSortValue = queryParams.mcSortValue;
@@ -395,17 +394,14 @@ var McsListComponent = /** @class */ (function () {
             if (queryParams.mcFilterValue) {
                 // if passed mc sort value
                 _this.mcFilterValue = queryParams.mcFilterValue;
-                console.log('not null');
                 return _this.mcService.getMcsByFilter(_this.mcFilterValue, _this.mcSortValue, -1, 0, 10, queryParams.noMoreChildren);
             }
             else {
-                console.log('null');
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(null);
             }
         }))
             .subscribe(function (result) {
             _this.mcs = result;
-            console.log('this.mcs', _this.mcs);
         }, function (err) { return console.log(err); });
     };
     McsListComponent = __decorate([
@@ -492,7 +488,7 @@ var McsRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container\">\r\n  <div class=\"container\">\r\n    <router-outlet name=\"mcsFilters\"></router-outlet>\r\n  </div>\r\n</div>\r\n<div class=\"app-container\">\r\n  <div class=\"container\">\r\n    <router-outlet></router-outlet>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"app-container\">\n  <div class=\"container\">\n    <router-outlet name=\"mcsFilters\"></router-outlet>\n  </div>\n</div>\n<div class=\"app-container\">\n  <div class=\"container\">\n    <router-outlet></router-outlet>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -659,7 +655,7 @@ var McService = /** @class */ (function () {
      *
      *
      * @param {string} _id
-     * @returns {Observable<any>}
+     * @returns {Observable<IMc>}
      * @memberof McService
      */
     McService.prototype.getMcById = function (_id) {
@@ -675,7 +671,7 @@ var McService = /** @class */ (function () {
      *
      * @param {string} parent
      * @param {boolean} [displayFilter]
-     * @returns {Observable<[any]>}
+     * @returns {Observable<IMc[]>}
      * @memberof McService
      */
     McService.prototype.getMcsByParent = function (parent, displayFilter) {
@@ -700,7 +696,7 @@ var McService = /** @class */ (function () {
      * @param {number} [sortOrder=1]
      * @param {number} [skip=0]
      * @param {number} [limit=10]
-     * @returns {Observable<[any]>}
+     * @returns {Observable<IMc[]>}
      * @memberof McService
      */
     McService.prototype.getMcsByFilter = function (parent, sort, sortOrder, skip, limit, noMoreChildren) {

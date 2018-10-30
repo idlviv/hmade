@@ -1021,6 +1021,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
 var AsyncSubject_1 = __webpack_require__(/*! ../AsyncSubject */ "./node_modules/rxjs/internal/AsyncSubject.js");
 var map_1 = __webpack_require__(/*! ../operators/map */ "./node_modules/rxjs/internal/operators/map.js");
+var canReportError_1 = __webpack_require__(/*! ../util/canReportError */ "./node_modules/rxjs/internal/util/canReportError.js");
 var isArray_1 = __webpack_require__(/*! ../util/isArray */ "./node_modules/rxjs/internal/util/isArray.js");
 var isScheduler_1 = __webpack_require__(/*! ../util/isScheduler */ "./node_modules/rxjs/internal/util/isScheduler.js");
 function bindCallback(callbackFunc, resultSelector, scheduler) {
@@ -1067,7 +1068,12 @@ function bindCallback(callbackFunc, resultSelector, scheduler) {
                         callbackFunc.apply(context, args.concat([handler]));
                     }
                     catch (err) {
-                        subject.error(err);
+                        if (canReportError_1.canReportError(subject)) {
+                            subject.error(err);
+                        }
+                        else {
+                            console.warn(err);
+                        }
                     }
                 }
                 return subject.subscribe(subscriber);
@@ -1133,6 +1139,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
 var AsyncSubject_1 = __webpack_require__(/*! ../AsyncSubject */ "./node_modules/rxjs/internal/AsyncSubject.js");
 var map_1 = __webpack_require__(/*! ../operators/map */ "./node_modules/rxjs/internal/operators/map.js");
+var canReportError_1 = __webpack_require__(/*! ../util/canReportError */ "./node_modules/rxjs/internal/util/canReportError.js");
 var isScheduler_1 = __webpack_require__(/*! ../util/isScheduler */ "./node_modules/rxjs/internal/util/isScheduler.js");
 var isArray_1 = __webpack_require__(/*! ../util/isArray */ "./node_modules/rxjs/internal/util/isArray.js");
 function bindNodeCallback(callbackFunc, resultSelector, scheduler) {
@@ -1185,7 +1192,12 @@ function bindNodeCallback(callbackFunc, resultSelector, scheduler) {
                         callbackFunc.apply(context, args.concat([handler]));
                     }
                     catch (err) {
-                        subject.error(err);
+                        if (canReportError_1.canReportError(subject)) {
+                            subject.error(err);
+                        }
+                        else {
+                            console.warn(err);
+                        }
                     }
                 }
                 return subject.subscribe(subscriber);
@@ -2451,6 +2463,7 @@ var ZipSubscriber = (function (_super) {
     ZipSubscriber.prototype._complete = function () {
         var iterators = this.iterators;
         var len = iterators.length;
+        this.unsubscribe();
         if (len === 0) {
             this.destination.complete();
             return;
@@ -2459,7 +2472,8 @@ var ZipSubscriber = (function (_super) {
         for (var i = 0; i < len; i++) {
             var iterator = iterators[i];
             if (iterator.stillUnsubscribed) {
-                this.add(iterator.subscribe(iterator, i));
+                var destination = this.destination;
+                destination.add(iterator.subscribe(iterator, i));
             }
             else {
                 this.active--;
@@ -3017,7 +3031,8 @@ var MergeMapSubscriber = (function (_super) {
     };
     MergeMapSubscriber.prototype._innerSub = function (ish, value, index) {
         var innerSubscriber = new InnerSubscriber_1.InnerSubscriber(this, undefined, undefined);
-        this.add(innerSubscriber);
+        var destination = this.destination;
+        destination.add(innerSubscriber);
         subscribeToResult_1.subscribeToResult(this, ish, value, index, innerSubscriber);
     };
     MergeMapSubscriber.prototype._complete = function () {
@@ -3025,6 +3040,7 @@ var MergeMapSubscriber = (function (_super) {
         if (this.active === 0 && this.buffer.length === 0) {
             this.destination.complete();
         }
+        this.unsubscribe();
     };
     MergeMapSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
         this.destination.next(innerValue);
@@ -3106,16 +3122,19 @@ var ObserveOnSubscriber = (function (_super) {
         this.unsubscribe();
     };
     ObserveOnSubscriber.prototype.scheduleMessage = function (notification) {
-        this.add(this.scheduler.schedule(ObserveOnSubscriber.dispatch, this.delay, new ObserveOnMessage(notification, this.destination)));
+        var destination = this.destination;
+        destination.add(this.scheduler.schedule(ObserveOnSubscriber.dispatch, this.delay, new ObserveOnMessage(notification, this.destination)));
     };
     ObserveOnSubscriber.prototype._next = function (value) {
         this.scheduleMessage(Notification_1.Notification.createNext(value));
     };
     ObserveOnSubscriber.prototype._error = function (err) {
         this.scheduleMessage(Notification_1.Notification.createError(err));
+        this.unsubscribe();
     };
     ObserveOnSubscriber.prototype._complete = function () {
         this.scheduleMessage(Notification_1.Notification.createComplete());
+        this.unsubscribe();
     };
     return ObserveOnSubscriber;
 }(Subscriber_1.Subscriber));
@@ -4563,7 +4582,7 @@ var DashboardModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  mc-editor-form works!\n</p>\n"
+module.exports = "<p>\r\n  mc-editor-form works!\r\n</p>\r\n"
 
 /***/ }),
 
@@ -4589,12 +4608,13 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McEditorFormComponent", function() { return McEditorFormComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
+/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4611,70 +4631,43 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var McEditorFormComponent = /** @class */ (function () {
-    function McEditorFormComponent(mcService, route) {
+    function McEditorFormComponent(mcService, route, location) {
         this.mcService = mcService;
         this.route = route;
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_6__["config"];
+        this.location = location;
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_7__["config"];
     }
     McEditorFormComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.mcForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
-            _id: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]({ value: '', disabled: false }, [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[a-z0-9]+'),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(7),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(7),
+        this.mcForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+            _id: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]({ value: '', disabled: false }, [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-z0-9]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(7),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(7),
             ]),
-            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(4),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(30),
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(30),
             ]),
-            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(4),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(200),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(200),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
             ]),
-            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormArray"]([]),
-            display: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](true, []),
-            onMainPage: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](false, []),
-            mainImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](this.config.defaultProductImg, []),
-            menuImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](this.config.defaultProductImg, []),
-            pics: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormArray"]([]),
-            materials: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
-                name: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(3),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(20),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
-                ]),
-                quantity: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[0-9]+'),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(4),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
-                ]),
-                units: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(1),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(7),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
-                ]),
-            }),
-            steps: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
-                pic: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
-                ]),
-                description: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(4),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(200),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
-                ]),
-            }),
+            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormArray"]([]),
+            display: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](true, []),
+            onMainPage: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](false, []),
+            mainImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](this.config.defaultProductImg, []),
+            pics: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormArray"]([]),
+            materials: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormArray"]([]),
+            steps: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormArray"]([])
         });
-        this.route.url.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (url) {
+        this.route.url.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function (url) {
             switch (url[1].path) {
                 case 'new':
                     _this.editMode = false;
@@ -4685,26 +4678,119 @@ var McEditorFormComponent = /** @class */ (function () {
                 default: throw new Error('url error');
             }
             return _this.route.paramMap;
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (params) {
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function (params) {
             if (_this.editMode) {
                 _this.paramEdited_id = params.get('_id');
                 return _this.mcService.getMcById(_this.paramEdited_id);
             }
             else {
                 _this.paramParent_id = params.get('parent_id');
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(null);
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(null);
             }
         }))
-            .subscribe(function (result) { return console.log('result', result); }, function (err) { return console.log(err.message); });
+            .subscribe(function (mc) {
+            if (_this.editMode) {
+                // save parents
+                _this.parents = mc.parents;
+                mc.pics.forEach(function (element) {
+                    _this.addControl('pics');
+                });
+                mc.materials.forEach(function (element) {
+                    _this.addMaterialsControl();
+                });
+                _this.mcForm.patchValue(mc);
+                console.log('mcForm', _this.mcForm);
+            }
+            else {
+                // create parents []
+                _this.parents = [_this.paramParent_id];
+            }
+        }, function (err) { return console.log(err.message); });
     };
+    McEditorFormComponent.prototype.resetForm = function () {
+        this.mcFormDirective.resetForm();
+    };
+    McEditorFormComponent.prototype.goBack = function () {
+        this.location.back();
+    };
+    McEditorFormComponent.prototype.addStepsControl = function () {
+        var control = this.mcForm.get('steps');
+        control.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+            pic: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+            ]),
+            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(200),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+            ]),
+        }));
+    };
+    McEditorFormComponent.prototype.addMaterialsControl = function () {
+        var control = this.mcForm.get('materials');
+        control.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(3),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(20),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+            ]),
+            quantity: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[0-9]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+            ]),
+            units: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(1),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(7),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+            ]),
+        }));
+    };
+    /**
+     *
+     *
+     * @param {string} formField
+     * @param {*} [formState=null] // initialization
+     * @param {ValidatorFn[]} [validators=[]] //validators
+     * @memberof McEditorFormComponent
+     */
+    McEditorFormComponent.prototype.addControl = function (formField, formState, validators) {
+        if (formState === void 0) { formState = null; }
+        if (validators === void 0) { validators = []; }
+        var control = this.mcForm.get(formField);
+        control.push(this.initControl(validators, formState));
+    };
+    /**
+     *
+     *
+     * @param {string} formField
+     * @param {number} position // position which removes
+     * @memberof McEditorFormComponent
+     */
+    McEditorFormComponent.prototype.removeControl = function (formControl, position) {
+        var control = this.mcForm.get(formControl);
+        control.removeAt(position);
+    };
+    McEditorFormComponent.prototype.initControl = function (validators, formState) {
+        if (formState === void 0) { formState = null; }
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](formState, validators);
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('f'),
+        __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroupDirective"])
+    ], McEditorFormComponent.prototype, "mcFormDirective", void 0);
     McEditorFormComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-mc-editor-form',
             template: __webpack_require__(/*! ./mc-editor-form.component.html */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.html"),
             styles: [__webpack_require__(/*! ./mc-editor-form.component.scss */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.scss")]
         }),
-        __metadata("design:paramtypes", [src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_1__["McService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"]])
+        __metadata("design:paramtypes", [src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_2__["McService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"],
+            _angular_common__WEBPACK_IMPORTED_MODULE_1__["Location"]])
     ], McEditorFormComponent);
     return McEditorFormComponent;
 }());
@@ -5588,7 +5674,7 @@ var ProductEditorComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"cell\">\r\n          <h2 class=\"mat-h2\">Інструменти</h2>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">favicon32x32</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_32,h_32/' +\r\n                faviconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\"> Logo 250x90</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_250,h_90/' +\r\n                logoFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">Logo 140x50</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_140,h_50/' +\r\n                logoFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">512x512</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_512,h_512/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">384x384</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_384,h_384/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">192x192</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_192,h_192/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">152x152</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_152,h_152/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">144x144</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_144,h_144/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">128x128</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_128,h_128/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">96x96</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_96,h_96/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">72x72</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_72,h_72/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n\r\n\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n\n    <div class=\"container\">\n      <div class=\"row\">\n        <div class=\"cell\">\n          <h2 class=\"mat-h2\">Інструменти</h2>\n        </div>\n      </div>\n\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">favicon32x32</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_32,h_32/' +\n                faviconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n      </div>\n\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\"> Logo 250x90</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_250,h_90/' +\n                logoFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">Logo 140x50</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_140,h_50/' +\n                logoFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n      </div>\n\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">512x512</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_512,h_512/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">384x384</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_384,h_384/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">192x192</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_192,h_192/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">152x152</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_152,h_152/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">144x144</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_144,h_144/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">128x128</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_128,h_128/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">96x96</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_96,h_96/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">72x72</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_72,h_72/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n\n\n      </div>\n    </div>\n\n  </div>\n</div>\n"
 
 /***/ }),
 

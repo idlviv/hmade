@@ -34,10 +34,6 @@ const McSchema = new Schema({
     type: String,
     required: true,
   },
-  menuImage: {
-    type: String,
-    required: true,
-  },
   pics: {
     type: [String],
   },
@@ -54,16 +50,19 @@ const McSchema = new Schema({
       },
     },
   ],
-  steps: [
-    {
-      pic: {
-        type: String,
+  steps: {
+    required: true,
+    type: [
+      {
+        pic: {
+          type: String,
+        },
+        description: {
+          type: String,
+        },
       },
-      description: {
-        type: String,
-      },
-    },
-  ],
+    ],
+  },
   createdAt: {
     type: Number,
     default: 0,

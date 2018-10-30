@@ -44,3 +44,42 @@ export interface IDesignProducts {
   name: string;
   category_id: string[];
 }
+
+export interface IMc {
+  _id: string;
+  name: string;
+  description: string;
+  parents: string[];
+  display: boolean;
+  onMainPage: boolean;
+  mainImage: string;
+  pics: string[];
+  materials?: [
+    {
+      name: string,
+      quantity: number,
+      units: string
+    }
+  ];
+  steps: [
+    {
+      pic: string,
+      description: string
+    }
+  ];
+  createdAt?: number;
+  updatedAt?: number;
+  likes?: number;
+  likedBy?: string[];
+  dislikes?: number;
+  dislikedBy?: string[];
+  views?: number;
+  comments: IComment[];
+}
+
+export interface IComment {
+  comment: string;
+  commentator: string;
+  commentedAt: number;
+}
+

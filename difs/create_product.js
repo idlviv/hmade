@@ -12,7 +12,6 @@ db.getCollection('mcs')
         display: true,
         onMainPage: true,
         mainImage: 'default_product',
-        menuImage: 'default_product',
         views: 5,
         comments: [{
           comment: 'comment comment comment comment',
@@ -32,7 +31,6 @@ db.getCollection('mcs')
         display: true,
         onMainPage: true,
         mainImage: 'default_product',
-        menuImage: 'default_product',
         views: 15,
         comments: [{
           comment: 'comment comment comment comment',
@@ -52,7 +50,6 @@ db.getCollection('mcs')
         display: true,
         onMainPage: true,
         mainImage: 'default_product',
-        menuImage: 'default_product',
         views: 1,
         comments: [{
           comment: 'comment comment comment comment',
@@ -72,7 +69,6 @@ db.getCollection('mcs')
         display: true,
         onMainPage: true,
         mainImage: 'default_product',
-        menuImage: 'default_product',
         views: 1,
         likes: 10,
         dislikes: 10,

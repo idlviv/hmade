@@ -25,7 +25,6 @@ export class McsListComponent implements OnInit {
     .pipe(
       mergeMap(
         queryParams => {
-          console.log('query params', queryParams);
           if (queryParams.mcSortValue) {
             // if passed mc sort value
             this.mcSortValue = queryParams.mcSortValue;
@@ -36,10 +35,8 @@ export class McsListComponent implements OnInit {
           if (queryParams.mcFilterValue) {
             // if passed mc sort value
             this.mcFilterValue = queryParams.mcFilterValue;
-            console.log('not null');
             return this.mcService.getMcsByFilter(this.mcFilterValue, this.mcSortValue, -1, 0, 10, queryParams.noMoreChildren);
           } else {
-            console.log('null');
             return of(null);
           }
         }
@@ -47,7 +44,6 @@ export class McsListComponent implements OnInit {
     )
     .subscribe((result) => {
       this.mcs = result;
-      console.log('this.mcs', this.mcs);
     },
       err => console.log(err)
     );
