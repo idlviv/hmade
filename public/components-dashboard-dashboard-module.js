@@ -4593,6 +4593,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4607,17 +4609,71 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var McEditorFormComponent = /** @class */ (function () {
     function McEditorFormComponent(mcService, route) {
         this.mcService = mcService;
         this.route = route;
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_6__["config"];
     }
     McEditorFormComponent.prototype.ngOnInit = function () {
-        // this.route.queryParamMap
-        // .pipe(
-        //   mergeMap(
-        //     queryParams => {
         var _this = this;
+        this.mcForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
+            _id: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]({ value: '', disabled: false }, [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[a-z0-9]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(7),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(7),
+            ]),
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(30),
+            ]),
+            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(200),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+            ]),
+            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormArray"]([]),
+            display: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](true, []),
+            onMainPage: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](false, []),
+            mainImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](this.config.defaultProductImg, []),
+            menuImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"](this.config.defaultProductImg, []),
+            pics: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormArray"]([]),
+            materials: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
+                name: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(3),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(20),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
+                ]),
+                quantity: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[0-9]+'),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(4),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
+                ]),
+                units: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(1),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(7),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
+                ]),
+            }),
+            steps: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
+                pic: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
+                ]),
+                description: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(4),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(200),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+                ]),
+            }),
+        });
         this.route.url.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (url) {
             switch (url[1].path) {
                 case 'new':
