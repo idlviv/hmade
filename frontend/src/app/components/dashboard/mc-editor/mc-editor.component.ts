@@ -49,20 +49,19 @@ export class McEditorComponent implements OnInit {
         if (!children.data.length) {
           // if no children - show products
           this.parentCategory_id = event.value;
-          this.parentCategoryName = event.source.triggerValue;
           this.noMoreChildren = true;
           this.children[level + 1] = children.data;
-          return this.mcService.getMcsByParent(event.value, 'products', false);
+          return this.mcService.getMcsByParent(event.value, false);
        } else {
           this.children[level + 1] = children.data;
           this.noMoreChildren = false;
           this.addParents();
-          return this.mcService.getMcsByParent(null, 'products', true);
+          return of(null);
         }
       })
     )
-    .subscribe(res => {
-      this.mcs = res.data;
+    .subscribe(result => {
+      this.mcs = result;
     },
       err => console.log('помилка завантаження категорій', err)
     );

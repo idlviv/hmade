@@ -4,6 +4,8 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { CatalogService } from 'src/app/services/catalog.service';
 import { mergeMap } from 'rxjs/operators';
+import { UserService } from 'src/app/services/user.service';
+import { IUser } from 'src/app/interfaces/user-interface';
 
 @Component({
   selector: 'app-mcs-filters',
@@ -14,9 +16,9 @@ export class McsFiltersComponent implements OnInit {
   children = [];
   config = config;
   filterForm: FormGroup;
-  parentCategory_id: string;
-  parentCategoryName: string;
+  parent_id: string;
   noMoreChildren = false;
+  user: IUser;
 
   mcSortValue: string;
   mcFilterValue: string;
@@ -24,9 +26,14 @@ export class McsFiltersComponent implements OnInit {
   constructor(
     private router: Router,
     private catalogService: CatalogService,
+    private userService: UserService,
   ) { }
 
   ngOnInit() {
+
+    this.userService.getUserLocal()
+    .subscribe(user => this.user = user);
+
     this.filterForm = new FormGroup({
       mcSort: new FormControl([]),
       parents : new FormArray([this.initParents()]),
@@ -70,21 +77,14 @@ export class McsFiltersComponent implements OnInit {
         children => {
           if (!children.data.length) {
             // if no children - show products
-            this.parentCategory_id = event.value;
-            // this.parentCategoryName = event.source.triggerValue;
+            this.parent_id = event.value;
             this.noMoreChildren = true;
             this.children[level + 1] = children.data;
-
-            // this.mcFilterValue = this.parentCategory_id;
             this.navigateTo();
-
-
-            // return this.productService.getProductsByParent(event.value, 'products', false);
         } else {
             this.children[level + 1] = children.data;
             this.noMoreChildren = false;
             this.addParents();
-            // this.mcFilterValue = this.parentCategory_id;
             this.navigateTo();
 
             // return this.productService.getProductsByParent(null, 'products', true);
@@ -102,7 +102,10 @@ export class McsFiltersComponent implements OnInit {
         noMoreChildren: this.noMoreChildren,
       }
     });
+  }
 
+  addMcsItem(parent_id) {
+    this.router.navigate(['/dashboard', 'mc', 'new', parent_id]);
   }
 
   addParents() {

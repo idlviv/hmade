@@ -23,6 +23,13 @@
           </mat-select>
         </mat-form-field>
       </div>
+      <div *ngIf="noMoreChildren" class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
+        <div *ngIf="user" class="item text-align-center muted" fxFlex>
+          <a mat-button (click)=addMcsItem(parent_id)>
+            <mat-icon>add</mat-icon> Додати майстерклас
+          </a>
+        </div>
+      </div>
     </div>
 
   </form>

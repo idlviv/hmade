@@ -36,6 +36,7 @@ export class McEditorFormComponent implements OnInit {
             case 'edit':
               this.editMode = true;
               break;
+            default: throw new Error('url error');
             }
             return this.route.paramMap;
           }
@@ -47,14 +48,14 @@ export class McEditorFormComponent implements OnInit {
               return this.mcService.getMcById(this.paramEdited_id);
             } else {
               this.paramParent_id = params.get('parent_id');
+              return of(null);
             }
-            console.log('paramMap', params);
-            return of(null);
           }
         )
       )
       .subscribe(
-        result => console.log('result', result);
+        result => console.log('result', result),
+        err => console.log(err.message)
       );
   }
 

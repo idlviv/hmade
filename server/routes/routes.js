@@ -29,7 +29,7 @@ router.get('/mc/get-mcs-by-filter',
     mcController.getMcsByFilter
 );
 
-router.get('/product/get-mcs-by-parent',
+router.get('/mc/get-mcs-by-parent',
     mcController.getMcsByParent
 );
 

@@ -52,15 +52,14 @@ export class McService {
   }
 
   /**
-   * return children
+   *
    *
    * @param {string} parent
-   * @param {string} collection
    * @param {boolean} [displayFilter]
-   * @returns {Observable<IResponse>}
+   * @returns {Observable<[any]>}
    * @memberof McService
    */
-  getMcsByParent(parent: string, collection: string, displayFilter?: boolean): Observable<IResponse> {
+  getMcsByParent(parent: string, displayFilter?: boolean): Observable<[any]> {
     if (!displayFilter) {
       displayFilter = false;
     }
@@ -71,9 +70,8 @@ export class McService {
       params: new HttpParams()
         .set('parent', parent)
         .set('displayFilter', displayFilter + '')
-        .set('collection', collection)
     };
-    return this.http.get<IResponse>(
+    return this.http.get<[any]>(
       'api/mc/get-mcs-by-parent',
       httpOptions
     );
