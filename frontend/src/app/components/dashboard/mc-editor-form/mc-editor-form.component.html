@@ -1,3 +1,337 @@
-<p>
-  mc-editor-form works!
-</p>
+<div class="row" fxLayout="row">
+  <div class="cell" fxFlex="100">
+    <div class="full-width-container">
+      <mat-card class="form-block">
+        <mat-card-header></mat-card-header>
+        <mat-card-title>
+          <h2 *ngIf="editMode" class="mat-h2">Редагувати майстерклас
+            <span class="accent">{{mcForm.get('name').value}}</span> у розділі
+            <span class="accent">{{paramParent_id}}</span></h2>
+          <h2 *ngIf="!editMode" class="mat-h2">Створити колекцію у розділі <span
+              class="accent">{{paramParent_id}}</span></h2>
+        </mat-card-title>
+
+        <mat-card-content>
+          <div class="container">
+
+            <form [formGroup]="mcForm" #f="ngForm" novalidate>
+
+              <div class="row padding-bottom" fxLayout="row">
+                <div class="cell" fxFlex="100" fxFlex.sm="50" fxFlex.gt-sm="25">
+                  <mat-form-field>
+                    <input matInput placeholder="Ідентифікатор"
+                      formControlName="_id" required>
+                    <mat-error
+                      *ngIf="(mcForm.get('_id').errors?.minlength ||
+                      mcForm.get('_id').errors?.maxlength ||
+                      mcForm.get('_id').errors?.required) &&
+                      mcForm.get('_id').touched">
+                      Довжина повинна бути 7 символів
+                    </mat-error>
+                    <mat-error
+                      *ngIf="mcForm.get('_id').errors?.pattern &&
+                      mcForm.get('_id').touched">
+                      Не використовуйте спецсимволи
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="cell" fxFlex="100" fxFlex.sm="50" fxFlex.gt-sm="25">
+                  <mat-form-field>
+                    <input matInput placeholder="Назва" formControlName="name"
+                      required>
+                    <mat-error
+                      *ngIf="(mcForm.get('name').errors?.minlength ||
+                      mcForm.get('name').errors?.maxlength ||
+                      mcForm.get('name').errors?.required) &&
+                      mcForm.get('name').touched">
+                      Довжина повинна бути від 4 до 50 символів
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="cell" fxFlex="100" fxFlex.sm="50" fxFlex.gt-sm="25">
+                  <mat-form-field>
+                    <mat-select placeholder="Публікувати"
+                      formControlName="display">
+                      <mat-option [value]="true">Так</mat-option>
+                      <mat-option [value]="false">Ні</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="cell" fxFlex="100" fxFlex.sm="50" fxFlex.gt-sm="25">
+                  <mat-form-field>
+                    <mat-select placeholder="На головній"
+                      formControlName="onMainPage">
+                      <mat-option [value]="true">Так</mat-option>
+                      <mat-option [value]="false">Ні</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+              </div>
+              <div class="row padding-bottom" fxLayout="row">
+                <div class="cell" fxFlex="100" fxFlex.sm="100"
+                  fxFlex.gt-sm="50">
+                  <mat-form-field>
+                    <textarea matInput placeholder="Головний опис"
+                      formControlName="description" required></textarea>
+                    <mat-error
+                      *ngIf="(mcForm.get('description').errors?.minlength ||
+                      mcForm.get('description').errors?.maxlength ||
+                      mcForm.get('description').errors?.required) &&
+                      mcForm.get('description').touched">
+                      Довжина повинна бути від 4 до 200 символів
+                    </mat-error>
+                    <mat-error
+                      *ngIf="mcForm.get('description').errors?.pattern &&
+                      mcForm.get('description').touched">
+                      Не використовуйте спеціальні символи
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="row padding-bottom" fxLayout="row">
+                <div class="cell-header" fxLayout="row">
+                  <h3 class="mat-h3 margin-0">Кроки
+                    <span>
+                      <button *ngIf="mcForm.get('steps').value.length < 15"
+                        mat-icon-button color="accent" type="button"
+                        (click)="addStepsControl()"><mat-icon>add_circle</mat-icon></button>
+                    </span>
+                  </h3>
+                </div>
+
+
+                <div formArrayName="steps" class="cell" fxFlex="100"
+                  *ngFor="let step of mcForm.get('steps')['controls'];
+                  let i= index">
+                  <mat-card formGroupName="{{i}}" fxLayout="row" fxFlex="100">
+
+
+                      <div class="item" fxFlex="calc((100%-40px)-50%)">
+                          <div class="preview-img-wrapper">
+                            <img *ngIf="mcForm.get('steps').at(i).get('pic').value" src="{{
+                              config.imgPath +
+                              config.cloudinary.cloud_name +
+                              '/c_fill,w_260,h_170,f_auto/' +
+                              mcForm.get('steps').at(i).get('pic').value}}"
+                              alt="Menu Image">
+                            <img *ngIf="!mcForm.get('steps').at(i).get('pic').value"
+                              src="{{
+                              config.imgPath +
+                              config.cloudinary.cloud_name +
+                              '/c_fill,w_260,h_170,f_auto/'+
+                              config.defaultProductImg}}" alt="Menu Image">
+                            <input #inputStepsPic type="file"
+                              (change)="addStepsPic($event, i)"
+                              accept=".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif, .svg"
+                              style="display:none;">
+                            <div class="preview-div-processing">
+                              <div *ngIf="processingLoadStepsPic"
+                                class="spinner-wrapper">
+                                <mat-spinner [diameter]="24"></mat-spinner>
+                              </div>
+                              <div *ngIf="!processingLoadStepsPic"
+                                class="button-wrapper">
+                                <button mat-mini-fab color="primary" type="button"
+                                  (click)="inputStepsPic.click();"
+                                  [disabled]="processingLoadStepsPic">
+                                  <mat-icon *ngIf="!mcForm.get('steps').at(i).get('pic').value &&
+                                    !processingLoadStepsPic">add</mat-icon>
+                                  <mat-icon *ngIf="mcForm.get('steps').at(i).get('pic').value &&
+                                    !processingLoadStepsPic">redo</mat-icon>
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+
+                    <mat-form-field class="item" fxFlex="calc((100%-40px)-67%)">
+                      <textarea matInput placeholder="Опис"
+                        formControlName="description" required></textarea>
+                      <mat-error
+                        *ngIf="(mcForm.get('steps').at(i).get('description').errors?.minlength ||
+                        mcForm.get('steps').at(i).get('description').errors?.maxlength ||
+                        mcForm.get('steps').at(i).get('description').errors?.required) &&
+                        mcForm.get('steps').at(i).get('description').touched">
+                        Довжина повинна бути від 4 до 200 символів
+                      </mat-error>
+                      <mat-error
+                        *ngIf="mcForm.get('steps').at(i).get('description').errors?.required
+                        &&
+                        mcForm.get('steps').at(i).get('description').touched">
+                        Обов'язкове поле
+                      </mat-error>
+                    </mat-form-field>
+                    <div class="item" fxFlex="40px" fxLayoutAlign="center
+                      center">
+                      <button class="text-align-center"
+                        mat-icon-button color="accent" type="button"
+                        (click)="removeControl('steps', i)"><mat-icon>remove_circle</mat-icon></button>
+                    </div>
+                  </mat-card>
+                </div>
+              </div>
+
+              <div class="row padding-bottom" fxLayout="row">
+                  <div class="cell-header" fxLayout="row">
+                    <h3 class="mat-h3 margin-0">Необхідні матеріали
+                      <span>
+                        <button *ngIf="mcForm.get('materials').value.length <10"
+                          mat-icon-button color="accent" type="button"
+                          (click)="addMaterialsControl()"><mat-icon>add_circle</mat-icon></button>
+                      </span>
+                    </h3>
+                  </div>
+
+                  <div formArrayName="materials" class="cell" fxFlex="100"
+                    *ngFor="let material of mcForm.get('materials')['controls'];
+                    let i= index">
+                    <mat-card formGroupName="{{i}}" fxLayout="row" fxFlex="100">
+                      <mat-form-field class="item" fxFlex="calc((100%-40px)-67%)">
+                        <input matInput placeholder="Матеріал"
+                          formControlName="name" required>
+                        <mat-error
+                          *ngIf="mcForm.get('materials').at(i).get('name').errors?.required
+                          &&
+                          mcForm.get('materials').at(i).get('name').touched">
+                          Обов'язкове поле
+                        </mat-error>
+                        <mat-error
+                          *ngIf="(mcForm.get('materials').at(i).get('name').errors?.minlength
+                          ||
+                          mcForm.get('materials').at(i).get('name').errors?.maxlength
+                          ||
+                          mcForm.get('materials').at(i).get('name').errors?.required)
+                          &&
+                          mcForm.get('materials').at(i).get('name').touched">
+                          Довжина повинна бути від 3 до 20 символів
+                        </mat-error>
+                      </mat-form-field>
+                      <mat-form-field class="item" fxFlex="calc((100%-40px)-67%)">
+                        <input matInput placeholder="Одиниці виміру"
+                          formControlName="units" required>
+                        <mat-error
+                          *ngIf="mcForm.get('materials').at(i).get('units').errors?.required
+                          &&
+                          mcForm.get('materials').at(i).get('units').touched">
+                          Обов'язкове поле
+                        </mat-error>
+                        <mat-error
+                          *ngIf="(mcForm.get('materials').at(i).get('units').errors?.minlength
+                          ||
+                          mcForm.get('materials').at(i).get('units').errors?.maxlength
+                          ||
+                          mcForm.get('materials').at(i).get('units').errors?.required)
+                          &&
+                          mcForm.get('materials').at(i).get('units').touched">
+                          Довжина повинна бути від 1 до 7 символів
+                        </mat-error>
+                      </mat-form-field>
+                      <mat-form-field class="item" fxFlex="calc((100%-40px)-67%)">
+                        <input matInput placeholder="Значення"
+                          formControlName="value" required>
+                        <mat-error
+                          *ngIf="mcForm.get('materials').at(i).get('value').errors?.required
+                          &&
+                          mcForm.get('materials').at(i).get('value').touched">
+                          Обов'язкове поле
+                        </mat-error>
+                        <mat-error
+                          *ngIf="(mcForm.get('materials').at(i).get('value').errors?.minlength
+                          ||
+                          mcForm.get('materials').at(i).get('value').errors?.maxlength
+                          ||
+                          mcForm.get('materials').at(i).get('value').errors?.required)
+                          &&
+                          mcForm.get('materials').at(i).get('value').touched">
+                          Довжина повинна бути від 1 до 4 символів
+                        </mat-error>
+                      </mat-form-field>
+                      <div class="item" fxFlex="40px" fxLayoutAlign="center
+                        center">
+                        <button class="text-align-center"
+                          mat-icon-button color="accent" type="button"
+                          (click)="removeControl('materials', i)"><mat-icon>remove_circle</mat-icon></button>
+                      </div>
+                    </mat-card>
+                  </div>
+                </div>
+
+              <div class="row padding-bottom" fxLayout="row">
+                <div class="cell-header" fxLayout="row" fxFlex="100">
+                  <h3 class="mat-h3 margin-0">Головне зображення</h3>
+                </div>
+                <div class="cell" fxFlex.xs="100" fxFlex="25">
+                  <div class="preview-img-wrapper">
+                    <img *ngIf="mcForm.get('mainImage').value" src="{{
+                      config.imgPath +
+                      config.cloudinary.cloud_name +
+                      '/c_fill,w_260,h_170,f_auto/' +
+                      mcForm.get('mainImage').value}}"
+                      alt="Menu Image">
+                    <img *ngIf="!mcForm.get('mainImage').value"
+                      src="{{
+                      config.imgPath +
+                      config.cloudinary.cloud_name +
+                      '/c_fill,w_260,h_170,f_auto/'+
+                      config.defaultProductImg}}" alt="Menu Image">
+                    <input #inputMainImage type="file"
+                      (change)="addMainImage($event)"
+                      accept=".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif, .svg"
+                      style="display:none;">
+                    <div class="preview-div-processing">
+                      <div *ngIf="processingLoadMainImage"
+                        class="spinner-wrapper">
+                        <mat-spinner [diameter]="24"></mat-spinner>
+                      </div>
+                      <div *ngIf="!processingLoadMainImage"
+                        class="button-wrapper">
+                        <button mat-mini-fab color="primary" type="button"
+                          (click)="inputMainImage.click();"
+                          [disabled]="processingLoadMainImage">
+                          <mat-icon *ngIf="!mcForm.get('mainImage').value &&
+                            !processingLoadMainImage">add</mat-icon>
+                          <mat-icon *ngIf="mcForm.get('mainImage').value &&
+                            !processingLoadMainImage">redo</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="submit-button-wrapper row" fxLayout="row">
+                <div class="cell" fxFlex="40">
+
+                  <button mat-raised-button color="primary" class="full-width"
+                    type="button" (click)="onMcFormSubmit(false)"
+                    [disabled]="!mcForm.valid || processingLoadMainImage">
+                    Зберегти</button>
+                </div>
+                <div class="cell" fxFlex="40">
+
+                  <button *ngIf="editMode" mat-raised-button color="primary"
+                    class="full-width" type="button"
+                    (click)="onMcFormSubmit(true)"
+                    [disabled]="!mcForm.valid || processingLoadMainImage">
+                    Зберегти і повернутись</button>
+                  <button *ngIf="!editMode" mat-raised-button color="primary"
+                    class="full-width" type="button"
+                    (click)="onMcFormSubmit(true)"
+                    [disabled]="!mcForm.valid || processingLoadMainImage">
+                    Створити і повернутись</button>
+                </div>
+                <div class="cell" fxFlex="20">
+                  <button mat-raised-button type="button" (click)="goBack()"
+                    class="full-width"
+                    [disabled]="processingLoadMainImage">Повернутись</button>
+                </div>
+
+              </div>
+            </form>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>

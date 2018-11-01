@@ -56,7 +56,7 @@ export class ProductEditorFormComponent implements OnInit {
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
-        Validators.maxLength(30),
+        Validators.maxLength(50),
       ]),
       display: new FormControl(true, [
       ]),
@@ -222,7 +222,7 @@ export class ProductEditorFormComponent implements OnInit {
       description : this.productForm.get('description').value,
       onMainPage: this.productForm.get('onMainPage').value,
       display: this.productForm.get('display').value,
-      mainImage: this.productForm.get('mainImage').value,
+      // mainImage: this.productForm.get('mainImage').value,
       menuImage: this.productForm.get('menuImage').value,
       dimensions: {
         width: this.productForm.get('dimensions.width').value,

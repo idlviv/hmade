@@ -13,6 +13,7 @@ export const config = {
     showViews: true,
     showComments: true,
   },
+  mcPrefix: 'mcs',
   mcSortOptionsDefault: 0,
   mcSortOptions: [
     {

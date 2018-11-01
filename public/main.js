@@ -228,6 +228,7 @@ var config = {
         showViews: true,
         showComments: true,
     },
+    mcPrefix: 'mcs',
     mcSortOptionsDefault: 0,
     mcSortOptions: [
         {
@@ -1995,7 +1996,7 @@ var CatalogService = /** @class */ (function () {
      *
      *
      * @param {string} _id
-     * @returns
+     * @returns {Observable<IResponse>}
      * @memberof CatalogService
      */
     CatalogService.prototype.getPrefix = function (_id) {
@@ -2518,6 +2519,8 @@ var SharedService = /** @class */ (function () {
     SharedService.prototype.getSharingEvent = function () {
         return this.shareEvent$;
     };
+    // ['updateDesigns'] design-item-component => design-editor-component
+    // ['closeSidenav'] design-popup-component => app-component
     // sending feedback message
     SharedService.prototype.sendFeedbackMessage = function (feedback, recaptcha) {
         var httpOptions = {
@@ -2530,6 +2533,27 @@ var SharedService = /** @class */ (function () {
         };
         return this.http.post('api/shared/send-feedback-message', feedback, httpOptions);
     };
+    SharedService.prototype.checkFile = function (file) {
+        if (!file) {
+            return ({ success: false, message: 'Файл не вибрано' });
+        }
+        else if (file.size > 10485760) { // 10 * 1024 * 1024
+            return ({ success: false, message: 'Розмір файлу повинен бути менше 10Мб' });
+        }
+        else if (file.type !== 'image/jpg' &&
+            file.type !== 'image/jpe' &&
+            file.type !== 'image/gif' &&
+            file.type !== 'image/jpeg' &&
+            file.type !== 'image/bmp' &&
+            file.type !== 'image/png' &&
+            file.type !== 'image/svg+xml' &&
+            file.type !== 'image/webp') {
+            return ({ success: false, message: 'Виберіть інший тип файлу' });
+        }
+        else {
+            return ({ success: true, message: '' });
+        }
+    };
     SharedService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
@@ -2539,8 +2563,6 @@ var SharedService = /** @class */ (function () {
     return SharedService;
 }());
 
-// ['updateDesigns'] design-item-component => design-editor-component
-// ['closeSidenav'] design-popup-component => app-component
 
 
 /***/ }),

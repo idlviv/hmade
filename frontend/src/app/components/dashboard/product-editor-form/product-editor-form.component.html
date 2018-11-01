@@ -24,12 +24,12 @@
                                   productForm.get('_id').errors?.maxlength ||
                                   productForm.get('_id').errors?.required) &&
                                   productForm.get('_id').touched">
-                          Довжина повинна бути 6 символів
+                          Довжина повинна бути 7 символів
                         </mat-error>
                         <mat-error
                         *ngIf="productForm.get('_id').errors?.pattern &&
                                 productForm.get('_id').touched">
-                        Довжина повинна бути 6 символів
+                          Не використовуйте спецсимволи
                       </mat-error>
                       </mat-form-field>
                     </div>
@@ -94,7 +94,7 @@
                     <mat-error
                       *ngIf="productForm.get('description').errors?.pattern &&
                         productForm.get('description').touched">
-                      Не використовуйте спецыальны символи
+                      Не використовуйте спеціальні символи
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -184,8 +184,8 @@
                             <div *ngIf="processingLoadMenuImage" class="spinner-wrapper">
                               <mat-spinner [diameter]="24"></mat-spinner>
                             </div>
-        
-        
+
+
                             <div *ngIf="!processingLoadMenuImage" class="button-wrapper">
                               <button mat-mini-fab color="primary" type="button"
                                       (click)="inputMenuImage.click();"
@@ -193,7 +193,7 @@
                                 <mat-icon *ngIf="!productForm.get('menuImage').value && !processingLoadMenuImage">add</mat-icon>
                                 <mat-icon *ngIf="productForm.get('menuImage').value && !processingLoadMenuImage">redo</mat-icon>
                               </button>
-        
+
                             </div>
                           </div>
                         </div>
@@ -202,13 +202,13 @@
 
               <div class="submit-button-wrapper row" fxLayout="row">
                   <div class="cell" fxFlex="40">
-  
+
                     <button mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(false)"
                             [disabled]="!productForm.valid || processingLoadAssets >=0">
                       Зберегти</button>
                   </div>
                   <div class="cell" fxFlex="40">
-  
+
                     <button *ngIf="editMode" mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(true)"
                               [disabled]="!productForm.valid || processingLoadAssets >=0">
                       Зберегти і повернутись</button>
@@ -220,7 +220,7 @@
                     <button mat-raised-button  type="button" (click)="goBack()" class="full-width"
                             [disabled]="processingLoadAssets >=0">Повернутись</button>
                   </div>
-  
+
                 </div>
             </form>
           </div>

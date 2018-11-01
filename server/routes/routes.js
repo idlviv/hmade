@@ -33,6 +33,29 @@ router.get('/mc/get-mcs-by-parent',
     mcController.getMcsByParent
 );
 
+router.get('/mc/get-sku-list',
+    passport.authenticate('jwt', {session: false}),
+    mcController.getSkuList
+);
+
+router.post('/mc/add-main-image',
+    passport.authenticate('jwt', {session: false}),
+    authorization('manager'),
+    mcController.addMainImage
+);
+
+router.post('/mc/add-steps-pic',
+    passport.authenticate('jwt', {session: false}),
+    authorization('manager'),
+    mcController.addStepsPic
+);
+
+router.post('/mc/upsert',
+    passport.authenticate('jwt', {session: false}),
+    authorization('manager'),
+    mcController.mcUpsert
+);
+
 /**
  * product routes
  */

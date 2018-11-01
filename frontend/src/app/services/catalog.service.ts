@@ -36,14 +36,15 @@ export class CatalogService {
     );
   }
 
+
   /**
    *
    *
    * @param {string} _id
-   * @returns
+   * @returns {Observable<IResponse>}
    * @memberof CatalogService
    */
-  getPrefix(_id: string) {
+  getPrefix(_id: string): Observable<IResponse> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',

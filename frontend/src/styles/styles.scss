@@ -608,8 +608,8 @@ mat-sidenav-content {
 
 .preview-img-wrapper {
   position: relative;
-  max-height: 180px;
-  max-width: 180px;
+  max-height: 260px;
+  max-width: 170px;
   margin: auto;
   overflow: hidden;
   &:hover {
@@ -618,17 +618,17 @@ mat-sidenav-content {
     }
   }
 
-  cl-image {
-    max-width: 180px;
-    width: 100%;
-    //width: 100%;
-    height: auto;
-    //max-height: 180px;
-    //display: block;
-    margin: auto;
-  }
+  // cl-image {
+  //   max-width: 180px;
+  //   width: 100%;
+  //   //width: 100%;
+  //   height: auto;
+  //   //max-height: 180px;
+  //   //display: block;
+  //   margin: auto;
+  // }
   img {
-    max-width: 180px;
+    max-width: 260px;
     width: 100%;
     //width: 100%;
     height: auto;
@@ -637,8 +637,8 @@ mat-sidenav-content {
     margin: auto;
   }
   .preview-div-processing {
-    height: 180px;
-    width: 180px;
+    height: 100%;
+    width: 100%;
     //opacity: .5;
     background: $border;
     position: absolute;
@@ -651,7 +651,7 @@ mat-sidenav-content {
       margin-right: auto;
       left: 0;
       right: 0;
-      bottom: 70px;
+      bottom: calc(50% - 12px);
     }
     .button-wrapper {
       position: absolute;
@@ -661,7 +661,7 @@ mat-sidenav-content {
       margin-right: auto;
       left: 0;
       right: 0;
-      bottom: 70px;
+      bottom: calc(50% - 20px);
     }
   }
 }
@@ -821,7 +821,7 @@ mat-sidenav-content {
 
 // overriding materials
 
-.material-icons.mat-18 { 
+.material-icons.mat-18 {
   font-size: 18px;
   height: 20px;
   width: 20px;

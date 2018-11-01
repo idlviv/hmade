@@ -622,6 +622,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McService", function() { return McService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user.service */ "./src/app/services/user.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -633,9 +634,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var McService = /** @class */ (function () {
-    function McService(http) {
+    function McService(http, userService) {
         this.http = http;
+        this.userService = userService;
     }
     /**
      *
@@ -650,6 +653,16 @@ var McService = /** @class */ (function () {
             }),
         };
         return this.http.get('api/mc/get-mcs', httpOptions);
+    };
+    McService.prototype.mcUpsert = function (mc) {
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+                'Authorization': token
+            })
+        };
+        return this.http.post('api/mc/upsert', mc, httpOptions);
     };
     /**
      *
@@ -714,11 +727,68 @@ var McService = /** @class */ (function () {
         };
         return this.http.get('api/mc/get-mcs-by-filter', httpOptions);
     };
+    /**
+     *
+     *
+     * @param {File} file
+     * @param {string} _id
+     * @returns {Observable<string>}
+     * @memberof McService
+     */
+    McService.prototype.addMainImage = function (file, _id) {
+        var formData = new FormData();
+        formData.append('file', file, file.name);
+        formData.append('_id', _id);
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Authorization': token
+            })
+        };
+        return this.http.post('api/mc/add-main-image', formData, httpOptions);
+    };
+    /**
+     *
+     *
+     * @param {File} file
+     * @param {string} _id
+     * @returns {Observable<string>}
+     * @memberof McService
+     */
+    McService.prototype.addStepsPic = function (file, _id) {
+        var formData = new FormData();
+        formData.append('file', file, file.name);
+        formData.append('_id', _id);
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Authorization': token
+            })
+        };
+        return this.http.post('api/mc/add-steps-pic', formData, httpOptions);
+    };
+    /**
+     *
+     *
+     * @returns {Observable<{_id: string}[]>}
+     * @memberof McService
+     */
+    McService.prototype.getSkuList = function () {
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+                'Authorization': token
+            })
+        };
+        return this.http.get('api/mc/get-sku-list', httpOptions);
+    };
     McService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'
         }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+            _user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"]])
     ], McService);
     return McService;
 }());

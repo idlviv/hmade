@@ -21,6 +21,126 @@ module.exports.getMcs = function(req, res, next) { // tmp
       .catch((err) => next(new DbError()));
 };
 
+module.exports.mcUpsert = function(req, res, next) {
+  const mc = req.body;
+
+  McModel.findOne({_id: mc._id})
+      .then((result) => {
+        log.debug('find', result);
+        if (result !== null && result._doc) {
+          mc.createdAt = result.createdAt || 0;
+          mc.updatedAt = Date.now();
+        } else {
+          mc.createdAt = Date.now();
+          mc.updatedAt = Date.now();
+        }
+        mc.likes = result.likes || 0;
+        mc.likedBy = result.likedBy || [];
+        mc.dislikes = result.dislikes || 0;
+        mc.dislikedBy = result.dislikedBy || [];
+        mc.views = result.views || 0;
+        mc.comments = result.comments || [];
+
+        return McModel.findOneAndUpdate(
+            {_id: mc._id},
+            {$set: mc},
+            {upsert: true, new: true}
+        ); // upsert + return updated object)
+      })
+      .then((result) => res.status(200).json(
+          new ResObj(true, 'Майстерклас додано/змінено', result)
+      ))
+      .catch((err) => next(new DbError()));
+};
+
+module.exports.addMainImage = function(req, res, next) {
+
+  let form = new formidable.IncomingForm({maxFileSize: 10500000});
+  form.parse(req, function(err, fields, files) {
+    if (err) {
+      return next(
+          new ApplicationError(
+              'Помилка завантаження зображення - form parse', 400
+          )
+      );
+    }
+
+    cloudinary.v2.uploader.upload(
+        files.file.path,
+        {
+          public_id:
+              'main_image_' +
+              fields._id + '_' +
+              Date.now(),
+          // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
+          eager: [
+            {width: 535, height: 350, crop: 'fill', fetch_format: 'auto'},
+            {width: 260, height: 170, crop: 'fill', fetch_format: 'auto'},
+          ],
+        },
+        function(err, result) {
+          if (err) {
+            return next(
+                new ApplicationError(
+                    'Помилка завантаження - product mainImage', 400
+                )
+            );
+          }
+          return res.status(200).json(result.public_id);
+          // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
+        });
+  });
+};
+
+module.exports.addStepsPic = function(req, res, next) {
+
+  let form = new formidable.IncomingForm({maxFileSize: 10500000});
+  form.parse(req, function(err, fields, files) {
+    if (err) {
+      return next(
+          new ApplicationError(
+              'Помилка завантаження зображення - form parse', 400
+          )
+      );
+    }
+
+    cloudinary.v2.uploader.upload(
+        files.file.path,
+        {
+          public_id:
+              'steps_pic_' +
+              fields._id + '_' +
+              Date.now(),
+          // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
+          eager: [
+            {width: 535, height: 350, crop: 'fill', fetch_format: 'auto'},
+            {width: 260, height: 170, crop: 'fill', fetch_format: 'auto'},
+          ],
+        },
+        function(err, result) {
+          if (err) {
+            return next(
+                new ApplicationError(
+                    'Помилка завантаження - product mainImage', 400
+                )
+            );
+          }
+          return res.status(200).json(result.public_id);
+          // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
+        });
+  });
+};
+
+
+module.exports.getSkuList = function(req, res, next) {
+  McModel.find({}, {_id: 1})
+      .sort({_id: 1})
+      .then((result) => {
+        return res.status(200).json(result);
+      })
+      .catch((err) => next(new DbError()));
+};
+
 module.exports.getMcById = function(req, res, next) {
   _id = req.params._id;
   McModel.findById({_id})

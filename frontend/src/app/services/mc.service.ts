@@ -3,6 +3,7 @@ import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { IResponse } from '../interfaces/server-response-interface';
 import { Observable } from 'rxjs';
 import { IMc } from '../interfaces/interface';
+import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class McService {
 
   constructor(
     private http: HttpClient,
+    private userService: UserService,
   ) { }
 
   /**
@@ -32,6 +34,20 @@ export class McService {
     );
   }
 
+  mcUpsert(mc: IMc): Observable<IResponse> {
+    const token = this.userService.userLocalGetToken('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      })
+    };
+    return this.http.post<IResponse>(
+      'api/mc/upsert',
+      mc,
+      httpOptions
+    );
+  }
 
   /**
    *
@@ -103,6 +119,78 @@ export class McService {
     };
     return this.http.get<IMc[]>(
       'api/mc/get-mcs-by-filter',
+      httpOptions
+    );
+  }
+
+  /**
+   *
+   *
+   * @param {File} file
+   * @param {string} _id
+   * @returns {Observable<string>}
+   * @memberof McService
+   */
+  addMainImage(file: File, _id: string): Observable<string> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    formData.append('_id', _id);
+
+    const token = this.userService.userLocalGetToken('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': token
+      })
+    };
+    return this.http.post<string>(
+      'api/mc/add-main-image',
+      formData,
+      httpOptions
+    );
+  }
+
+  /**
+   *
+   *
+   * @param {File} file
+   * @param {string} _id
+   * @returns {Observable<string>}
+   * @memberof McService
+   */
+  addStepsPic(file: File, _id: string): Observable<string> {
+    const formData: FormData = new FormData();
+    formData.append('file', file, file.name);
+    formData.append('_id', _id);
+
+    const token = this.userService.userLocalGetToken('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Authorization': token
+      })
+    };
+    return this.http.post<string>(
+      'api/mc/add-steps-pic',
+      formData,
+      httpOptions
+    );
+  }
+
+  /**
+   *
+   *
+   * @returns {Observable<{_id: string}[]>}
+   * @memberof McService
+   */
+  getSkuList():  Observable<{_id: string}[]> {
+    const token = this.userService.userLocalGetToken('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      })
+    };
+    return this.http.get<{_id: string}[]>(
+      'api/mc/get-sku-list',
       httpOptions
     );
   }

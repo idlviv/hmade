@@ -25,6 +25,8 @@ export class SharedService {
   getSharingEvent() {
     return this.shareEvent$;
   }
+  // ['updateDesigns'] design-item-component => design-editor-component
+  // ['closeSidenav'] design-popup-component => app-component
 
   // sending feedback message
   sendFeedbackMessage(feedback, recaptcha): Observable<IResponse> {
@@ -42,7 +44,26 @@ export class SharedService {
       httpOptions
     );
   }
+
+  checkFile(file: File): IResponse {
+    if (!file) {
+      return ({ success: false, message: 'Файл не вибрано' });
+    } else if (file.size > 10485760) { // 10 * 1024 * 1024
+      return ({ success: false, message: 'Розмір файлу повинен бути менше 10Мб' });
+    } else if (
+      file.type !== 'image/jpg' &&
+      file.type !== 'image/jpe' &&
+      file.type !== 'image/gif' &&
+      file.type !== 'image/jpeg' &&
+      file.type !== 'image/bmp' &&
+      file.type !== 'image/png' &&
+      file.type !== 'image/svg+xml' &&
+      file.type !== 'image/webp') {
+      return ({ success: false, message: 'Виберіть інший тип файлу' });
+    } else {
+      return ({ success: true, message: '' });
+    }
+  }
 }
 
-// ['updateDesigns'] design-item-component => design-editor-component
-// ['closeSidenav'] design-popup-component => app-component
+

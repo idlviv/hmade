@@ -3,9 +3,13 @@ import { Location } from '@angular/common';
 import { McService } from 'src/app/services/mc.service';
 import { ActivatedRoute } from '@angular/router';
 import { mergeMap } from 'rxjs/operators';
-import { of } from 'rxjs';
+import { of, forkJoin as observableForkJoin } from 'rxjs';
 import { FormGroupDirective, FormGroup, FormArray, FormControl, Validators, ValidatorFn } from '@angular/forms';
 import { config } from '../../../app.config';
+import { CatalogService } from 'src/app/services/catalog.service';
+import { SharedService } from 'src/app/services/shared.service';
+import { MatSnackBar } from '@angular/material';
+import { IMc } from 'src/app/interfaces/interface';
 
 @Component({
   selector: 'app-mc-editor-form',
@@ -17,15 +21,20 @@ export class McEditorFormComponent implements OnInit {
   paramEdited_id: string;
   paramParent_id: string;
   editMode: boolean;
-  parents: string[];
+  processingLoadMainImage = false;
+  processingLoadStepsPic = false;
+  mc: IMc;
 
   @ViewChild('f') mcFormDirective: FormGroupDirective;
   mcForm: FormGroup;
 
   constructor(
     private mcService: McService,
+    private catalogService: CatalogService,
     private route: ActivatedRoute,
     private location: Location,
+    private sharedService: SharedService,
+    private matSnackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -39,7 +48,7 @@ export class McEditorFormComponent implements OnInit {
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
-        Validators.maxLength(30),
+        Validators.maxLength(50),
       ]),
       description: new FormControl('', [
         Validators.required,
@@ -86,24 +95,137 @@ export class McEditorFormComponent implements OnInit {
     .subscribe(
       mc => {
         if (this.editMode) {
-          // save parents
-          this.parents = mc.parents;
-          mc.pics.forEach(element => {
-            this.addControl('pics');
-          });
-          mc.materials.forEach(element => {
-            this.addMaterialsControl();
-          });
+          mc.pics.forEach(element => this.addControl('pics'));
+          mc.materials.forEach(element => this.addMaterialsControl());
+          mc.steps.forEach(element => this.addStepsControl());
+          mc.parents.forEach(element => this.addControl('parents'));
+
           this.mcForm.patchValue(mc);
+          this.mcForm.get('_id').disable();
           console.log('mcForm', this.mcForm);
         } else {
-          // create parents []
-          this.parents = [this.paramParent_id];
+          this.addControl('parents');
+          this.mcForm.get('parents').setValue([this.paramParent_id]);
+          this.addMaterialsControl();
+          this._createSku();
         }
 
       },
       err => console.log(err.message)
     );
+  }
+
+  _createSku(): void {
+    this.mcService.getSkuList()
+    .subscribe(
+      result => {
+        const prefix = config.mcPrefix;
+        const skuList = result
+          .map(item => item._id) // create [] from {}
+          .filter(item => item.slice(0, 3) === prefix) // take elems with needed prefix
+          .map(item => +item.slice(3)); // concat prefix, take only numbers
+
+          let freeNumber = 1;
+          for (let i = 0; i < skuList.length; i++) {
+            if (skuList[i] - (i + 1) >= 1) {
+              freeNumber = i + 1;
+              break;
+            }
+            if (i === skuList.length - 1) {
+              freeNumber = skuList.length + 1;
+            }
+          }
+          let sku = freeNumber.toString();
+          while (sku.length < 4) {
+            sku = '0' + sku;
+          }
+          sku = prefix + sku;
+          this.mcForm.patchValue({_id: sku});
+      },
+          err => console.log(err.error)
+      );
+  }
+
+  addMainImage(event): void {
+    this.processingLoadMainImage = true;
+    const file = event.target.files[0];
+    const checkFile = this.sharedService.checkFile(file);
+
+    if (!checkFile.success) {
+      this.matSnackBar.open(checkFile.message || 'Помилка', '',
+        {duration: 3000, panelClass: 'snack-bar-danger'});
+      this.processingLoadMainImage = false;
+    } else {
+      this.mcService.addMainImage(file, this.mcForm.get('_id').value)
+        .subscribe(result => {
+            this.mcForm.get('mainImage').setValue(result);
+            this.processingLoadMainImage = false;
+          },
+          err => {
+            this.matSnackBar.open(err.error || 'Помилка', '',
+              {duration: 3000, panelClass: 'snack-bar-danger'});
+            this.processingLoadMainImage = false;
+          }
+        );
+    }
+  }
+
+  addStepsPic(event, i): void {
+    this.processingLoadStepsPic = true;
+    const file = event.target.files[0];
+    const checkFile = this.sharedService.checkFile(file);
+
+    if (!checkFile.success) {
+      this.matSnackBar.open(checkFile.message || 'Помилка', '',
+        {duration: 3000, panelClass: 'snack-bar-danger'});
+      this.processingLoadStepsPic = false;
+    } else {
+      this.mcService.addStepsPic(file, this.mcForm.get('_id').value)
+        .subscribe(result => {
+            console.log('this.mcForm.get(steps).controls', this.mcForm.get('steps')['controls']);
+            this.mcForm.get('steps')['controls'][i].get('pic').setValue(result);
+            this.processingLoadStepsPic = false;
+          },
+          err => {
+            this.matSnackBar.open(err.error || 'Помилка', '',
+              {duration: 3000, panelClass: 'snack-bar-danger'});
+            this.processingLoadStepsPic = false;
+          }
+        );
+    }
+  }
+
+  onMcFormSubmit(goBackAndReset: boolean): void {
+
+    this.mc = <IMc>{
+      parents: this.mcForm.get('parents').value,
+      _id: this.mcForm.getRawValue()._id, // raw because may be disabled
+      name: this.mcForm.get('name').value,
+      steps : this.mcForm.get('steps').value,
+      description : this.mcForm.get('description').value,
+      onMainPage: this.mcForm.get('onMainPage').value,
+      display: this.mcForm.get('display').value,
+      mainImage: this.mcForm.get('mainImage').value,
+      materials: this.mcForm.get('materials').value
+    };
+
+    this.mcService.mcUpsert(this.mc)
+    .subscribe(result => {
+        console.log('result', result.data);
+        this.matSnackBar.open(result.message, '',
+          {duration: 3000});
+        if (goBackAndReset) {
+          this.goBack();
+          this.resetForm();
+          this.editMode = false;
+        } else {
+          this.editMode = true;
+        }
+      },
+      err => this.matSnackBar.open(err.error, '',
+        {duration: 3000, panelClass: 'snack-bar-danger'})
+    );
+
   }
 
   resetForm() {
@@ -132,15 +254,16 @@ export class McEditorFormComponent implements OnInit {
 
   addMaterialsControl() {
     const control = <FormArray>this.mcForm.get('materials');
-    control.push(new FormGroup({
+    return control.push(new FormGroup({
         name: new FormControl('', [
           Validators.pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
           Validators.minLength(3),
           Validators.maxLength(20),
           Validators.required,
         ]),
-        quantity: new FormControl('', [
+        value: new FormControl('', [
           Validators.pattern('[0-9]+'),
+          Validators.minLength(1),
           Validators.maxLength(4),
           Validators.required,
         ]),
@@ -174,8 +297,8 @@ export class McEditorFormComponent implements OnInit {
    * @param {number} position // position which removes
    * @memberof McEditorFormComponent
    */
-  removeControl(formControl: string, position: number) {
-    const control = <FormArray>this.mcForm.get(formControl);
+  removeControl(formField: string, position: number) {
+    const control = <FormArray>this.mcForm.get(formField);
     control.removeAt(position);
   }
 
