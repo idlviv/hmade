@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n  <form [formGroup]=\"filterForm\" novalidate>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n        <mat-form-field>\r\n          <mat-select formControlName=\"mcSort\" placeholder=\"Відсортувати\" (selectionChange)=\"onSelectMcSort($event)\">\r\n            <mat-option *ngFor=\"let mcSortOption of config.mcSortOptions\" [value]=\"mcSortOption.value\">\r\n              {{mcSortOption.name}}\r\n            </mat-option>\r\n          </mat-select>\r\n        </mat-form-field>\r\n      </div>\r\n      <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\r\n          *ngFor=\"let categoryBlock of filterForm.get('parents')['controls']; let i = index\">\r\n        <mat-form-field>\r\n          <mat-select placeholder=\"Фільтр\" formControlName=\"{{i}}\" required\r\n                      (selectionChange)=\"onSelectMcFilter($event, i)\">\r\n            <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\r\n              {{child.name}}\r\n            </mat-option>\r\n          </mat-select>\r\n        </mat-form-field>\r\n      </div>\r\n      <div *ngIf=\"noMoreChildren\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n        <div *ngIf=\"user\" class=\"item text-align-center muted\" fxFlex>\r\n          <a mat-button (click)=addMcsItem(parent_id)>\r\n            <mat-icon>add</mat-icon> Додати майстерклас\r\n          </a>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </form>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"container\">\r\n  <form [formGroup]=\"filterForm\" novalidate>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n        <mat-form-field>\r\n          <mat-select formControlName=\"mcSort\" placeholder=\"Відсортувати\" (selectionChange)=\"onSelectMcSort($event.value)\">\r\n            <mat-option *ngFor=\"let mcSortOption of config.mcSortOptions\" [value]=\"mcSortOption.value\">\r\n              {{mcSortOption.name}}\r\n            </mat-option>\r\n          </mat-select>\r\n        </mat-form-field>\r\n      </div>\r\n      <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\r\n          *ngFor=\"let categoryBlock of filterForm.get('parents')['controls']; let i = index\">\r\n        <mat-form-field>\r\n          <mat-select placeholder=\"Фільтр\" formControlName=\"{{i}}\" required\r\n                      (selectionChange)=\"onSelectMcFilter($event.value, i, true)\">\r\n            <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\r\n              {{child.name}}\r\n            </mat-option>\r\n          </mat-select>\r\n        </mat-form-field>\r\n      </div>\r\n      <div *ngIf=\"noMoreChildren\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n        <div *ngIf=\"user\" class=\"item text-align-center muted\" fxFlex>\r\n          <a mat-button (click)=addMcsItem(parent_id)>\r\n            <mat-icon>add</mat-icon> Додати майстерклас\r\n          </a>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </form>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -37,7 +37,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var src_app_services_catalog_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/catalog.service */ "./src/app/services/catalog.service.ts");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -53,11 +55,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var McsFiltersComponent = /** @class */ (function () {
-    function McsFiltersComponent(router, catalogService, userService) {
+    function McsFiltersComponent(router, catalogService, userService, mcService) {
         this.router = router;
         this.catalogService = catalogService;
         this.userService = userService;
+        this.mcService = mcService;
         this.children = [];
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"];
         this.noMoreChildren = false;
@@ -70,45 +75,56 @@ var McsFiltersComponent = /** @class */ (function () {
             mcSort: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]([]),
             parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormArray"]([this.initParents()]),
         });
-        this.catalogService.getChildren('products')
-            .subscribe(function (result) {
+        var initialMcSortValue = this.mcService.mcLocalGetFilter() ?
+            this.mcService.mcLocalGetFilter().mcSortValue : // use saved sort value
+            _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].mcSortOptions[_app_config__WEBPACK_IMPORTED_MODULE_1__["config"].mcSortOptionsDefault].value; // use default sort value
+        this.mcSortValue = initialMcSortValue;
+        var initialMcFilterValue = this.mcService.mcLocalGetFilter() ?
+            this.mcService.mcLocalGetFilter().mcFilterValue : // use saved filter value
+            'products';
+        this.mcFilterValue = initialMcFilterValue;
+        this.catalogService.getChildren('products').pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["mergeMap"])(function (result) {
             _this.children[0] = result.data;
             // initialize select values
-            var initialMcSortValue = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].mcSortOptions[_app_config__WEBPACK_IMPORTED_MODULE_1__["config"].mcSortOptionsDefault].value;
-            _this.filterForm.get('mcSort').setValue(initialMcSortValue);
-            _this.mcSortValue = initialMcSortValue;
-            var initialMcFilterValue = result.data[0].parent;
-            _this.mcFilterValue = initialMcFilterValue;
-            _this.navigateTo();
+            _this.filterForm.get('mcSort').setValue(_this.mcSortValue);
+            return _this.catalogService.getAllParents(_this.mcFilterValue);
+        }))
+            .subscribe(function (result) {
+            result.hierarchy.splice(0, 2);
+            if (result.hierarchy.length) {
+                result.hierarchy.map(function (value, index) {
+                    _this.filterForm.get('parents')['controls'][index].setValue(value._id);
+                    _this.onSelectMcFilter(value._id, index, result.hierarchy.length === index - 1);
+                });
+            }
         }, function (err) { return console.log('помилка завантаження категорій', err); });
     };
-    McsFiltersComponent.prototype.onSelectMcSort = function (event) {
-        // const mcSortValue = event.value;
-        this.mcSortValue = event.value;
+    McsFiltersComponent.prototype.onSelectMcSort = function (eventValue) {
+        this.mcSortValue = eventValue;
         this.navigateTo();
     };
-    McsFiltersComponent.prototype.onSelectMcFilter = function (event, level) {
+    McsFiltersComponent.prototype.onSelectMcFilter = function (eventValue, level, navigate) {
         var _this = this;
-        console.log('select filter');
-        this.mcFilterValue = event.value;
+        console.log('this.mcFilterValue3', this.mcFilterValue);
         while (level + 1 < this.filterForm.get('parents')['controls'].length) {
             this.removeParents(this.filterForm.get('parents')['controls'].length - 1);
         }
-        this.catalogService.getChildren(event.value)
+        this.catalogService.getChildren(eventValue)
             .subscribe(function (children) {
             if (!children.data.length) {
                 // if no children - show products
-                _this.parent_id = event.value;
+                _this.parent_id = eventValue;
                 _this.noMoreChildren = true;
                 _this.children[level + 1] = children.data;
-                _this.navigateTo();
             }
             else {
                 _this.children[level + 1] = children.data;
                 _this.noMoreChildren = false;
                 _this.addParents();
+            }
+            if (navigate) {
+                _this.mcFilterValue = eventValue;
                 _this.navigateTo();
-                // return this.productService.getProductsByParent(null, 'products', true);
             }
         }, function (err) { return console.log('помилка завантаження категорій', err); });
     };
@@ -145,7 +161,8 @@ var McsFiltersComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
             src_app_services_catalog_service__WEBPACK_IMPORTED_MODULE_4__["CatalogService"],
-            src_app_services_user_service__WEBPACK_IMPORTED_MODULE_5__["UserService"]])
+            src_app_services_user_service__WEBPACK_IMPORTED_MODULE_6__["UserService"],
+            src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_7__["McService"]])
     ], McsFiltersComponent);
     return McsFiltersComponent;
 }());
@@ -161,7 +178,7 @@ var McsFiltersComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card>\r\n  <mat-card-content>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"container-px0\" fxFlex=\"100\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <section class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\">\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                <mat-icon>thumb_up_alt</mat-icon>\r\n                <span>{{mc.likes || 0}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                  <mat-icon>thumb_down_alt</mat-icon>\r\n                  <span>{{mc.dislikes || 0}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showViews\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>remove_red_eye</mat-icon>\r\n                  <span>{{mc.views || 0}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showComments\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>comment</mat-icon>\r\n                  <span>{{mc.comments?.length || 0}}</span>\r\n              </div>\r\n               <div class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>calendar_today</mat-icon>\r\n                  <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>\r\n              </div>\r\n          </section>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <h2 class=\"mat-h2\">\r\n          {{mc.name}}\r\n        </h2>\r\n      </div>\r\n    </div>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"20\">\r\n        <p class=\"mat-body\">\r\n          {{mc | json}}\r\n        </p>\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"80\">\r\n        <p class=\"mat-body\">\r\n          {{mc.description}}\r\n        </p>\r\n      </div>\r\n    </div>\r\n  </mat-card-content>\r\n  <mat-card-actions>\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <section class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\" fxLayoutAlign=\"space-around center\">\r\n          <div class=\"item text-align-center muted\" fxFlex>\r\n            <a mat-button (click)=goToMcsItemDetail(mc._id)>\r\n              <!-- [routerLink]=\"['/mcs', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]\"\r\n              [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\"> -->\r\n              Докладно\r\n           </a>\r\n\r\n          </div>\r\n          <div *ngIf=\"user\" class=\"item text-align-center muted\" fxFlex>\r\n            <a mat-button (click)=editMcsItem(mc._id)>\r\n              <mat-icon>edit</mat-icon>\r\n            </a>\r\n          </div>\r\n          <div *ngIf=\"user\" class=\"item text-align-center muted\" fxFlex>\r\n            <a mat-button (click)=deleteMcsItem(mc._id)>\r\n              <mat-icon>delete</mat-icon>\r\n            </a>\r\n          </div>\r\n\r\n        </section>\r\n    </div>\r\n  </mat-card-actions>\r\n</mat-card>\r\n\r\n"
+module.exports = "<mat-card>\r\n  <mat-card-content>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"container-px0\" fxFlex=\"100\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <section class=\"cell-px0 social-feed-section mc-social\" fxFlex=\"100\" fxLayout=\"row\">\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                <mat-icon>thumb_up_alt</mat-icon>\r\n                <span>{{mc.likes || 0}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                  <mat-icon>thumb_down_alt</mat-icon>\r\n                  <span>{{mc.dislikes || 0}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showViews\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>remove_red_eye</mat-icon>\r\n                  <span>{{mc.views || 0}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showComments\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>comment</mat-icon>\r\n                  <span>{{mc.comments?.length || 0}}</span>\r\n              </div>\r\n               <div class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>calendar_today</mat-icon>\r\n                  <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>\r\n              </div>\r\n          </section>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"20\" fxLayoutAlign=\"center center\">\r\n          <img class=\"responsive-image\" src=\"{{\r\n            config.imgPath +\r\n            config.cloudinary.cloud_name +\r\n            '/c_fill,w_535,h_350,f_auto/' +\r\n            mc.mainImage}}\"\r\n            alt=\"master class image\">\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"80\">\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div class=\"cell\" fxFlex=\"100\" fxLayoutAlign=\"center\">\r\n              <h2 class=\"mat-h1\">\r\n                {{mc.name}}\r\n              </h2>\r\n            </div>\r\n          </div>\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div class=\"cell\" fxFlex=\"100\">\r\n              <p class=\"mat-body\">\r\n                {{mc.description}}\r\n              </p>\r\n            </div>\r\n          </div>\r\n\r\n      </div>\r\n    </div>\r\n  </mat-card-content>\r\n  <mat-card-actions>\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <section class=\"cell-px0\" fxFlex=\"100\" fxLayout=\"row\" fxLayoutAlign=\"space-around center\">\r\n          <div class=\"item text-align-center muted\" fxFlex>\r\n            <a mat-button (click)=\"goToMcsItemDetail(mc._id)\">\r\n              <!-- [routerLink]=\"['/mcs', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]\"\r\n              [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\"> -->\r\n              Докладно\r\n           </a>\r\n\r\n          </div>\r\n          <div *ngIf=\"user\" class=\"item text-align-center muted\" fxFlex>\r\n            <a mat-button (click)=\"editMcsItem(mc._id)\">\r\n              <mat-icon>edit</mat-icon>\r\n            </a>\r\n          </div>\r\n          <div *ngIf=\"user\" class=\"item text-align-center muted\" fxFlex>\r\n            <a mat-button (click)=\"deleteMcsItem(mc._id)\">\r\n              <mat-icon>delete</mat-icon>\r\n            </a>\r\n          </div>\r\n\r\n        </section>\r\n    </div>\r\n  </mat-card-actions>\r\n</mat-card>\r\n\r\n"
 
 /***/ }),
 
@@ -356,9 +373,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var src_app_app_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/app.config */ "./src/app/app.config.ts");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -373,7 +389,6 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-
 var McsListComponent = /** @class */ (function () {
     function McsListComponent(mcService, route) {
         this.mcService = mcService;
@@ -382,26 +397,48 @@ var McsListComponent = /** @class */ (function () {
     McsListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.queryParams
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function (queryParams) {
-            if (queryParams.mcSortValue) {
-                // if passed mc sort value
-                _this.mcSortValue = queryParams.mcSortValue;
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (queryParams) {
+            if (!queryParams.mcSortValue || queryParams.mcFilterValue || queryParams.noMoreChildren) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(null);
             }
-            else {
-                // use defalt sort value
-                _this.mcSortValue = src_app_app_config__WEBPACK_IMPORTED_MODULE_3__["config"].mcSortOptions[src_app_app_config__WEBPACK_IMPORTED_MODULE_3__["config"].mcSortOptionsDefault].value;
-            }
-            if (queryParams.mcFilterValue) {
-                // if passed mc sort value
-                _this.mcFilterValue = queryParams.mcFilterValue;
-                return _this.mcService.getMcsByFilter(_this.mcFilterValue, _this.mcSortValue, -1, 0, 10, queryParams.noMoreChildren);
-            }
-            else {
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(null);
-            }
+            _this.mcSortValue = queryParams.mcSortValue;
+            _this.mcFilterValue = queryParams.mcFilterValue;
+            _this.noMoreChildren = queryParams.noMoreChildren;
+            return _this.mcService.getMcsByFilter(_this.mcFilterValue, _this.mcSortValue, -1, 0, 10, _this.noMoreChildren);
+            // this.noMoreChildren = queryParams.noMoreChildren;
+            // if (queryParams.mcSortValue) {
+            //   // if passed mc sort value
+            //   this.mcSortValue = queryParams.mcSortValue;
+            // } else {
+            //   this.mcSortValue = this.mcService.mcLocalGetFilter() ?
+            //     this.mcService.mcLocalGetFilter().mcSortValue : // use saved sort value
+            //     config.mcSortOptions[config.mcSortOptionsDefault].value;  // use default sort value
+            // }
+            // if (queryParams.mcFilterValue) {
+            //   // if passed mc filter value
+            //   this.mcFilterValue = queryParams.mcFilterValue;
+            //   return this.mcService.getMcsByFilter(this.mcFilterValue, this.mcSortValue, -1, 0, 10, this.noMoreChildren);
+            // } else if (this.mcService.mcLocalGetFilter()) {
+            //   // use saved filter value
+            //   this.mcFilterValue = this.mcService.mcLocalGetFilter().mcFilterValue;
+            //   return this.mcService.getMcsByFilter(this.mcFilterValue, this.mcSortValue, -1, 0, 10, this.noMoreChildren);
+            // } else {
+            //   // without filter
+            //   this.mcFilterValue = 'products';
+            //   this.noMoreChildren = 'false';
+            //   return this.mcService.getMcsByFilter(this.mcFilterValue, this.mcSortValue, -1, 0, 10, 'false');
+            //   // return of(null);
+            // }
         }))
             .subscribe(function (result) {
             _this.mcs = result;
+            if (result) {
+                _this.mcService.mcLocalSetFilter({
+                    mcSortValue: _this.mcSortValue,
+                    mcFilterValue: _this.mcFilterValue,
+                    noMoreChildren: _this.noMoreChildren,
+                });
+            }
         }, function (err) { return console.log(err); });
     };
     McsListComponent = __decorate([
@@ -722,7 +759,7 @@ var McService = /** @class */ (function () {
                 'Content-Type': 'application/json',
             }),
             params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: {
-                    parent: parent, sort: sort, sortOrder: sortOrder + '', skip: skip + '', limit: limit + '', noMoreChildren: noMoreChildren + ''
+                    parent: parent, sort: sort, sortOrder: sortOrder + '', skip: skip + '', limit: limit + '', noMoreChildren: noMoreChildren
                 } }),
         };
         return this.http.get('api/mc/get-mcs-by-filter', httpOptions);
@@ -782,6 +819,15 @@ var McService = /** @class */ (function () {
             })
         };
         return this.http.get('api/mc/get-sku-list', httpOptions);
+    };
+    McService.prototype.mcLocalSetFilter = function (filter) {
+        localStorage.setItem('mcQueryParams', JSON.stringify(filter));
+    };
+    McService.prototype.mcLocalGetFilter = function () {
+        return JSON.parse(localStorage.getItem('mcQueryParams'));
+    };
+    McService.prototype.mcLocalRemoveFilter = function () {
+        localStorage.removeItem('mcQueryParams');
     };
     McService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({

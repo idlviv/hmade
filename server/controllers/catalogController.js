@@ -41,25 +41,6 @@ module.exports.getMainMenu = function(req, res, next) {
 module.exports.getAllParents = function(req, res, next) {
   const category_id = req.query.category_id;
   CatalogModel.aggregate([
-    // {
-    //   $match: {_id: category_id}
-    // },
-    // {
-    //   $sort: {order: 1}
-    // },
-    // {
-    //   $graphLookup: {
-    //     from: 'catalogs',
-    //     startWith: '$parent',
-    //     connectFromField: 'parent',
-    //     connectToField: '_id',
-    //     as: 'hierarchy',
-    //   }
-    // },
-    // {
-    //   $addFields: {numOfChildren: {$size: '$hierarchy'}}
-    // },
-
     {
       $match: {_id: category_id},
     },
@@ -76,14 +57,9 @@ module.exports.getAllParents = function(req, res, next) {
         // depthField: 'depthField'
       },
     },
-
-    // {
-    //   $addFields: {numOfChildren: {$size: '$hierarchy'}}
-    // },
     {
       $unwind: '$hierarchy',
     },
-
     {
       $addFields: {sizeOfAncestors: {$size: '$hierarchy.ancestors'}},
     },
@@ -97,7 +73,7 @@ module.exports.getAllParents = function(req, res, next) {
             name: {$first: '$name'},
           },
     },
-  ]).then((result) => res.status(200).json(new ResObj(true, 'Каталог', result)))
+  ]).then((result) => res.status(200).json(result[0]))
       .catch((err) => next(new DbError()));
 };
 

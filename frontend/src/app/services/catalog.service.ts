@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { IUser } from '../interfaces/user-interface';
 import { IResponse } from '../interfaces/server-response-interface';
 import { Observable } from 'rxjs';
+import { ICatalog } from '../interfaces/catalog-interface';
 
 @Injectable()
 export class CatalogService {
@@ -23,14 +24,14 @@ export class CatalogService {
     );
   }
 
-  getAllParents(category_id): Observable<IResponse> {
+  getAllParents(category_id): Observable<{_id: string, name: string, hierarchy: ICatalog[]}> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
       params: new HttpParams().set('category_id', category_id)
     };
-    return this.http.get<IResponse>(
+    return this.http.get<{_id: string, name: string, hierarchy: ICatalog[]}>(
       'api/catalog/get-all-parents',
       httpOptions
     );

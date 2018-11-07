@@ -42,8 +42,8 @@ export class BreadcrumbComponent implements OnInit {
     )
       .subscribe(result => {
           this.productName = result[1].get('name');
-          this.hierarchyCategory = result[0].data[0].hierarchy;
-          this.hierarchyCategory.push(result[0].data[0]);
+          this.hierarchyCategory = result[0].hierarchy;
+          this.hierarchyCategory.push(result[0]);
           this.hierarchyCategory.splice(0, 3);
           this.processing = false;
         },

@@ -3,7 +3,7 @@
     <div class="row" fxLayout="row">
       <div class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
         <mat-form-field>
-          <mat-select formControlName="mcSort" placeholder="Відсортувати" (selectionChange)="onSelectMcSort($event)">
+          <mat-select formControlName="mcSort" placeholder="Відсортувати" (selectionChange)="onSelectMcSort($event.value)">
             <mat-option *ngFor="let mcSortOption of config.mcSortOptions" [value]="mcSortOption.value">
               {{mcSortOption.name}}
             </mat-option>
@@ -14,7 +14,7 @@
           *ngFor="let categoryBlock of filterForm.get('parents')['controls']; let i = index">
         <mat-form-field>
           <mat-select placeholder="Фільтр" formControlName="{{i}}" required
-                      (selectionChange)="onSelectMcFilter($event, i)">
+                      (selectionChange)="onSelectMcFilter($event.value, i, true)">
             <mat-option *ngFor="let child of children[i]" [value]="child._id">
               {{child.name}}
             </mat-option>

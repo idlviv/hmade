@@ -6,6 +6,7 @@ import { CatalogService } from 'src/app/services/catalog.service';
 import { mergeMap } from 'rxjs/operators';
 import { UserService } from 'src/app/services/user.service';
 import { IUser } from 'src/app/interfaces/user-interface';
+import { McService } from 'src/app/services/mc.service';
 
 @Component({
   selector: 'app-mcs-filters',
@@ -22,11 +23,13 @@ export class McsFiltersComponent implements OnInit {
 
   mcSortValue: string;
   mcFilterValue: string;
+  filteredElementLevel: number;
 
   constructor(
     private router: Router,
     private catalogService: CatalogService,
     private userService: UserService,
+    private mcService: McService,
   ) { }
 
   ngOnInit() {
@@ -39,56 +42,75 @@ export class McsFiltersComponent implements OnInit {
       parents : new FormArray([this.initParents()]),
     });
 
-    this.catalogService.getChildren('products')
+    const initialMcSortValue = this.mcService.mcLocalGetFilter() ?
+        this.mcService.mcLocalGetFilter().mcSortValue : // use saved sort value
+        config.mcSortOptions[config.mcSortOptionsDefault].value;  // use default sort value
+    this.mcSortValue = initialMcSortValue;
+
+    const initialMcFilterValue = this.mcService.mcLocalGetFilter() ?
+        this.mcService.mcLocalGetFilter().mcFilterValue : // use saved filter value
+        'products';
+    this.mcFilterValue = initialMcFilterValue;
+
+    this.catalogService.getChildren('products').pipe(
+      mergeMap(result => {
+        this.children[0] = result.data;
+        // initialize select values
+        this.filterForm.get('mcSort').setValue(this.mcSortValue);
+        return this.catalogService.getAllParents(this.mcFilterValue);
+      })
+    )
     .subscribe(
       result => {
-        this.children[0] = result.data;
+        result.hierarchy.splice(0, 2);
+        if (result.hierarchy.length) {
+          result.hierarchy.map(
+            (value, index) => {
+              this.filterForm.get('parents')['controls'][index].setValue(value._id);
+              this.onSelectMcFilter(value._id, index, result.hierarchy.length === index - 1);
+            }
+          );
 
-        // initialize select values
-        const initialMcSortValue = config.mcSortOptions[config.mcSortOptionsDefault].value;
-        this.filterForm.get('mcSort').setValue(initialMcSortValue);
-        this.mcSortValue = initialMcSortValue;
-
-        const initialMcFilterValue = result.data[0].parent;
-        this.mcFilterValue = initialMcFilterValue;
-        this.navigateTo();
-
-      },
+        }
+    },
       err => console.log('помилка завантаження категорій', err)
     );
   }
 
-  onSelectMcSort(event) {
-    // const mcSortValue = event.value;
-    this.mcSortValue = event.value;
+  onSelectMcSort(eventValue) {
+    this.mcSortValue = eventValue;
     this.navigateTo();
 
   }
 
-  onSelectMcFilter(event, level) {
-    console.log('select filter');
-    this.mcFilterValue = event.value;
+  onSelectMcFilter(eventValue, level, navigate) {
+
+    console.log('this.mcFilterValue3', this.mcFilterValue);
+
     while (level + 1 < this.filterForm.get('parents')['controls'].length) {
       this.removeParents(this.filterForm.get('parents')['controls'].length - 1);
     }
 
-    this.catalogService.getChildren(event.value)
+    this.catalogService.getChildren(eventValue)
       .subscribe(
         children => {
           if (!children.data.length) {
             // if no children - show products
-            this.parent_id = event.value;
+            this.parent_id = eventValue;
             this.noMoreChildren = true;
             this.children[level + 1] = children.data;
-            this.navigateTo();
+
         } else {
             this.children[level + 1] = children.data;
             this.noMoreChildren = false;
             this.addParents();
-            this.navigateTo();
-
-            // return this.productService.getProductsByParent(null, 'products', true);
           }
+          if (navigate) {
+            this.mcFilterValue = eventValue;
+            this.navigateTo();
+          }
+
+
       },
         err => console.log('помилка завантаження категорій', err)
       );

@@ -18,6 +18,10 @@ $accent-light50: mat-color($accent, 50);
 $accent-light: mat-color($accent, 100);
 $accent-dark: mat-color($accent, 900);
 
+$warn-light50: mat-color($warn, 50);
+$warn-light: mat-color($warn, 100);
+$warn-dark: mat-color($warn, 900);
+
 .primary {
   color: $_primary;
 }

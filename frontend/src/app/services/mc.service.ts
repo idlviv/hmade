@@ -107,14 +107,14 @@ export class McService {
    * @memberof McService
    */
   getMcsByFilter(
-    parent: string = 'products', sort: string, sortOrder: number = 1, skip: number = 0, limit: number = 10, noMoreChildren: boolean
+    parent: string = 'products', sort: string, sortOrder: number = 1, skip: number = 0, limit: number = 10, noMoreChildren: string
     ): Observable<IMc[]> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
       params: new HttpParams({ fromObject: {
-        parent, sort, sortOrder: sortOrder + '', skip: skip + '', limit: limit + '', noMoreChildren: noMoreChildren + ''
+        parent, sort, sortOrder: sortOrder + '', skip: skip + '', limit: limit + '', noMoreChildren
       }}),
     };
     return this.http.get<IMc[]>(
@@ -193,6 +193,18 @@ export class McService {
       'api/mc/get-sku-list',
       httpOptions
     );
+  }
+
+  mcLocalSetFilter(filter: {mcSortValue: string, mcFilterValue: string, noMoreChildren: string}): void {
+    localStorage.setItem('mcQueryParams', JSON.stringify(filter));
+  }
+
+  mcLocalGetFilter(): {mcSortValue: string, mcFilterValue: string, noMoreChildren: string} | null {
+    return JSON.parse(localStorage.getItem('mcQueryParams'));
+  }
+
+  mcLocalRemoveFilter(): void {
+    localStorage.removeItem('mcQueryParams');
   }
 
 }

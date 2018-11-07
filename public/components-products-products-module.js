@@ -71,8 +71,8 @@ var BreadcrumbComponent = /** @class */ (function () {
         })), $queryParamMap)
             .subscribe(function (result) {
             _this.productName = result[1].get('name');
-            _this.hierarchyCategory = result[0].data[0].hierarchy;
-            _this.hierarchyCategory.push(result[0].data[0]);
+            _this.hierarchyCategory = result[0].hierarchy;
+            _this.hierarchyCategory.push(result[0]);
             _this.hierarchyCategory.splice(0, 3);
             _this.processing = false;
         }, function (err) { return console.log('Помилка breadcrumb', err); });

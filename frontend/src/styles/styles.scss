@@ -1059,6 +1059,11 @@ mat-card {
   }
 }
 
+.mc-social {
+  margin-bottom: 2rem;
+  background-color: $accent-light;
+}
+
 .product-brief-section {
   .product-brief-description {
     height: 100px;
@@ -1067,3 +1072,5 @@ mat-card {
     }
   }
 }
+
+
