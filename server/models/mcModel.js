@@ -43,7 +43,7 @@ const McSchema = new Schema({
         type: String,
       },
       value: {
-        type: Number,
+        type: String,
       },
       units: {
         type: String,

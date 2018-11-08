@@ -215,9 +215,9 @@ body {
   margin-bottom: 8px;
 }
 
-.footer {
-  margin-top: 8px;
-}
+// .footer {
+  // margin-top: 8px;
+// }
 
 .sidenav-mat-toolbar-row {
   padding: 0 !important;
@@ -1064,6 +1064,10 @@ mat-card {
   background-color: $accent-light;
 }
 
+.mc-side {
+  background-color: mat-color($greener, 100);
+}
+
 .product-brief-section {
   .product-brief-description {
     height: 100px;
@@ -1072,5 +1076,7 @@ mat-card {
     }
   }
 }
+
+
 
 

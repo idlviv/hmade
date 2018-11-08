@@ -321,7 +321,7 @@ var McsItemBriefComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div class=\"container\">\r\n  <div class=\"row\">\r\n    <div class=\"cell\">\r\n      {{mc | json}}\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "\r\n<div class=\"container\">\r\n  <div class=\"app-container\">\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"80\">\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n        {{mc | json}}\r\n      </div>\r\n      <div class=\"cell mc-side mat-elevation-z10\" fxFlex=\"20\">\r\n        {{mc | json}}\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 

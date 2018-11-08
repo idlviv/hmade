@@ -26,20 +26,20 @@ module.exports.mcUpsert = function(req, res, next) {
 
   McModel.findOne({_id: mc._id})
       .then((result) => {
-        log.debug('find', result);
         if (result !== null && result._doc) {
+
           mc.createdAt = result.createdAt || 0;
           mc.updatedAt = Date.now();
+          mc.likes = result.likes || 0;
+          mc.likedBy = result.likedBy || [];
+          mc.dislikes = result.dislikes || 0;
+          mc.dislikedBy = result.dislikedBy || [];
+          mc.views = result.views || 0;
+          mc.comments = result.comments || [];
         } else {
           mc.createdAt = Date.now();
           mc.updatedAt = Date.now();
         }
-        mc.likes = result.likes || 0;
-        mc.likedBy = result.likedBy || [];
-        mc.dislikes = result.dislikes || 0;
-        mc.dislikedBy = result.dislikedBy || [];
-        mc.views = result.views || 0;
-        mc.comments = result.comments || [];
 
         return McModel.findOneAndUpdate(
             {_id: mc._id},
@@ -50,7 +50,7 @@ module.exports.mcUpsert = function(req, res, next) {
       .then((result) => res.status(200).json(
           new ResObj(true, 'Майстерклас додано/змінено', result)
       ))
-      .catch((err) => next(new DbError()));
+      .catch((err) => next(new DbError(err)));
 };
 
 module.exports.addMainImage = function(req, res, next) {
