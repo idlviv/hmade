@@ -61,9 +61,11 @@
       <div class="row" fxLayout="row">
         <section class="cell-px0" fxFlex="100" fxLayout="row" fxLayoutAlign="space-around center">
           <div class="item text-align-center muted" fxFlex>
-            <a mat-button (click)="goToMcsItemDetail(mc._id)">
-              <!-- [routerLink]="['/mcs', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]"
-              [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}"> -->
+             <!-- (click)="goToMcsItemDetail(mc._id)"> -->
+
+            <a mat-button
+              [routerLink]="['/mcs','show', mc._id]"
+              [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
               Докладно
            </a>
 

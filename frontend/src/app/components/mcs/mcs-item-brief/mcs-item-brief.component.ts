@@ -40,6 +40,8 @@ export class McsItemBriefComponent implements OnInit, OnChanges {
 
   goToMcsItemDetail(_id) {
     console.log(`goToMcsItemDetail ${_id}`);
+    this.router.navigate(['/mcs', 'show', _id]);
+
   }
 
   editMcsItem(_id) {

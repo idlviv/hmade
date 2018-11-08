@@ -1,34 +1,49 @@
-<div class="container">
+<!-- <div class="container"> -->
+  <mat-card>
+
   <form [formGroup]="filterForm" novalidate>
     <div class="row" fxLayout="row">
-      <div class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
-        <mat-form-field>
-          <mat-select formControlName="mcSort" placeholder="Відсортувати" (selectionChange)="onSelectMcSort($event.value)">
-            <mat-option *ngFor="let mcSortOption of config.mcSortOptions" [value]="mcSortOption.value">
-              {{mcSortOption.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
+      <div class="cell" fxFlex.xs="56px" fxFlex="64px">
+
+          <button mat-icon-button (click)=resetFilters()>
+            <mat-icon>clear</mat-icon>
+          </button>
+
       </div>
-      <div formArrayName="parents" class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25"
-          *ngFor="let categoryBlock of filterForm.get('parents')['controls']; let i = index">
-        <mat-form-field>
-          <mat-select placeholder="Фільтр" formControlName="{{i}}" required
-                      (selectionChange)="onSelectMcFilter($event.value, i, true)">
-            <mat-option *ngFor="let child of children[i]" [value]="child._id">
-              {{child.name}}
-            </mat-option>
-          </mat-select>
-        </mat-form-field>
-      </div>
-      <div *ngIf="noMoreChildren" class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
-        <div *ngIf="user" class="item text-align-center muted" fxFlex>
-          <a mat-button (click)=addMcsItem(parent_id)>
-            <mat-icon>add</mat-icon> Додати майстерклас
-          </a>
+
+      <div class="cell row" fxFlex="calc(100%-64px)" fxLayout="row">
+        <div class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
+          <mat-form-field>
+            <mat-select formControlName="mcSort" placeholder="Відсортувати" (selectionChange)="onSelectMcSort($event.value)">
+              <mat-option *ngFor="let mcSortOption of config.mcSortOptions" [value]="mcSortOption.value">
+                {{mcSortOption.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div formArrayName="parents" class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25"
+            *ngFor="let categoryBlock of filterForm.get('parents')['controls']; let i = index">
+          <mat-form-field>
+            <mat-select placeholder="Фільтр" formControlName="{{i}}"
+                        (selectionChange)="onSelectMcFilter($event.value, i, true, filter)">
+              <mat-option *ngFor="let child of children[i]" [value]="child._id">
+                {{child.name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </div>
+        <div *ngIf="noMoreChildren === 'true'" class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
+          <div *ngIf="user" class="item text-align-center muted" fxFlex>
+            <a mat-button (click)=addMcsItem(parent_id)>
+              <mat-icon>add</mat-icon> Додати майстерклас
+            </a>
+          </div>
         </div>
       </div>
+
     </div>
   </form>
-</div>
+</mat-card>
+
+<!-- </div> -->
 

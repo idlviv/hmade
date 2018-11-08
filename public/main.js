@@ -229,6 +229,8 @@ var config = {
         showComments: true,
     },
     mcPrefix: 'mcs',
+    mcSkipValue: 0,
+    mcLimitValue: 10,
     mcSortOptionsDefault: 0,
     mcSortOptions: [
         {

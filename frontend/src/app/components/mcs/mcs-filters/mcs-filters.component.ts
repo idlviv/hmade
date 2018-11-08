@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { config } from '../../../app.config';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { CatalogService } from 'src/app/services/catalog.service';
 import { mergeMap } from 'rxjs/operators';
@@ -18,7 +18,7 @@ export class McsFiltersComponent implements OnInit {
   config = config;
   filterForm: FormGroup;
   parent_id: string;
-  noMoreChildren = false;
+  noMoreChildren = 'false';
   user: IUser;
 
   mcSortValue: string;
@@ -27,6 +27,7 @@ export class McsFiltersComponent implements OnInit {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private catalogService: CatalogService,
     private userService: UserService,
     private mcService: McService,
@@ -39,19 +40,28 @@ export class McsFiltersComponent implements OnInit {
 
     this.filterForm = new FormGroup({
       mcSort: new FormControl([]),
-      parents : new FormArray([this.initParents()]),
+      parents : new FormArray([
+        this.initParents()
+      ]),
     });
 
+
     const initialMcSortValue = this.mcService.mcLocalGetFilter() ?
-        this.mcService.mcLocalGetFilter().mcSortValue : // use saved sort value
-        config.mcSortOptions[config.mcSortOptionsDefault].value;  // use default sort value
+    this.mcService.mcLocalGetFilter().mcSortValue : // use saved sort value
+    config.mcSortOptions[config.mcSortOptionsDefault].value;  // use default sort value
     this.mcSortValue = initialMcSortValue;
 
-    const initialMcFilterValue = this.mcService.mcLocalGetFilter() ?
-        this.mcService.mcLocalGetFilter().mcFilterValue : // use saved filter value
-        'products';
-    this.mcFilterValue = initialMcFilterValue;
-
+    if (this.mcService.mcLocalGetFilter()) {
+      const initialMcFilterValue = this.mcService.mcLocalGetFilter().mcFilterValue;
+      const initialNoMoreChildrenValue = this.mcService.mcLocalGetFilter().noMoreChildren;
+      this.mcFilterValue = initialMcFilterValue;
+      this.noMoreChildren = initialNoMoreChildrenValue;
+    } else {
+      const initialMcFilterValue = 'products';
+      const initialNoMoreChildrenValue = 'false';
+      this.mcFilterValue = initialMcFilterValue;
+      this.noMoreChildren = initialNoMoreChildrenValue;
+    }
     this.catalogService.getChildren('products').pipe(
       mergeMap(result => {
         this.children[0] = result.data;
@@ -63,57 +73,78 @@ export class McsFiltersComponent implements OnInit {
     .subscribe(
       result => {
         result.hierarchy.splice(0, 2);
-        if (result.hierarchy.length) {
+        if (result.hierarchy.length > 0) {
           result.hierarchy.map(
             (value, index) => {
-              this.filterForm.get('parents')['controls'][index].setValue(value._id);
-              this.onSelectMcFilter(value._id, index, result.hierarchy.length === index - 1);
+              if (index !== 0) {
+                console.log('value._id', value._id);
+                this.onSelectMcFilter(value._id, index - 1, false, true);
+              }
             }
           );
-
+          this.onSelectMcFilter(result._id, result.hierarchy.length - 1, true, true);
+        } else {
+          this.navigateTo();
         }
-    },
-      err => console.log('помилка завантаження категорій', err)
+      },
+        err => console.log('помилка завантаження категорій', err)
     );
+
+    this.route.queryParams.subscribe(() => this.navigateTo());
   }
 
-  onSelectMcSort(eventValue) {
-    this.mcSortValue = eventValue;
-    this.navigateTo();
+    onSelectMcSort(eventValue) {
+      this.mcSortValue = eventValue;
+      this.navigateTo();
 
-  }
-
-  onSelectMcFilter(eventValue, level, navigate) {
-
-    console.log('this.mcFilterValue3', this.mcFilterValue);
-
-    while (level + 1 < this.filterForm.get('parents')['controls'].length) {
-      this.removeParents(this.filterForm.get('parents')['controls'].length - 1);
     }
 
-    this.catalogService.getChildren(eventValue)
-      .subscribe(
-        children => {
-          if (!children.data.length) {
-            // if no children - show products
-            this.parent_id = eventValue;
-            this.noMoreChildren = true;
-            this.children[level + 1] = children.data;
+    onSelectMcFilter(eventValue, level, navigate, programmatic) {
+      console.log('level', level);
+      while (level + 1 < this.filterForm.get('parents')['controls'].length) {
+        this.removeParents(this.filterForm.get('parents')['controls'].length - 1);
+      }
 
-        } else {
-            this.children[level + 1] = children.data;
-            this.noMoreChildren = false;
-            this.addParents();
+      this.catalogService.getChildren(eventValue)
+        .subscribe(
+          children => {
+            if (!children.data.length) {
+              // if no children - show products
+              this.parent_id = eventValue;
+              this.noMoreChildren = 'true';
+              this.children[level + 1] = children.data;
+          } else {
+              this.children[level + 1] = children.data;
+              this.noMoreChildren = 'false';
+              this.addParents();
+          }
+          if (programmatic) {
+            this.filterForm.get('parents')['controls'][level].setValue(eventValue);
           }
           if (navigate) {
             this.mcFilterValue = eventValue;
             this.navigateTo();
           }
+        },
+          err => console.log('помилка завантаження категорій', err)
+        );
+  }
 
-
-      },
-        err => console.log('помилка завантаження категорій', err)
-      );
+  resetFilters() {
+    this.mcSortValue = config.mcSortOptions[config.mcSortOptionsDefault].value;
+    this.mcFilterValue = 'products';
+    this.noMoreChildren = 'false';
+    while (1 < this.filterForm.get('parents')['controls'].length) {
+      this.removeParents(this.filterForm.get('parents')['controls'].length - 1);
+    }
+    this.filterForm.reset();
+    this.filterForm.get('mcSort').setValue(this.mcSortValue);
+    this.mcService.mcLocalSetFilter({
+      mcSortValue: this.mcSortValue,
+      mcFilterValue: this.mcFilterValue,
+      noMoreChildren: this.noMoreChildren,
+    });
+    this.navigateTo();
   }
 
   navigateTo() {

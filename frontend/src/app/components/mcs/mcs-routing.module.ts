@@ -3,12 +3,17 @@ import { NgModule } from '@angular/core';
 import { McsComponent } from './mcs.component';
 import { McsListComponent } from './mcs-list/mcs-list.component';
 import { McsFiltersComponent } from './mcs-filters/mcs-filters.component';
+import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.component';
 
 const mcsRoutes: Routes = [
   {
     path: 'ch',
     component: McsComponent,
     children: [
+      // {
+      //   path: '',
+      //   redirectTo: 'mcFilter'
+      // },
       {
         path: '',
         component: McsListComponent,
@@ -18,17 +23,12 @@ const mcsRoutes: Routes = [
         component: McsFiltersComponent,
         outlet: 'mcsFilters',
       },
-    //   {
-    //     path: ':category_id/details/:product_id',
-    //     component: ProductsDetailComponent,
-    //   },
-    //   {
-    //     path: ':category_id/details/:product_id',
-    //     component: BreadcrumbComponent,
-    //     outlet: 'breadcrumb',
-    //   },
     ],
-  }
+  },
+  {
+    path: 'show/:_id',
+    component: McsItemDetailComponent,
+  },
 ];
 
 @NgModule({
