@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { mergeMap } from 'rxjs/operators';
 import { McService } from 'src/app/services/mc.service';
 import { IMc } from 'src/app/interfaces/interface';
+import { config } from 'src/app/app.config';
 
 @Component({
   selector: 'app-mcs-item-detail',
@@ -10,11 +11,12 @@ import { IMc } from 'src/app/interfaces/interface';
   styleUrls: ['./mcs-item-detail.component.scss']
 })
 export class McsItemDetailComponent implements OnInit {
-
+  config = config;
   mc: IMc;
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private mcService: McService,
   ) { }
 
@@ -29,6 +31,10 @@ export class McsItemDetailComponent implements OnInit {
         this.mc = result;
         console.log('result', result);
       });
+  }
+
+  goToMcs() {
+    this.router.navigate(['/mcs', 'ch']);
   }
 
 }

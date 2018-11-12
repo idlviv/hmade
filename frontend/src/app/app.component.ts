@@ -12,15 +12,8 @@ export class AppComponent implements OnInit {
   showHeader = false;
 
   constructor(
-     private router: Router,
    ) { }
 
   ngOnInit() {
-  //   this.router.events.pipe(
-  //     filter(event => event instanceof NavigationStart)
-  //   )
-  //     .subscribe((event: NavigationStart) => {
-  //       this.showHeader = !(event.url === '/');
-  //     });
   }
 }

@@ -35,6 +35,13 @@ export const config = {
     showComments: true,
     commentsLength: 10,
   },
+  permissions: {
+    admin: ['casual', 'guest', 'user', 'manager', 'admin'],
+    manager: ['casual', 'guest', 'user', 'manager'],
+    user: ['casual', 'guest', 'user'],
+    guest: ['casual', 'guest'],
+    casual: ['casual']
+  },
   imgPath: 'https://res.cloudinary.com/',
   cloudinary: {
     cloud_name: environment.cloud_name

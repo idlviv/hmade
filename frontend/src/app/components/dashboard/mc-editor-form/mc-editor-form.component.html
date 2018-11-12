@@ -5,10 +5,8 @@
         <mat-card-header></mat-card-header>
         <mat-card-title>
           <h2 *ngIf="editMode" class="mat-h2">Редагувати майстерклас
-            <span class="accent">{{mcForm.get('name').value}}</span> у розділі
-            <span class="accent">{{paramParent_id}}</span></h2>
-          <h2 *ngIf="!editMode" class="mat-h2">Створити колекцію у розділі <span
-              class="accent">{{paramParent_id}}</span></h2>
+            <span class="accent"> {{mcForm.get('name').value}}</span></h2>
+          <h2 *ngIf="!editMode" class="mat-h2">Створити колекцію</h2>
         </mat-card-title>
 
         <mat-card-content>
@@ -44,7 +42,7 @@
                       mcForm.get('name').errors?.maxlength ||
                       mcForm.get('name').errors?.required) &&
                       mcForm.get('name').touched">
-                      Довжина повинна бути від 4 до 50 символів
+                      Довжина повинна бути від 4 до 100 символів
                     </mat-error>
                   </mat-form-field>
                 </div>
@@ -78,7 +76,7 @@
                       mcForm.get('description').errors?.maxlength ||
                       mcForm.get('description').errors?.required) &&
                       mcForm.get('description').touched">
-                      Довжина повинна бути від 4 до 200 символів
+                      Довжина повинна бути від 4 до 500 символів
                     </mat-error>
                     <mat-error
                       *ngIf="mcForm.get('description').errors?.pattern &&
@@ -153,7 +151,7 @@
                         mcForm.get('steps').at(i).get('description').errors?.maxlength ||
                         mcForm.get('steps').at(i).get('description').errors?.required) &&
                         mcForm.get('steps').at(i).get('description').touched">
-                        Довжина повинна бути від 4 до 200 символів
+                        Довжина повинна бути від 4 до 600 символів
                       </mat-error>
                       <mat-error
                         *ngIf="mcForm.get('steps').at(i).get('description').errors?.required

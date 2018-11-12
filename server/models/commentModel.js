@@ -12,6 +12,10 @@ const CommentSchema = new Schema({
     type: Number,
     default: 0,
   },
+  display: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 let CommentModel = mongoose.model('comments', CommentSchema);

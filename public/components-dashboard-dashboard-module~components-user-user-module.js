@@ -578,7 +578,7 @@ var UserPasswordResetComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n  <div class=\"cell\" fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\r\n\r\n  <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\r\n\r\n    <div class=\"item centered-container\" *ngIf=\"user\">\r\n      <div class=\"info-block mat-elevation-z4\">\r\n\r\n        <div class=\"avatar-block\">\r\n          <form [formGroup]=\"changeAvatarForm\" (submit)=\"onSubmitChangeAvatarForm()\">\r\n\r\n          <div class=\"avatar-img-wrapper\">\r\n            <img *ngIf=\"!previewAvatarUrl\" src=\"{{user.avatar}}\" alt=\"avatar\">\r\n            <img *ngIf=\"previewAvatarUrl\"  src=\"{{previewAvatarUrl}}\" alt=\"avatar\">\r\n\r\n            <div *ngIf=\"processingChangeAvatar\" class=\"avatar-div-processing\">\r\n              <div class=\"spinner-wrapper\">\r\n                <mat-spinner [diameter]=\"24\"></mat-spinner>\r\n              </div>\r\n            </div>\r\n\r\n            <div *ngIf=\"!editAvatar && !processingChangeAvatar\" class=\"avatar-div-change\"></div>\r\n            <div *ngIf=\"!editAvatar && !processingChangeAvatar\" class=\"avatar-button-change\">\r\n              <input type=\"file\" accept=\".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif\" (change)=\"changeAvatar($event)\" id=\"input-file\">\r\n              <label for=\"input-file\">Змінити\r\n              </label>\r\n            </div>\r\n\r\n\r\n            <div *ngIf=\"editAvatar && !processingChangeAvatar\">\r\n              <div class=\"avatar-div-ok\" >\r\n              </div>\r\n              <div class=\"avatar-div-cancel\">\r\n              </div>\r\n              <button class=\"avatar-button-ok\" [disabled]=\"!changeAvatarForm.valid\">\r\n                <mat-icon>done</mat-icon>\r\n              </button>\r\n              <button type=\"button\" class=\"avatar-button-cancel\" (click)=\"cancelChangeAvatar()\">\r\n                <mat-icon>cancel</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n          </form>\r\n\r\n        </div>\r\n\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div class=\"info-block-row-title mat-title\">{{user.login}}</div>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"info-block-row-wrapper\">\r\n            <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n              <!--<div fxFlex=\"100%\">-->\r\n                <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">Email</div>\r\n                <div class=\"mat-body-1 muted\" fxFlex=\"60%\">{{user.email}}</div>\r\n                <mat-icon *ngIf=\"processing !== 'email'\" fxFlex=\"30px\"\r\n                          (click)=\"openDialog(makeEmailObject())\" class=\"muted\">edit</mat-icon>\r\n                <mat-spinner *ngIf=\"processing === 'email'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n              <!--</div>-->\r\n            </div>\r\n        </div>\r\n\r\n        <div *ngIf=\"user.role === 'guest' && !verificationSent\" class=\"info-block-row-wrapper border-0\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row mail-verification\">\r\n            <div class=\"mat-body-1\" fxFlex=\"100%\">Пошту не верифіковано, надіслати код</div>\r\n            <mat-icon *ngIf=\"processing !== 'verification'\" fxFlex=\"30px\" (click)=\"onVerificationSend()\">mail</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'verification'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n          </div>\r\n        </div>\r\n\r\n        <div *ngIf=\"user.role === 'guest' && verificationSent\" class=\"info-block-row-wrapper border-0\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row mail-verification\">\r\n            <div class=\"mat-body-1 muted\" fxFlex=\"100%\">На пошту надіслано посилання</div>\r\n            <mat-icon *ngIf=\"processing !== 'verification'\" fxFlex=\"30px\" class=\"muted\" (click)=\"onVerificationSend()\">refresh</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'verification'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">Ім'я</div>\r\n            <!--<div fxFlex></div>-->\r\n            <div class=\"mat-subheading-2 muted\" fxFlex=\"60%\">{{user.name}}</div>\r\n            <mat-icon *ngIf=\"processing !== 'name'\" fxFlex=\"30px\"\r\n                      (click)=\"openDialog(makeNameObject())\" class=\"muted\">edit</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'name'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">Прізвище</div>\r\n            <!--<div fxFlex></div>-->\r\n            <div class=\"mat-subheading-2 muted\" fxFlex=\"60%\">{{user.surname}}</div>\r\n            <mat-icon *ngIf=\"processing !== 'surname'\" fxFlex=\"30px\"\r\n                      (click)=\"openDialog(makeSurnameObject())\" class=\"muted\">edit</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'surname'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div fxFlex=\"60%\"></div>\r\n            <div fxFlex=\"40%\">\r\n              <button mat-button (click)=\"openDialog(makePasswordObject())\">\r\n                <span *ngIf=\"processing !== 'password'\">Змінити пароль</span>\r\n                <mat-spinner *ngIf=\"processing === 'password'\" [diameter]=\"24\"></mat-spinner>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n  <div class=\"cell\" fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\r\n\r\n  <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\r\n\r\n    <div class=\"item centered-container\" *ngIf=\"user\">\r\n      <div class=\"info-block mat-elevation-z4\">\r\n\r\n        <div class=\"avatar-block\">\r\n          <form [formGroup]=\"changeAvatarForm\" (submit)=\"onSubmitChangeAvatarForm()\">\r\n\r\n          <div class=\"avatar-img-wrapper\">\r\n            <img *ngIf=\"!previewAvatarUrl\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_180,h_180,f_auto/' +\r\n              user.avatar}}\" alt=\"avatar\">\r\n            <img *ngIf=\"previewAvatarUrl\"  src=\"{{previewAvatarUrl}}\" alt=\"avatar\">\r\n\r\n            <div *ngIf=\"processingChangeAvatar\" class=\"avatar-div-processing\">\r\n              <div class=\"spinner-wrapper\">\r\n                <mat-spinner [diameter]=\"24\"></mat-spinner>\r\n              </div>\r\n            </div>\r\n\r\n            <div *ngIf=\"!editAvatar && !processingChangeAvatar\" class=\"avatar-div-change\"></div>\r\n            <div *ngIf=\"!editAvatar && !processingChangeAvatar\" class=\"avatar-button-change\">\r\n              <input type=\"file\" accept=\".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif\" (change)=\"changeAvatar($event)\" id=\"input-file\">\r\n              <label for=\"input-file\">Змінити\r\n              </label>\r\n            </div>\r\n\r\n\r\n            <div *ngIf=\"editAvatar && !processingChangeAvatar\">\r\n              <div class=\"avatar-div-ok\" >\r\n              </div>\r\n              <div class=\"avatar-div-cancel\">\r\n              </div>\r\n              <button class=\"avatar-button-ok\" [disabled]=\"!changeAvatarForm.valid\">\r\n                <mat-icon>done</mat-icon>\r\n              </button>\r\n              <button type=\"button\" class=\"avatar-button-cancel\" (click)=\"cancelChangeAvatar()\">\r\n                <mat-icon>cancel</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n          </form>\r\n\r\n        </div>\r\n\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div class=\"info-block-row-title mat-title\">{{user.login}}</div>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"info-block-row-wrapper\">\r\n            <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n              <!--<div fxFlex=\"100%\">-->\r\n                <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">Email</div>\r\n                <div class=\"mat-body-1 muted\" fxFlex=\"60%\">{{user.email}}</div>\r\n                <mat-icon *ngIf=\"processing !== 'email'\" fxFlex=\"30px\"\r\n                          (click)=\"openDialog(makeEmailObject())\" class=\"muted\">edit</mat-icon>\r\n                <mat-spinner *ngIf=\"processing === 'email'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n              <!--</div>-->\r\n            </div>\r\n        </div>\r\n\r\n        <div *ngIf=\"user.role === 'guest' && !verificationSent\" class=\"info-block-row-wrapper border-0\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row mail-verification\">\r\n            <div class=\"mat-body-1\" fxFlex=\"100%\">Пошту не верифіковано, надіслати код</div>\r\n            <mat-icon *ngIf=\"processing !== 'verification'\" fxFlex=\"30px\" (click)=\"onVerificationSend()\">mail</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'verification'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n          </div>\r\n        </div>\r\n\r\n        <div *ngIf=\"user.role === 'guest' && verificationSent\" class=\"info-block-row-wrapper border-0\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row mail-verification\">\r\n            <div class=\"mat-body-1 muted\" fxFlex=\"100%\">На пошту надіслано посилання</div>\r\n            <mat-icon *ngIf=\"processing !== 'verification'\" fxFlex=\"30px\" class=\"muted\" (click)=\"onVerificationSend()\">refresh</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'verification'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">Ім'я</div>\r\n            <!--<div fxFlex></div>-->\r\n            <div class=\"mat-subheading-2 muted\" fxFlex=\"60%\">{{user.name}}</div>\r\n            <mat-icon *ngIf=\"processing !== 'name'\" fxFlex=\"30px\"\r\n                      (click)=\"openDialog(makeNameObject())\" class=\"muted\">edit</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'name'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">Прізвище</div>\r\n            <!--<div fxFlex></div>-->\r\n            <div class=\"mat-subheading-2 muted\" fxFlex=\"60%\">{{user.surname}}</div>\r\n            <mat-icon *ngIf=\"processing !== 'surname'\" fxFlex=\"30px\"\r\n                      (click)=\"openDialog(makeSurnameObject())\" class=\"muted\">edit</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'surname'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div fxFlex=\"60%\"></div>\r\n            <div fxFlex=\"40%\">\r\n              <button mat-button (click)=\"openDialog(makePasswordObject())\">\r\n                <span *ngIf=\"processing !== 'password'\">Змінити пароль</span>\r\n                <mat-spinner *ngIf=\"processing === 'password'\" [diameter]=\"24\"></mat-spinner>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -605,12 +605,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserProfileComponent", function() { return UserProfileComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../services/user.service */ "./src/app/services/user.service.ts");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _user_dialog_user_dialog_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../user-dialog/user-dialog.component */ "./src/app/components/user/user-dialog/user-dialog.component.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _user_dialog_user_dialog_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../user-dialog/user-dialog.component */ "./src/app/components/user/user-dialog/user-dialog.component.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -628,22 +629,24 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var UserProfileComponent = /** @class */ (function () {
     function UserProfileComponent(userService, matSnackBar, router, dialog) {
         this.userService = userService;
         this.matSnackBar = matSnackBar;
         this.router = router;
         this.dialog = dialog;
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"];
         this.editAvatar = false;
         this.processingChangeAvatar = false;
         this.verificationSent = false;
     }
     UserProfileComponent.prototype.ngOnInit = function () {
         this.getProfile();
-        this.changeAvatarForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
-            file: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(4),
+        this.changeAvatarForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+            file: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(4),
             ]),
         });
     };
@@ -711,15 +714,15 @@ var UserProfileComponent = /** @class */ (function () {
     };
     UserProfileComponent.prototype.openDialog = function (object) {
         var _this = this;
-        var dialogRef = this.dialog.open(_user_dialog_user_dialog_component__WEBPACK_IMPORTED_MODULE_4__["UserDialogComponent"], {
+        var dialogRef = this.dialog.open(_user_dialog_user_dialog_component__WEBPACK_IMPORTED_MODULE_5__["UserDialogComponent"], {
             width: '400px',
             data: object,
         });
-        dialogRef.afterClosed().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["mergeMap"])(function (result) {
+        dialogRef.afterClosed().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["mergeMap"])(function (result) {
             if (result) {
                 return _this.userService.userEdit(result);
             }
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])({
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])({
                 success: false,
                 message: 'dialog wasn\'t submitted',
                 data: 'doNothing'
@@ -791,18 +794,18 @@ var UserProfileComponent = /** @class */ (function () {
                     ],
                 }],
             initForm: function () {
-                return new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
-                    password: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(6),
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(15),
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[a-zA-Z0-9]+'),
+                return new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+                    password: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(6),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(15),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9]+'),
                     ]),
-                    passwordConfirm: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
+                    passwordConfirm: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
                     ]),
-                    passwordCurrent: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
+                    passwordCurrent: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
                     ]),
                 }, function matchPassword(abstractControl) {
                     var password = abstractControl.get('password').value;
@@ -853,15 +856,15 @@ var UserProfileComponent = /** @class */ (function () {
                     ],
                 }],
             initForm: function () {
-                return new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
-                    email: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(5),
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(30),
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern(emailPattern),
+                return new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+                    email: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(5),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(30),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern(emailPattern),
                     ]),
-                    passwordCurrent: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
+                    passwordCurrent: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
                     ]),
                 });
             },
@@ -900,14 +903,14 @@ var UserProfileComponent = /** @class */ (function () {
                     ],
                 }],
             initForm: function () {
-                return new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
-                    name: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(2),
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(20),
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ\' ]+'),
+                return new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+                    name: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(2),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(20),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ\' ]+'),
                     ]),
-                    passwordCurrent: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
+                    passwordCurrent: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
                     ]),
                 });
             },
@@ -946,14 +949,14 @@ var UserProfileComponent = /** @class */ (function () {
                     ],
                 }],
             initForm: function () {
-                return new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
-                    surname: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].minLength(2),
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].maxLength(20),
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ\' ]+'),
+                return new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+                    surname: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(2),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(20),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ\' ]+'),
                     ]),
-                    passwordCurrent: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
+                    passwordCurrent: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
                     ]),
                 });
             },
@@ -966,9 +969,9 @@ var UserProfileComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./user-profile.component.scss */ "./src/app/components/user/user-profile/user-profile.component.scss")]
         }),
         __metadata("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatSnackBar"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_2__["MatDialog"]])
+            _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"],
+            _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatDialog"]])
     ], UserProfileComponent);
     return UserProfileComponent;
 }());

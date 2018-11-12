@@ -5,6 +5,8 @@ import { IResponse } from '../interfaces/server-response-interface';
 import { Observable ,  ReplaySubject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { config } from '../app.config';
+import { mergeMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 
 @Injectable()
 export class UserService {
@@ -121,6 +123,25 @@ export class UserService {
     return this.http.get<IResponse>(
       'api/user/profile',
       httpOptions
+    );
+  }
+
+  allowTo(permitedRole) {
+    const permissions = config.permissions;
+    return this.getUserLocal().pipe(
+      mergeMap(
+          user => {
+            if (!user) {
+              return of(false);
+            }
+            const roleFromLocalStorage = user.role;
+            if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
+              return of(true);
+            } else {
+              return of(false);
+            }
+        }
+      )
     );
   }
 

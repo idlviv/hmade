@@ -856,9 +856,22 @@ mat-card {
   min-width: 50px !important;
 }
 
+
+
 // fix for ie
 .mat-header-row, .mat-row {
   height: 48px;
+}
+
+td.mat-cell {
+  padding: 0 5px !important;
+  @include first {
+    text-align: left;
+  }
+  @include last {
+    text-align: right;
+  }
+  text-align: center;
 }
 
 // custom fonts styles
@@ -1066,6 +1079,10 @@ mat-card {
 
 .mc-side {
   background-color: mat-color($greener, 100);
+}
+
+.mc-side {
+  background-color: mat-color($primary, 100);
 }
 
 .product-brief-section {

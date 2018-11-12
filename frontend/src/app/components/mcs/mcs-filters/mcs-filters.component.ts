@@ -36,7 +36,7 @@ export class McsFiltersComponent implements OnInit {
   ngOnInit() {
 
     this.userService.getUserLocal()
-    .subscribe(user => this.user = user);
+      .subscribe(user => this.user = user);
 
     this.filterForm = new FormGroup({
       mcSort: new FormControl([]),

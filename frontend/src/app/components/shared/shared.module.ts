@@ -18,6 +18,7 @@ import { LandingComponent } from './landing/landing.component';
 import { FooterComponent } from './footer/footer.component';
 import { ContentComponent } from './content/content.component';
 import { AboutComponent } from './about/about.component';
+import { CommentsComponent } from './comments/comments.component';
 
 @NgModule({
   imports: [
@@ -38,6 +39,7 @@ import { AboutComponent } from './about/about.component';
     LandingComponent,
     FooterComponent,
     ContentComponent,
+    CommentsComponent,
   ],
   declarations: [
     Page404Component,
@@ -53,6 +55,7 @@ import { AboutComponent } from './about/about.component';
     FooterComponent,
     ContentComponent,
     AboutComponent,
+    CommentsComponent,
   ],
 })
 export class SharedModule { }

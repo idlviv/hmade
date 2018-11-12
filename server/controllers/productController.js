@@ -89,7 +89,11 @@ module.exports.productAddImage = function(req, res, next) {
         {
           public_id: 'product_' + fields.sku + '_' +
           Date.now(), // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
-        // width: 1920, height: 1920, crop: 'fill'
+          // eager: [
+          //   {width: 535, height: 350, crop: 'fill', fetch_format: 'auto'},
+          //   {width: 260, height: 170, crop: 'fill', fetch_format: 'auto'},
+          //   {width: 180, height: 180, crop: 'fill', fetch_format: 'auto'},
+          // ],
         },
         function(err, result) {
           if (err) {

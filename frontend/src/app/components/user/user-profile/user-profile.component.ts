@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { IUser } from '../../../interfaces/user-interface';
+import { config } from '../../../app.config';
 import { MatDialog, MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { UserDialogComponent } from '../user-dialog/user-dialog.component';
@@ -16,6 +17,7 @@ import { IResponse } from '../../../interfaces/server-response-interface';
 })
 export class UserProfileComponent implements OnInit {
 
+  config = config;
   user: IUser;
   processing: string;
   changeAvatarForm: FormGroup;

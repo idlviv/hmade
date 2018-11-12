@@ -164,7 +164,6 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -175,19 +174,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
 var AppComponent = /** @class */ (function () {
-    function AppComponent(router) {
-        this.router = router;
+    function AppComponent() {
         this.showHeader = false;
     }
     AppComponent.prototype.ngOnInit = function () {
-        //   this.router.events.pipe(
-        //     filter(event => event instanceof NavigationStart)
-        //   )
-        //     .subscribe((event: NavigationStart) => {
-        //       this.showHeader = !(event.url === '/');
-        //     });
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -195,7 +186,7 @@ var AppComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
         }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"]])
+        __metadata("design:paramtypes", [])
     ], AppComponent);
     return AppComponent;
 }());
@@ -249,6 +240,13 @@ var config = {
         showViews: true,
         showComments: true,
         commentsLength: 10,
+    },
+    permissions: {
+        admin: ['casual', 'guest', 'user', 'manager', 'admin'],
+        manager: ['casual', 'guest', 'user', 'manager'],
+        user: ['casual', 'guest', 'user'],
+        guest: ['casual', 'guest'],
+        casual: ['casual']
     },
     imgPath: 'https://res.cloudinary.com/',
     cloudinary: {
@@ -598,6 +596,105 @@ var AboutComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], AboutComponent);
     return AboutComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/shared/comments/comments.component.html":
+/*!********************************************************************!*\
+  !*** ./src/app/components/shared/comments/comments.component.html ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"container\">\n  <div class=\"app-container\">\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" *ngFor=\"let comment of comments\" fxFlex=\"100\">\n        {{comment | json}}\n      </div>\n      <div class=\"cell\" *ngIf=\"allowTo('manager') | async\" fxFlex=\"100\">\n        Permission\n      </div>\n    </div>\n    <form [formGroup]=\"commentForm\" #f=\"ngForm\" novalidate>\n      <div class=\"row\" fxLayout=\"row\">\n        <div class=\"cell\" fxFlex=\"10\">\n          <img *ngIf=\"allowTo('guest') | async\" class=\"responsive-image\"\n            src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_50,h_50,f_auto/' +\n              user.avatar}}\" alt=\"avatar\">\n          <!-- <img *ngIf=!user?.avatar\" class=\"responsive-image\"\n            src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_50,h_50,f_auto/' +\n              config.defaultAvatar}}\" alt=\"avatar\"> -->\n        </div>\n          <mat-form-field class=\"cell\" fxFlex=\"80\">\n            <textarea matInput placeholder=\"Коментар\"\n              formControlName=\"comment\" required>\n            </textarea>\n            <mat-error\n              *ngIf=\"(commentForm.get('comment').errors?.minlength ||\n              commentForm.get('comment').errors?.maxlength ||\n              commentForm.get('comment').errors?.required) &&\n              commentForm.get('comment').touched\">\n              Довжина повинна бути від 3 до 200 символів\n            </mat-error>\n            <mat-error\n              *ngIf=\"commentForm.get('comment').errors?.pattern &&\n              commentForm.get('comment').touched\">\n              Не використовуйте спеціальні символи\n            </mat-error>\n          </mat-form-field>\n        <div class=\"cell\" fxFlex=\"10\">\n          <button mat-icon-button (click)=\"sendComment()\"  [disabled]=\"!commentForm.valid || !(allowTo('admin') | async)\">\n            <mat-icon class=\"muted\">send</mat-icon>\n          </button>\n        </div>\n      </div>\n    </form>\n\n  </div>\n</div>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/shared/comments/comments.component.scss":
+/*!********************************************************************!*\
+  !*** ./src/app/components/shared/comments/comments.component.scss ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/shared/comments/comments.component.ts":
+/*!******************************************************************!*\
+  !*** ./src/app/components/shared/comments/comments.component.ts ***!
+  \******************************************************************/
+/*! exports provided: CommentsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CommentsComponent", function() { return CommentsComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var CommentsComponent = /** @class */ (function () {
+    function CommentsComponent(userService) {
+        this.userService = userService;
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"];
+    }
+    CommentsComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.commentForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]({
+            comment: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].minLength(3),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].maxLength(150),
+            ]),
+        });
+        this.userService.getUserLocal()
+            .subscribe(function (user) {
+            console.log('user', user);
+            _this.user = user;
+        });
+    };
+    CommentsComponent.prototype.allowTo = function (permitedRole) {
+        return this.userService.allowTo(permitedRole);
+    };
+    CommentsComponent.prototype.sendComment = function () {
+        console.log('send Comment');
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Array)
+    ], CommentsComponent.prototype, "comments", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('f'),
+        __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroupDirective"])
+    ], CommentsComponent.prototype, "mcFormDirective", void 0);
+    CommentsComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-comments',
+            template: __webpack_require__(/*! ./comments.component.html */ "./src/app/components/shared/comments/comments.component.html"),
+            styles: [__webpack_require__(/*! ./comments.component.scss */ "./src/app/components/shared/comments/comments.component.scss")]
+        }),
+        __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"]])
+    ], CommentsComponent);
+    return CommentsComponent;
 }());
 
 
@@ -1746,12 +1843,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/components/shared/footer/footer.component.ts");
 /* harmony import */ var _content_content_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./content/content.component */ "./src/app/components/shared/content/content.component.ts");
 /* harmony import */ var _about_about_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./about/about.component */ "./src/app/components/shared/about/about.component.ts");
+/* harmony import */ var _comments_comments_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./comments/comments.component */ "./src/app/components/shared/comments/comments.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1795,6 +1894,7 @@ var SharedModule = /** @class */ (function () {
                 _landing_landing_component__WEBPACK_IMPORTED_MODULE_16__["LandingComponent"],
                 _footer_footer_component__WEBPACK_IMPORTED_MODULE_17__["FooterComponent"],
                 _content_content_component__WEBPACK_IMPORTED_MODULE_18__["ContentComponent"],
+                _comments_comments_component__WEBPACK_IMPORTED_MODULE_20__["CommentsComponent"],
             ],
             declarations: [
                 _page_404_page_404_component__WEBPACK_IMPORTED_MODULE_2__["Page404Component"],
@@ -1810,6 +1910,7 @@ var SharedModule = /** @class */ (function () {
                 _footer_footer_component__WEBPACK_IMPORTED_MODULE_17__["FooterComponent"],
                 _content_content_component__WEBPACK_IMPORTED_MODULE_18__["ContentComponent"],
                 _about_about_component__WEBPACK_IMPORTED_MODULE_19__["AboutComponent"],
+                _comments_comments_component__WEBPACK_IMPORTED_MODULE_20__["CommentsComponent"],
             ],
         })
     ], SharedModule);
@@ -2583,6 +2684,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/index.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2592,6 +2695,9 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+
+
+
 
 
 
@@ -2680,6 +2786,21 @@ var UserService = /** @class */ (function () {
             }),
         };
         return this.http.get('api/user/profile', httpOptions);
+    };
+    UserService.prototype.allowTo = function (permitedRole) {
+        var permissions = _app_config__WEBPACK_IMPORTED_MODULE_4__["config"].permissions;
+        return this.getUserLocal().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["mergeMap"])(function (user) {
+            if (!user) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(false);
+            }
+            var roleFromLocalStorage = user.role;
+            if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(true);
+            }
+            else {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(false);
+            }
+        }));
     };
     UserService.prototype.userCheckRole = function (role) {
         var token = this.userLocalGetToken('token');

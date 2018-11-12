@@ -48,12 +48,12 @@ export class McEditorFormComponent implements OnInit {
       name: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
-        Validators.maxLength(50),
+        Validators.maxLength(100),
       ]),
       description: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
-        Validators.maxLength(200),
+        Validators.maxLength(500),
         Validators.pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
       ]),
       parents : new FormArray([]),
@@ -102,7 +102,6 @@ export class McEditorFormComponent implements OnInit {
 
           this.mcForm.patchValue(mc);
           this.mcForm.get('_id').disable();
-          console.log('mcForm', this.mcForm);
         } else {
           this.addControl('parents');
           this.mcForm.get('parents').setValue([this.paramParent_id]);
@@ -245,7 +244,7 @@ export class McEditorFormComponent implements OnInit {
       description: new FormControl('', [
         Validators.required,
         Validators.minLength(4),
-        Validators.maxLength(200),
+        Validators.maxLength(600),
         Validators.pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
       ]),
     }),

@@ -10,7 +10,11 @@
           <form [formGroup]="changeAvatarForm" (submit)="onSubmitChangeAvatarForm()">
 
           <div class="avatar-img-wrapper">
-            <img *ngIf="!previewAvatarUrl" src="{{user.avatar}}" alt="avatar">
+            <img *ngIf="!previewAvatarUrl" src="{{
+              config.imgPath +
+              config.cloudinary.cloud_name +
+              '/c_fill,w_180,h_180,f_auto/' +
+              user.avatar}}" alt="avatar">
             <img *ngIf="previewAvatarUrl"  src="{{previewAvatarUrl}}" alt="avatar">
 
             <div *ngIf="processingChangeAvatar" class="avatar-div-processing">

@@ -80,6 +80,7 @@ export interface IMc {
 export interface IComment {
   comment: string;
   commentator: string;
-  commentedAt: number;
+  commentedAt?: number;
+  display?: boolean;
 }
 

@@ -1,4 +1,4 @@
-import { of as observableOf,  Observable } from 'rxjs';
+import { of,  Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
@@ -21,7 +21,7 @@ export class AuthGuard implements CanActivate {
     const requiredRole = next.data.auth; // from routing.module
     return this.userService.userCheckRole(requiredRole).pipe(
       map(permission => permission.data),
-      catchError(err => observableOf(false))
+      catchError(err => of(false))
       );
 
   }
