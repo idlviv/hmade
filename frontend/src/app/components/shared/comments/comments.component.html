@@ -4,28 +4,33 @@
       <div class="cell" *ngFor="let comment of comments" fxFlex="100">
         {{comment | json}}
       </div>
-      <div class="cell" *ngIf="allowTo('manager') | async" fxFlex="100">
+      <div class="cell" *ngIf="allowTo('manager')async" fxFlex="100">
         Permission
       </div>
     </div>
     <form [formGroup]="commentForm" #f="ngForm" novalidate>
       <div class="row" fxLayout="row">
         <div class="cell" fxFlex="10">
-          <img *ngIf="allowTo('guest') | async" class="responsive-image"
+          <img *ngIf="allowTo('guest')" class="responsive-image"
             src="{{
               config.imgPath +
               config.cloudinary.cloud_name +
               '/c_fill,w_50,h_50,f_auto/' +
               user.avatar}}" alt="avatar">
-          <!-- <img *ngIf=!user?.avatar" class="responsive-image"
+          <img *ngIf="!allowTo('guest')" class="responsive-image"
             src="{{
               config.imgPath +
               config.cloudinary.cloud_name +
               '/c_fill,w_50,h_50,f_auto/' +
-              config.defaultAvatar}}" alt="avatar"> -->
+              config.defaultAvatar}}" alt="avatar">
         </div>
           <mat-form-field class="cell" fxFlex="80">
-            <textarea matInput placeholder="Коментар"
+            <textarea matInput 
+              [placeholder]="allowTo('user') ? 
+                'Коментар' : 
+                allowTo('guest') ? 
+                  'Для відправки коментарів верифікуйте пошту' :
+                  'Коментарі можуть залишати лише зареєстровані користувачі'"
               formControlName="comment" required>
             </textarea>
             <mat-error
@@ -42,8 +47,8 @@
             </mat-error>
           </mat-form-field>
         <div class="cell" fxFlex="10">
-          <button mat-icon-button (click)="sendComment()"  [disabled]="!commentForm.valid || !(allowTo('admin') | async)">
-            <mat-icon class="muted">send</mat-icon>
+          <button mat-icon-button (click)="sendComment()"  [disabled]="!commentForm.valid || !allowTo('user')">
+            <mat-icon>send</mat-icon>
           </button>
         </div>
       </div>

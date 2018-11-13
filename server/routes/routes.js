@@ -5,18 +5,25 @@ const passport = require('passport');
 const userController = require('../controllers/userController');
 const catalogController = require('../controllers/catalogController');
 const mcController = require('../controllers/mcController');
+const socialController = require('../controllers/socialController');
 const uploadController = require('../controllers/uploadController');
 const productController = require('../controllers/productController');
 const sharedController = require('../controllers/sharedController');
 const recaptcha = require('../middleware/recaptcha');
 const authorization = require('../middleware/authorization');
 
+/**
+ * social routes
+ */
+router.post('/social/add-comment',
+    passport.authenticate('jwt', {session: false}),
+    authorization('user'),
+    socialController.addComment
+);
 
 /**
  * mc routes
  */
-
-
 router.get('/mc/get-mcs', // tmp
     mcController.getMcs
 );

@@ -24,7 +24,7 @@ const CatalogSchema = new Schema({
   },
   menuImage: {
     type: [String],
-    default: config.get('defaultProductImgPath'),
+    default: config.get('defaultProductImg'),
   },
   prefix: {
     type: String,

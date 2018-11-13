@@ -70,12 +70,12 @@
            </a>
 
           </div>
-          <div *ngIf="user" class="item text-align-center muted" fxFlex>
+          <div *ngIf="allowTo('manager')" class="item text-align-center muted" fxFlex>
             <a mat-button (click)="editMcsItem(mc._id)">
               <mat-icon>edit</mat-icon>
             </a>
           </div>
-          <div *ngIf="user" class="item text-align-center muted" fxFlex>
+          <div *ngIf="allowTo('manager')" class="item text-align-center muted" fxFlex>
             <a mat-button (click)="deleteMcsItem(mc._id)">
               <mat-icon>delete</mat-icon>
             </a>

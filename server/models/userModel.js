@@ -31,7 +31,7 @@ const UserSchema = new Schema({
   },
   avatar: {
     type: String,
-    default: config.get('defaultAvatarPath'),
+    default: config.get('defaultAvatar'),
   },
   name: {
     type: String,

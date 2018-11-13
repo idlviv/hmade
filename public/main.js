@@ -546,7 +546,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container\">\n  <div class=\"container\">\n    <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n\n      <div class=\"cell\" fxFlex=\"100\">\n        <mat-card>\n          <mat-card-header>\n                <h1 class=\"mat-display-2\">Вітаємо на сайті!</h1>\n\n\n          </mat-card-header>\n          <mat-card-content>\n            <p class=\"text-justify muted mat-body-1\">\n            \n              Запрошуємо Вас до співпраці!\n            </p>\n          </mat-card-content>\n        </mat-card>\n\n      </div>\n    </div>\n  </div>\n\n\n</div>"
+module.exports = "<div class=\"app-container\">\r\n  <div class=\"container\">\r\n    <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <mat-card>\r\n          <mat-card-header>\r\n                <h1 class=\"mat-display-2\">Вітаємо на сайті!</h1>\r\n\r\n\r\n          </mat-card-header>\r\n          <mat-card-content>\r\n            <p class=\"text-justify muted mat-body-1\">\r\n            \r\n              Запрошуємо Вас до співпраці!\r\n            </p>\r\n          </mat-card-content>\r\n        </mat-card>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n\r\n</div>"
 
 /***/ }),
 
@@ -609,7 +609,7 @@ var AboutComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"app-container\">\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" *ngFor=\"let comment of comments\" fxFlex=\"100\">\n        {{comment | json}}\n      </div>\n      <div class=\"cell\" *ngIf=\"allowTo('manager') | async\" fxFlex=\"100\">\n        Permission\n      </div>\n    </div>\n    <form [formGroup]=\"commentForm\" #f=\"ngForm\" novalidate>\n      <div class=\"row\" fxLayout=\"row\">\n        <div class=\"cell\" fxFlex=\"10\">\n          <img *ngIf=\"allowTo('guest') | async\" class=\"responsive-image\"\n            src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_50,h_50,f_auto/' +\n              user.avatar}}\" alt=\"avatar\">\n          <!-- <img *ngIf=!user?.avatar\" class=\"responsive-image\"\n            src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_50,h_50,f_auto/' +\n              config.defaultAvatar}}\" alt=\"avatar\"> -->\n        </div>\n          <mat-form-field class=\"cell\" fxFlex=\"80\">\n            <textarea matInput placeholder=\"Коментар\"\n              formControlName=\"comment\" required>\n            </textarea>\n            <mat-error\n              *ngIf=\"(commentForm.get('comment').errors?.minlength ||\n              commentForm.get('comment').errors?.maxlength ||\n              commentForm.get('comment').errors?.required) &&\n              commentForm.get('comment').touched\">\n              Довжина повинна бути від 3 до 200 символів\n            </mat-error>\n            <mat-error\n              *ngIf=\"commentForm.get('comment').errors?.pattern &&\n              commentForm.get('comment').touched\">\n              Не використовуйте спеціальні символи\n            </mat-error>\n          </mat-form-field>\n        <div class=\"cell\" fxFlex=\"10\">\n          <button mat-icon-button (click)=\"sendComment()\"  [disabled]=\"!commentForm.valid || !(allowTo('admin') | async)\">\n            <mat-icon class=\"muted\">send</mat-icon>\n          </button>\n        </div>\n      </div>\n    </form>\n\n  </div>\n</div>\n"
+module.exports = "<div class=\"container\">\r\n  <div class=\"app-container\">\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" *ngFor=\"let comment of comments\" fxFlex=\"100\">\r\n        {{comment | json}}\r\n      </div>\r\n      <div class=\"cell\" *ngIf=\"allowTo('manager')async\" fxFlex=\"100\">\r\n        Permission\r\n      </div>\r\n    </div>\r\n    <form [formGroup]=\"commentForm\" #f=\"ngForm\" novalidate>\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <div class=\"cell\" fxFlex=\"10\">\r\n          <img *ngIf=\"allowTo('guest')\" class=\"responsive-image\"\r\n            src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_50,h_50,f_auto/' +\r\n              user.avatar}}\" alt=\"avatar\">\r\n          <img *ngIf=\"!allowTo('guest')\" class=\"responsive-image\"\r\n            src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_50,h_50,f_auto/' +\r\n              config.defaultAvatar}}\" alt=\"avatar\">\r\n        </div>\r\n          <mat-form-field class=\"cell\" fxFlex=\"80\">\r\n            <textarea matInput \r\n              [placeholder]=\"allowTo('user') ? \r\n                'Коментар' : \r\n                allowTo('guest') ? \r\n                  'Для відправки коментарів верифікуйте пошту' :\r\n                  'Коментарі можуть залишати лише зареєстровані користувачі'\"\r\n              formControlName=\"comment\" required>\r\n            </textarea>\r\n            <mat-error\r\n              *ngIf=\"(commentForm.get('comment').errors?.minlength ||\r\n              commentForm.get('comment').errors?.maxlength ||\r\n              commentForm.get('comment').errors?.required) &&\r\n              commentForm.get('comment').touched\">\r\n              Довжина повинна бути від 3 до 200 символів\r\n            </mat-error>\r\n            <mat-error\r\n              *ngIf=\"commentForm.get('comment').errors?.pattern &&\r\n              commentForm.get('comment').touched\">\r\n              Не використовуйте спеціальні символи\r\n            </mat-error>\r\n          </mat-form-field>\r\n        <div class=\"cell\" fxFlex=\"10\">\r\n          <button mat-icon-button (click)=\"sendComment()\"  [disabled]=\"!commentForm.valid || !allowTo('user')\">\r\n            <mat-icon>send</mat-icon>\r\n          </button>\r\n        </div>\r\n      </div>\r\n    </form>\r\n\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -638,6 +638,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
 /* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -651,15 +652,20 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var CommentsComponent = /** @class */ (function () {
-    function CommentsComponent(userService) {
+    function CommentsComponent(userService, socialService) {
         this.userService = userService;
+        this.socialService = socialService;
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"];
     }
     CommentsComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.commentForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]({
-            comment: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+            comment: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]({
+                value: '',
+                disabled: !this.allowTo('user')
+            }, [
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].minLength(3),
@@ -676,12 +682,22 @@ var CommentsComponent = /** @class */ (function () {
         return this.userService.allowTo(permitedRole);
     };
     CommentsComponent.prototype.sendComment = function () {
-        console.log('send Comment');
+        var comment = this.commentForm.get('comment').value;
+        this.socialService.addComment(this.parent_id, this.parent_category, comment)
+            .subscribe(function (result) { return console.log('send Comment result', result); }, function (err) { return console.log('send Comment err', err); });
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Array)
     ], CommentsComponent.prototype, "comments", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], CommentsComponent.prototype, "parent_id", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], CommentsComponent.prototype, "parent_category", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('f'),
         __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroupDirective"])
@@ -692,7 +708,8 @@ var CommentsComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./comments.component.html */ "./src/app/components/shared/comments/comments.component.html"),
             styles: [__webpack_require__(/*! ./comments.component.scss */ "./src/app/components/shared/comments/comments.component.scss")]
         }),
-        __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"]])
+        __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"],
+            src_app_services_social_service__WEBPACK_IMPORTED_MODULE_4__["SocialService"]])
     ], CommentsComponent);
     return CommentsComponent;
 }());
@@ -783,7 +800,7 @@ var ConfirmPopupComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar class=\"mat-elevation-z4\" color=\"primary\">\n  <mat-toolbar-row>\n    <a mat-button href=\"\">\n      <img src=\"./assets/images/hmade_logo_light.svg\" height=\"40px\">\n    </a>\n\n    <div fxShow=\"true\" fxHide.lt-md=\"true\">\n      <a *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\" mat-button\n         [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\"\n         [routerLinkActive]=\"['primary-light']\" [routerLinkActiveOptions]=\"{exact: true}\">\n        {{mainMenuCommonItem.name}}\n      </a>\n    </div>\n    <div fxFlex></div>\n\n    <div fxShow=\"true\" fxHide.lt-md=\"true\">\n      <button *ngIf=\"user\"\n              mat-button [matMenuTriggerFor]=\"settingsMenu\" #settingsMenuTrigger=\"matMenuTrigger\"\n              (mouseover)=\"onSettingsMenuMouseover()\">\n        <mat-icon>settings</mat-icon><span> {{user.login}}</span>\n      </button>\n\n      <mat-menu #settingsMenu=\"matMenu\" xPosition=\"after\" yPosition=\"above\" [overlapTrigger]=\"false\">\n      <span (mouseleave)=\"onSettingsMenuMouseleave()\">\n      <a *ngIf=\"user\"\n         mat-menu-item [routerLink]=\"['/user/profile']\"\n         [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n        <mat-icon>account_circle</mat-icon><span>Профіль</span></a>\n      <a *ngIf=\"user && (user?.role === 'manager' || user?.role === 'admin')\"\n         mat-menu-item [routerLink]=\"['/dashboard']\"\n         [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n        <mat-icon>settings</mat-icon><span>Dashboard</span></a>\n      </span>\n      </mat-menu>\n      <a *ngIf='!user'\n      [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\"\n      mat-button [routerLink]=\"['/user/login']\">Вхід</a>\n      <a *ngIf='user' mat-button (click)=\"userLocalLogout()\"><mat-icon>exit_to_app</mat-icon> Вихід</a>\n    </div>\n\n    <div class=\"cell\" fxShow=\"hide\" fxHide.lt-md=\"true\">\n      <a mat-button class=\"primary-light\"\n         href=\"tel:+380985443968\">\n        <mat-icon>phone</mat-icon> 098 544 39 68\n      </a>\n    </div>\n\n    <div class=\"menu-button\" fxShow=\"true\" fxHide.gt-sm=\"true\">\n      <button mat-button (click)=\"sidenav.toggle()\">\n        <mat-icon *ngIf=\"sidenav.opened\">format_indent_increase</mat-icon>\n        <mat-icon *ngIf=\"!sidenav.opened\">menu</mat-icon>\n      </button>\n    </div>\n  </mat-toolbar-row>\n</mat-toolbar>\n\n<mat-sidenav-container fxFlexFill>\n  <mat-sidenav #sidenav fxLayout=\"column\" class=\"theme-dark\"\n               position=\"end\" class=\"sidenav\" role=\"navigation\" mode=\"side\">\n    <div fxLayout=\"column\">\n      <mat-nav-list>\n        <mat-list-item *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\">\n          <a matLine\n             [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\"\n             [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\" (click)=\"sidenav.toggle()\">\n            {{mainMenuCommonItem.name}}\n          </a>\n        </mat-list-item>\n\n        <mat-expansion-panel *ngIf=\"user\" class=\"mat-elevation-z0\">\n          <mat-expansion-panel-header class=\"sidenav-expansion-panel\">\n            <mat-panel-title>\n              <mat-list-item>\n                <mat-icon matListIcon>settings</mat-icon>\n                <span matLine>{{user.login}}</span>\n              </mat-list-item>\n            </mat-panel-title>\n\n          </mat-expansion-panel-header>\n          <mat-list-item *ngIf=\"user\">\n            <mat-icon matListIcon>account_circle</mat-icon>\n            <a matLine [routerLink]=\"['/user/profile']\"\n               [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\" (click)=\"sidenav.toggle()\">\n              Профіль</a>\n          </mat-list-item>\n          <mat-list-item *ngIf=\"user && user?.role === 'manager' || user?.role === 'admin'\">\n            <mat-icon matListIcon>settings</mat-icon>\n            <a matLine [routerLink]=\"['/dashboard']\"\n               [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\" (click)=\"sidenav.toggle()\">\n              Dashboard</a>\n          </mat-list-item>\n        </mat-expansion-panel>\n\n        <mat-list-item *ngIf='!user'>\n          <a matLine\n             [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\"\n             [routerLink]=\"['/user/login']\" (click)=\"sidenav.toggle()\">Вхід</a>\n        </mat-list-item>\n        <mat-list-item *ngIf='user'>\n          <a matLine\n             (click)=\"userLocalLogout()\" (click)=\"sidenav.toggle()\">\n            Вихід\n          </a>\n          <mat-icon matListIcon>exit_to_app</mat-icon>\n        </mat-list-item>\n      </mat-nav-list>\n    </div>\n  </mat-sidenav>\n  <mat-sidenav-content>\n    <router-outlet></router-outlet>\n  </mat-sidenav-content>\n</mat-sidenav-container>\n"
+module.exports = "<mat-toolbar class=\"mat-elevation-z4\" color=\"primary\">\r\n  <mat-toolbar-row>\r\n    <a mat-button href=\"\">\r\n      <img src=\"./assets/images/hmade_logo_light.svg\" height=\"40px\">\r\n    </a>\r\n\r\n    <div fxShow=\"true\" fxHide.lt-md=\"true\">\r\n      <a *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\" mat-button\r\n         [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\"\r\n         [routerLinkActive]=\"['primary-light']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{mainMenuCommonItem.name}}\r\n      </a>\r\n    </div>\r\n    <div fxFlex></div>\r\n\r\n    <div fxShow=\"true\" fxHide.lt-md=\"true\">\r\n      <button *ngIf=\"user\"\r\n              mat-button [matMenuTriggerFor]=\"settingsMenu\" #settingsMenuTrigger=\"matMenuTrigger\"\r\n              (mouseover)=\"onSettingsMenuMouseover()\">\r\n        <mat-icon>settings</mat-icon><span> {{user.login}}</span>\r\n      </button>\r\n\r\n      <mat-menu #settingsMenu=\"matMenu\" xPosition=\"after\" yPosition=\"above\" [overlapTrigger]=\"false\">\r\n      <span (mouseleave)=\"onSettingsMenuMouseleave()\">\r\n      <a *ngIf=\"user\"\r\n         mat-menu-item [routerLink]=\"['/user/profile']\"\r\n         [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        <mat-icon>account_circle</mat-icon><span>Профіль</span></a>\r\n      <a *ngIf=\"user && (user?.role === 'manager' || user?.role === 'admin')\"\r\n         mat-menu-item [routerLink]=\"['/dashboard']\"\r\n         [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        <mat-icon>settings</mat-icon><span>Dashboard</span></a>\r\n      </span>\r\n      </mat-menu>\r\n      <a *ngIf='!user'\r\n      [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n      mat-button [routerLink]=\"['/user/login']\">Вхід</a>\r\n      <a *ngIf='user' mat-button (click)=\"userLocalLogout()\"><mat-icon>exit_to_app</mat-icon> Вихід</a>\r\n    </div>\r\n\r\n    <div class=\"cell\" fxShow=\"hide\" fxHide.lt-md=\"true\">\r\n      <a mat-button class=\"primary-light\"\r\n         href=\"tel:+380985443968\">\r\n        <mat-icon>phone</mat-icon> 098 544 39 68\r\n      </a>\r\n    </div>\r\n\r\n    <div class=\"menu-button\" fxShow=\"true\" fxHide.gt-sm=\"true\">\r\n      <button mat-button (click)=\"sidenav.toggle()\">\r\n        <mat-icon *ngIf=\"sidenav.opened\">format_indent_increase</mat-icon>\r\n        <mat-icon *ngIf=\"!sidenav.opened\">menu</mat-icon>\r\n      </button>\r\n    </div>\r\n  </mat-toolbar-row>\r\n</mat-toolbar>\r\n\r\n<mat-sidenav-container fxFlexFill>\r\n  <mat-sidenav #sidenav fxLayout=\"column\" class=\"theme-dark\"\r\n               position=\"end\" class=\"sidenav\" role=\"navigation\" mode=\"side\">\r\n    <div fxLayout=\"column\">\r\n      <mat-nav-list>\r\n        <mat-list-item *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\">\r\n          <a matLine\r\n             [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n             [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\" (click)=\"sidenav.toggle()\">\r\n            {{mainMenuCommonItem.name}}\r\n          </a>\r\n        </mat-list-item>\r\n\r\n        <mat-expansion-panel *ngIf=\"user\" class=\"mat-elevation-z0\">\r\n          <mat-expansion-panel-header class=\"sidenav-expansion-panel\">\r\n            <mat-panel-title>\r\n              <mat-list-item>\r\n                <mat-icon matListIcon>settings</mat-icon>\r\n                <span matLine>{{user.login}}</span>\r\n              </mat-list-item>\r\n            </mat-panel-title>\r\n\r\n          </mat-expansion-panel-header>\r\n          <mat-list-item *ngIf=\"user\">\r\n            <mat-icon matListIcon>account_circle</mat-icon>\r\n            <a matLine [routerLink]=\"['/user/profile']\"\r\n               [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\" (click)=\"sidenav.toggle()\">\r\n              Профіль</a>\r\n          </mat-list-item>\r\n          <mat-list-item *ngIf=\"user && user?.role === 'manager' || user?.role === 'admin'\">\r\n            <mat-icon matListIcon>settings</mat-icon>\r\n            <a matLine [routerLink]=\"['/dashboard']\"\r\n               [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\" (click)=\"sidenav.toggle()\">\r\n              Dashboard</a>\r\n          </mat-list-item>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-list-item *ngIf='!user'>\r\n          <a matLine\r\n             [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n             [routerLink]=\"['/user/login']\" (click)=\"sidenav.toggle()\">Вхід</a>\r\n        </mat-list-item>\r\n        <mat-list-item *ngIf='user'>\r\n          <a matLine\r\n             (click)=\"userLocalLogout()\" (click)=\"sidenav.toggle()\">\r\n            Вихід\r\n          </a>\r\n          <mat-icon matListIcon>exit_to_app</mat-icon>\r\n        </mat-list-item>\r\n      </mat-nav-list>\r\n    </div>\r\n  </mat-sidenav>\r\n  <mat-sidenav-content>\r\n    <router-outlet></router-outlet>\r\n  </mat-sidenav-content>\r\n</mat-sidenav-container>\r\n"
 
 /***/ }),
 
@@ -1119,7 +1136,7 @@ var DesignPopupComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n\n  <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n    <div fxFlex.gt-xs=\"10\" fxFlex.gt-md=\"15\"></div>\n\n    <div class=\"cell\" fxFlex.gt-xs=\"80\" fxFlex.gt-md=\"70\">\n\n      <div class=\"centered-container-600\">\n        <mat-card  class=\"form-block\">\n          <mat-card-content>\n            <div class=\"padding-bottom\" fxLayout fxLayoutAlign=\"center center\">\n              <img class=\"responsive-image\" src=\"./assets/images/graboplast_logo.svg\" width=\"367px\">\n            </div>\n            <form #fForm=\"ngForm\" [formGroup]=\"feedbackForm\" (submit)=\"onFeedbackFormSubmit()\">\n\n              <div fxLayout=\"row\">\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                  <mat-icon color=\"primary\">textsms</mat-icon>\n                </div>\n              <mat-form-field>\n                <textarea rows=\"5\" matInput placeholder=\"Повідомлення\" formControlName=\"message\" required></textarea>\n                <mat-error\n                  *ngIf=\"(feedbackForm.get('message').errors?.minlength ||\n                                    feedbackForm.get('message').errors?.maxlength ||\n                                    feedbackForm.get('message').errors?.required) &&\n                                    feedbackForm.get('message').touched\">\n                  Довжина повинна бути від 3 до 500 символів\n                </mat-error>\n              </mat-form-field>\n              </div>\n\n              <div fxLayout=\"row\">\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                  <mat-icon color=\"primary\">account_circle</mat-icon>\n                </div>\n                <mat-form-field>\n                  <input matInput placeholder=\"Ваше ім'я\" formControlName=\"name\" required>\n                  <mat-error\n                    *ngIf=\"feedbackForm.get('contacts').errors?.required &&\n                        feedbackForm.get('name').touched\">\n                    Введіть ім'я\n                  </mat-error>\n                </mat-form-field>\n              </div>\n\n              <div fxLayout=\"row\">\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                  <mat-icon color=\"primary\">contacts</mat-icon>\n                </div>\n                <mat-form-field>\n                  <input matInput placeholder=\"Контактний номер або email\" formControlName=\"contacts\" required>\n                  <mat-error\n                    *ngIf=\"feedbackForm.get('contacts').errors?.required &&\n                        feedbackForm.get('contacts').touched\">\n                    Введіть котактну інформацію\n                  </mat-error>\n                </mat-form-field>\n              </div>\n              <re-captcha [ngClass]=\"{'display-none':\n          !feedbackForm.get('contacts').valid || !feedbackForm.get('contacts').valid ||\n          !feedbackForm.get('message').valid}\"\n                          [formControlName]=\"'recaptcha'\" #recaptchaRef\n                          siteKey=\"6LelLF0UAAAAAEd0tfLUO02IAuT-_bf0noIJN0nK\">\n              </re-captcha>\n              <!--<div *ngIf=\"!processing\" fxLayout=\"row\">-->\n                <!--<object type=\"image/svg+xml\" data=\"./assets/images/loading.svg\" width=\"50px\" height=\"20px\">-->\n                  <!--Loading..-->\n                <!--</object>-->\n              <!--</div>-->\n\n              <div class=\"submit-button-wrapper\">\n                <!--<span fxFlex></span>-->\n                <button mat-raised-button class=\"full-width\" color=\"primary\" [disabled]=\"!feedbackForm.valid || processing\">\n                  <mat-icon *ngIf=\"!processing\">message</mat-icon> Написати нам</button>\n              </div>\n\n            </form>\n          </mat-card-content>\n          <!--<img mat-card-image class=\"mat-card-image-bottom\" src=\"./assets/images/logo400x140-2.jpg\" alt=\"\">-->\n        </mat-card>\n      </div>\n\n\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"container\">\r\n\r\n  <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n    <div fxFlex.gt-xs=\"10\" fxFlex.gt-md=\"15\"></div>\r\n\r\n    <div class=\"cell\" fxFlex.gt-xs=\"80\" fxFlex.gt-md=\"70\">\r\n\r\n      <div class=\"centered-container-600\">\r\n        <mat-card  class=\"form-block\">\r\n          <mat-card-content>\r\n            <div class=\"padding-bottom\" fxLayout fxLayoutAlign=\"center center\">\r\n              <img class=\"responsive-image\" src=\"./assets/images/graboplast_logo.svg\" width=\"367px\">\r\n            </div>\r\n            <form #fForm=\"ngForm\" [formGroup]=\"feedbackForm\" (submit)=\"onFeedbackFormSubmit()\">\r\n\r\n              <div fxLayout=\"row\">\r\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n                  <mat-icon color=\"primary\">textsms</mat-icon>\r\n                </div>\r\n              <mat-form-field>\r\n                <textarea rows=\"5\" matInput placeholder=\"Повідомлення\" formControlName=\"message\" required></textarea>\r\n                <mat-error\r\n                  *ngIf=\"(feedbackForm.get('message').errors?.minlength ||\r\n                                    feedbackForm.get('message').errors?.maxlength ||\r\n                                    feedbackForm.get('message').errors?.required) &&\r\n                                    feedbackForm.get('message').touched\">\r\n                  Довжина повинна бути від 3 до 500 символів\r\n                </mat-error>\r\n              </mat-form-field>\r\n              </div>\r\n\r\n              <div fxLayout=\"row\">\r\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n                  <mat-icon color=\"primary\">account_circle</mat-icon>\r\n                </div>\r\n                <mat-form-field>\r\n                  <input matInput placeholder=\"Ваше ім'я\" formControlName=\"name\" required>\r\n                  <mat-error\r\n                    *ngIf=\"feedbackForm.get('contacts').errors?.required &&\r\n                        feedbackForm.get('name').touched\">\r\n                    Введіть ім'я\r\n                  </mat-error>\r\n                </mat-form-field>\r\n              </div>\r\n\r\n              <div fxLayout=\"row\">\r\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n                  <mat-icon color=\"primary\">contacts</mat-icon>\r\n                </div>\r\n                <mat-form-field>\r\n                  <input matInput placeholder=\"Контактний номер або email\" formControlName=\"contacts\" required>\r\n                  <mat-error\r\n                    *ngIf=\"feedbackForm.get('contacts').errors?.required &&\r\n                        feedbackForm.get('contacts').touched\">\r\n                    Введіть котактну інформацію\r\n                  </mat-error>\r\n                </mat-form-field>\r\n              </div>\r\n              <re-captcha [ngClass]=\"{'display-none':\r\n          !feedbackForm.get('contacts').valid || !feedbackForm.get('contacts').valid ||\r\n          !feedbackForm.get('message').valid}\"\r\n                          [formControlName]=\"'recaptcha'\" #recaptchaRef\r\n                          siteKey=\"6Lc0uE8UAAAAAKyekxrsdhSdrgV9zhPW-lMY-srm\">\r\n              </re-captcha>\r\n              <!--<div *ngIf=\"!processing\" fxLayout=\"row\">-->\r\n                <!--<object type=\"image/svg+xml\" data=\"./assets/images/loading.svg\" width=\"50px\" height=\"20px\">-->\r\n                  <!--Loading..-->\r\n                <!--</object>-->\r\n              <!--</div>-->\r\n\r\n              <div class=\"submit-button-wrapper\">\r\n                <!--<span fxFlex></span>-->\r\n                <button mat-raised-button class=\"full-width\" color=\"primary\" [disabled]=\"!feedbackForm.valid || processing\">\r\n                  <mat-icon *ngIf=\"!processing\">message</mat-icon> Написати нам</button>\r\n              </div>\r\n\r\n            </form>\r\n          </mat-card-content>\r\n          <!--<img mat-card-image class=\"mat-card-image-bottom\" src=\"./assets/images/logo400x140-2.jpg\" alt=\"\">-->\r\n        </mat-card>\r\n      </div>\r\n\r\n\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -1238,7 +1255,7 @@ var FeedbackComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar class=\"mat-elevation-z16 footer\" color=\"primary\">\n  <a fxHide.gt-sm=\"true\" mat-button class=\"primary-light\"\n     href=\"tel:+380985443968\">\n    <mat-icon>phone</mat-icon> 098 544 39 68\n  </a>\n  <div fxFlex></div>\n  <a mat-button [routerLink]=\"['/feedback']\" class=\"primary-light\"\n     [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n    <mat-icon>mail</mat-icon> Задати питання\n  </a>\n</mat-toolbar>\n"
+module.exports = "<mat-toolbar class=\"mat-elevation-z16 footer\" color=\"primary\">\r\n  <a fxHide.gt-sm=\"true\" mat-button class=\"primary-light\"\r\n     href=\"tel:+380985443968\">\r\n    <mat-icon>phone</mat-icon> 098 544 39 68\r\n  </a>\r\n  <div fxFlex></div>\r\n  <a mat-button [routerLink]=\"['/feedback']\" class=\"primary-light\"\r\n     [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n    <mat-icon>mail</mat-icon> Задати питання\r\n  </a>\r\n</mat-toolbar>\r\n"
 
 /***/ }),
 
@@ -1301,7 +1318,7 @@ var FooterComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container\">\n  <div class=\"container\">\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\">\n      <h1 class=\"mat-display-1\">Галерея</h1>\n      </div>\n    </div>\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\n        <mat-card>\n          <mat-card-subtitle>\n            <a mat-button\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\n               [queryParams]=\"{name: product.name}\"\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\n              {{product.name}}\n            </a>\n          </mat-card-subtitle>\n          <div class=\"row\" fxLayout=\"row\">\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\n\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\n                 fxLayout fxLayoutAlign=\"center center\"\n                 *ngFor=\"let productAsset of product.assets\">\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_590,h_295,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n\n\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_350,h_175,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n            </div>\n          </div>\n        </mat-card>\n      </div>\n    </div>\n\n\n  </div>\n</div>\n\n"
+module.exports = "<div class=\"app-container\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n      <h1 class=\"mat-display-1\">Галерея</h1>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\r\n        <mat-card>\r\n          <mat-card-subtitle>\r\n            <a mat-button\r\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\r\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\r\n               [queryParams]=\"{name: product.name}\"\r\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n              {{product.name}}\r\n            </a>\r\n          </mat-card-subtitle>\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\r\n\r\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\r\n                 fxLayout fxLayoutAlign=\"center center\"\r\n                 *ngFor=\"let productAsset of product.assets\">\r\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_590,h_295,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n\r\n\r\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_350,h_175,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n            </div>\r\n          </div>\r\n        </mat-card>\r\n      </div>\r\n    </div>\r\n\r\n\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -1399,7 +1416,7 @@ var GalleryComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container primary-background\" id=\"header\">\n\n  <div class=\"container\" fxHide.lt-md=\"true\">\n    <div class=\"row primary-background\">\n      <div class=\"cell\">\n        <a href=\"\">\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\n        </a>\n      </div>\n      <div fxFlex></div>\n    <div class=\"cell\">\n      <div class=\"row\" fxLayout=\"row\">\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\"\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n            <mat-icon>mail</mat-icon> Задати питання\n          </a>\n        </div>\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button class=\"muted\"\n             href=\"tel:+380985443968\">\n            <mat-icon>phone</mat-icon> 098 544 39 68\n          </a>\n        </div>\n      </div>\n    </div>\n\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"app-container primary-background\" id=\"header\">\r\n\r\n  <div class=\"container\" fxHide.lt-md=\"true\">\r\n    <div class=\"row primary-background\">\r\n      <div class=\"cell\">\r\n        <a href=\"\">\r\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\r\n        </a>\r\n      </div>\r\n      <div fxFlex></div>\r\n    <div class=\"cell\">\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\"\r\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n            <mat-icon>mail</mat-icon> Задати питання\r\n          </a>\r\n        </div>\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button class=\"muted\"\r\n             href=\"tel:+380985443968\">\r\n            <mat-icon>phone</mat-icon> 098 544 39 68\r\n          </a>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1461,7 +1478,7 @@ var HeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"home-container\">\n  <div id=\"home-left\">\n    <img src=\"./assets/images/hmade_logo_dark.svg\" id=\"home-logo\" alt=\"logo\">\n    <div>\n      <!--<a mat-flat-button class=\"radius-5\" href=\"/products/ch\" id=\"home-action\">Перейти</a>-->\n      <!--<button mat-fab-button class=\"radius-5\" (click)=\"onScroll()\">Down</button>-->\n      <button\n\n        color=\"primary\" mat-mini-fab (click)=\"onScroll()\" id=\"scroll-down-btn\"><mat-icon>keyboard_arrow_down</mat-icon></button> <!--*ngIf=\"media.isActive('lt-md')\" -->\n    </div>\n  </div>\n  <div id=\"home-right\" #scrollPoint>\n    <p>right</p>\n  </div>\n  <div id=\"home-bottom\">\n    <div fxLayout=\"row full-width\">\n      <div fxFlex=\"10\"></div>\n      <div class=\"row wrap full-width\" fxFlex=\"80\" fxLayout=\"row\" fxLayoutAlign=\"space-between\">\n        <div class=\"cell-padding\" fxFlex=\"1 1 auto\" *ngFor=\"let descendant of descendants\" fxLayout=\"row\">\n          <a fxFlex=\"1 1 auto\" mat-stroked-button class=\"radius-5 text-center\" color=\"accent\"\n             [routerLink]=\"['/products', 'ch', {outlets: {primary: [descendant._id], breadcrumb: [descendant._id]}}]\"\n             [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\n             {{descendant.name}}\n          </a>\n\n        </div>\n\n      </div>\n\n    </div>\n  </div>\n\n</div>\n"
+module.exports = "<div id=\"home-container\">\r\n  <div id=\"home-left\">\r\n    <img src=\"./assets/images/hmade_logo_dark.svg\" id=\"home-logo\" alt=\"logo\">\r\n    <div>\r\n      <!--<a mat-flat-button class=\"radius-5\" href=\"/products/ch\" id=\"home-action\">Перейти</a>-->\r\n      <!--<button mat-fab-button class=\"radius-5\" (click)=\"onScroll()\">Down</button>-->\r\n      <button\r\n\r\n        color=\"primary\" mat-mini-fab (click)=\"onScroll()\" id=\"scroll-down-btn\"><mat-icon>keyboard_arrow_down</mat-icon></button> <!--*ngIf=\"media.isActive('lt-md')\" -->\r\n    </div>\r\n  </div>\r\n  <div id=\"home-right\" #scrollPoint>\r\n    <p>right</p>\r\n  </div>\r\n  <div id=\"home-bottom\">\r\n    <div fxLayout=\"row full-width\">\r\n      <div fxFlex=\"10\"></div>\r\n      <div class=\"row wrap full-width\" fxFlex=\"80\" fxLayout=\"row\" fxLayoutAlign=\"space-between\">\r\n        <div class=\"cell-padding\" fxFlex=\"1 1 auto\" *ngFor=\"let descendant of descendants\" fxLayout=\"row\">\r\n          <a fxFlex=\"1 1 auto\" mat-stroked-button class=\"radius-5 text-center\" color=\"accent\"\r\n             [routerLink]=\"['/products', 'ch', {outlets: {primary: [descendant._id], breadcrumb: [descendant._id]}}]\"\r\n             [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n             {{descendant.name}}\r\n          </a>\r\n\r\n        </div>\r\n\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n"
 
 /***/ }),
 
@@ -2670,6 +2687,60 @@ var SharedService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/services/social.service.ts":
+/*!********************************************!*\
+  !*** ./src/app/services/social.service.ts ***!
+  \********************************************/
+/*! exports provided: SocialService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SocialService", function() { return SocialService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user.service */ "./src/app/services/user.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var SocialService = /** @class */ (function () {
+    function SocialService(userService, http) {
+        this.userService = userService;
+        this.http = http;
+    }
+    SocialService.prototype.addComment = function (parent_id, parentCategory, comment) {
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+                'Authorization': token
+            })
+        };
+        return this.http.post('api/social/add-comment', { comment: comment, parent_id: parent_id, parentCategory: parentCategory }, httpOptions);
+    };
+    SocialService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
+            _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+    ], SocialService);
+    return SocialService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/user.service.ts":
 /*!******************************************!*\
   !*** ./src/app/services/user.service.ts ***!
@@ -2685,7 +2756,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/index.js");
 /* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2695,8 +2765,6 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
-
-
 
 
 
@@ -2789,18 +2857,32 @@ var UserService = /** @class */ (function () {
     };
     UserService.prototype.allowTo = function (permitedRole) {
         var permissions = _app_config__WEBPACK_IMPORTED_MODULE_4__["config"].permissions;
-        return this.getUserLocal().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["mergeMap"])(function (user) {
-            if (!user) {
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(false);
-            }
-            var roleFromLocalStorage = user.role;
-            if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(true);
-            }
-            else {
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(false);
-            }
-        }));
+        var user = this.userLocalGetCredentials('token');
+        if (!user) {
+            return false;
+        }
+        var roleFromLocalStorage = user.role;
+        if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+        // return this.getUserLocal().pipe(
+        //   mergeMap(
+        //       user => {
+        //         if (!user) {
+        //           return of(false);
+        //         }
+        //         const roleFromLocalStorage = user.role;
+        //         if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
+        //           return of(true);
+        //         } else {
+        //           return of(false);
+        //         }
+        //     }
+        //   )
+        // );
     };
     UserService.prototype.userCheckRole = function (role) {
         var token = this.userLocalGetToken('token');

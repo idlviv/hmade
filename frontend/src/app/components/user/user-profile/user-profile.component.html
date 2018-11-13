@@ -68,7 +68,10 @@
 
         <div *ngIf="user.role === 'guest' && !verificationSent" class="info-block-row-wrapper border-0">
           <div fxLayout="row" fxLayoutAlign="center" class="info-block-row mail-verification">
-            <div class="mat-body-1" fxFlex="100%">Пошту не верифіковано, надіслати код</div>
+            <div class="mat-body-1" fxFlex="100%">
+              <p>Пошту не верифіковано, надіслати код.</p>
+              <p>Деякі функції будуть недоступні. Наприклад, відправка коментарів</p>
+            </div>
             <mat-icon *ngIf="processing !== 'verification'" fxFlex="30px" (click)="onVerificationSend()">mail</mat-icon>
             <mat-spinner *ngIf="processing === 'verification'" fxFlex="30px" [diameter]="24"></mat-spinner>
           </div>

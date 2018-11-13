@@ -17,14 +17,15 @@ module.exports = function(req, res, next) {
   remoteip=${req.connection.remoteAddress}`;
 
   rp(recaptchaURL)
-    .then(result => {
-      // console.log('result', result);
-      result = JSON.parse(result);
-      if (result.success === true) {
-        return next();
-      } else {
-        // console.log('error');
-        return next(new ApplicationError('recaptchaErr', 401));
-      }})
-    .catch(error => next(new ApplicationError('recaptchaErr', 401)));
+      .then((result) => {
+        console.log('result', result);
+        result = JSON.parse(result);
+        if (result.success === true) {
+          return next();
+        } else {
+          console.log('error');
+          return next(new ApplicationError('recaptchaErr', 401));
+        }
+      })
+      .catch((error) => next(new ApplicationError('recaptchaErr', 401)));
 };

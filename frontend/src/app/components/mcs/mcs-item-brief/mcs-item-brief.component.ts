@@ -27,6 +27,10 @@ export class McsItemBriefComponent implements OnInit, OnChanges {
     .subscribe(user => this.user = user);
   }
 
+  allowTo(permitedRole): boolean {
+    return this.userService.allowTo(permitedRole);
+  }
+
   ngOnChanges(changes: SimpleChanges) {
     const productChange: SimpleChange = changes.mc;
     // console.log('prev value: ', productChange.previousValue);

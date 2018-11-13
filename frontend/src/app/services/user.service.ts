@@ -128,21 +128,31 @@ export class UserService {
 
   allowTo(permitedRole) {
     const permissions = config.permissions;
-    return this.getUserLocal().pipe(
-      mergeMap(
-          user => {
-            if (!user) {
-              return of(false);
-            }
-            const roleFromLocalStorage = user.role;
-            if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
-              return of(true);
-            } else {
-              return of(false);
-            }
-        }
-      )
-    );
+    const user = this.userLocalGetCredentials('token');
+    if (!user) {
+      return false;
+    }
+    const roleFromLocalStorage = user.role;
+    if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
+      return true;
+    } else {
+      return false;
+    }
+    // return this.getUserLocal().pipe(
+    //   mergeMap(
+    //       user => {
+    //         if (!user) {
+    //           return of(false);
+    //         }
+    //         const roleFromLocalStorage = user.role;
+    //         if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
+    //           return of(true);
+    //         } else {
+    //           return of(false);
+    //         }
+    //     }
+    //   )
+    // );
   }
 
   userCheckRole(role): Observable<IResponse> {
