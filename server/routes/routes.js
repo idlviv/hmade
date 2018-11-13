@@ -21,6 +21,10 @@ router.post('/social/add-comment',
     socialController.addComment
 );
 
+router.get('/social/get-comments',
+    socialController.getComments
+);
+
 /**
  * mc routes
  */

@@ -4,8 +4,9 @@ import { UserService } from 'src/app/services/user.service';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { config } from '../../../app.config';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { SocialService } from 'src/app/services/social.service';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-comments',
@@ -15,7 +16,7 @@ import { SocialService } from 'src/app/services/social.service';
 export class CommentsComponent implements OnInit {
   config = config;
   user: IUser;
-  @Input() comments: IComment[];
+  comments: IComment[];
   @Input() parent_id: string;
   @Input() parent_category: string;
   commentForm: FormGroup;
@@ -51,6 +52,9 @@ export class CommentsComponent implements OnInit {
       console.log('user', user);
       this.user = user;
     });
+
+    this.socialService.getComments(this.parent_id, -1, 0, 10, false)
+      .subscribe(result => this.comments = result);
   }
 
   allowTo(permitedRole): boolean {
@@ -59,8 +63,22 @@ export class CommentsComponent implements OnInit {
 
   sendComment() {
     const comment = this.commentForm.get('comment').value;
-    this.socialService.addComment(this.parent_id, this.parent_category, comment)
-      .subscribe(result => console.log('send Comment result', result),
+    this.socialService.addComment(this.parent_id, this.parent_category, comment).pipe(
+      mergeMap(result => {
+        if (result) {
+          return this.socialService.getComments(this.parent_id, -1, 0, 10, false);
+        } else {
+          return of([]);
+        }
+      }
+      )
+    )
+      .subscribe(result => {
+        if (result.length) {
+          this.comments = result;
+        }
+        console.log('send Comment result', result);
+      },
       err => console.log('send Comment err', err));
   }
 
