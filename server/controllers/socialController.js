@@ -42,7 +42,7 @@ module.exports.getComments = function(req, res, next) {
   const displayFilter = req.query.displayFilter;
   log.debug('displayFilter', limit);
   let query;
-  displayFilter === 'true' ? query = {parent_id, display: true} : query = {_id};
+  displayFilter === 'true' ? query = {_id: parent_id, display: true} : query = {_id: parent_id};
 
   McModel.aggregate([
     {$match: query},
