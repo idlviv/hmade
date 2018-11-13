@@ -15,5 +15,12 @@ module.exports.addComment = function(req, res, next) {
   log.debug('parent_id', parent_id);
   log.debug('parentCategory', parentCategory);
 
-  res.status(200).json({comment, parent_id, parentCategory});
+  let model;
+  if (parent_id === 'mc') {
+    model = McModel;
+  }
+
+  McModel.findOne({_id: parent_id})
+      .then((result) => res.status(200).json(result))
+      .catch((err) => next(new DbError(err.message)));
 };
