@@ -66,6 +66,7 @@ export class CommentsComponent implements OnInit {
     this.socialService.addComment(this.parent_id, this.parent_category, comment).pipe(
       mergeMap(result => {
         if (result) {
+          this.mcFormDirective.resetForm();
           return this.socialService.getComments(this.parent_id, -1, 0, 10, false);
         } else {
           return of([]);

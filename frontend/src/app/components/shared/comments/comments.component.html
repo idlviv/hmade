@@ -1,13 +1,6 @@
 <div class="container">
   <div class="app-container">
-    <div class="row" fxLayout="row">
-      <div class="cell" *ngFor="let comment of comments" fxFlex="100">
-        {{comment | json}}
-      </div>
-      <div class="cell" *ngIf="allowTo('manager')async" fxFlex="100">
-        Permission
-      </div>
-    </div>
+
     <form [formGroup]="commentForm" #f="ngForm" novalidate>
       <div class="row" fxLayout="row">
         <div class="cell" fxFlex="10">
@@ -25,10 +18,10 @@
               config.defaultAvatar}}" alt="avatar">
         </div>
           <mat-form-field class="cell" fxFlex="80">
-            <textarea matInput 
-              [placeholder]="allowTo('user') ? 
-                'Коментар' : 
-                allowTo('guest') ? 
+            <textarea matInput
+              [placeholder]="allowTo('user') ?
+                'Коментар' :
+                allowTo('guest') ?
                   'Для відправки коментарів верифікуйте пошту' :
                   'Коментарі можуть залишати лише зареєстровані користувачі'"
               formControlName="comment" required>
@@ -53,6 +46,10 @@
         </div>
       </div>
     </form>
-
+    <div class="row" fxLayout="row">
+      <div class="cell" *ngFor="let comment of comments" fxFlex="100">
+        {{comment | json}}
+      </div>
+    </div>
   </div>
 </div>
