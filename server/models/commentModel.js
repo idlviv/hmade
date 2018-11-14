@@ -1,4 +1,5 @@
 const mongoose = require('../config/mongoose');
+const ObjectId = mongoose.Schema.Types.ObjectId;
 const Schema = mongoose.Schema;
 
 const CommentSchema = new Schema({
@@ -6,7 +7,7 @@ const CommentSchema = new Schema({
     type: String,
   },
   commentator: {
-    type: String,
+    type: ObjectId,
   },
   commentedAt: {
     type: Number,

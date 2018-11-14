@@ -16,13 +16,14 @@ module.exports.addComment = function(req, res, next) {
   if (parentCategory === 'mc') {
     model = McModel;
   }
+  console.log('obj_id', typeof new ObjectId(commentator));
   model.findOneAndUpdate(
       {_id: parent_id},
       {$push:
         {comments:
           {
             comment,
-            commentator,
+            commentator: new ObjectId(commentator),
             commentedAt: Date.now(),
             display: true,
           }}},
@@ -52,6 +53,22 @@ module.exports.getComments = function(req, res, next) {
     {$sort: {commentedAt: sort}},
     {$skip: skip},
     {$limit: limit},
+    {$lookup: {
+      from: 'users',
+      localField: 'commentator',
+      foreignField: '_id',
+      as: 'user',
+    }},
+
+    {$project: {
+      'commentedAt': 1,
+      'display': 1,
+      'comment': 1,
+      'commentator': 1,
+      'user.avatar': 1,
+      'user.role': 1,
+      'user.login': 1,
+    }},
   ])
       .then((result) => res.status(200).json(result))
       .catch((err) => next(new DbError(err.message)));
