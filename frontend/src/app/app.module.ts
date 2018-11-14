@@ -25,9 +25,12 @@ import { ConfirmPopupComponent } from './components/shared/confirm-popup/confirm
 import { DesignPopupComponent } from './components/shared/design-popup/design-popup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { ScrollingDirective } from './directives/scrolling.directive';
+
 @NgModule({
   declarations: [
     AppComponent,
+    ScrollingDirective,
   ],
   imports: [
     BrowserModule,

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
 import { IComment } from 'src/app/interfaces/interface';
 import { UserService } from 'src/app/services/user.service';
 import { IUser } from 'src/app/interfaces/user-interface';
@@ -55,6 +55,22 @@ export class CommentsComponent implements OnInit {
 
     this.socialService.getComments(this.parent_id, -1, 0, 10, false)
       .subscribe(result => this.comments = result);
+  }
+
+  // Listening of page bottom reached
+  @HostListener('window:scroll', [])
+  onScroll(): void {
+    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
+      // if (!this.processing && this.commentsList.length !== this.blog.commentsLength) {
+        this.loadComments();
+      // }
+    }
+  }
+
+  loadComments() {
+    console.log('load comments');
+    // this.socialService.getComments(this.parent_id, -1, 0, 10, false)
+    //   .subscribe(result => this.comments = result);
   }
 
   allowTo(permitedRole): boolean {

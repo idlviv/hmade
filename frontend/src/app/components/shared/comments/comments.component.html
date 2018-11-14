@@ -1,54 +1,84 @@
 <div class="container">
   <div class="app-container">
+    <div class="padding-bottom-3">
+        <mat-card>
+            <form [formGroup]="commentForm" #f="ngForm" novalidate>
+                <div class="row" fxLayout="row">
+                  <div class="cell" fxFlex="10" fxLayoutAlign="center center">
 
-    <form [formGroup]="commentForm" #f="ngForm" novalidate>
-      <div class="row" fxLayout="row">
-        <div class="cell" fxFlex="10">
-          <img *ngIf="allowTo('guest')" class="responsive-image"
-            src="{{
-              config.imgPath +
-              config.cloudinary.cloud_name +
-              '/c_fill,w_50,h_50,f_auto/' +
-              user.avatar}}" alt="avatar">
-          <img *ngIf="!allowTo('guest')" class="responsive-image"
-            src="{{
-              config.imgPath +
-              config.cloudinary.cloud_name +
-              '/c_fill,w_50,h_50,f_auto/' +
-              config.defaultAvatar}}" alt="avatar">
-        </div>
-          <mat-form-field class="cell" fxFlex="80">
-            <textarea matInput
-              [placeholder]="allowTo('user') ?
-                'Коментар' :
-                allowTo('guest') ?
-                  'Для відправки коментарів верифікуйте пошту' :
-                  'Коментарі можуть залишати лише зареєстровані користувачі'"
-              formControlName="comment" required>
-            </textarea>
-            <mat-error
-              *ngIf="(commentForm.get('comment').errors?.minlength ||
-              commentForm.get('comment').errors?.maxlength ||
-              commentForm.get('comment').errors?.required) &&
-              commentForm.get('comment').touched">
-              Довжина повинна бути від 3 до 200 символів
-            </mat-error>
-            <mat-error
-              *ngIf="commentForm.get('comment').errors?.pattern &&
-              commentForm.get('comment').touched">
-              Не використовуйте спеціальні символи
-            </mat-error>
-          </mat-form-field>
-        <div class="cell" fxFlex="10">
-          <button mat-icon-button (click)="sendComment()"  [disabled]="!commentForm.valid || !allowTo('user')">
-            <mat-icon>send</mat-icon>
-          </button>
-        </div>
+                    <img *ngIf="user" class="responsive-image"
+                      src="{{
+                        config.imgPath +
+                        config.cloudinary.cloud_name +
+                        '/c_fill,w_50,h_50,f_auto/' +
+                        user.avatar}}" alt="avatar">
+                    <img *ngIf="!user" class="responsive-image"
+                      src="{{
+                        config.imgPath +
+                        config.cloudinary.cloud_name +
+                        '/c_fill,w_50,h_50,f_auto/' +
+                        config.defaultAvatar}}" alt="avatar">
+                  
+                  </div>
+                    <mat-form-field class="cell" fxFlex="80">
+                      <textarea matInput
+                        [placeholder]="allowTo('user') ?
+                          'Коментар' :
+                          allowTo('guest') ?
+                            'Для відправки коментарів верифікуйте пошту' :
+                            'Коментарі можуть залишати лише зареєстровані користувачі'"
+                        formControlName="comment" required>
+                      </textarea>
+                      <mat-error
+                        *ngIf="(commentForm.get('comment').errors?.minlength ||
+                        commentForm.get('comment').errors?.maxlength ||
+                        commentForm.get('comment').errors?.required) &&
+                        commentForm.get('comment').touched">
+                        Довжина повинна бути від 3 до 200 символів
+                      </mat-error>
+                      <mat-error
+                        *ngIf="commentForm.get('comment').errors?.pattern &&
+                        commentForm.get('comment').touched">
+                        Не використовуйте спеціальні символи
+                      </mat-error>
+                    </mat-form-field>
+                  <div class="cell" fxFlex="10">
+                    <button mat-icon-button (click)="sendComment()"  [disabled]="!commentForm.valid || !allowTo('user')">
+                      <mat-icon>send</mat-icon>
+                    </button>
+                  </div>
+                </div>
+              </form>
+        </mat-card>
+    </div>
+    
+    
+    <div class="row padding-bottom" *ngFor="let comment of comments" fxLayout="row">
+      <div class="cell" fxFlex="10" fxLayoutAlign="center center">
+
+                  <img *ngIf="comment.user && comment.user.avatar" class="responsive-image"
+                  src="{{
+                    config.imgPath +
+                    config.cloudinary.cloud_name +
+                    '/c_fill,w_50,h_50,f_auto/' +
+                    comment.user.avatar}}" alt="avatar">
+                <img *ngIf="!comment.user" class="responsive-image"
+                  src="{{
+                    config.imgPath +
+                    config.cloudinary.cloud_name +
+                    '/c_fill,w_50,h_50,f_auto/' +
+                    config.defaultAvatar}}" alt="avatar">
       </div>
-    </form>
-    <div class="row" fxLayout="row">
-      <div class="cell" *ngFor="let comment of comments" fxFlex="100">
-        {{comment | json}}
+      <div class="cell" fxFlex="80">
+        <p>
+          <span class="mat-body-2">{{comment.user && comment.user.login ? comment.user.login : 'Гість'}}</span>
+          <span fxFlex></span>
+          <span class="mat-body-1">{{comment.commentedAt | date: 'dd.MM.yyyy HH:mm'}}</span> 
+        </p>
+        <p class="text-align-justify">{{comment.comment}} {{comment | json}}</p>
+      </div>
+      <div class="cell" fxFlex="10" appScrolling>
+       
       </div>
     </div>
   </div>

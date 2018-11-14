@@ -59,7 +59,13 @@ module.exports.getComments = function(req, res, next) {
       foreignField: '_id',
       as: 'user',
     }},
-
+    {$project: {
+      'commentedAt': 1,
+      'display': 1,
+      'comment': 1,
+      'commentator': 1,
+      'user': {$arrayElemAt: ['$user', 0]},
+    }},
     {$project: {
       'commentedAt': 1,
       'display': 1,
@@ -73,3 +79,50 @@ module.exports.getComments = function(req, res, next) {
       .then((result) => res.status(200).json(result))
       .catch((err) => next(new DbError(err.message)));
 };
+
+// db.getCollection('mcs').aggregate([
+//   {$match: {_id: 'mcs0006'}},
+//   {$project: {_id: 0, comments: 1, numberOfComments: { $size: "$comments" }}},
+//   {$unwind: '$comments'},
+//   {$replaceRoot: {newRoot: '$comments'}},
+
+//   {$lookup: {
+//     from: 'users',
+//     localField: 'commentator',
+//     foreignField: '_id',
+//     as: 'user',
+//   }},
+//     {
+//   $facet: {
+//     "comments": [
+//   {$project: {
+//     'commentedAt': 1,
+//     'display': 1,
+//     'comment': 1,
+//     'commentator': 1,
+//       'user': {$arrayElemAt: ['$user', 0]}
+//   }},
+//       {$project: {
+//     'commentedAt': 1,
+//     'display': 1,
+//     'comment': 1,
+//     'commentator': 1,
+//     'user.avatar': 1,
+//     'user.role': 1,
+//     'user.login': 1,
+          
+//   }},
+//     ],
+//     "count": [
+//       { $sortByCount: "$comments" },
+//     ],
+//       }
+//       },
+
+//   {$project: {
+//     'comments': 1,
+//     'count': {$arrayElemAt: ['$count', 0]}
+//   }},
+
+  
+// ]);
