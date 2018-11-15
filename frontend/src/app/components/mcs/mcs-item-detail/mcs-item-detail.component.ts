@@ -24,7 +24,7 @@ export class McsItemDetailComponent implements OnInit {
     this.route.params.pipe(
       mergeMap(
         (params) => {
-          return this.mcService.getMcById(params._id);
+          return this.mcService.getMcByIdAndIncViews(params._id);
         })
       )
       .subscribe((result) => {

@@ -70,6 +70,28 @@ export class McService {
     );
   }
 
+    /**
+   *
+   *
+   * @param {string} _id
+   * @returns {Observable<IMc>}
+   * @memberof McService
+   */
+  getMcByIdAndIncViews(_id: string): Observable<IMc>  {
+    // const token = this.userService.userLocalGetToken('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        // 'Authorization': token
+      }),
+    };
+    return this.http.get<IMc>(
+      'api/mc/get-mc-by-id-and-inc-views/' + _id,
+      httpOptions
+    );
+  }
+
+
   /**
    *
    *

@@ -16,11 +16,14 @@ import { mergeMap } from 'rxjs/operators';
 export class CommentsComponent implements OnInit {
   config = config;
   user: IUser;
-  comments: IComment[];
+  comments = <IComment[]>[];
+  commentsTotalLength: number;
   @Input() parent_id: string;
-  @Input() parent_category: string;
+  @Input() parentCategory: string;
   commentForm: FormGroup;
   @ViewChild('f') mcFormDirective: FormGroupDirective;
+
+  processing = false;
 
   constructor(
     private userService: UserService,
@@ -41,10 +44,6 @@ export class CommentsComponent implements OnInit {
           Validators.minLength(3),
           Validators.maxLength(150),
         ]),
-      // commentator: new FormControl('', [
-      //   Validators.required,
-      //   Validators.pattern('[a-z0-9]+'),
-      // ]),
     });
 
     this.userService.getUserLocal()
@@ -53,24 +52,29 @@ export class CommentsComponent implements OnInit {
       this.user = user;
     });
 
-    this.socialService.getComments(this.parent_id, -1, 0, 10, false)
-      .subscribe(result => this.comments = result);
+    this.loadComments(-1, 0, 5, !this.allowTo('manager'));
   }
 
   // Listening of page bottom reached
-  @HostListener('window:scroll', [])
-  onScroll(): void {
-    if ((window.innerHeight + window.scrollY) >= document.body.offsetHeight) {
-      // if (!this.processing && this.commentsList.length !== this.blog.commentsLength) {
-        this.loadComments();
-      // }
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event): void {
+    if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 2) {
+      if (!this.processing && this.commentsTotalLength !== this.comments.length) {
+        this.loadComments(-1, this.comments.length, 5, !this.allowTo('manager'));
+      }
     }
   }
 
-  loadComments() {
-    console.log('load comments');
-    // this.socialService.getComments(this.parent_id, -1, 0, 10, false)
-    //   .subscribe(result => this.comments = result);
+  loadComments(sort: number, skip: number, limit: number, displayFilter: boolean) {
+    this.processing = true;
+    this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter)
+      .subscribe(result => {
+        console.log('res', result);
+        this.comments.push(...result.comments);
+        this.commentsTotalLength = result.commentsTotalLength;
+        this.processing = false;
+
+      });
   }
 
   allowTo(permitedRole): boolean {
@@ -79,24 +83,58 @@ export class CommentsComponent implements OnInit {
 
   sendComment() {
     const comment = this.commentForm.get('comment').value;
-    this.socialService.addComment(this.parent_id, this.parent_category, comment).pipe(
-      mergeMap(result => {
-        if (result) {
-          this.mcFormDirective.resetForm();
-          return this.socialService.getComments(this.parent_id, -1, 0, 10, false);
-        } else {
-          return of([]);
+    this.socialService.addComment(this.parent_id, this.parentCategory, comment)
+      .pipe(
+        mergeMap(result => {
+          if (result) {
+            // successfuly added
+            this.mcFormDirective.resetForm();
+            return this.socialService.getComments(this.parent_id, this.parentCategory, -1, 0, 5, !this.allowTo('manager'));
+          } else {
+            // not added, do nothing
+            return of({comments: [], commentsTotalLength: 0});
+          }
         }
-      }
+        )
       )
-    )
       .subscribe(result => {
-        if (result.length) {
-          this.comments = result;
+        if (result.comments.length) {
+          this.comments = result.comments;
+          this.commentsTotalLength = result.commentsTotalLength;
         }
-        console.log('send Comment result', result);
       },
-      err => console.log('send Comment err', err));
+        err => console.log('add comment err', err)
+      );
+  }
+
+  deleteComment(comment: IComment) {
+
+  }
+
+  displayComment(display: boolean, comment_id: string) {
+    this.socialService.displayComment(this.parent_id, this.parentCategory, display, comment_id)
+      .pipe(
+        mergeMap(result => {
+          if (result) {
+            // successfuly updated
+            return this.socialService.getComments(
+              this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
+              );
+          } else {
+            // not added, do nothing
+            return of({comments: [], commentsTotalLength: 0});
+          }
+        }
+        )
+      )
+      .subscribe(result => {
+        if (result.comments.length) {
+          this.comments = result.comments;
+          this.commentsTotalLength = result.commentsTotalLength;
+        }
+      },
+        err => console.log('add comment err', err)
+      );
   }
 
 }

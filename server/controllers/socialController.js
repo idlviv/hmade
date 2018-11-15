@@ -7,16 +7,15 @@ const log = require('../config/winston')(module);
 const cloudinary = require('../config/cloudinary');
 
 module.exports.addComment = function(req, res, next) {
-  const comment = req.body.comment;
   const parent_id = req.body.parent_id;
   const parentCategory = req.body.parentCategory;
+  const comment = req.body.comment;
   const commentator = req.user._doc._id;
 
   let model;
   if (parentCategory === 'mc') {
     model = McModel;
   }
-  console.log('obj_id', typeof new ObjectId(commentator));
   model.findOneAndUpdate(
       {_id: parent_id},
       {$push:
@@ -35,94 +34,90 @@ module.exports.addComment = function(req, res, next) {
       .catch((err) => next(new DbError(err.message)));
 };
 
+module.exports.displayComment = function(req, res, next) {
+  const parent_id = req.body.parent_id;
+  const parentCategory = req.body.parentCategory;
+  const comment_id = req.body.comment_id;
+  const display = req.body.display;
+  console.log('display', display);
+  let model;
+  if (parentCategory === 'mc') {
+    model = McModel;
+  }
+  model.findOneAndUpdate(
+      {'_id': parent_id, 'comments._id': new ObjectId(comment_id)},
+      {$set: {'comments.$.display': display}},
+      {
+        new: true,
+      } // return the modified document rather than the original
+  )
+      .then((result) => res.status(200).json(true))
+      .catch((err) => next(new DbError(err.message)));
+};
+
 module.exports.getComments = function(req, res, next) {
   const parent_id = req.query.parent_id;
+  const parentCategory = req.query.parentCategory;
   const sort = +req.query.sort;
   const skip = +req.query.skip;
   const limit = +req.query.limit;
   const displayFilter = req.query.displayFilter;
-  log.debug('displayFilter', limit);
   let query;
-  displayFilter === 'true' ? query = {_id: parent_id, display: true} : query = {_id: parent_id};
+  displayFilter === 'true' ? query = {display: true} : query = {};
 
-  McModel.aggregate([
-    {$match: query},
-    {$project: {_id: 0, comments: 1}},
+  let model;
+  if (parentCategory === 'mc') {
+    model = McModel;
+  }
+
+  model.aggregate([
+    {$match: {_id: parent_id}},
+    {$project: {_id: 0, comments: 1, numberOfComments: {$size: '$comments'}}},
     {$unwind: '$comments'},
     {$replaceRoot: {newRoot: '$comments'}},
-    {$sort: {commentedAt: sort}},
-    {$skip: skip},
-    {$limit: limit},
-    {$lookup: {
-      from: 'users',
-      localField: 'commentator',
-      foreignField: '_id',
-      as: 'user',
+    {$match: query},
+    {$facet: {
+      'comments': [
+        {$sort: {commentedAt: sort}},
+        {$skip: skip},
+        {$limit: limit},
+        {$lookup: {
+          from: 'users',
+          localField: 'commentator',
+          foreignField: '_id',
+          as: 'user',
+        }},
+        {$project: {
+          'commentedAt': 1,
+          'display': 1,
+          'comment': 1,
+          'commentator': 1,
+          'user': {$arrayElemAt: ['$user', 0]},
+        }},
+        {$project: {
+          'commentedAt': 1,
+          'display': 1,
+          'comment': 1,
+          'commentator': 1,
+          'user.avatar': 1,
+          'user.role': 1,
+          'user.login': 1,
+        }},
+      ],
+      'count': [
+        {$sortByCount: '$comments'},
+      ],
     }},
     {$project: {
-      'commentedAt': 1,
-      'display': 1,
-      'comment': 1,
-      'commentator': 1,
-      'user': {$arrayElemAt: ['$user', 0]},
+      'comments': 1,
+      'count': {$arrayElemAt: ['$count', 0]},
     }},
     {$project: {
-      'commentedAt': 1,
-      'display': 1,
-      'comment': 1,
-      'commentator': 1,
-      'user.avatar': 1,
-      'user.role': 1,
-      'user.login': 1,
+      'comments': 1,
+      'commentsTotalLength': '$count.count',
     }},
   ])
-      .then((result) => res.status(200).json(result))
+      .then((result) => res.status(200).json(result[0]))
       .catch((err) => next(new DbError(err.message)));
 };
 
-// db.getCollection('mcs').aggregate([
-//   {$match: {_id: 'mcs0006'}},
-//   {$project: {_id: 0, comments: 1, numberOfComments: { $size: "$comments" }}},
-//   {$unwind: '$comments'},
-//   {$replaceRoot: {newRoot: '$comments'}},
-
-//   {$lookup: {
-//     from: 'users',
-//     localField: 'commentator',
-//     foreignField: '_id',
-//     as: 'user',
-//   }},
-//     {
-//   $facet: {
-//     "comments": [
-//   {$project: {
-//     'commentedAt': 1,
-//     'display': 1,
-//     'comment': 1,
-//     'commentator': 1,
-//       'user': {$arrayElemAt: ['$user', 0]}
-//   }},
-//       {$project: {
-//     'commentedAt': 1,
-//     'display': 1,
-//     'comment': 1,
-//     'commentator': 1,
-//     'user.avatar': 1,
-//     'user.role': 1,
-//     'user.login': 1,
-          
-//   }},
-//     ],
-//     "count": [
-//       { $sortByCount: "$comments" },
-//     ],
-//       }
-//       },
-
-//   {$project: {
-//     'comments': 1,
-//     'count': {$arrayElemAt: ['$count', 0]}
-//   }},
-
-  
-// ]);

@@ -21,6 +21,12 @@ router.post('/social/add-comment',
     socialController.addComment
 );
 
+router.put('/social/display-comment',
+    passport.authenticate('jwt', {session: false}),
+    authorization('manager'),
+    socialController.displayComment
+);
+
 router.get('/social/get-comments',
     socialController.getComments
 );
@@ -34,6 +40,9 @@ router.get('/mc/get-mcs', // tmp
 
 router.get('/mc/get-mc-by-id/:_id',
     mcController.getMcById
+);
+router.get('/mc/get-mc-by-id-and-inc-views/:_id',
+    mcController.getMcByIdAndIncViews
 );
 
 router.get('/mc/get-mcs-by-filter',

@@ -1,6 +1,6 @@
 <div class="container">
   <div class="app-container">
-    <div class="padding-bottom-3">
+    <!-- <div class="padding-bottom-3"> -->
         <mat-card>
             <form [formGroup]="commentForm" #f="ngForm" novalidate>
                 <div class="row" fxLayout="row">
@@ -18,7 +18,7 @@
                         config.cloudinary.cloud_name +
                         '/c_fill,w_50,h_50,f_auto/' +
                         config.defaultAvatar}}" alt="avatar">
-                  
+
                   </div>
                     <mat-form-field class="cell" fxFlex="80">
                       <textarea matInput
@@ -50,9 +50,13 @@
                 </div>
               </form>
         </mat-card>
+    <!-- </div> -->
+
+    <div class="row" fxLayout="row">
+      <div *ngIf="comments" class="cell">
+        <p class="mat-body-1">Показано<span class="mat-body-2"> {{comments.length}} </span>коментарів з<span class="mat-body-2"> {{commentsTotalLength}}</span></p>
+      </div>
     </div>
-    
-    
     <div class="row padding-bottom" *ngFor="let comment of comments" fxLayout="row">
       <div class="cell" fxFlex="10" fxLayoutAlign="center center">
 
@@ -73,12 +77,23 @@
         <p>
           <span class="mat-body-2">{{comment.user && comment.user.login ? comment.user.login : 'Гість'}}</span>
           <span fxFlex></span>
-          <span class="mat-body-1">{{comment.commentedAt | date: 'dd.MM.yyyy HH:mm'}}</span> 
+          <span class="mat-body-1">{{comment.commentedAt | date: 'dd.MM.yyyy HH:mm'}}</span>
         </p>
         <p class="text-align-justify">{{comment.comment}} {{comment | json}}</p>
       </div>
-      <div class="cell" fxFlex="10" appScrolling>
-       
+      <div class="cell" fxFlex="10">
+        <p *ngIf="allowTo('manager')"><button class="mat-icon-button" (click)="deleteComment(comment)"><mat-icon class="mat-18">delete_outline</mat-icon></button></p>
+        <p *ngIf="allowTo('manager') && !comment.display">
+          <button class="mat-icon-button" (click)="displayComment(true, comment._id)"><mat-icon class="mat-18">play_circle_outline</mat-icon></button>
+        </p>
+        <p *ngIf="allowTo('manager') && comment.display">
+          <button class="mat-icon-button" (click)="displayComment(false, comment._id)"><mat-icon class="mat-18">pause_circle_outline</mat-icon></button>
+        </p>
+      </div>
+    </div>
+    <div *ngIf="processing" class="row" fxLayout="row" fxLayoutAlign="center center">
+      <div class="cell" fxFlex="100">
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
       </div>
     </div>
   </div>

@@ -149,6 +149,18 @@ module.exports.getMcById = function(req, res, next) {
       .catch((err) => next(new DbError()));
 };
 
+module.exports.getMcByIdAndIncViews = function(req, res, next) {
+  const _id = req.params._id;
+
+  McModel.findOneAndUpdate(
+      {_id},
+      {$inc: {views: 1}},
+      {new: true} // return updated object
+  )
+      .then((result) => res.status(200).json(result))
+      .catch((err) => next(new DbError()));
+};
+
 module.exports.getMcsByFilter = function(req, res, next) {
   const parent = req.query.parent;
   const sort = req.query.sort;
