@@ -34,13 +34,13 @@ router.get('/social/get-comments',
 /**
  * mc routes
  */
-router.get('/mc/get-mcs', // tmp
-    mcController.getMcs
-);
+// router.get('/mc/get-mcs', // tmp
+//     mcController.getMcs
+// );
 
-router.get('/mc/get-mc-by-id/:_id',
-    mcController.getMcById
-);
+// router.get('/mc/get-mc-by-id/:_id',
+//     mcController.getMcById
+// );
 router.get('/mc/get-mc-by-id-and-inc-views/:_id',
     mcController.getMcByIdAndIncViews
 );

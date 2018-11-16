@@ -13,13 +13,13 @@ const cloudinary = require('../config/cloudinary');
 const catalogController = require('../controllers/catalogController');
 const sharedController = require('../controllers/sharedController');
 
-module.exports.getMcs = function(req, res, next) { // tmp
-  McModel.find()
-      .then((result) =>
-        res.status(200)
-            .json(new ResObj(true, 'Масив товарів', result)))
-      .catch((err) => next(new DbError()));
-};
+// module.exports.getMcs = function(req, res, next) { // tmp
+//   McModel.find()
+//       .then((result) =>
+//         res.status(200)
+//             .json(new ResObj(true, 'Масив товарів', result)))
+//       .catch((err) => next(new DbError()));
+// };
 
 module.exports.mcUpsert = function(req, res, next) {
   const mc = req.body;
@@ -27,7 +27,6 @@ module.exports.mcUpsert = function(req, res, next) {
   McModel.findOne({_id: mc._id})
       .then((result) => {
         if (result !== null && result._doc) {
-
           mc.createdAt = result.createdAt || 0;
           mc.updatedAt = Date.now();
           mc.likes = result.likes || 0;
@@ -35,7 +34,7 @@ module.exports.mcUpsert = function(req, res, next) {
           mc.dislikes = result.dislikes || 0;
           mc.dislikedBy = result.dislikedBy || [];
           mc.views = result.views || 0;
-          mc.comments = result.comments || [];
+          // mc.comments = result.comments || [];
         } else {
           mc.createdAt = Date.now();
           mc.updatedAt = Date.now();
@@ -54,7 +53,6 @@ module.exports.mcUpsert = function(req, res, next) {
 };
 
 module.exports.addMainImage = function(req, res, next) {
-
   let form = new formidable.IncomingForm({maxFileSize: 10500000});
   form.parse(req, function(err, fields, files) {
     if (err) {
@@ -93,7 +91,6 @@ module.exports.addMainImage = function(req, res, next) {
 };
 
 module.exports.addStepsPic = function(req, res, next) {
-
   let form = new formidable.IncomingForm({maxFileSize: 10500000});
   form.parse(req, function(err, fields, files) {
     if (err) {
@@ -131,7 +128,6 @@ module.exports.addStepsPic = function(req, res, next) {
   });
 };
 
-
 module.exports.getSkuList = function(req, res, next) {
   McModel.find({}, {_id: 1})
       .sort({_id: 1})
@@ -141,23 +137,33 @@ module.exports.getSkuList = function(req, res, next) {
       .catch((err) => next(new DbError()));
 };
 
-module.exports.getMcById = function(req, res, next) {
-  _id = req.params._id;
-  McModel.findById({_id})
-      .then((result) =>
-        res.status(200).json(result))
-      .catch((err) => next(new DbError()));
-};
+// module.exports.getMcById = function(req, res, next) {
+//   _id = req.params._id;
+//   McModel.findById({_id})
+//       .then((result) =>
+//         res.status(200).json(result))
+//       .catch((err) => next(new DbError()));
+// };
 
 module.exports.getMcByIdAndIncViews = function(req, res, next) {
   const _id = req.params._id;
 
-  McModel.findOneAndUpdate(
-      {_id},
-      {$inc: {views: 1}},
-      {new: true} // return updated object
-  )
-      .then((result) => res.status(200).json(result))
+  McModel.findOneAndUpdate({_id}, {$inc: {views: 1}})
+      .then(() => McModel.aggregate([
+        {$match: {_id},
+        },
+        {$addFields: {
+          comments: {
+            $filter: {
+              input: '$comments',
+              as: 'comment',
+              cond: {$eq: ['$$comment.display', true]},
+            },
+          },
+        },
+        },
+      ]))
+      .then((result) => res.status(200).json(result[0]))
       .catch((err) => next(new DbError()));
 };
 
@@ -172,10 +178,24 @@ module.exports.getMcsByFilter = function(req, res, next) {
 
   if (noMoreChildren) {
     McModel
-        .find({parents: parent})
-        .sort({[sort]: sortOrder})
-        .skip(skip)
-        .limit(limit)
+        .aggregate([
+          {$match: {parents: parent},
+          },
+          {$addFields: {
+            comments: {
+              $filter: {
+                input: '$comments',
+                as: 'comment',
+                cond: {$eq: ['$$comment.display', true]},
+              },
+            },
+          },
+          },
+          {$sort: {[sort]: sortOrder}},
+          {$skip: skip},
+          {$limit: limit}
+        ])
+
         .then((result) => res.status(200).json(result))
         .catch((err) => next(new DbError()));
   } else {
@@ -213,9 +233,17 @@ module.exports.getMcsByFilter = function(req, res, next) {
           },
           // move docs to root
           {
-            $replaceRoot:
-        {newRoot: '$data'},
+            $replaceRoot:{newRoot: '$data'},
           },
+          {$addFields: {
+            comments: {
+              $filter: {
+                input: '$comments',
+                as: 'comment',
+                cond: {$eq: ['$$comment.display', true]},
+              },
+            },
+          }},
           {
             $sort: {[sort]: sortOrder},
           },
@@ -234,7 +262,7 @@ module.exports.getMcsByFilter = function(req, res, next) {
 module.exports.getMcsByParent = function(req, res, next) {
   const parent = req.query.parent;
   const displayFilter = req.query.display;
-  log.debug('req.query.parent', req.query.parent)
+  log.debug('req.query.parent', req.query.parent);
   let query;
   displayFilter === 'true' ?
       query = {parents: parent, display: true} : query = {parents: parent};

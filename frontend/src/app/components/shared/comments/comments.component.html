@@ -57,8 +57,9 @@
         <p class="mat-body-1">Показано<span class="mat-body-2"> {{comments.length}} </span>коментарів з<span class="mat-body-2"> {{commentsTotalLength}}</span></p>
       </div>
     </div>
-    <div class="row padding-bottom" *ngFor="let comment of comments" fxLayout="row">
-      <div class="cell" fxFlex="10" fxLayoutAlign="center center">
+    <div class="row padding-bottom" [ngClass]="{'muted-strong': !comment.display}"
+     *ngFor="let comment of comments" fxLayout="row">
+      <div  class="cell" fxFlex="10" fxLayoutAlign="center center">
 
                   <img *ngIf="comment.user && comment.user.avatar" class="responsive-image"
                   src="{{

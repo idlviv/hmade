@@ -34,6 +34,7 @@ module.exports.addComment = function(req, res, next) {
       .catch((err) => next(new DbError(err.message)));
 };
 
+// set display (true || false) option for comment
 module.exports.displayComment = function(req, res, next) {
   const parent_id = req.body.parent_id;
   const parentCategory = req.body.parentCategory;

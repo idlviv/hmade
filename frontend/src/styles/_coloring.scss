@@ -65,13 +65,22 @@ $warn-dark: mat-color($warn, 900);
 }
 
 // old
-
-$muted: rgba(0, 0, 0, 0.65);
+$muted-light: rgba(0, 0, 0, 0.4);
+$muted: rgba(0, 0, 0, 0.5);
+$muted-strong: rgba(0, 0, 0, 0.3);
 $border: rgba(0, 0, 0, 0.12);
 $light-gray: #D6E7F7;
 
+.muted-light {
+  color: $muted-light;
+}
+
 .muted {
   color: $muted;
+}
+
+.muted-strong {
+  color: $muted-strong;
 }
 
 .light-gray-background {
