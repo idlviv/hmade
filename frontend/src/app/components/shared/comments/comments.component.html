@@ -46,7 +46,14 @@
                     <button mat-icon-button (click)="sendComment()"  [disabled]="!commentForm.valid || !allowTo('user')">
                       <mat-icon>send</mat-icon>
                     </button>
+           
                   </div>
+                </div>
+                <div class="row" fxLayout="row" fxLayoutAlign="end">
+                  <re-captcha [ngClass]="{'display-none': !commentForm.get('comment').valid}"
+                    [formControlName]="'recaptcha'" #recaptchaRef
+                    siteKey="6Lc0uE8UAAAAAKyekxrsdhSdrgV9zhPW-lMY-srm">
+                  </re-captcha> 
                 </div>
               </form>
         </mat-card>
@@ -61,7 +68,7 @@
      *ngFor="let comment of comments" fxLayout="row">
       <div  class="cell" fxFlex="10" fxLayoutAlign="center center">
 
-                  <img *ngIf="comment.user && comment.user.avatar" class="responsive-image"
+                <img *ngIf="comment.user && comment.user.avatar" class="responsive-image"
                   src="{{
                     config.imgPath +
                     config.cloudinary.cloud_name +
@@ -90,6 +97,7 @@
         <p *ngIf="allowTo('manager') && comment.display">
           <button class="mat-icon-button" (click)="displayComment(false, comment._id)"><mat-icon class="mat-18">pause_circle_outline</mat-icon></button>
         </p>
+
       </div>
     </div>
     <div *ngIf="processing" class="row" fxLayout="row" fxLayoutAlign="center center">

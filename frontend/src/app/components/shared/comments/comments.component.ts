@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
-import { IComment } from 'src/app/interfaces/interface';
+import { IComment, IConfirmPopupData } from 'src/app/interfaces/interface';
 import { UserService } from 'src/app/services/user.service';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { config } from '../../../app.config';
@@ -7,6 +7,8 @@ import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular
 import { Observable, of } from 'rxjs';
 import { SocialService } from 'src/app/services/social.service';
 import { mergeMap } from 'rxjs/operators';
+import { MatDialog } from '@angular/material';
+import { ConfirmPopupComponent } from '../confirm-popup/confirm-popup.component';
 
 @Component({
   selector: 'app-comments',
@@ -22,12 +24,14 @@ export class CommentsComponent implements OnInit {
   @Input() parentCategory: string;
   commentForm: FormGroup;
   @ViewChild('f') mcFormDirective: FormGroupDirective;
+  @ViewChild('recaptchaRef') recaptchaRef;
 
   processing = false;
 
   constructor(
     private userService: UserService,
     private socialService: SocialService,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -44,6 +48,9 @@ export class CommentsComponent implements OnInit {
           Validators.minLength(3),
           Validators.maxLength(150),
         ]),
+        recaptcha: new FormControl('', [
+          Validators.required
+        ])
     });
 
     this.userService.getUserLocal()
@@ -83,7 +90,8 @@ export class CommentsComponent implements OnInit {
 
   sendComment() {
     const comment = this.commentForm.get('comment').value;
-    this.socialService.addComment(this.parent_id, this.parentCategory, comment)
+    const recaptcha = this.commentForm.get('recaptcha').value;
+    this.socialService.addComment(this.parent_id, this.parentCategory, comment, recaptcha)
       .pipe(
         mergeMap(result => {
           if (result) {
@@ -107,8 +115,48 @@ export class CommentsComponent implements OnInit {
       );
   }
 
-  deleteComment(comment: IComment) {
+  deleteComment(comment: IComment): void {
 
+    const confirmObject = <IConfirmPopupData>{
+      message: `Дійсно видалити коментар: ${comment.comment} ?`,
+      data: {_id: comment._id}
+    };
+
+    const dialogRef = this.dialog.open(ConfirmPopupComponent, {
+      data: confirmObject,
+      // panelClass: 'custom-dialog-container'
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(res => {
+          if (res.data.choice) {
+            this.socialService.deleteComment(this.parent_id, this.parentCategory, res.data._id)
+              .pipe(
+                mergeMap(result => {
+                  if (result) {
+                    // successfuly delete
+                    return this.socialService.getComments(
+                      this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
+                      );
+                  } else {
+                    // not delete, do nothing
+                    return of({comments: [], commentsTotalLength: 0});
+                  }
+                }
+                )
+              )
+              .subscribe(result => {
+                if (result.comments.length) {
+                  this.comments = result.comments;
+                  this.commentsTotalLength = result.commentsTotalLength;
+                }
+              },
+                err => console.log('add comment err', err)
+              );
+          }
+        },
+        err => console.log('err delete', err)
+      );
   }
 
   displayComment(display: boolean, comment_id: string) {

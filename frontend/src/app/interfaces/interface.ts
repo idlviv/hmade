@@ -78,9 +78,15 @@ export interface IMc {
 }
 
 export interface IComment {
+  _id: string;
   comment: string;
   commentator: string;
   commentedAt?: number;
   display?: boolean;
 }
 
+export interface ILikes {
+  _id: string;
+  likedByLength: number;
+  dislikedByLength: number;
+}

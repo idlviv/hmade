@@ -15,7 +15,15 @@ const authorization = require('../middleware/authorization');
 /**
  * social routes
  */
+
+router.delete('/social/delete-comment',
+    passport.authenticate('jwt', {session: false}),
+    authorization('manager'),
+    socialController.deleteComment
+);
+
 router.post('/social/add-comment',
+    recaptcha,
     passport.authenticate('jwt', {session: false}),
     authorization('user'),
     socialController.addComment
@@ -38,14 +46,19 @@ router.get('/social/get-comments',
 //     mcController.getMcs
 // );
 
-// router.get('/mc/get-mc-by-id/:_id',
-//     mcController.getMcById
-// );
+router.get('/mc/get-mc-by-id/:_id',
+    passport.authenticate('jwt', {session: false}),
+    authorization('manager'),
+    mcController.getMcById
+);
+
 router.get('/mc/get-mc-by-id-and-inc-views/:_id',
+    passport.authenticate('notGuardCheckUser', {session: false}),
     mcController.getMcByIdAndIncViews
 );
 
 router.get('/mc/get-mcs-by-filter',
+    passport.authenticate('notGuardCheckUser', {session: false}),
     mcController.getMcsByFilter
 );
 

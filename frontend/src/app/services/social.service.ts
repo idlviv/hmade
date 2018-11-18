@@ -14,13 +14,34 @@ export class SocialService {
     private http: HttpClient,
   ) { }
 
-  addComment(parent_id: string, parentCategory: string, comment: string): Observable<boolean> {
+  deleteComment(parent_id: string, parentCategory: string, comment_id: string): Observable<boolean> {
     const token = this.userService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
         'Authorization': token
-      })
+      }),
+      params: new HttpParams()
+      .set('parent_id', parent_id)
+      .set('parentCategory', parentCategory)
+      .set('comment_id', comment_id)
+    };
+    return this.http.delete<boolean>(
+      'api/social/delete-comment/',
+      httpOptions
+    );
+  }
+
+  addComment(parent_id: string, parentCategory: string, comment: string, recaptcha): Observable<boolean> {
+    const token = this.userService.userLocalGetToken('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      }),
+      params: new HttpParams({ fromObject: {
+        recaptcha
+      }})
     };
 
     return this.http.post<boolean>(

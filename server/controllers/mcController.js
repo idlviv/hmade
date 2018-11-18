@@ -29,10 +29,10 @@ module.exports.mcUpsert = function(req, res, next) {
         if (result !== null && result._doc) {
           mc.createdAt = result.createdAt || 0;
           mc.updatedAt = Date.now();
-          mc.likes = result.likes || 0;
-          mc.likedBy = result.likedBy || [];
-          mc.dislikes = result.dislikes || 0;
-          mc.dislikedBy = result.dislikedBy || [];
+          mc.likes = {
+            likedBy: result.likes && result.likes.likedBy ? result.likes.likedBy : [],
+            dislikedBy: result.likes && result.likes.dislikedBy ? result.likes.dislikedBy : [],
+          };
           mc.views = result.views || 0;
           // mc.comments = result.comments || [];
         } else {
@@ -137,20 +137,20 @@ module.exports.getSkuList = function(req, res, next) {
       .catch((err) => next(new DbError()));
 };
 
-// module.exports.getMcById = function(req, res, next) {
-//   _id = req.params._id;
-//   McModel.findById({_id})
-//       .then((result) =>
-//         res.status(200).json(result))
-//       .catch((err) => next(new DbError()));
-// };
+module.exports.getMcById = function(req, res, next) {
+  const _id = req.params._id;
+  McModel.findById({_id})
+      .then((result) =>
+        res.status(200).json(result))
+      .catch((err) => next(new DbError()));
+};
 
 module.exports.getMcByIdAndIncViews = function(req, res, next) {
   const _id = req.params._id;
 
   McModel.findOneAndUpdate({_id}, {$inc: {views: 1}})
       .then(() => McModel.aggregate([
-        {$match: {_id},
+        {$match: {parents: parent},
         },
         {$addFields: {
           comments: {
@@ -162,6 +162,15 @@ module.exports.getMcByIdAndIncViews = function(req, res, next) {
           },
         },
         },
+        {$addFields: {
+          'likes.likedByLength': {$size: '$likes.likedBy'},
+          'likes.dislikedByLength': {$size: '$likes.dislikedBy'},
+        },
+        },
+        {$project: {
+          'likes.likedBy': 0,
+          'likes.dislikedBy': 0,
+        }},
       ]))
       .then((result) => res.status(200).json(result[0]))
       .catch((err) => next(new DbError()));
@@ -174,8 +183,8 @@ module.exports.getMcsByFilter = function(req, res, next) {
   const skip = +req.query.skip;
   const limit = +req.query.limit;
   const noMoreChildren = req.query.noMoreChildren === 'true';
-  log.debug('req.query', req.query);
-
+  const user = req.user._doc._id;
+  log.debug('user', user);
   if (noMoreChildren) {
     McModel
         .aggregate([
@@ -191,9 +200,18 @@ module.exports.getMcsByFilter = function(req, res, next) {
             },
           },
           },
+          {$addFields: {
+            'likes.likedByLength': {$size: '$likes.likedBy'},
+            'likes.dislikedByLength': {$size: '$likes.dislikedBy'},
+          },
+          },
+          {$project: {
+            'likes.likedBy': 0,
+            'likes.dislikedBy': 0,
+          }},
           {$sort: {[sort]: sortOrder}},
           {$skip: skip},
-          {$limit: limit}
+          {$limit: limit},
         ])
 
         .then((result) => res.status(200).json(result))
@@ -233,7 +251,7 @@ module.exports.getMcsByFilter = function(req, res, next) {
           },
           // move docs to root
           {
-            $replaceRoot:{newRoot: '$data'},
+            $replaceRoot: {newRoot: '$data'},
           },
           {$addFields: {
             comments: {
@@ -262,7 +280,6 @@ module.exports.getMcsByFilter = function(req, res, next) {
 module.exports.getMcsByParent = function(req, res, next) {
   const parent = req.query.parent;
   const displayFilter = req.query.display;
-  log.debug('req.query.parent', req.query.parent);
   let query;
   displayFilter === 'true' ?
       query = {parents: parent, display: true} : query = {parents: parent};

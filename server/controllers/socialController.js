@@ -1,10 +1,26 @@
 const McModel = require('../models/mcModel');
-const CatalogModel = require('../models/catalogModel');
 const DbError = require('../errors/dbError');
 const ApplicationError = require('../errors/applicationError');
 const ObjectId = require('../config/mongoose').Types.ObjectId;
 const log = require('../config/winston')(module);
-const cloudinary = require('../config/cloudinary');
+
+
+module.exports.deleteComment = function(req, res, next) {
+  const parent_id = req.query.parent_id;
+  const parentCategory = req.query.parentCategory;
+  const comment_id = req.query.comment_id;
+  let model;
+  if (parentCategory === 'mc') {
+    model = McModel;
+  }
+  model.findOneAndUpdate(
+      {_id: parent_id},
+      {$pull: {comments: {_id: comment_id}}}
+  )
+      .then((result) =>res.status(200).json(true))
+      .catch((err) => next(new DbError(err.message)));
+
+};
 
 module.exports.addComment = function(req, res, next) {
   const parent_id = req.body.parent_id;

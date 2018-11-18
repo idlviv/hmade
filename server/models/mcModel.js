@@ -2,6 +2,7 @@ const mongoose = require('../config/mongoose');
 const Schema = mongoose.Schema;
 
 const CommentSchema = require('./commentModel').CommentSchema;
+const LikesSchema = require('./likesModel').LikesSchema;
 
 const McSchema = new Schema({
   _id: {
@@ -71,20 +72,7 @@ const McSchema = new Schema({
     type: Number,
     default: 0,
   },
-  likes: {
-    type: Number,
-    default: 0,
-  },
-  likedBy: {
-    type: [String],
-  },
-  dislikes: {
-    type: Number,
-    default: 0,
-  },
-  dislikedBy: {
-    type: [String],
-  },
+  likes: LikesSchema,
   views: {
     type: Number,
     default: 0,

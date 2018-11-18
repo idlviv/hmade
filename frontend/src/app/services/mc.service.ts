@@ -17,24 +17,24 @@ export class McService {
 
 
 
-  /**
-   *
-   *
-   * @returns {Observable<IResponse>}
-   * @memberof McService
-   */
-  getMcs(): Observable<IResponse> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-      // params: new HttpParams().set('category', category)
-    };
-    return this.http.get<IResponse>(
-      'api/mc/get-mcs',
-      httpOptions
-    );
-  }
+  // /**
+  //  *
+  //  *
+  //  * @returns {Observable<IResponse>}
+  //  * @memberof McService
+  //  */
+  // getMcs(): Observable<IResponse> {
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //     }),
+  //     // params: new HttpParams().set('category', category)
+  //   };
+  //   return this.http.get<IResponse>(
+  //     'api/mc/get-mcs',
+  //     httpOptions
+  //   );
+  // }
 
   mcUpsert(mc: IMc): Observable<IResponse> {
     const token = this.userService.userLocalGetToken('token');
@@ -59,9 +59,11 @@ export class McService {
    * @memberof McService
    */
   getMcById(_id: string): Observable<IMc>  {
+    const token = this.userService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Authorization': token
       }),
     };
     return this.http.get<IMc>(
@@ -78,11 +80,11 @@ export class McService {
    * @memberof McService
    */
   getMcByIdAndIncViews(_id: string): Observable<IMc>  {
-    // const token = this.userService.userLocalGetToken('token');
+    const token = this.userService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        // 'Authorization': token
+        'Authorization': token
       }),
     };
     return this.http.get<IMc>(
@@ -133,9 +135,11 @@ export class McService {
   getMcsByFilter(
     parent: string = 'products', sort: string, sortOrder: number = 1, skip: number = 0, limit: number = 10, noMoreChildren: string
     ): Observable<IMc[]> {
+    const token = this.userService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
+        'Authorization': token
       }),
       params: new HttpParams({ fromObject: {
         parent, sort, sortOrder: sortOrder + '', skip: skip + '', limit: limit + '', noMoreChildren
