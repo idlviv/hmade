@@ -10,7 +10,8 @@ const uploadController = require('../controllers/uploadController');
 const productController = require('../controllers/productController');
 const sharedController = require('../controllers/sharedController');
 const recaptcha = require('../middleware/recaptcha');
-const authorization = require('../middleware/authorization');
+const authorization = require('../middleware/authorization').authorization;
+const notGuardExtarctUser = require('../middleware/authorization').notGuardExtarctUser;
 
 /**
  * social routes
@@ -53,12 +54,13 @@ router.get('/mc/get-mc-by-id/:_id',
 );
 
 router.get('/mc/get-mc-by-id-and-inc-views/:_id',
-    passport.authenticate('notGuardCheckUser', {session: false}),
+    // passport.authenticate('notGuardCheckUser', {session: false}),
     mcController.getMcByIdAndIncViews
 );
 
 router.get('/mc/get-mcs-by-filter',
-    passport.authenticate('notGuardCheckUser', {session: false}),
+    // passport.authenticate('notGuardCheckUser', {session: false},
+    notGuardExtarctUser(),
     mcController.getMcsByFilter
 );
 

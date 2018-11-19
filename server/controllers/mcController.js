@@ -183,7 +183,7 @@ module.exports.getMcsByFilter = function(req, res, next) {
   const skip = +req.query.skip;
   const limit = +req.query.limit;
   const noMoreChildren = req.query.noMoreChildren === 'true';
-  const user = req.user._doc._id;
+  const user = req.userRole;
   log.debug('user', user);
   if (noMoreChildren) {
     McModel
