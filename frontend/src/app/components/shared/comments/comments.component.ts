@@ -55,7 +55,6 @@ export class CommentsComponent implements OnInit {
 
     this.userService.getUserLocal()
     .subscribe(user => {
-      console.log('user', user);
       this.user = user;
     });
 

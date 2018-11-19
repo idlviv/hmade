@@ -151,7 +151,7 @@ module.exports.getMcByIdAndIncViews = function(req, res, next) {
 
   McModel.findOneAndUpdate({_id}, {$inc: {views: 1}})
       .then(() => McModel.aggregate([
-        {$match: {parents: parent},
+        {$match: {_id},
         },
         {$addFields: {
           comments: {

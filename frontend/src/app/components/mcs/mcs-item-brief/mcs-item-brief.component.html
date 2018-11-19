@@ -5,11 +5,11 @@
         <div class="row" fxLayout="row">
           <section class="cell-px0 social-feed-section mc-social" fxFlex="100" fxLayout="row">
               <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
-                <mat-icon [ngClass]="{'muted-strong': !mc.likes.canLike}">thumb_up_alt</mat-icon>
+                <mat-icon>thumb_up_alt</mat-icon>
                 <span>{{mc.likes.likedByLength || 0}}</span>
               </div>
               <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
-                  <mat-icon [ngClass]="{'muted-strong': !mc.likes.canDislike}">thumb_down_alt</mat-icon>
+                  <mat-icon>thumb_down_alt</mat-icon>
                   <span>{{mc.likes.dislikedByLength || 0}}</span>
               </div>
               <div *ngIf="config.social.showViews" class="item text-align-center muted" fxFlex>

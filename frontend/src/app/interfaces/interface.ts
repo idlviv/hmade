@@ -89,4 +89,6 @@ export interface ILikes {
   _id: string;
   likedByLength: number;
   dislikedByLength: number;
+  canLike: boolean;
+  canDislike: boolean;
 }
