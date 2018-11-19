@@ -22,11 +22,26 @@ module.exports.authorization = function(restrictedRole) {
   };
 };
 
+function headersExtractor (req) {
+  let token = null;
+  if (req && req.headers && req.headers.authorization) {
+    token = req.headers.authorization;
+  }
+  return token;
+};
+
 module.exports.notGuardExtarctUser = function() {
   return function(req, res, next) {
 
+    const jwtFromRequest = headersExtractor(req);
+    log.debug('jwtFromRequest', jwtFromRequest);
+    //  ExtractJwt.fromAuthHeaderWithScheme('jwt');
     
-    req.userRole = 'role';
+    if (jwtFromRequest) {
+      
+    } else {
+      req.userRole = 'role';
+    }
 
     next();
     // const usersRole = req.user._doc.role;
