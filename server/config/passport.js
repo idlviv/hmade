@@ -35,28 +35,6 @@ module.exports = function(passport) {
       }
       ));
 
-  passport.use('notGuardCheckUser',
-      new JwtStrategy(jwtOptions, (jwtPayload, done) => {
-        log.debug('jwtOptions', jwtOptions)
-        // на основі _id (витягнутого з токена) робить пошук
-        // в базі, чи є такий юзер, і ф-я done повертає відповідь
-        UserModel.findOne({_id: jwtPayload.sub._id})
-            .then((user) => {
-              if (user) {
-                console.log('true');
-                done(null, user);
-              } else {
-                console.log('false');
-                done(null, 'user');
-              }
-            })
-            .catch((err) => {
-              console.log('err');
-              done(null, 'user');
-            });
-      }
-      ));
-
   passport.use('jwt.email.verification',
       new JwtStrategy(emailVerificationOptions, (jwtPayload, done) => {
         UserModel.findOne({_id: jwtPayload.sub._id})

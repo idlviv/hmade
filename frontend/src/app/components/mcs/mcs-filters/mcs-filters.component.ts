@@ -77,7 +77,6 @@ export class McsFiltersComponent implements OnInit {
           result.hierarchy.map(
             (value, index) => {
               if (index !== 0) {
-                console.log('value._id', value._id);
                 this.onSelectMcFilter(value._id, index - 1, false, true);
               }
             }
@@ -100,7 +99,6 @@ export class McsFiltersComponent implements OnInit {
     }
 
     onSelectMcFilter(eventValue, level, navigate, programmatic) {
-      console.log('level', level);
       while (level + 1 < this.filterForm.get('parents')['controls'].length) {
         this.removeParents(this.filterForm.get('parents')['controls'].length - 1);
       }

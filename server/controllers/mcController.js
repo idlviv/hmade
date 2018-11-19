@@ -147,6 +147,7 @@ module.exports.getMcById = function(req, res, next) {
 
 module.exports.getMcByIdAndIncViews = function(req, res, next) {
   const _id = req.params._id;
+  const user_id = req.user_id;
 
   McModel.findOneAndUpdate({_id}, {$inc: {views: 1}})
       .then(() => McModel.aggregate([
@@ -167,6 +168,18 @@ module.exports.getMcByIdAndIncViews = function(req, res, next) {
           'likes.dislikedByLength': {$size: '$likes.dislikedBy'},
         },
         },
+        {$addFields:
+          {'likes.canLike': {$cond: [
+            {$setIsSubset: [[user_id], '$likes.likedBy']},
+            false,
+            true,
+          ]},
+          'likes.canDislike': {$cond: [
+            {$setIsSubset: [[user_id], '$likes.dislikedBy']},
+            false,
+            true,
+          ]}},
+        },
         {$project: {
           'likes.likedBy': 0,
           'likes.dislikedBy': 0,
@@ -183,8 +196,8 @@ module.exports.getMcsByFilter = function(req, res, next) {
   const skip = +req.query.skip;
   const limit = +req.query.limit;
   const noMoreChildren = req.query.noMoreChildren === 'true';
-  const user = req.userRole;
-  log.debug('user', user);
+  const user_id = req.user_id;
+  log.debug('user', user_id);
   if (noMoreChildren) {
     McModel
         .aggregate([
@@ -205,6 +218,18 @@ module.exports.getMcsByFilter = function(req, res, next) {
             'likes.dislikedByLength': {$size: '$likes.dislikedBy'},
           },
           },
+          {$addFields:
+            {'likes.canLike': {$cond: [
+              {$setIsSubset: [[user_id], '$likes.likedBy']},
+              false,
+              true,
+            ]},
+            'likes.canDislike': {$cond: [
+              {$setIsSubset: [[user_id], '$likes.dislikedBy']},
+              false,
+              true,
+            ]}},
+          },
           {$project: {
             'likes.likedBy': 0,
             'likes.dislikedBy': 0,
@@ -213,7 +238,6 @@ module.exports.getMcsByFilter = function(req, res, next) {
           {$skip: skip},
           {$limit: limit},
         ])
-
         .then((result) => res.status(200).json(result))
         .catch((err) => next(new DbError()));
   } else {
@@ -261,6 +285,27 @@ module.exports.getMcsByFilter = function(req, res, next) {
                 cond: {$eq: ['$$comment.display', true]},
               },
             },
+          }},
+          {$addFields: {
+            'likes.likedByLength': {$size: '$likes.likedBy'},
+            'likes.dislikedByLength': {$size: '$likes.dislikedBy'},
+          },
+          },
+          {$addFields:
+            {'likes.canLike': {$cond: [
+              {$setIsSubset: [[user_id], '$likes.likedBy']},
+              false,
+              true,
+            ]},
+            'likes.canDislike': {$cond: [
+              {$setIsSubset: [[user_id], '$likes.dislikedBy']},
+              false,
+              true,
+            ]}},
+          },
+          {$project: {
+            'likes.likedBy': 0,
+            'likes.dislikedBy': 0,
           }},
           {
             $sort: {[sort]: sortOrder},
