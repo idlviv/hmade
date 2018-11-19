@@ -122,7 +122,6 @@ var McsFiltersComponent = /** @class */ (function () {
     };
     McsFiltersComponent.prototype.onSelectMcFilter = function (eventValue, level, navigate, programmatic) {
         var _this = this;
-        console.log('level', level);
         while (level + 1 < this.filterForm.get('parents')['controls'].length) {
             this.removeParents(this.filterForm.get('parents')['controls'].length - 1);
         }
