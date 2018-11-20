@@ -36,6 +36,12 @@ router.put('/social/display-comment',
     socialController.displayComment
 );
 
+router.put('/social/likes-set',
+    passport.authenticate('jwt', {session: false}),
+    authorization('user'),
+    socialController.likesSet
+);
+
 router.get('/social/get-comments',
     socialController.getComments
 );

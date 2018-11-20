@@ -170,12 +170,12 @@ module.exports.getMcByIdAndIncViews = function(req, res, next) {
         },
         {$addFields:
           {'likes.canLike': {$cond: [
-            {$setIsSubset: [[user_id], '$likes.likedBy']},
+            {$setIsSubset: [[new ObjectId(user_id)], '$likes.likedBy']},
             false,
             true,
           ]},
           'likes.canDislike': {$cond: [
-            {$setIsSubset: [[user_id], '$likes.dislikedBy']},
+            {$setIsSubset: [[new ObjectId(user_id)], '$likes.dislikedBy']},
             false,
             true,
           ]}},

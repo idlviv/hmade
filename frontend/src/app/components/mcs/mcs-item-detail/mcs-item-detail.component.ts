@@ -6,6 +6,7 @@ import { IMc } from 'src/app/interfaces/interface';
 import { config } from 'src/app/app.config';
 import { UserService } from 'src/app/services/user.service';
 import { IUser } from 'src/app/interfaces/user-interface';
+import { SocialService } from 'src/app/services/social.service';
 
 @Component({
   selector: 'app-mcs-item-detail',
@@ -22,6 +23,7 @@ export class McsItemDetailComponent implements OnInit {
     private router: Router,
     private mcService: McService,
     private userService: UserService,
+    private socialService: SocialService,
   ) { }
 
   ngOnInit() {
@@ -43,12 +45,31 @@ export class McsItemDetailComponent implements OnInit {
       });
   }
 
+  allowTo(permitedRole): boolean {
+    return this.userService.allowTo(permitedRole);
+  }
+
   goToMcs() {
     this.router.navigate(['/mcs', 'ch']);
   }
 
-  onLike(choise) {
-    console.log('like choise', choise);
+  onLike(action: boolean, permission: boolean): void {
+    if (!permission) {
+      return;
+    } else {
+      // action is true for like, is false for dislike
+    console.log('like action', action);
+    const parent_id = this.mc._id;
+    const parentCategory = 'mc';
+    this.socialService.likesSet(parent_id, parentCategory, action)
+      .subscribe(
+        (result) => {
+        console.log('result', result);
+        },
+        (err) => console.log('err', err)
+      );
+
+    }
   }
 
 }

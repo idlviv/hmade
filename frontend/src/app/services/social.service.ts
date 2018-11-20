@@ -87,4 +87,22 @@ export class SocialService {
       httpOptions
     );
   }
+
+  likesSet(parent_id: string, parentCategory: string, action: boolean) {
+
+    // action is true for like, is false for dislike
+    const token = this.userService.userLocalGetToken('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+        'Authorization': token
+      })
+    };
+
+    return this.http.put<boolean>(
+      'api/social/likes-set',
+      {parent_id, parentCategory, action},
+      httpOptions
+    );
+  }
 }

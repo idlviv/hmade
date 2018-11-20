@@ -2941,6 +2941,17 @@ var SocialService = /** @class */ (function () {
         };
         return this.http.put('api/social/display-comment', { parent_id: parent_id, parentCategory: parentCategory, display: display, comment_id: comment_id }, httpOptions);
     };
+    SocialService.prototype.likesSet = function (parent_id, parentCategory, action) {
+        // action is true for like, is false for dislike
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+                'Authorization': token
+            })
+        };
+        return this.http.put('api/social/likes-set', { parent_id: parent_id, parentCategory: parentCategory, action: action }, httpOptions);
+    };
     SocialService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
             providedIn: 'root'

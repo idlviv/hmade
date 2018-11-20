@@ -72,6 +72,32 @@ module.exports.displayComment = function(req, res, next) {
       .catch((err) => next(new DbError(err.message)));
 };
 
+module.exports.likesSet = function(req, res, next) {
+  const parent_id = req.body.parent_id;
+  const parentCategory = req.body.parentCategory;
+  // action is true for like, is false for dislike
+  const actionAdd = req.body.action ? 'likes.likedBy' : 'likes.dislikedBy';
+  const actionRemove = !req.body.action ? 'likes.likedBy' : 'likes.dislikedBy';
+  const user_id = req.user._doc._id;
+
+  let model;
+  if (parentCategory === 'mc') {
+    model = McModel;
+  }
+  model.findOneAndUpdate(
+      {'_id': parent_id},
+      {
+        $addToSet: {[actionAdd]: user_id},
+        $pull: {[actionRemove]: user_id},
+      }
+  )
+      .then((result) => {
+        res.status(200).json(true);
+      })
+      .catch((err) => next(new DbError(err.message)));
+};
+
+
 module.exports.getComments = function(req, res, next) {
   const parent_id = req.query.parent_id;
   const parentCategory = req.query.parentCategory;

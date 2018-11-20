@@ -12,14 +12,14 @@
                               <mat-icon class="warn hover-cursor" (click)="goToMcs()">reply_all</mat-icon>
                           </div>
                           <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
-                            <mat-icon [ngClass]="{'muted-strong': !mc.likes.canLike, 'hover-cursor': mc.likes.canLike}"
-                            (click)="onLike('like', mc.likes.canDislike)">thumb_up_alt</mat-icon>
-                            <span>{{mc.likes.likesLength || 0}}</span>
+                            <mat-icon [ngClass]="{'muted-strong': !mc.likes.canLike && allowTo('user'), 'hover-cursor': mc.likes.canLike && allowTo('user')}"
+                            (click)="onLike(true, mc.likes.canLike && allowTo('user'))">thumb_up_alt</mat-icon>
+                            <span>{{mc.likes.likedByLength || 0}}</span>
                           </div>
                           <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
-                            <mat-icon [ngClass]="{'muted-strong': !mc.likes.canDislike, 'hover-cursor': mc.likes.canDislike}" 
-                            (click)="onLike('dislike', mc.likes.canDislike)">thumb_down_alt</mat-icon>
-                            <span>{{mc.likes.dislikesLength || 0}}</span>
+                            <mat-icon [ngClass]="{'muted-strong': !mc.likes.canDislike && allowTo('user'), 'hover-cursor': mc.likes.canDislike && allowTo('user')}" 
+                            (click)="onLike(false, mc.likes.canDislike && allowTo('user'))">thumb_down_alt</mat-icon>
+                            <span>{{mc.likes.dislikedByLength || 0}}</span>
                           </div>
                           <div *ngIf="config.social.showViews" class="item text-align-center muted" fxFlex>
                               <mat-icon>remove_red_eye</mat-icon>
