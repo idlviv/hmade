@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { mergeMap } from 'rxjs/operators';
+import { of } from 'rxjs';
 import { McService } from 'src/app/services/mc.service';
 import { IMc } from 'src/app/interfaces/interface';
 import { config } from 'src/app/app.config';
@@ -41,8 +42,9 @@ export class McsItemDetailComponent implements OnInit {
       )
       .subscribe((result) => {
         this.mc = result;
-        console.log('result', result);
-      });
+      },
+      (err) => console.log('err', err)
+      );
   }
 
   allowTo(permitedRole): boolean {
@@ -58,13 +60,27 @@ export class McsItemDetailComponent implements OnInit {
       return;
     } else {
       // action is true for like, is false for dislike
-    console.log('like action', action);
     const parent_id = this.mc._id;
     const parentCategory = 'mc';
     this.socialService.likesSet(parent_id, parentCategory, action)
+      .pipe(
+        mergeMap(
+          (result) => {
+            console.log('result', result);
+              if (result) {
+                return this.mcService.getMcById(parent_id);
+              } else {
+                return of(null);
+              }
+            }
+        )
+        )
       .subscribe(
         (result) => {
-        console.log('result', result);
+          if (result) {
+            console.log('result2', result);
+            this.mc = result;
+          }
         },
         (err) => console.log('err', err)
       );

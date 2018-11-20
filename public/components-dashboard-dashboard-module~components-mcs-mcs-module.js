@@ -350,10 +350,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
-/* harmony import */ var src_app_app_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/app.config */ "./src/app/app.config.ts");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
-/* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
+/* harmony import */ var src_app_app_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/app.config */ "./src/app/app.config.ts");
+/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -370,6 +371,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var McsItemDetailComponent = /** @class */ (function () {
     function McsItemDetailComponent(route, router, mcService, userService, socialService) {
         this.route = route;
@@ -377,7 +379,7 @@ var McsItemDetailComponent = /** @class */ (function () {
         this.mcService = mcService;
         this.userService = userService;
         this.socialService = socialService;
-        this.config = src_app_app_config__WEBPACK_IMPORTED_MODULE_4__["config"];
+        this.config = src_app_app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
     }
     McsItemDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -390,8 +392,7 @@ var McsItemDetailComponent = /** @class */ (function () {
         }))
             .subscribe(function (result) {
             _this.mc = result;
-            console.log('result', result);
-        });
+        }, function (err) { return console.log('err', err); });
     };
     McsItemDetailComponent.prototype.allowTo = function (permitedRole) {
         return this.userService.allowTo(permitedRole);
@@ -400,17 +401,29 @@ var McsItemDetailComponent = /** @class */ (function () {
         this.router.navigate(['/mcs', 'ch']);
     };
     McsItemDetailComponent.prototype.onLike = function (action, permission) {
+        var _this = this;
         if (!permission) {
             return;
         }
         else {
             // action is true for like, is false for dislike
-            console.log('like action', action);
-            var parent_id = this.mc._id;
+            var parent_id_1 = this.mc._id;
             var parentCategory = 'mc';
-            this.socialService.likesSet(parent_id, parentCategory, action)
-                .subscribe(function (result) {
+            this.socialService.likesSet(parent_id_1, parentCategory, action)
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])(function (result) {
                 console.log('result', result);
+                if (result) {
+                    return _this.mcService.getMcById(parent_id_1);
+                }
+                else {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(null);
+                }
+            }))
+                .subscribe(function (result) {
+                if (result) {
+                    console.log('result2', result);
+                    _this.mc = result;
+                }
             }, function (err) { return console.log('err', err); });
         }
     };
@@ -422,9 +435,9 @@ var McsItemDetailComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
             _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
-            src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_3__["McService"],
-            src_app_services_user_service__WEBPACK_IMPORTED_MODULE_5__["UserService"],
-            src_app_services_social_service__WEBPACK_IMPORTED_MODULE_6__["SocialService"]])
+            src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_4__["McService"],
+            src_app_services_user_service__WEBPACK_IMPORTED_MODULE_6__["UserService"],
+            src_app_services_social_service__WEBPACK_IMPORTED_MODULE_7__["SocialService"]])
     ], McsItemDetailComponent);
     return McsItemDetailComponent;
 }());

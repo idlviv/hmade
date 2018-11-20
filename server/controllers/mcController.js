@@ -139,9 +139,45 @@ module.exports.getSkuList = function(req, res, next) {
 
 module.exports.getMcById = function(req, res, next) {
   const _id = req.params._id;
-  McModel.findById({_id})
+  const user_id = req.user_id;
+
+  McModel.aggregate([
+    {$match: {_id},
+    },
+    {$addFields: {
+      comments: {
+        $filter: {
+          input: '$comments',
+          as: 'comment',
+          cond: {$eq: ['$$comment.display', true]},
+        },
+      },
+    },
+    },
+    {$addFields: {
+      'likes.likedByLength': {$size: '$likes.likedBy'},
+      'likes.dislikedByLength': {$size: '$likes.dislikedBy'},
+    },
+    },
+    {$addFields:
+      {'likes.canLike': {$cond: [
+        {$setIsSubset: [[user_id], '$likes.likedBy']},
+        false,
+        true,
+      ]},
+      'likes.canDislike': {$cond: [
+        {$setIsSubset: [[user_id], '$likes.dislikedBy']},
+        false,
+        true,
+      ]}},
+    },
+    {$project: {
+      'likes.likedBy': 0,
+      'likes.dislikedBy': 0,
+    }},
+  ])
       .then((result) =>
-        res.status(200).json(result))
+        res.status(200).json(result[0]))
       .catch((err) => next(new DbError()));
 };
 
@@ -170,12 +206,12 @@ module.exports.getMcByIdAndIncViews = function(req, res, next) {
         },
         {$addFields:
           {'likes.canLike': {$cond: [
-            {$setIsSubset: [[new ObjectId(user_id)], '$likes.likedBy']},
+            {$setIsSubset: [[user_id], '$likes.likedBy']},
             false,
             true,
           ]},
           'likes.canDislike': {$cond: [
-            {$setIsSubset: [[new ObjectId(user_id)], '$likes.dislikedBy']},
+            {$setIsSubset: [[user_id], '$likes.dislikedBy']},
             false,
             true,
           ]}},

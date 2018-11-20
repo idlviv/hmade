@@ -54,8 +54,7 @@ router.get('/social/get-comments',
 // );
 
 router.get('/mc/get-mc-by-id/:_id',
-    passport.authenticate('jwt', {session: false}),
-    authorization('manager'),
+    notGuardExtarctUser_id(),
     mcController.getMcById
 );
 
