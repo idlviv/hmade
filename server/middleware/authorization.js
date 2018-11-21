@@ -4,6 +4,7 @@ const log = require('../config/winston')(module);
 const ApplicationError = require('../errors/applicationError');
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken');
+const ObjectId = require('../config/mongoose').Types.ObjectId;
 
 module.exports.authorization = function(restrictedRole) {
   return function(req, res, next) {
@@ -45,14 +46,14 @@ module.exports.notGuardExtarctUser_id = function() {
       jwt.verify(jwtFromRequest.substr(4), config.get('JWT_SECRET'),
           (err, payload) => {
             if (err) {
-              req.user_id = 'null';
+              req.user_id = '';
               next();
             }
-            req.user_id = payload.sub._id;
+            req.user_id = new ObjectId(payload.sub._id);
             next();
           });
     } else {
-      req.user_id = 'null';
+      req.user_id = '';
       next();
     }
   };

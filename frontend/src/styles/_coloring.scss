@@ -64,12 +64,19 @@ $warn-dark: mat-color($warn, 900);
   background-color: $_warn;
 }
 
-// old
 $muted-light: rgba(0, 0, 0, 0.4);
 $muted: rgba(0, 0, 0, 0.5);
 $muted-strong: rgba(0, 0, 0, 0.3);
-$border: rgba(0, 0, 0, 0.12);
-$light-gray: #D6E7F7;
+$red: #cc0000;
+$green: #009900;
+
+.red {
+  color: $red;
+}
+
+.green {
+  color: $green;
+}
 
 .muted-light {
   color: $muted-light;
@@ -82,6 +89,10 @@ $light-gray: #D6E7F7;
 .muted-strong {
   color: $muted-strong;
 }
+
+//old
+$border: rgba(0, 0, 0, 0.12);
+$light-gray: #D6E7F7;
 
 .light-gray-background {
   background-color: $light-gray;

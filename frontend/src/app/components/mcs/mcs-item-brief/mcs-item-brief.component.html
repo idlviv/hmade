@@ -4,23 +4,23 @@
       <div class="container-px0" fxFlex="100">
         <div class="row" fxLayout="row">
           <section class="cell-px0 social-feed-section mc-social" fxFlex="100" fxLayout="row">
-              <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
+              <div *ngIf="config.social.showLikes" class="item text-align-center primary" fxFlex>
                 <mat-icon>thumb_up_alt</mat-icon>
                 <span>{{mc.likes.likedByLength || 0}}</span>
               </div>
-              <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
+              <div *ngIf="config.social.showLikes" class="item text-align-center primary" fxFlex>
                   <mat-icon>thumb_down_alt</mat-icon>
                   <span>{{mc.likes.dislikedByLength || 0}}</span>
               </div>
-              <div *ngIf="config.social.showViews" class="item text-align-center muted" fxFlex>
+              <div *ngIf="config.social.showViews" class="item text-align-center primary" fxFlex>
                   <mat-icon>remove_red_eye</mat-icon>
                   <span>{{mc.views || 0}}</span>
               </div>
-              <div *ngIf="config.social.showComments" class="item text-align-center muted" fxFlex>
+              <div *ngIf="config.social.showComments" class="item text-align-center primary" fxFlex>
                   <mat-icon>comment</mat-icon>
                   <span>{{mc.comments?.length || 0}}</span>
               </div>
-               <div class="item text-align-center muted" fxFlex>
+               <div class="item text-align-center primary" fxFlex>
                   <mat-icon>calendar_today</mat-icon>
                   <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>
               </div>

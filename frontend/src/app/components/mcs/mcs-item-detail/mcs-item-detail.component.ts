@@ -41,6 +41,7 @@ export class McsItemDetailComponent implements OnInit {
         })
       )
       .subscribe((result) => {
+        console.log('result', result);
         this.mc = result;
       },
       (err) => console.log('err', err)

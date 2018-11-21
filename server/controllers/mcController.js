@@ -137,13 +137,39 @@ module.exports.getSkuList = function(req, res, next) {
       .catch((err) => next(new DbError()));
 };
 
-module.exports.getMcById = function(req, res, next) {
-  const _id = req.params._id;
-  const user_id = req.user_id;
+/**
+ *
+ *
+ * @param {*} matchKey
+ * @param {*} matchValue
+ * @param {*} user_id
+ * @returns
+ */
+function _getMcs(match, user_id) {
+  let addFields;
+  if (user_id) {
+    addFields =
+    {'likes.canLike': {$cond: [
+      {$setIsSubset: [[user_id], '$likes.likedBy']},
+      false,
+      true,
+    ]},
+    'likes.canDislike': {$cond: [
+      {$setIsSubset: [[user_id], '$likes.dislikedBy']},
+      false,
+      true,
+    ]},
+    };
+  } else {
+    addFields =
+    {
+      'likes.canLike': false,
+      'likes.canDislike': false,
+    };
+  };
 
-  McModel.aggregate([
-    {$match: {_id},
-    },
+  return McModel.aggregate([
+    {$match: match},
     {$addFields: {
       comments: {
         $filter: {
@@ -159,23 +185,31 @@ module.exports.getMcById = function(req, res, next) {
       'likes.dislikedByLength': {$size: '$likes.dislikedBy'},
     },
     },
-    {$addFields:
-      {'likes.canLike': {$cond: [
-        {$setIsSubset: [[user_id], '$likes.likedBy']},
-        false,
-        true,
-      ]},
-      'likes.canDislike': {$cond: [
-        {$setIsSubset: [[user_id], '$likes.dislikedBy']},
-        false,
-        true,
-      ]}},
-    },
+    {$addFields: addFields},
+    // {$addFields:
+    //   {'likes.canLike': {$cond: [
+    //     {$setIsSubset: [[user_id], '$likes.likedBy']},
+    //     false,
+    //     true,
+    //   ]},
+    //   'likes.canDislike': {$cond: [
+    //     {$setIsSubset: [[user_id], '$likes.dislikedBy']},
+    //     false,
+    //     true,
+    //   ]}},
+    // },
     {$project: {
       'likes.likedBy': 0,
       'likes.dislikedBy': 0,
     }},
-  ])
+  ]);
+}
+
+
+module.exports.getMcById = function(req, res, next) {
+  const _id = req.params._id;
+  const user_id = req.user_id;
+  _getMcs({_id}, user_id)
       .then((result) =>
         res.status(200).json(result[0]))
       .catch((err) => next(new DbError()));
@@ -186,41 +220,7 @@ module.exports.getMcByIdAndIncViews = function(req, res, next) {
   const user_id = req.user_id;
 
   McModel.findOneAndUpdate({_id}, {$inc: {views: 1}})
-      .then(() => McModel.aggregate([
-        {$match: {_id},
-        },
-        {$addFields: {
-          comments: {
-            $filter: {
-              input: '$comments',
-              as: 'comment',
-              cond: {$eq: ['$$comment.display', true]},
-            },
-          },
-        },
-        },
-        {$addFields: {
-          'likes.likedByLength': {$size: '$likes.likedBy'},
-          'likes.dislikedByLength': {$size: '$likes.dislikedBy'},
-        },
-        },
-        {$addFields:
-          {'likes.canLike': {$cond: [
-            {$setIsSubset: [[user_id], '$likes.likedBy']},
-            false,
-            true,
-          ]},
-          'likes.canDislike': {$cond: [
-            {$setIsSubset: [[user_id], '$likes.dislikedBy']},
-            false,
-            true,
-          ]}},
-        },
-        {$project: {
-          'likes.likedBy': 0,
-          'likes.dislikedBy': 0,
-        }},
-      ]))
+      .then(() => _getMcs({_id}, user_id))
       .then((result) => res.status(200).json(result[0]))
       .catch((err) => next(new DbError()));
 };
@@ -233,7 +233,29 @@ module.exports.getMcsByFilter = function(req, res, next) {
   const limit = +req.query.limit;
   const noMoreChildren = req.query.noMoreChildren === 'true';
   const user_id = req.user_id;
-  log.debug('user', user_id);
+
+  let addFields;
+  if (user_id) {
+    addFields =
+    {'likes.canLike': {$cond: [
+      {$setIsSubset: [[user_id], '$likes.likedBy']},
+      false,
+      true,
+    ]},
+    'likes.canDislike': {$cond: [
+      {$setIsSubset: [[user_id], '$likes.dislikedBy']},
+      false,
+      true,
+    ]},
+    };
+  } else {
+    addFields =
+    {
+      'likes.canLike': false,
+      'likes.canDislike': false,
+    };
+  };
+
   if (noMoreChildren) {
     McModel
         .aggregate([
@@ -254,18 +276,7 @@ module.exports.getMcsByFilter = function(req, res, next) {
             'likes.dislikedByLength': {$size: '$likes.dislikedBy'},
           },
           },
-          {$addFields:
-            {'likes.canLike': {$cond: [
-              {$setIsSubset: [[user_id], '$likes.likedBy']},
-              false,
-              true,
-            ]},
-            'likes.canDislike': {$cond: [
-              {$setIsSubset: [[user_id], '$likes.dislikedBy']},
-              false,
-              true,
-            ]}},
-          },
+          {$addFields: addFields},
           {$project: {
             'likes.likedBy': 0,
             'likes.dislikedBy': 0,
@@ -327,18 +338,7 @@ module.exports.getMcsByFilter = function(req, res, next) {
             'likes.dislikedByLength': {$size: '$likes.dislikedBy'},
           },
           },
-          {$addFields:
-            {'likes.canLike': {$cond: [
-              {$setIsSubset: [[user_id], '$likes.likedBy']},
-              false,
-              true,
-            ]},
-            'likes.canDislike': {$cond: [
-              {$setIsSubset: [[user_id], '$likes.dislikedBy']},
-              false,
-              true,
-            ]}},
-          },
+          {$addFields: addFields},
           {$project: {
             'likes.likedBy': 0,
             'likes.dislikedBy': 0,

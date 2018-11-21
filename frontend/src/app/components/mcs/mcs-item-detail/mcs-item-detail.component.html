@@ -9,27 +9,33 @@
                     <div class="row" fxLayout="row">
                       <section class="cell-px0 social-feed-section mc-social" fxFlex="100" fxLayout="row">
                           <div class="item text-align-center" fxFlex>
-                              <mat-icon class="warn hover-cursor" (click)="goToMcs()">reply_all</mat-icon>
+                              <mat-icon class="primary hover-cursor" (click)="goToMcs()">reply_all</mat-icon>
                           </div>
                           <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
-                            <mat-icon [ngClass]="{'muted-strong': !mc.likes.canLike && allowTo('user'), 'hover-cursor': mc.likes.canLike && allowTo('user')}"
+                            <mat-icon [ngClass]="{
+                              'muted-strong': !(mc.likes.canLike && allowTo('user')), 
+                              'primary': mc.likes.canLike && allowTo('user'), 
+                              'hover-cursor': mc.likes.canLike && allowTo('user')}"
                             (click)="onLike(true, mc.likes.canLike && allowTo('user'))">thumb_up_alt</mat-icon>
                             <span>{{mc.likes.likedByLength || 0}}</span>
                           </div>
                           <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
-                            <mat-icon [ngClass]="{'muted-strong': !mc.likes.canDislike && allowTo('user'), 'hover-cursor': mc.likes.canDislike && allowTo('user')}" 
+                            <mat-icon [ngClass]="{
+                              'muted-strong': !(mc.likes.canDislike && allowTo('user')), 
+                              'primary': mc.likes.canDislike && allowTo('user'), 
+                              'hover-cursor': mc.likes.canDislike && allowTo('user')}" 
                             (click)="onLike(false, mc.likes.canDislike && allowTo('user'))">thumb_down_alt</mat-icon>
                             <span>{{mc.likes.dislikedByLength || 0}}</span>
                           </div>
-                          <div *ngIf="config.social.showViews" class="item text-align-center muted" fxFlex>
+                          <div *ngIf="config.social.showViews" class="item text-align-center primary" fxFlex>
                               <mat-icon>remove_red_eye</mat-icon>
                               <span>{{mc.views || 0}}</span>
                           </div>
-                          <div *ngIf="config.social.showComments" class="item text-align-center muted" fxFlex>
+                          <div *ngIf="config.social.showComments" class="item text-align-center primary" fxFlex>
                               <mat-icon>comment</mat-icon>
                               <span>{{mc.comments?.length || 0}}</span>
                           </div>
-                          <div class="item text-align-center muted" fxFlex>
+                          <div class="item text-align-center primary" fxFlex>
                               <mat-icon>calendar_today</mat-icon>
                               <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>
                           </div>
