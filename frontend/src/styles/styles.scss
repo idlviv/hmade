@@ -1094,6 +1094,23 @@ td.mat-cell {
   }
 }
 
+.toolbar {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0 16px;  
+  background-color: $_accent;
+  color: $white;
 
-
-
+  @include gt-md {
+    height: 64px;
+  }
+  @include md {
+    height: 64px;
+  }
+  @include sm {
+    height: 64px;
+  }
+  @include xs {
+    height: 56px;
+  }
+}

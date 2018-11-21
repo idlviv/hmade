@@ -386,12 +386,11 @@ var McsItemDetailComponent = /** @class */ (function () {
         this.userService.getUserLocal()
             .subscribe(function (user) {
             _this.user = user;
-        });
+        }, function (err) { return console.log('err', err); });
         this.route.params.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])(function (params) {
             return _this.mcService.getMcByIdAndIncViews(params._id);
         }))
             .subscribe(function (result) {
-            console.log('result', result);
             _this.mc = result;
         }, function (err) { return console.log('err', err); });
     };
