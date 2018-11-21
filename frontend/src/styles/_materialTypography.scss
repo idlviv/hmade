@@ -1,8 +1,14 @@
+@import url('https://fonts.googleapis.com/css?family=Poppins|Roboto|Montserrat');
+
 @import '~@angular/material/theming';
 
+$custom-typography: mat-typography-config(
+        $font-family: 'Montserrat, sans-serif'
+        );
+@include mat-core($custom-typography);
+
 $custom-mat-list-typography: mat-typography-config(
-        $font-family: 'Roboto, monospace',
+        $font-family: 'Montserrat, monospace',
         $subheading-2: mat-typography-level(14px, 20px, 400)  //use mat-body-1 style for mat-list items (instead subheading-2)
 );
-
 @include mat-list-typography($custom-mat-list-typography);
