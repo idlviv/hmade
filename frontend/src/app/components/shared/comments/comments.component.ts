@@ -65,7 +65,11 @@ export class CommentsComponent implements OnInit {
   @HostListener('window:scroll', ['$event'])
   onScroll(event): void {
     if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 2) {
-      if (!this.processing && this.commentsTotalLength !== this.comments.length) {
+      if (
+        !this.processing &&
+        this.commentsTotalLength !== this.comments.length &&
+        this.commentsTotalLength
+        ) {
         this.loadComments(-1, this.comments.length, 5, !this.allowTo('manager'));
       }
     }
@@ -159,6 +163,9 @@ export class CommentsComponent implements OnInit {
   }
 
   displayComment(display: boolean, comment_id: string) {
+    console.log('display', display);
+    console.log('comment_id', comment_id);
+
     this.socialService.displayComment(this.parent_id, this.parentCategory, display, comment_id)
       .pipe(
         mergeMap(result => {
