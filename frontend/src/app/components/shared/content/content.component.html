@@ -53,7 +53,8 @@
     </div>
   </mat-toolbar-row>
 </mat-toolbar>
-<div class="toolbar" fxLayoutAlign="center end">
+
+<!-- <div class="toolbar" fxLayoutAlign="center end">
     <div fxShow="true" fxHide.lt-md="true" fxLayout="row" fxLayoutAlign="center">
       <a *ngFor="let mainMenuCommonItem of mainMenuCommonItems" mat-button
           [routerLink]="['/', mainMenuCommonItem._id, 'ch']"
@@ -61,7 +62,7 @@
         {{mainMenuCommonItem.name}}
       </a>
     </div>
-</div>
+</div> -->
 
 <mat-sidenav-container fxFlexFill>
   <mat-sidenav #sidenav fxLayout="column" class="theme-dark"
