@@ -19,6 +19,7 @@ import { FooterComponent } from './footer/footer.component';
 import { ContentComponent } from './content/content.component';
 import { AboutComponent } from './about/about.component';
 import { CommentsComponent } from './comments/comments.component';
+import { ScreenTestComponent } from './screen-test/screen-test.component';
 
 @NgModule({
   imports: [
@@ -56,6 +57,7 @@ import { CommentsComponent } from './comments/comments.component';
     ContentComponent,
     AboutComponent,
     CommentsComponent,
+    ScreenTestComponent,
   ],
 })
 export class SharedModule { }

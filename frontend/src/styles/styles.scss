@@ -1,12 +1,9 @@
-//@import './variables';
 @import './mixins';
-//@import './custom-bootstrap';
-//@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
-@import './materialTypography';
-@import './coloring';
+// @import './materialTypography';
+@import './materialTypography';  // ~@angular/material/theming -> ./material -> ./materialTypography
 
 html {
-  font-size: 14px;
+  font-size: 16px;
   box-sizing: border-box;
 }
 
@@ -54,12 +51,12 @@ body {
 
 .app-container {
   @include gt-md {
-    padding-left: 4rem;
-    padding-right: 4rem;
+    padding-left: 64px;
+    padding-right: 64px;
   }
   @include md {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 32px;
+    padding-right: 32px;
   }
 }
 
@@ -1091,17 +1088,35 @@ td.mat-cell {
 }
 
 .toolbar {
+  display: flex;
   box-sizing: border-box;
   width: 100%;
-  padding: 0 16px;  
-  background-color: $_accent;
-  color: $white;
+  background-color: $primary-light50;
+  padding: 32px 16px 16px 16px;
+
+  .logo {
+    align-self: flex-end;
+    padding: 0 16px;
+  }
+
+  a.link {
+    padding: 0 16px;
+    span{
+      padding-bottom: 5px;
+      border-bottom: 3px solid $_primary;
+      text-transform: uppercase;
+      &:hover {
+        border-bottom: 3px solid $primary-light;
+      }
+    }
+
+  }
 
   @include gt-md {
-    height: 64px;
+    height: 150px;
   }
   @include md {
-    height: 64px;
+    height: 150px;
   }
   @include sm {
     height: 64px;
@@ -1111,23 +1126,3 @@ td.mat-cell {
   }
 }
 
-// tmp
-.w393 {
-  width: 393px;
-  background-color: beige
-}
-
-.w100 {
-  width: 100px;
-  background-color: rgb(66, 66, 19)
-}
-
-.w360 {
-  width: 360px;
-  background-color: burlywood
-}
-
-.w350 {
-  width: 350px;
-  background-color: cadetblue
-}

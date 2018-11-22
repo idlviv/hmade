@@ -12,8 +12,7 @@ export class LandingComponent implements OnInit {
   @ViewChild('scrollPoint') scrollPoint: ElementRef;
   config = config;
   descendants: any;
-  height: any;
-  width: any;
+
 
   constructor(
     private catalogService: CatalogService,
@@ -21,8 +20,7 @@ export class LandingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.height = window.innerHeight;
-    this.width = window.innerWidth;
+
     this.catalogService.getChildren('products')
       .subscribe(
         result => this.descendants = result.data,

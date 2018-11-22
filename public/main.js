@@ -918,7 +918,7 @@ var ConfirmPopupComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar class=\"mat-elevation-z4\" color=\"primary\">\r\n  <mat-toolbar-row>\r\n    <a mat-button href=\"\">\r\n      <img src=\"./assets/images/hmade_logo_light.svg\" height=\"40px\">\r\n    </a>\r\n\r\n    <div fxShow=\"true\" fxHide.lt-md=\"true\">\r\n      <a *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\" mat-button\r\n         [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\"\r\n         [routerLinkActive]=\"['primary-light']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{mainMenuCommonItem.name}}\r\n      </a>\r\n    </div>\r\n    <div fxFlex></div>\r\n\r\n    <div fxShow=\"true\" fxHide.lt-md=\"true\">\r\n      <button *ngIf=\"user\"\r\n              mat-button [matMenuTriggerFor]=\"settingsMenu\" #settingsMenuTrigger=\"matMenuTrigger\"\r\n              (mouseover)=\"onSettingsMenuMouseover()\">\r\n        <mat-icon>settings</mat-icon><span> {{user.login}}</span>\r\n      </button>\r\n\r\n      <mat-menu #settingsMenu=\"matMenu\" xPosition=\"after\" yPosition=\"above\" [overlapTrigger]=\"false\">\r\n      <span (mouseleave)=\"onSettingsMenuMouseleave()\">\r\n      <a *ngIf=\"user\"\r\n         mat-menu-item [routerLink]=\"['/user/profile']\"\r\n         [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        <mat-icon>account_circle</mat-icon><span>Профіль</span></a>\r\n      <a *ngIf=\"user && (user?.role === 'manager' || user?.role === 'admin')\"\r\n         mat-menu-item [routerLink]=\"['/dashboard']\"\r\n         [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        <mat-icon>settings</mat-icon><span>Dashboard</span></a>\r\n      </span>\r\n      </mat-menu>\r\n      <a *ngIf='!user'\r\n      [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n      mat-button [routerLink]=\"['/user/login']\">Вхід</a>\r\n      <a *ngIf='user' mat-button (click)=\"userLocalLogout()\"><mat-icon>exit_to_app</mat-icon> Вихід</a>\r\n    </div>\r\n\r\n    <div class=\"cell\" fxShow=\"hide\" fxHide.lt-md=\"true\">\r\n      <a mat-button class=\"primary-light\"\r\n         href=\"tel:+380985443968\">\r\n        <mat-icon>phone</mat-icon> 098 544 39 68\r\n      </a>\r\n    </div>\r\n\r\n    <div class=\"menu-button\" fxShow=\"true\" fxHide.gt-sm=\"true\">\r\n      <button mat-button (click)=\"sidenav.toggle()\">\r\n        <mat-icon *ngIf=\"sidenav.opened\">format_indent_increase</mat-icon>\r\n        <mat-icon *ngIf=\"!sidenav.opened\">menu</mat-icon>\r\n      </button>\r\n    </div>\r\n  </mat-toolbar-row>\r\n</mat-toolbar>\r\n\r\n<!-- <div class=\"toolbar\" fxLayoutAlign=\"center end\">\r\n    <div fxShow=\"true\" fxHide.lt-md=\"true\" fxLayout=\"row\" fxLayoutAlign=\"center\">\r\n      <a *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\" mat-button\r\n          [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\"\r\n          [routerLinkActive]=\"['primary-light']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{mainMenuCommonItem.name}}\r\n      </a>\r\n    </div>\r\n</div> -->\r\n\r\n<mat-sidenav-container fxFlexFill>\r\n  <mat-sidenav #sidenav fxLayout=\"column\" class=\"theme-dark\"\r\n               position=\"end\" class=\"sidenav\" role=\"navigation\" mode=\"side\">\r\n    <div fxLayout=\"column\">\r\n      <mat-nav-list>\r\n        <mat-list-item *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\">\r\n          <a matLine\r\n             [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n             [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\" (click)=\"sidenav.toggle()\">\r\n            {{mainMenuCommonItem.name}}\r\n          </a>\r\n        </mat-list-item>\r\n\r\n        <mat-expansion-panel *ngIf=\"user\" class=\"mat-elevation-z0\">\r\n          <mat-expansion-panel-header class=\"sidenav-expansion-panel\">\r\n            <mat-panel-title>\r\n              <mat-list-item>\r\n                <mat-icon matListIcon>settings</mat-icon>\r\n                <span matLine>{{user.login}}</span>\r\n              </mat-list-item>\r\n            </mat-panel-title>\r\n\r\n          </mat-expansion-panel-header>\r\n          <mat-list-item *ngIf=\"user\">\r\n            <mat-icon matListIcon>account_circle</mat-icon>\r\n            <a matLine [routerLink]=\"['/user/profile']\"\r\n               [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\" (click)=\"sidenav.toggle()\">\r\n              Профіль</a>\r\n          </mat-list-item>\r\n          <mat-list-item *ngIf=\"user && user?.role === 'manager' || user?.role === 'admin'\">\r\n            <mat-icon matListIcon>settings</mat-icon>\r\n            <a matLine [routerLink]=\"['/dashboard']\"\r\n               [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\" (click)=\"sidenav.toggle()\">\r\n              Dashboard</a>\r\n          </mat-list-item>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-list-item *ngIf='!user'>\r\n          <a matLine\r\n             [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n             [routerLink]=\"['/user/login']\" (click)=\"sidenav.toggle()\">Вхід</a>\r\n        </mat-list-item>\r\n        <mat-list-item *ngIf='user'>\r\n          <a matLine\r\n             (click)=\"userLocalLogout()\" (click)=\"sidenav.toggle()\">\r\n            Вихід\r\n          </a>\r\n          <mat-icon matListIcon>exit_to_app</mat-icon>\r\n        </mat-list-item>\r\n      </mat-nav-list>\r\n    </div>\r\n  </mat-sidenav>\r\n  <mat-sidenav-content>\r\n    <router-outlet></router-outlet>\r\n  </mat-sidenav-content>\r\n</mat-sidenav-container>\r\n"
+module.exports = "<div class=\"toolbar\">\r\n<!-- <mat-ttolbar class=\"mat-elevation-z4 toolbar\"> -->\r\n <!-- color=\"primary\"> -->\r\n  <!-- <mat-toolbar-row> -->\r\n    <div class=\"logo\">\r\n      <a href=\"\">\r\n        <img src=\"./assets/images/hmade_logo_dark.svg\" height=\"40px\" alt=\"HandMADE logo\">\r\n      </a>\r\n    </div>\r\n    <div fxFlex></div>\r\n\r\n    <div fxShow=\"true\" fxHide.lt-md=\"true\">\r\n      <a *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\" class=\"link\"\r\n         [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\"\r\n         [routerLinkActive]=\"['primary-light']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        <span>{{mainMenuCommonItem.name}}</span>\r\n      </a>\r\n    </div>\r\n    <div fxFlex></div>\r\n\r\n    <div fxShow=\"true\" fxHide.lt-md=\"true\">\r\n      <a *ngIf=\"user\"  class=\"link\"\r\n              [matMenuTriggerFor]=\"settingsMenu\" #settingsMenuTrigger=\"matMenuTrigger\"\r\n              (mouseover)=\"onSettingsMenuMouseover()\">\r\n        <!-- <mat-icon>settings</mat-icon> -->\r\n        {{user.login}}\r\n      </a>\r\n\r\n      <mat-menu #settingsMenu=\"matMenu\" xPosition=\"after\" yPosition=\"above\" [overlapTrigger]=\"false\">\r\n        <span (mouseleave)=\"onSettingsMenuMouseleave()\">\r\n          <a *ngIf=\"user\"\r\n            mat-menu-item [routerLink]=\"['/user/profile']\"\r\n            [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n            <mat-icon>account_circle</mat-icon><span>Профіль</span></a>\r\n          <a *ngIf=\"user && (user?.role === 'manager' || user?.role === 'admin')\"\r\n            mat-menu-item [routerLink]=\"['/dashboard']\"\r\n            [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n            <mat-icon>settings</mat-icon><span>Dashboard</span></a>\r\n        </span>\r\n      </mat-menu>\r\n      <a *ngIf='!user'  class=\"link\"\r\n      [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n      [routerLink]=\"['/user/login']\">Вхід</a>\r\n      <a *ngIf='user' class=\"link\" (click)=\"userLocalLogout()\">\r\n        <!-- <mat-icon>exit_to_app</mat-icon> -->\r\n         Вихід</a>\r\n    </div>\r\n    \r\n\r\n   <div class=\"menu-button\" fxShow=\"true\" fxHide.gt-sm=\"true\">\r\n      <button mat-button (click)=\"sidenav.toggle()\">\r\n        <mat-icon *ngIf=\"sidenav.opened\">format_indent_increase</mat-icon>\r\n        <mat-icon *ngIf=\"!sidenav.opened\">menu</mat-icon>\r\n      </button>\r\n    </div>\r\n  <!-- </mat-toolbar-row> -->\r\n<!-- </mat-toolbar> -->\r\n  </div>\r\n<!-- <div class=\"toolbar\" fxLayoutAlign=\"center end\">\r\n    <div fxShow=\"true\" fxHide.lt-md=\"true\" fxLayout=\"row\" fxLayoutAlign=\"center\">\r\n      <a *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\" mat-button\r\n          [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\"\r\n          [routerLinkActive]=\"['primary-light']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{mainMenuCommonItem.name}}\r\n      </a>\r\n    </div>\r\n</div> -->\r\n\r\n<mat-sidenav-container fxFlexFill>\r\n  <mat-sidenav #sidenav fxLayout=\"column\" class=\"theme-dark\"\r\n               position=\"end\" class=\"sidenav\" role=\"navigation\" mode=\"side\">\r\n    <div fxLayout=\"column\">\r\n      <mat-nav-list>\r\n        <mat-list-item *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\">\r\n          <a matLine\r\n             [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n             [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\" (click)=\"sidenav.toggle()\">\r\n            {{mainMenuCommonItem.name}}\r\n          </a>\r\n        </mat-list-item>\r\n\r\n        <mat-expansion-panel *ngIf=\"user\" class=\"mat-elevation-z0\">\r\n          <mat-expansion-panel-header class=\"sidenav-expansion-panel\">\r\n            <mat-panel-title>\r\n              <mat-list-item>\r\n                <mat-icon matListIcon>settings</mat-icon>\r\n                <span matLine>{{user.login}}</span>\r\n              </mat-list-item>\r\n            </mat-panel-title>\r\n\r\n          </mat-expansion-panel-header>\r\n          <mat-list-item *ngIf=\"user\">\r\n            <mat-icon matListIcon>account_circle</mat-icon>\r\n            <a matLine [routerLink]=\"['/user/profile']\"\r\n               [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\" (click)=\"sidenav.toggle()\">\r\n              Профіль</a>\r\n          </mat-list-item>\r\n          <mat-list-item *ngIf=\"user && user?.role === 'manager' || user?.role === 'admin'\">\r\n            <mat-icon matListIcon>settings</mat-icon>\r\n            <a matLine [routerLink]=\"['/dashboard']\"\r\n               [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\" (click)=\"sidenav.toggle()\">\r\n              Dashboard</a>\r\n          </mat-list-item>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-list-item *ngIf='!user'>\r\n          <a matLine\r\n             [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n             [routerLink]=\"['/user/login']\" (click)=\"sidenav.toggle()\">Вхід</a>\r\n        </mat-list-item>\r\n        <mat-list-item *ngIf='user'>\r\n          <a matLine\r\n             (click)=\"userLocalLogout()\" (click)=\"sidenav.toggle()\">\r\n            Вихід\r\n          </a>\r\n          <mat-icon matListIcon>exit_to_app</mat-icon>\r\n        </mat-list-item>\r\n      </mat-nav-list>\r\n    </div>\r\n  </mat-sidenav>\r\n  <mat-sidenav-content>\r\n    <router-outlet></router-outlet>\r\n  </mat-sidenav-content>\r\n</mat-sidenav-container>\r\n"
 
 /***/ }),
 
@@ -1596,7 +1596,7 @@ var HeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n  <div class=\"cell\">\r\n    <p class=\"muted\">height {{height}}</p>\r\n    <p class=\"muted\"> width {{width}}</p>\r\n\r\n  </div>\r\n<div class=\"w393\">393</div>\r\n<div class=\"w360\">360</div>\r\n<div class=\"w350\">350</div>\r\n<div class=\"w100\">100</div>\r\n<div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\r\n<div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\r\n\r\n\r\n  \r\n \r\n  <!-- <div id=\"home-left\">\r\n    <img src=\"./assets/images/hmade_logo_dark.svg\" id=\"home-logo\" alt=\"logo\">\r\n    <div>\r\n      <a mat-flat-button class=\"radius-5\" href=\"/products/ch\" id=\"home-action\">Перейти</a>\r\n      <button mat-fab-button class=\"radius-5\" (click)=\"onScroll()\">Down</button>\r\n      <button color=\"primary\" mat-mini-fab (click)=\"onScroll()\" id=\"scroll-down-btn\">\r\n        <mat-icon>keyboard_arrow_down</mat-icon></button>\r\n    </div>\r\n  </div>\r\n  <div id=\"home-right\" #scrollPoint>\r\n    <p>right</p>\r\n  </div>\r\n  <div id=\"home-bottom\">\r\n    <div fxLayout=\"row full-width\">\r\n      <div fxFlex=\"10\"></div>\r\n      <div class=\"row wrap full-width\" fxFlex=\"80\" fxLayout=\"row\" fxLayoutAlign=\"space-between\">\r\n        <div class=\"cell-padding\" fxFlex=\"1 1 auto\" *ngFor=\"let descendant of descendants\" fxLayout=\"row\">\r\n          <a fxFlex=\"1 1 auto\" mat-stroked-button class=\"radius-5 text-center\" color=\"accent\"\r\n             [routerLink]=\"['/products', 'ch', {outlets: {primary: [descendant._id], breadcrumb: [descendant._id]}}]\"\r\n             [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n             {{descendant.name}}\r\n          </a>\r\n\r\n        </div>\r\n\r\n      </div>\r\n\r\n    </div>\r\n  </div> -->\r\n\r\n</div>\r\n"
+module.exports = "<div>\r\n\r\n    <app-screen-test></app-screen-test> \r\n  \r\n \r\n  <!-- <div id=\"home-left\">\r\n    <img src=\"./assets/images/hmade_logo_dark.svg\" id=\"home-logo\" alt=\"logo\">\r\n    <div>\r\n      <a mat-flat-button class=\"radius-5\" href=\"/products/ch\" id=\"home-action\">Перейти</a>\r\n      <button mat-fab-button class=\"radius-5\" (click)=\"onScroll()\">Down</button>\r\n      <button color=\"primary\" mat-mini-fab (click)=\"onScroll()\" id=\"scroll-down-btn\">\r\n        <mat-icon>keyboard_arrow_down</mat-icon></button>\r\n    </div>\r\n  </div>\r\n  <div id=\"home-right\" #scrollPoint>\r\n    <p>right</p>\r\n  </div>\r\n  <div id=\"home-bottom\">\r\n    <div fxLayout=\"row full-width\">\r\n      <div fxFlex=\"10\"></div>\r\n      <div class=\"row wrap full-width\" fxFlex=\"80\" fxLayout=\"row\" fxLayoutAlign=\"space-between\">\r\n        <div class=\"cell-padding\" fxFlex=\"1 1 auto\" *ngFor=\"let descendant of descendants\" fxLayout=\"row\">\r\n          <a fxFlex=\"1 1 auto\" mat-stroked-button class=\"radius-5 text-center\" color=\"accent\"\r\n             [routerLink]=\"['/products', 'ch', {outlets: {primary: [descendant._id], breadcrumb: [descendant._id]}}]\"\r\n             [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n             {{descendant.name}}\r\n          </a>\r\n\r\n        </div>\r\n\r\n      </div>\r\n\r\n    </div>\r\n  </div> -->\r\n\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1646,8 +1646,6 @@ var LandingComponent = /** @class */ (function () {
     }
     LandingComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.height = window.innerHeight;
-        this.width = window.innerWidth;
         this.catalogService.getChildren('products')
             .subscribe(function (result) { return _this.descendants = result.data; }, function (err) { return console.log('mainPageProducts load error', err); });
     };
@@ -1948,6 +1946,73 @@ var ProductItemDetailComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/components/shared/screen-test/screen-test.component.html":
+/*!**************************************************************************!*\
+  !*** ./src/app/components/shared/screen-test/screen-test.component.html ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div>\n    <div class=\"cell\">\n      <p class=\"muted\">height {{height}}</p>\n      <p class=\"muted\"> width {{width}}</p>\n  \n    </div>\n  <div class=\"w393\">393</div>\n  <div class=\"w360\">360</div>\n  <div class=\"w350\">350</div>\n  <div class=\"w100\">100</div>\n  <div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\n  <div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/shared/screen-test/screen-test.component.scss":
+/*!**************************************************************************!*\
+  !*** ./src/app/components/shared/screen-test/screen-test.component.scss ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ".w393 {\n  width: 393px;\n  background-color: beige; }\n\n.w100 {\n  width: 100px;\n  background-color: #424213; }\n\n.w360 {\n  width: 360px;\n  background-color: burlywood; }\n\n.w350 {\n  width: 350px;\n  background-color: cadetblue; }\n"
+
+/***/ }),
+
+/***/ "./src/app/components/shared/screen-test/screen-test.component.ts":
+/*!************************************************************************!*\
+  !*** ./src/app/components/shared/screen-test/screen-test.component.ts ***!
+  \************************************************************************/
+/*! exports provided: ScreenTestComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ScreenTestComponent", function() { return ScreenTestComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+var ScreenTestComponent = /** @class */ (function () {
+    function ScreenTestComponent() {
+    }
+    ScreenTestComponent.prototype.ngOnInit = function () {
+        this.height = window.innerHeight;
+        this.width = window.innerWidth;
+    };
+    ScreenTestComponent.prototype.ngOnChanges = function (changes) {
+    };
+    ScreenTestComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-screen-test',
+            template: __webpack_require__(/*! ./screen-test.component.html */ "./src/app/components/shared/screen-test/screen-test.component.html"),
+            styles: [__webpack_require__(/*! ./screen-test.component.scss */ "./src/app/components/shared/screen-test/screen-test.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], ScreenTestComponent);
+    return ScreenTestComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/shared/shared.module.ts":
 /*!****************************************************!*\
   !*** ./src/app/components/shared/shared.module.ts ***!
@@ -1981,12 +2046,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _content_content_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./content/content.component */ "./src/app/components/shared/content/content.component.ts");
 /* harmony import */ var _about_about_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./about/about.component */ "./src/app/components/shared/about/about.component.ts");
 /* harmony import */ var _comments_comments_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./comments/comments.component */ "./src/app/components/shared/comments/comments.component.ts");
+/* harmony import */ var _screen_test_screen_test_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./screen-test/screen-test.component */ "./src/app/components/shared/screen-test/screen-test.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -2048,6 +2115,7 @@ var SharedModule = /** @class */ (function () {
                 _content_content_component__WEBPACK_IMPORTED_MODULE_18__["ContentComponent"],
                 _about_about_component__WEBPACK_IMPORTED_MODULE_19__["AboutComponent"],
                 _comments_comments_component__WEBPACK_IMPORTED_MODULE_20__["CommentsComponent"],
+                _screen_test_screen_test_component__WEBPACK_IMPORTED_MODULE_21__["ScreenTestComponent"],
             ],
         })
     ], SharedModule);
