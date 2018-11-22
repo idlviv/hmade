@@ -107,6 +107,6 @@ $warn: mat-palette($mat-custom-warn);
 $theme-light: mat-light-theme($primary, $accent, $warn);
 $theme-dark: mat-dark-theme($primary, $accent, $warn);
 
-@include angular-material-theme($theme-dark);
+@include angular-material-theme($theme-light);
 
 

@@ -917,139 +917,139 @@ td.mat-cell {
   margin-bottom: 2rem;
 }
 
-#home-container {
-  background: $primary-light50 url('../assets/images/bg3.svg');
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-  display: grid;
-  grid-template-columns: 1fr 6fr 6fr 1fr;
-  grid-template-rows: calc(100vh - 144px) calc(100vh - 144px);
-  grid-gap: 12px;
-  grid-template-areas:
-    ". left right ."
-    ". bottom bottom .";
-  //height: calc(100vh - 144px); // header and footer
-  @include md {
-    grid-template-columns: 1fr 10fr 10fr 1fr;
-    grid-template-rows: calc(100vh - 144px) calc(100vh - 144px);
-    grid-template-areas:
-            ". left right ."
-            ". bottom bottom .";
-  }
-  @include sm {
-    grid-template-columns: 1fr 10fr 1fr;
-    grid-template-rows: calc(100vh - 128px) calc(100vh - 128px) calc(100vh - 128px);
-    grid-template-areas:
-            ". left ."
-            ". right ."
-            ". bottom .";
-  }
-  @include lt-sm {
-    grid-template-columns: 1fr;
-    grid-template-rows: calc(100vh - 128px) calc(100vh - 128px) calc(100vh - 128px);
-    grid-template-areas:
-            "left"
-            "right"
-            "bottom";
-    //height: calc((100vh - 128px) * 3); // header and footer
-  }
-  h1 {
-    color: $muted;
-    margin-bottom: 1rem;
-    text-transform: uppercase;
-  }
-}
+// #home-container {
+//   background: $primary-light50 url('../assets/images/bg3.svg');
+//   -webkit-background-size: cover;
+//   -moz-background-size: cover;
+//   -o-background-size: cover;
+//   background-size: cover;
+//   display: grid;
+//   grid-template-columns: 1fr 6fr 6fr 1fr;
+//   grid-template-rows: calc(100vh - 144px) calc(100vh - 144px);
+//   grid-gap: 12px;
+//   grid-template-areas:
+//     ". left right ."
+//     ". bottom bottom .";
+//   //height: calc(100vh - 144px); // header and footer
+//   @include md {
+//     grid-template-columns: 1fr 10fr 10fr 1fr;
+//     grid-template-rows: calc(100vh - 144px) calc(100vh - 144px);
+//     grid-template-areas:
+//             ". left right ."
+//             ". bottom bottom .";
+//   }
+//   @include sm {
+//     grid-template-columns: 1fr 10fr 1fr;
+//     grid-template-rows: calc(100vh - 128px) calc(100vh - 128px) calc(100vh - 128px);
+//     grid-template-areas:
+//             ". left ."
+//             ". right ."
+//             ". bottom .";
+//   }
+//   @include lt-sm {
+//     grid-template-columns: 1fr;
+//     grid-template-rows: calc(100vh - 128px) calc(100vh - 128px) calc(100vh - 128px);
+//     grid-template-areas:
+//             "left"
+//             "right"
+//             "bottom";
+//     //height: calc((100vh - 128px) * 3); // header and footer
+//   }
+//   h1 {
+//     color: $muted;
+//     margin-bottom: 1rem;
+//     text-transform: uppercase;
+//   }
+// }
 
-#home-left {
-  grid-area: left;
-  align-self: center;
-  justify-self: center;
-}
+// #home-left {
+//   grid-area: left;
+//   align-self: center;
+//   justify-self: center;
+// }
 
-#home-right {
-  grid-area: right;
-  align-self: center;
-  justify-self: center;
-}
+// #home-right {
+//   grid-area: right;
+//   align-self: center;
+//   justify-self: center;
+// }
 
-#home-bottom {
-  grid-area: bottom;
-  align-self: center;
-  justify-self: center;
-}
+// #home-bottom {
+//   grid-area: bottom;
+//   align-self: center;
+//   justify-self: center;
+// }
 
-#home-logo {
-  width: 250px;
-  padding-bottom: 1rem;
-  animation: logoAppear 2s forwards;
-  -webkit-animation: logoAppear 2s forwards;
-}
+// #home-logo {
+//   width: 250px;
+//   padding-bottom: 1rem;
+//   animation: logoAppear 2s forwards;
+//   -webkit-animation: logoAppear 2s forwards;
+// }
 
-#home-action {
-  width: 50%;
-  animation: buttonAppear2 2s forwards;
-  -webkit-animation: buttonAppear2 2s forwards;
-}
+// #home-action {
+//   width: 50%;
+//   animation: buttonAppear2 2s forwards;
+//   -webkit-animation: buttonAppear2 2s forwards;
+// }
 
-.info-logo-trice {
-  width: 250px;
-  padding-bottom: 3rem;
-  padding-top: 3rem;
-}
+// .info-logo-trice {
+//   width: 250px;
+//   padding-bottom: 3rem;
+//   padding-top: 3rem;
+// }
 
-#scroll-down-btn {
-  position: absolute;
-  top: 80vh;
-  left: 80vw;
-  animation: buttonAppear 5s forwards;
-  -webkit-animation: buttonAppear 5s forwards;
-  opacity: 0;
-}
+// #scroll-down-btn {
+//   position: absolute;
+//   top: 80vh;
+//   left: 80vw;
+//   animation: buttonAppear 5s forwards;
+//   -webkit-animation: buttonAppear 5s forwards;
+//   opacity: 0;
+// }
 
-@include keyframes(buttonAppear) {
-    0% {
-      transform: translateY(0px);
-      opacity: 0;
-    }
-    40% {
-      transform: translateY(8px);
-      opacity: 0;
-    }
-    100% {
-      transform: translateY(20px);
-      opacity: 1;
-    }
-}
+// @include keyframes(buttonAppear) {
+//     0% {
+//       transform: translateY(0px);
+//       opacity: 0;
+//     }
+//     40% {
+//       transform: translateY(8px);
+//       opacity: 0;
+//     }
+//     100% {
+//       transform: translateY(20px);
+//       opacity: 1;
+//     }
+// }
 
-@include keyframes(buttonAppear2) {
-  0% {
-    transform: translateX(20px);
-    opacity: 0;
-  }
-  100% {
-    transform: translateX(0px);
-    opacity: 1;
-  }
-}
+// @include keyframes(buttonAppear2) {
+//   0% {
+//     transform: translateX(20px);
+//     opacity: 0;
+//   }
+//   100% {
+//     transform: translateX(0px);
+//     opacity: 1;
+//   }
+// }
 
-@include keyframes(logoAppear) {
-  0% {
-    //position: absolute;
-    //top: 0;
-    //left: 0;
-    transform: translateX(20px);
-    opacity: 0;
-  }
-  100% {
-    //position: absolute;
-    //top: calc(100vh / 4);
-    //left: calc(100vw / 4);
-    transform: translateX(0px);
-    opacity: 1;
-  }
-}
+// @include keyframes(logoAppear) {
+//   0% {
+//     //position: absolute;
+//     //top: 0;
+//     //left: 0;
+//     transform: translateX(20px);
+//     opacity: 0;
+//   }
+//   100% {
+//     //position: absolute;
+//     //top: calc(100vh / 4);
+//     //left: calc(100vw / 4);
+//     transform: translateX(0px);
+//     opacity: 1;
+//   }
+// }
 
 #header {
   height: 150px;
@@ -1109,4 +1109,20 @@ td.mat-cell {
   @include xs {
     height: 56px;
   }
+}
+
+// tmp
+.w393 {
+  width: 393px;
+  background-color: beige
+}
+
+.w360 {
+  width: 360px;
+  background-color: burlywood
+}
+
+.w350 {
+  width: 350px;
+  background-color: cadetblue
 }
