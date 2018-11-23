@@ -1087,6 +1087,7 @@ td.mat-cell {
   }
 }
 
+
 .toolbar {
   display: flex;
   box-sizing: border-box;
@@ -1099,14 +1100,21 @@ td.mat-cell {
     padding: 0 16px;
   }
 
+
+
   a.link {
     padding: 0 16px;
+    &.active {
+      span {
+        border-bottom: 3px solid $_primary;
+      }
+    }
     span{
       padding-bottom: 5px;
-      border-bottom: 3px solid $_primary;
+      border-bottom: 3px solid $primary-light;
       text-transform: uppercase;
       &:hover {
-        border-bottom: 3px solid $primary-light;
+        border-bottom: 3px solid $primary-dark;
       }
     }
 

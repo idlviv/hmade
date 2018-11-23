@@ -12,7 +12,7 @@
     <div fxShow="true" fxHide.lt-md="true">
       <a *ngFor="let mainMenuCommonItem of mainMenuCommonItems" class="link"
          [routerLink]="['/', mainMenuCommonItem._id, 'ch']"
-         [routerLinkActive]="['primary-light']" [routerLinkActiveOptions]="{exact: true}">
+         [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: false}">
         <span>{{mainMenuCommonItem.name}}</span>
       </a>
     </div>
@@ -38,12 +38,11 @@
             <mat-icon>settings</mat-icon><span>Dashboard</span></a>
         </span>
       </mat-menu>
-      <a *ngIf='!user'  class="link"
-      [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}"
-      [routerLink]="['/user/login']">Вхід</a>
-      <a *ngIf='user' class="link" (click)="userLocalLogout()">
-        <!-- <mat-icon>exit_to_app</mat-icon> -->
-         Вихід</a>
+
+    <a *ngIf='!user' class="link"
+      [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
+      [routerLink]="['/user/login']"><span>Вхід</span></a>
+    <a *ngIf='user' class="link" (click)="userLocalLogout()">Вихід</a>
     </div>
     
 
