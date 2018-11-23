@@ -13,7 +13,7 @@
       <a *ngFor="let mainMenuCommonItem of mainMenuCommonItems" class="link"
          [routerLink]="['/', mainMenuCommonItem._id, 'ch']"
          [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: false}">
-        <span>{{mainMenuCommonItem.name}}</span>
+        <span class="type1">{{mainMenuCommonItem.name}}</span>
       </a>
     </div>
     <div fxFlex></div>
@@ -22,8 +22,10 @@
       <a *ngIf="user"  class="link"
               [matMenuTriggerFor]="settingsMenu" #settingsMenuTrigger="matMenuTrigger"
               (mouseover)="onSettingsMenuMouseover()">
-        <!-- <mat-icon>settings</mat-icon> -->
-        {{user.login}}
+        <span class="type2">
+          <mat-icon>settings</mat-icon>{{user.login}}
+        </span>
+             
       </a>
 
       <mat-menu #settingsMenu="matMenu" xPosition="after" yPosition="above" [overlapTrigger]="false">
@@ -41,8 +43,8 @@
 
     <a *ngIf='!user' class="link"
       [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
-      [routerLink]="['/user/login']"><span>Вхід</span></a>
-    <a *ngIf='user' class="link" (click)="userLocalLogout()">Вихід</a>
+      [routerLink]="['/user/login']"><span class="type1">Вхід</span></a>
+    <a *ngIf='user' class="link" (click)="userLocalLogout()"><span class="type2">Вихід</span></a>
     </div>
     
 

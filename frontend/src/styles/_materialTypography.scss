@@ -16,7 +16,7 @@ $custom-typography: mat-typography-config(
 // @include mat-list-typography($custom-mat-list-typography);
 
 
-a {
+a, a.mat-icon{
   text-decoration: none;
   font-size: mat-font-size($config, subheading-2);
   font-family: mat-font-family($config);

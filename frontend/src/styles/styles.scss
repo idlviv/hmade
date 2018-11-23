@@ -1105,18 +1105,34 @@ td.mat-cell {
   a.link {
     padding: 0 16px;
     &.active {
-      span {
+      span.type1 {
         border-bottom: 3px solid $_primary;
       }
     }
     span{
-      padding-bottom: 5px;
-      border-bottom: 3px solid $primary-light;
-      text-transform: uppercase;
-      &:hover {
-        border-bottom: 3px solid $primary-dark;
+      &.type1 {
+        padding-bottom: 5px;
+        border-bottom: 3px solid $primary-light;
+        text-transform: uppercase;
+        &:hover {
+          border-bottom: 3px solid $primary-dark;
+        }
+      }
+      &.type2 {
+        padding-bottom: 5px;
+        border-bottom: 3px solid $primary-light;
+
+        mat-icon{
+          padding-right: 5px;
+          display: inline-block;
+          vertical-align: middle;
+        }
+        &:hover {
+          border-bottom: 3px solid $primary-dark;
+        }
       }
     }
+
 
   }
 
