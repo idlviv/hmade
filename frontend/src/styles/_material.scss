@@ -1,17 +1,18 @@
 @import '~@angular/material/theming';
+// @include mat-core();
 
-$dark-primary-text: rgba(black, 0.87);
-$dark-secondary-text: rgba(black, 0.54);
-$dark-disabled-text: rgba(black, 0.38);
-$dark-dividers: rgba(black, 0.12);
-$dark-focused: rgba(black, 0.12);
-$light-primary-text: white;
-$light-secondary-text: rgba(white, 0.7);
-$light-disabled-text: rgba(white, 0.5);
-$light-dividers: rgba(white, 0.12);
-$light-focused: rgba(white, 0.12);
+// $dark-primary-text: rgba(black, 0.87);
+// $dark-secondary-text: rgba(black, 0.54);
+// $dark-disabled-text: rgba(black, 0.38);
+// $dark-dividers: rgba(black, 0.12);
+// $dark-focused: rgba(black, 0.12);
+// $light-primary-text: white;
+// $light-secondary-text: rgba(white, 0.7);
+// $light-disabled-text: rgba(white, 0.5);
+// $light-dividers: rgba(white, 0.12);
+// $light-focused: rgba(white, 0.12);
 
-$mat-custom-darker: (
+$mat-custom-blue: (
         50 : #e4e7ee,
         100 : #bbc3d6,
         200 : #8e9bba,
@@ -44,38 +45,38 @@ $mat-custom-darker: (
         )
 );
 
-$mat-custom-lighter: (
-        50 : #e4eaee,
-        100 : #bbcbd6,
-        200 : #8ea9ba,
-        300 : #60869e,
-        400 : #3e6c8a,
-        500 : #1c5275,
-        600 : #194b6d,
-        700 : #144162,
-        800 : #113858,
-        900 : #092845,
-        A100 : #7cb8ff,
-        A200 : #499dff,
-        A400 : #1681ff,
-        A700 : #0074fc,
-        contrast: (
-                50: $dark-primary-text,
-                100: $dark-primary-text,
-                200: $dark-primary-text,
-                300: $dark-primary-text,
-                400: $dark-primary-text,
-                500: $light-primary-text,
-                600: $light-primary-text,
-                700: $light-primary-text,
-                800: $light-primary-text,
-                900: $light-primary-text,
-                A100: $dark-primary-text,
-                A200: $light-primary-text,
-                A400: $light-primary-text,
-                A700: $light-primary-text,
-        )
-);
+// $mat-custom-lighter: (
+//         50 : #e4eaee,
+//         100 : #bbcbd6,
+//         200 : #8ea9ba,
+//         300 : #60869e,
+//         400 : #3e6c8a,
+//         500 : #1c5275,
+//         600 : #194b6d,
+//         700 : #144162,
+//         800 : #113858,
+//         900 : #092845,
+//         A100 : #7cb8ff,
+//         A200 : #499dff,
+//         A400 : #1681ff,
+//         A700 : #0074fc,
+//         contrast: (
+//                 50: $dark-primary-text,
+//                 100: $dark-primary-text,
+//                 200: $dark-primary-text,
+//                 300: $dark-primary-text,
+//                 400: $dark-primary-text,
+//                 500: $light-primary-text,
+//                 600: $light-primary-text,
+//                 700: $light-primary-text,
+//                 800: $light-primary-text,
+//                 900: $light-primary-text,
+//                 A100: $dark-primary-text,
+//                 A200: $light-primary-text,
+//                 A400: $light-primary-text,
+//                 A700: $light-primary-text,
+//         )
+// );
 
 $mat-custom-warn: (
         50 : #f9e0e0,
@@ -111,42 +112,61 @@ $mat-custom-warn: (
 );
 
 // @include mat-core();
-$primary: mat-palette($mat-custom-darker);
-$accent: mat-palette($mat-custom-lighter);
-$warn: mat-palette($mat-custom-warn);
+// mat-palette accepts $palette-name, main, lighter and darker variants ($default: 500, $lighter: 100, $darker: 700)
+$light-primary: mat-palette($mat-custom-blue);
+$light-accent: mat-palette($mat-custom-blue);
+$light-warn: mat-palette($mat-custom-warn);
 
-$theme-light: mat-light-theme($primary, $accent, $warn);
-$theme-dark: mat-dark-theme($primary, $accent, $warn);
+$light-theme: mat-light-theme($light-primary, $light-primary, $light-warn);
 
-// overriding
-$overridedTheme: $theme-light;
+$dark-primary: mat-palette($mat-custom-blue);
+$dark-accent: mat-palette($mat-custom-blue);
+$dark-warn: mat-palette($mat-custom-warn);
 
-@include angular-material-theme($overridedTheme);
+$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
-// getting variables
-$foreground: map-get($overridedTheme, foreground);
-$background: map-get($overridedTheme, background);
-$config: mat-typography-config();
+$mainTheme: $light-theme;
 
+@include angular-material-theme($mainTheme);
 
+@mixin toolbar-theme($theme) {
+        $primary: map-get($theme, primary);
+        $accent: map-get($theme, accent);
+        $warn: map-get($theme, accent);
+        $foreground: map-get($theme, foreground);
+        $background: map-get($theme, background);
+        .toolbar {
+                color: mat-color($foreground, text);
+
+                // Use mat-color to extract individual colors a palette.
+                background-color: mat-color($primary);
+                border-color: mat-color($accent, A400);
+              }
+      }
+
+@mixin dark-components-theme($theme) {
+        @include toolbar-theme($theme);
+      }
+@include dark-components-theme($dark-theme);
 
 
 // coloring 
-$_primary: mat-color($primary);
-$_accent: mat-color($accent);
-$_warn: mat-color($warn);
+$background-color: map_get($mat-grey, 50);
+$_primary: mat-color($light-primary);
+$_accent: mat-color($light-accent);
+$_warn: mat-color($light-warn);
 
-$primary-light50: mat-color($primary, 50);
-$primary-light: mat-color($primary, 100);
-$primary-dark: mat-color($primary, 900);
+$primary-light50: mat-color($light-primary, 50);
+$primary-light: mat-color($light-primary, 100);
+$primary-dark: mat-color($light-primary, 900);
 
-$accent-light50: mat-color($accent, 50);
-$accent-light: mat-color($accent, 100);
-$accent-dark: mat-color($accent, 900);
+$accent-light50: mat-color($light-accent, 50);
+$accent-light: mat-color($light-accent, 100);
+$accent-dark: mat-color($light-accent, 900);
 
-$warn-light50: mat-color($warn, 50);
-$warn-light: mat-color($warn, 100);
-$warn-dark: mat-color($warn, 900);
+$warn-light50: mat-color($light-warn, 50);
+$warn-light: mat-color($light-warn, 100);
+$warn-dark: mat-color($light-warn, 900);
 
 .primary {
   color: $_primary;

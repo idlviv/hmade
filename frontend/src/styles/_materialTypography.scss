@@ -3,11 +3,13 @@
 @import './material';
 
 // overriding
-$overridedFontFamily: 'Roboto, sans-serif';
+$mainFontFamily: 'Roboto, sans-serif';
 
 $custom-typography: mat-typography-config(
-        $font-family: $overridedFontFamily
+        $font-family: $mainFontFamily
         );
+        
+@include angular-material-typography($custom-typography);
 @include mat-core($custom-typography);
 
 // $custom-mat-list-typography: mat-typography-config(
@@ -15,14 +17,29 @@ $custom-typography: mat-typography-config(
 // );
 // @include mat-list-typography($custom-mat-list-typography);
 
+$config: mat-typography-config();
 
-a, a.mat-icon{
-  text-decoration: none;
-  font-size: mat-font-size($config, subheading-2);
-  font-family: mat-font-family($config);
-  font-weight: mat-font-weight($config, subheading-2);
-  line-height: mat-line-height($config, subheading-2);
-  color: mat-color($foreground, text);
+// @mixin candy-carousel-typography($config) {
+//         .custom {
+//           font: {
+//             family: mat-font-family($config, display-1);
+//             size: mat-font-size($config, display-1);
+//             weight: mat-font-weight($config, display-1);
+//           }
+//         }
+//       }
+// @include candy-carousel-typography($config);
+
+a, a:visited, a:hover, a:active {
+        text-decoration: none;
+        color: inherit;
+//   text-decoration: none;
+//   font-size: mat-font-size($config, subheading-2);
+//   font-family: mat-font-family($config);
+//   font-weight: mat-font-weight($config, subheading-2);
+//   line-height: mat-line-height($config, subheading-2);
+@include mat-typography-level-to-styles($config, subheading-2);
+//   color: mat-color($foreground, text);
 }
 
 

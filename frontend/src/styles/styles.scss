@@ -10,7 +10,7 @@ html {
 body {
   padding: 0;
   margin: 0;
-  background-color: $primary-light50;
+  background-color: $background-color;
 }
 
 .mat-drawer-container {
@@ -1071,11 +1071,11 @@ td.mat-cell {
 
 .mc-social {
   margin-bottom: 2rem;
-  background-color: $accent-light;
+  // background-color: $accent-light;
 }
 
 .mc-side {
-  background-color: mat-color($primary, 100);
+  background-color: $background-color;
 }
 
 .product-brief-section {
@@ -1087,44 +1087,41 @@ td.mat-cell {
   }
 }
 
-
 .toolbar {
+  // color: mat-color($primary);
   display: flex;
   box-sizing: border-box;
   width: 100%;
-  background-color: $primary-light50;
+  // background-color: mat-palette($primary, 500);
   padding: 32px 16px 16px 16px;
 
-  background: $primary-light50 url('../assets/images/header.jpg');
-  -webkit-background-size: cover;
-  -moz-background-size: cover;
-  -o-background-size: cover;
-  background-size: cover;
-
   .logo {
-    align-self: flex-end;
+    // align-self: flex-end;
     padding: 0 16px;
+
   }
+  
+ 
 
   a.link {
     padding: 0 16px;
     &.active {
       span.type1 {
-        border-bottom: 3px solid $_primary;
+        border-bottom: 1px solid mat-color($light-primary, 300);
       }
     }
     span{
       &.type1 {
         padding-bottom: 5px;
-        border-bottom: 3px solid $primary-light;
+        border-bottom: 1px solid;
         text-transform: uppercase;
         &:hover {
-          border-bottom: 3px solid $primary-dark;
+          border-bottom: 1px solid mat-color($light-primary, 100);
         }
       }
       &.type2 {
         padding-bottom: 5px;
-        border-bottom: 3px solid $primary-light;
+        border-bottom: 1px solid;
 
         mat-icon{
           padding-right: 5px;
@@ -1132,17 +1129,17 @@ td.mat-cell {
           vertical-align: middle;
         }
         &:hover {
-          border-bottom: 3px solid $primary-dark;
+          border-bottom: 1px solid mat-color($light-primary, 100);
         }
       }
     }
   }
 
   @include gt-md {
-    height: 200px;
+    height: 160px;
   }
   @include md {
-    height: 150px;
+    height: 100px;
   }
   @include sm {
     height: 64px;
@@ -1152,3 +1149,27 @@ td.mat-cell {
   }
 }
 
+#landing {
+  #banner {
+    width: 100%;
+    background: $background-color url('../assets/images/header.jpg');
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+
+    @include gt-md {
+      height: 300px;
+    }
+    @include md {
+      height: 150px;
+    }
+    @include sm {
+      height: 64px;
+    }
+    @include xs {
+      height: 56px;
+    }
+  }
+
+}

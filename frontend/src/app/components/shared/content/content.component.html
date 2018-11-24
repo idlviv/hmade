@@ -1,12 +1,14 @@
 <div class="toolbar">
+
 <!-- <mat-ttolbar class="mat-elevation-z4 toolbar"> -->
  <!-- color="primary"> -->
   <!-- <mat-toolbar-row> -->
-    <div class="logo">
-      <a href="">
-        <img src="./assets/images/hmade_logo_dark.svg" height="40px" alt="HandMADE logo">
-      </a>
-    </div>
+        <div class="logo">
+            <a href="">
+              <img src="./assets/images/hmade_logo_light.svg" height="40px" alt="HandMADE logo">
+            </a>
+          </div>
+ 
     <div fxFlex></div>
 
     <div fxShow="true" fxHide.lt-md="true">
@@ -19,7 +21,7 @@
     <div fxFlex></div>
 
     <div fxShow="true" fxHide.lt-md="true">
-      <a *ngIf="user"  class="link"
+      <a *ngIf="user" class="link"
               [matMenuTriggerFor]="settingsMenu" #settingsMenuTrigger="matMenuTrigger"
               (mouseover)="onSettingsMenuMouseover()">
         <span class="type2">
@@ -45,8 +47,7 @@
       [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
       [routerLink]="['/user/login']"><span class="type1">Вхід</span></a>
     <a *ngIf='user' class="link" (click)="userLocalLogout()"><span class="type2">Вихід</span></a>
-    </div>
-    
+  </div>
 
    <div class="menu-button" fxShow="true" fxHide.gt-sm="true">
       <button mat-button (click)="sidenav.toggle()">
