@@ -38,7 +38,14 @@ a, a:visited, a:hover, a:active {
 //   font-family: mat-font-family($config);
 //   font-weight: mat-font-weight($config, subheading-2);
 //   line-height: mat-line-height($config, subheading-2);
-@include mat-typography-level-to-styles($config, subheading-2);
+        &.link span {
+                &.type1 {
+                        @include mat-typography-level-to-styles($config, subheading-2);
+                }
+                &.type2 {
+                        @include mat-typography-level-to-styles($config, body-1);
+                }
+        }
 //   color: mat-color($foreground, text);
 }
 

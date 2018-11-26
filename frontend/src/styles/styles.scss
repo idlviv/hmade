@@ -1088,55 +1088,35 @@ td.mat-cell {
 }
 
 .toolbar {
-  // color: mat-color($primary);
   display: flex;
   box-sizing: border-box;
   width: 100%;
-  // background-color: mat-palette($primary, 500);
   padding: 32px 16px 16px 16px;
-
   .logo {
-    // align-self: flex-end;
     padding: 0 16px;
-
   }
-  
- 
-
   a.link {
     padding: 0 16px;
-    &.active {
-      span.type1 {
-        border-bottom: 1px solid mat-color($light-primary, 300);
-      }
-    }
-    span{
+    span {
+      padding-bottom: 5px;
+      cursor: pointer;
       &.type1 {
-        padding-bottom: 5px;
-        border-bottom: 1px solid;
         text-transform: uppercase;
-        &:hover {
-          border-bottom: 1px solid mat-color($light-primary, 100);
-        }
       }
       &.type2 {
         padding-bottom: 5px;
-        border-bottom: 1px solid;
-
+        cursor: pointer;
         mat-icon{
           padding-right: 5px;
           display: inline-block;
           vertical-align: middle;
-        }
-        &:hover {
-          border-bottom: 1px solid mat-color($light-primary, 100);
         }
       }
     }
   }
 
   @include gt-md {
-    height: 160px;
+    height: 130px;
   }
   @include md {
     height: 100px;
