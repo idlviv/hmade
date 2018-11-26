@@ -212,10 +212,6 @@ body {
   margin-bottom: 8px;
 }
 
-// .footer {
-  // margin-top: 8px;
-// }
-
 .sidenav-mat-toolbar-row {
   padding: 0 !important;
   a {
@@ -1092,7 +1088,9 @@ td.mat-cell {
     vertical-align: middle;
 }
 
-#toolbar {
+#toolbar, #footer, #breadcrumb {
+  position: relative;
+  z-index: 4;
   display: flex;
   box-sizing: border-box;
   align-items: flex-start;
@@ -1119,7 +1117,9 @@ td.mat-cell {
       }
     }
   }
+}
 
+#toolbar {
   @include gt-md {
     height: 130px;
     padding: 32px 16px 16px 16px;
@@ -1137,6 +1137,19 @@ td.mat-cell {
     height: 56px;
   }
 }
+
+#footer, #breadcrumb {
+  @include gt-xs {
+    height: 64px;
+    padding: 8px 16px;
+  }
+  @include xs {
+    padding: 8px 16px;
+    height: 56px;
+  }
+}
+
+
 
 #landing {
   // #banner {

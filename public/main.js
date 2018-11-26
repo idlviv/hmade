@@ -1373,7 +1373,7 @@ var FeedbackComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-toolbar class=\"mat-elevation-z16 footer\" color=\"primary\">\n  <a fxHide.gt-sm=\"true\" mat-button class=\"primary-light\"\n     href=\"tel:+380985443968\">\n    <mat-icon>phone</mat-icon> 098 544 39 68\n  </a>\n  <div fxFlex></div>\n  <a mat-button [routerLink]=\"['/feedback']\" class=\"primary-light\"\n     [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n    <mat-icon>mail</mat-icon> Задати питання\n  </a>\n</mat-toolbar>\n"
+module.exports = "<div class=\"mat-elevation-z16\" id=\"footer\">\n  <div fxFlex></div>\n  <a mat-button [routerLink]=\"['/feedback']\" class=\"primary-light\"\n     [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n    <mat-icon>mail</mat-icon> Задати питання\n  </a>\n</div>\n"
 
 /***/ }),
 

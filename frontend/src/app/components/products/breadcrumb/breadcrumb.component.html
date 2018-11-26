@@ -1,32 +1,31 @@
 
-<mat-toolbar class="mat-elevation-z4 header" color="primary">
-  <mat-toolbar-row>
+<div class="mat-elevation-z4 header" id="breadcrumb">
+  <!-- <mat-toolbar-row> -->
     <div class="app-container">
       <div class="container">
         <div class="row" fxLayout>
           <div class="cell wrap" fxFlex fxLayout="row">
             <div>
-              <a mat-button class="breadcrumb-button"
+              <a class="link"
                  [routerLink]="['/products', 'ch']"
                  [routerLinkActive]="['primary-light']" [routerLinkActiveOptions]="{exact: true}">
-                <mat-icon>room</mat-icon>
+                 <span class="type2"><mat-icon class="mat-icon-aligner">room</mat-icon></span> 
               </a>
             </div>
 
             <div *ngFor="let hierarchyCategoryItem of hierarchyCategory">
-              <a mat-button class="breadcrumb-button" *ngIf="!processing"
+              <a class="link" *ngIf="!processing"
                  [routerLink]="['/products', 'ch', {outlets: {primary: [hierarchyCategoryItem._id], breadcrumb: [hierarchyCategoryItem._id]}}]"
-                 [routerLinkActive]="['primary-light']" [routerLinkActiveOptions]="{exact: true}">
-                {{hierarchyCategoryItem.name}}<mat-icon>keyboard_arrow_right</mat-icon></a>
+                 [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
+                 <span class="type2">{{hierarchyCategoryItem.name}}<mat-icon class="mat-icon-aligner">keyboard_arrow_right</mat-icon></span></a>
             </div>
             <div *ngIf="!processing" fxHide.lt-md>
-              <button *ngIf="productName" mat-button disabled class="primary-light">
-                <!-- <mat-icon>insert_photo</mat-icon> -->
-                 {{productName}}</button>
+              <a *ngIf="productName" disabled class="link">
+                 <span class="type2">{{productName}}</span></a>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </mat-toolbar-row>
-</mat-toolbar>
+  <!-- </mat-toolbar-row> -->
+  </div>

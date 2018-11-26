@@ -1,11 +1,7 @@
-<mat-toolbar class="mat-elevation-z16 footer" color="primary">
-  <a fxHide.gt-sm="true" mat-button class="primary-light"
-     href="tel:+380985443968">
-    <mat-icon>phone</mat-icon> 098 544 39 68
-  </a>
+<div class="mat-elevation-z16" id="footer">
   <div fxFlex></div>
   <a mat-button [routerLink]="['/feedback']" class="primary-light"
      [routerLinkActive]="['accent']" [routerLinkActiveOptions]="{exact: true}">
     <mat-icon>mail</mat-icon> Задати питання
   </a>
-</mat-toolbar>
+</div>
