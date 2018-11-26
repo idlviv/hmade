@@ -1,16 +1,4 @@
 @import '~@angular/material/theming';
-// @include mat-core();
-
-// $dark-primary-text: rgba(black, 0.87);
-// $dark-secondary-text: rgba(black, 0.54);
-// $dark-disabled-text: rgba(black, 0.38);
-// $dark-dividers: rgba(black, 0.12);
-// $dark-focused: rgba(black, 0.12);
-// $light-primary-text: white;
-// $light-secondary-text: rgba(white, 0.7);
-// $light-disabled-text: rgba(white, 0.5);
-// $light-dividers: rgba(white, 0.12);
-// $light-focused: rgba(white, 0.12);
 
 $mat-custom-blue: (
         50 : #e4e7ee,
@@ -45,54 +33,126 @@ $mat-custom-blue: (
         )
 );
 
-// $mat-custom-lighter: (
-//         50 : #e4eaee,
-//         100 : #bbcbd6,
-//         200 : #8ea9ba,
-//         300 : #60869e,
-//         400 : #3e6c8a,
-//         500 : #1c5275,
-//         600 : #194b6d,
-//         700 : #144162,
-//         800 : #113858,
-//         900 : #092845,
-//         A100 : #7cb8ff,
-//         A200 : #499dff,
-//         A400 : #1681ff,
-//         A700 : #0074fc,
-//         contrast: (
-//                 50: $dark-primary-text,
-//                 100: $dark-primary-text,
-//                 200: $dark-primary-text,
-//                 300: $dark-primary-text,
-//                 400: $dark-primary-text,
-//                 500: $light-primary-text,
-//                 600: $light-primary-text,
-//                 700: $light-primary-text,
-//                 800: $light-primary-text,
-//                 900: $light-primary-text,
-//                 A100: $dark-primary-text,
-//                 A200: $light-primary-text,
-//                 A400: $light-primary-text,
-//                 A700: $light-primary-text,
-//         )
-// );
+$color1: #143642;
+$color2: #0F8B8D;
+$color3: #EC9A29;
+$color4: #F7F7F7;
+$color5: #A8201A;
+
+$mat-custom-color1: (
+  50 : #e3e7e8,
+  100 : #b9c3c6,
+  200 : #8a9ba1,
+  300 : #5b727b,
+  400 : #37545e,
+  500 : #143642,
+  600 : #12303c,
+  700 : #0e2933,
+  800 : #0b222b,
+  900 : #06161d,
+  A100 : #5cc1ff,
+  A200 : #29aeff,
+  A400 : #0098f5,
+  A700 : #0088db,
+        contrast: (
+                50: $dark-primary-text,
+                100: $dark-primary-text,
+                200: $dark-primary-text,
+                300: $dark-primary-text,
+                400: $dark-primary-text,
+                500: $light-primary-text,
+                600: $light-primary-text,
+                700: $light-primary-text,
+                800: $light-primary-text,
+                900: $light-primary-text,
+                A100: $dark-primary-text,
+                A200: $light-primary-text,
+                A400: $light-primary-text,
+                A700: $light-primary-text,
+        )
+);
+
+$mat-custom-color2: (
+  50 : #e2f1f1,
+  100 : #b7dcdd,
+  200 : #87c5c6,
+  300 : #57aeaf,
+  400 : #339c9e,
+  500 : #0f8b8d,
+  600 : #0d8385,
+  700 : #0b787a,
+  800 : #086e70,
+  900 : #045b5d,
+  A100 : #8efcff,
+  A200 : #5bfbff,
+  A400 : #28f9ff,
+  A700 : #0ef9ff,
+        contrast: (
+                50: $dark-primary-text,
+                100: $dark-primary-text,
+                200: $dark-primary-text,
+                300: $dark-primary-text,
+                400: $dark-primary-text,
+                500: $light-primary-text,
+                600: $light-primary-text,
+                700: $light-primary-text,
+                800: $light-primary-text,
+                900: $light-primary-text,
+                A100: $dark-primary-text,
+                A200: $light-primary-text,
+                A400: $light-primary-text,
+                A700: $light-primary-text,
+        )
+);
+
+$mat-custom-color3: (
+  50 : #fdf3e5,
+  100 : #f9e1bf,
+  200 : #f6cd94,
+  300 : #f2b869,
+  400 : #efa949,
+  500 : #ec9a29,
+  600 : #ea9224,
+  700 : #e7881f,
+  800 : #e47e19,
+  900 : #df6c0f,
+  A100 : #ffffff,
+  A200 : #ffe8d8,
+  A400 : #ffcaa5,
+  A700 : #ffbb8b,
+        contrast: (
+                50: $dark-primary-text,
+                100: $dark-primary-text,
+                200: $dark-primary-text,
+                300: $dark-primary-text,
+                400: $dark-primary-text,
+                500: $light-primary-text,
+                600: $light-primary-text,
+                700: $light-primary-text,
+                800: $light-primary-text,
+                900: $light-primary-text,
+                A100: $dark-primary-text,
+                A200: $light-primary-text,
+                A400: $light-primary-text,
+                A700: $light-primary-text,
+        )
+);
 
 $mat-custom-warn: (
-        50 : #f9e0e0,
-        100 : #f0b3b3,
-        200 : #e68080,
-        300 : #db4d4d,
-        400 : #d42626,
-        500 : #cc0000,
-        600 : #c70000,
-        700 : #c00000,
-        800 : #b90000,
-        900 : #ad0000,
-        A100 : #ffd7d7,
-        A200 : #ffa4a4,
-        A400 : #ff7171,
-        A700 : #ff5858,
+  50 : #f5e4e4,
+  100 : #e5bcba,
+  200 : #d4908d,
+  300 : #c2635f,
+  400 : #b5413c,
+  500 : #a8201a,
+  600 : #a01c17,
+  700 : #971813,
+  800 : #8d130f,
+  900 : #7d0b08,
+  A100 : #ffadac,
+  A200 : #ff7b79,
+  A400 : #ff4946,
+  A700 : #ff302c,
         contrast: (
     50: $dark-primary-text,
     100: $dark-primary-text,
@@ -114,50 +174,89 @@ $mat-custom-warn: (
 // @include mat-core();
 // mat-palette accepts $palette-name, main, lighter and darker variants ($default: 500, $lighter: 100, $darker: 700)
 $light-primary: mat-palette($mat-custom-blue);
-$light-accent: mat-palette($mat-custom-blue);
+$light-accent: mat-palette($mat-light-blue);
 $light-warn: mat-palette($mat-custom-warn);
 
-$light-theme: mat-light-theme($light-primary, $light-primary, $light-warn);
+$light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
 
 $dark-primary: mat-palette($mat-custom-blue);
-$dark-accent: mat-palette($mat-custom-blue);
+$dark-accent: mat-palette($mat-light-blue);
 $dark-warn: mat-palette($mat-custom-warn);
 
+
 $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+
+$custom-color-primary: mat-palette($mat-custom-color1);
+$custom-color-accent: mat-palette($mat-custom-color2);
+$custom-color-warn: mat-palette($mat-custom-warn);
+
+$custom-color-theme: mat-dark-theme($custom-color-primary, $custom-color-accent, $custom-color-warn);
 
 $mainTheme: $light-theme;
 
 @include angular-material-theme($mainTheme);
 
 @mixin toolbar-theme($theme) {
-        $primary: map-get($theme, primary);
-        $accent: map-get($theme, accent);
-        $warn: map-get($theme, accent);
-        $foreground: map-get($theme, foreground);
-        $background: map-get($theme, background);
-        .toolbar {
-              color: mat-color($foreground, text);
-              background-color: mat-color($primary);
-              a.link {
-                &.active {
-                  span.type1 {
-                    border-bottom-color: mat-color($primary, 300);
-                  }
-                }
-                span.type1 {
-                  border-bottom: 1px solid mat-color($foreground, text);
-                  &:hover {
-                    border-bottom: 1px solid mat-color($primary, 200);
-                  }
-                }
-              }
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, accent);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+  #toolbar {
+        color: mat-color($foreground, text);
+        background-color: mat-color($primary);
+        a.link {
+          &.active {
+            span.type1 {
+              border-bottom-color: mat-color($primary, 300);
             }
+          }
+          span.type1 {
+            border-bottom: 1px solid mat-color($foreground, text);
+            &:hover {
+              border-bottom: 1px solid mat-color($primary, 200);
+            }
+          }
+        }
       }
+}
+
+@mixin landing-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, accent);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+  #landing {
+        color: mat-color($foreground, text);
+        
+        .side-container {
+          background-color: mat-color($accent);
+          
+        }
+        .main-container {
+
+        }
+      }
+}
 
 @mixin dark-components-theme($theme) {
-        @include toolbar-theme($theme);
-      }
+  // @include toolbar-theme($theme);
+}
+
+@mixin custom-color-components-theme($theme) {
+  @include toolbar-theme($theme);
+
+  @include landing-theme($theme);
+}
+
+@mixin light-components-theme($theme) {
+  // @include mat-sidenav-theme($theme);
+}
+
 @include dark-components-theme($dark-theme);
+@include light-components-theme($light-theme);
+@include custom-color-components-theme($custom-color-theme);
 
 
 // coloring 

@@ -1086,12 +1086,17 @@ td.mat-cell {
     }
   }
 }
+.mat-icon-aligner {
+    padding-right: 16px;
+    display: inline-block;
+    vertical-align: middle;
+}
 
-.toolbar {
+#toolbar {
   display: flex;
   box-sizing: border-box;
+  align-items: flex-start;
   width: 100%;
-  padding: 32px 16px 16px 16px;
   .logo {
     padding: 0 16px;
   }
@@ -1106,8 +1111,8 @@ td.mat-cell {
       &.type2 {
         padding-bottom: 5px;
         cursor: pointer;
-        mat-icon{
-          padding-right: 5px;
+        mat-icon {
+          padding-right: 8px;
           display: inline-block;
           vertical-align: middle;
         }
@@ -1117,39 +1122,45 @@ td.mat-cell {
 
   @include gt-md {
     height: 130px;
+    padding: 32px 16px 16px 16px;
   }
   @include md {
     height: 100px;
+    padding: 32px 16px 16px 16px;
   }
   @include sm {
     height: 64px;
+    padding: 8px 16px;
   }
   @include xs {
+    padding: 8px 16px;
     height: 56px;
   }
 }
 
 #landing {
-  #banner {
-    width: 100%;
-    background: $background-color url('../assets/images/header.jpg');
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-
-    @include gt-md {
-      height: 300px;
+  // #banner {
+  //   width: 100%;
+  //   background: $background-color url('../assets/images/header.jpg');
+  //   -webkit-background-size: cover;
+  //   -moz-background-size: cover;
+  //   -o-background-size: cover;
+  //   background-size: cover;
+    .side-container {
+      height: 100vh
     }
-    @include md {
-      height: 150px;
-    }
-    @include sm {
-      height: 64px;
-    }
-    @include xs {
-      height: 56px;
-    }
-  }
+    // @include gt-md {
+    //   height: 300px;
+    // }
+    // @include md {
+    //   height: 150px;
+    // }
+    // @include sm {
+    //   height: 64px;
+    // }
+    // @include xs {
+    //   height: 56px;
+    // }
+  // }
 
 }
