@@ -1,6 +1,6 @@
-<mat-card>
+<mat-card id="product-item-brief">
   <mat-card-content class="wrap" fxLayot="row">
-    <div *ngIf="product" class="container-px0" fxFlex="100">
+    <!-- <div *ngIf="product" class="container-px0" fxFlex="100">
       <div class="row" fxLayout="row">
           <section class="cell-px0 social-feed-section" fxFlex="100" fxLayout="row">
               <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
@@ -21,7 +21,7 @@
               </div>
           </section>
         </div>
-    </div>
+    </div> -->
 
     <div class="mat-card-wide-image" fxLayout="row">
 
@@ -72,15 +72,15 @@
     </div>
 
     <!-- product level (no children)-->
-    <section *ngIf="!child && category_id && product" class="row product-brief-section" fxFlex="row">
+    <section *ngIf="!child && product" class="row product-brief-section" fxFlex="row">
       <div class="cell" fxFlex="100">
-        <h2 class="mat-h2">{{product.name}}</h2>
-      </div>
+        <h2 class="mat-h2 title">{{product.name}}</h2>
+       </div>
       <div class="cell product-brief-description" fxFlex="100" fxLayoutAlign="center center">
         <p class="mat-body">{{product.description}}</p>
       </div>
     </section>
-    <section *ngIf="!child && category_id && product" class="cell-px0 social-feed-section" fxFlex="100" fxLayout="row">
+    <section *ngIf="!child && product" class="cell-px0 social-feed-section" fxFlex="100" fxLayout="row">
       <div class="item text-align-center" fxFlex>
         <mat-icon>swap_horiz</mat-icon>
         <span> {{product?.dimensions?.width}}</span>
@@ -106,11 +106,11 @@
         {{product.name}}
       </a> -->
       <!--using with dashboard-->
-      <a *ngIf="!child && !category_id" mat-button
+      <!-- <a *ngIf="!child && !category_id" mat-button
          [routerLink]="['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]"
          [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
         {{product.name}}
-      </a>
+      </a> -->
       <!--using with catalog, when children present-->
       <a *ngIf="child" mat-button
          [routerLink]="['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]"

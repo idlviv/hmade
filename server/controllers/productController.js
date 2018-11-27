@@ -56,14 +56,7 @@ module.exports.getProducts = function(req, res, next) {
       .catch((err) => next(err));
 };
 
-module.exports.getMainPageProducts = function(req, res, next) {
-  ProductModel.find({onMainPage: true})
-      .then((result) =>
-        res.status(200)
-            .json(new ResObj(true, 'Товари головної сторінки', result))
-      )
-      .catch((err) => next(new DbError()));
-};
+
 
 
 module.exports.productAddImage = function(req, res, next) {
@@ -200,6 +193,15 @@ module.exports.productAddAssets = function(req, res, next) {
 };
 
 // hmade
+module.exports.getMainPageProducts = function(req, res, next) {
+  ProductModel.find({onMainPage: true})
+      .then((result) =>
+        res.status(200)
+            .json(result)
+      )
+      .catch((err) => next(new DbError()));
+};
+
 module.exports.increaseViews = function(req, res, next) {
   const _id = req.query._id;
 

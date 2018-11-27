@@ -15,7 +15,23 @@ export class McService {
     private userService: UserService,
   ) { }
 
-
+  /**
+   *
+   *
+   * @returns {Observable<[IMc]>}
+   * @memberof McService
+   */
+  getMainPageMcs(): Observable<[IMc]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http.get<[IMc]>(
+      'api/mc/get-main-page-mcs',
+      httpOptions
+    );
+  }
 
   // /**
   //  *

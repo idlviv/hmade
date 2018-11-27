@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 import { McsComponent } from './mcs.component';
 import { McsListComponent } from './mcs-list/mcs-list.component';
 import { McsFiltersComponent } from './mcs-filters/mcs-filters.component';
-import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.component';
+import { McsItemDetailComponent } from '../shared/mcs-item-detail/mcs-item-detail.component';
 
 const mcsRoutes: Routes = [
   {

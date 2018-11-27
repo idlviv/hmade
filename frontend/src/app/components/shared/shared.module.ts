@@ -20,6 +20,8 @@ import { ContentComponent } from './content/content.component';
 import { AboutComponent } from './about/about.component';
 import { CommentsComponent } from './comments/comments.component';
 import { ScreenTestComponent } from './screen-test/screen-test.component';
+import { McsItemBriefComponent } from './mcs-item-brief/mcs-item-brief.component';
+import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.component';
 
 @NgModule({
   imports: [
@@ -28,7 +30,7 @@ import { ScreenTestComponent } from './screen-test/screen-test.component';
     RouterModule,
     ReactiveFormsModule,
     RecaptchaModule,
-    RecaptchaFormsModule
+    RecaptchaFormsModule,
   ],
   exports: [
     Page404Component,
@@ -41,6 +43,8 @@ import { ScreenTestComponent } from './screen-test/screen-test.component';
     FooterComponent,
     ContentComponent,
     CommentsComponent,
+    McsItemBriefComponent,
+    McsItemDetailComponent
   ],
   declarations: [
     Page404Component,
@@ -58,6 +62,8 @@ import { ScreenTestComponent } from './screen-test/screen-test.component';
     AboutComponent,
     CommentsComponent,
     ScreenTestComponent,
+    McsItemBriefComponent,
+    McsItemDetailComponent
   ],
 })
 export class SharedModule { }

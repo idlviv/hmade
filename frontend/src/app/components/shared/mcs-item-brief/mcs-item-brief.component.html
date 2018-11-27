@@ -1,0 +1,88 @@
+<mat-card>
+  <mat-card-content>
+    <div class="row" fxLayout="row">
+      <div class="container-px0" fxFlex="100">
+        <div class="row" fxLayout="row">
+          <section class="cell-px0 social-feed-section mc-social" fxFlex="100" fxLayout="row">
+              <div *ngIf="config.social.showLikes" class="item text-align-center primary" fxFlex>
+                <mat-icon>thumb_up_alt</mat-icon>
+                <span>{{mc.likes.likedByLength || 0}}</span>
+              </div>
+              <div *ngIf="config.social.showLikes" class="item text-align-center primary" fxFlex>
+                  <mat-icon>thumb_down_alt</mat-icon>
+                  <span>{{mc.likes.dislikedByLength || 0}}</span>
+              </div>
+              <div *ngIf="config.social.showViews" class="item text-align-center primary" fxFlex>
+                  <mat-icon>remove_red_eye</mat-icon>
+                  <span>{{mc.views || 0}}</span>
+              </div>
+              <div *ngIf="config.social.showComments" class="item text-align-center primary" fxFlex>
+                  <mat-icon>comment</mat-icon>
+                  <span>{{mc.comments?.length || 0}}</span>
+              </div>
+               <div class="item text-align-center primary" fxFlex>
+                  <mat-icon>calendar_today</mat-icon>
+                  <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>
+              </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <div class="row padding-bottom" fxLayout="row">
+      <div class="cell" fxFlex="20" fxLayoutAlign="center center">
+          <img class="responsive-image" src="{{
+            config.imgPath +
+            config.cloudinary.cloud_name +
+            '/c_fill,w_535,h_350,f_auto/' +
+            mc.mainImage}}"
+            alt="master class image">
+      </div>
+      <div class="cell" fxFlex="80">
+          <div class="row" fxLayout="row">
+            <div class="cell" fxFlex="100" fxLayoutAlign="center">
+              <h2 class="mat-h1">
+                {{mc.name}}
+              </h2>
+            </div>
+          </div>
+          <div class="row" fxLayout="row">
+            <div class="cell" fxFlex="100">
+              <p class="mat-body">
+                {{mc.description}}
+              </p>
+            </div>
+          </div>
+
+      </div>
+    </div>
+  </mat-card-content>
+  <mat-card-actions>
+      <div class="row" fxLayout="row">
+        <section class="cell-px0" fxFlex="100" fxLayout="row" fxLayoutAlign="space-around center">
+          <div class="item text-align-center muted" fxFlex>
+             <!-- (click)="goToMcsItemDetail(mc._id)"> -->
+
+            <a mat-button
+              [routerLink]="['/mcs','show', mc._id]"
+              [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
+              Докладно
+           </a>
+
+          </div>
+          <div *ngIf="allowTo('manager')" class="item text-align-center muted" fxFlex>
+            <a mat-button (click)="editMcsItem(mc._id)">
+              <mat-icon>edit</mat-icon>
+            </a>
+          </div>
+          <div *ngIf="allowTo('manager')" class="item text-align-center muted" fxFlex>
+            <a mat-button (click)="deleteMcsItem(mc._id)">
+              <mat-icon>delete</mat-icon>
+            </a>
+          </div>
+
+        </section>
+    </div>
+  </mat-card-actions>
+</mat-card>
+

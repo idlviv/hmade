@@ -549,7 +549,7 @@ var AppModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container\">\n  <div class=\"container\">\n    <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n\n      <div class=\"cell\" fxFlex=\"100\">\n        <mat-card>\n          <mat-card-header>\n                <h1 class=\"mat-display-2\">Вітаємо на сайті!</h1>\n\n\n          </mat-card-header>\n          <mat-card-content>\n            <p class=\"text-justify muted mat-body-1\">\n            \n              Запрошуємо Вас до співпраці!\n            </p>\n          </mat-card-content>\n        </mat-card>\n\n      </div>\n    </div>\n  </div>\n\n\n</div>"
+module.exports = "<div class=\"app-container\">\r\n  <div class=\"container\">\r\n    <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <mat-card>\r\n          <mat-card-header>\r\n                <h1 class=\"mat-display-2\">Вітаємо на сайті!</h1>\r\n\r\n\r\n          </mat-card-header>\r\n          <mat-card-content>\r\n            <p class=\"text-justify muted mat-body-1\">\r\n            \r\n              Запрошуємо Вас до співпраці!\r\n            </p>\r\n          </mat-card-content>\r\n        </mat-card>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n\r\n</div>"
 
 /***/ }),
 
@@ -1373,7 +1373,7 @@ var FeedbackComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"mat-elevation-z16\" id=\"footer\">\n  <div fxFlex></div>\n  <a mat-button [routerLink]=\"['/feedback']\" class=\"primary-light\"\n     [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n    <mat-icon>mail</mat-icon> Задати питання\n  </a>\n</div>\n"
+module.exports = "<div class=\"mat-elevation-z16\" id=\"footer\">\r\n  <div fxFlex></div>\r\n  <a mat-button [routerLink]=\"['/feedback']\" class=\"primary-light\"\r\n     [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n    <mat-icon>mail</mat-icon> Задати питання\r\n  </a>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1436,7 +1436,7 @@ var FooterComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container\">\n  <div class=\"container\">\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\">\n      <h1 class=\"mat-display-1\">Галерея</h1>\n      </div>\n    </div>\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\n        <mat-card>\n          <mat-card-subtitle>\n            <a mat-button\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\n               [queryParams]=\"{name: product.name}\"\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\n              {{product.name}}\n            </a>\n          </mat-card-subtitle>\n          <div class=\"row\" fxLayout=\"row\">\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\n\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\n                 fxLayout fxLayoutAlign=\"center center\"\n                 *ngFor=\"let productAsset of product.assets\">\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_590,h_295,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n\n\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_350,h_175,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n            </div>\n          </div>\n        </mat-card>\n      </div>\n    </div>\n\n\n  </div>\n</div>\n\n"
+module.exports = "<div class=\"app-container\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n      <h1 class=\"mat-display-1\">Галерея</h1>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\r\n        <mat-card>\r\n          <mat-card-subtitle>\r\n            <a mat-button\r\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\r\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\r\n               [queryParams]=\"{name: product.name}\"\r\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n              {{product.name}}\r\n            </a>\r\n          </mat-card-subtitle>\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\r\n\r\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\r\n                 fxLayout fxLayoutAlign=\"center center\"\r\n                 *ngFor=\"let productAsset of product.assets\">\r\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_590,h_295,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n\r\n\r\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_350,h_175,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n            </div>\r\n          </div>\r\n        </mat-card>\r\n      </div>\r\n    </div>\r\n\r\n\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -1534,7 +1534,7 @@ var GalleryComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container primary-background\" id=\"header\">\n\n  <div class=\"container\" fxHide.lt-md=\"true\">\n    <div class=\"row primary-background\">\n      <div class=\"cell\">\n        <a href=\"\">\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\n        </a>\n      </div>\n      <div fxFlex></div>\n    <div class=\"cell\">\n      <div class=\"row\" fxLayout=\"row\">\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\"\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n            <mat-icon>mail</mat-icon> Задати питання\n          </a>\n        </div>\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button class=\"muted\"\n             href=\"tel:+380985443968\">\n            <mat-icon>phone</mat-icon> 098 544 39 68\n          </a>\n        </div>\n      </div>\n    </div>\n\n    </div>\n  </div>\n</div>\n"
+module.exports = "<div class=\"app-container primary-background\" id=\"header\">\r\n\r\n  <div class=\"container\" fxHide.lt-md=\"true\">\r\n    <div class=\"row primary-background\">\r\n      <div class=\"cell\">\r\n        <a href=\"\">\r\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\r\n        </a>\r\n      </div>\r\n      <div fxFlex></div>\r\n    <div class=\"cell\">\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\"\r\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n            <mat-icon>mail</mat-icon> Задати питання\r\n          </a>\r\n        </div>\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button class=\"muted\"\r\n             href=\"tel:+380985443968\">\r\n            <mat-icon>phone</mat-icon> 098 544 39 68\r\n          </a>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1596,7 +1596,7 @@ var HeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"landing\">\r\n\r\n  <!-- <div id=\"banner\">\r\n\r\n  </div> -->\r\n  <div class=\"container\">\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell side-container\" fxFlex=\"20\">\r\n\r\n      </div>\r\n      <div class=\"cell main-container\" fxFlex=\"20\">\r\n\r\n        </div>\r\n    </div>\r\n  </div>\r\n\r\n    <!-- <app-screen-test></app-screen-test>  -->\r\n  \r\n \r\n  <!-- <div id=\"home-left\">\r\n    <img src=\"./assets/images/hmade_logo_dark.svg\" id=\"home-logo\" alt=\"logo\">\r\n    <div>\r\n      <a mat-flat-button class=\"radius-5\" href=\"/products/ch\" id=\"home-action\">Перейти</a>\r\n      <button mat-fab-button class=\"radius-5\" (click)=\"onScroll()\">Down</button>\r\n      <button color=\"primary\" mat-mini-fab (click)=\"onScroll()\" id=\"scroll-down-btn\">\r\n        <mat-icon>keyboard_arrow_down</mat-icon></button>\r\n    </div>\r\n  </div>\r\n  <div id=\"home-right\" #scrollPoint>\r\n    <p>right</p>\r\n  </div>\r\n  <div id=\"home-bottom\">\r\n    <div fxLayout=\"row full-width\">\r\n      <div fxFlex=\"10\"></div>\r\n      <div class=\"row wrap full-width\" fxFlex=\"80\" fxLayout=\"row\" fxLayoutAlign=\"space-between\">\r\n        <div class=\"cell-padding\" fxFlex=\"1 1 auto\" *ngFor=\"let descendant of descendants\" fxLayout=\"row\">\r\n          <a fxFlex=\"1 1 auto\" mat-stroked-button class=\"radius-5 text-center\" color=\"accent\"\r\n             [routerLink]=\"['/products', 'ch', {outlets: {primary: [descendant._id], breadcrumb: [descendant._id]}}]\"\r\n             [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n             {{descendant.name}}\r\n          </a>\r\n\r\n        </div>\r\n\r\n      </div>\r\n\r\n    </div>\r\n  </div> -->\r\n\r\n</div>\r\n"
+module.exports = "<div id=\"landing\">\r\n\r\n  <!-- <div id=\"banner\">\r\n\r\n  </div> -->\r\n  <div class=\"container\">\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <!-- <div class=\"cell top-container\" fxFlex=\"100\">\r\n\r\n      </div> -->\r\n      <div class=\"cell left-side-container\" fxFlex=\"20\">\r\n          <!-- <mat-card> -->\r\n              <div class=\"avatar-big-block\">\r\n                <img class=\"avatar-big\" src=\"./assets/images/my-photo180x180.png\" alt=\"my photo\">\r\n              </div>\r\n              <!-- <mat-card-header> -->\r\n                <h3 class=\"mat-h3\">Про себе</h3>\r\n              <!-- </mat-card-header> -->\r\n              <!-- <mat-card-content> -->\r\n                <p class=\"mat-body-1 text-justify\">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.\r\n                Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,\r\n                шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..\r\n    \r\n                Ще багато можна писати про себе та мої захоплення, але згодом..\r\n    \r\n                  Завітайте у мою майстерню.</p>\r\n              <!-- </mat-card-content> -->\r\n            <!-- </mat-card> -->\r\n      </div>\r\n      <div class=\"cell main-container\" fxFlex=\"60\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <div class=\"cell\" fxFlex=\"100\">\r\n\r\n          </div>\r\n          <div *ngFor=\"let mc of mcs\" class=\"cell\" fxFlex=\"100\">\r\n              <app-mcs-item-brief [mc]=\"mc\"></app-mcs-item-brief>\r\n            </div>\r\n        </div>\r\n      </div>\r\n      <div class=\"cell right-side-container\" fxFlex=\"20\">\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div *ngFor=\"let product of products\" class=\"cell\" fxFlex=\"100\">\r\n              <app-product-item-brief [product]=\"product\"></app-product-item-brief>\r\n            </div>\r\n          </div>\r\n        </div>\r\n    </div>\r\n  </div>\r\n\r\n    <!-- <app-screen-test></app-screen-test>  -->\r\n  \r\n \r\n  <!-- <div id=\"home-left\">\r\n    <img src=\"./assets/images/hmade_logo_dark.svg\" id=\"home-logo\" alt=\"logo\">\r\n    <div>\r\n      <a mat-flat-button class=\"radius-5\" href=\"/products/ch\" id=\"home-action\">Перейти</a>\r\n      <button mat-fab-button class=\"radius-5\" (click)=\"onScroll()\">Down</button>\r\n      <button color=\"primary\" mat-mini-fab (click)=\"onScroll()\" id=\"scroll-down-btn\">\r\n        <mat-icon>keyboard_arrow_down</mat-icon></button>\r\n    </div>\r\n  </div>\r\n  <div id=\"home-right\" #scrollPoint>\r\n    <p>right</p>\r\n  </div>\r\n  <div id=\"home-bottom\">\r\n    <div fxLayout=\"row full-width\">\r\n      <div fxFlex=\"10\"></div>\r\n      <div class=\"row wrap full-width\" fxFlex=\"80\" fxLayout=\"row\" fxLayoutAlign=\"space-between\">\r\n        <div class=\"cell-padding\" fxFlex=\"1 1 auto\" *ngFor=\"let descendant of descendants\" fxLayout=\"row\">\r\n          <a fxFlex=\"1 1 auto\" mat-stroked-button class=\"radius-5 text-center\" color=\"accent\"\r\n             [routerLink]=\"['/products', 'ch', {outlets: {primary: [descendant._id], breadcrumb: [descendant._id]}}]\"\r\n             [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n             {{descendant.name}}\r\n          </a>\r\n\r\n        </div>\r\n\r\n      </div>\r\n\r\n    </div>\r\n  </div> -->\r\n\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1625,6 +1625,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
 /* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
 /* harmony import */ var _angular_flex_layout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/flex-layout */ "./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
+/* harmony import */ var src_app_services_product_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/product.service */ "./src/app/services/product.service.ts");
+/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1638,19 +1640,31 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var LandingComponent = /** @class */ (function () {
-    function LandingComponent(catalogService, media) {
+    // descendants: any;
+    function LandingComponent(catalogService, media, productService, mcService) {
         this.catalogService = catalogService;
         this.media = media;
+        this.productService = productService;
+        this.mcService = mcService;
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"];
     }
     LandingComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.catalogService.getChildren('products')
-            .subscribe(function (result) { return _this.descendants = result.data; }, function (err) { return console.log('mainPageProducts load error', err); });
+        this.productService.getMainPageProducts()
+            .subscribe(function (result) { return _this.products = result; }, function (err) { return console.log('mainPageProducts load error', err); });
+        this.mcService.getMainPageMcs()
+            .subscribe(function (result) { return _this.mcs = result; }, function (err) { return console.log('mainPageMcs load error', err); });
+        // this.catalogService.getChildren('products')
+        // .subscribe(
+        //   result => this.descendants = result.data,
+        //   err => console.log('mainPageProducts load error', err)
+        // );
     };
     LandingComponent.prototype.onScroll = function () {
-        this.scrollPoint.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        // this.scrollPoint.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('scrollPoint'),
@@ -1663,9 +1677,250 @@ var LandingComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./landing.component.scss */ "./src/app/components/shared/landing/landing.component.scss")]
         }),
         __metadata("design:paramtypes", [_services_catalog_service__WEBPACK_IMPORTED_MODULE_1__["CatalogService"],
-            _angular_flex_layout__WEBPACK_IMPORTED_MODULE_3__["ObservableMedia"]])
+            _angular_flex_layout__WEBPACK_IMPORTED_MODULE_3__["ObservableMedia"],
+            src_app_services_product_service__WEBPACK_IMPORTED_MODULE_4__["ProductService"],
+            src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_5__["McService"]])
     ], LandingComponent);
     return LandingComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.html":
+/*!********************************************************************************!*\
+  !*** ./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.html ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<mat-card>\r\n  <mat-card-content>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"container-px0\" fxFlex=\"100\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <section class=\"cell-px0 social-feed-section mc-social\" fxFlex=\"100\" fxLayout=\"row\">\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center primary\" fxFlex>\r\n                <mat-icon>thumb_up_alt</mat-icon>\r\n                <span>{{mc.likes.likedByLength || 0}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center primary\" fxFlex>\r\n                  <mat-icon>thumb_down_alt</mat-icon>\r\n                  <span>{{mc.likes.dislikedByLength || 0}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showViews\" class=\"item text-align-center primary\" fxFlex>\r\n                  <mat-icon>remove_red_eye</mat-icon>\r\n                  <span>{{mc.views || 0}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showComments\" class=\"item text-align-center primary\" fxFlex>\r\n                  <mat-icon>comment</mat-icon>\r\n                  <span>{{mc.comments?.length || 0}}</span>\r\n              </div>\r\n               <div class=\"item text-align-center primary\" fxFlex>\r\n                  <mat-icon>calendar_today</mat-icon>\r\n                  <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>\r\n              </div>\r\n          </section>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"20\" fxLayoutAlign=\"center center\">\r\n          <img class=\"responsive-image\" src=\"{{\r\n            config.imgPath +\r\n            config.cloudinary.cloud_name +\r\n            '/c_fill,w_535,h_350,f_auto/' +\r\n            mc.mainImage}}\"\r\n            alt=\"master class image\">\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"80\">\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div class=\"cell\" fxFlex=\"100\" fxLayoutAlign=\"center\">\r\n              <h2 class=\"mat-h1\">\r\n                {{mc.name}}\r\n              </h2>\r\n            </div>\r\n          </div>\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div class=\"cell\" fxFlex=\"100\">\r\n              <p class=\"mat-body\">\r\n                {{mc.description}}\r\n              </p>\r\n            </div>\r\n          </div>\r\n\r\n      </div>\r\n    </div>\r\n  </mat-card-content>\r\n  <mat-card-actions>\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <section class=\"cell-px0\" fxFlex=\"100\" fxLayout=\"row\" fxLayoutAlign=\"space-around center\">\r\n          <div class=\"item text-align-center muted\" fxFlex>\r\n             <!-- (click)=\"goToMcsItemDetail(mc._id)\"> -->\r\n\r\n            <a mat-button\r\n              [routerLink]=\"['/mcs','show', mc._id]\"\r\n              [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n              Докладно\r\n           </a>\r\n\r\n          </div>\r\n          <div *ngIf=\"allowTo('manager')\" class=\"item text-align-center muted\" fxFlex>\r\n            <a mat-button (click)=\"editMcsItem(mc._id)\">\r\n              <mat-icon>edit</mat-icon>\r\n            </a>\r\n          </div>\r\n          <div *ngIf=\"allowTo('manager')\" class=\"item text-align-center muted\" fxFlex>\r\n            <a mat-button (click)=\"deleteMcsItem(mc._id)\">\r\n              <mat-icon>delete</mat-icon>\r\n            </a>\r\n          </div>\r\n\r\n        </section>\r\n    </div>\r\n  </mat-card-actions>\r\n</mat-card>\r\n\r\n"
+
+/***/ }),
+
+/***/ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.scss":
+/*!********************************************************************************!*\
+  !*** ./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.scss ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.ts":
+/*!******************************************************************************!*\
+  !*** ./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.ts ***!
+  \******************************************************************************/
+/*! exports provided: McsItemBriefComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McsItemBriefComponent", function() { return McsItemBriefComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var McsItemBriefComponent = /** @class */ (function () {
+    function McsItemBriefComponent(userService, router) {
+        this.userService = userService;
+        this.router = router;
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"];
+    }
+    McsItemBriefComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.userService.getUserLocal()
+            .subscribe(function (user) { return _this.user = user; });
+    };
+    McsItemBriefComponent.prototype.allowTo = function (permitedRole) {
+        return this.userService.allowTo(permitedRole);
+    };
+    McsItemBriefComponent.prototype.ngOnChanges = function (changes) {
+        var productChange = changes.mc;
+        // console.log('prev value: ', productChange.previousValue);
+        // console.log('got name: ', productChange.currentValue);
+        // console.log('productChange: ', productChange);
+        if (productChange) {
+            // console.log('simple changes product');
+            // this.getRecommendations();
+        }
+    };
+    McsItemBriefComponent.prototype.goToMcsItemDetail = function (_id) {
+        console.log("goToMcsItemDetail " + _id);
+        this.router.navigate(['/mcs', 'show', _id]);
+    };
+    McsItemBriefComponent.prototype.editMcsItem = function (_id) {
+        console.log("editMcsItem " + _id);
+        this.router.navigate(['/dashboard', 'mc', 'edit', _id]);
+    };
+    McsItemBriefComponent.prototype.deleteMcsItem = function (_id) {
+        console.log("deleteMcsItem " + _id);
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], McsItemBriefComponent.prototype, "mc", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], McsItemBriefComponent.prototype, "parentCategory_id", void 0);
+    McsItemBriefComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-mcs-item-brief',
+            template: __webpack_require__(/*! ./mcs-item-brief.component.html */ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.html"),
+            styles: [__webpack_require__(/*! ./mcs-item-brief.component.scss */ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.scss")]
+        }),
+        __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
+    ], McsItemBriefComponent);
+    return McsItemBriefComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.html":
+/*!**********************************************************************************!*\
+  !*** ./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.html ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "\r\n<div *ngIf='mc' class=\"container\">\r\n  <div class=\"app-container\">\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <mat-card>\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                  <div class=\"container-px0\" fxFlex=\"100\">\r\n                    <div class=\"row\" fxLayout=\"row\">\r\n                      <section class=\"cell-px0 social-feed-section mc-social\" fxFlex=\"100\" fxLayout=\"row\">\r\n                          <div class=\"item text-align-center\" fxFlex>\r\n                              <mat-icon class=\"primary hover-cursor\" (click)=\"goToMcs()\">reply_all</mat-icon>\r\n                          </div>\r\n                          <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                            <mat-icon [ngClass]=\"{\r\n                              'muted-strong': !(mc.likes.canLike && allowTo('user')), \r\n                              'primary': mc.likes.canLike && allowTo('user'), \r\n                              'hover-cursor': mc.likes.canLike && allowTo('user')}\"\r\n                            (click)=\"onLike(true, mc.likes.canLike && allowTo('user'))\">thumb_up_alt</mat-icon>\r\n                            <span>{{mc.likes.likedByLength || 0}}</span>\r\n                          </div>\r\n                          <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                            <mat-icon [ngClass]=\"{\r\n                              'muted-strong': !(mc.likes.canDislike && allowTo('user')), \r\n                              'primary': mc.likes.canDislike && allowTo('user'), \r\n                              'hover-cursor': mc.likes.canDislike && allowTo('user')}\" \r\n                            (click)=\"onLike(false, mc.likes.canDislike && allowTo('user'))\">thumb_down_alt</mat-icon>\r\n                            <span>{{mc.likes.dislikedByLength || 0}}</span>\r\n                          </div>\r\n                          <div *ngIf=\"config.social.showViews\" class=\"item text-align-center primary\" fxFlex>\r\n                              <mat-icon>remove_red_eye</mat-icon>\r\n                              <span>{{mc.views || 0}}</span>\r\n                          </div>\r\n                          <div *ngIf=\"config.social.showComments\" class=\"item text-align-center primary\" fxFlex>\r\n                              <mat-icon>comment</mat-icon>\r\n                              <span>{{mc.comments?.length || 0}}</span>\r\n                          </div>\r\n                          <div class=\"item text-align-center primary\" fxFlex>\r\n                              <mat-icon>calendar_today</mat-icon>\r\n                              <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>\r\n                          </div>\r\n                      </section>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n          <h1 class=\"mat-display-1\">{{mc.name}}</h1>\r\n          <mat-card-header>\r\n              <!-- <mat-card-title>{{mc.name}}</mat-card-title> -->\r\n              <mat-card-subtitle class=\"text-justify\">{{mc.description}}</mat-card-subtitle>\r\n          </mat-card-header>\r\n\r\n          <mat-card-content>\r\n              <div class=\"row padding-bottom-3\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"50\">\r\n                  <div class=\"row\" fxLayout=\"row\">\r\n                    <div class=\"cell\" fxFlex=\"100\" fxLayoutAlign=\"center start\">\r\n                        <table mat-table [dataSource]=\"mc.materials\" class=\"mat-elevation-z0\" fxFlex=\"100\">\r\n                            <!-- Position Column -->\r\n                            <ng-container matColumnDef=\"name\">\r\n                              <!-- <th mat-header-cell *matHeaderCellDef> No. </th> -->\r\n                              <td mat-cell *matCellDef=\"let element\"> {{element.name}} </td>\r\n                            </ng-container>\r\n\r\n                            <!-- Name Column -->\r\n                            <ng-container matColumnDef=\"value\">\r\n                              <!-- <th mat-header-cell *matHeaderCellDef> Name </th> -->\r\n                              <td mat-cell *matCellDef=\"let element\"> {{element.value}} </td>\r\n                            </ng-container>\r\n\r\n                            <!-- Weight Column -->\r\n                            <ng-container matColumnDef=\"units\">\r\n                              <!-- <th mat-header-cell *matHeaderCellDef> Weight </th> -->\r\n                              <td mat-cell *matCellDef=\"let element\"> {{element.units}} </td>\r\n                            </ng-container>\r\n\r\n                            <!-- <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr> -->\r\n                            <tr mat-row *matRowDef=\"let row; columns: ['name', 'value', 'units'];\"></tr>\r\n                          </table>\r\n\r\n                      <!-- <div class=\"item mc-materials\" fxFlex=\"33.3\">\r\n                        {{material.name}}\r\n                      </div>\r\n                      <div class=\"item mc-materials\" fxFlex=\"33.3\">\r\n                        {{material.value}}\r\n                      </div>\r\n                      <div class=\"item mc-materials\" fxFlex=\"33.3\">\r\n                        {{material.units}}\r\n                      </div> -->\r\n                    </div>\r\n                   </div>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"50\" fxLayoutAlign=\"center center\">\r\n                    <img class=\"responsive-image mat-elevation-z10\" src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_535,h_350,f_auto/' +\r\n                      mc.mainImage}}\"\r\n                      alt=\"master class image\">\r\n                </div>\r\n\r\n              </div>\r\n\r\n            <div class=\"row padding-bottom-3\" fxLayout=\"row\" *ngFor=\"let step of mc.steps\">\r\n               <div class=\"cell\" fxFlex=\"100\" fxLayoutAlign=\"center center\">\r\n                  <img class=\"responsive-image mat-elevation-z10\" src=\"{{\r\n                    config.imgPath +\r\n                    config.cloudinary.cloud_name +\r\n                    '/c_fill,w_535,h_350,f_auto/' +\r\n                    step.pic}}\"\r\n                    alt=\"master class image\">\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"5\"></div>\r\n                <div class=\"cell\" fxFlex=\"90\" fxLayoutAlign=\"center center\">\r\n                  <p class=\"mat-body text-justify muted\">\r\n                      {{step.description}}\r\n                  </p>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"5\"></div>\r\n\r\n            </div>\r\n\r\n          </mat-card-content>\r\n          <mat-card-actions align=\"start\">\r\n              <!-- <button mat-button (click)=\"onAction1\">Action1</button> -->\r\n\r\n          </mat-card-actions>\r\n          <app-comments *ngIf=\"config.social.showComments\" [parent_id]=\"mc._id\" [parentCategory]=\"'mc'\"></app-comments>\r\n\r\n          <mat-card-footer>\r\n\r\n          </mat-card-footer>\r\n      </mat-card>\r\n      </div>\r\n\r\n\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+
+/***/ }),
+
+/***/ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.scss":
+/*!**********************************************************************************!*\
+  !*** ./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.scss ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.ts":
+/*!********************************************************************************!*\
+  !*** ./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.ts ***!
+  \********************************************************************************/
+/*! exports provided: McsItemDetailComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McsItemDetailComponent", function() { return McsItemDetailComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
+/* harmony import */ var src_app_app_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/app.config */ "./src/app/app.config.ts");
+/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+var McsItemDetailComponent = /** @class */ (function () {
+    function McsItemDetailComponent(route, router, mcService, userService, socialService) {
+        this.route = route;
+        this.router = router;
+        this.mcService = mcService;
+        this.userService = userService;
+        this.socialService = socialService;
+        this.config = src_app_app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
+    }
+    McsItemDetailComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.userService.getUserLocal()
+            .subscribe(function (user) {
+            _this.user = user;
+        }, function (err) { return console.log('err', err); });
+        this.route.params.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])(function (params) {
+            return _this.mcService.getMcByIdAndIncViews(params._id);
+        }))
+            .subscribe(function (result) {
+            _this.mc = result;
+        }, function (err) { return console.log('err', err); });
+    };
+    McsItemDetailComponent.prototype.allowTo = function (permitedRole) {
+        return this.userService.allowTo(permitedRole);
+    };
+    McsItemDetailComponent.prototype.goToMcs = function () {
+        this.router.navigate(['/mcs', 'ch']);
+    };
+    McsItemDetailComponent.prototype.onLike = function (action, permission) {
+        var _this = this;
+        if (!permission) {
+            return;
+        }
+        else {
+            // action is true for like, is false for dislike
+            var parent_id_1 = this.mc._id;
+            var parentCategory = 'mc';
+            this.socialService.likesSet(parent_id_1, parentCategory, action)
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])(function (result) {
+                console.log('result', result);
+                if (result) {
+                    return _this.mcService.getMcById(parent_id_1);
+                }
+                else {
+                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(null);
+                }
+            }))
+                .subscribe(function (result) {
+                if (result) {
+                    console.log('result2', result);
+                    _this.mc = result;
+                }
+            }, function (err) { return console.log('err', err); });
+        }
+    };
+    McsItemDetailComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-mcs-item-detail',
+            template: __webpack_require__(/*! ./mcs-item-detail.component.html */ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.html"),
+            styles: [__webpack_require__(/*! ./mcs-item-detail.component.scss */ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
+            src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_4__["McService"],
+            src_app_services_user_service__WEBPACK_IMPORTED_MODULE_6__["UserService"],
+            src_app_services_social_service__WEBPACK_IMPORTED_MODULE_7__["SocialService"]])
+    ], McsItemDetailComponent);
+    return McsItemDetailComponent;
 }());
 
 
@@ -1742,7 +1997,7 @@ var Page404Component = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card>\r\n  <mat-card-content class=\"wrap\" fxLayot=\"row\">\r\n    <div *ngIf=\"product\" class=\"container-px0\" fxFlex=\"100\">\r\n      <div class=\"row\" fxLayout=\"row\">\r\n          <section class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\">\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                <mat-icon>thumb_up_alt</mat-icon>\r\n                <span>{{product.likes}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                  <mat-icon>thumb_down_alt</mat-icon>\r\n                  <span>{{product.dislikes}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showViews\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>remove_red_eye</mat-icon>\r\n                  <span>{{product.views}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showComments\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>comment</mat-icon>\r\n                  <span>{{product.comments.length}}</span>\r\n              </div>\r\n          </section>\r\n        </div>\r\n    </div>\r\n\r\n    <div class=\"mat-card-wide-image\" fxLayout=\"row\">\r\n\r\n      <!-- product level (no children)-->\r\n      <div *ngIf=\"product\" fxFlex=\"100\">\r\n\r\n        <img *ngIf=\"media.isActive('gt-sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_400,h_200,f_auto/' +\r\n              product.menuImage}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_460,h_230,f_auto/' +\r\n              product.menuImage}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('xs')\" class=\"responsive-image-stretch\" src=\"{{\r\n            config.imgPath +\r\n            config.cloudinary.cloud_name +\r\n            '/c_fill,w_590,h_295,f_auto/' +\r\n            product.menuImage}}\"\r\n             alt=\"Image\">\r\n      </div>\r\n\r\n      <!-- catalog level -->\r\n      <div *ngIf=\"child\" fxFlex=\"100\">\r\n        <img *ngIf=\"media.isActive('gt-sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_400,h_200,f_auto/' +\r\n              child.assets[0]}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_460,h_230,f_auto/' +\r\n              child.assets[0]}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('xs')\" class=\"responsive-image-stretch\" src=\"{{\r\n            config.imgPath +\r\n            config.cloudinary.cloud_name +\r\n            '/c_fill,w_590,h_295,f_auto/' +\r\n            child.assets[0]}}\"\r\n             alt=\"Image\">\r\n      </div>\r\n    </div>\r\n\r\n    <!-- product level (no children)-->\r\n    <section *ngIf=\"!child && category_id && product\" class=\"row product-brief-section\" fxFlex=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <h2 class=\"mat-h2\">{{product.name}}</h2>\r\n      </div>\r\n      <div class=\"cell product-brief-description\" fxFlex=\"100\" fxLayoutAlign=\"center center\">\r\n        <p class=\"mat-body\">{{product.description}}</p>\r\n      </div>\r\n    </section>\r\n    <section *ngIf=\"!child && category_id && product\" class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\">\r\n      <div class=\"item text-align-center\" fxFlex>\r\n        <mat-icon>swap_horiz</mat-icon>\r\n        <span> {{product?.dimensions?.width}}</span>\r\n        <span> см</span>\r\n      </div>\r\n      <div class=\"item text-align-center\" fxFlex>\r\n        <mat-icon>swap_vert</mat-icon>\r\n        <span> {{product?.dimensions?.height}}</span>\r\n        <span> см</span>\r\n      </div>\r\n      </section>\r\n\r\n  </mat-card-content>\r\n  <mat-card-actions fxLayout=\"row\">\r\n    <div fxFlex>\r\n      <!--using with catalog, when no children (product level)\r\n      category_id for breadcrumb-->\r\n      <!-- <a *ngIf=\"!child && category_id\" mat-button\r\n         [routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', product._id],\r\n         breadcrumb: [category_id, 'details', product._id]}}]\"\r\n         [queryParams]=\"{name: product.name}\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{product.name}}\r\n      </a> -->\r\n      <!--using with dashboard-->\r\n      <a *ngIf=\"!child && !category_id\" mat-button\r\n         [routerLink]=\"['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{product.name}}\r\n      </a>\r\n      <!--using with catalog, when children present-->\r\n      <a *ngIf=\"child\" mat-button\r\n         [routerLink]=\"['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{child.name}}\r\n      </a>\r\n    </div>\r\n  </mat-card-actions>\r\n</mat-card>\r\n"
+module.exports = "<mat-card id=\"product-item-brief\">\r\n  <mat-card-content class=\"wrap\" fxLayot=\"row\">\r\n    <!-- <div *ngIf=\"product\" class=\"container-px0\" fxFlex=\"100\">\r\n      <div class=\"row\" fxLayout=\"row\">\r\n          <section class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\">\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                <mat-icon>thumb_up_alt</mat-icon>\r\n                <span>{{product.likes}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                  <mat-icon>thumb_down_alt</mat-icon>\r\n                  <span>{{product.dislikes}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showViews\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>remove_red_eye</mat-icon>\r\n                  <span>{{product.views}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showComments\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>comment</mat-icon>\r\n                  <span>{{product.comments.length}}</span>\r\n              </div>\r\n          </section>\r\n        </div>\r\n    </div> -->\r\n\r\n    <div class=\"mat-card-wide-image\" fxLayout=\"row\">\r\n\r\n      <!-- product level (no children)-->\r\n      <div *ngIf=\"product\" fxFlex=\"100\">\r\n\r\n        <img *ngIf=\"media.isActive('gt-sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_400,h_200,f_auto/' +\r\n              product.menuImage}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_460,h_230,f_auto/' +\r\n              product.menuImage}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('xs')\" class=\"responsive-image-stretch\" src=\"{{\r\n            config.imgPath +\r\n            config.cloudinary.cloud_name +\r\n            '/c_fill,w_590,h_295,f_auto/' +\r\n            product.menuImage}}\"\r\n             alt=\"Image\">\r\n      </div>\r\n\r\n      <!-- catalog level -->\r\n      <div *ngIf=\"child\" fxFlex=\"100\">\r\n        <img *ngIf=\"media.isActive('gt-sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_400,h_200,f_auto/' +\r\n              child.assets[0]}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_460,h_230,f_auto/' +\r\n              child.assets[0]}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('xs')\" class=\"responsive-image-stretch\" src=\"{{\r\n            config.imgPath +\r\n            config.cloudinary.cloud_name +\r\n            '/c_fill,w_590,h_295,f_auto/' +\r\n            child.assets[0]}}\"\r\n             alt=\"Image\">\r\n      </div>\r\n    </div>\r\n\r\n    <!-- product level (no children)-->\r\n    <section *ngIf=\"!child && product\" class=\"row product-brief-section\" fxFlex=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <h2 class=\"mat-h2 title\">{{product.name}}</h2>\r\n       </div>\r\n      <div class=\"cell product-brief-description\" fxFlex=\"100\" fxLayoutAlign=\"center center\">\r\n        <p class=\"mat-body\">{{product.description}}</p>\r\n      </div>\r\n    </section>\r\n    <section *ngIf=\"!child && product\" class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\">\r\n      <div class=\"item text-align-center\" fxFlex>\r\n        <mat-icon>swap_horiz</mat-icon>\r\n        <span> {{product?.dimensions?.width}}</span>\r\n        <span> см</span>\r\n      </div>\r\n      <div class=\"item text-align-center\" fxFlex>\r\n        <mat-icon>swap_vert</mat-icon>\r\n        <span> {{product?.dimensions?.height}}</span>\r\n        <span> см</span>\r\n      </div>\r\n      </section>\r\n\r\n  </mat-card-content>\r\n  <mat-card-actions fxLayout=\"row\">\r\n    <div fxFlex>\r\n      <!--using with catalog, when no children (product level)\r\n      category_id for breadcrumb-->\r\n      <!-- <a *ngIf=\"!child && category_id\" mat-button\r\n         [routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', product._id],\r\n         breadcrumb: [category_id, 'details', product._id]}}]\"\r\n         [queryParams]=\"{name: product.name}\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{product.name}}\r\n      </a> -->\r\n      <!--using with dashboard-->\r\n      <!-- <a *ngIf=\"!child && !category_id\" mat-button\r\n         [routerLink]=\"['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{product.name}}\r\n      </a> -->\r\n      <!--using with catalog, when children present-->\r\n      <a *ngIf=\"child\" mat-button\r\n         [routerLink]=\"['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{child.name}}\r\n      </a>\r\n    </div>\r\n  </mat-card-actions>\r\n</mat-card>\r\n"
 
 /***/ }),
 
@@ -1953,7 +2208,7 @@ var ProductItemDetailComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\n    <div class=\"cell\">\n      <p class=\"muted\">height {{height}}</p>\n      <p class=\"muted\"> width {{width}}</p>\n  \n    </div>\n  <div class=\"w393\">393</div>\n  <div class=\"w360\">360</div>\n  <div class=\"w350\">350</div>\n  <div class=\"w100\">100</div>\n  <div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\n  <div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\n"
+module.exports = "<div>\r\n    <div class=\"cell\">\r\n      <p class=\"muted\">height {{height}}</p>\r\n      <p class=\"muted\"> width {{width}}</p>\r\n  \r\n    </div>\r\n  <div class=\"w393\">393</div>\r\n  <div class=\"w360\">360</div>\r\n  <div class=\"w350\">350</div>\r\n  <div class=\"w100\">100</div>\r\n  <div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\r\n  <div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\r\n"
 
 /***/ }),
 
@@ -2047,12 +2302,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _about_about_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./about/about.component */ "./src/app/components/shared/about/about.component.ts");
 /* harmony import */ var _comments_comments_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./comments/comments.component */ "./src/app/components/shared/comments/comments.component.ts");
 /* harmony import */ var _screen_test_screen_test_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./screen-test/screen-test.component */ "./src/app/components/shared/screen-test/screen-test.component.ts");
+/* harmony import */ var _mcs_item_brief_mcs_item_brief_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./mcs-item-brief/mcs-item-brief.component */ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.ts");
+/* harmony import */ var _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./mcs-item-detail/mcs-item-detail.component */ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -2086,7 +2345,7 @@ var SharedModule = /** @class */ (function () {
                 _angular_router__WEBPACK_IMPORTED_MODULE_4__["RouterModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ReactiveFormsModule"],
                 ng_recaptcha__WEBPACK_IMPORTED_MODULE_12__["RecaptchaModule"],
-                ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_13__["RecaptchaFormsModule"]
+                ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_13__["RecaptchaFormsModule"],
             ],
             exports: [
                 _page_404_page_404_component__WEBPACK_IMPORTED_MODULE_2__["Page404Component"],
@@ -2099,6 +2358,8 @@ var SharedModule = /** @class */ (function () {
                 _footer_footer_component__WEBPACK_IMPORTED_MODULE_17__["FooterComponent"],
                 _content_content_component__WEBPACK_IMPORTED_MODULE_18__["ContentComponent"],
                 _comments_comments_component__WEBPACK_IMPORTED_MODULE_20__["CommentsComponent"],
+                _mcs_item_brief_mcs_item_brief_component__WEBPACK_IMPORTED_MODULE_22__["McsItemBriefComponent"],
+                _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_23__["McsItemDetailComponent"]
             ],
             declarations: [
                 _page_404_page_404_component__WEBPACK_IMPORTED_MODULE_2__["Page404Component"],
@@ -2116,6 +2377,8 @@ var SharedModule = /** @class */ (function () {
                 _about_about_component__WEBPACK_IMPORTED_MODULE_19__["AboutComponent"],
                 _comments_comments_component__WEBPACK_IMPORTED_MODULE_20__["CommentsComponent"],
                 _screen_test_screen_test_component__WEBPACK_IMPORTED_MODULE_21__["ScreenTestComponent"],
+                _mcs_item_brief_mcs_item_brief_component__WEBPACK_IMPORTED_MODULE_22__["McsItemBriefComponent"],
+                _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_23__["McsItemDetailComponent"]
             ],
         })
     ], SharedModule);
@@ -2461,6 +2724,241 @@ var CatalogService = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/services/mc.service.ts":
+/*!****************************************!*\
+  !*** ./src/app/services/mc.service.ts ***!
+  \****************************************/
+/*! exports provided: McService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McService", function() { return McService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
+/* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user.service */ "./src/app/services/user.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+var McService = /** @class */ (function () {
+    function McService(http, userService) {
+        this.http = http;
+        this.userService = userService;
+    }
+    /**
+     *
+     *
+     * @returns {Observable<[IMc]>}
+     * @memberof McService
+     */
+    McService.prototype.getMainPageMcs = function () {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            }),
+        };
+        return this.http.get('api/mc/get-main-page-mcs', httpOptions);
+    };
+    // /**
+    //  *
+    //  *
+    //  * @returns {Observable<IResponse>}
+    //  * @memberof McService
+    //  */
+    // getMcs(): Observable<IResponse> {
+    //   const httpOptions = {
+    //     headers: new HttpHeaders({
+    //       'Content-Type': 'application/json',
+    //     }),
+    //     // params: new HttpParams().set('category', category)
+    //   };
+    //   return this.http.get<IResponse>(
+    //     'api/mc/get-mcs',
+    //     httpOptions
+    //   );
+    // }
+    McService.prototype.mcUpsert = function (mc) {
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+                'Authorization': token
+            })
+        };
+        return this.http.post('api/mc/upsert', mc, httpOptions);
+    };
+    /**
+     *
+     *
+     * @param {string} _id
+     * @returns {Observable<IMc>}
+     * @memberof McService
+     */
+    McService.prototype.getMcById = function (_id) {
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }),
+        };
+        return this.http.get('api/mc/get-mc-by-id/' + _id, httpOptions);
+    };
+    /**
+   *
+   *
+   * @param {string} _id
+   * @returns {Observable<IMc>}
+   * @memberof McService
+   */
+    McService.prototype.getMcByIdAndIncViews = function (_id) {
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }),
+        };
+        return this.http.get('api/mc/get-mc-by-id-and-inc-views/' + _id, httpOptions);
+    };
+    /**
+     *
+     *
+     * @param {string} parent
+     * @param {boolean} [displayFilter]
+     * @returns {Observable<IMc[]>}
+     * @memberof McService
+     */
+    McService.prototype.getMcsByParent = function (parent, displayFilter) {
+        if (!displayFilter) {
+            displayFilter = false;
+        }
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            }),
+            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]()
+                .set('parent', parent)
+                .set('displayFilter', displayFilter + '')
+        };
+        return this.http.get('api/mc/get-mcs-by-parent', httpOptions);
+    };
+    /**
+     *  return all descendants
+     *
+     * @param {string} [parent='products']
+     * @param {string} sort
+     * @param {number} [sortOrder=1]
+     * @param {number} [skip=0]
+     * @param {number} [limit=10]
+     * @returns {Observable<IMc[]>}
+     * @memberof McService
+     */
+    McService.prototype.getMcsByFilter = function (parent, sort, sortOrder, skip, limit, noMoreChildren) {
+        if (parent === void 0) { parent = 'products'; }
+        if (sortOrder === void 0) { sortOrder = 1; }
+        if (skip === void 0) { skip = 0; }
+        if (limit === void 0) { limit = 10; }
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+                'Authorization': token
+            }),
+            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: {
+                    parent: parent, sort: sort, sortOrder: sortOrder + '', skip: skip + '', limit: limit + '', noMoreChildren: noMoreChildren
+                } }),
+        };
+        return this.http.get('api/mc/get-mcs-by-filter', httpOptions);
+    };
+    /**
+     *
+     *
+     * @param {File} file
+     * @param {string} _id
+     * @returns {Observable<string>}
+     * @memberof McService
+     */
+    McService.prototype.addMainImage = function (file, _id) {
+        var formData = new FormData();
+        formData.append('file', file, file.name);
+        formData.append('_id', _id);
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Authorization': token
+            })
+        };
+        return this.http.post('api/mc/add-main-image', formData, httpOptions);
+    };
+    /**
+     *
+     *
+     * @param {File} file
+     * @param {string} _id
+     * @returns {Observable<string>}
+     * @memberof McService
+     */
+    McService.prototype.addStepsPic = function (file, _id) {
+        var formData = new FormData();
+        formData.append('file', file, file.name);
+        formData.append('_id', _id);
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Authorization': token
+            })
+        };
+        return this.http.post('api/mc/add-steps-pic', formData, httpOptions);
+    };
+    /**
+     *
+     *
+     * @returns {Observable<{_id: string}[]>}
+     * @memberof McService
+     */
+    McService.prototype.getSkuList = function () {
+        var token = this.userService.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+                'Authorization': token
+            })
+        };
+        return this.http.get('api/mc/get-sku-list', httpOptions);
+    };
+    McService.prototype.mcLocalSetFilter = function (filter) {
+        localStorage.setItem('mcQueryParams', JSON.stringify(filter));
+    };
+    McService.prototype.mcLocalGetFilter = function () {
+        return JSON.parse(localStorage.getItem('mcQueryParams'));
+    };
+    McService.prototype.mcLocalRemoveFilter = function () {
+        localStorage.removeItem('mcQueryParams');
+    };
+    McService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+            _user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"]])
+    ], McService);
+    return McService;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/product.service.ts":
 /*!*********************************************!*\
   !*** ./src/app/services/product.service.ts ***!
@@ -2570,14 +3068,6 @@ var ProductService = /** @class */ (function () {
         };
         return this.http.get('api/product/get-products', httpOptions);
     };
-    ProductService.prototype.getMainPageProducts = function () {
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-            }),
-        };
-        return this.http.get('api/product/get-main-page-products', httpOptions);
-    };
     ProductService.prototype.productAddImage = function (file, sku) {
         console.log('file', file);
         var formData = new FormData();
@@ -2668,6 +3158,20 @@ var ProductService = /** @class */ (function () {
             })
         };
         return this.http.post('api/product/add-techassets', formData, httpOptions);
+    };
+    /**
+     *
+     *
+     * @returns {Observable<[IProduct]>}
+     * @memberof ProductService
+     */
+    ProductService.prototype.getMainPageProducts = function () {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            }),
+        };
+        return this.http.get('api/product/get-main-page-products', httpOptions);
     };
     /**
      *

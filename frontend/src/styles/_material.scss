@@ -190,7 +190,8 @@ $custom-color-primary: mat-palette($mat-custom-color1);
 $custom-color-accent: mat-palette($mat-custom-color2);
 $custom-color-warn: mat-palette($mat-custom-warn);
 
-$custom-color-theme: mat-dark-theme($custom-color-primary, $custom-color-accent, $custom-color-warn);
+$dark-custom-color-theme: mat-dark-theme($custom-color-primary, $custom-color-accent, $custom-color-warn);
+$light-custom-color-theme: mat-light-theme($custom-color-primary, $custom-color-accent, $custom-color-warn);
 
 $mainTheme: $light-theme;
 
@@ -204,25 +205,25 @@ $mainTheme: $light-theme;
   $background: map-get($theme, background);
   
   #toolbar, #footer, #breadcrumb {
-        color: mat-color($foreground, text);
-        background-color: mat-color($primary);
-        a.link {
-          &.active {
-            span.type1 {
-              border-bottom-color: mat-color($primary, 300);
-            }
-          }
-          span.type1 {
-            border-bottom: 1px solid mat-color($foreground, text);
-            &:hover {
-              border-bottom: 1px solid mat-color($primary, 200);
-            }
-          }
+    color: mat-color($foreground, text);
+    background-color: mat-color($primary);
+    a.link {
+      &.active {
+        span.type1 {
+          border-bottom-color: mat-color($primary, 300);
         }
       }
+      span.type1 {
+        border-bottom: 1px solid mat-color($foreground, text);
+        &:hover {
+          border-bottom: 1px solid mat-color($primary, 200);
+        }
+      }
+    }
+  }
 }
 
-@mixin landing-theme($theme) {
+@mixin type1-custom-theme($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
   $warn: map-get($theme, accent);
@@ -231,7 +232,7 @@ $mainTheme: $light-theme;
   #landing {
         color: mat-color($foreground, text);
         
-        .side-container {
+        .left-side-container {
           background-color: mat-color($accent);
           
         }
@@ -241,23 +242,43 @@ $mainTheme: $light-theme;
       }
 }
 
+@mixin type2-custom-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, accent);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+
+  #product-item-brief {
+    color: mat-color($foreground, text);
+    // background-color: mat-color($accent);
+  }
+}
+
 @mixin dark-components-theme($theme) {
   // @include toolbar-theme($theme);
 }
-
-@mixin custom-color-components-theme($theme) {
-  @include toolbar-theme($theme);
-
-  @include landing-theme($theme);
-}
-
 @mixin light-components-theme($theme) {
   // @include mat-sidenav-theme($theme);
 }
 
+@mixin dark-components-custom-theme($theme) {
+  @include toolbar-theme($theme);
+  @include type1-custom-theme($theme);
+
+}
+
+@mixin light-components-custom-theme($theme) {
+  @include type2-custom-theme($theme);
+
+}
+
+
 @include dark-components-theme($dark-theme);
 @include light-components-theme($light-theme);
-@include custom-color-components-theme($custom-color-theme);
+@include dark-components-custom-theme($dark-custom-color-theme);
+@include light-components-custom-theme($light-custom-color-theme);
+
 
 
 // coloring 

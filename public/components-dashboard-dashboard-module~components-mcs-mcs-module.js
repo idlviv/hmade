@@ -207,245 +207,6 @@ var McsFiltersComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.html":
-/*!*****************************************************************************!*\
-  !*** ./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.html ***!
-  \*****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<mat-card>\r\n  <mat-card-content>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"container-px0\" fxFlex=\"100\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <section class=\"cell-px0 social-feed-section mc-social\" fxFlex=\"100\" fxLayout=\"row\">\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center primary\" fxFlex>\r\n                <mat-icon>thumb_up_alt</mat-icon>\r\n                <span>{{mc.likes.likedByLength || 0}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center primary\" fxFlex>\r\n                  <mat-icon>thumb_down_alt</mat-icon>\r\n                  <span>{{mc.likes.dislikedByLength || 0}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showViews\" class=\"item text-align-center primary\" fxFlex>\r\n                  <mat-icon>remove_red_eye</mat-icon>\r\n                  <span>{{mc.views || 0}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showComments\" class=\"item text-align-center primary\" fxFlex>\r\n                  <mat-icon>comment</mat-icon>\r\n                  <span>{{mc.comments?.length || 0}}</span>\r\n              </div>\r\n               <div class=\"item text-align-center primary\" fxFlex>\r\n                  <mat-icon>calendar_today</mat-icon>\r\n                  <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>\r\n              </div>\r\n          </section>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"20\" fxLayoutAlign=\"center center\">\r\n          <img class=\"responsive-image\" src=\"{{\r\n            config.imgPath +\r\n            config.cloudinary.cloud_name +\r\n            '/c_fill,w_535,h_350,f_auto/' +\r\n            mc.mainImage}}\"\r\n            alt=\"master class image\">\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"80\">\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div class=\"cell\" fxFlex=\"100\" fxLayoutAlign=\"center\">\r\n              <h2 class=\"mat-h1\">\r\n                {{mc.name}}\r\n              </h2>\r\n            </div>\r\n          </div>\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div class=\"cell\" fxFlex=\"100\">\r\n              <p class=\"mat-body\">\r\n                {{mc.description}}\r\n              </p>\r\n            </div>\r\n          </div>\r\n\r\n      </div>\r\n    </div>\r\n  </mat-card-content>\r\n  <mat-card-actions>\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <section class=\"cell-px0\" fxFlex=\"100\" fxLayout=\"row\" fxLayoutAlign=\"space-around center\">\r\n          <div class=\"item text-align-center muted\" fxFlex>\r\n             <!-- (click)=\"goToMcsItemDetail(mc._id)\"> -->\r\n\r\n            <a mat-button\r\n              [routerLink]=\"['/mcs','show', mc._id]\"\r\n              [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n              Докладно\r\n           </a>\r\n\r\n          </div>\r\n          <div *ngIf=\"allowTo('manager')\" class=\"item text-align-center muted\" fxFlex>\r\n            <a mat-button (click)=\"editMcsItem(mc._id)\">\r\n              <mat-icon>edit</mat-icon>\r\n            </a>\r\n          </div>\r\n          <div *ngIf=\"allowTo('manager')\" class=\"item text-align-center muted\" fxFlex>\r\n            <a mat-button (click)=\"deleteMcsItem(mc._id)\">\r\n              <mat-icon>delete</mat-icon>\r\n            </a>\r\n          </div>\r\n\r\n        </section>\r\n    </div>\r\n  </mat-card-actions>\r\n</mat-card>\r\n\r\n"
-
-/***/ }),
-
-/***/ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.scss":
-/*!*****************************************************************************!*\
-  !*** ./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.scss ***!
-  \*****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.ts":
-/*!***************************************************************************!*\
-  !*** ./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.ts ***!
-  \***************************************************************************/
-/*! exports provided: McsItemBriefComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McsItemBriefComponent", function() { return McsItemBriefComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-var McsItemBriefComponent = /** @class */ (function () {
-    function McsItemBriefComponent(userService, router) {
-        this.userService = userService;
-        this.router = router;
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"];
-    }
-    McsItemBriefComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.userService.getUserLocal()
-            .subscribe(function (user) { return _this.user = user; });
-    };
-    McsItemBriefComponent.prototype.allowTo = function (permitedRole) {
-        return this.userService.allowTo(permitedRole);
-    };
-    McsItemBriefComponent.prototype.ngOnChanges = function (changes) {
-        var productChange = changes.mc;
-        // console.log('prev value: ', productChange.previousValue);
-        // console.log('got name: ', productChange.currentValue);
-        // console.log('productChange: ', productChange);
-        if (productChange) {
-            // console.log('simple changes product');
-            // this.getRecommendations();
-        }
-    };
-    McsItemBriefComponent.prototype.goToMcsItemDetail = function (_id) {
-        console.log("goToMcsItemDetail " + _id);
-        this.router.navigate(['/mcs', 'show', _id]);
-    };
-    McsItemBriefComponent.prototype.editMcsItem = function (_id) {
-        console.log("editMcsItem " + _id);
-        this.router.navigate(['/dashboard', 'mc', 'edit', _id]);
-    };
-    McsItemBriefComponent.prototype.deleteMcsItem = function (_id) {
-        console.log("deleteMcsItem " + _id);
-    };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Object)
-    ], McsItemBriefComponent.prototype, "mc", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Object)
-    ], McsItemBriefComponent.prototype, "parentCategory_id", void 0);
-    McsItemBriefComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-mcs-item-brief',
-            template: __webpack_require__(/*! ./mcs-item-brief.component.html */ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.html"),
-            styles: [__webpack_require__(/*! ./mcs-item-brief.component.scss */ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.scss")]
-        }),
-        __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"]])
-    ], McsItemBriefComponent);
-    return McsItemBriefComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.html":
-/*!*******************************************************************************!*\
-  !*** ./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.html ***!
-  \*******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "\r\n<div *ngIf='mc' class=\"container\">\r\n  <div class=\"app-container\">\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <mat-card>\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                  <div class=\"container-px0\" fxFlex=\"100\">\r\n                    <div class=\"row\" fxLayout=\"row\">\r\n                      <section class=\"cell-px0 social-feed-section mc-social\" fxFlex=\"100\" fxLayout=\"row\">\r\n                          <div class=\"item text-align-center\" fxFlex>\r\n                              <mat-icon class=\"primary hover-cursor\" (click)=\"goToMcs()\">reply_all</mat-icon>\r\n                          </div>\r\n                          <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                            <mat-icon [ngClass]=\"{\r\n                              'muted-strong': !(mc.likes.canLike && allowTo('user')), \r\n                              'primary': mc.likes.canLike && allowTo('user'), \r\n                              'hover-cursor': mc.likes.canLike && allowTo('user')}\"\r\n                            (click)=\"onLike(true, mc.likes.canLike && allowTo('user'))\">thumb_up_alt</mat-icon>\r\n                            <span>{{mc.likes.likedByLength || 0}}</span>\r\n                          </div>\r\n                          <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                            <mat-icon [ngClass]=\"{\r\n                              'muted-strong': !(mc.likes.canDislike && allowTo('user')), \r\n                              'primary': mc.likes.canDislike && allowTo('user'), \r\n                              'hover-cursor': mc.likes.canDislike && allowTo('user')}\" \r\n                            (click)=\"onLike(false, mc.likes.canDislike && allowTo('user'))\">thumb_down_alt</mat-icon>\r\n                            <span>{{mc.likes.dislikedByLength || 0}}</span>\r\n                          </div>\r\n                          <div *ngIf=\"config.social.showViews\" class=\"item text-align-center primary\" fxFlex>\r\n                              <mat-icon>remove_red_eye</mat-icon>\r\n                              <span>{{mc.views || 0}}</span>\r\n                          </div>\r\n                          <div *ngIf=\"config.social.showComments\" class=\"item text-align-center primary\" fxFlex>\r\n                              <mat-icon>comment</mat-icon>\r\n                              <span>{{mc.comments?.length || 0}}</span>\r\n                          </div>\r\n                          <div class=\"item text-align-center primary\" fxFlex>\r\n                              <mat-icon>calendar_today</mat-icon>\r\n                              <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>\r\n                          </div>\r\n                      </section>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n          <h1 class=\"mat-display-1\">{{mc.name}}</h1>\r\n          <mat-card-header>\r\n              <!-- <mat-card-title>{{mc.name}}</mat-card-title> -->\r\n              <mat-card-subtitle class=\"text-justify\">{{mc.description}}</mat-card-subtitle>\r\n          </mat-card-header>\r\n\r\n          <mat-card-content>\r\n              <div class=\"row padding-bottom-3\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"50\">\r\n                  <div class=\"row\" fxLayout=\"row\">\r\n                    <div class=\"cell\" fxFlex=\"100\" fxLayoutAlign=\"center start\">\r\n                        <table mat-table [dataSource]=\"mc.materials\" class=\"mat-elevation-z0\" fxFlex=\"100\">\r\n                            <!-- Position Column -->\r\n                            <ng-container matColumnDef=\"name\">\r\n                              <!-- <th mat-header-cell *matHeaderCellDef> No. </th> -->\r\n                              <td mat-cell *matCellDef=\"let element\"> {{element.name}} </td>\r\n                            </ng-container>\r\n\r\n                            <!-- Name Column -->\r\n                            <ng-container matColumnDef=\"value\">\r\n                              <!-- <th mat-header-cell *matHeaderCellDef> Name </th> -->\r\n                              <td mat-cell *matCellDef=\"let element\"> {{element.value}} </td>\r\n                            </ng-container>\r\n\r\n                            <!-- Weight Column -->\r\n                            <ng-container matColumnDef=\"units\">\r\n                              <!-- <th mat-header-cell *matHeaderCellDef> Weight </th> -->\r\n                              <td mat-cell *matCellDef=\"let element\"> {{element.units}} </td>\r\n                            </ng-container>\r\n\r\n                            <!-- <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr> -->\r\n                            <tr mat-row *matRowDef=\"let row; columns: ['name', 'value', 'units'];\"></tr>\r\n                          </table>\r\n\r\n                      <!-- <div class=\"item mc-materials\" fxFlex=\"33.3\">\r\n                        {{material.name}}\r\n                      </div>\r\n                      <div class=\"item mc-materials\" fxFlex=\"33.3\">\r\n                        {{material.value}}\r\n                      </div>\r\n                      <div class=\"item mc-materials\" fxFlex=\"33.3\">\r\n                        {{material.units}}\r\n                      </div> -->\r\n                    </div>\r\n                   </div>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"50\" fxLayoutAlign=\"center center\">\r\n                    <img class=\"responsive-image mat-elevation-z10\" src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_535,h_350,f_auto/' +\r\n                      mc.mainImage}}\"\r\n                      alt=\"master class image\">\r\n                </div>\r\n\r\n              </div>\r\n\r\n            <div class=\"row padding-bottom-3\" fxLayout=\"row\" *ngFor=\"let step of mc.steps\">\r\n               <div class=\"cell\" fxFlex=\"100\" fxLayoutAlign=\"center center\">\r\n                  <img class=\"responsive-image mat-elevation-z10\" src=\"{{\r\n                    config.imgPath +\r\n                    config.cloudinary.cloud_name +\r\n                    '/c_fill,w_535,h_350,f_auto/' +\r\n                    step.pic}}\"\r\n                    alt=\"master class image\">\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"5\"></div>\r\n                <div class=\"cell\" fxFlex=\"90\" fxLayoutAlign=\"center center\">\r\n                  <p class=\"mat-body text-justify muted\">\r\n                      {{step.description}}\r\n                  </p>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"5\"></div>\r\n\r\n            </div>\r\n\r\n          </mat-card-content>\r\n          <mat-card-actions align=\"start\">\r\n              <!-- <button mat-button (click)=\"onAction1\">Action1</button> -->\r\n\r\n          </mat-card-actions>\r\n          <app-comments *ngIf=\"config.social.showComments\" [parent_id]=\"mc._id\" [parentCategory]=\"'mc'\"></app-comments>\r\n\r\n          <mat-card-footer>\r\n\r\n          </mat-card-footer>\r\n      </mat-card>\r\n      </div>\r\n\r\n\r\n    </div>\r\n  </div>\r\n</div>\r\n"
-
-/***/ }),
-
-/***/ "./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.scss":
-/*!*******************************************************************************!*\
-  !*** ./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.scss ***!
-  \*******************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.ts":
-/*!*****************************************************************************!*\
-  !*** ./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.ts ***!
-  \*****************************************************************************/
-/*! exports provided: McsItemDetailComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McsItemDetailComponent", function() { return McsItemDetailComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
-/* harmony import */ var src_app_app_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/app.config */ "./src/app/app.config.ts");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
-/* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-var McsItemDetailComponent = /** @class */ (function () {
-    function McsItemDetailComponent(route, router, mcService, userService, socialService) {
-        this.route = route;
-        this.router = router;
-        this.mcService = mcService;
-        this.userService = userService;
-        this.socialService = socialService;
-        this.config = src_app_app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
-    }
-    McsItemDetailComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.userService.getUserLocal()
-            .subscribe(function (user) {
-            _this.user = user;
-        }, function (err) { return console.log('err', err); });
-        this.route.params.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])(function (params) {
-            return _this.mcService.getMcByIdAndIncViews(params._id);
-        }))
-            .subscribe(function (result) {
-            _this.mc = result;
-        }, function (err) { return console.log('err', err); });
-    };
-    McsItemDetailComponent.prototype.allowTo = function (permitedRole) {
-        return this.userService.allowTo(permitedRole);
-    };
-    McsItemDetailComponent.prototype.goToMcs = function () {
-        this.router.navigate(['/mcs', 'ch']);
-    };
-    McsItemDetailComponent.prototype.onLike = function (action, permission) {
-        var _this = this;
-        if (!permission) {
-            return;
-        }
-        else {
-            // action is true for like, is false for dislike
-            var parent_id_1 = this.mc._id;
-            var parentCategory = 'mc';
-            this.socialService.likesSet(parent_id_1, parentCategory, action)
-                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])(function (result) {
-                console.log('result', result);
-                if (result) {
-                    return _this.mcService.getMcById(parent_id_1);
-                }
-                else {
-                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(null);
-                }
-            }))
-                .subscribe(function (result) {
-                if (result) {
-                    console.log('result2', result);
-                    _this.mc = result;
-                }
-            }, function (err) { return console.log('err', err); });
-        }
-    };
-    McsItemDetailComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-mcs-item-detail',
-            template: __webpack_require__(/*! ./mcs-item-detail.component.html */ "./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.html"),
-            styles: [__webpack_require__(/*! ./mcs-item-detail.component.scss */ "./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.scss")]
-        }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
-            src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_4__["McService"],
-            src_app_services_user_service__WEBPACK_IMPORTED_MODULE_6__["UserService"],
-            src_app_services_social_service__WEBPACK_IMPORTED_MODULE_7__["SocialService"]])
-    ], McsItemDetailComponent);
-    return McsItemDetailComponent;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/components/mcs/mcs-list/mcs-list.component.html":
 /*!*****************************************************************!*\
   !*** ./src/app/components/mcs/mcs-list/mcs-list.component.html ***!
@@ -568,7 +329,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mcs_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./mcs.component */ "./src/app/components/mcs/mcs.component.ts");
 /* harmony import */ var _mcs_list_mcs_list_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./mcs-list/mcs-list.component */ "./src/app/components/mcs/mcs-list/mcs-list.component.ts");
 /* harmony import */ var _mcs_filters_mcs_filters_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./mcs-filters/mcs-filters.component */ "./src/app/components/mcs/mcs-filters/mcs-filters.component.ts");
-/* harmony import */ var _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./mcs-item-detail/mcs-item-detail.component */ "./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.ts");
+/* harmony import */ var _shared_mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../shared/mcs-item-detail/mcs-item-detail.component */ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -603,7 +364,7 @@ var mcsRoutes = [
     },
     {
         path: 'show/:_id',
-        component: _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_5__["McsItemDetailComponent"],
+        component: _shared_mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_5__["McsItemDetailComponent"],
     },
 ];
 var McsRoutingModule = /** @class */ (function () {
@@ -631,7 +392,7 @@ var McsRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container\">\n  <div class=\"container\">\n    <router-outlet name=\"mcsFilters\"></router-outlet>\n  </div>\n</div>\n<div class=\"app-container\">\n  <div class=\"container\">\n    <router-outlet></router-outlet>\n  </div>\n</div>\n"
+module.exports = "<div class=\"app-container\">\r\n  <div class=\"container\">\r\n    <router-outlet name=\"mcsFilters\"></router-outlet>\r\n  </div>\r\n</div>\r\n<div class=\"app-container\">\r\n  <div class=\"container\">\r\n    <router-outlet></router-outlet>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -705,17 +466,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mcs_list_mcs_list_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./mcs-list/mcs-list.component */ "./src/app/components/mcs/mcs-list/mcs-list.component.ts");
 /* harmony import */ var _mcs_filters_mcs_filters_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./mcs-filters/mcs-filters.component */ "./src/app/components/mcs/mcs-filters/mcs-filters.component.ts");
 /* harmony import */ var _mcs_routing_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./mcs-routing.module */ "./src/app/components/mcs/mcs-routing.module.ts");
-/* harmony import */ var _mcs_item_brief_mcs_item_brief_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./mcs-item-brief/mcs-item-brief.component */ "./src/app/components/mcs/mcs-item-brief/mcs-item-brief.component.ts");
-/* harmony import */ var _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./mcs-item-detail/mcs-item-detail.component */ "./src/app/components/mcs/mcs-item-detail/mcs-item-detail.component.ts");
-/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/components/shared/shared.module.ts");
+/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/components/shared/shared.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
-
 
 
 
@@ -735,242 +492,17 @@ var McsModule = /** @class */ (function () {
                 _mcs_routing_module__WEBPACK_IMPORTED_MODULE_7__["McsRoutingModule"],
                 _material_module__WEBPACK_IMPORTED_MODULE_2__["MaterialModule"],
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["ReactiveFormsModule"],
-                _shared_shared_module__WEBPACK_IMPORTED_MODULE_10__["SharedModule"],
+                _shared_shared_module__WEBPACK_IMPORTED_MODULE_8__["SharedModule"],
             ],
-            exports: [
-                _mcs_item_brief_mcs_item_brief_component__WEBPACK_IMPORTED_MODULE_8__["McsItemBriefComponent"],
-            ],
+            exports: [],
             declarations: [
                 _mcs_component__WEBPACK_IMPORTED_MODULE_4__["McsComponent"],
                 _mcs_list_mcs_list_component__WEBPACK_IMPORTED_MODULE_5__["McsListComponent"],
                 _mcs_filters_mcs_filters_component__WEBPACK_IMPORTED_MODULE_6__["McsFiltersComponent"],
-                _mcs_item_brief_mcs_item_brief_component__WEBPACK_IMPORTED_MODULE_8__["McsItemBriefComponent"],
-                _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_9__["McsItemDetailComponent"],
             ]
         })
     ], McsModule);
     return McsModule;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/services/mc.service.ts":
-/*!****************************************!*\
-  !*** ./src/app/services/mc.service.ts ***!
-  \****************************************/
-/*! exports provided: McService */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McService", function() { return McService; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm5/http.js");
-/* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./user.service */ "./src/app/services/user.service.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-var McService = /** @class */ (function () {
-    function McService(http, userService) {
-        this.http = http;
-        this.userService = userService;
-    }
-    // /**
-    //  *
-    //  *
-    //  * @returns {Observable<IResponse>}
-    //  * @memberof McService
-    //  */
-    // getMcs(): Observable<IResponse> {
-    //   const httpOptions = {
-    //     headers: new HttpHeaders({
-    //       'Content-Type': 'application/json',
-    //     }),
-    //     // params: new HttpParams().set('category', category)
-    //   };
-    //   return this.http.get<IResponse>(
-    //     'api/mc/get-mcs',
-    //     httpOptions
-    //   );
-    // }
-    McService.prototype.mcUpsert = function (mc) {
-        var token = this.userService.userLocalGetToken('token');
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-                'Authorization': token
-            })
-        };
-        return this.http.post('api/mc/upsert', mc, httpOptions);
-    };
-    /**
-     *
-     *
-     * @param {string} _id
-     * @returns {Observable<IMc>}
-     * @memberof McService
-     */
-    McService.prototype.getMcById = function (_id) {
-        var token = this.userService.userLocalGetToken('token');
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-                'Authorization': token
-            }),
-        };
-        return this.http.get('api/mc/get-mc-by-id/' + _id, httpOptions);
-    };
-    /**
-   *
-   *
-   * @param {string} _id
-   * @returns {Observable<IMc>}
-   * @memberof McService
-   */
-    McService.prototype.getMcByIdAndIncViews = function (_id) {
-        var token = this.userService.userLocalGetToken('token');
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-                'Authorization': token
-            }),
-        };
-        return this.http.get('api/mc/get-mc-by-id-and-inc-views/' + _id, httpOptions);
-    };
-    /**
-     *
-     *
-     * @param {string} parent
-     * @param {boolean} [displayFilter]
-     * @returns {Observable<IMc[]>}
-     * @memberof McService
-     */
-    McService.prototype.getMcsByParent = function (parent, displayFilter) {
-        if (!displayFilter) {
-            displayFilter = false;
-        }
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-            }),
-            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]()
-                .set('parent', parent)
-                .set('displayFilter', displayFilter + '')
-        };
-        return this.http.get('api/mc/get-mcs-by-parent', httpOptions);
-    };
-    /**
-     *  return all descendants
-     *
-     * @param {string} [parent='products']
-     * @param {string} sort
-     * @param {number} [sortOrder=1]
-     * @param {number} [skip=0]
-     * @param {number} [limit=10]
-     * @returns {Observable<IMc[]>}
-     * @memberof McService
-     */
-    McService.prototype.getMcsByFilter = function (parent, sort, sortOrder, skip, limit, noMoreChildren) {
-        if (parent === void 0) { parent = 'products'; }
-        if (sortOrder === void 0) { sortOrder = 1; }
-        if (skip === void 0) { skip = 0; }
-        if (limit === void 0) { limit = 10; }
-        var token = this.userService.userLocalGetToken('token');
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-                'Authorization': token
-            }),
-            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: {
-                    parent: parent, sort: sort, sortOrder: sortOrder + '', skip: skip + '', limit: limit + '', noMoreChildren: noMoreChildren
-                } }),
-        };
-        return this.http.get('api/mc/get-mcs-by-filter', httpOptions);
-    };
-    /**
-     *
-     *
-     * @param {File} file
-     * @param {string} _id
-     * @returns {Observable<string>}
-     * @memberof McService
-     */
-    McService.prototype.addMainImage = function (file, _id) {
-        var formData = new FormData();
-        formData.append('file', file, file.name);
-        formData.append('_id', _id);
-        var token = this.userService.userLocalGetToken('token');
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Authorization': token
-            })
-        };
-        return this.http.post('api/mc/add-main-image', formData, httpOptions);
-    };
-    /**
-     *
-     *
-     * @param {File} file
-     * @param {string} _id
-     * @returns {Observable<string>}
-     * @memberof McService
-     */
-    McService.prototype.addStepsPic = function (file, _id) {
-        var formData = new FormData();
-        formData.append('file', file, file.name);
-        formData.append('_id', _id);
-        var token = this.userService.userLocalGetToken('token');
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Authorization': token
-            })
-        };
-        return this.http.post('api/mc/add-steps-pic', formData, httpOptions);
-    };
-    /**
-     *
-     *
-     * @returns {Observable<{_id: string}[]>}
-     * @memberof McService
-     */
-    McService.prototype.getSkuList = function () {
-        var token = this.userService.userLocalGetToken('token');
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-                'Authorization': token
-            })
-        };
-        return this.http.get('api/mc/get-sku-list', httpOptions);
-    };
-    McService.prototype.mcLocalSetFilter = function (filter) {
-        localStorage.setItem('mcQueryParams', JSON.stringify(filter));
-    };
-    McService.prototype.mcLocalGetFilter = function () {
-        return JSON.parse(localStorage.getItem('mcQueryParams'));
-    };
-    McService.prototype.mcLocalRemoveFilter = function () {
-        localStorage.removeItem('mcQueryParams');
-    };
-    McService = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
-            providedIn: 'root'
-        }),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
-            _user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"]])
-    ], McService);
-    return McService;
 }());
 
 

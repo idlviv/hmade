@@ -110,17 +110,7 @@ export class ProductService {
     );
   }
 
-  getMainPageProducts() {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
-    return this.http.get<IResponse>(
-      'api/product/get-main-page-products',
-      httpOptions
-    );
-  }
+
 
   productAddImage(file, sku): Observable<IResponse> {
     console.log('file', file);
@@ -249,6 +239,24 @@ export class ProductService {
     return this.http.post<IResponse>(
       'api/product/add-techassets',
       formData,
+      httpOptions
+    );
+  }
+  
+  /**
+   *
+   *
+   * @returns {Observable<[IProduct]>}
+   * @memberof ProductService
+   */
+  getMainPageProducts(): Observable<[IProduct]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http.get<[IProduct]>(
+      'api/product/get-main-page-products',
       httpOptions
     );
   }

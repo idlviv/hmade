@@ -52,6 +52,9 @@ router.get('/social/get-comments',
 // router.get('/mc/get-mcs', // tmp
 //     mcController.getMcs
 // );
+router.get('/mc/get-main-page-mcs',
+    mcController.getMainPageMcs
+);
 
 router.get('/mc/get-mc-by-id/:_id',
     notGuardExtarctUser_id(),

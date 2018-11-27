@@ -1,0 +1,138 @@
+
+<div *ngIf='mc' class="container">
+  <div class="app-container">
+    <div class="row" fxLayout="row">
+      <div class="cell" fxFlex="100">
+        <mat-card>
+              <div class="row padding-bottom" fxLayout="row">
+                  <div class="container-px0" fxFlex="100">
+                    <div class="row" fxLayout="row">
+                      <section class="cell-px0 social-feed-section mc-social" fxFlex="100" fxLayout="row">
+                          <div class="item text-align-center" fxFlex>
+                              <mat-icon class="primary hover-cursor" (click)="goToMcs()">reply_all</mat-icon>
+                          </div>
+                          <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
+                            <mat-icon [ngClass]="{
+                              'muted-strong': !(mc.likes.canLike && allowTo('user')), 
+                              'primary': mc.likes.canLike && allowTo('user'), 
+                              'hover-cursor': mc.likes.canLike && allowTo('user')}"
+                            (click)="onLike(true, mc.likes.canLike && allowTo('user'))">thumb_up_alt</mat-icon>
+                            <span>{{mc.likes.likedByLength || 0}}</span>
+                          </div>
+                          <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
+                            <mat-icon [ngClass]="{
+                              'muted-strong': !(mc.likes.canDislike && allowTo('user')), 
+                              'primary': mc.likes.canDislike && allowTo('user'), 
+                              'hover-cursor': mc.likes.canDislike && allowTo('user')}" 
+                            (click)="onLike(false, mc.likes.canDislike && allowTo('user'))">thumb_down_alt</mat-icon>
+                            <span>{{mc.likes.dislikedByLength || 0}}</span>
+                          </div>
+                          <div *ngIf="config.social.showViews" class="item text-align-center primary" fxFlex>
+                              <mat-icon>remove_red_eye</mat-icon>
+                              <span>{{mc.views || 0}}</span>
+                          </div>
+                          <div *ngIf="config.social.showComments" class="item text-align-center primary" fxFlex>
+                              <mat-icon>comment</mat-icon>
+                              <span>{{mc.comments?.length || 0}}</span>
+                          </div>
+                          <div class="item text-align-center primary" fxFlex>
+                              <mat-icon>calendar_today</mat-icon>
+                              <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>
+                          </div>
+                      </section>
+                    </div>
+                  </div>
+                </div>
+          <h1 class="mat-display-1">{{mc.name}}</h1>
+          <mat-card-header>
+              <!-- <mat-card-title>{{mc.name}}</mat-card-title> -->
+              <mat-card-subtitle class="text-justify">{{mc.description}}</mat-card-subtitle>
+          </mat-card-header>
+
+          <mat-card-content>
+              <div class="row padding-bottom-3" fxLayout="row">
+                <div class="cell" fxFlex="50">
+                  <div class="row" fxLayout="row">
+                    <div class="cell" fxFlex="100" fxLayoutAlign="center start">
+                        <table mat-table [dataSource]="mc.materials" class="mat-elevation-z0" fxFlex="100">
+                            <!-- Position Column -->
+                            <ng-container matColumnDef="name">
+                              <!-- <th mat-header-cell *matHeaderCellDef> No. </th> -->
+                              <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                            </ng-container>
+
+                            <!-- Name Column -->
+                            <ng-container matColumnDef="value">
+                              <!-- <th mat-header-cell *matHeaderCellDef> Name </th> -->
+                              <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+                            </ng-container>
+
+                            <!-- Weight Column -->
+                            <ng-container matColumnDef="units">
+                              <!-- <th mat-header-cell *matHeaderCellDef> Weight </th> -->
+                              <td mat-cell *matCellDef="let element"> {{element.units}} </td>
+                            </ng-container>
+
+                            <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
+                            <tr mat-row *matRowDef="let row; columns: ['name', 'value', 'units'];"></tr>
+                          </table>
+
+                      <!-- <div class="item mc-materials" fxFlex="33.3">
+                        {{material.name}}
+                      </div>
+                      <div class="item mc-materials" fxFlex="33.3">
+                        {{material.value}}
+                      </div>
+                      <div class="item mc-materials" fxFlex="33.3">
+                        {{material.units}}
+                      </div> -->
+                    </div>
+                   </div>
+                </div>
+                <div class="cell" fxFlex="50" fxLayoutAlign="center center">
+                    <img class="responsive-image mat-elevation-z10" src="{{
+                      config.imgPath +
+                      config.cloudinary.cloud_name +
+                      '/c_fill,w_535,h_350,f_auto/' +
+                      mc.mainImage}}"
+                      alt="master class image">
+                </div>
+
+              </div>
+
+            <div class="row padding-bottom-3" fxLayout="row" *ngFor="let step of mc.steps">
+               <div class="cell" fxFlex="100" fxLayoutAlign="center center">
+                  <img class="responsive-image mat-elevation-z10" src="{{
+                    config.imgPath +
+                    config.cloudinary.cloud_name +
+                    '/c_fill,w_535,h_350,f_auto/' +
+                    step.pic}}"
+                    alt="master class image">
+                </div>
+                <div class="cell" fxFlex="5"></div>
+                <div class="cell" fxFlex="90" fxLayoutAlign="center center">
+                  <p class="mat-body text-justify muted">
+                      {{step.description}}
+                  </p>
+                </div>
+                <div class="cell" fxFlex="5"></div>
+
+            </div>
+
+          </mat-card-content>
+          <mat-card-actions align="start">
+              <!-- <button mat-button (click)="onAction1">Action1</button> -->
+
+          </mat-card-actions>
+          <app-comments *ngIf="config.social.showComments" [parent_id]="mc._id" [parentCategory]="'mc'"></app-comments>
+
+          <mat-card-footer>
+
+          </mat-card-footer>
+      </mat-card>
+      </div>
+
+
+    </div>
+  </div>
+</div>

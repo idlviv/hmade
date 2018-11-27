@@ -225,6 +225,15 @@ module.exports.getMcByIdAndIncViews = function(req, res, next) {
       .catch((err) => next(new DbError()));
 };
 
+module.exports.getMainPageMcs = function(req, res, next) {
+  McModel.find({onMainPage: true})
+      .then((result) =>
+        res.status(200)
+            .json(result)
+      )
+      .catch((err) => next(new DbError()));
+};
+
 module.exports.getMcsByFilter = function(req, res, next) {
   const parent = req.query.parent;
   const sort = req.query.sort;
