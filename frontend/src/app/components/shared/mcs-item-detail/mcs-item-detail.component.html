@@ -1,15 +1,16 @@
+<div *ngIf='mc' class="app-container-h mcs-item">
 
-<div *ngIf='mc' class="container">
-  <div class="app-container">
+<div class="container">
     <div class="row" fxLayout="row">
       <div class="cell" fxFlex="100">
-        <mat-card>
+        <!-- <mat-card> -->
               <div class="row padding-bottom" fxLayout="row">
-                  <div class="container-px0" fxFlex="100">
-                    <div class="row" fxLayout="row">
-                      <section class="cell-px0 social-feed-section mc-social" fxFlex="100" fxLayout="row">
+                  <!-- <div class="container-px0" fxFlex="100">
+                    <div class="row" fxLayout="row"> -->
+                      <div class="cell" fxFlex="100">
+                        <section class="mc-social" fxFlex="100" fxLayout="row">
                           <div class="item text-align-center" fxFlex>
-                              <mat-icon class="primary hover-cursor" (click)="goToMcs()">reply_all</mat-icon>
+                              <mat-icon class="hover-cursor" (click)="goToMcs()">reply_all</mat-icon>
                           </div>
                           <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
                             <mat-icon [ngClass]="{
@@ -27,29 +28,31 @@
                             (click)="onLike(false, mc.likes.canDislike && allowTo('user'))">thumb_down_alt</mat-icon>
                             <span>{{mc.likes.dislikedByLength || 0}}</span>
                           </div>
-                          <div *ngIf="config.social.showViews" class="item text-align-center primary" fxFlex>
+                          <div *ngIf="config.social.showViews" class="item text-align-center" fxFlex>
                               <mat-icon>remove_red_eye</mat-icon>
                               <span>{{mc.views || 0}}</span>
                           </div>
-                          <div *ngIf="config.social.showComments" class="item text-align-center primary" fxFlex>
+                          <div *ngIf="config.social.showComments" class="item text-align-center" fxFlex>
                               <mat-icon>comment</mat-icon>
                               <span>{{mc.comments?.length || 0}}</span>
                           </div>
-                          <div class="item text-align-center primary" fxFlex>
+                          <div class="item text-align-center" fxFlex>
                               <mat-icon>calendar_today</mat-icon>
                               <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>
                           </div>
-                      </section>
-                    </div>
-                  </div>
+                        </section>
+                      </div>
+                      
+                    <!-- </div>
+                  </div> -->
                 </div>
           <h1 class="mat-display-1">{{mc.name}}</h1>
-          <mat-card-header>
+          <!-- <mat-card-header> -->
               <!-- <mat-card-title>{{mc.name}}</mat-card-title> -->
-              <mat-card-subtitle class="text-justify">{{mc.description}}</mat-card-subtitle>
-          </mat-card-header>
+              <p class="mat-body-2 text-justify">{{mc.description}}</p>
+          <!-- </mat-card-header> -->
 
-          <mat-card-content>
+          <!-- <mat-card-content> -->
               <div class="row padding-bottom-3" fxLayout="row">
                 <div class="cell" fxFlex="50">
                   <div class="row" fxLayout="row">
@@ -119,17 +122,17 @@
 
             </div>
 
-          </mat-card-content>
-          <mat-card-actions align="start">
+          <!-- </mat-card-content> -->
+          <!-- <mat-card-actions align="start"> -->
               <!-- <button mat-button (click)="onAction1">Action1</button> -->
 
-          </mat-card-actions>
+          <!-- </mat-card-actions> -->
           <app-comments *ngIf="config.social.showComments" [parent_id]="mc._id" [parentCategory]="'mc'"></app-comments>
 
-          <mat-card-footer>
+          <!-- <mat-card-footer>
 
           </mat-card-footer>
-      </mat-card>
+      </mat-card> -->
       </div>
 
 

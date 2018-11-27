@@ -49,7 +49,16 @@ body {
   }
 }
 
-.app-container {
+// additional to container, add top and bottom padding
+.app-container-v {
+  @include gt-xs {
+    padding-top: 8px;
+    padding-bottom: 8px;
+  }
+}
+
+// additional to container, add left and right padding
+.app-container-h {
   @include gt-md {
     padding-left: 64px;
     padding-right: 64px;
@@ -1048,27 +1057,29 @@ td.mat-cell {
   height: 150px;
 }
 
-
-.social-feed-section {
-  font-size: 12px;
-  line-height: 20px;
-  .mat-icon {
-    font-size: 18px;
-    height: 20px;
-    width: 20px;
+.mcs-item {
+  .mc-social {
+    margin-bottom: 2rem;
+    font-size: 12px;
     line-height: 20px;
-    vertical-align: middle;
-    padding-right: 5px;
-  }
-  .span {
-    vertical-align: middle;
+    .mat-icon {
+      font-size: 18px;
+      height: 20px;
+      width: 20px;
+      line-height: 20px;
+      vertical-align: middle;
+      padding-right: 5px;
+    }
+    .span {
+      vertical-align: middle;
+    }
   }
 }
+// .social-feed-section {
+ 
+// }
 
-.mc-social {
-  margin-bottom: 2rem;
-  // background-color: $accent-light;
-}
+
 
 .mc-side {
   background-color: $background-color;
@@ -1087,6 +1098,8 @@ td.mat-cell {
     display: inline-block;
     vertical-align: middle;
 }
+
+
 
 #product-item-brief {
 

@@ -1,51 +1,46 @@
-<div id="landing">
-
-  <!-- <div id="banner">
-
-  </div> -->
-  <div class="container">
-    <div class="row" fxLayout="row">
-      <!-- <div class="cell top-container" fxFlex="100">
-
-      </div> -->
-      <div class="cell left-side-container" fxFlex="20">
-          <!-- <mat-card> -->
-              <div class="avatar-big-block">
-                <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo">
-              </div>
-              <!-- <mat-card-header> -->
-                <h3 class="mat-h3">Про себе</h3>
-              <!-- </mat-card-header> -->
-              <!-- <mat-card-content> -->
-                <p class="mat-body-1 text-justify">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.
-                Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,
-                шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..
-    
-                Ще багато можна писати про себе та мої захоплення, але згодом..
-    
-                  Завітайте у мою майстерню.</p>
-              <!-- </mat-card-content> -->
-            <!-- </mat-card> -->
-      </div>
-      <div class="cell main-container" fxFlex="60">
-        <div class="row" fxLayout="row">
-          <div class="cell" fxFlex="100">
-
-          </div>
-          <div *ngFor="let mc of mcs" class="cell" fxFlex="100">
-              <app-mcs-item-brief [mc]="mc"></app-mcs-item-brief>
+<div id="landing" class="container">
+  <div class="row" fxLayout="row">
+  
+    <div class="app-container-v left-side-container" fxFlex="20">
+      <div class="container">
+        <div class="row">
+          <div class="cell">
+            <div class="avatar-big-block">
+              <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo">
             </div>
-        </div>
-      </div>
-      <div class="cell right-side-container" fxFlex="20">
-          <div class="row" fxLayout="row">
-            <div *ngFor="let product of products" class="cell" fxFlex="100">
-              <app-product-item-brief [product]="product"></app-product-item-brief>
-            </div>
+              <h3 class="mat-h3">Про себе</h3>
+              <p class="mat-body-1 text-justify">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.
+              Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,
+              шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..
+              Ще багато можна писати про себе та мої захоплення, але згодом..
+                Завітайте у мою майстерню.</p>
           </div>
         </div>
+      </div>
     </div>
+
+    <div class="app-container-v main-container" fxFlex="60">
+      <div class="container">
+        <div class="row" fxLayout="row">
+          <div *ngFor="let mc of mcs" class="cell" fxFlex="100">
+            <app-mcs-item-brief [mc]="mc"></app-mcs-item-brief>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="app-container-v right-side-container" fxFlex="20">
+        <div class="container">
+          <div class="row" fxLayout="row">
+              <div *ngFor="let product of products" class="cell" fxFlex="100">
+                  <app-product-item-brief [product]="product"></app-product-item-brief>
+                </div>
+          </div>
+        </div>
+      </div>
+
   </div>
+</div>
 
     <!-- <app-screen-test></app-screen-test>  -->
   
@@ -80,4 +75,3 @@
     </div>
   </div> -->
 
-</div>

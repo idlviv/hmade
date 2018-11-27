@@ -187,13 +187,13 @@ $dark-warn: mat-palette($mat-custom-warn);
 $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
 $custom-color-primary: mat-palette($mat-custom-color1);
-$custom-color-accent: mat-palette($mat-custom-color2);
+$custom-color-accent: mat-palette($mat-custom-color2, 500, 200, 700);
 $custom-color-warn: mat-palette($mat-custom-warn);
 
 $dark-custom-color-theme: mat-dark-theme($custom-color-primary, $custom-color-accent, $custom-color-warn);
 $light-custom-color-theme: mat-light-theme($custom-color-primary, $custom-color-accent, $custom-color-warn);
 
-$mainTheme: $light-theme;
+$mainTheme: $light-custom-color-theme;
 
 @include angular-material-theme($mainTheme);
 
@@ -229,18 +229,29 @@ $mainTheme: $light-theme;
   $warn: map-get($theme, accent);
   $foreground: map-get($theme, foreground);
   $background: map-get($theme, background);
-  #landing {
-        color: mat-color($foreground, text);
-        
+    #landing {
         .left-side-container {
+          color: mat-color($foreground, text);
           background-color: mat-color($accent);
-          
         }
         .main-container {
 
         }
       }
 }
+@mixin mcs-item-brief-theme($theme) {
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, accent);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+    .mcs-item {
+      .mc-social {
+        color: mat-color($foreground, text);
+        background-color: mat-color($accent, lighter);
+      }
+    }
+  }
 
 @mixin type2-custom-theme($theme) {
   $primary: map-get($theme, primary);
@@ -265,6 +276,7 @@ $mainTheme: $light-theme;
 @mixin dark-components-custom-theme($theme) {
   @include toolbar-theme($theme);
   @include type1-custom-theme($theme);
+  @include mcs-item-brief-theme($theme);
 
 }
 
