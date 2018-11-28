@@ -1,5 +1,6 @@
 const ApplicationError = require('../errors/applicationError');
 const log = require('../config/winston')(module);
+const GoogleStrategy = require('passport-google-oauth').OAuthStrategy;
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
@@ -15,6 +16,18 @@ module.exports = function(passport) {
   let jwtOptions = {};
   jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
   jwtOptions.secretOrKey = config.get('JWT_SECRET');
+
+  // passport.use(new GoogleStrategy({
+  //   consumerKey: GOOGLE_CONSUMER_KEY,
+  //   consumerSecret: GOOGLE_CONSUMER_SECRET,
+  //   callbackURL: 'http://www.example.com/auth/google/callback',
+  // },
+  // function(token, tokenSecret, profile, done) {
+  //   User.findOrCreate({googleId: profile.id}, function(err, user) {
+  //     return done(err, user);
+  //   });
+  // }
+  // ));
 
   passport.use('jwt',
       new JwtStrategy(jwtOptions, (jwtPayload, done) => {
