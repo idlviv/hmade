@@ -26,9 +26,12 @@ module.exports = function(passport) {
     callbackURL: '/api/user/auth/google/redirect',
   },
   function(accessToken, refreshToken, profile, done) {
+    console.log('profile', profile);
     User.findOrCreate({googleId: profile.id}, function(err, user) {
+
       return done(err, user);
     });
+
   }
   ));
 
