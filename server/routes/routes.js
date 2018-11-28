@@ -227,6 +227,15 @@ router.get('/user/login',
     userController.userLogin
 );
 
+router.get('/user/auth/google',
+    passport.authenticate('google', {scope: ['profile']}, {session: false})
+);
+router.get('/user/auth/google/redirect',
+    (req, res) => {
+      res.status(200).send('google');
+    }
+);
+
 router.get('/user/profile',
     passport.authenticate('jwt', {session: false}),
     userController.userProfile
