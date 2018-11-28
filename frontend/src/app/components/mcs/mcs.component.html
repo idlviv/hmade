@@ -1,10 +1,12 @@
-<div class="app-container-h">
+<div class="app-container-h app-container-v">
   <div class="container">
-    <router-outlet name="mcsFilters"></router-outlet>
-  </div>
-</div>
-<div class="app-container-h">
-  <div class="container">
-    <router-outlet></router-outlet>
+    <div class="row" FxLayout="row">
+      <div class="cell" fxFlex="100">
+        <router-outlet name="mcsFilters"></router-outlet>
+      </div>
+      <div class="cell" fxFlex="100">
+        <router-outlet></router-outlet>
+      </div>
+    </div>
   </div>
 </div>

@@ -247,9 +247,18 @@ $mainTheme: $light-custom-color-theme;
   $background: map-get($theme, background);
     .mcs-item {
       .mc-social {
-        color: mat-color($foreground, text);
-        background-color: mat-color($accent, lighter);
+        // &.cell {
+          color: mat-color($foreground, text);
+          background-color: mat-color($accent, lighter);
+        // }
+          .disabled {
+            color: mat-color($foreground, disabled-button);
+          }
+          .enabled {
+            color: mat-color($accent);
+          }
       }
+    
     }
   }
 

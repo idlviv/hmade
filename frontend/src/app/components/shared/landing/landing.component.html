@@ -1,6 +1,5 @@
 <div id="landing" class="container">
   <div class="row" fxLayout="row">
-  
     <div class="app-container-v left-side-container" fxFlex="20">
       <div class="container">
         <div class="row">
@@ -32,13 +31,12 @@
     <div class="app-container-v right-side-container" fxFlex="20">
         <div class="container">
           <div class="row" fxLayout="row">
-              <div *ngFor="let product of products" class="cell" fxFlex="100">
-                  <app-product-item-brief [product]="product"></app-product-item-brief>
-                </div>
+            <div *ngFor="let product of products" class="cell" fxFlex="100">
+              <app-product-item-brief [product]="product"></app-product-item-brief>
+            </div>
           </div>
         </div>
       </div>
-
   </div>
 </div>
 

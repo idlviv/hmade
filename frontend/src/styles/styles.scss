@@ -13,9 +13,9 @@ body {
   background-color: $background-color;
 }
 
-.mat-drawer-container {
-  background-color: transparent;
-}
+// .mat-drawer-container {
+//   background-color: transparent;
+// }
 
 .home-container {
   @include gt-md {
@@ -1059,7 +1059,8 @@ td.mat-cell {
 
 .mcs-item {
   .mc-social {
-    margin-bottom: 2rem;
+    margin-bottom: 16px;
+    padding: 4px 0;
     font-size: 12px;
     line-height: 20px;
     .mat-icon {

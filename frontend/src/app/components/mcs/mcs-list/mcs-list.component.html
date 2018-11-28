@@ -1,3 +1,7 @@
-<div *ngFor="let mc of mcs" class="row" fxLayout="row">
-  <app-mcs-item-brief [mc]="mc" class="cell" fxFlex="100"></app-mcs-item-brief>
-</div>
+  <div class="comtainer">
+    <div class="row" fxLayout="row">
+      <div *ngFor="let mc of mcs" class="cell" fxFlex="100">
+            <app-mcs-item-brief [mc]="mc"></app-mcs-item-brief>
+      </div>
+    </div>
+  </div>
