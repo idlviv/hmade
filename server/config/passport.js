@@ -20,20 +20,20 @@ module.exports = function(passport) {
   //   Strategies in Passport require a `verify` function, which accept
   //   credentials (in this case, an accessToken, refreshToken, and Google
   //   profile), and invoke a callback with a user object.
-  passport.use(new GoogleStrategy({
-    clientID: config.get('GOOGLE_CLIENT_ID'),
-    clientSecret: config.get('GOOGLE_CLIENT_SECRET'),
-    callbackURL: '/api/user/auth/google/redirect',
-  },
-  function(accessToken, refreshToken, profile, done) {
-    console.log('profile', profile);
-    User.findOrCreate({googleId: profile.id}, function(err, user) {
-
-      return done(err, user);
-    });
-
-  }
-  ));
+  passport.use(
+      new GoogleStrategy(
+          {
+            clientID: config.get('GOOGLE_CLIENT_ID'),
+            clientSecret: config.get('GOOGLE_CLIENT_SECRET'),
+            callbackURL: '/api/user/auth/google/redirect',
+          },
+          function(accessToken, refreshToken, profile, done) {
+            console.log('profile', profile);
+            User.findOrCreate({googleId: profile.id}, function(err, user) {
+              return done(err, user);
+            });
+          }
+      ));
 
   passport.use('jwt',
       new JwtStrategy(jwtOptions, (jwtPayload, done) => {

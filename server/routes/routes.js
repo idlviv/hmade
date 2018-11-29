@@ -49,6 +49,7 @@ router.get('/social/get-comments',
 /**
  * mc routes
  */
+
 // router.get('/mc/get-mcs', // tmp
 //     mcController.getMcs
 // );
@@ -243,6 +244,8 @@ router.get('/user/auth/google/redirect',
     passport.authenticate('google'),
     // 5.step: passport calls this callback with data
     (req, res) => {
+      log.debug('google redirect');
+
       res.status(200).send('google');
     }
 );

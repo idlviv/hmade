@@ -252,7 +252,7 @@ var UserDialogComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n  <div fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\r\n\r\n  <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\r\n    <!--<div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\" fxFlexOffset.gt-xs=\"20\" fxFlexOffset.gt-md=\"30\">-->\r\n\r\n  <div class=\"centered-container\">\r\n    <mat-card  class=\"form-block\">\r\n      <mat-card-content>\r\n        <div class=\"padding-bottom\" fxLayout fxLayoutAlign=\"center center\">\r\n          <img class=\"responsive-image\" src=\"./assets/images/hmade_logo_dark.svg\" width=\"367px\">\r\n        </div>\r\n        <form [formGroup]=\"userLoginForm\" (submit)=\"onUserLoginSubmit()\">\r\n\r\n          <div fxLayout=\"row\">\r\n            <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n              <mat-icon color=\"primary\">account_circle</mat-icon>\r\n            </div>\r\n            <mat-form-field>\r\n              <input matInput placeholder=\"Логін\" formControlName=\"login\" required>\r\n              <mat-error\r\n                *ngIf=\"userLoginForm.get('login').errors?.required &&\r\n                      userLoginForm.get('login').touched\">\r\n                      Введіть логін\r\n              </mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <div fxLayout=\"row\">\r\n            <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n              <mat-icon color=\"primary\">lock_outline</mat-icon>\r\n            </div>\r\n            <mat-form-field>\r\n              <input matInput placeholder=\"Пароль\" formControlName=\"password\"\r\n                     required [type]=\"hidePassword ? 'password' : 'text'\">\r\n              <mat-icon class=\"muted\" matSuffix (click)=\"hidePassword = !hidePassword\">\r\n                {{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>\r\n              <mat-error\r\n                *ngIf=\"userLoginForm.get('password').errors?.required &&\r\n                          userLoginForm.get('password').touched\">\r\n                Введіть пароль\r\n              </mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <div class=\"submit-button-wrapper\">\r\n            <!--<span fxFlex></span>-->\r\n            <button mat-raised-button class=\"full-width\" color=\"primary\" [disabled]=\"!userLoginForm.valid\">Увійти</button>\r\n          </div>\r\n          <div fxLayout=\"row\" class=\"links-wrapper\">\r\n            <!--<a [routerLink]=\"['/user/create']\">Зареєструватись</a>-->\r\n            <span fxFlex></span>\r\n            <a [routerLink]=\"['/user/password-reset']\">Забули пароль</a>\r\n          </div>\r\n        </form>\r\n      </mat-card-content>\r\n      <!--<img mat-card-image class=\"mat-card-image-bottom\" src=\"./assets/images/logo400x140-2.jpg\" alt=\"\">-->\r\n    </mat-card>\r\n  </div>\r\n\r\n\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n  <div fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\r\n\r\n  <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\r\n    <!--<div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\" fxFlexOffset.gt-xs=\"20\" fxFlexOffset.gt-md=\"30\">-->\r\n\r\n  <div class=\"centered-container\">\r\n    <mat-card  class=\"form-block\">\r\n      <mat-card-content>\r\n        <div class=\"padding-bottom\" fxLayout fxLayoutAlign=\"center center\">\r\n          <img class=\"responsive-image\" src=\"./assets/images/hmade_logo_dark.svg\" width=\"367px\">\r\n        </div>\r\n        <form [formGroup]=\"userLoginForm\" (submit)=\"onUserLoginSubmit()\">\r\n\r\n          <div fxLayout=\"row\">\r\n            <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n              <mat-icon color=\"primary\">account_circle</mat-icon>\r\n            </div>\r\n            <mat-form-field>\r\n              <input matInput placeholder=\"Логін\" formControlName=\"login\" required>\r\n              <mat-error\r\n                *ngIf=\"userLoginForm.get('login').errors?.required &&\r\n                      userLoginForm.get('login').touched\">\r\n                      Введіть логін\r\n              </mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <div fxLayout=\"row\">\r\n            <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n              <mat-icon color=\"primary\">lock_outline</mat-icon>\r\n            </div>\r\n            <mat-form-field>\r\n              <input matInput placeholder=\"Пароль\" formControlName=\"password\"\r\n                     required [type]=\"hidePassword ? 'password' : 'text'\">\r\n              <mat-icon class=\"muted\" matSuffix (click)=\"hidePassword = !hidePassword\">\r\n                {{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>\r\n              <mat-error\r\n                *ngIf=\"userLoginForm.get('password').errors?.required &&\r\n                          userLoginForm.get('password').touched\">\r\n                Введіть пароль\r\n              </mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <div class=\"submit-button-wrapper\">\r\n            <!--<span fxFlex></span>-->\r\n            <button mat-raised-button class=\"full-width\" color=\"primary\" [disabled]=\"!userLoginForm.valid\">Увійти</button>       \r\n          </div>\r\n\r\n          <div fxLayout=\"row\" class=\"links-wrapper\">\r\n              <!--<a [routerLink]=\"['/user/create']\">Зареєструватись</a>-->\r\n              <span fxFlex></span>\r\n              <a [routerLink]=\"['/user/password-reset']\">Забули пароль</a>\r\n          </div>\r\n\r\n          <div class=\"links-wrapper\" fxLayoutAlign=\"center\">\r\n            <button mat-stroked-button type=\"button\" (click)=\"onGoogleSignin()\">\r\n                <i class=\"fab fa-google\"></i> Signin with google\r\n            </button>       \r\n            <!-- <a mat-stroked-button routerLink=\"/user/auth/google\">\r\n              <i class=\"fab fa-google\"></i> Signin with google\r\n            </a> -->\r\n            <!-- <div id=\"my-signin2\" (click)=\"onGoogleSignin()\"></div> -->\r\n          </div>\r\n\r\n    \r\n   \r\n        </form>\r\n      </mat-card-content>\r\n      <!--<img mat-card-image class=\"mat-card-image-bottom\" src=\"./assets/images/logo400x140-2.jpg\" alt=\"\">-->\r\n    </mat-card>\r\n  </div>\r\n\r\n\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -307,6 +307,26 @@ var UserLoginComponent = /** @class */ (function () {
         this.hidePassword = true;
     }
     UserLoginComponent.prototype.ngOnInit = function () {
+        // gapi.load('auth2', function() {
+        //   const auth2 = gapi.auth2.init({
+        //     client_id: '367222500405-f9n32rgpii2i10k9tq0btgffi21031mn.apps.googleusercontent.com',
+        //     fetch_basic_profile: false,
+        //     scope: 'profile'
+        //   });
+        //   gapi.signin2.render('my-signin2', {
+        //     'scope': 'profile',
+        //     'width': 240,
+        //     'height': 50,
+        //     'longtitle': true,
+        //     'theme': 'light',
+        //     // 'onsuccess': this.onGoogleSignIn(auth2),
+        //     // 'onfailure': onFailure
+        //   });
+        //   auth2.signIn().then(function() {
+        //     console.log(auth2.currentUser.get().getId());
+        //   });
+        //   console.log('auth2', auth2.currentUser.get().getId());
+        // });
         this.userLoginForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
             login: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
                 _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
@@ -315,6 +335,13 @@ var UserLoginComponent = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
             ]),
         });
+    };
+    UserLoginComponent.prototype.onGoogleSignin = function () {
+        console.log('google onGoogleSignin');
+        this.userService.userGoogleLogin()
+            .subscribe(function (result) {
+            console.log('google login');
+        }, function (err) { return console.log('google login err', err); });
     };
     UserLoginComponent.prototype.onUserLoginSubmit = function () {
         var _this = this;

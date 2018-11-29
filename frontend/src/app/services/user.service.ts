@@ -112,6 +112,18 @@ export class UserService {
     );
   }
 
+  userGoogleLogin(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    };
+    return this.http.get<any>(
+      'api/user/auth/google',
+      httpOptions
+    );
+  }
+
   userGetProfile(): Observable<IResponse> {
     const token = this.userLocalGetToken('token');
     const httpOptions = {

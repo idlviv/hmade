@@ -45,13 +45,27 @@
 
           <div class="submit-button-wrapper">
             <!--<span fxFlex></span>-->
-            <button mat-raised-button class="full-width" color="primary" [disabled]="!userLoginForm.valid">Увійти</button>
+            <button mat-raised-button class="full-width" color="primary" [disabled]="!userLoginForm.valid">Увійти</button>       
           </div>
+
           <div fxLayout="row" class="links-wrapper">
-            <!--<a [routerLink]="['/user/create']">Зареєструватись</a>-->
-            <span fxFlex></span>
-            <a [routerLink]="['/user/password-reset']">Забули пароль</a>
+              <!--<a [routerLink]="['/user/create']">Зареєструватись</a>-->
+              <span fxFlex></span>
+              <a [routerLink]="['/user/password-reset']">Забули пароль</a>
           </div>
+
+          <div class="links-wrapper" fxLayoutAlign="center">
+            <button mat-stroked-button type="button" (click)="onGoogleSignin()">
+                <i class="fab fa-google"></i> Signin with google
+            </button>       
+            <!-- <a mat-stroked-button routerLink="/user/auth/google">
+              <i class="fab fa-google"></i> Signin with google
+            </a> -->
+            <!-- <div id="my-signin2" (click)="onGoogleSignin()"></div> -->
+          </div>
+
+    
+   
         </form>
       </mat-card-content>
       <!--<img mat-card-image class="mat-card-image-bottom" src="./assets/images/logo400x140-2.jpg" alt="">-->
