@@ -1,4 +1,5 @@
 // const createError = require('http-errors');
+const cors = require('cors');
 const express = require('express');
 const compression = require('compression');
 const path = require('path');
@@ -18,7 +19,11 @@ const errorHandler = require('./server/errors/errorHandler');
 const util = require('util');
 
 const app = express();
+
+const log = require('./server/config/winston')(module);
+
 app.use(compression());
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
@@ -32,6 +37,26 @@ app.use(csrfCookie);
 app.use(passport.initialize());
 // app.use(passport.session());
 require('./server/config/passport')(passport);
+
+app.use(function(req, res, next) {
+  // Enabling CORS
+  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
+  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization');
+  next();
+});
+
+app.use('/cors',
+    function(req, res, next) {
+      log.debug('/user/auth/google - req.headers', req.headers);
+      next();
+    },
+
+    // 2step: passport redirects to google 'chose account' window
+    passport.authenticate('google', {scope: ['profile']}
+        // ,{session: false}
+    )
+);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'server/views'));

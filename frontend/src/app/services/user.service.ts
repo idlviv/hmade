@@ -115,11 +115,12 @@ export class UserService {
   userGoogleLogin(): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type':  'application/x-www-form-urlencoded',
+        'Access-Control-Allow-Origin': '*'
       })
     };
     return this.http.get<any>(
-      'api/user/auth/google',
+      'cors',
       httpOptions
     );
   }

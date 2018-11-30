@@ -11,7 +11,9 @@ const productController = require('../controllers/productController');
 const sharedController = require('../controllers/sharedController');
 const recaptcha = require('../middleware/recaptcha');
 const authorization = require('../middleware/authorization').authorization;
-const notGuardExtarctUser_id = require('../middleware/authorization').notGuardExtarctUser_id;
+const notGuardExtarctUser_id = require('../middleware/authorization')
+    .notGuardExtarctUser_id;
+const log = require('../config/winston')(module);
 
 /**
  * social routes
@@ -230,6 +232,18 @@ router.get('/user/login',
 
 // 1step: on google authenticate buntton press
 router.get('/user/auth/google',
+    // function(req, res, next) {
+    //   res.header('Access-Control-Allow-Origin', '*');
+    //   res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
+    //   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
+    //   next();
+    // },
+
+    function(req, res, next) {
+      log.debug('/user/auth/google - req.headers', req.headers);
+      next();
+    },
+
     // 2step: passport redirects to google 'chose account' window
     passport.authenticate('google', {scope: ['profile']}
     // ,{session: false}
@@ -238,9 +252,14 @@ router.get('/user/auth/google',
 
 // 3.step: after user choses his account google redirect here
 // this uri saved on google api and in passport options
-router.get('/user/auth/google/redirect',
-    // 4.step: passport get code from google, extracts 'scope' info and passed it
-    // to callback function (./config/passport)
+router.post('/user/auth/google/redirect',
+
+    function(req, res, next) {
+      log.debug('/user/auth/google/redirect');
+      next();
+    },
+    // 4.step: passport get code from google, extracts 'scope' info
+    // and passed it to the callback function (./config/passport)
     passport.authenticate('google'),
     // 5.step: passport calls this callback with data
     (req, res) => {

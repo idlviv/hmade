@@ -3651,10 +3651,11 @@ var UserService = /** @class */ (function () {
     UserService.prototype.userGoogleLogin = function () {
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'Access-Control-Allow-Origin': '*'
             })
         };
-        return this.http.get('api/user/auth/google', httpOptions);
+        return this.http.get('cors', httpOptions);
     };
     UserService.prototype.userGetProfile = function () {
         var token = this.userLocalGetToken('token');
