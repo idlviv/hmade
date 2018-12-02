@@ -117,10 +117,13 @@ export class UserService {
       headers: new HttpHeaders({
         'Content-Type':  'application/x-www-form-urlencoded',
         'Access-Control-Allow-Origin': '*'
-      })
+      }),
+      // params: new HttpParams({ fromObject: {
+      //   id_token
+      // }})
     };
     return this.http.get<any>(
-      'cors',
+      'api/user/auth/google',
       httpOptions
     );
   }

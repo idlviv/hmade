@@ -25,13 +25,14 @@ module.exports = function(passport) {
           {
             clientID: config.get('GOOGLE_CLIENT_ID'),
             clientSecret: config.get('GOOGLE_CLIENT_SECRET'),
-            callbackURL: '/api/user/auth/google/redirect',
+            callbackURL: 'http://localhost:8081/api/user/auth/google/redirect',
           },
           function(accessToken, refreshToken, profile, done) {
-            console.log('profile', profile);
-            User.findOrCreate({googleId: profile.id}, function(err, user) {
-              return done(err, user);
-            });
+            console.log('profile');
+            return done(null, profile);
+            // User.findOrCreate({googleId: profile.id}, function(err, user) {
+            //   return done(err, user);
+            // });
           }
       ));
 

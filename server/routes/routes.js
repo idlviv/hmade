@@ -232,27 +232,19 @@ router.get('/user/login',
 
 // 1step: on google authenticate buntton press
 router.get('/user/auth/google',
-    // function(req, res, next) {
-    //   res.header('Access-Control-Allow-Origin', '*');
-    //   res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
-    //   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, Authorization');
-    //   next();
-    // },
-
     function(req, res, next) {
       log.debug('/user/auth/google - req.headers', req.headers);
       next();
     },
-
     // 2step: passport redirects to google 'chose account' window
     passport.authenticate('google', {scope: ['profile']}
-    // ,{session: false}
+    ,{session: false}
     )
 );
 
 // 3.step: after user choses his account google redirect here
 // this uri saved on google api and in passport options
-router.post('/user/auth/google/redirect',
+router.get('/user/auth/google/redirect',
 
     function(req, res, next) {
       log.debug('/user/auth/google/redirect');
