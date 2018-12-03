@@ -10,7 +10,10 @@ const UserSchema = new Schema({
   },
   password: {
     type: String,
-    required: true
+    // required: true
+  },
+  googleId: {
+    type: String,
   },
   passwordTries: {
     type: Number,
@@ -26,7 +29,7 @@ const UserSchema = new Schema({
   },
   email: {
     type: String,
-    required: true,
+    // required: true,
     unique: true,
   },
   avatar: {
@@ -60,6 +63,9 @@ const UserSchema = new Schema({
     type: Number,
     default: 3
   },
+  createdAt: {
+    type: Number
+  }
 },
   // {
   // toObject: {virtuals: true},

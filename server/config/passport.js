@@ -28,11 +28,29 @@ module.exports = function(passport) {
             callbackURL: 'http://localhost:8081/api/user/auth/google/redirect',
           },
           function(accessToken, refreshToken, profile, done) {
-            console.log('profile');
-            return done(null, profile);
-            // User.findOrCreate({googleId: profile.id}, function(err, user) {
-            //   return done(err, user);
-            // });
+            UserModel.findOne({googleId: profile.id})
+                .then((user) => {
+                  if (user) {
+                    // user is already in db
+                    return done(null, user);
+                  } else {
+                    // new user, create new record in db
+                    new UserModel(
+                        {
+                          login: profile.displayName,
+                          googleId: profile.id,
+                          role: 'user',
+                        })
+                        .save()
+                        .then((user) => {
+                          return done(null, user);
+                        },
+                        err => done(err, false)
+                        );
+                  }
+                },
+                err => done(err, false)
+                );
           }
       ));
 

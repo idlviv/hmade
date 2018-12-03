@@ -242,8 +242,8 @@ router.get('/user/auth/google',
     )
 );
 
-// 3.step: after user choses his account google redirect here
-// this uri saved on google api and in passport options
+// 3.step: after user choosed his account google redirects here
+// this uri was saved on google api and in passport options
 router.get('/user/auth/google/redirect',
 
     function(req, res, next) {
@@ -255,9 +255,9 @@ router.get('/user/auth/google/redirect',
     passport.authenticate('google'),
     // 5.step: passport calls this callback with data
     (req, res) => {
-      log.debug('google redirect');
+      log.debug('google redirect', req.user._doc);
 
-      res.status(200).send('google');
+      res.status(200).send(req.user._doc);
     }
 );
 
