@@ -1,5 +1,89 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["components-dashboard-dashboard-module~components-user-user-module"],{
 
+/***/ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.html":
+/*!********************************************************************************************!*\
+  !*** ./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.html ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  redirected-from-oauth works!\n</p>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.scss":
+/*!********************************************************************************************!*\
+  !*** ./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.scss ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.ts":
+/*!******************************************************************************************!*\
+  !*** ./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.ts ***!
+  \******************************************************************************************/
+/*! exports provided: RedirectedFromOauthComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RedirectedFromOauthComponent", function() { return RedirectedFromOauthComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+var RedirectedFromOauthComponent = /** @class */ (function () {
+    function RedirectedFromOauthComponent(router, route, userService, matSnackBar) {
+        this.router = router;
+        this.route = route;
+        this.userService = userService;
+        this.matSnackBar = matSnackBar;
+    }
+    RedirectedFromOauthComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.route.params
+            .subscribe(function (params) {
+            var token = params.token;
+            _this.userService.userLocalLogin(token);
+            _this.matSnackBar.open('Logged in', '', { duration: 3000 });
+            _this.router.navigate(['/user', 'profile']);
+        }, function (err) { return console.log('err', err); });
+    };
+    RedirectedFromOauthComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-redirected-from-oauth',
+            template: __webpack_require__(/*! ./redirected-from-oauth.component.html */ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.html"),
+            styles: [__webpack_require__(/*! ./redirected-from-oauth.component.scss */ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
+            src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
+            _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"]])
+    ], RedirectedFromOauthComponent);
+    return RedirectedFromOauthComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/user/user-create/user-create.component.html":
 /*!************************************************************************!*\
   !*** ./src/app/components/user/user-create/user-create.component.html ***!
@@ -163,7 +247,7 @@ var UserCreateComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 mat-dialog-title>Внести зміни</h1>\r\n<div class=\"form-block\">\r\n    <form [formGroup]=\"userEditForm\" (submit)=\"onSubmit()\">\r\n\r\n      <div fxLayout=\"row\" *ngFor=\"let dataPayload of data.payload\">\r\n        <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n          <mat-icon color=\"primary\">{{dataPayload.icon}}</mat-icon>\r\n        </div>\r\n        <mat-form-field>\r\n            <input matInput placeholder=\"{{dataPayload.label}}\" formControlName=\"{{dataPayload.name}}\"\r\n                   autocomplete=\"false\" type=\"{{dataPayload.type}}\" required>\r\n            <mat-error *ngFor=\"let validator of dataPayload.validators\">\r\n              <div\r\n                *ngIf=\"(validator.name === 'length' &&\r\n                (userEditForm.get(dataPayload.name).errors?.minlength ||\r\n                userEditForm.get(dataPayload.name).errors?.maxlength ||\r\n                userEditForm.get(dataPayload.name).errors?.required) &&\r\n                userEditForm.get(dataPayload.name).touched)\">\r\n                {{validator.message}}\r\n              </div>\r\n              <div\r\n                *ngIf=\"(validator.name === 'pattern' &&\r\n                userEditForm.get(dataPayload.name).errors?.pattern &&\r\n                userEditForm.get(dataPayload.name).touched)\">\r\n                {{validator.message}}\r\n              </div>\r\n              <div\r\n                *ngIf=\"(validator.name === 'require' &&\r\n                userEditForm.get(dataPayload.name).errors?.required &&\r\n                userEditForm.get(dataPayload.name).touched)\">\r\n                {{validator.message}}\r\n              </div>\r\n              <div\r\n                *ngIf=\"(validator.name === 'match' &&\r\n                userEditForm.get(dataPayload.name).errors?.mismatch &&\r\n                userEditForm.get(dataPayload.name).touched)\">\r\n                {{validator.message}}\r\n              </div>\r\n            </mat-error>\r\n          </mat-form-field>\r\n\r\n      </div>\r\n      <div class=\"submit-button-wrapper\">\r\n        <button type=\"reset\" mat-button color=\"primary\" (click)=\"onNoClick()\">Повернутись</button>\r\n        <span fxFlex></span>\r\n        <button mat-raised-button color=\"primary\" [disabled]=\"!userEditForm.valid\">Ok</button>\r\n      </div>\r\n\r\n    </form>\r\n<p *ngIf=\"data.oldValue\" class=\"mat-body-1\">поточне значення: <span class=\"mat-body-2\">{{data.oldValue}}</span></p>\r\n\r\n</div>\r\n"
+module.exports = "<h1 mat-dialog-title>Внести зміни</h1>\n<div class=\"form-block\">\n    <form [formGroup]=\"userEditForm\" (submit)=\"onSubmit()\">\n\n      <div fxLayout=\"row\" *ngFor=\"let dataPayload of data.payload\">\n        <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n          <mat-icon color=\"primary\">{{dataPayload.icon}}</mat-icon>\n        </div>\n        <mat-form-field>\n            <input matInput placeholder=\"{{dataPayload.label}}\" formControlName=\"{{dataPayload.name}}\"\n                   autocomplete=\"false\" type=\"{{dataPayload.type}}\" required>\n            <mat-error *ngFor=\"let validator of dataPayload.validators\">\n              <div\n                *ngIf=\"(validator.name === 'length' &&\n                (userEditForm.get(dataPayload.name).errors?.minlength ||\n                userEditForm.get(dataPayload.name).errors?.maxlength ||\n                userEditForm.get(dataPayload.name).errors?.required) &&\n                userEditForm.get(dataPayload.name).touched)\">\n                {{validator.message}}\n              </div>\n              <div\n                *ngIf=\"(validator.name === 'pattern' &&\n                userEditForm.get(dataPayload.name).errors?.pattern &&\n                userEditForm.get(dataPayload.name).touched)\">\n                {{validator.message}}\n              </div>\n              <div\n                *ngIf=\"(validator.name === 'require' &&\n                userEditForm.get(dataPayload.name).errors?.required &&\n                userEditForm.get(dataPayload.name).touched)\">\n                {{validator.message}}\n              </div>\n              <div\n                *ngIf=\"(validator.name === 'match' &&\n                userEditForm.get(dataPayload.name).errors?.mismatch &&\n                userEditForm.get(dataPayload.name).touched)\">\n                {{validator.message}}\n              </div>\n            </mat-error>\n          </mat-form-field>\n\n      </div>\n      <div class=\"submit-button-wrapper\">\n        <button type=\"reset\" mat-button color=\"primary\" (click)=\"onNoClick()\">Повернутись</button>\n        <span fxFlex></span>\n        <button mat-raised-button color=\"primary\" [disabled]=\"!userEditForm.valid\">Ok</button>\n      </div>\n\n    </form>\n<p *ngIf=\"data.oldValue\" class=\"mat-body-1\">поточне значення: <span class=\"mat-body-2\">{{data.oldValue}}</span></p>\n\n</div>\n"
 
 /***/ }),
 
@@ -307,32 +391,6 @@ var UserLoginComponent = /** @class */ (function () {
         this.hidePassword = true;
     }
     UserLoginComponent.prototype.ngOnInit = function () {
-        var that = this;
-        // gapi.load('auth2', function() {
-        //   gapi.auth2.init({
-        //     client_id: '367222500405-0vu24vs5s1gi1kemsu6grvte6r5675rn.apps.googleusercontent.com',
-        //     fetch_basic_profile: true,
-        //     // scope: 'profile'
-        //   });
-        //   gapi.signin2.render('my-signin2', {
-        //     'scope': 'profile',
-        //     'width': 240,
-        //     'height': 50,
-        //     'longtitle': true,
-        //     'theme': 'light',
-        //     'onsuccess': onSignIn,
-        //     // 'onfailure': onFailure
-        //   });
-        //   function onSignIn(googleUser) {
-        //     const profile = googleUser.getBasicProfile();
-        //     const id_token = googleUser.getAuthResponse().id_token;
-        //     // that.onGoogleSignin(id_token);
-        //     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-        //     console.log('Name: ' + profile.getName());
-        //     console.log('Image URL: ' + profile.getImageUrl());
-        //     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-        //   }
-        // });
         this.userLoginForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
             login: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
                 _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
@@ -341,19 +399,6 @@ var UserLoginComponent = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
             ]),
         });
-    };
-    // googleSignOut() {
-    //   const auth2 = gapi.auth2.getAuthInstance();
-    //   auth2.signOut().then(function () {
-    //     console.log('User signed out.');
-    //   });
-    // }
-    UserLoginComponent.prototype.userGoogleLogin = function () {
-        console.log('google onGoogleSignin');
-        this.userService.userGoogleLogin()
-            .subscribe(function (result) {
-            console.log('google login');
-        }, function (err) { return console.log('google login err', err); });
     };
     UserLoginComponent.prototype.onUserLoginSubmit = function () {
         var _this = this;
@@ -1038,12 +1083,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_password_reset_user_password_reset_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./user-password-reset/user-password-reset.component */ "./src/app/components/user/user-password-reset/user-password-reset.component.ts");
 /* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../guards/auth.guard */ "./src/app/guards/auth.guard.ts");
 /* harmony import */ var _shared_page_404_page_404_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../shared/page-404/page-404.component */ "./src/app/components/shared/page-404/page-404.component.ts");
+/* harmony import */ var _redirected_from_oauth_redirected_from_oauth_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./redirected-from-oauth/redirected-from-oauth.component */ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1077,6 +1124,10 @@ var userRoutes = [
             {
                 path: 'password-reset',
                 component: _user_password_reset_user_password_reset_component__WEBPACK_IMPORTED_MODULE_6__["UserPasswordResetComponent"],
+            },
+            {
+                path: 'redirected-from-oauth/:token',
+                component: _redirected_from_oauth_redirected_from_oauth_component__WEBPACK_IMPORTED_MODULE_9__["RedirectedFromOauthComponent"],
             },
             { path: '', component: _shared_page_404_page_404_component__WEBPACK_IMPORTED_MODULE_8__["Page404Component"] },
         ],
@@ -1189,12 +1240,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ng-recaptcha/forms */ "./node_modules/ng-recaptcha/forms.js");
 /* harmony import */ var ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/components/shared/shared.module.ts");
+/* harmony import */ var _redirected_from_oauth_redirected_from_oauth_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./redirected-from-oauth/redirected-from-oauth.component */ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1221,6 +1274,7 @@ var UserModule = /** @class */ (function () {
                 _user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_8__["UserProfileComponent"],
                 _user_dialog_user_dialog_component__WEBPACK_IMPORTED_MODULE_9__["UserDialogComponent"],
                 _user_password_reset_user_password_reset_component__WEBPACK_IMPORTED_MODULE_10__["UserPasswordResetComponent"],
+                _redirected_from_oauth_redirected_from_oauth_component__WEBPACK_IMPORTED_MODULE_14__["RedirectedFromOauthComponent"],
             ],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],

@@ -28,6 +28,7 @@ module.exports = function(passport) {
             callbackURL: 'http://localhost:8081/api/user/auth/google/redirect',
           },
           function(accessToken, refreshToken, profile, done) {
+            log.debug('profile', profile);
             UserModel.findOne({googleId: profile.id})
                 .then((user) => {
                   if (user) {
@@ -38,6 +39,7 @@ module.exports = function(passport) {
                     new UserModel(
                         {
                           login: profile.displayName,
+                          
                           googleId: profile.id,
                           role: 'user',
                         })
@@ -45,11 +47,11 @@ module.exports = function(passport) {
                         .then((user) => {
                           return done(null, user);
                         },
-                        err => done(err, false)
+                        (err) => done(err, false)
                         );
                   }
                 },
-                err => done(err, false)
+                (err) => done(err, false)
                 );
           }
       ));

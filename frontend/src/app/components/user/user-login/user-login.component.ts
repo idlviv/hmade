@@ -30,35 +30,6 @@ export class UserLoginComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    let that = this;
-
-    // gapi.load('auth2', function() {
-    //   gapi.auth2.init({
-    //     client_id: '367222500405-0vu24vs5s1gi1kemsu6grvte6r5675rn.apps.googleusercontent.com',
-    //     fetch_basic_profile: true,
-    //     // scope: 'profile'
-    //   });
-    //   gapi.signin2.render('my-signin2', {
-    //     'scope': 'profile',
-    //     'width': 240,
-    //     'height': 50,
-    //     'longtitle': true,
-    //     'theme': 'light',
-    //     'onsuccess': onSignIn,
-    //     // 'onfailure': onFailure
-    //   });
-    //   function onSignIn(googleUser) {
-    //     const profile = googleUser.getBasicProfile();
-    //     const id_token = googleUser.getAuthResponse().id_token;
-    //     // that.onGoogleSignin(id_token);
-    //     console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead.
-    //     console.log('Name: ' + profile.getName());
-    //     console.log('Image URL: ' + profile.getImageUrl());
-    //     console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present.
-    //   }
-
-    // });
-
     this.userLoginForm = new FormGroup({
         login: new FormControl('', [
           Validators.required,
@@ -68,26 +39,6 @@ export class UserLoginComponent implements OnInit {
         ]),
       },
     );
-  }
-
-
-
-  // googleSignOut() {
-  //   const auth2 = gapi.auth2.getAuthInstance();
-  //   auth2.signOut().then(function () {
-  //     console.log('User signed out.');
-  //   });
-  // }
-
-  userGoogleLogin() {
-    console.log('google onGoogleSignin');
-    this.userService.userGoogleLogin()
-      .subscribe(
-        result => {
-          console.log('google login');
-        },
-        err => console.log('google login err', err)
-      );
   }
 
   onUserLoginSubmit() {

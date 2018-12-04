@@ -232,33 +232,21 @@ router.get('/user/login',
 
 // 1step: on google authenticate buntton press
 router.get('/user/auth/google',
-    function(req, res, next) {
-      log.debug('/user/auth/google - req.headers', req.headers);
-      next();
-    },
     // 2step: passport redirects to google 'chose account' window
-    passport.authenticate('google', {scope: ['profile']}
-    ,{session: false}
-    )
+    passport.authenticate(
+        'google',
+        {scope: ['profile', 'email']},
+        {session: false})
 );
 
-// 3.step: after user choosed his account google redirects here
+// 3.step: after user chose his account google redirects here
 // this uri was saved on google api and in passport options
 router.get('/user/auth/google/redirect',
-
-    function(req, res, next) {
-      log.debug('/user/auth/google/redirect');
-      next();
-    },
     // 4.step: passport get code from google, extracts 'scope' info
     // and passed it to the callback function (./config/passport)
-    passport.authenticate('google'),
+    passport.authenticate('google', {session: false}),
     // 5.step: passport calls this callback with data
-    (req, res) => {
-      log.debug('google redirect', req.user._doc);
-
-      res.status(200).send(req.user._doc);
-    }
+    userController.userGoogleSignin
 );
 
 router.get('/user/profile',

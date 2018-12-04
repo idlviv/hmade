@@ -168,6 +168,18 @@ module.exports.passwordReset = function(req, res, next) {
       );
 };
 
+module.exports.userGoogleSignin = function(req, res, next) {
+  log.debug('google redirect', req.user._doc);
+  const user = req.user._doc;
+  const sub = {
+    _id: user._id,
+    role: user.role,
+    login: user.login,
+  };
+  const token = createJWTToken('JWT ', sub, 604800, 'JWT_SECRET'); 
+  res.redirect('/user/redirected-from-oauth/' + token).status(200);
+};
+
 module.exports.userEmailVerificationReceive = function(req, res, next) {
   let user = {};
   Object.assign(user, req.user._doc);
