@@ -175,9 +175,10 @@ module.exports.userGoogleSignin = function(req, res, next) {
     _id: user._id,
     role: user.role,
     login: user.login,
+    avatar: user.avatar,
   };
-  const token = createJWTToken('JWT ', sub, 604800, 'JWT_SECRET'); 
-  res.redirect('/user/redirected-from-oauth/' + token).status(200);
+  const token = _createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
+  res.redirect('/user/redirected-from-oauth/' + token);
 };
 
 module.exports.userEmailVerificationReceive = function(req, res, next) {
@@ -234,7 +235,7 @@ module.exports.userEmailVerificationSend = function(req, res, next) {
   const email = user.email;
 
   let mailOptions = {
-    from: 'Grabo <postmaster@sandbox4d505533524a4360b5506928e2ed0726.mailgun.org>',
+    from: 'Hmade <postmaster@sandbox4d505533524a4360b5506928e2ed0726.mailgun.org>', // FIXME: change email credentials
     to: email,
     subject: 'Підтвердіть пошту',
     text: 'Будь ласка, перейдіть за посиланням ' + url,
@@ -349,8 +350,9 @@ module.exports.userCreate = function(req, res, next) {
                               _id: user._id,
                               role: user.role,
                               login: user.login,
+                              avatar: config.get('defaultAvatar'),
                             };
-                            const token = createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
+                            const token = _createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
                             return res.status(200).json(new ResObj(true, 'Користувач створений. Вхід виконано', token));
                           },
                           (err) => next(new DbError(err.message, err.code))
@@ -375,7 +377,7 @@ module.exports.userCreate = function(req, res, next) {
  * @param {string} secret - object key from config
  * @return {string} token
  */
-function createJWTToken(prefix, sub, expire, secret) {
+function _createJWTToken(prefix, sub, expire, secret) {
   const date = Math.floor(Date.now() / 1000); // in seconds
   return prefix + jwt.sign(
       {

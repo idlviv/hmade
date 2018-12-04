@@ -32,20 +32,40 @@ module.exports = function(passport) {
             UserModel.findOne({googleId: profile.id})
                 .then((user) => {
                   if (user) {
-                    // user is already in db
-                    return done(null, user);
+                    // if user is already in db update credentials
+                    user.set({
+                      login: profile._json.displayName,
+                      avatar: profile._json.image.url,
+                      name: profile._json.name.givenName,
+                      surname: profile._json.name.familyName,
+                      email: profile._json.emails[0].value,
+                    })
+                        .save()
+                        .then((updatedUser) => {
+                          console.log('updatedUser', updatedUser);
+                          // if (updatedUser.ok !== 1) {
+                          //   return done('error singn in', false);
+                          // }
+                          return done(null, updatedUser);
+                        },
+                        (err) => done(err, false)
+                        );
                   } else {
-                    // new user, create new record in db
+                    // if new user, create new record in db
                     new UserModel(
                         {
-                          login: profile.displayName,
-                          
-                          googleId: profile.id,
+                          login: profile._json.displayName,
+                          avatar: profile._json.image.url,
+                          ban: 0,
+                          name: profile._json.name.givenName,
+                          surname: profile._json.name.familyName,
                           role: 'user',
+                          email: profile._json.emails[0].value,
+                          googleId: profile._json.id,
                         })
                         .save()
-                        .then((user) => {
-                          return done(null, user);
+                        .then((newUser) => {
+                          return done(null, newUser);
                         },
                         (err) => done(err, false)
                         );
