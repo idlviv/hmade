@@ -29,6 +29,21 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
+// var whitelist = ['http://localhost:8081', 'https://res.cloudinary.com']
+// var corsOptions = {
+//   origin: function (origin, callback) {
+//     if (whitelist.indexOf(origin) !== -1) {
+//       callback(null, true)
+//     } else {
+//       callback(new Error('Not allowed by CORS'))
+//     }
+//   }
+// }
+var corsOptions = {
+  origin: ['http://localhost:8080', 'https://res.cloudinary.com'],
+  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
+app.use(cors(corsOptions));
 // check cookie, add req.csrfToken(),
  // If the "cookie" option is not false, then this option does nothing.
 app.use(csrf({cookie: true}));
