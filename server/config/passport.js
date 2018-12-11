@@ -17,6 +17,15 @@ module.exports = function(passport) {
   jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
   jwtOptions.secretOrKey = config.get('JWT_SECRET');
 
+  passport.serializeUser((user, done) => {
+    done(null, user._id);
+  });
+
+  passport.deserializeUser((_id, done) => {
+    UserModel.findById(_id).then((user) => done(null, user));
+  });
+
+
   //   Strategies in Passport require a `verify` function, which accept
   //   credentials (in this case, an accessToken, refreshToken, and Google
   //   profile), and invoke a callback with a user object.

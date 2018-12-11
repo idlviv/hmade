@@ -9,9 +9,10 @@ const csrfCookie = require('./server/config/csrf');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const bodyParser = require('body-parser');
-
+const session =require('express-session');
 const index = require('./server/routes');
 const routes = require('./server/routes/routes');
+const config = require('./server/config');
 
 const ApplicationError = require('./server/errors/applicationError');
 const errorHandler = require('./server/errors/errorHandler');
@@ -29,38 +30,28 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
-// var whitelist = ['http://localhost:8081', 'https://res.cloudinary.com']
 // var corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
+//  origin: ['http://localhost:8080', 'https://res.cloudinary.com'],
+//  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
 // }
-var corsOptions = {
-  origin: ['http://localhost:8080', 'https://res.cloudinary.com'],
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-app.use(cors(corsOptions));
+// app.use(cors(corsOptions));
+
 // check cookie, add req.csrfToken(),
- // If the "cookie" option is not false, then this option does nothing.
+// If the "cookie" option is not false, then this option does nothing.
 app.use(csrf({cookie: true}));
 // set cookie
 app.use(csrfCookie);
 
-app.use(passport.initialize());
-// app.use(passport.session());
-require('./server/config/passport')(passport);
+app.use(session({
+  secret: config.get('SESSION_SECRET'),
+  resave: false,
+  saveUninitialized: true,
+  // cookie: {secure: true},
+}));
 
-// app.use(function(req, res, next) {
-//   // Enabling CORS
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
-//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization');
-//   next();
-// });
+app.use(passport.initialize());
+app.use(passport.session());
+require('./server/config/passport')(passport);
 
 // view engine setup
 app.set('views', path.join(__dirname, 'server/views'));
