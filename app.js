@@ -6,17 +6,22 @@ const path = require('path');
 const passport = require('passport');
 const csrf = require('csurf');
 const csrfCookie = require('./server/config/csrf');
-const cookieParser = require('cookie-parser');
 const logger = require('morgan');
+
+const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
+
+const session =require('express-session');
+const MongoStore = require('connect-mongo')(session);
+const mongoose = require('./server/config/mongoose');
+// const favicon = require('express-favicon');
 
 const index = require('./server/routes');
 const routes = require('./server/routes/routes');
+const config = require('./server/config');
 
 const ApplicationError = require('./server/errors/applicationError');
 const errorHandler = require('./server/errors/errorHandler');
-
-const util = require('util');
 
 const app = express();
 
@@ -24,51 +29,58 @@ const log = require('./server/config/winston')(module);
 
 app.use(compression());
 
+app.use(logger('dev'));
+
+// app.use(favicon());
+app.use(express.static(path.join(__dirname, 'public')));
+
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-app.use(cookieParser());
+// app.use(cookieParser());
 
-// var whitelist = ['http://localhost:8081', 'https://res.cloudinary.com']
-// var corsOptions = {
-//   origin: function (origin, callback) {
-//     if (whitelist.indexOf(origin) !== -1) {
-//       callback(null, true)
-//     } else {
-//       callback(new Error('Not allowed by CORS'))
-//     }
-//   }
-// }
-var corsOptions = {
-  origin: ['http://localhost:8080', 'https://res.cloudinary.com'],
-  optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
-}
-app.use(cors(corsOptions));
+
+
+app.use(session({
+  key: 'hmade.sid',
+  secret: config.get('SESSION_SECRET'),
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    path: '/',
+    httpOnly: true, // not reachable for js (XSS)
+    // secure: true,
+    sameSite: 'Strict',
+    maxAge: null, // never expires, but will be deketed after closing browser
+  },
+  store: new MongoStore({mongooseConnection: mongoose.connection}),
+}));
+
 // check cookie, add req.csrfToken(),
- // If the "cookie" option is not false, then this option does nothing.
-app.use(csrf({cookie: true}));
+// If the "cookie" option is not false, then this option does nothing.
+app.use(csrf({
+  cookie: false,
+}));
 // set cookie
-app.use(csrfCookie);
+// app.use(csrfCookie);
 
 app.use(passport.initialize());
-// app.use(passport.session());
+app.use(passport.session());
+
 require('./server/config/passport')(passport);
 
-// app.use(function(req, res, next) {
-//   // Enabling CORS
-//   res.header('Access-Control-Allow-Origin', '*');
-//   res.header('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT');
-//   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept, x-client-key, x-client-token, x-client-secret, Authorization');
-//   next();
-// });
+app.use(function(req, res, next) {
+  log.debug('headers', req.headers);
+  log.debug('req.csrfToken()', req.csrfToken());
+  req.session.number += 1;
+  console.log('ses', req.session);
+  next();
+});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'server/views'));
 app.set('view engine', 'pug');
-
-app.use(logger('dev'));
-
-app.use(express.static(path.join(__dirname, 'public')));
 
 /**
  * all apis, api/404 will be handled there
@@ -85,6 +97,7 @@ app.use('/', index);
 app.use('*', function(req, res) {
   res.redirect('/');
 });
+
 
 // // catch 404 and forward to error handler
 // app.use(function(req, res, next) {

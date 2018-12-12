@@ -236,7 +236,7 @@ router.get('/user/auth/google',
     passport.authenticate(
         'google',
         {scope: ['profile', 'email']},
-        {session: false})
+        {session: true})
 );
 
 // 3.step: after user chose his account google redirects here
@@ -244,13 +244,13 @@ router.get('/user/auth/google',
 router.get('/user/auth/google/redirect',
     // 4.step: passport get code from google, extracts 'scope' info
     // and passed it to the callback function (./config/passport)
-    passport.authenticate('google', {session: false}),
+    passport.authenticate('google', {session: true}),
     // 5.step: passport calls this callback with data
     userController.userGoogleSignin
 );
 
 router.get('/user/profile',
-    passport.authenticate('jwt', {session: false}),
+    passport.authenticate('jwt', {session: true}),
     userController.userProfile
 );
 

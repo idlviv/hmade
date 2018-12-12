@@ -4,7 +4,7 @@
   "defaultAvatar": "default_avatar",
   "cookieCsrfOptions": {
     "secure": false,
-    "httpOnly": false,
+    "httpOnly": true,
     "maxAge": 1800000,
     "sameSite": "Strict"
   },
