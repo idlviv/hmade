@@ -3,7 +3,7 @@ import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { RecaptchaModule } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 
@@ -43,6 +43,10 @@ import { ScrollingDirective } from './directives/scrolling.directive';
     RecaptchaFormsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     ReactiveFormsModule,
+    // HttpClientXsrfModule.withOptions({
+      // cookieName: '_csrf',
+      // headerName: 'x-xsrf-token',
+    // }),
   ],
   providers: [
     ValidateService,

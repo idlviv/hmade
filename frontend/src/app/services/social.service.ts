@@ -72,7 +72,7 @@ export class SocialService {
     );
   }
 
-  displayComment(parent_id: string, parentCategory: string, display: boolean, comment_id: string): Observable<boolean> {
+  displayComment(parent_id: string, parentCategory: string, display: boolean, comment_id: string, _csrf: any): Observable<boolean> {
     const token = this.userService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
@@ -83,7 +83,7 @@ export class SocialService {
 
     return this.http.put<boolean>(
       'api/social/display-comment',
-      {parent_id, parentCategory, display, comment_id},
+      {parent_id, parentCategory, display, comment_id, _csrf},
       httpOptions
     );
   }

@@ -165,8 +165,21 @@ export class CommentsComponent implements OnInit {
   displayComment(display: boolean, comment_id: string) {
     console.log('display', display);
     console.log('comment_id', comment_id);
+    function _cookieParser() {
+      return document.cookie.split(';').reduce((cookieObject, cookieString) => {
+        const splitCookie = cookieString.split('=').map((cookiePart) => cookiePart.trim());
+        try {
+          cookieObject[splitCookie[0]] = JSON.parse(splitCookie[1]);
+        } catch (error) {
+          cookieObject[splitCookie[0]] = splitCookie[1];
+        }
+        return cookieObject;
+      });
 
-    this.socialService.displayComment(this.parent_id, this.parentCategory, display, comment_id)
+    }
+    const _csrf = _cookieParser();
+    console.log('_csrf', _csrf);
+    this.socialService.displayComment(this.parent_id, this.parentCategory, display, comment_id, _csrf)
       .pipe(
         mergeMap(result => {
           if (result) {

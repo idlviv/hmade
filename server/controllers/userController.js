@@ -41,7 +41,7 @@ module.exports.passwordResetCheckEmail = function(req, res, next) {
                         return next(new ApplicationError(err.message, err.status));
                       }
                       const sub = {_id: user._id};
-                      const codeToken = createJWTToken('JWT ', sub, 300, 'JWT_SECRET_CODE');
+                      const codeToken = _createJWTToken('JWT ', sub, 300, 'JWT_SECRET_CODE');
                       return res.status(200).json(new ResObj(true, 'На Вашу пошту відправлено листа', codeToken));
                     });
                   })
@@ -80,7 +80,7 @@ module.exports.passwordResetCheckCode = function(req, res, next) {
                 return next(new ApplicationError('wrongCredentials', 401));
               }
               const sub = {_id: user._id};
-              const changePasswordToken = createJWTToken('JWT ', sub, 300, 'JWT_SECRET_CHANGE_PASSWORD');
+              const changePasswordToken = _createJWTToken('JWT ', sub, 300, 'JWT_SECRET_CHANGE_PASSWORD');
               return res.status(200).json(new ResObj(true, 'Код введено вірно', changePasswordToken));
             })
             .catch((err) => next(new ApplicationError('bc', 500)));
@@ -159,7 +159,7 @@ module.exports.passwordReset = function(req, res, next) {
                     role: user.role,
                     login: user.login,
                   };
-                  const token = createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
+                  const token = _createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
                   return res.status(200).json(new ResObj(true, 'Пароль змінено. Вхід виконано', token));
                 })
                 .catch((err) => new ApplicationError(err.message, err.status));
@@ -452,7 +452,7 @@ module.exports.userLogin = function(req, res, next) {
                   login: user.login,
                   avatar: user.avatar,
                 };
-                const token = createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
+                const token = _createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
                 return res.status(200).json(new ResObj(true, 'Вхід виконано', token));
               }
             })

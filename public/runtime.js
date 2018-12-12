@@ -61,7 +61,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"components-dashboard-dashboard-module~components-mcs-mcs-module":"components-dashboard-dashboard-module~components-user-user-module","components-dashboard-dashboard-module":"components-dashboard-dashboard-module","components-dashboard-dashboard-module~components-user-user-module":"components-products-products-module"}[chunkId]||chunkId) + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"components-dashboard-dashboard-module~components-mcs-mcs-module":"components-dashboard-dashboard-module~components-mcs-mcs-module","components-dashboard-dashboard-module~components-user-user-module":"components-dashboard-dashboard-module~components-user-user-module","components-dashboard-dashboard-module":"components-dashboard-dashboard-module","components-products-products-module":"components-products-products-module"}[chunkId]||chunkId) + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function

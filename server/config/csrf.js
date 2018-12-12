@@ -4,7 +4,13 @@ module.exports = function(req, res, next) {
   res.cookie(
       'XSRF-TOKEN',
       req.csrfToken(),
-      config.get('cookieCsrfOptions')
+      {
+        // 'secure': false,
+        'httpOnly': false,
+        'maxAge': 500000,
+        // 'sameSite': 'Strict',
+        'path': '/',
+      }
   );
   next();
 };

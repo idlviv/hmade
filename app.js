@@ -57,6 +57,9 @@ app.use(session({
 // If the "cookie" option is not false, then this option does nothing.
 app.use(csrf({
   cookie: true,
+  // {
+  //   key: 'XSRF-TOKEN',
+  // },
 }));
 // set cookie
 app.use(csrfCookie);

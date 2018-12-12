@@ -1,4 +1,4 @@
-(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["components-dashboard-dashboard-module~components-user-user-module"],{
+(window["webpackJsonp"] = window["webpackJsonp"] || []).push([["components-products-products-module"],{
 
 /***/ "./src/app/components/products/breadcrumb/breadcrumb.component.html":
 /*!**************************************************************************!*\
@@ -100,7 +100,7 @@ var BreadcrumbComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--<a *ngFor=\"let sibling of siblings\" mat-button-->\r\n   <!--[routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', sibling._id],-->\r\n     <!--breadcrumb: [category_id, 'details', sibling._id]}}]\"-->\r\n   <!--[queryParams]=\"{name: sibling.name}\"-->\r\n   <!--[routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">-->\r\n  <!--{{sibling.name}}-->\r\n<!--</a>-->\r\n\r\n<mat-nav-list>\r\n    <a mat-list-item *ngFor=\"let sibling of siblings\"\r\n       [routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', sibling._id],\r\n     breadcrumb: [category_id, 'details', sibling._id]}}]\"\r\n       [queryParams]=\"{name: sibling.name}\"\r\n       [routerLinkActive]=\"['primary']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n      {{sibling.name}}\r\n    </a>\r\n</mat-nav-list>"
+module.exports = "<!--<a *ngFor=\"let sibling of siblings\" mat-button-->\n   <!--[routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', sibling._id],-->\n     <!--breadcrumb: [category_id, 'details', sibling._id]}}]\"-->\n   <!--[queryParams]=\"{name: sibling.name}\"-->\n   <!--[routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">-->\n  <!--{{sibling.name}}-->\n<!--</a>-->\n\n<mat-nav-list>\n    <a mat-list-item *ngFor=\"let sibling of siblings\"\n       [routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', sibling._id],\n     breadcrumb: [category_id, 'details', sibling._id]}}]\"\n       [queryParams]=\"{name: sibling.name}\"\n       [routerLinkActive]=\"['primary']\" [routerLinkActiveOptions]=\"{exact: true}\">\n      {{sibling.name}}\n    </a>\n</mat-nav-list>"
 
 /***/ }),
 

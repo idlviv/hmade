@@ -3,10 +3,11 @@
   "defaultProductImg": "default_product",
   "defaultAvatar": "default_avatar",
   "cookieCsrfOptions": {
-    "secure": true,
+    "secure": false,
     "httpOnly": false,
-    "maxAge": 1800000,
-    "sameSite": "Strict"
+    "maxAge": 5000,
+    "sameSite": "Strict",
+    "path": "/"
   },
   "permissions": {
     "admin": ["casual", "guest", "user", "manager", "admin"],
