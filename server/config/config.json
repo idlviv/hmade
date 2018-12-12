@@ -3,8 +3,8 @@
   "defaultProductImg": "default_product",
   "defaultAvatar": "default_avatar",
   "cookieCsrfOptions": {
-    "secure": false,
-    "httpOnly": true,
+    "secure": true,
+    "httpOnly": false,
     "maxAge": 1800000,
     "sameSite": "Strict"
   },

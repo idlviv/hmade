@@ -34,12 +34,9 @@ app.use(logger('dev'));
 // app.use(favicon());
 app.use(express.static(path.join(__dirname, 'public')));
 
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
-// app.use(cookieParser());
-
-
+app.use(cookieParser());
 
 app.use(session({
   key: 'hmade.sid',
@@ -59,10 +56,10 @@ app.use(session({
 // check cookie, add req.csrfToken(),
 // If the "cookie" option is not false, then this option does nothing.
 app.use(csrf({
-  cookie: false,
+  cookie: true,
 }));
 // set cookie
-// app.use(csrfCookie);
+app.use(csrfCookie);
 
 app.use(passport.initialize());
 app.use(passport.session());
