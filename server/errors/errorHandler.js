@@ -7,7 +7,7 @@ module.exports = function(err, req, res, next) {
   log.debug('Error', err);
 
   if (err.code === 'EBADCSRFTOKEN') {
-    return res.status(403).json('Оновіть сторінку, час вийшов (CSRF)');
+    return res.status(403).json('Оновіть сторінку, вийшов час очікування(CSRF)');
   }
 
   // handle db errors

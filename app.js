@@ -42,25 +42,19 @@ app.use(session({
   key: 'hmade.sid',
   secret: config.get('SESSION_SECRET'),
   resave: false,
-  saveUninitialized: true,
+  saveUninitialized: false,
   cookie: {
     path: '/',
     httpOnly: true, // not reachable for js (XSS)
     // secure: true,
     sameSite: 'Strict',
-    maxAge: null, // never expires, but will be deketed after closing browser
+    maxAge: null, // never expires, but will be deleted after closing browser
   },
   store: new MongoStore({mongooseConnection: mongoose.connection}),
 }));
 
 // check cookie, add req.csrfToken(),
-// If the "cookie" option is not false, then this option does nothing.
-app.use(csrf({
-  cookie: true,
-  // {
-  //   key: 'XSRF-TOKEN',
-  // },
-}));
+app.use(csrf({cookie: true}));
 // set cookie
 app.use(csrfCookie);
 
@@ -71,9 +65,8 @@ require('./server/config/passport')(passport);
 
 app.use(function(req, res, next) {
   log.debug('headers', req.headers);
-  log.debug('req.csrfToken()', req.csrfToken());
-  req.session.number += 1;
-  console.log('ses', req.session);
+  // req.session.number += 1;
+  // console.log('ses', req.session);
   next();
 });
 
