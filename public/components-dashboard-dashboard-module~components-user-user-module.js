@@ -406,13 +406,13 @@ var UserLoginComponent = /** @class */ (function () {
             login: this.userLoginForm.get('login').value,
             password: this.userLoginForm.get('password').value,
         };
-        this.userService.userLogin(this.user)
-            .subscribe(function (result) {
-            _this.resetForm();
-            var token = result.data;
-            _this.userService.userLocalLogin(token);
-            _this.matSnackBar.open(result.message, '', { duration: 3000 });
-            _this.router.navigate(['/user', 'profile']);
+        this.userService.userAuth(this.user)
+            .subscribe(function (user) {
+            if (user) {
+                _this.resetForm();
+                console.log('user logged in', user);
+                _this.matSnackBar.open('user logged in' + user.login, '', { duration: 3000 });
+            }
         }, function (err) {
             var message;
             if (err.error === 'maxTries') {
@@ -420,6 +420,24 @@ var UserLoginComponent = /** @class */ (function () {
             }
             _this.matSnackBar.open(message || err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' });
         });
+        // this.userService.userLogin(this.user)
+        //   .subscribe(
+        //     result => {
+        //       this.resetForm();
+        //       const token = result.data;
+        //       this.userService.userLocalLogin(token);
+        //       this.matSnackBar.open(result.message, '', {duration: 3000});
+        //       this.router.navigate(['/user', 'profile']);
+        //     },
+        //     err => {
+        //       let message;
+        //       if (err.error === 'maxTries') {
+        //         message = 'Досягнуто максимальну кількість спроб, вхід тимчасово заблоковано';
+        //       }
+        //       this.matSnackBar.open(message || err.error, '',
+        //         {duration: 3000, panelClass: 'snack-bar-danger'});
+        //     }
+        //   );
     };
     UserLoginComponent.prototype.resetForm = function () {
         if (this.userCreateFormDirective) {

@@ -112,6 +112,22 @@ export class UserService {
     );
   }
 
+  userAuth(user: IUser): Observable<IUser> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      }),
+      params: new HttpParams({ fromObject: {
+        login: user.login,
+        password: user.password
+      }})
+    };
+    return this.http.get<IUser>(
+      'api/user/auth',
+      httpOptions
+    );
+  }
+
   userGoogleLogin(): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({

@@ -463,6 +463,22 @@ module.exports.userLogin = function(req, res, next) {
       .catch((err) => next(new ApplicationError()));
 };
 
+
+module.exports.userAuth = function(req, res, next) {
+  if (req.user) {
+    const user = {
+      _id: req.user._doc._id,
+      login: req.user._doc.login,
+      avatar: req.user._doc.avatar,
+      role: req.user._doc.role,
+    };
+    res.status(200).json(user);
+  } else {
+    return next(new ApplicationError());
+  }
+};
+
+
 module.exports.userRole = function(req, res, next) {
   const roleFromDb = req.user._doc.role;
   const permitedRole = req.query.role;

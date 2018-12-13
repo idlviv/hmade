@@ -59,12 +59,12 @@ app.use(csrf({cookie: true}));
 app.use(csrfCookie);
 
 app.use(passport.initialize());
+require('./server/config/passport')(passport);
 app.use(passport.session());
 
-require('./server/config/passport')(passport);
-
 app.use(function(req, res, next) {
-  log.debug('headers', req.headers);
+  
+  log.debug('user', req.user);
   // req.session.number += 1;
   // console.log('ses', req.session);
   next();

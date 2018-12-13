@@ -1,10 +1,12 @@
 const ApplicationError = require('../errors/applicationError');
+const DbError = require('../errors/dbError');
 const log = require('../config/winston')(module);
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const UserModel = require('../models/userModel');
+const bcrypt = require('bcryptjs');
 
 const config = require('../config');
 
@@ -22,8 +24,87 @@ module.exports = function(passport) {
   });
 
   passport.deserializeUser((_id, done) => {
-    UserModel.findById(_id).then((user) => done(null, user));
+    UserModel.findById(_id).then(
+        (user) => done(null, user),
+        (err) => done(err, false)
+    );
   });
+
+
+  passport.use(new LocalStrategy(
+      {
+        usernameField: 'login',
+        passwordField: 'password',
+      },
+      function(login, password, done) {
+        let userCandidate = {
+          login,
+          password,
+        };
+        log.debug('login', login);
+        log.debug('password', password);
+        UserModel.findOne({login: userCandidate.login})
+            .then((user) => {
+              if (!user) {
+                return done(new ApplicationError('Невірний логін', 401));
+              }
+              if (user.isPasswordLocked) {
+                return done(new ApplicationError('maxTries', 401));
+              }
+              bcrypt.compare(userCandidate.password, user.password)
+                  .then((passwordMatched) => {
+                    if (!passwordMatched) {
+                      const dateNow = Date.now(); // in seconds
+                      let query;
+      
+                      if ((dateNow - user.passwordLockUntil) > 600000) {
+                        UserModel.update({_id: user._id},
+                            {
+                              $set: {
+                                passwordTries: 1,
+                                passwordLockUntil: dateNow,
+                              },
+                            })
+                            .then((result)=>{
+                              if (result.ok !== 1) {
+                                done(new DbError());
+                              }
+                              return done(new ApplicationError('Невірний пароль', 401));
+                            })
+                            .catch((err) => next(new ApplicationError()));
+                      } else {
+                        if (user.passwordTries >= user.passwordLockTries) {
+                          query = {
+                            $set: {
+                              passwordTries: 1,
+                              passwordLockUntil: dateNow + 600000},
+                          };
+                        } else {
+                          query = {
+                            $inc: {passwordTries: 1},
+                            $set: {passwordLockUntil: dateNow},
+                          };
+                        }
+                        UserModel.update({_id: user._id}, query)
+                            .then((result)=>{
+                              if (result.ok !== 1) {
+                                done(new DbError());
+                              }
+                              return done(new ApplicationError('Невірний пароль', 401));
+                            })
+                            .catch((err) => done(new ApplicationError()));
+                      }
+                    } else {
+                      return done(null, user);
+                    }
+                  })
+                  .catch((err) => done(new ApplicationError(err.message, err.status)));
+            },
+            (err) => done(new DbError(err.message, err.code))
+            )
+            .catch((err) => done(new ApplicationError()));
+      }
+  ));
 
 
   //   Strategies in Passport require a `verify` function, which accept

@@ -230,6 +230,11 @@ router.get('/user/login',
     userController.userLogin
 );
 
+router.get('/user/auth',
+    passport.authenticate('local'),
+    userController.userAuth
+);
+
 // 1step: on google authenticate buntton press
 router.get('/user/auth/google',
     // 2step: passport redirects to google 'chose account' window

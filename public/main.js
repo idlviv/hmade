@@ -3646,6 +3646,18 @@ var UserService = /** @class */ (function () {
         };
         return this.http.get('api/user/login', httpOptions);
     };
+    UserService.prototype.userAuth = function (user) {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            }),
+            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: {
+                    login: user.login,
+                    password: user.password
+                } })
+        };
+        return this.http.get('api/user/auth', httpOptions);
+    };
     UserService.prototype.userGoogleLogin = function () {
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
