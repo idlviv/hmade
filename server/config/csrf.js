@@ -8,7 +8,7 @@ module.exports = function(req, res, next) {
         // 'secure': false,
         'httpOnly': false,
         'maxAge': 500000,
-        // 'sameSite': 'Strict',
+        'sameSite': 'Strict',
         'path': '/',
       }
   );

@@ -389,80 +389,85 @@ function _createJWTToken(prefix, sub, expire, secret) {
   );
 }
 
-module.exports.userLogin = function(req, res, next) {
-  let userCandidate = {};
-  Object.assign(userCandidate, req.query);
+// module.exports.userLogin = function(req, res, next) {
+//   let userCandidate = {};
+//   Object.assign(userCandidate, req.query);
 
-  UserModel.findOne({login: userCandidate.login})
-      .then((user) => {
-        if (!user) {
-          return next(new ApplicationError('Невірний логін', 401));
-        }
-        if (user.isPasswordLocked) {
-          return next(new ApplicationError('maxTries', 401));
-        }
+//   UserModel.findOne({login: userCandidate.login})
+//       .then((user) => {
+//         if (!user) {
+//           return next(new ApplicationError('Невірний логін', 401));
+//         }
+//         if (user.isPasswordLocked) {
+//           return next(new ApplicationError('maxTries', 401));
+//         }
 
-        bcrypt.compare(userCandidate.password, user.password)
-            .then((passwordMatched) => {
-              if (!passwordMatched) {
-                const dateNow = Date.now(); // in seconds
-                let query;
+//         bcrypt.compare(userCandidate.password, user.password)
+//             .then((passwordMatched) => {
+//               if (!passwordMatched) {
+//                 const dateNow = Date.now(); // in seconds
+//                 let query;
 
-                if ((dateNow - user.passwordLockUntil) > 600000) {
-                  UserModel.update({_id: user._id},
-                      {
-                        $set: {
-                          passwordTries: 1,
-                          passwordLockUntil: dateNow,
-                        },
-                      })
-                      .then((result)=>{
-                        if (result.ok !== 1) {
-                          next(new DbError());
-                        }
-                        return next(new ApplicationError('Невірний пароль', 401));
-                      })
-                      .catch((err) => next(new ApplicationError()));
-                } else {
-                  if (user.passwordTries >= user.passwordLockTries) {
-                    query = {
-                      $set: {
-                        passwordTries: 1,
-                        passwordLockUntil: dateNow + 600000},
-                    };
-                  } else {
-                    query = {
-                      $inc: {passwordTries: 1},
-                      $set: {passwordLockUntil: dateNow},
-                    };
-                  }
-                  UserModel.update({_id: user._id}, query)
-                      .then((result)=>{
-                        if (result.ok !== 1) {
-                          next(new DbError());
-                        }
-                        return next(new ApplicationError('Невірний пароль', 401));
-                      })
-                      .catch((err) => next(new ApplicationError()));
-                }
-              } else {
-                const sub = {
-                  _id: user._id,
-                  role: user.role,
-                  login: user.login,
-                  avatar: user.avatar,
-                };
-                const token = _createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
-                return res.status(200).json(new ResObj(true, 'Вхід виконано', token));
-              }
-            })
-            .catch((err) => next(new ApplicationError(err.message, err.status)));
-      },
-      (err) => next(new DbError(err.message, err.code))
-      )
-      .catch((err) => next(new ApplicationError()));
+//                 if ((dateNow - user.passwordLockUntil) > 600000) {
+//                   UserModel.update({_id: user._id},
+//                       {
+//                         $set: {
+//                           passwordTries: 1,
+//                           passwordLockUntil: dateNow,
+//                         },
+//                       })
+//                       .then((result)=>{
+//                         if (result.ok !== 1) {
+//                           next(new DbError());
+//                         }
+//                         return next(new ApplicationError('Невірний пароль', 401));
+//                       })
+//                       .catch((err) => next(new ApplicationError()));
+//                 } else {
+//                   if (user.passwordTries >= user.passwordLockTries) {
+//                     query = {
+//                       $set: {
+//                         passwordTries: 1,
+//                         passwordLockUntil: dateNow + 600000},
+//                     };
+//                   } else {
+//                     query = {
+//                       $inc: {passwordTries: 1},
+//                       $set: {passwordLockUntil: dateNow},
+//                     };
+//                   }
+//                   UserModel.update({_id: user._id}, query)
+//                       .then((result)=>{
+//                         if (result.ok !== 1) {
+//                           next(new DbError());
+//                         }
+//                         return next(new ApplicationError('Невірний пароль', 401));
+//                       })
+//                       .catch((err) => next(new ApplicationError()));
+//                 }
+//               } else {
+//                 const sub = {
+//                   _id: user._id,
+//                   role: user.role,
+//                   login: user.login,
+//                   avatar: user.avatar,
+//                 };
+//                 const token = _createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
+//                 return res.status(200).json(new ResObj(true, 'Вхід виконано', token));
+//               }
+//             })
+//             .catch((err) => next(new ApplicationError(err.message, err.status)));
+//       },
+//       (err) => next(new DbError(err.message, err.code))
+//       )
+//       .catch((err) => next(new ApplicationError()));
+// };
+
+module.exports.userLogout = function(req, res, next) {
+  log.debug('logout');
+  req.logout();
+  res.status(200).json('Logged out');
 };
-
 
 module.exports.userAuth = function(req, res, next) {
   if (req.user) {
@@ -484,12 +489,14 @@ module.exports.userRole = function(req, res, next) {
   const permitedRole = req.query.role;
 
   const permissions = config.get('permissions');
+  
+  return res.status(200).json(new ResObj(true, 'auth', true));
 
-  if (permissions[roleFromDb].indexOf(permitedRole) >= 0) {
-    return res.status(200).json(new ResObj(true, 'auth', true));
-  } else {
-    return res.status(200).json(new ResObj(false, 'auth', false));
-  }
+  // if (permissions[roleFromDb].indexOf(permitedRole) >= 0) {
+  //   return res.status(200).json(new ResObj(true, 'auth', true));
+  // } else {
+  //   return res.status(200).json(new ResObj(false, 'auth', false));
+  // }
 };
 
 module.exports.userProfile = function(req, res, next) {

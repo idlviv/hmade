@@ -218,6 +218,18 @@ export class UserService {
     );
   }
 
+  userLogout(): Observable<String> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    };
+    return this.http.get<String>(
+      'api/user/logout',
+      httpOptions
+    );
+  }
+
   userEditAvatar(file): Observable<IResponse> {
   // uploadPic(file, user) {
 

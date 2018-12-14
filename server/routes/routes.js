@@ -10,8 +10,10 @@ const uploadController = require('../controllers/uploadController');
 const productController = require('../controllers/productController');
 const sharedController = require('../controllers/sharedController');
 const recaptcha = require('../middleware/recaptcha');
-const authorization = require('../middleware/authorization').authorization;
-const notGuardExtarctUser_id = require('../middleware/authorization')
+const authorization = require('../middleware/auth').authorization;
+const authentication = require('../middleware/auth').authentication;
+
+const notGuardExtarctUser_id = require('../middleware/auth')
     .notGuardExtarctUser_id;
 const log = require('../config/winston')(module);
 
@@ -226,9 +228,9 @@ router.post('/user/create',
     userController.userCreate
 );
 
-router.get('/user/login',
-    userController.userLogin
-);
+// router.get('/user/login',
+//     userController.userLogin
+// );
 
 router.get('/user/auth',
     passport.authenticate('local'),
@@ -254,8 +256,13 @@ router.get('/user/auth/google/redirect',
     userController.userGoogleSignin
 );
 
+router.get('/user/logout',
+    userController.userLogout
+);
+
 router.get('/user/profile',
-    passport.authenticate('jwt', {session: true}),
+    authentication,
+    // passport.authenticate('jwt', {session: true}),
     userController.userProfile
 );
 

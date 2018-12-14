@@ -38,7 +38,7 @@
 
     <a *ngIf='!user' class="link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
       [routerLink]="['/user/login']"><span class="type1">Вхід</span></a>
-    <a *ngIf='user' class="link" (click)="userLocalLogout()"><span class="type2">Вихід</span></a>
+    <a *ngIf='user' class="link" (click)="userLogout()"><span class="type2">Вихід</span></a>
   </div>
 
   <div class="menu-button" fxShow="true" fxHide.gt-sm="true">

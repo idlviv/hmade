@@ -24,10 +24,20 @@ module.exports.authorization = function(restrictedRole) {
   };
 };
 
+module.exports.authentication = function(req, res, next) {
+  const user = req.user;
+  
+  if (user) {
+    return next();
+  } else {
+    return next(new ApplicationError('notAuthorized', 401));
+  }
+};
+
 /**
  * Extract token from headers
  * @param {*} req
- * @return
+ * @return {string}
  */
 function headersExtractor(req) {
   let token = null;

@@ -62,8 +62,15 @@ export class ContentComponent implements OnInit {
         });
   }
 
-  userLocalLogout() {
-    this.userService.userLocalLogout();
+  userLogout() {
+    this.userService.userLogout()
+      .subscribe(message => {
+        console.log(message);
+      },
+    err => {
+      console.log(err.error);
+    });
+    ;
     this.router.navigate(['/user', 'login']);
   }
 

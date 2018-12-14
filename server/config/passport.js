@@ -30,7 +30,6 @@ module.exports = function(passport) {
     );
   });
 
-
   passport.use(new LocalStrategy(
       {
         usernameField: 'login',
