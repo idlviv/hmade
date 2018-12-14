@@ -10,7 +10,7 @@ const config = require('../config');
 // let nodemailer = require('nodemailer');
 const transporter = require('../config/mailgun');
 
-module.exports.passwordResetCheckEmail = function(req, res, next) {
+const passwordResetCheckEmail = function(req, res, next) {
   let email = req.query.email;
   UserModel.findOne({email: email})
       .then((user) => {
@@ -52,7 +52,7 @@ module.exports.passwordResetCheckEmail = function(req, res, next) {
       .catch((err) => next(new ApplicationError(err.message, err.status)));
 };
 
-module.exports.passwordResetCheckCode = function(req, res, next) {
+const passwordResetCheckCode = function(req, res, next) {
   let user = {};
   Object.assign(user, req.user._doc);
 
@@ -96,7 +96,7 @@ module.exports.passwordResetCheckCode = function(req, res, next) {
  * @param {string} modificationRequest.value - value
  * @return {Promise}
  */
-updateUserField = function(_id, modificationRequest) {
+const updateUserField = function(_id, modificationRequest) {
   return new Promise(function(resolve, reject) {
     UserModel.updateOne({_id},
         {$set: {[modificationRequest.name]: modificationRequest.value}})
@@ -112,9 +112,7 @@ updateUserField = function(_id, modificationRequest) {
   });
 };
 
-module.exports.updateUserField = updateUserField;
-
-updateUserFields = function(_id, modificationRequestObject) {
+const updateUserFields = function(_id, modificationRequestObject) {
   return new Promise(function(resolve, reject) {
     UserModel.updateOne({_id},
         {$set: modificationRequestObject})
@@ -130,10 +128,7 @@ updateUserFields = function(_id, modificationRequestObject) {
   });
 };
 
-module.exports.updateUserFields = updateUserFields;
-
-
-module.exports.passwordReset = function(req, res, next) {
+const passwordReset = function(req, res, next) {
   let user = {};
   Object.assign(user, req.user._doc);
   // console.log('req.query.password', req.query.password);
@@ -168,7 +163,7 @@ module.exports.passwordReset = function(req, res, next) {
       );
 };
 
-module.exports.userGoogleSignin = function(req, res, next) {
+const userGoogleSignin = function(req, res, next) {
   log.debug('google redirect', req.user._doc);
   const user = req.user._doc;
   const sub = {
@@ -181,7 +176,7 @@ module.exports.userGoogleSignin = function(req, res, next) {
   res.redirect('/user/redirected-from-oauth/' + token);
 };
 
-module.exports.userEmailVerificationReceive = function(req, res, next) {
+const userEmailVerificationReceive = function(req, res, next) {
   let user = {};
   Object.assign(user, req.user._doc);
   UserModel.findOne({_id: user._id})
@@ -207,14 +202,14 @@ module.exports.userEmailVerificationReceive = function(req, res, next) {
                   (err) => {
                     log.debug('err', err);
                     res.redirect(req.protocol + '://' + req.get('host'));
-}
+                  }
               );
         }
       }
       );
 };
 
-module.exports.userEmailVerificationSend = function(req, res, next) {
+const userEmailVerificationSend = function(req, res, next) {
   let user = {};
   Object.assign(user, req.user._doc);
   const date = Math.floor(Date.now() / 1000); // in seconds
@@ -250,7 +245,7 @@ module.exports.userEmailVerificationSend = function(req, res, next) {
   });
 };
 
-module.exports.userEdit = function(req, res, next) {
+const userEdit = function(req, res, next) {
   let moderator = {};
   let modificationRequest = {};
 
@@ -327,7 +322,7 @@ function comparePassword(_id, passwordCandidate) {
   });
 }
 
-module.exports.userCreate = function(req, res, next) {
+const userCreate = function(req, res, next) {
   bcrypt.hash(req.body.password, 10)
       .then((hash) => {
         let user = {};
@@ -375,9 +370,9 @@ module.exports.userCreate = function(req, res, next) {
  * @param {object} sub - subject payload
  * @param {number} expire - seconds
  * @param {string} secret - object key from config
- * @return {string} token
+ * @return {string}
  */
-function _createJWTToken(prefix, sub, expire, secret) {
+const _createJWTToken = function(prefix, sub, expire, secret) {
   const date = Math.floor(Date.now() / 1000); // in seconds
   return prefix + jwt.sign(
       {
@@ -387,7 +382,7 @@ function _createJWTToken(prefix, sub, expire, secret) {
       },
       config.get(secret)
   );
-}
+};
 
 // module.exports.userLogin = function(req, res, next) {
 //   let userCandidate = {};
@@ -463,43 +458,72 @@ function _createJWTToken(prefix, sub, expire, secret) {
 //       .catch((err) => next(new ApplicationError()));
 // };
 
-module.exports.userLogout = function(req, res, next) {
+/** Session
+ * user logout
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @return {string}
+ */
+const userLogout = function(req, res, next) {
   log.debug('logout');
   req.logout();
-  res.status(200).json('Logged out');
+  return res.status(200).json('Logged out');
 };
 
-module.exports.userAuth = function(req, res, next) {
+/** Session
+ * Returns basic user credential after successful login (passport local)
+ * Signed by JWT
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @return {*}
+ */
+const userAuth = function(req, res, next) {
   if (req.user) {
-    const user = {
+    const sub = {
       _id: req.user._doc._id,
       login: req.user._doc.login,
       avatar: req.user._doc.avatar,
       role: req.user._doc.role,
     };
-    res.status(200).json(user);
+    const token = _createJWTToken('', sub, 604800, 'JWT_SECRET');
+    return res.status(200).json(token);
   } else {
     return next(new ApplicationError());
   }
 };
 
 
-module.exports.userRole = function(req, res, next) {
-  const roleFromDb = req.user._doc.role;
-  const permitedRole = req.query.role;
+/** Session
+ * Check users authenticity to activate routes on frontend (canActivate)
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @return {boolean}
+ */
+const userCheckAuthenticity = function(req, res, next) {
+  let roleFromSession;
+  if (req.user) {
+    roleFromSession = req.user._doc.role || 'casual';
+  } else {
+    roleFromSession = 'casual';
+  }
+  const requiredRoleForAuthentication = req.query.role;
 
   const permissions = config.get('permissions');
-  
-  return res.status(200).json(new ResObj(true, 'auth', true));
 
-  // if (permissions[roleFromDb].indexOf(permitedRole) >= 0) {
-  //   return res.status(200).json(new ResObj(true, 'auth', true));
-  // } else {
-  //   return res.status(200).json(new ResObj(false, 'auth', false));
-  // }
+  if (permissions[roleFromSession].indexOf(requiredRoleForAuthentication) >= 0) {
+    return res.status(200).json(true);
+  } else {
+    return res.status(200).json(false);
+  }
 };
 
-module.exports.userProfile = function(req, res, next) {
+const userProfile = function(req, res, next) {
   // let user = {};
   // Object.assign(user, req.user._doc);
   // delete user.password;
@@ -516,4 +540,22 @@ module.exports.userProfile = function(req, res, next) {
     email: req.user._doc.email,
   };
   return res.status(200).json(new ResObj(true, 'auth', user));
+};
+
+
+module.exports = {
+  userCheckAuthenticity,
+  userProfile,
+  userAuth,
+  userLogout,
+  userCreate,
+  userEdit,
+  userEmailVerificationSend,
+  userGoogleSignin,
+  userEmailVerificationReceive,
+  updateUserFields,
+  updateUserField,
+  passwordReset,
+  passwordResetCheckCode,
+  passwordResetCheckEmail,
 };

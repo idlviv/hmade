@@ -407,11 +407,15 @@ var UserLoginComponent = /** @class */ (function () {
             password: this.userLoginForm.get('password').value,
         };
         this.userService.userAuth(this.user)
-            .subscribe(function (user) {
-            if (user) {
+            .subscribe(function (token) {
+            if (token) {
                 _this.resetForm();
-                console.log('user logged in', user);
-                _this.matSnackBar.open('user logged in' + user.login, '', { duration: 3000 });
+                console.log('user logged in ', token);
+                _this.userService.userLocalLogin(token);
+                var login = _this.userService.userLocalGetCredentials('token').login;
+                console.log('login', login);
+                _this.matSnackBar.open(login + ", \u0432\u0438 \u0443\u0432\u0456\u0439\u0448\u043B\u0438 \u043D\u0430 \u0441\u0430\u0439\u0442", '', { duration: 5000 });
+                _this.router.navigate(['/user', 'profile']);
             }
         }, function (err) {
             var message;

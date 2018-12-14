@@ -49,11 +49,15 @@ export class UserLoginComponent implements OnInit {
 
     this.userService.userAuth(this.user)
       .subscribe(
-        user => {
-          if (user) {
+        token => {
+          if (token) {
             this.resetForm();
-            console.log('user logged in', user)
-            this.matSnackBar.open('user logged in' + user.login, '', {duration: 3000});
+            console.log('user logged in ', token);
+            this.userService.userLocalLogin(token);
+            const login = this.userService.userLocalGetCredentials('token').login;
+            console.log('login', login);
+            this.matSnackBar.open(`${login}, ви увійшли на сайт`, '', {duration: 5000});
+            this.router.navigate(['/user', 'profile']);
           }
         },
         err => {

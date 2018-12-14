@@ -266,9 +266,8 @@ router.get('/user/profile',
     userController.userProfile
 );
 
-router.get('/user/role',
-    passport.authenticate('jwt', {session: false}),
-    userController.userRole
+router.get('/user/checkAuthenticity',
+    userController.userCheckAuthenticity
 );
 
 router.put('/user/edit',

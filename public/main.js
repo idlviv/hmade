@@ -996,8 +996,10 @@ var ContentComponent = /** @class */ (function () {
         });
     };
     ContentComponent.prototype.userLogout = function () {
+        var _this = this;
         this.userService.userLogout()
             .subscribe(function (message) {
+            _this.userService.userLocalLogout();
             console.log(message);
         }, function (err) {
             console.log(err.error);
@@ -2481,8 +2483,8 @@ var AuthGuard = /** @class */ (function () {
         this.userService = userService;
     }
     AuthGuard.prototype.canActivate = function (next, state) {
-        var requiredRole = next.data.auth; // from routing.module
-        return this.userService.userCheckRole(requiredRole).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (permission) { return permission.data; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (err) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"])(false); }));
+        var requiredRoleForAuthentication = next.data.auth; // from routing.module
+        return this.userService.userCheckAuthenticity(requiredRoleForAuthentication).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (permission) { return permission; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (err) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"])(false); }));
     };
     AuthGuard = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])(),
@@ -3712,16 +3714,22 @@ var UserService = /** @class */ (function () {
         //   )
         // );
     };
-    UserService.prototype.userCheckRole = function (role) {
+    /** Session
+     * Used for router guard (canActivate)
+     *
+     * @param {*} requiredRoleForAuthentication
+     * @returns {Observable<boolean>}
+     * @memberof UserService
+     */
+    UserService.prototype.userCheckAuthenticity = function (requiredRoleForAuthentication) {
         var token = this.userLocalGetToken('token');
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                 'Content-Type': 'application/json',
-                'Authorization': token
             }),
-            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromString: "role=" + role })
+            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromString: "role=" + requiredRoleForAuthentication })
         };
-        return this.http.get('api/user/role', httpOptions);
+        return this.http.get('api/user/checkAuthenticity', httpOptions);
     };
     UserService.prototype.userEdit = function (data) {
         var token = this.userLocalGetToken('token');
@@ -3733,6 +3741,12 @@ var UserService = /** @class */ (function () {
         };
         return this.http.put('api/user/edit', data, httpOptions);
     };
+    /** Session
+     * User logout
+     *
+     * @returns {Observable<String>}
+     * @memberof UserService
+     */
     UserService.prototype.userLogout = function () {
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({

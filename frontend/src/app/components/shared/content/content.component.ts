@@ -65,6 +65,7 @@ export class ContentComponent implements OnInit {
   userLogout() {
     this.userService.userLogout()
       .subscribe(message => {
+        this.userService.userLocalLogout();
         console.log(message);
       },
     err => {

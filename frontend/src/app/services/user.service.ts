@@ -187,18 +187,24 @@ export class UserService {
     // );
   }
 
-  userCheckRole(role): Observable<IResponse> {
+  /** Session
+   * Used for router guard (canActivate)
+   *
+   * @param {*} requiredRoleForAuthentication
+   * @returns {Observable<boolean>}
+   * @memberof UserService
+   */
+  userCheckAuthenticity(requiredRoleForAuthentication): Observable<boolean> {
     const token = this.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': token
       }),
-      params: new HttpParams({fromString: `role=${role}`})
+      params: new HttpParams({fromString: `role=${requiredRoleForAuthentication}`})
 
     };
-    return this.http.get<IResponse>(
-      'api/user/role',
+    return this.http.get<boolean>(
+      'api/user/checkAuthenticity',
       httpOptions
     );
   }
@@ -217,7 +223,13 @@ export class UserService {
       httpOptions
     );
   }
-
+  
+  /** Session
+   * User logout
+   *
+   * @returns {Observable<String>}
+   * @memberof UserService
+   */
   userLogout(): Observable<String> {
     const httpOptions = {
       headers: new HttpHeaders({
