@@ -163,18 +163,7 @@ const passwordReset = function(req, res, next) {
       );
 };
 
-const userGoogleSignin = function(req, res, next) {
-  log.debug('google redirect', req.user._doc);
-  const user = req.user._doc;
-  const sub = {
-    _id: user._id,
-    role: user.role,
-    login: user.login,
-    avatar: user.avatar,
-  };
-  const token = _createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
-  res.redirect('/user/redirected-from-oauth/' + token);
-};
+
 
 const userEmailVerificationReceive = function(req, res, next) {
   let user = {};
@@ -496,6 +485,18 @@ const userAuth = function(req, res, next) {
   }
 };
 
+const userGoogleSignin = function(req, res, next) {
+  log.debug('google redirect', req.user._doc);
+  const user = req.user._doc;
+  const sub = {
+    _id: user._id,
+    role: user.role,
+    login: user.login,
+    avatar: user.avatar,
+  };
+  const token = _createJWTToken('', sub, 604800, 'JWT_SECRET');
+  res.redirect('/user/redirected-from-oauth/' + token);
+};
 
 /** Session
  * Check users authenticity to activate routes on frontend (canActivate)

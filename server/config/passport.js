@@ -20,10 +20,15 @@ module.exports = function(passport) {
   jwtOptions.secretOrKey = config.get('JWT_SECRET');
 
   passport.serializeUser((user, done) => {
-    done(null, user._id);
+    log.debug('serialize');
+    if (user.googleId) {
+      log.debug('google user');
+    }
+    return done(null, user._id);
   });
 
   passport.deserializeUser((_id, done) => {
+    log.debug('deserialize');
     UserModel.findById(_id).then(
         (user) => done(null, user),
         (err) => done(err, false)
@@ -40,8 +45,6 @@ module.exports = function(passport) {
           login,
           password,
         };
-        log.debug('login', login);
-        log.debug('password', password);
         UserModel.findOne({login: userCandidate.login})
             .then((user) => {
               if (!user) {
@@ -105,7 +108,6 @@ module.exports = function(passport) {
       }
   ));
 
-
   //   Strategies in Passport require a `verify` function, which accept
   //   credentials (in this case, an accessToken, refreshToken, and Google
   //   profile), and invoke a callback with a user object.
@@ -117,7 +119,6 @@ module.exports = function(passport) {
             callbackURL: 'http://localhost:8081/api/user/auth/google/redirect',
           },
           function(accessToken, refreshToken, profile, done) {
-            log.debug('profile', profile);
             UserModel.findOne({googleId: profile.id})
                 .then((user) => {
                   if (user) {
@@ -135,6 +136,7 @@ module.exports = function(passport) {
                           // if (updatedUser.ok !== 1) {
                           //   return done('error singn in', false);
                           // }
+                          console.log('done');
                           return done(null, updatedUser);
                         },
                         (err) => done(err, false)
@@ -151,6 +153,8 @@ module.exports = function(passport) {
                           role: 'user',
                           email: profile._json.emails[0].value,
                           googleId: profile._json.id,
+                          accessToken,
+                          refreshToken,
                         })
                         .save()
                         .then((newUser) => {

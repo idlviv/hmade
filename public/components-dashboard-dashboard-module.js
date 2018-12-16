@@ -4674,7 +4674,7 @@ var McEditorFormComponent = /** @class */ (function () {
             display: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](true, []),
             onMainPage: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](false, []),
             mainImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](this.config.defaultProductImg, []),
-            pics: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormArray"]([]),
+            // pics : new FormArray([]),
             materials: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormArray"]([]),
             steps: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormArray"]([])
         });
@@ -4700,8 +4700,9 @@ var McEditorFormComponent = /** @class */ (function () {
             }
         }))
             .subscribe(function (mc) {
+            console.log('mc', mc);
             if (_this.editMode) {
-                mc.pics.forEach(function (element) { return _this.addControl('pics'); });
+                // mc.pics.forEach(element => this.addControl('pics'));
                 mc.materials.forEach(function (element) { return _this.addMaterialsControl(); });
                 mc.steps.forEach(function (element) { return _this.addStepsControl(); });
                 mc.parents.forEach(function (element) { return _this.addControl('parents'); });

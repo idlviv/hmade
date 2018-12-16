@@ -15,6 +15,12 @@ const UserSchema = new Schema({
   googleId: {
     type: String,
   },
+  accessToken: {
+    type: String,
+  },
+  refreshToken: {
+    type: String,
+  },
   passwordTries: {
     type: Number,
     default: 0

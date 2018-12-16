@@ -6,7 +6,7 @@ const ExtractJwt = require('passport-jwt').ExtractJwt;
 const jwt = require('jsonwebtoken');
 const ObjectId = require('../config/mongoose').Types.ObjectId;
 
-module.exports.authorization = function(restrictedRole) {
+const authorization = function(restrictedRole) {
   return function(req, res, next) {
     const usersRole = req.user._doc.role;
 
@@ -24,9 +24,9 @@ module.exports.authorization = function(restrictedRole) {
   };
 };
 
-module.exports.authentication = function(req, res, next) {
+const authentication = function(req, res, next) {
   const user = req.user;
-  
+
   if (user) {
     return next();
   } else {
@@ -34,37 +34,37 @@ module.exports.authentication = function(req, res, next) {
   }
 };
 
-/**
- * Extract token from headers
- * @param {*} req
- * @return {string}
- */
-function headersExtractor(req) {
-  let token = null;
-  if (req && req.headers && req.headers.authorization) {
-    token = req.headers.authorization;
-  }
-  return token;
-};
+module.exports = {
+  authorization,
+  authentication,
+}
 
-// !not guard. Only extracts userId from headers and adds it to req.user_id
-module.exports.notGuardExtarctUser_id = function() {
-  return function(req, res, next) {
-    const jwtFromRequest = headersExtractor(req);
+// function headersExtractor(req) {
+//   let token = null;
+//   if (req && req.headers && req.headers.authorization) {
+//     token = req.headers.authorization;
+//   }
+//   return token;
+// };
 
-    if (jwtFromRequest) {
-      jwt.verify(jwtFromRequest.substr(4), config.get('JWT_SECRET'),
-          (err, payload) => {
-            if (err) {
-              req.user_id = '';
-              next();
-            }
-            req.user_id = new ObjectId(payload.sub._id);
-            next();
-          });
-    } else {
-      req.user_id = '';
-      next();
-    }
-  };
-};
+// // !not guard. Only extracts userId from headers and adds it to req.user_id
+// module.exports.notGuardExtarctUser_id = function() {
+//   return function(req, res, next) {
+//     const jwtFromRequest = headersExtractor(req);
+
+//     if (jwtFromRequest) {
+//       jwt.verify(jwtFromRequest.substr(4), config.get('JWT_SECRET'),
+//           (err, payload) => {
+//             if (err) {
+//               req.user_id = '';
+//               next();
+//             }
+//             req.user_id = new ObjectId(payload.sub._id);
+//             next();
+//           });
+//     } else {
+//       req.user_id = '';
+//       next();
+//     }
+//   };
+// };

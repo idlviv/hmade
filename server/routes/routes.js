@@ -22,26 +22,26 @@ const log = require('../config/winston')(module);
  */
 
 router.delete('/social/delete-comment',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     authorization('manager'),
     socialController.deleteComment
 );
 
 router.post('/social/add-comment',
     recaptcha,
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     authorization('user'),
     socialController.addComment
 );
 
 router.put('/social/display-comment',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     authorization('manager'),
     socialController.displayComment
 );
 
 router.put('/social/likes-set',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     authorization('user'),
     socialController.likesSet
 );
@@ -62,17 +62,14 @@ router.get('/mc/get-main-page-mcs',
 );
 
 router.get('/mc/get-mc-by-id/:_id',
-    notGuardExtarctUser_id(),
     mcController.getMcById
 );
 
 router.get('/mc/get-mc-by-id-and-inc-views/:_id',
-    notGuardExtarctUser_id(),
     mcController.getMcByIdAndIncViews
 );
 
 router.get('/mc/get-mcs-by-filter',
-    notGuardExtarctUser_id(),
     mcController.getMcsByFilter
 );
 
@@ -81,24 +78,24 @@ router.get('/mc/get-mcs-by-parent',
 );
 
 router.get('/mc/get-sku-list',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     mcController.getSkuList
 );
 
 router.post('/mc/add-main-image',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     authorization('manager'),
     mcController.addMainImage
 );
 
 router.post('/mc/add-steps-pic',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     authorization('manager'),
     mcController.addStepsPic
 );
 
 router.post('/mc/upsert',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     authorization('manager'),
     mcController.mcUpsert
 );
@@ -137,13 +134,13 @@ router.get('/product/get-main-page-products',
 // );
 
 router.delete('/product/delete/:_id',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     authorization('manager'),
     productController.productDelete
 );
 
 router.post('/product/add-image',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     authorization('manager'),
     productController.productAddImage
 );
@@ -154,25 +151,25 @@ router.get('/product/increase-views',
 );
 
 router.post('/product/add-menu-image',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     authorization('manager'),
     productController.productAddMenuImage
 );
 
 router.post('/product/add-main-image',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     authorization('manager'),
     productController.productAddMainImage
 );
 
 router.post('/product/upsert',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     authorization('manager'),
     productController.productUpsert
 );
 
 router.get('/product/get-sku-list',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     productController.getSkuList
 );
 
@@ -223,7 +220,7 @@ router.get('/catalog/get-children',
 
 router.post('/user/create',
     recaptcha,
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     authorization('manager'),
     userController.userCreate
 );
@@ -242,7 +239,10 @@ router.get('/user/auth/google',
     // 2step: passport redirects to google 'chose account' window
     passport.authenticate(
         'google',
-        {scope: ['profile', 'email']},
+        {
+          scope: ['profile', 'email'],
+          accessType: 'offline',
+        },
         {session: true})
 );
 
@@ -262,7 +262,6 @@ router.get('/user/logout',
 
 router.get('/user/profile',
     authentication,
-    // passport.authenticate('jwt', {session: true}),
     userController.userProfile
 );
 
@@ -271,22 +270,22 @@ router.get('/user/checkAuthenticity',
 );
 
 router.put('/user/edit',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     userController.userEdit
 );
 
 router.put('/user/edit-avatar',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     uploadController.userEditAvatar
 );
 
 router.get('/user/email-verification-send',
-    passport.authenticate('jwt', {session: false}),
+    authentication,
     userController.userEmailVerificationSend
 );
 
 router.get('/user/email-verification',
-    passport.authenticate('jwt.email.verification', {session: false}),
+    passport.authenticate('jwt.email.verification', {session: true}),
     userController.userEmailVerificationReceive
 );
 
@@ -296,12 +295,12 @@ router.get('/user/password-reset-check-email',
 );
 
 router.get('/user/password-reset-check-code',
-    passport.authenticate('jwt.passwordResetCheckCode', {session: false}),
+    passport.authenticate('jwt.passwordResetCheckCode', {session: true}),
     userController.passwordResetCheckCode
 );
 
 router.get('/user/password-reset',
-    passport.authenticate('jwt.passwordReset', {session: false}),
+    passport.authenticate('jwt.passwordReset', {session: true}),
     userController.passwordReset
 );
 

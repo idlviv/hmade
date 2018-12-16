@@ -1898,7 +1898,6 @@ var McsItemDetailComponent = /** @class */ (function () {
             var parentCategory = 'mc';
             this.socialService.likesSet(parent_id_1, parentCategory, action)
                 .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])(function (result) {
-                console.log('result', result);
                 if (result) {
                     return _this.mcService.getMcById(parent_id_1);
                 }
@@ -1908,7 +1907,6 @@ var McsItemDetailComponent = /** @class */ (function () {
             }))
                 .subscribe(function (result) {
                 if (result) {
-                    console.log('result2', result);
                     _this.mc = result;
                 }
             }, function (err) { return console.log('err', err); });

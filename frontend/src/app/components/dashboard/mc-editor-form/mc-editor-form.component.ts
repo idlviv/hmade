@@ -60,7 +60,7 @@ export class McEditorFormComponent implements OnInit {
       display: new FormControl(true, []),
       onMainPage: new FormControl(false, []),
       mainImage: new FormControl(this.config.defaultProductImg, []),
-      pics : new FormArray([]),
+      // pics : new FormArray([]),
       materials: new FormArray([]),
       steps: new FormArray([])
     });
@@ -94,8 +94,9 @@ export class McEditorFormComponent implements OnInit {
     )
     .subscribe(
       mc => {
+        console.log('mc', mc);
         if (this.editMode) {
-          mc.pics.forEach(element => this.addControl('pics'));
+          // mc.pics.forEach(element => this.addControl('pics'));
           mc.materials.forEach(element => this.addMaterialsControl());
           mc.steps.forEach(element => this.addStepsControl());
           mc.parents.forEach(element => this.addControl('parents'));

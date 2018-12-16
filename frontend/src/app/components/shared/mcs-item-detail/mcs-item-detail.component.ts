@@ -69,7 +69,6 @@ export class McsItemDetailComponent implements OnInit {
       .pipe(
         mergeMap(
           (result) => {
-            console.log('result', result);
               if (result) {
                 return this.mcService.getMcById(parent_id);
               } else {
@@ -81,7 +80,6 @@ export class McsItemDetailComponent implements OnInit {
       .subscribe(
         (result) => {
           if (result) {
-            console.log('result2', result);
             this.mc = result;
           }
         },

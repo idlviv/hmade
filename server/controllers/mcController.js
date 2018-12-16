@@ -208,7 +208,7 @@ function _getMcs(match, user_id) {
 
 module.exports.getMcById = function(req, res, next) {
   const _id = req.params._id;
-  const user_id = req.user_id;
+  const user_id = req.user ? req.user._doc._id : '';
   _getMcs({_id}, user_id)
       .then((result) =>
         res.status(200).json(result[0]))
@@ -217,7 +217,7 @@ module.exports.getMcById = function(req, res, next) {
 
 module.exports.getMcByIdAndIncViews = function(req, res, next) {
   const _id = req.params._id;
-  const user_id = req.user_id;
+  const user_id = req.user ? req.user._doc._id : '';
 
   McModel.findOneAndUpdate({_id}, {$inc: {views: 1}})
       .then(() => _getMcs({_id}, user_id))
@@ -241,7 +241,8 @@ module.exports.getMcsByFilter = function(req, res, next) {
   const skip = +req.query.skip;
   const limit = +req.query.limit;
   const noMoreChildren = req.query.noMoreChildren === 'true';
-  const user_id = req.user_id;
+
+  const user_id = req.user ? req.user._doc._id : '';
 
   let addFields;
   if (user_id) {

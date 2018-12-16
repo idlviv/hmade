@@ -66,7 +66,7 @@ app.use(passport.session());
 
 app.use(function(req, res, next) {
   if (req.user) {
-    log.debug('user', req.user._doc);
+    log.debug('user');
   } else {
     log.debug('NOT USER');
   }
