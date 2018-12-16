@@ -965,14 +965,21 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var ContentComponent = /** @class */ (function () {
-    function ContentComponent(sharedService, userService, router, catalogService) {
+    function ContentComponent(sharedService, userService, router, catalogService, cd) {
         this.sharedService = sharedService;
         this.userService = userService;
         this.router = router;
         this.catalogService = catalogService;
+        this.cd = cd;
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
         this.hierarchyCategory = [];
     }
+    // Solve error ExpressionChangedAfterItHasBeenCheckedError
+    // After redirection from auth2 signin (server) view changes (*ngIf)
+    // was user=null becomes user which logged
+    ContentComponent.prototype.ngAfterViewChecked = function () {
+        this.cd.detectChanges();
+    };
     ContentComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sharedService.getSharingEvent()
@@ -1040,7 +1047,8 @@ var ContentComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_services_shared_service__WEBPACK_IMPORTED_MODULE_6__["SharedService"],
             _services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
-            _services_catalog_service__WEBPACK_IMPORTED_MODULE_3__["CatalogService"]])
+            _services_catalog_service__WEBPACK_IMPORTED_MODULE_3__["CatalogService"],
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ChangeDetectorRef"]])
     ], ContentComponent);
     return ContentComponent;
 }());

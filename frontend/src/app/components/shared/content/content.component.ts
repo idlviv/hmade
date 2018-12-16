@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { IUser } from '../../../interfaces/user-interface';
 import { Router } from '@angular/router';
@@ -13,7 +13,7 @@ import { SharedService } from '../../../services/shared.service';
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
 })
-export class ContentComponent implements OnInit {
+export class ContentComponent implements OnInit, AfterViewChecked {
 
   config = config;
   user: IUser;
@@ -32,7 +32,15 @@ export class ContentComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     private catalogService: CatalogService,
+    private cd: ChangeDetectorRef,
   ) { }
+
+  // Solve error ExpressionChangedAfterItHasBeenCheckedError
+  // After redirection from auth2 signin (server) view changes (*ngIf)
+  // was user=null becomes user which logged
+  ngAfterViewChecked() {
+    this.cd.detectChanges();
+  }
 
   ngOnInit() {
 

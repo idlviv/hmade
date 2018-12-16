@@ -24,7 +24,7 @@ export class RedirectedFromOauthComponent implements OnInit {
         (params) => {
           const token = params.token;
           this.userService.userLocalLogin(token);
-          this.matSnackBar.open('Logged in', '', {duration: 3000});
+          // this.matSnackBar.open('Logged in', '', {duration: 3000});
           this.router.navigate(['/user', 'profile']);
         },
       (err) => console.log('err', err)

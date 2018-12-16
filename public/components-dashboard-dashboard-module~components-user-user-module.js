@@ -62,7 +62,7 @@ var RedirectedFromOauthComponent = /** @class */ (function () {
             .subscribe(function (params) {
             var token = params.token;
             _this.userService.userLocalLogin(token);
-            _this.matSnackBar.open('Logged in', '', { duration: 3000 });
+            // this.matSnackBar.open('Logged in', '', {duration: 3000});
             _this.router.navigate(['/user', 'profile']);
         }, function (err) { return console.log('err', err); });
     };
@@ -410,10 +410,8 @@ var UserLoginComponent = /** @class */ (function () {
             .subscribe(function (token) {
             if (token) {
                 _this.resetForm();
-                console.log('user logged in ', token);
                 _this.userService.userLocalLogin(token);
                 var login = _this.userService.userLocalGetCredentials('token').login;
-                console.log('login', login);
                 _this.matSnackBar.open(login + ", \u0432\u0438 \u0443\u0432\u0456\u0439\u0448\u043B\u0438 \u043D\u0430 \u0441\u0430\u0439\u0442", '', { duration: 5000 });
                 _this.router.navigate(['/user', 'profile']);
             }
