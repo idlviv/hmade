@@ -1249,3 +1249,16 @@ td.mat-cell {
 //     font-weight: bold;
 //     font-family: 'Roboto', sans-serif;
 // }
+
+.google-button {
+  color: rgba(0, 0, 0, .54);
+  font-family: Roboto;
+  padding: 0 8px !important;
+  font-size: 14px;
+  font-weight: 500;
+  height: 40px;
+  line-height: 40px !important;
+  svg {
+    padding-right: 24px;
+  }
+}

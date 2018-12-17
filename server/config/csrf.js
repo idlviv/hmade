@@ -7,7 +7,7 @@ module.exports = function(req, res, next) {
       {
         // 'secure': false,
         'httpOnly': false,
-        'maxAge': 500000,
+        'maxAge': 3 * 60 * 60 * 1000,
         'sameSite': 'Strict',
         'path': '/',
       }
