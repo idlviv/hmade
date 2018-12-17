@@ -57,11 +57,13 @@ export class UserCreateComponent implements OnInit {
           Validators.pattern(emailPattern),
         ]),
         name: new FormControl('', [
+          Validators.required,
           Validators.minLength(2),
           Validators.maxLength(20),
           Validators.pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ\' ]+'),
         ]),
         surname: new FormControl('', [
+          Validators.required,
           Validators.minLength(2),
           Validators.maxLength(20),
           Validators.pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ\' ]+'),
