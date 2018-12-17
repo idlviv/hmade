@@ -25,12 +25,10 @@ const authorization = function(restrictedRole) {
 };
 
 const authentication = function(req, res, next) {
-  const user = req.user;
-
-  if (user) {
+  if (req.isAuthenticated()) {
     return next();
   } else {
-    return next(new ApplicationError('notAuthorized', 401));
+    return next(new ApplicationError('notAuthenticated', 401));
   }
 };
 
