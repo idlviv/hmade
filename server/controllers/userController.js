@@ -311,47 +311,7 @@ function comparePassword(_id, passwordCandidate) {
   });
 }
 
-const userCreate = function(req, res, next) {
-  bcrypt.hash(req.body.password, 10)
-      .then((hash) => {
-        let user = {};
-        Object.assign(user, req.body);
-        user.password = hash;
-        user.role = 'guest';
-        const userModel = new UserModel(user);
-        // create new user
-        userModel.save()
-            .then(
-                (result) => {
-                  // login new user
-                  UserModel.findOne({login: user.login})
-                      .then(
-                          (user) => {
-                            if (!user) {
-                              return next(new ApplicationError('Невірний логін', 401));
-                            }
-                            const sub = {
-                              _id: user._id,
-                              role: user.role,
-                              login: user.login,
-                              avatar: config.get('defaultAvatar'),
-                            };
-                            const token = _createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
-                            return res.status(200).json(new ResObj(true, 'Користувач створений. Вхід виконано', token));
-                          },
-                          (err) => next(new DbError(err.message, err.code))
-                      );
-                },
-                (err) =>
-                // redirect to error handler
-                  next(new DbError(err.message, err.code))
-            );
-      },
-      // redirect to error handler
-      (err) => next(new ApplicationError(err.message, err.status, err.code))
-      )
-      .catch((err) => next(new ApplicationError(err.message, err.status)));
-};
+
 
 /**
  *
@@ -373,79 +333,83 @@ const _createJWTToken = function(prefix, sub, expire, secret) {
   );
 };
 
-// module.exports.userLogin = function(req, res, next) {
-//   let userCandidate = {};
-//   Object.assign(userCandidate, req.query);
+/** Session
+ * check email uniqueness
+ *
+ * @param {string} email
+ * @return {Promise<boolean>}
+ */
+function _isEmailUnique(email) {
+  return UserModel.find({email})
+      .then((result) => {
+        log.debug('!result', !result);
+        log.debug('result', !!result);
+        return !result;
+      }
+      // {
+      //   if (result) {
+      //     return !result;
+      //   } else {
+      //     return !!result;
+      //   }
+      // }
 
-//   UserModel.findOne({login: userCandidate.login})
-//       .then((user) => {
-//         if (!user) {
-//           return next(new ApplicationError('Невірний логін', 401));
-//         }
-//         if (user.isPasswordLocked) {
-//           return next(new ApplicationError('maxTries', 401));
-//         }
+      )
+      .catch((err) => !!result);
+}
 
-//         bcrypt.compare(userCandidate.password, user.password)
-//             .then((passwordMatched) => {
-//               if (!passwordMatched) {
-//                 const dateNow = Date.now(); // in seconds
-//                 let query;
+/** Session
+ * check login uniqueness
+ *
+ * @param {string} login
+ * @return {Promise<boolean>}
+ */
+function _isLoginUnique(login) {
+  return UserModel.find({login})
+      .then((result) => {
+        if (result) {
+          return !result;
+        } else {
+          return !!result;
+        }
+      })
+      .catch((err) => !!result);
+}
 
-//                 if ((dateNow - user.passwordLockUntil) > 600000) {
-//                   UserModel.update({_id: user._id},
-//                       {
-//                         $set: {
-//                           passwordTries: 1,
-//                           passwordLockUntil: dateNow,
-//                         },
-//                       })
-//                       .then((result)=>{
-//                         if (result.ok !== 1) {
-//                           next(new DbError());
-//                         }
-//                         return next(new ApplicationError('Невірний пароль', 401));
-//                       })
-//                       .catch((err) => next(new ApplicationError()));
-//                 } else {
-//                   if (user.passwordTries >= user.passwordLockTries) {
-//                     query = {
-//                       $set: {
-//                         passwordTries: 1,
-//                         passwordLockUntil: dateNow + 600000},
-//                     };
-//                   } else {
-//                     query = {
-//                       $inc: {passwordTries: 1},
-//                       $set: {passwordLockUntil: dateNow},
-//                     };
-//                   }
-//                   UserModel.update({_id: user._id}, query)
-//                       .then((result)=>{
-//                         if (result.ok !== 1) {
-//                           next(new DbError());
-//                         }
-//                         return next(new ApplicationError('Невірний пароль', 401));
-//                       })
-//                       .catch((err) => next(new ApplicationError()));
-//                 }
-//               } else {
-//                 const sub = {
-//                   _id: user._id,
-//                   role: user.role,
-//                   login: user.login,
-//                   avatar: user.avatar,
-//                 };
-//                 const token = _createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
-//                 return res.status(200).json(new ResObj(true, 'Вхід виконано', token));
-//               }
-//             })
-//             .catch((err) => next(new ApplicationError(err.message, err.status)));
-//       },
-//       (err) => next(new DbError(err.message, err.code))
-//       )
-//       .catch((err) => next(new ApplicationError()));
-// };
+const userProfile = function(req, res, next) {
+  // let user = {};
+  // Object.assign(user, req.user._doc);
+  // delete user.password;
+  // console.log('user', req.user);
+  // console.log('user._doc', req.user._doc);
+  const a =_isEmailUnique('idlvi@gmail.com')
+      .then((result) => {
+        if (result) {
+          return _isLoginUnique('idlviv');
+        } else {
+          log.debug('email unique', result);
+        }
+      })
+      .then((result) => {
+        if (result) {
+          return true;
+        } else {
+          log.debug('login unique', result);
+        }
+      });
+  log.debug('res', a);
+
+  let user = {
+    login: req.user._doc.login,
+    avatar: req.user._doc.avatar,
+    ban: req.user._doc.ban,
+    name: req.user._doc.name,
+    surname: req.user._doc.surname,
+    role: req.user._doc.role,
+    email: req.user._doc.email,
+  };
+  return res.status(200).json(new ResObj(true, 'auth', user));
+};
 
 /** Session
  * user logout
@@ -493,6 +457,7 @@ const userGoogleSignin = function(req, res, next) {
     role: user.role,
     login: user.login,
     avatar: user.avatar,
+    provider: user.provider,
   };
   const token = _createJWTToken('', sub, 604800, 'JWT_SECRET');
   res.redirect('/user/redirected-from-oauth/' + token);
@@ -524,23 +489,55 @@ const userCheckAuthenticity = function(req, res, next) {
   }
 };
 
-const userProfile = function(req, res, next) {
-  // let user = {};
-  // Object.assign(user, req.user._doc);
-  // delete user.password;
-  // console.log('user', req.user);
-  // console.log('user._doc', req.user._doc);
 
-  let user = {
-    login: req.user._doc.login,
-    avatar: req.user._doc.avatar,
-    ban: req.user._doc.ban,
-    name: req.user._doc.name,
-    surname: req.user._doc.surname,
-    role: req.user._doc.role,
-    email: req.user._doc.email,
-  };
-  return res.status(200).json(new ResObj(true, 'auth', user));
+
+const userCreate = function(req, res, next) {
+  
+
+
+  bcrypt.hash(req.body.password, 10)
+      .then((hash) => {
+        let user = {};
+        Object.assign(user, req.body);
+        
+        user.password = hash;
+        user.role = 'guest';
+        user.provider = 'native';
+        user.createdAt = Date.now();
+
+        const userModel = new UserModel(user);
+        // create new user
+        userModel.save()
+            .then(
+                (result) => {
+                  // login new user
+                  UserModel.findOne({login: user.login})
+                      .then(
+                          (user) => {
+                            if (!user) {
+                              return next(new ApplicationError('Невірний логін', 401));
+                            }
+                            const sub = {
+                              _id: user._id,
+                              role: user.role,
+                              login: user.login,
+                              avatar: config.get('defaultAvatar'),
+                            };
+                            const token = _createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
+                            return res.status(200).json(new ResObj(true, 'Користувач створений. Вхід виконано', token));
+                          },
+                          (err) => next(new DbError(err.message, err.code))
+                      );
+                },
+                (err) =>
+                // redirect to error handler
+                  next(new DbError(err.message, err.code))
+            );
+      },
+      // redirect to error handler
+      (err) => next(new ApplicationError(err.message, err.status, err.code))
+      )
+      .catch((err) => next(new ApplicationError(err.message, err.status)));
 };
 
 

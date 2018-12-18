@@ -124,11 +124,9 @@ module.exports = function(passport) {
                   if (user) {
                     // if user is already in db update credentials
                     user.set({
-                      login: profile._json.displayName,
                       avatar: profile._json.image.url,
                       name: profile._json.name.givenName,
                       surname: profile._json.name.familyName,
-                      email: profile._json.emails[0].value,
                     })
                         .save()
                         .then((updatedUser) => {
@@ -145,14 +143,16 @@ module.exports = function(passport) {
                     // if new user, create new record in db
                     new UserModel(
                         {
-                          login: profile._json.displayName,
+                          provider: 'google',
+                          login: 'gid_' + profile._json.id,
+                          email: profile._json.emails[0].value,
                           avatar: profile._json.image.url,
-                          ban: 0,
                           name: profile._json.name.givenName,
                           surname: profile._json.name.familyName,
                           role: 'user',
-                          email: profile._json.emails[0].value,
-                          googleId: profile._json.id,
+                          ban: 0,
+                          createdAt: Date.now(),
+                          providersId: profile._json.id,
                           accessToken,
                           refreshToken,
                         })
