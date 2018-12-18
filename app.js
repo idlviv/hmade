@@ -33,7 +33,8 @@ const app = express();
 
 app.use(compression());
 
-app.use(logger('dev'));
+// app.use(logger('tiny'));
+// app.use(logger('dev'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -66,9 +67,9 @@ app.use(passport.session());
 
 app.use(function(req, res, next) {
   if (req.user) {
-    log.debug('user');
+    // log.debug('user');
   } else {
-    log.debug('NOT USER');
+    // log.debug('NOT USER');
   }
   // req.session.number += 1;
   // console.log('ses', req.session);

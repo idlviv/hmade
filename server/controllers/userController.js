@@ -3,6 +3,7 @@ const UserModel = require('../models/userModel');
 const ResObj = require('../libs/responseObject');
 const DbError = require('../errors/dbError');
 const ApplicationError = require('../errors/applicationError');
+const ClientError = require('../errors/clientError');
 const util = require('util');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -164,7 +165,6 @@ const passwordReset = function(req, res, next) {
 };
 
 
-
 const userEmailVerificationReceive = function(req, res, next) {
   let user = {};
   Object.assign(user, req.user._doc);
@@ -312,7 +312,6 @@ function comparePassword(_id, passwordCandidate) {
 }
 
 
-
 /**
  *
  * @param {string} prefix - prefix for token
@@ -337,43 +336,40 @@ const _createJWTToken = function(prefix, sub, expire, secret) {
  * check email uniqueness
  *
  * @param {string} email
- * @return {Promise<boolean>}
+ * @return {Promise}
  */
 function _isEmailUnique(email) {
-  return UserModel.find({email})
-      .then((result) => {
-        log.debug('!result', !result);
-        log.debug('result', !!result);
-        return !result;
-      }
-      // {
-      //   if (result) {
-      //     return !result;
-      //   } else {
-      //     return !!result;
-      //   }
-      // }
-
-      )
-      .catch((err) => !!result);
+  return new Promise((resolve, reject) => {
+    UserModel.find({email})
+        .then((result) => {
+          if (!result.length) {
+            resolve();
+          } else {
+            reject(new ClientError('Цей email вже використовується', 422));
+          }
+        })
+        .catch((err) => reject(new DbError()));
+  });
 }
 
 /** Session
  * check login uniqueness
  *
  * @param {string} login
- * @return {Promise<boolean>}
+ * @return {Promise}
  */
 function _isLoginUnique(login) {
-  return UserModel.find({login})
-      .then((result) => {
-        if (result) {
-          return !result;
-        } else {
-          return !!result;
-        }
-      })
-      .catch((err) => !!result);
+  return new Promise((resolve, reject) => {
+    UserModel.find({login})
+        .then((result) => {
+          if (!result.length) {
+            resolve();
+          } else {
+            reject(new ClientError('Цей логін вже використовується', 422));
+          }
+        })
+        .catch((err) => reject(new DbError()));
+  });
 }
 
 const userProfile = function(req, res, next) {
@@ -382,22 +378,7 @@ const userProfile = function(req, res, next) {
   // delete user.password;
   // console.log('user', req.user);
   // console.log('user._doc', req.user._doc);
-  const a =_isEmailUnique('idlvi@gmail.com')
-      .then((result) => {
-        if (result) {
-          return _isLoginUnique('idlviv');
-        } else {
-          log.debug('email unique', result);
-        }
-      })
-      .then((result) => {
-        if (result) {
-          return true;
-        } else {
-          log.debug('login unique', result);
-        }
-      });
-  log.debug('res', a);
+
 
   let user = {
     login: req.user._doc.login,
@@ -490,56 +471,58 @@ const userCheckAuthenticity = function(req, res, next) {
 };
 
 
-
 const userCreate = function(req, res, next) {
-  
+  let user = {};
+  Object.assign(user, req.body);
 
-
-  bcrypt.hash(req.body.password, 10)
+  _isEmailUnique(user.email)
+      .then((result) => _isLoginUnique(user.login))
+      .then((result) => bcrypt.hash(req.body.password, 10))
       .then((hash) => {
-        let user = {};
-        Object.assign(user, req.body);
-        
         user.password = hash;
         user.role = 'guest';
         user.provider = 'native';
         user.createdAt = Date.now();
-
         const userModel = new UserModel(user);
         // create new user
-        userModel.save()
-            .then(
-                (result) => {
-                  // login new user
-                  UserModel.findOne({login: user.login})
-                      .then(
-                          (user) => {
-                            if (!user) {
-                              return next(new ApplicationError('Невірний логін', 401));
-                            }
-                            const sub = {
-                              _id: user._id,
-                              role: user.role,
-                              login: user.login,
-                              avatar: config.get('defaultAvatar'),
-                            };
-                            const token = _createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
-                            return res.status(200).json(new ResObj(true, 'Користувач створений. Вхід виконано', token));
-                          },
-                          (err) => next(new DbError(err.message, err.code))
-                      );
-                },
-                (err) =>
-                // redirect to error handler
-                  next(new DbError(err.message, err.code))
-            );
+        return userModel.save();
       },
       // redirect to error handler
       (err) => next(new ApplicationError(err.message, err.status, err.code))
       )
-      .catch((err) => next(new ApplicationError(err.message, err.status)));
+      .then((result) => {
+        next();
+      }
+      )
+      // .then(
+      //     (result) => {
+      //       // login new user
+      //       UserModel.findOne({login: user.login})
+      //           .then(
+      //               (user) => {
+      //                 if (!user) {
+      //                   return next(new ApplicationError('Невірний логін', 401));
+      //                 }
+      //                 const sub = {
+      //                   _id: user._id,
+      //                   role: user.role,
+      //                   login: user.login,
+      //                   avatar: config.get('defaultAvatar'),
+      //                 };
+      //                 const token = _createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
+      //                 return res.status(200).json(new ResObj(true, 'Користувач створений. Вхід виконано', token));
+      //               },
+      //               (err) => next(new DbError(err.message, err.code))
+      //           );
+      //     },
+      //     (err) =>
+      //     // redirect to error handler
+      //       next(new DbError(err.message, err.code))
+      // )
+      .catch((err) => {
+        log.debug('err', err);
+      });
 };
-
 
 module.exports = {
   userCheckAuthenticity,

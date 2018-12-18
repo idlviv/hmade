@@ -222,7 +222,9 @@ router.post('/user/create',
     recaptcha,
     authentication,
     authorization('manager'),
-    userController.userCreate
+    userController.userCreate,
+    passport.authenticate('local'),
+    userController.userAuth
 );
 
 // router.get('/user/login',

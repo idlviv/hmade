@@ -20,15 +20,10 @@ module.exports = function(passport) {
   jwtOptions.secretOrKey = config.get('JWT_SECRET');
 
   passport.serializeUser((user, done) => {
-    log.debug('serialize');
-    if (user.googleId) {
-      log.debug('google user');
-    }
     return done(null, user._id);
   });
 
   passport.deserializeUser((_id, done) => {
-    log.debug('deserialize');
     UserModel.findById(_id).then(
         (user) => done(null, user),
         (err) => done(err, false)
@@ -119,7 +114,7 @@ module.exports = function(passport) {
             callbackURL: 'http://localhost:8081/api/user/auth/google/redirect',
           },
           function(accessToken, refreshToken, profile, done) {
-            UserModel.findOne({googleId: profile.id})
+            UserModel.findOne({providersId: profile.id})
                 .then((user) => {
                   if (user) {
                     // if user is already in db update credentials
@@ -130,11 +125,9 @@ module.exports = function(passport) {
                     })
                         .save()
                         .then((updatedUser) => {
-                          console.log('updatedUser', updatedUser);
                           // if (updatedUser.ok !== 1) {
                           //   return done('error singn in', false);
                           // }
-                          console.log('done');
                           return done(null, updatedUser);
                         },
                         (err) => done(err, false)

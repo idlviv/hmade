@@ -35,6 +35,8 @@ module.exports = function(err, req, res, next) {
 
   // custom application error
   if (err instanceof ApplicationError) {
+
+    
     return res.status(err.status).json(err.message);
     // return res.status(err.status).json(new ResObj(false, err.message, err));
   }

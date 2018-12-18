@@ -1,30 +1,31 @@
 /**
- * server errors
+ * Client errors 400..
  *
  * @param {string} message
  * @param {number} status
  * @param {string | number} code
  * @constructor
  */
-function ApplicationError(message, status, code) {
+function ClientError(message, status, code) {
   Error.call(this);
   if (Error.captureStackTrace) {
-    Error.captureStackTrace(this, ApplicationError);
+    Error.captureStackTrace(this, ClientError);
   } else {
     this.stack = new Error().stack;
   }
-  this.message = message ? message : 'Помилка програми';
-  this.status = status || 500;
+  this.message = message ? message : 'Помилка у запиті до сервера';
+  this.status = status || 400;
   this.code = code || 0;
-  this.name = 'ApplicationError';
+  this.name = 'ClientError';
 }
 
-ApplicationError.prototype = Object.create(Error.prototype);
-ApplicationError.prototype.constructor = Error;
+ClientError.prototype = Object.create(Error.prototype);
+ClientError.prototype.constructor = Error;
 
-module.exports = ApplicationError;
+module.exports = ClientError;
 
 //    messages
+// uniqueConflict (login or email already exists) - 422 Unprocessable Entity
 // noSuchUser (wrong email, _id, login) => clientError - 403 Forbidden
 // wrongCredentials (wrong code, password) => clientError - 403 Forbidden
 // maxTries (reached max of tries) => clientError - 403 Forbidden
