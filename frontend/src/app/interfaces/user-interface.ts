@@ -1,21 +1,22 @@
 export interface IUser {
   _id?: string;
+  provider?: string;
   login: string;
-  password: string;
   email?: string;
+  avatar?: string;
   name?: string;
   surname?: string;
   role?: string;
   ban?: string;
-  avatar?: string;
+  createdAt?: number;
 }
 
-export class User implements IUser{
-  constructor (
-    public login: string,
-    public email: string,
-    public password: string,
-    public name: string,
-    public surname: string,
-  ) { }
-}
+// export class User implements IUser {
+//   constructor (
+//     public login: string,
+//     public email: string,
+//     public password: string,
+//     public name: string,
+//     public surname: string,
+//   ) { }
+// }

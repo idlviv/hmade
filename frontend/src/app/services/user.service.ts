@@ -78,7 +78,7 @@ export class UserService {
     );
   }
 
-  userCreate(user: IUser, recaptcha): Observable<IResponse> {
+  userCreate(user: IUser, recaptcha: string): Observable<IResponse> {
     const token = this.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
@@ -158,7 +158,7 @@ export class UserService {
     );
   }
 
-  allowTo(permitedRole) {
+  allowTo(permitedRole: string): boolean {
     const permissions = config.permissions;
     const user = this.userLocalGetCredentials('token');
     if (!user) {

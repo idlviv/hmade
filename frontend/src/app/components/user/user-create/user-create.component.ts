@@ -74,9 +74,6 @@ export class UserCreateComponent implements OnInit {
       },
       this.validateService.matchPassword
     );
-
-    // this.onUserCreateFake();
-
   }
 
   onUserCreateSubmit() {
@@ -84,8 +81,8 @@ export class UserCreateComponent implements OnInit {
       login: this.userCreateForm.get('login').value,
       password: this.userCreateForm.get('password').value,
       email: this.userCreateForm.get('email').value,
-      // name: this.userCreateForm.get('name').value,
-      // surname: this.userCreateForm.get('surname').value
+      name: this.userCreateForm.get('name').value,
+      surname: this.userCreateForm.get('surname').value
     };
     // create user
     this.userService.userCreate(this.user,  this.userCreateForm.get('recaptcha').value)

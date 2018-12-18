@@ -188,7 +188,6 @@ var UserCreateComponent = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required
             ])
         }, this.validateService.matchPassword);
-        // this.onUserCreateFake();
     };
     UserCreateComponent.prototype.onUserCreateSubmit = function () {
         var _this = this;
@@ -196,6 +195,8 @@ var UserCreateComponent = /** @class */ (function () {
             login: this.userCreateForm.get('login').value,
             password: this.userCreateForm.get('password').value,
             email: this.userCreateForm.get('email').value,
+            name: this.userCreateForm.get('name').value,
+            surname: this.userCreateForm.get('surname').value
         };
         // create user
         this.userService.userCreate(this.user, this.userCreateForm.get('recaptcha').value)
