@@ -7,6 +7,7 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const UserModel = require('../models/userModel');
 const bcrypt = require('bcryptjs');
+const userController = require('../controllers/userController');
 
 const config = require('../config');
 
@@ -30,7 +31,8 @@ module.exports = function(passport) {
     );
   });
 
-  passport.use(new LocalStrategy(
+  // login user with password
+  passport.use('local', new LocalStrategy(
       {
         usernameField: 'login',
         passwordField: 'password',
@@ -40,66 +42,25 @@ module.exports = function(passport) {
           login,
           password,
         };
-        UserModel.findOne({login: userCandidate.login})
-            .then((user) => {
-              if (!user) {
-                return done(new ApplicationError('Невірний логін', 401));
-              }
-              if (user.isPasswordLocked) {
-                return done(new ApplicationError('maxTries', 401));
-              }
-              bcrypt.compare(userCandidate.password, user.password)
-                  .then((passwordMatched) => {
-                    if (!passwordMatched) {
-                      const dateNow = Date.now(); // in seconds
-                      let query;
-      
-                      if ((dateNow - user.passwordLockUntil) > 600000) {
-                        UserModel.update({_id: user._id},
-                            {
-                              $set: {
-                                passwordTries: 1,
-                                passwordLockUntil: dateNow,
-                              },
-                            })
-                            .then((result)=>{
-                              if (result.ok !== 1) {
-                                done(new DbError());
-                              }
-                              return done(new ApplicationError('Невірний пароль', 401));
-                            })
-                            .catch((err) => next(new ApplicationError()));
-                      } else {
-                        if (user.passwordTries >= user.passwordLockTries) {
-                          query = {
-                            $set: {
-                              passwordTries: 1,
-                              passwordLockUntil: dateNow + 600000},
-                          };
-                        } else {
-                          query = {
-                            $inc: {passwordTries: 1},
-                            $set: {passwordLockUntil: dateNow},
-                          };
-                        }
-                        UserModel.update({_id: user._id}, query)
-                            .then((result)=>{
-                              if (result.ok !== 1) {
-                                done(new DbError());
-                              }
-                              return done(new ApplicationError('Невірний пароль', 401));
-                            })
-                            .catch((err) => done(new ApplicationError()));
-                      }
-                    } else {
-                      return done(null, user);
-                    }
-                  })
-                  .catch((err) => done(new ApplicationError(err.message, err.status)));
-            },
-            (err) => done(new DbError(err.message, err.code))
-            )
-            .catch((err) => done(new ApplicationError()));
+
+        userController.isLoginExists(userCandidate.login)
+            .then((userFromDb) => userController.isPasswordLocked(userFromDb))
+            .then((userFromDb) => userController.isPasswordMatched(userCandidate, userFromDb))
+            .then((userFromDb) => done(null, userFromDb))
+            .catch((err) => done(err, false));
+      }
+  ));
+
+  // login user after creation or change credentials
+  // without password
+  passport.use('localWithoutPassword', new LocalStrategy(
+      {
+        usernameField: 'login',
+      },
+      function(login, password, done) {
+        userController.isLoginExists(login)
+            .then((userFromDb) => done(null, userFromDb))
+            .catch((err) => done(err, false));
       }
   ));
 
@@ -122,15 +83,11 @@ module.exports = function(passport) {
                       avatar: profile._json.image.url,
                       name: profile._json.name.givenName,
                       surname: profile._json.name.familyName,
-                    })
-                        .save()
-                        .then((updatedUser) => {
-                          // if (updatedUser.ok !== 1) {
-                          //   return done('error singn in', false);
-                          // }
-                          return done(null, updatedUser);
-                        },
-                        (err) => done(err, false)
+                      accessToken,
+                    }).save()
+                        .then(
+                            (updatedUser) => done(null, updatedUser),
+                            (err) => done(new DbError(), false)
                         );
                   } else {
                     // if new user, create new record in db
@@ -150,10 +107,9 @@ module.exports = function(passport) {
                           refreshToken,
                         })
                         .save()
-                        .then((newUser) => {
-                          return done(null, newUser);
-                        },
-                        (err) => done(err, false)
+                        .then(
+                            (newUser) => done(null, newdUser),
+                            (err) => done(new DbError(), false)
                         );
                   }
                 },

@@ -338,7 +338,7 @@ const _createJWTToken = function(prefix, sub, expire, secret) {
  * @param {string} email
  * @return {Promise}
  */
-function _isEmailUnique(email) {
+function isEmailUnique(email) {
   return new Promise((resolve, reject) => {
     UserModel.find({email})
         .then((result) => {
@@ -358,7 +358,7 @@ function _isEmailUnique(email) {
  * @param {string} login
  * @return {Promise}
  */
-function _isLoginUnique(login) {
+function isLoginUnique(login) {
   return new Promise((resolve, reject) => {
     UserModel.find({login})
         .then((result) => {
@@ -369,6 +369,112 @@ function _isLoginUnique(login) {
           }
         })
         .catch((err) => reject(new DbError()));
+  });
+}
+
+/** Session
+ * check login exists in db
+ *
+ * @param {string} login
+ * @return {Promise<UserModel>}
+ */
+function isLoginExists(login) {
+  return new Promise((resolve, reject) => {
+    UserModel.findOne({login})
+        .then((user) => {
+          if (user) {
+            resolve(user);
+          } else {
+            reject(new ClientError('Користувача не знайдено', 401));
+          }
+        })
+        .catch((err) => reject(new DbError()));
+  });
+}
+
+/** Session
+ * check locking after max tries to input wrong password
+ *
+ * @param {UserModel} userFromDb
+ * @return {Promise<UserModel>}
+ */
+function isPasswordLocked(userFromDb) {
+  return new Promise((resolve, reject) => {
+    if (userFromDb.isPasswordLocked) {
+      let time = new Date(userFromDb.passwordLockUntil);
+      reject(new ClientError(`Вхід заблоковано до ${time.toTimeString()}, досягнуто максимальну кількість спроб`, 401));
+    } else {
+      resolve(userFromDb);
+    }
+  });
+}
+
+/** Session
+ * compare password from request (candidate)
+ * with password from db
+ *
+ * @param {*} userCandidate
+ * @param {UserModel} userFromDb
+ * @return {Promise<UserModel>}
+ */
+function isPasswordMatched(userCandidate, userFromDb) {
+  return new Promise((resolve, reject) => {
+    bcrypt.compare(userCandidate.password, userFromDb.password)
+        .then((passwordMatched) => {
+          if (passwordMatched) {
+            resolve(userFromDb);
+          } else {
+            updatePasswordLockOptions(userFromDb)
+                .then(
+                    () => reject(new ClientError('Невірний пароль', 401)),
+                    (err) => reject(new ClientError('Невірний пароль_', 401))
+                );
+          }
+        })
+        .catch((err) => reject(new ApplicationError()));
+  });
+}
+
+/** Session
+ * update user (password lock options) after wrong password input
+ *
+ * @param {UserModel} user
+ * @return {Promise<UserModel>}
+ */
+function updatePasswordLockOptions(user) {
+  return new Promise((resolve, reject) => {
+    const dateNow = Date.now(); // in seconds
+    let query;
+
+    if ((dateNow - user.passwordLockUntil) > 600000) {
+      query = {
+        $set: {
+          passwordTries: 1,
+          passwordLockUntil: dateNow,
+        },
+      };
+    } else if (user.passwordTries >= user.passwordLockTries) {
+      query = {
+        $set: {
+          passwordTries: 1,
+          passwordLockUntil: dateNow + 600000},
+      };
+    } else {
+      query = {
+        $inc: {passwordTries: 1},
+        $set: {passwordLockUntil: dateNow},
+      };
+    }
+
+    UserModel.update({_id: user._id}, query)
+        .then((result)=>{
+          if (result.ok !== 1) {
+            reject(new DbError());
+          }
+          resolve(user);
+        },
+        (err) => reject(new DbError())
+        );
   });
 }
 
@@ -415,12 +521,15 @@ const userLogout = function(req, res, next) {
  * @param {*} next
  * @return {*}
  */
-const userAuth = function(req, res, next) {
+const userLogin = function(req, res, next) {
   if (req.user) {
     const sub = {
       _id: req.user._doc._id,
       login: req.user._doc.login,
+      name: req.user._doc.name,
+      surname: req.user._doc.surname,
       avatar: req.user._doc.avatar,
+      provider: req.user._doc.provider,
       role: req.user._doc.role,
     };
     const token = _createJWTToken('', sub, 604800, 'JWT_SECRET');
@@ -431,14 +540,15 @@ const userAuth = function(req, res, next) {
 };
 
 const userGoogleSignin = function(req, res, next) {
-  log.debug('google redirect', req.user._doc);
-  const user = req.user._doc;
+  log.debug('google redirect');
   const sub = {
-    _id: user._id,
-    role: user.role,
-    login: user.login,
-    avatar: user.avatar,
-    provider: user.provider,
+    _id: req.user._doc._id,
+    login: req.user._doc.login,
+    name: req.user._doc.name,
+    surname: req.user._doc.surname,
+    avatar: req.user._doc.avatar,
+    provider: req.user._doc.provider,
+    role: req.user._doc.role,
   };
   const token = _createJWTToken('', sub, 604800, 'JWT_SECRET');
   res.redirect('/user/redirected-from-oauth/' + token);
@@ -475,8 +585,8 @@ const userCreate = function(req, res, next) {
   let user = {};
   Object.assign(user, req.body);
 
-  _isEmailUnique(user.email)
-      .then((result) => _isLoginUnique(user.login))
+  isEmailUnique(user.email)
+      .then((result) => isLoginUnique(user.login))
       .then((result) => bcrypt.hash(req.body.password, 10))
       .then((hash) => {
         user.password = hash;
@@ -491,7 +601,8 @@ const userCreate = function(req, res, next) {
       (err) => next(new ApplicationError(err.message, err.status, err.code))
       )
       .then((result) => {
-        next();
+        res.status(200).json();
+        // next();
       }
       )
       // .then(
@@ -527,7 +638,7 @@ const userCreate = function(req, res, next) {
 module.exports = {
   userCheckAuthenticity,
   userProfile,
-  userAuth,
+  userLogin,
   userLogout,
   userCreate,
   userEdit,
@@ -539,4 +650,10 @@ module.exports = {
   passwordReset,
   passwordResetCheckCode,
   passwordResetCheckEmail,
+
+  isEmailUnique,
+  isLoginUnique,
+  isLoginExists,
+  isPasswordLocked,
+  isPasswordMatched,
 };

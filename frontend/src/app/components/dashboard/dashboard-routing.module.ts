@@ -90,12 +90,12 @@ const dashboardRoutes: Routes = [
       //   canActivate: [AuthGuard],
       //   data: { auth: 'manager' },
       // },
-      {
-        path: 'dashboard-signup',
-        component: UserCreateComponent,
-        canActivate: [AuthGuard],
-        data: { auth: 'manager' },
-      },
+      // {
+      //   path: 'dashboard-signup',
+      //   component: UserCreateComponent,
+      //   canActivate: [AuthGuard],
+      //   data: { auth: 'manager' },
+      // },
       {
         path: 'profile',
         component: UserProfileComponent,

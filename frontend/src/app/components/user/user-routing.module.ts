@@ -18,8 +18,8 @@ const userRoutes: Routes = [
       {
         path: 'create',
         component: UserCreateComponent,
-        canActivate: [AuthGuard],
-        data: { auth: 'manager' },
+        // canActivate: [AuthGuard],
+        // data: { auth: 'manager' },
       },
       {
         path: 'login',

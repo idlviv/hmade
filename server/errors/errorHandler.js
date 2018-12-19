@@ -1,5 +1,6 @@
 const DbError = require('./dbError');
 const ApplicationError = require('./applicationError');
+const ClientError = require('./clientError');
 const log = require('../config/winston')(module);
 
 module.exports = function(err, req, res, next) {
@@ -35,10 +36,12 @@ module.exports = function(err, req, res, next) {
 
   // custom application error
   if (err instanceof ApplicationError) {
-
-    
     return res.status(err.status).json(err.message);
-    // return res.status(err.status).json(new ResObj(false, err.message, err));
+  }
+
+  // custom client error
+  if (err instanceof ClientError) {
+    return res.status(err.status).json(err.message);
   }
 
   // all other errors

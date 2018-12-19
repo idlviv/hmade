@@ -13,7 +13,7 @@ function ApplicationError(message, status, code) {
   } else {
     this.stack = new Error().stack;
   }
-  this.message = message ? message : 'Помилка програми';
+  this.message = message ? message : 'Internal Server Error';
   this.status = status || 500;
   this.code = code || 0;
   this.name = 'ApplicationError';
@@ -29,5 +29,5 @@ module.exports = ApplicationError;
 // wrongCredentials (wrong code, password) => clientError - 403 Forbidden
 // maxTries (reached max of tries) => clientError - 403 Forbidden
 // recaptchaErr () => clientError - 403 Forbidden
-// bc (Bestcrypt errors)
+// bc (Bestcrypt errors) - 500 Internal Server Error
 // notAuthorized (don't have permission) => clientError - 401 Unauthorized

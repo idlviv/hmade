@@ -82,8 +82,8 @@ db.getCollection('catalogs')
           auth: 'manager', order: 2, assets: ['catalog'], description: ''},
         {_id: 'tools', name: 'Інструменти', ancestors: ['home', 'system', 'dashboard'], parent: 'dashboard',
           auth: 'manager', order: 5, assets: ['catalog'],description: ''},
-        {_id: 'dashboard-signup', name: 'Реєстрація', ancestors: ['home', 'system', 'dashboard'], parent: 'dashboard',
-          auth: 'manager', order: 6, assets: ['catalog'],description: ''},
+        // {_id: 'dashboard-signup', name: 'Реєстрація', ancestors: ['home', 'system', 'dashboard'], parent: 'dashboard',
+        //   auth: 'manager', order: 6, assets: ['catalog'],description: ''},
 
       {_id: 'login', name: 'Увійти', ancestors: ['home', 'system'], parent: 'system',
         auth: 'casual', order: 2, assets: ['catalog'],description: ''},

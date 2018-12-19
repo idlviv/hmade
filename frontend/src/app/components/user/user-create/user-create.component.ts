@@ -88,11 +88,11 @@ export class UserCreateComponent implements OnInit {
     this.userService.userCreate(this.user,  this.userCreateForm.get('recaptcha').value)
       .subscribe(
         result => {
-          const token = result.data;
+          // const token = result;
           this.resetForm();
-          this.matSnackBar.open(result.message, '', {duration: 3000});
+          // this.matSnackBar.open(result.message, '', {duration: 3000});
           // login new user
-          this.userService.userLocalLogin(token);
+          // this.userService.userLocalLogin(token);
           this.router.navigate(['/user', 'profile']);
         },
         err => {

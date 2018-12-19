@@ -1021,7 +1021,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
 var AsyncSubject_1 = __webpack_require__(/*! ../AsyncSubject */ "./node_modules/rxjs/internal/AsyncSubject.js");
 var map_1 = __webpack_require__(/*! ../operators/map */ "./node_modules/rxjs/internal/operators/map.js");
-var canReportError_1 = __webpack_require__(/*! ../util/canReportError */ "./node_modules/rxjs/internal/util/canReportError.js");
 var isArray_1 = __webpack_require__(/*! ../util/isArray */ "./node_modules/rxjs/internal/util/isArray.js");
 var isScheduler_1 = __webpack_require__(/*! ../util/isScheduler */ "./node_modules/rxjs/internal/util/isScheduler.js");
 function bindCallback(callbackFunc, resultSelector, scheduler) {
@@ -1068,12 +1067,7 @@ function bindCallback(callbackFunc, resultSelector, scheduler) {
                         callbackFunc.apply(context, args.concat([handler]));
                     }
                     catch (err) {
-                        if (canReportError_1.canReportError(subject)) {
-                            subject.error(err);
-                        }
-                        else {
-                            console.warn(err);
-                        }
+                        subject.error(err);
                     }
                 }
                 return subject.subscribe(subscriber);
@@ -1139,7 +1133,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
 var AsyncSubject_1 = __webpack_require__(/*! ../AsyncSubject */ "./node_modules/rxjs/internal/AsyncSubject.js");
 var map_1 = __webpack_require__(/*! ../operators/map */ "./node_modules/rxjs/internal/operators/map.js");
-var canReportError_1 = __webpack_require__(/*! ../util/canReportError */ "./node_modules/rxjs/internal/util/canReportError.js");
 var isScheduler_1 = __webpack_require__(/*! ../util/isScheduler */ "./node_modules/rxjs/internal/util/isScheduler.js");
 var isArray_1 = __webpack_require__(/*! ../util/isArray */ "./node_modules/rxjs/internal/util/isArray.js");
 function bindNodeCallback(callbackFunc, resultSelector, scheduler) {
@@ -1192,12 +1185,7 @@ function bindNodeCallback(callbackFunc, resultSelector, scheduler) {
                         callbackFunc.apply(context, args.concat([handler]));
                     }
                     catch (err) {
-                        if (canReportError_1.canReportError(subject)) {
-                            subject.error(err);
-                        }
-                        else {
-                            console.warn(err);
-                        }
+                        subject.error(err);
                     }
                 }
                 return subject.subscribe(subscriber);
@@ -2463,7 +2451,6 @@ var ZipSubscriber = (function (_super) {
     ZipSubscriber.prototype._complete = function () {
         var iterators = this.iterators;
         var len = iterators.length;
-        this.unsubscribe();
         if (len === 0) {
             this.destination.complete();
             return;
@@ -2472,8 +2459,7 @@ var ZipSubscriber = (function (_super) {
         for (var i = 0; i < len; i++) {
             var iterator = iterators[i];
             if (iterator.stillUnsubscribed) {
-                var destination = this.destination;
-                destination.add(iterator.subscribe(iterator, i));
+                this.add(iterator.subscribe(iterator, i));
             }
             else {
                 this.active--;
@@ -3031,8 +3017,7 @@ var MergeMapSubscriber = (function (_super) {
     };
     MergeMapSubscriber.prototype._innerSub = function (ish, value, index) {
         var innerSubscriber = new InnerSubscriber_1.InnerSubscriber(this, undefined, undefined);
-        var destination = this.destination;
-        destination.add(innerSubscriber);
+        this.add(innerSubscriber);
         subscribeToResult_1.subscribeToResult(this, ish, value, index, innerSubscriber);
     };
     MergeMapSubscriber.prototype._complete = function () {
@@ -3040,7 +3025,6 @@ var MergeMapSubscriber = (function (_super) {
         if (this.active === 0 && this.buffer.length === 0) {
             this.destination.complete();
         }
-        this.unsubscribe();
     };
     MergeMapSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
         this.destination.next(innerValue);
@@ -3122,19 +3106,16 @@ var ObserveOnSubscriber = (function (_super) {
         this.unsubscribe();
     };
     ObserveOnSubscriber.prototype.scheduleMessage = function (notification) {
-        var destination = this.destination;
-        destination.add(this.scheduler.schedule(ObserveOnSubscriber.dispatch, this.delay, new ObserveOnMessage(notification, this.destination)));
+        this.add(this.scheduler.schedule(ObserveOnSubscriber.dispatch, this.delay, new ObserveOnMessage(notification, this.destination)));
     };
     ObserveOnSubscriber.prototype._next = function (value) {
         this.scheduleMessage(Notification_1.Notification.createNext(value));
     };
     ObserveOnSubscriber.prototype._error = function (err) {
         this.scheduleMessage(Notification_1.Notification.createError(err));
-        this.unsubscribe();
     };
     ObserveOnSubscriber.prototype._complete = function () {
         this.scheduleMessage(Notification_1.Notification.createComplete());
-        this.unsubscribe();
     };
     return ObserveOnSubscriber;
 }(Subscriber_1.Subscriber));
@@ -4216,18 +4197,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../user/user-profile/user-profile.component */ "./src/app/components/user/user-profile/user-profile.component.ts");
 /* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../guards/auth.guard */ "./src/app/guards/auth.guard.ts");
 /* harmony import */ var _tools_tools_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./tools/tools.component */ "./src/app/components/dashboard/tools/tools.component.ts");
-/* harmony import */ var _user_user_create_user_create_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../user/user-create/user-create.component */ "./src/app/components/user/user-create/user-create.component.ts");
-/* harmony import */ var _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./product-editor/product-editor.component */ "./src/app/components/dashboard/product-editor/product-editor.component.ts");
-/* harmony import */ var _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./product-editor-form/product-editor-form.component */ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.ts");
-/* harmony import */ var _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./mc-editor/mc-editor.component */ "./src/app/components/dashboard/mc-editor/mc-editor.component.ts");
-/* harmony import */ var _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./mc-editor-form/mc-editor-form.component */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.ts");
+/* harmony import */ var _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./product-editor/product-editor.component */ "./src/app/components/dashboard/product-editor/product-editor.component.ts");
+/* harmony import */ var _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./product-editor-form/product-editor-form.component */ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.ts");
+/* harmony import */ var _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./mc-editor/mc-editor.component */ "./src/app/components/dashboard/mc-editor/mc-editor.component.ts");
+/* harmony import */ var _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./mc-editor-form/mc-editor-form.component */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
 
 
 
@@ -4265,37 +4244,37 @@ var dashboardRoutes = [
             },
             {
                 path: 'product-editor',
-                component: _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_8__["ProductEditorComponent"],
+                component: _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_7__["ProductEditorComponent"],
                 canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             {
                 path: 'product-editor-new/:parentCategory_id/:parentCategoryName',
-                component: _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_9__["ProductEditorFormComponent"],
+                component: _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_8__["ProductEditorFormComponent"],
                 canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             {
                 path: 'product-editor-edit/:parentCategory_id/:parentCategoryName/:_id',
-                component: _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_9__["ProductEditorFormComponent"],
+                component: _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_8__["ProductEditorFormComponent"],
                 canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             {
                 path: 'mc-editor',
-                component: _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_10__["McEditorComponent"],
+                component: _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_9__["McEditorComponent"],
                 canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             {
                 path: 'mc/new/:parent_id',
-                component: _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_11__["McEditorFormComponent"],
+                component: _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_10__["McEditorFormComponent"],
                 canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             {
                 path: 'mc/edit/:_id',
-                component: _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_11__["McEditorFormComponent"],
+                component: _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_10__["McEditorFormComponent"],
                 canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
@@ -4315,12 +4294,12 @@ var dashboardRoutes = [
             //   canActivate: [AuthGuard],
             //   data: { auth: 'manager' },
             // },
-            {
-                path: 'dashboard-signup',
-                component: _user_user_create_user_create_component__WEBPACK_IMPORTED_MODULE_7__["UserCreateComponent"],
-                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
-                data: { auth: 'manager' },
-            },
+            // {
+            //   path: 'dashboard-signup',
+            //   component: UserCreateComponent,
+            //   canActivate: [AuthGuard],
+            //   data: { auth: 'manager' },
+            // },
             {
                 path: 'profile',
                 component: _user_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_4__["UserProfileComponent"],
@@ -5783,7 +5762,7 @@ var ProductEditorComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n\n    <div class=\"container\">\n      <div class=\"row\">\n        <div class=\"cell\">\n          <h2 class=\"mat-h2\">Інструменти</h2>\n        </div>\n      </div>\n\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">favicon32x32</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_32,h_32/' +\n                faviconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n      </div>\n\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\"> Logo 250x90</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_250,h_90/' +\n                logoFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">Logo 140x50</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_140,h_50/' +\n                logoFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n      </div>\n\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">512x512</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_512,h_512/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">384x384</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_384,h_384/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">192x192</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_192,h_192/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">152x152</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_152,h_152/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">144x144</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_144,h_144/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">128x128</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_128,h_128/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">96x96</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_96,h_96/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">72x72</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_72,h_72/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n\n\n      </div>\n    </div>\n\n  </div>\n</div>\n"
+module.exports = "<div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"cell\">\r\n          <h2 class=\"mat-h2\">Інструменти</h2>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">favicon32x32</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_32,h_32/' +\r\n                faviconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\"> Logo 250x90</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_250,h_90/' +\r\n                logoFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">Logo 140x50</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_140,h_50/' +\r\n                logoFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">512x512</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_512,h_512/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">384x384</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_384,h_384/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">192x192</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_192,h_192/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">152x152</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_152,h_152/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">144x144</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_144,h_144/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">128x128</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_128,h_128/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">96x96</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_96,h_96/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">72x72</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_72,h_72/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n\r\n\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 

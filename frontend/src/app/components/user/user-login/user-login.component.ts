@@ -47,7 +47,7 @@ export class UserLoginComponent implements OnInit {
       password: this.userLoginForm.get('password').value,
     };
 
-    this.userService.userAuth(this.user)
+    this.userService.userLogin(this.user)
       .subscribe(
         token => {
           if (token) {
@@ -64,30 +64,9 @@ export class UserLoginComponent implements OnInit {
             message = 'Досягнуто максимальну кількість спроб, вхід тимчасово заблоковано';
           }
           this.matSnackBar.open(message || err.error, '',
-            {duration: 3000, panelClass: 'snack-bar-danger'});
+            {duration: 5000, panelClass: 'snack-bar-danger'});
         }
       );
-
-    // this.userService.userLogin(this.user)
-    //   .subscribe(
-    //     result => {
-    //       this.resetForm();
-    //       const token = result.data;
-
-    //       this.userService.userLocalLogin(token);
-    //       this.matSnackBar.open(result.message, '', {duration: 3000});
-    //       this.router.navigate(['/user', 'profile']);
-
-    //     },
-    //     err => {
-    //       let message;
-    //       if (err.error === 'maxTries') {
-    //         message = 'Досягнуто максимальну кількість спроб, вхід тимчасово заблоковано';
-    //       }
-    //       this.matSnackBar.open(message || err.error, '',
-    //         {duration: 3000, panelClass: 'snack-bar-danger'});
-    //     }
-    //   );
   }
 
   resetForm() {

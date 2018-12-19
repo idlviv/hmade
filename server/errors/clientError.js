@@ -26,7 +26,7 @@ module.exports = ClientError;
 
 //    messages
 // uniqueConflict (login or email already exists) - 422 Unprocessable Entity
-// noSuchUser (wrong email, _id, login) => clientError - 403 Forbidden
+// noSuchUser (wrong email, _id, login) => clientError - 401 Unauthorized
 // wrongCredentials (wrong code, password) => clientError - 403 Forbidden
 // maxTries (reached max of tries) => clientError - 403 Forbidden
 // recaptchaErr () => clientError - 403 Forbidden

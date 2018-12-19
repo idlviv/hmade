@@ -96,23 +96,23 @@ export class UserService {
     );
   }
 
-  userLogin(user: IUser): Observable<IResponse> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      }),
-      params: new HttpParams({ fromObject: {
-        login: user.login,
-        password: user.password
-      }})
-    };
-    return this.http.get<IResponse>(
-      'api/user/login',
-      httpOptions
-    );
-  }
+  // userLogin(user: IUser): Observable<IResponse> {
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type':  'application/json',
+  //     }),
+  //     params: new HttpParams({ fromObject: {
+  //       login: user.login,
+  //       password: user.password
+  //     }})
+  //   };
+  //   return this.http.get<IResponse>(
+  //     'api/user/login',
+  //     httpOptions
+  //   );
+  // }
 
-  userAuth(user: IUser): Observable<IUser> {
+  userLogin(user: IUser): Observable<IUser> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -123,7 +123,7 @@ export class UserService {
       }})
     };
     return this.http.get<IUser>(
-      'api/user/auth',
+      'api/user/Login',
       httpOptions
     );
   }

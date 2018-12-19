@@ -220,20 +220,14 @@ router.get('/catalog/get-children',
 
 router.post('/user/create',
     recaptcha,
-    authentication,
-    authorization('manager'),
     userController.userCreate,
-    passport.authenticate('local'),
-    userController.userAuth
+    passport.authenticate('localWithoutPassword'),
+    userController.userLogin
 );
 
-// router.get('/user/login',
-//     userController.userLogin
-// );
-
-router.get('/user/auth',
+router.get('/user/login',
     passport.authenticate('local'),
-    userController.userAuth
+    userController.userLogin
 );
 
 // 1step: on google authenticate buntton press
