@@ -373,6 +373,26 @@ function isLoginUnique(login) {
 }
 
 /** Session
+ * check email exists in db
+ *
+ * @param {string} email
+ * @return {Promise<UserModel>}
+ */
+function isEmailExists(email) {
+  return new Promise((resolve, reject) => {
+    UserModel.findOne({email})
+        .then((user) => {
+          if (user) {
+            resolve(user);
+          } else {
+            reject(new ClientError('Email не знайдено', 401));
+          }
+        })
+        .catch((err) => reject(new DbError()));
+  });
+}
+
+/** Session
  * check login exists in db
  *
  * @param {string} login
@@ -484,7 +504,18 @@ const userProfile = function(req, res, next) {
   // delete user.password;
   // console.log('user', req.user);
   // console.log('user._doc', req.user._doc);
+  const emails = [{value: '0008.ua@gmail.com', type: 'account'},
+    {value: '8.ua@gmail.com', type: 'other'}];
+  let email;
+  for (let i = 0; i < emails.length; i++) {
+    log.debug('emails[i]', emails[i]);
 
+    if (emails[i].type === 'account') {
+      email = emails[i].value;
+      break;
+    }
+  }
+  log.debug('email', email);
 
   let user = {
     login: req.user._doc.login,
@@ -653,6 +684,7 @@ module.exports = {
 
   isEmailUnique,
   isLoginUnique,
+  isEmailExists,
   isLoginExists,
   isPasswordLocked,
   isPasswordMatched,

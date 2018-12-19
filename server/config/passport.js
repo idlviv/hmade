@@ -75,6 +75,10 @@ module.exports = function(passport) {
             callbackURL: 'http://localhost:8081/api/user/auth/google/redirect',
           },
           function(accessToken, refreshToken, profile, done) {
+    
+
+            // UserModel.userController.isEmailExists(profile._json.emails[0].value)
+            log.debug('profile', profile);
             UserModel.findOne({providersId: profile.id})
                 .then((user) => {
                   if (user) {
