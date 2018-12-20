@@ -7,7 +7,7 @@ const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
 const UserModel = require('../models/userModel');
 const bcrypt = require('bcryptjs');
-const userController = require('../controllers/userController');
+const userHelper = require('../helpers/userHelper');
 
 const config = require('../config');
 
@@ -42,10 +42,9 @@ module.exports = function(passport) {
           login,
           password,
         };
-
-        userController.isLoginExists(userCandidate.login)
-            .then((userFromDb) => userController.isPasswordLocked(userFromDb))
-            .then((userFromDb) => userController.isPasswordMatched(userCandidate, userFromDb))
+        userHelper.isLoginExists(userCandidate.login)
+            .then((userFromDb) => userHelper.isPasswordLocked(userFromDb))
+            .then((userFromDb) => userHelper.isPasswordMatched(userCandidate, userFromDb))
             .then((userFromDb) => done(null, userFromDb))
             .catch((err) => done(err, false));
       }
@@ -58,15 +57,12 @@ module.exports = function(passport) {
         usernameField: 'login',
       },
       function(login, password, done) {
-        userController.isLoginExists(login)
+        userHelper.isLoginExists(login)
             .then((userFromDb) => done(null, userFromDb))
             .catch((err) => done(err, false));
       }
   ));
 
-  //   Strategies in Passport require a `verify` function, which accept
-  //   credentials (in this case, an accessToken, refreshToken, and Google
-  //   profile), and invoke a callback with a user object.
   passport.use(
       new GoogleStrategy(
           {
@@ -75,71 +71,45 @@ module.exports = function(passport) {
             callbackURL: 'http://localhost:8081/api/user/auth/google/redirect',
           },
           function(accessToken, refreshToken, profile, done) {
+            // extract 'account' email
             let email;
             for (let i = 0; i < profile.emails.length; i++) {
-              log.debug('emails[i]', emails[i]);
-
               if (profile.emails[i].type === 'account') {
                 email = profile.emails[i].value;
                 break;
               }
             }
 
-            UserModel.userController.isEmailExists(email)
-                .then((userFromDb) => {
-                  if (userFromDb && userFromDb.provider === 'native') {
-                  // make combination
-                  } else if (userFromDb && userFromDb.provider === 'google') {
-                  // make update credentials
-                  } else if (userFromDb) {
-                  // email already registred, login with previous provider
-                  } else {
-                  // new
-                  }
-
-                });
-
-            log.debug('profile', profile);
             UserModel.findOne({providersId: profile.id})
                 .then((user) => {
                   if (user) {
                     // if user is already in db update credentials
-                    user.set({
+                    return user.set({
                       avatar: profile._json.image.url,
                       name: profile._json.name.givenName,
                       surname: profile._json.name.familyName,
                       accessToken,
-                    }).save()
-                        .then(
-                            (updatedUser) => done(null, updatedUser),
-                            (err) => done(new DbError(), false)
-                        );
+                    }).save();
                   } else {
                     // if new user, create new record in db
-                    new UserModel(
-                        {
-                          provider: 'google',
-                          login: 'gid_' + profile._json.id,
-                          email: profile._json.emails[0].value,
-                          avatar: profile._json.image.url,
-                          name: profile._json.name.givenName,
-                          surname: profile._json.name.familyName,
-                          role: 'user',
-                          ban: 0,
-                          createdAt: Date.now(),
-                          providersId: profile._json.id,
-                          accessToken,
-                          refreshToken,
-                        })
-                        .save()
-                        .then(
-                            (newUser) => done(null, newdUser),
-                            (err) => done(new DbError(), false)
-                        );
+                    return new UserModel({
+                      provider: 'google',
+                      login: 'gid_' + profile._json.id,
+                      email,
+                      avatar: profile._json.image.url,
+                      name: profile._json.name.givenName,
+                      surname: profile._json.name.familyName,
+                      role: 'user',
+                      ban: 0,
+                      createdAt: Date.now(),
+                      providersId: profile._json.id,
+                      accessToken,
+                      refreshToken,
+                    }).save();
                   }
-                },
-                (err) => done(err, false)
-                );
+                })
+                .then((user) => done(null, user))
+                .catch((err) => done(new DbError(err), false));
           }
       ));
 
