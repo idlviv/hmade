@@ -333,14 +333,15 @@ const _createJWTToken = function(prefix, sub, expire, secret) {
 };
 
 /** Session
- * check email uniqueness
+ * check pair: email - provider uniqueness
  *
  * @param {string} email
+ * @param {string} provider
  * @return {Promise}
  */
-function isEmailUnique(email) {
+function isEmailUnique(email, provider) {
   return new Promise((resolve, reject) => {
-    UserModel.find({email})
+    UserModel.find({email, provider})
         .then((result) => {
           if (!result.length) {
             resolve();
@@ -373,14 +374,15 @@ function isLoginUnique(login) {
 }
 
 /** Session
- * check email exists in db
+ * check pair: email-provider exists in db
  *
  * @param {string} email
+ * @param {string} provider
  * @return {Promise<UserModel>}
  */
-function isEmailExists(email) {
+function isEmailExists(email, provider) {
   return new Promise((resolve, reject) => {
-    UserModel.findOne({email})
+    UserModel.findOne({email, provider})
         .then((user) => {
           if (user) {
             resolve(user);
@@ -599,18 +601,17 @@ const userCheckAuthenticity = function(req, res, next) {
   }
 };
 
-
 const userCreate = function(req, res, next) {
   let user = {};
   Object.assign(user, req.body);
+  user.provider = 'local';
 
-  isEmailUnique(user.email)
-      .then((result) => isLoginUnique(user.login))
-      .then((result) => bcrypt.hash(req.body.password, 10))
+  isEmailUnique(user.email, user.provider)
+      .then(() => isLoginUnique(user.login))
+      .then(() => bcrypt.hash(req.body.password, 10))
       .then((hash) => {
         user.password = hash;
         user.role = 'guest';
-        user.provider = 'native';
         user.createdAt = Date.now();
         const userModel = new UserModel(user);
         // create new user
@@ -619,39 +620,8 @@ const userCreate = function(req, res, next) {
       // redirect to error handler
       (err) => next(new ApplicationError(err.message, err.status, err.code))
       )
-      .then((result) => {
-        res.status(200).json();
-        // next();
-      }
-      )
-      // .then(
-      //     (result) => {
-      //       // login new user
-      //       UserModel.findOne({login: user.login})
-      //           .then(
-      //               (user) => {
-      //                 if (!user) {
-      //                   return next(new ApplicationError('Невірний логін', 401));
-      //                 }
-      //                 const sub = {
-      //                   _id: user._id,
-      //                   role: user.role,
-      //                   login: user.login,
-      //                   avatar: config.get('defaultAvatar'),
-      //                 };
-      //                 const token = _createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
-      //                 return res.status(200).json(new ResObj(true, 'Користувач створений. Вхід виконано', token));
-      //               },
-      //               (err) => next(new DbError(err.message, err.code))
-      //           );
-      //     },
-      //     (err) =>
-      //     // redirect to error handler
-      //       next(new DbError(err.message, err.code))
-      // )
-      .catch((err) => {
-        log.debug('err', err);
-      });
+      .then((result) => res.status(200).json())
+      .catch((err) => next(err));
 };
 
 module.exports = {
