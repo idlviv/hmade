@@ -3,21 +3,20 @@ const Schema = mongoose.Schema;
 const config = require('../config');
 
 const UserSchema = new Schema({
-  provider: {
-    type: String,
-    required: true,
-    enum: ['native', 'google'],
-  },
-  // users login or gid_xxxxxxxxxxxx
+  // users login or gid_xxxxxxxxxxxx, fid_xxxxxxxxxxxx,
   login: {
     type: String,
     required: true,
     unique: true,
   },
+  provider: {
+    type: String,
+    required: true,
+    enum: ['local', 'google', 'facebook'],
+  },
   email: {
     type: String,
     required: true,
-    unique: true,
   },
   avatar: {
     type: String,
