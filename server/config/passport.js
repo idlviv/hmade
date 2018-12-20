@@ -75,9 +75,30 @@ module.exports = function(passport) {
             callbackURL: 'http://localhost:8081/api/user/auth/google/redirect',
           },
           function(accessToken, refreshToken, profile, done) {
-    
+            let email;
+            for (let i = 0; i < profile.emails.length; i++) {
+              log.debug('emails[i]', emails[i]);
 
-            // UserModel.userController.isEmailExists(profile._json.emails[0].value)
+              if (profile.emails[i].type === 'account') {
+                email = profile.emails[i].value;
+                break;
+              }
+            }
+
+            UserModel.userController.isEmailExists(email)
+                .then((userFromDb) => {
+                  if (userFromDb && userFromDb.provider === 'native') {
+                  // make combination
+                  } else if (userFromDb && userFromDb.provider === 'google') {
+                  // make update credentials
+                  } else if (userFromDb) {
+                  // email already registred, login with previous provider
+                  } else {
+                  // new
+                  }
+
+                });
+
             log.debug('profile', profile);
             UserModel.findOne({providersId: profile.id})
                 .then((user) => {

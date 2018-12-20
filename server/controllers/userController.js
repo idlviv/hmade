@@ -385,7 +385,7 @@ function isEmailExists(email) {
           if (user) {
             resolve(user);
           } else {
-            reject(new ClientError('Email не знайдено', 401));
+            reject();
           }
         })
         .catch((err) => reject(new DbError()));
@@ -504,18 +504,6 @@ const userProfile = function(req, res, next) {
   // delete user.password;
   // console.log('user', req.user);
   // console.log('user._doc', req.user._doc);
-  const emails = [{value: '0008.ua@gmail.com', type: 'account'},
-    {value: '8.ua@gmail.com', type: 'other'}];
-  let email;
-  for (let i = 0; i < emails.length; i++) {
-    log.debug('emails[i]', emails[i]);
-
-    if (emails[i].type === 'account') {
-      email = emails[i].value;
-      break;
-    }
-  }
-  log.debug('email', email);
 
   let user = {
     login: req.user._doc.login,
