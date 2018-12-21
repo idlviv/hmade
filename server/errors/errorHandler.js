@@ -1,6 +1,7 @@
 const DbError = require('./dbError');
 const ApplicationError = require('./applicationError');
 const ClientError = require('./clientError');
+const ServerError = require('./serverError');
 const log = require('../config/winston')(module);
 
 module.exports = function(err, req, res, next) {
@@ -43,6 +44,13 @@ module.exports = function(err, req, res, next) {
   if (err instanceof ClientError) {
     return res.status(err.status).json(err.message);
   }
+
+  // custom server error
+  if (err instanceof ServerError) {
+    log.verbose('err dfgdsfgsdfgsfg - ', err);
+    return res.status(err.status).json(err);
+  }
+
 
   // all other errors
   return res.status(500).json('Помилка сервера');

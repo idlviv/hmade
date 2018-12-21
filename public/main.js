@@ -1387,7 +1387,7 @@ var FeedbackComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"mat-elevation-z16\" id=\"footer\">\r\n  <div fxFlex></div>\r\n  <a mat-button [routerLink]=\"['/feedback']\" class=\"primary-light\"\r\n     [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n    <mat-icon>mail</mat-icon> Задати питання\r\n  </a>\r\n</div>\r\n"
+module.exports = "<div class=\"mat-elevation-z16\" id=\"footer\">\n  <div fxFlex></div>\n  <a mat-button [routerLink]=\"['/feedback']\" class=\"primary-light\"\n     [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n    <mat-icon>mail</mat-icon> Задати питання\n  </a>\n</div>\n"
 
 /***/ }),
 
@@ -1450,7 +1450,7 @@ var FooterComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container-h\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n      <h1 class=\"mat-display-1\">Галерея</h1>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\r\n        <mat-card>\r\n          <mat-card-subtitle>\r\n            <a mat-button\r\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\r\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\r\n               [queryParams]=\"{name: product.name}\"\r\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n              {{product.name}}\r\n            </a>\r\n          </mat-card-subtitle>\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\r\n\r\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\r\n                 fxLayout fxLayoutAlign=\"center center\"\r\n                 *ngFor=\"let productAsset of product.assets\">\r\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_590,h_295,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n\r\n\r\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_350,h_175,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n            </div>\r\n          </div>\r\n        </mat-card>\r\n      </div>\r\n    </div>\r\n\r\n\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"app-container-h\">\n  <div class=\"container\">\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\">\n      <h1 class=\"mat-display-1\">Галерея</h1>\n      </div>\n    </div>\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\n        <mat-card>\n          <mat-card-subtitle>\n            <a mat-button\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\n               [queryParams]=\"{name: product.name}\"\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\n              {{product.name}}\n            </a>\n          </mat-card-subtitle>\n          <div class=\"row\" fxLayout=\"row\">\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\n\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\n                 fxLayout fxLayoutAlign=\"center center\"\n                 *ngFor=\"let productAsset of product.assets\">\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_590,h_295,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n\n\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_350,h_175,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n            </div>\n          </div>\n        </mat-card>\n      </div>\n    </div>\n\n\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1548,7 +1548,7 @@ var GalleryComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container-h primary-background\" id=\"header\">\r\n\r\n  <div class=\"container\" fxHide.lt-md=\"true\">\r\n    <div class=\"row primary-background\">\r\n      <div class=\"cell\">\r\n        <a href=\"\">\r\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\r\n        </a>\r\n      </div>\r\n      <div fxFlex></div>\r\n    <div class=\"cell\">\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\"\r\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n            <mat-icon>mail</mat-icon> Задати питання\r\n          </a>\r\n        </div>\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button class=\"muted\"\r\n             href=\"tel:+380985443968\">\r\n            <mat-icon>phone</mat-icon> 098 544 39 68\r\n          </a>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"app-container-h primary-background\" id=\"header\">\n\n  <div class=\"container\" fxHide.lt-md=\"true\">\n    <div class=\"row primary-background\">\n      <div class=\"cell\">\n        <a href=\"\">\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\n        </a>\n      </div>\n      <div fxFlex></div>\n    <div class=\"cell\">\n      <div class=\"row\" fxLayout=\"row\">\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\"\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n            <mat-icon>mail</mat-icon> Задати питання\n          </a>\n        </div>\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button class=\"muted\"\n             href=\"tel:+380985443968\">\n            <mat-icon>phone</mat-icon> 098 544 39 68\n          </a>\n        </div>\n      </div>\n    </div>\n\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -2220,7 +2220,7 @@ var ProductItemDetailComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n    <div class=\"cell\">\r\n      <p class=\"muted\">height {{height}}</p>\r\n      <p class=\"muted\"> width {{width}}</p>\r\n  \r\n    </div>\r\n  <div class=\"w393\">393</div>\r\n  <div class=\"w360\">360</div>\r\n  <div class=\"w350\">350</div>\r\n  <div class=\"w100\">100</div>\r\n  <div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\r\n  <div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\r\n"
+module.exports = "<div>\n    <div class=\"cell\">\n      <p class=\"muted\">height {{height}}</p>\n      <p class=\"muted\"> width {{width}}</p>\n  \n    </div>\n  <div class=\"w393\">393</div>\n  <div class=\"w360\">360</div>\n  <div class=\"w350\">350</div>\n  <div class=\"w100\">100</div>\n  <div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\n  <div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\n"
 
 /***/ }),
 
@@ -3590,6 +3590,152 @@ var UserService = /** @class */ (function () {
         this.http = http;
         this._logging = new rxjs__WEBPACK_IMPORTED_MODULE_2__["ReplaySubject"](1);
     }
+    /**
+     * Create new user
+     *
+     * @param {IUser} user
+     * @param {string} recaptcha
+     * @returns {Observable<string>}
+     * @memberof UserService
+     */
+    UserService.prototype.userCreate = function (user, recaptcha) {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            }),
+            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: {
+                    recaptcha: recaptcha
+                } })
+        };
+        return this.http.post('api/user/create', user, httpOptions);
+    };
+    /**
+     * Login with username and password
+     *
+     * @param {IUser} user
+     * @returns {Observable<IUser>}
+     * @memberof UserService
+     */
+    UserService.prototype.userLogin = function (user) {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            }),
+            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: {
+                    login: user.login,
+                    password: user.password
+                } })
+        };
+        return this.http.get('api/user/Login', httpOptions);
+    };
+    /**
+     * Login with google social sin in
+     *
+     * @returns {Observable<any>}
+     * @memberof UserService
+     */
+    UserService.prototype.userGoogleLogin = function () {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            }),
+        };
+        return this.http.get('api/user/auth/google', httpOptions);
+    };
+    /**
+     * Get profile
+     *
+     * @returns {Observable<IResponse>}
+     * @memberof UserService
+     */
+    UserService.prototype.userGetProfile = function () {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            }),
+        };
+        return this.http.get('api/user/profile', httpOptions);
+    };
+    /** Session
+     * User logout
+     *
+     * @returns {Observable<String>}
+     * @memberof UserService
+     */
+    UserService.prototype.userLogout = function () {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            })
+        };
+        return this.http.get('api/user/logout', httpOptions);
+    };
+    /** Session
+     * Used for router guard (canActivate)
+     *
+     * @param {*} requiredRoleForAuthentication
+     * @returns {Observable<boolean>}
+     * @memberof UserService
+     */
+    UserService.prototype.userCheckAuthorization = function (requiredRoleForAuthentication) {
+        var token = this.userLocalGetToken('token');
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            }),
+            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromString: "role=" + requiredRoleForAuthentication })
+        };
+        return this.http.get('api/user/checkAuthorization', httpOptions);
+    };
+    /**
+     * Helper for frontend authorization
+     * Check user permittion for some restricted actions
+     * like menu displaying..
+     *
+     * @param {string} permitedRole
+     * @returns {boolean}
+     * @memberof UserService
+     */
+    UserService.prototype.allowTo = function (permitedRole) {
+        var permissions = _app_config__WEBPACK_IMPORTED_MODULE_4__["config"].permissions;
+        var user = this.userLocalGetCredentials('token');
+        if (!user) {
+            return false;
+        }
+        var roleFromLocalStorage = user.role;
+        if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+    };
+    /**
+     * Helper for checking image file before uploading
+     *
+     * @param {*} eventTarget
+     * @returns {IResponse}
+     * @memberof UserService
+     */
+    UserService.prototype.checkFile = function (eventTarget) {
+        if (!eventTarget.files[0]) {
+            return ({ success: false, message: 'Виберіть файл' });
+        }
+        else if (eventTarget.files[0].size > 8400000) {
+            return ({ success: false, message: 'Розмір файлу повинен бути менше 8Мб' });
+        }
+        else if (eventTarget.files[0].type !== 'image/jpg' &&
+            eventTarget.files[0].type !== 'image/jpe' &&
+            eventTarget.files[0].type !== 'image/jpeg' &&
+            eventTarget.files[0].type !== 'image/bmp' &&
+            eventTarget.files[0].type !== 'image/png' &&
+            eventTarget.files[0].type !== 'image/webp') {
+            return ({ success: false, message: 'Виберіть інший тип файлу' });
+        }
+        else {
+            return ({ success: true, message: '' });
+        }
+    };
     UserService.prototype.userPasswordResetEmail = function (email, recaptcha) {
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
@@ -3635,111 +3781,6 @@ var UserService = /** @class */ (function () {
         };
         return this.http.get('api/user/email-verification-send', httpOptions);
     };
-    UserService.prototype.userCreate = function (user, recaptcha) {
-        var token = this.userLocalGetToken('token');
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-                'Authorization': token
-            }),
-            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: {
-                    recaptcha: recaptcha
-                } })
-        };
-        return this.http.post('api/user/create', user, httpOptions);
-    };
-    // userLogin(user: IUser): Observable<IResponse> {
-    //   const httpOptions = {
-    //     headers: new HttpHeaders({
-    //       'Content-Type':  'application/json',
-    //     }),
-    //     params: new HttpParams({ fromObject: {
-    //       login: user.login,
-    //       password: user.password
-    //     }})
-    //   };
-    //   return this.http.get<IResponse>(
-    //     'api/user/login',
-    //     httpOptions
-    //   );
-    // }
-    UserService.prototype.userLogin = function (user) {
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-            }),
-            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromObject: {
-                    login: user.login,
-                    password: user.password
-                } })
-        };
-        return this.http.get('api/user/Login', httpOptions);
-    };
-    UserService.prototype.userGoogleLogin = function () {
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Access-Control-Allow-Origin': '*'
-            }),
-        };
-        return this.http.get('api/user/auth/google', httpOptions);
-    };
-    UserService.prototype.userGetProfile = function () {
-        var token = this.userLocalGetToken('token');
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-                'Authorization': token
-            }),
-        };
-        return this.http.get('api/user/profile', httpOptions);
-    };
-    UserService.prototype.allowTo = function (permitedRole) {
-        var permissions = _app_config__WEBPACK_IMPORTED_MODULE_4__["config"].permissions;
-        var user = this.userLocalGetCredentials('token');
-        if (!user) {
-            return false;
-        }
-        var roleFromLocalStorage = user.role;
-        if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
-            return true;
-        }
-        else {
-            return false;
-        }
-        // return this.getUserLocal().pipe(
-        //   mergeMap(
-        //       user => {
-        //         if (!user) {
-        //           return of(false);
-        //         }
-        //         const roleFromLocalStorage = user.role;
-        //         if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
-        //           return of(true);
-        //         } else {
-        //           return of(false);
-        //         }
-        //     }
-        //   )
-        // );
-    };
-    /** Session
-     * Used for router guard (canActivate)
-     *
-     * @param {*} requiredRoleForAuthentication
-     * @returns {Observable<boolean>}
-     * @memberof UserService
-     */
-    UserService.prototype.userCheckAuthorization = function (requiredRoleForAuthentication) {
-        var token = this.userLocalGetToken('token');
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-            }),
-            params: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpParams"]({ fromString: "role=" + requiredRoleForAuthentication })
-        };
-        return this.http.get('api/user/checkAuthorization', httpOptions);
-    };
     UserService.prototype.userEdit = function (data) {
         var token = this.userLocalGetToken('token');
         var httpOptions = {
@@ -3749,20 +3790,6 @@ var UserService = /** @class */ (function () {
             })
         };
         return this.http.put('api/user/edit', data, httpOptions);
-    };
-    /** Session
-     * User logout
-     *
-     * @returns {Observable<String>}
-     * @memberof UserService
-     */
-    UserService.prototype.userLogout = function () {
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-            })
-        };
-        return this.http.get('api/user/logout', httpOptions);
     };
     UserService.prototype.userEditAvatar = function (file) {
         // uploadPic(file, user) {
@@ -3783,25 +3810,6 @@ var UserService = /** @class */ (function () {
             })
         };
         return this.http.put('api/user/edit-avatar', formData, httpOptions);
-    };
-    UserService.prototype.checkFile = function (eventTarget) {
-        if (!eventTarget.files[0]) {
-            return ({ success: false, message: 'Виберіть файл' });
-        }
-        else if (eventTarget.files[0].size > 8400000) {
-            return ({ success: false, message: 'Розмір файлу повинен бути менше 8Мб' });
-        }
-        else if (eventTarget.files[0].type !== 'image/jpg' &&
-            eventTarget.files[0].type !== 'image/jpe' &&
-            eventTarget.files[0].type !== 'image/jpeg' &&
-            eventTarget.files[0].type !== 'image/bmp' &&
-            eventTarget.files[0].type !== 'image/png' &&
-            eventTarget.files[0].type !== 'image/webp') {
-            return ({ success: false, message: 'Виберіть інший тип файлу' });
-        }
-        else {
-            return ({ success: true, message: '' });
-        }
     };
     // create Observable for user login watch
     UserService.prototype.userLocalLogin = function (token) {

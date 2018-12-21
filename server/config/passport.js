@@ -12,13 +12,6 @@ const userHelper = require('../helpers/userHelper');
 const config = require('../config');
 
 module.exports = function(passport) {
-  let emailVerificationOptions = {};
-  emailVerificationOptions.jwtFromRequest = ExtractJwt.fromUrlQueryParameter('token');
-  emailVerificationOptions.secretOrKey = config.get('JWT_EMAIL');
-
-  let jwtOptions = {};
-  jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
-  jwtOptions.secretOrKey = config.get('JWT_SECRET');
 
   passport.serializeUser((user, done) => {
     return done(null, user._id);
@@ -63,12 +56,13 @@ module.exports = function(passport) {
       }
   ));
 
+  // google sign in strategy
   passport.use(
       new GoogleStrategy(
           {
             clientID: config.get('GOOGLE_CLIENT_ID'),
             clientSecret: config.get('GOOGLE_CLIENT_SECRET'),
-            callbackURL: 'http://localhost:8081/api/user/auth/google/redirect',
+            callbackURL: config.get('SERVER_URL') + '/api/user/auth/google/redirect',
           },
           function(accessToken, refreshToken, profile, done) {
             // extract 'account' email
@@ -113,6 +107,10 @@ module.exports = function(passport) {
           }
       ));
 
+  let jwtOptions = {};
+  jwtOptions.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
+  jwtOptions.secretOrKey = config.get('JWT_SECRET');
+
   passport.use('jwt',
       new JwtStrategy(jwtOptions, (jwtPayload, done) => {
         // на основі _id (витягнутого з токена) робить пошук
@@ -131,6 +129,10 @@ module.exports = function(passport) {
             });
       }
       ));
+
+  let emailVerificationOptions = {};
+  emailVerificationOptions.jwtFromRequest = ExtractJwt.fromUrlQueryParameter('token');
+  emailVerificationOptions.secretOrKey = config.get('JWT_EMAIL');
 
   passport.use('jwt.email.verification',
       new JwtStrategy(emailVerificationOptions, (jwtPayload, done) => {

@@ -286,7 +286,7 @@ router.get('/user/email-verification',
 );
 
 router.get('/user/password-reset-check-email',
-    recaptcha,
+    // recaptcha,
     userController.passwordResetCheckEmail
 );
 

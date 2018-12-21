@@ -3,53 +3,55 @@ const UserModel = require('../models/userModel');
 const ResObj = require('../libs/responseObject');
 const DbError = require('../errors/dbError');
 const ApplicationError = require('../errors/applicationError');
+const ServerError = require('../errors/serverError');
 const ClientError = require('../errors/clientError');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 const transporter = require('../config/mailgun');
 const userHelper = require('../helpers/userHelper');
+const sharedHelper = require('../helpers/sharedHelper');
 
 const passwordResetCheckEmail = function(req, res, next) {
   let email = req.query.email;
-  UserModel.findOne({email: email})
-      .then((user) => {
-        if (!user) {
-          return next(new ApplicationError('noSuchuser', 403));
-        }
+  let user;
+  let code;
 
-        // const code = Math.floor(Math.random() * (100000 - 0)) + 0;
+  userHelper.isEmailExists(email, 'local')
+      .then((userFromDb) => {
         const code = Math.floor(Math.random() * (100000)) + '';
-        bcrypt.hash(code, 10)
-            .then((hash) => {
-              UserModel.update({_id: user._id}, {$set: {code: hash, codeTries: 1}})
-                  .then((result) => {
-                    if (result.ok !== 1) {
-                      next(new DbError());
-                    }
-
-                    const mailOptions = {
-                      from: 'grabo <postmaster@sandbox4d505533524a4360b5506928e2ed0726.mailgun.org>',
-                      to: email,
-                      subject: 'Зміна пароля, код підтвердження',
-                      text: 'Ваш код підтвердження' + code,
-                      html: '<b>Ваш код підтвердження </b>' + code,
-                    };
-
-                    transporter.sendMail(mailOptions, (err, info) => {
-                      if (err) {
-                        return next(new ApplicationError(err.message, err.status));
-                      }
-                      const sub = {_id: user._id};
-                      const codeToken = userHelper.createJWTToken('JWT ', sub, 300, 'JWT_SECRET_CODE');
-                      return res.status(200).json(new ResObj(true, 'На Вашу пошту відправлено листа', codeToken));
-                    });
-                  })
-                  .catch(new ApplicationError('bc', 500));
-            })
-            .catch((err) => next(new ApplicationError(err.message, err.status)));
+        user = userFromDb;
+        return bcrypt.hash(code, 10);
       })
-      .catch((err) => next(new ApplicationError(err.message, err.status)));
+      .catch((err) => {
+        throw new ServerError();
+      })
+      .then((hash) => {
+        code = hash;
+        return UserModel.updateOne({_id: user._doc._id}, {$set: {code: hash, codeTries: 1}});
+      })
+      .catch((err) => {
+        throw new ServerError(err);
+      })
+      .then((result) => {
+        if (result.ok !== 1) {
+          throw new DbError();
+        }
+        const mailOptions = {
+          from: 'HandMADE <postmaster@hmade.work>',
+          to: email,
+          subject: 'Зміна пароля, код підтвердження',
+          text: 'Ваш код підтвердження' + code,
+          html: '<b>Ваш код підтвердження </b>' + code,
+        };
+        return sharedHelper.sendMail(mailOptions);
+      })
+      .then((info) => {
+        const sub = {_id: user._id};
+        const codeToken = sharedHelper.createJWTToken('JWT ', sub, 300, 'JWT_SECRET_CODE');
+        return res.status(200).json(codeToken);
+      })
+      .catch((err) => next(err));
 };
 
 const passwordResetCheckCode = function(req, res, next) {
@@ -80,7 +82,7 @@ const passwordResetCheckCode = function(req, res, next) {
                 return next(new ApplicationError('wrongCredentials', 401));
               }
               const sub = {_id: user._id};
-              const changePasswordToken = userHelper.createJWTToken('JWT ', sub, 300, 'JWT_SECRET_CHANGE_PASSWORD');
+              const changePasswordToken = sharedHelper.createJWTToken('JWT ', sub, 300, 'JWT_SECRET_CHANGE_PASSWORD');
               return res.status(200).json(new ResObj(true, 'Код введено вірно', changePasswordToken));
             })
             .catch((err) => next(new ApplicationError('bc', 500)));
@@ -154,7 +156,7 @@ const passwordReset = function(req, res, next) {
                     role: user.role,
                     login: user.login,
                   };
-                  const token = userHelper.createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
+                  const token = sharedHelper.createJWTToken('JWT ', sub, 604800, 'JWT_SECRET');
                   return res.status(200).json(new ResObj(true, 'Пароль змінено. Вхід виконано', token));
                 })
                 .catch((err) => new ApplicationError(err.message, err.status));
@@ -310,13 +312,15 @@ function comparePassword(_id, passwordCandidate) {
   });
 }
 
+/**
+ * Return users credentials
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @return {UserModel}
+ */
 const userProfile = function(req, res, next) {
-  // let user = {};
-  // Object.assign(user, req.user._doc);
-  // delete user.password;
-  // console.log('user', req.user);
-  // console.log('user._doc', req.user._doc);
-
   let user = {
     login: req.user._doc.login,
     avatar: req.user._doc.avatar,
@@ -326,11 +330,11 @@ const userProfile = function(req, res, next) {
     role: req.user._doc.role,
     email: req.user._doc.email,
   };
-  return res.status(200).json(new ResObj(true, 'auth', user));
+  return res.status(200).json(user);
 };
 
-/** Session
- * user logout
+/**
+ * user logout from session
  *
  * @param {*} req
  * @param {*} res
@@ -342,9 +346,9 @@ const userLogout = function(req, res, next) {
   return res.status(200).json('Logged out');
 };
 
-/** Session
- * Returns basic user credential after successful login (passport local)
- * Signed by JWT
+/**
+ * After successful login (passport local)
+ * Returns basic user credentials, signed by JWT
  *
  * @param {*} req
  * @param {*} res
@@ -362,15 +366,22 @@ const userLogin = function(req, res, next) {
       provider: req.user._doc.provider,
       role: req.user._doc.role,
     };
-    const token = userHelper.createJWTToken('', sub, 604800, 'JWT_SECRET');
+    const token = sharedHelper.createJWTToken('', sub, 604800, 'JWT_SECRET');
     return res.status(200).json(token);
   } else {
     return next(new ClientError('Помилка авторизації', 401));
   }
 };
 
+/**
+ * After successful google social signin
+ * Returns basic user credentials, signed by JWT
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 const userGoogleSignin = function(req, res, next) {
-  log.debug('google redirect');
   const sub = {
     _id: req.user._doc._id,
     login: req.user._doc.login,
@@ -380,11 +391,11 @@ const userGoogleSignin = function(req, res, next) {
     provider: req.user._doc.provider,
     role: req.user._doc.role,
   };
-  const token = userHelper.createJWTToken('', sub, 604800, 'JWT_SECRET');
+  const token = sharedHelper.createJWTToken('', sub, 604800, 'JWT_SECRET');
   res.redirect('/user/redirected-from-oauth/' + token);
 };
 
-/** Session
+/**
  * Check users authorization to activate routes on frontend (canActivate)
  *
  * @param {*} req
@@ -412,7 +423,7 @@ const userCheckAuthorization = function(req, res, next) {
 
 /**
  * Middleware for user create
- * invokes next to login created user
+ * invokes 'next()' to login created user
  *
  * @param {*} req
  * @param {*} res

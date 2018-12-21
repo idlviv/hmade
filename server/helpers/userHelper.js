@@ -7,26 +7,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
 
-/**
- *  Create token
- *
- * @param {string} prefix - prefix for token
- * @param {object} sub - subject payload
- * @param {number} expire - seconds
- * @param {string} secret - object key from config
- * @return {string}
- */
-const createJWTToken = function(prefix, sub, expire, secret) {
-  const date = Math.floor(Date.now() / 1000); // in seconds
-  return prefix + jwt.sign(
-      {
-        sub,
-        iat: date,
-        exp: date + (expire), // 60 секунд * 60 хвилин = 1 година * 24 год * 7 днів
-      },
-      config.get(secret)
-  );
-};
+
 
 /**
  * check pair: email - provider uniqueness
@@ -83,7 +64,7 @@ function isEmailExists(email, provider) {
           if (user) {
             resolve(user);
           } else {
-            reject();
+            reject(new ClientError('Email не знайдено', 401));
           }
         })
         .catch((err) => reject(new DbError()));
@@ -119,10 +100,12 @@ function isLoginExists(login) {
 function isPasswordLocked(userFromDb) {
   return new Promise((resolve, reject) => {
     if (userFromDb.isPasswordLocked) {
-      // let time = new Date(userFromDb.passwordLockUntil);
       const estimatedTime = userFromDb.passwordLockUntil - Date.now();
-      // reject(new ClientError(`Вхід заблоковано до ${time.toTimeString()}, досягнуто максимальну кількість спроб.`, 401));
-      reject(new ClientError(`Вхід заблоковано, спробуйте через ${estimatedTime / 1000} секунд.`, 401));
+      reject(new ClientError(
+          `Вхід заблоковано, спробуйте через 
+          ${Math.round(estimatedTime / 1000 / 60)} хвилин.`,
+          401
+      ));
     } else {
       resolve(userFromDb);
     }
@@ -199,7 +182,6 @@ function updatePasswordLockOptions(user) {
 }
 
 module.exports = {
-  createJWTToken,
   isEmailUnique,
   isLoginUnique,
   isEmailExists,

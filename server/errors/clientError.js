@@ -1,21 +1,19 @@
 /**
  * Client errors 400..
  *
- * @param {string} message
- * @param {number} status
  * @param {string | number} code
  * @constructor
  */
-function ClientError(message, status, code) {
+function ClientError(err) {
   Error.call(this);
   if (Error.captureStackTrace) {
     Error.captureStackTrace(this, ClientError);
   } else {
     this.stack = new Error().stack;
   }
-  this.message = message ? message : 'Помилка у запиті до сервера';
-  this.status = status || 400;
-  this.code = code || 0;
+  this.message = err && err.message ? err.message : 'Помилка у запиті до сервера';
+  this.status = err && err.status ? err.status : 400;
+  this.code = err && err.code ? err.code : 0;
   this.name = 'ClientError';
 }
 

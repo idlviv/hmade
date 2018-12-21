@@ -20,7 +20,7 @@ export class UserPasswordResetComponent implements OnInit {
   hidePassword = true;
   processing = false;
   result = false;
-
+  error: {};
   @ViewChild('stepper') matStepper: MatStepper;
   @ViewChild('recaptchaRef') recaptchaRef;
 
@@ -41,9 +41,9 @@ export class UserPasswordResetComponent implements OnInit {
         Validators.maxLength(30),
         Validators.pattern(emailPattern),
       ]),
-      recaptcha: new FormControl('', [
-        Validators.required
-      ])
+      // recaptcha: new FormControl('', [
+      //   Validators.required
+      // ])
       },
     );
 
@@ -77,7 +77,8 @@ export class UserPasswordResetComponent implements OnInit {
     this.userService.userLocalRemoveToken('passwordResetToken');
 
     const email = this.emailForm.get('email').value;
-    const recaptcha = this.emailForm.get('recaptcha').value;
+    // const recaptcha = this.emailForm.get('recaptcha').value;
+    const recaptcha = 'value';
     this.userService.userPasswordResetEmail(email, recaptcha)
       .subscribe(
         result => {
@@ -89,12 +90,13 @@ export class UserPasswordResetComponent implements OnInit {
           console.log(result);
         },
         err => {
-          this.recaptchaRef.reset();
           this.processing = false;
-          if (err.error === 'noSuchUser') {
+          if (err.error.code === 'noSuchUser') {
             this.emailForm.get('email').setErrors({invalidEmail: true});
           } else {
-            this.emailForm.get('email').setErrors({unrecognizedError: true});
+            this.matStepper.reset();
+            this.matSnackBar.open('Сталася помилка', '',
+            {duration: 3000, panelClass: 'snack-bar-danger'});
           }
         }
       );

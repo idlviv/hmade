@@ -17,6 +17,177 @@ export class UserService {
     private http: HttpClient
   ) { }
 
+  /**
+   * Create new user
+   *
+   * @param {IUser} user
+   * @param {string} recaptcha
+   * @returns {Observable<string>}
+   * @memberof UserService
+   */
+  userCreate(user: IUser, recaptcha: string): Observable<string> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      }),
+      params: new HttpParams({ fromObject: {
+          recaptcha
+        }})
+    };
+    return this.http.post<string>(
+      'api/user/create',
+      user,
+      httpOptions
+    );
+  }
+
+  /**
+   * Login with username and password
+   *
+   * @param {IUser} user
+   * @returns {Observable<IUser>}
+   * @memberof UserService
+   */
+  userLogin(user: IUser): Observable<IUser> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      }),
+      params: new HttpParams({ fromObject: {
+        login: user.login,
+        password: user.password
+      }})
+    };
+    return this.http.get<IUser>(
+      'api/user/Login',
+      httpOptions
+    );
+  }
+
+  /**
+   * Login with google social sin in
+   *
+   * @returns {Observable<any>}
+   * @memberof UserService
+   */
+  userGoogleLogin(): Observable<any> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      }),
+    };
+    return this.http.get<any>(
+      'api/user/auth/google',
+      httpOptions
+    );
+  }
+
+  /**
+   * Get profile
+   *
+   * @returns {Observable<IResponse>}
+   * @memberof UserService
+   */
+  userGetProfile(): Observable<IUser> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      }),
+    };
+    return this.http.get<IUser>(
+      'api/user/profile',
+      httpOptions
+    );
+  }
+
+  /** Session
+   * User logout
+   *
+   * @returns {Observable<String>}
+   * @memberof UserService
+   */
+  userLogout(): Observable<String> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    };
+    return this.http.get<String>(
+      'api/user/logout',
+      httpOptions
+    );
+  }
+
+  /** Session
+   * Used for router guard (canActivate)
+   *
+   * @param {*} requiredRoleForAuthentication
+   * @returns {Observable<boolean>}
+   * @memberof UserService
+   */
+  userCheckAuthorization(requiredRoleForAuthentication): Observable<boolean> {
+    const token = this.userLocalGetToken('token');
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      }),
+      params: new HttpParams({fromString: `role=${requiredRoleForAuthentication}`})
+
+    };
+    return this.http.get<boolean>(
+      'api/user/checkAuthorization',
+      httpOptions
+    );
+  }
+
+  /**
+   * Helper for frontend authorization
+   * Check user permittion for some restricted actions
+   * like menu displaying..
+   *
+   * @param {string} permitedRole
+   * @returns {boolean}
+   * @memberof UserService
+   */
+  allowTo(permitedRole: string): boolean {
+    const permissions = config.permissions;
+    const user = this.userLocalGetCredentials('token');
+    if (!user) {
+      return false;
+    }
+    const roleFromLocalStorage = user.role;
+    if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  /**
+   * Helper for checking image file before uploading
+   *
+   * @param {*} eventTarget
+   * @returns {IResponse}
+   * @memberof UserService
+   */
+  checkFile(eventTarget: any): IResponse {
+    if (!eventTarget.files[0]) {
+      return ({success: false, message: 'Виберіть файл'});
+    } else if (eventTarget.files[0].size > 8400000) {
+      return ({success: false, message: 'Розмір файлу повинен бути менше 8Мб'});
+    } else if (
+      eventTarget.files[0].type !== 'image/jpg' &&
+      eventTarget.files[0].type !== 'image/jpe' &&
+      eventTarget.files[0].type !== 'image/jpeg' &&
+      eventTarget.files[0].type !== 'image/bmp' &&
+      eventTarget.files[0].type !== 'image/png' &&
+      eventTarget.files[0].type !== 'image/webp') {
+      return ({success: false, message: 'Виберіть інший тип файлу'});
+    } else {
+      return ({success: true,  message: ''});
+    }
+  }
+
   userPasswordResetEmail(email, recaptcha): Observable<IResponse> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -78,137 +249,6 @@ export class UserService {
     );
   }
 
-  userCreate(user: IUser, recaptcha: string): Observable<IResponse> {
-    const token = this.userLocalGetToken('token');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': token
-      }),
-      params: new HttpParams({ fromObject: {
-          recaptcha
-        }})
-    };
-    return this.http.post<IResponse>(
-      'api/user/create',
-      user,
-      httpOptions
-    );
-  }
-
-  // userLogin(user: IUser): Observable<IResponse> {
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type':  'application/json',
-  //     }),
-  //     params: new HttpParams({ fromObject: {
-  //       login: user.login,
-  //       password: user.password
-  //     }})
-  //   };
-  //   return this.http.get<IResponse>(
-  //     'api/user/login',
-  //     httpOptions
-  //   );
-  // }
-
-  userLogin(user: IUser): Observable<IUser> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      }),
-      params: new HttpParams({ fromObject: {
-        login: user.login,
-        password: user.password
-      }})
-    };
-    return this.http.get<IUser>(
-      'api/user/Login',
-      httpOptions
-    );
-  }
-
-  userGoogleLogin(): Observable<any> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/x-www-form-urlencoded',
-        'Access-Control-Allow-Origin': '*'
-      }),
-      // params: new HttpParams({ fromObject: {
-      //   id_token
-      // }})
-    };
-    return this.http.get<any>(
-      'api/user/auth/google',
-      httpOptions
-    );
-  }
-
-  userGetProfile(): Observable<IResponse> {
-    const token = this.userLocalGetToken('token');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-        'Authorization': token
-      }),
-    };
-    return this.http.get<IResponse>(
-      'api/user/profile',
-      httpOptions
-    );
-  }
-
-  allowTo(permitedRole: string): boolean {
-    const permissions = config.permissions;
-    const user = this.userLocalGetCredentials('token');
-    if (!user) {
-      return false;
-    }
-    const roleFromLocalStorage = user.role;
-    if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
-      return true;
-    } else {
-      return false;
-    }
-    // return this.getUserLocal().pipe(
-    //   mergeMap(
-    //       user => {
-    //         if (!user) {
-    //           return of(false);
-    //         }
-    //         const roleFromLocalStorage = user.role;
-    //         if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
-    //           return of(true);
-    //         } else {
-    //           return of(false);
-    //         }
-    //     }
-    //   )
-    // );
-  }
-
-  /** Session
-   * Used for router guard (canActivate)
-   *
-   * @param {*} requiredRoleForAuthentication
-   * @returns {Observable<boolean>}
-   * @memberof UserService
-   */
-  userCheckAuthorization(requiredRoleForAuthentication): Observable<boolean> {
-    const token = this.userLocalGetToken('token');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      }),
-      params: new HttpParams({fromString: `role=${requiredRoleForAuthentication}`})
-
-    };
-    return this.http.get<boolean>(
-      'api/user/checkAuthorization',
-      httpOptions
-    );
-  }
-
   userEdit(data: {}): Observable<IResponse> {
     const token = this.userLocalGetToken('token');
     const httpOptions = {
@@ -220,24 +260,6 @@ export class UserService {
     return this.http.put<IResponse>(
       'api/user/edit',
       data,
-      httpOptions
-    );
-  }
-  
-  /** Session
-   * User logout
-   *
-   * @returns {Observable<String>}
-   * @memberof UserService
-   */
-  userLogout(): Observable<String> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      })
-    };
-    return this.http.get<String>(
-      'api/user/logout',
       httpOptions
     );
   }
@@ -271,23 +293,7 @@ export class UserService {
     );
   }
 
-  checkFile(eventTarget): IResponse {
-    if (!eventTarget.files[0]) {
-      return ({success: false, message: 'Виберіть файл'});
-    } else if (eventTarget.files[0].size > 8400000) {
-      return ({success: false, message: 'Розмір файлу повинен бути менше 8Мб'});
-    } else if (
-      eventTarget.files[0].type !== 'image/jpg' &&
-      eventTarget.files[0].type !== 'image/jpe' &&
-      eventTarget.files[0].type !== 'image/jpeg' &&
-      eventTarget.files[0].type !== 'image/bmp' &&
-      eventTarget.files[0].type !== 'image/png' &&
-      eventTarget.files[0].type !== 'image/webp') {
-      return ({success: false, message: 'Виберіть інший тип файлу'});
-    } else {
-      return ({success: true,  message: ''});
-    }
-  }
+
 
   // create Observable for user login watch
   userLocalLogin(token) {
