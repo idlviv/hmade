@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
 import { ValidateService } from '../../../services/validate.service';
 import { IUser } from '../../../interfaces/user-interface';
@@ -6,6 +6,7 @@ import { UserService } from '../../../services/user.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { config } from '../../../app.config';
+import {RecaptchaComponent} from 'ng-recaptcha';
 
 @Component({
   selector: 'app-user-create',
@@ -23,6 +24,7 @@ export class UserCreateComponent implements OnInit {
    * directive for reset form (invalid status)
    */
   @ViewChild(FormGroupDirective) userCreateFormDirective: FormGroupDirective;
+  @ViewChild(RecaptchaComponent) recaptchaRef: RecaptchaComponent;
 
   constructor(
     private validateService: ValidateService,
@@ -88,15 +90,16 @@ export class UserCreateComponent implements OnInit {
     this.userService.userCreate(this.user,  this.userCreateForm.get('recaptcha').value)
       .subscribe(
         result => {
-          // const token = result;
+          const token = result;
           this.resetForm();
-          // this.matSnackBar.open(result.message, '', {duration: 3000});
+          this.matSnackBar.open('Користувача створено, вхід виконано', '', {duration: 3000});
           // login new user
-          // this.userService.userLocalLogin(token);
+          this.userService.userLocalLogin(token);
           this.router.navigate(['/user', 'profile']);
         },
         err => {
           // 422 or 400
+          this.recaptchaRef.reset();
           this.matSnackBar.open(err.error, '',
             {duration: 3000, panelClass: 'snack-bar-danger'});
         }

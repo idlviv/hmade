@@ -194,7 +194,7 @@ export class UserService {
    * @returns {Observable<boolean>}
    * @memberof UserService
    */
-  userCheckAuthenticity(requiredRoleForAuthentication): Observable<boolean> {
+  userCheckAuthorization(requiredRoleForAuthentication): Observable<boolean> {
     const token = this.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
@@ -204,7 +204,7 @@ export class UserService {
 
     };
     return this.http.get<boolean>(
-      'api/user/checkAuthenticity',
+      'api/user/checkAuthorization',
       httpOptions
     );
   }

@@ -338,7 +338,6 @@ const userProfile = function(req, res, next) {
  * @return {string}
  */
 const userLogout = function(req, res, next) {
-  log.debug('logout');
   req.logout();
   return res.status(200).json('Logged out');
 };
@@ -366,7 +365,7 @@ const userLogin = function(req, res, next) {
     const token = userHelper.createJWTToken('', sub, 604800, 'JWT_SECRET');
     return res.status(200).json(token);
   } else {
-    return next(new ApplicationError());
+    return next(new ClientError('Помилка авторизації', 401));
   }
 };
 
@@ -386,31 +385,39 @@ const userGoogleSignin = function(req, res, next) {
 };
 
 /** Session
- * Check users authenticity to activate routes on frontend (canActivate)
+ * Check users authorization to activate routes on frontend (canActivate)
  *
  * @param {*} req
  * @param {*} res
  * @param {*} next
  * @return {boolean}
  */
-const userCheckAuthenticity = function(req, res, next) {
+const userCheckAuthorization = function(req, res, next) {
   let roleFromSession;
   if (req.user) {
     roleFromSession = req.user._doc.role || 'casual';
   } else {
     roleFromSession = 'casual';
   }
-  const requiredRoleForAuthentication = req.query.role;
+  const requiredRoleForAuthorization = req.query.role;
 
   const permissions = config.get('permissions');
 
-  if (permissions[roleFromSession].indexOf(requiredRoleForAuthentication) >= 0) {
+  if (permissions[roleFromSession].indexOf(requiredRoleForAuthorization) >= 0) {
     return res.status(200).json(true);
   } else {
     return res.status(200).json(false);
   }
 };
 
+/**
+ * Middleware for user create
+ * invokes next to login created user
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 const userCreate = function(req, res, next) {
   let user = {};
   Object.assign(user, req.body);
@@ -426,16 +433,14 @@ const userCreate = function(req, res, next) {
         const userModel = new UserModel(user);
         // create new user
         return userModel.save();
-      },
-      // redirect to error handler
-      (err) => next(new ApplicationError(err.message, err.status, err.code))
-      )
-      .then((result) => res.status(200).json())
+      })
+      // next to login created user
+      .then(() => next())
       .catch((err) => next(err));
 };
 
 module.exports = {
-  userCheckAuthenticity,
+  userCheckAuthorization,
   userProfile,
   userLogin,
   userLogout,

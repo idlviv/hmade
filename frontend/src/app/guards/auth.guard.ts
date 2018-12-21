@@ -19,7 +19,7 @@ export class AuthGuard implements CanActivate {
   ): Observable<boolean> | Promise<boolean> | boolean {
 
     const requiredRoleForAuthentication = next.data.auth; // from routing.module
-    return this.userService.userCheckAuthenticity(requiredRoleForAuthentication).pipe(
+    return this.userService.userCheckAuthorization(requiredRoleForAuthentication).pipe(
       map(permission => permission),
       catchError(err => of(false))
       );

@@ -3,14 +3,11 @@ const UserModel = require('../models/userModel');
 const DbError = require('../errors/dbError');
 const ApplicationError = require('../errors/applicationError');
 const ClientError = require('../errors/clientError');
-const util = require('util');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const config = require('../config');
-// let nodemailer = require('nodemailer');
-const transporter = require('../config/mailgun');
 
-/** Session
+/**
  *  Create token
  *
  * @param {string} prefix - prefix for token
@@ -31,7 +28,7 @@ const createJWTToken = function(prefix, sub, expire, secret) {
   );
 };
 
-/** Session
+/**
  * check pair: email - provider uniqueness
  *
  * @param {string} email
@@ -52,7 +49,7 @@ function isEmailUnique(email, provider) {
   });
 }
 
-/** Session
+/**
  * check login uniqueness
  *
  * @param {string} login
@@ -72,7 +69,7 @@ function isLoginUnique(login) {
   });
 }
 
-/** Session
+/**
  * check pair: email-provider exists in db
  *
  * @param {string} email
@@ -93,7 +90,7 @@ function isEmailExists(email, provider) {
   });
 }
 
-/** Session
+/**
  * check login exists in db
  *
  * @param {string} login
@@ -113,7 +110,7 @@ function isLoginExists(login) {
   });
 }
 
-/** Session
+/**
  * check locking after max tries to input wrong password
  *
  * @param {UserModel} userFromDb
@@ -122,15 +119,17 @@ function isLoginExists(login) {
 function isPasswordLocked(userFromDb) {
   return new Promise((resolve, reject) => {
     if (userFromDb.isPasswordLocked) {
-      let time = new Date(userFromDb.passwordLockUntil);
-      reject(new ClientError(`Вхід заблоковано до ${time.toTimeString()}, досягнуто максимальну кількість спроб`, 401));
+      // let time = new Date(userFromDb.passwordLockUntil);
+      const estimatedTime = userFromDb.passwordLockUntil - Date.now();
+      // reject(new ClientError(`Вхід заблоковано до ${time.toTimeString()}, досягнуто максимальну кількість спроб.`, 401));
+      reject(new ClientError(`Вхід заблоковано, спробуйте через ${estimatedTime / 1000} секунд.`, 401));
     } else {
       resolve(userFromDb);
     }
   });
 }
 
-/** Session
+/**
  * compare password from request (candidate)
  * with password from db
  *
@@ -156,7 +155,7 @@ function isPasswordMatched(userCandidate, userFromDb) {
   });
 }
 
-/** Session
+/**
  * update user (password lock options) after wrong password input
  *
  * @param {UserModel} user

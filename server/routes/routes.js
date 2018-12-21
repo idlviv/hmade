@@ -261,8 +261,8 @@ router.get('/user/profile',
     userController.userProfile
 );
 
-router.get('/user/checkAuthenticity',
-    userController.userCheckAuthenticity
+router.get('/user/checkAuthorization',
+    userController.userCheckAuthorization
 );
 
 router.put('/user/edit',
