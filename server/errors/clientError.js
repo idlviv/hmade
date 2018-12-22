@@ -33,3 +33,4 @@ module.exports = ClientError;
 // recaptchaErr () => clientError - 403 Forbidden
 // bc (Bestcrypt errors)
 // notAuthorized (don't have permission) => clientError - 401 Unauthorized
+

@@ -19,7 +19,7 @@ function isEmailUnique(email, provider) {
           if (!result.length) {
             resolve();
           } else {
-            reject(new ClientError({message: 'Цей email вже використовується', status: 422}));
+            reject(new ClientError({message: 'Цей email вже використовується', status: 422, code: 'uniqueConflict'}));
           }
         })
         .catch((err) => reject(new DbError()));
@@ -60,7 +60,7 @@ function isEmailExists(email, provider) {
           if (user) {
             resolve(user);
           } else {
-            reject(new ClientError({message: 'Email не знайдено', status: 401}));
+            reject(new ClientError({message: 'Email не знайдено', status: 403, code: 'wrongCredentials'}));
           }
         })
         .catch((err) => reject(new DbError()));

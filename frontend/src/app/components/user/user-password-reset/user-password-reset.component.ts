@@ -91,7 +91,7 @@ export class UserPasswordResetComponent implements OnInit {
         },
         err => {
           this.processing = false;
-          if (err.error.code === 'noSuchUser') {
+          if (err.error.code === 'wrongCredentials') {
             this.emailForm.get('email').setErrors({invalidEmail: true});
           } else {
             this.matStepper.reset();
