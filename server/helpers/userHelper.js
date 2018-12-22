@@ -19,7 +19,7 @@ function isEmailUnique(email, provider) {
           if (!result.length) {
             resolve();
           } else {
-            reject(new ClientError({message: 'Цей email вже використовується', status: 422}));
+            reject(new ClientError({message: 'Цей email вже використовується', status: 422, code: 'uniqueConflict'}));
           }
         })
         .catch((err) => reject(new DbError()));
@@ -39,7 +39,7 @@ function isLoginUnique(login) {
           if (!result.length) {
             resolve();
           } else {
-            reject(new ClientError({message: 'Цей логін вже використовується', status: 422}));
+            reject(new ClientError({message: 'Цей логін вже використовується', status: 422, code: 'uniqueConflict'}));
           }
         })
         .catch((err) => reject(new DbError()));
@@ -60,7 +60,7 @@ function isEmailExists(email, provider) {
           if (user) {
             resolve(user);
           } else {
-            reject(new ClientError({message: 'Email не знайдено', status: 401}));
+            reject(new ClientError({message: 'Email не знайдено', status: 403, code: 'wrongCredentials'}));
           }
         })
         .catch((err) => reject(new DbError()));
@@ -101,7 +101,7 @@ function isPasswordLocked(userFromDb) {
         message: `Вхід заблоковано, спробуйте через 
         ${Math.round(estimatedTime / 1000 / 60)} хвилин.`,
         status: 401,
-      }))
+      }));
     } else {
       resolve(userFromDb);
     }
@@ -118,13 +118,12 @@ function isPasswordLocked(userFromDb) {
  */
 function isPasswordMatched(userCandidate, userFromDb) {
   return new Promise((resolve, reject) => {
-    bcrypt.compare(userCandidate.password, userFromDb.password)
+    bcrypt.compare(userCandidate.password, userFromDb._doc.password)
         .then((passwordMatched) => {
           if (passwordMatched) {
             resolve(userFromDb);
           } else {
-            updatePasswordLockOptions(userFromDb)
-                .then(() => reject(new ClientError({message: 'Невірний пароль', sattus: 401})));
+            reject(new ClientError({message: 'Невірний пароль', status: 401, code: 'wrongCredentials'}));
           }
         })
         .catch((err) => reject(err));
@@ -162,7 +161,7 @@ function updatePasswordLockOptions(user) {
       };
     }
 
-    UserModel.update({_id: user._id}, query)
+    UserModel.updateOne({_id: user._id}, query)
         .then((result)=>{
           if (result.ok !== 1) {
             reject(new DbError());

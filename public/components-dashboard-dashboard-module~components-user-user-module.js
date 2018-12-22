@@ -563,12 +563,12 @@ var UserPasswordResetComponent = /** @class */ (function () {
             _this.processing = false;
             _this.emailForm.get('email').setErrors(null);
             _this.matStepper.next();
-            var codeToken = result.data;
+            var codeToken = result;
             _this.userService.userLocalSetToken('codeToken', codeToken);
             console.log(result);
         }, function (err) {
             _this.processing = false;
-            if (err.error.code === 'noSuchUser') {
+            if (err.error.code === 'wrongCredentials') {
                 _this.emailForm.get('email').setErrors({ invalidEmail: true });
             }
             else {

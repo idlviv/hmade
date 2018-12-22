@@ -291,7 +291,7 @@ router.get('/user/password-reset-check-email',
 );
 
 router.get('/user/password-reset-check-code',
-    passport.authenticate('jwt.passwordResetCheckCode', {session: true}),
+    passport.authenticate('jwt.passwordResetCheckCode', {session: false}),
     userController.passwordResetCheckCode
 );
 

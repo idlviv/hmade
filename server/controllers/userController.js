@@ -19,22 +19,12 @@ const passwordResetCheckEmail = function(req, res, next) {
 
   userHelper.isEmailExists(email, 'local')
       .then((userFromDb) => {
-        const code = Math.floor(Math.random() * (100000)) + '';
+        code = Math.floor(Math.random() * (100000)) + '';
         user = userFromDb;
         return bcrypt.hash(code, 10);
       })
-      .catch((err) => {
-        log.debug('err1', err);
-        throw new ServerError();
-      })
       .then((hash) => {
-        code = hash;
         return UserModel.updateOne({_id: user._doc._id}, {$set: {code: hash, codeTries: 1}});
-      })
-      .catch((err) => {
-        log.debug('err2', err);
-
-        throw new ServerError(err);
       })
       .then((result) => {
         if (result.ok !== 1) {
@@ -44,13 +34,14 @@ const passwordResetCheckEmail = function(req, res, next) {
           from: 'HandMADE <postmaster@hmade.work>',
           to: email,
           subject: 'Зміна пароля, код підтвердження',
-          text: 'Ваш код підтвердження' + code,
-          html: '<b>Ваш код підтвердження </b>' + code,
+          text: 'Ваш код підтвердження: ' + code,
+          html: '<b>Ваш код підтвердження: </b>' + code,
         };
         return sharedHelper.sendMail(mailOptions);
       })
       .then((info) => {
         const sub = {_id: user._id};
+        // token to identify user
         const codeToken = sharedHelper.createJWTToken('JWT ', sub, 300, 'JWT_SECRET_CODE');
         return res.status(200).json(codeToken);
       })
@@ -58,6 +49,7 @@ const passwordResetCheckEmail = function(req, res, next) {
 };
 
 const passwordResetCheckCode = function(req, res, next) {
+  console.log('check code - user', req.user._doc);
   let user = {};
   Object.assign(user, req.user._doc);
 

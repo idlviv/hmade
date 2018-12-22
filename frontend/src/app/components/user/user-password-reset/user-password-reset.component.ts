@@ -85,13 +85,13 @@ export class UserPasswordResetComponent implements OnInit {
           this.processing = false;
           this.emailForm.get('email').setErrors(null);
           this.matStepper.next();
-          const codeToken = result.data;
+          const codeToken = result;
           this.userService.userLocalSetToken('codeToken', codeToken);
           console.log(result);
         },
         err => {
           this.processing = false;
-          if (err.error.code === 'noSuchUser') {
+          if (err.error.code === 'wrongCredentials') {
             this.emailForm.get('email').setErrors({invalidEmail: true});
           } else {
             this.matStepper.reset();
