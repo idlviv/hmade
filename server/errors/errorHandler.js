@@ -42,12 +42,11 @@ module.exports = function(err, req, res, next) {
 
   // custom client error
   if (err instanceof ClientError) {
-    return res.status(err.status).json(err.message);
+    return res.status(err.status).json(err);
   }
 
   // custom server error
   if (err instanceof ServerError) {
-    log.verbose('err dfgdsfgsdfgsfg - ', err);
     return res.status(err.status).json(err);
   }
 

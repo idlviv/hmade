@@ -1,7 +1,6 @@
 /**
- * server errors
+ * server errors 500..
  *
-
  * @param {object|null} err
  * @param {string|null} err.message
  * @param {number|null} err.status

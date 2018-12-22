@@ -59,11 +59,7 @@ export class UserLoginComponent implements OnInit {
           }
         },
         err => {
-          let message;
-          if (err.error === 'maxTries') {
-            message = 'Досягнуто максимальну кількість спроб, вхід тимчасово заблоковано';
-          }
-          this.matSnackBar.open(message || err.error, '',
+          this.matSnackBar.open(err.error.message || 'Сталася помилка', '',
             {duration: 5000, panelClass: 'snack-bar-danger'});
         }
       );

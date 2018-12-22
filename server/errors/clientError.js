@@ -1,7 +1,10 @@
 /**
  * Client errors 400..
  *
- * @param {string | number} code
+ * @param {object|null} err
+ * @param {string|null} err.message
+ * @param {number|null} err.status
+ * @param {number|string|null} err.code
  * @constructor
  */
 function ClientError(err) {

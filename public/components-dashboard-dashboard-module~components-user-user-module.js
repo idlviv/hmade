@@ -213,7 +213,7 @@ var UserCreateComponent = /** @class */ (function () {
         }, function (err) {
             // 422 or 400
             _this.recaptchaRef.reset();
-            _this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' });
+            _this.matSnackBar.open(err.error.message || 'Сталася полка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
         });
     };
     UserCreateComponent.prototype.onUserCreateReset = function () {
@@ -427,11 +427,7 @@ var UserLoginComponent = /** @class */ (function () {
                 _this.router.navigate(['/user', 'profile']);
             }
         }, function (err) {
-            var message;
-            if (err.error === 'maxTries') {
-                message = 'Досягнуто максимальну кількість спроб, вхід тимчасово заблоковано';
-            }
-            _this.matSnackBar.open(message || err.error, '', { duration: 5000, panelClass: 'snack-bar-danger' });
+            _this.matSnackBar.open(err.error.message || 'Сталася помилка', '', { duration: 5000, panelClass: 'snack-bar-danger' });
         });
     };
     UserLoginComponent.prototype.resetForm = function () {

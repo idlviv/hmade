@@ -347,7 +347,8 @@ const userLogout = function(req, res, next) {
 };
 
 /**
- * After successful login (passport local)
+ * After successful login  (passport local)
+ * or create user (passport localWithoutPassword)
  * Returns basic user credentials, signed by JWT
  *
  * @param {*} req
@@ -369,7 +370,7 @@ const userLogin = function(req, res, next) {
     const token = sharedHelper.createJWTToken('', sub, 604800, 'JWT_SECRET');
     return res.status(200).json(token);
   } else {
-    return next(new ClientError('Помилка авторизації', 401));
+    return next(new ClientError({message: 'Помилка авторизації', status: 401}));
   }
 };
 

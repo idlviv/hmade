@@ -4,10 +4,6 @@ const DbError = require('../errors/dbError');
 const ApplicationError = require('../errors/applicationError');
 const ClientError = require('../errors/clientError');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('../config');
-
-
 
 /**
  * check pair: email - provider uniqueness
@@ -23,7 +19,7 @@ function isEmailUnique(email, provider) {
           if (!result.length) {
             resolve();
           } else {
-            reject(new ClientError('Цей email вже використовується', 422));
+            reject(new ClientError({message: 'Цей email вже використовується', status: 422}));
           }
         })
         .catch((err) => reject(new DbError()));
@@ -43,7 +39,7 @@ function isLoginUnique(login) {
           if (!result.length) {
             resolve();
           } else {
-            reject(new ClientError('Цей логін вже використовується', 422));
+            reject(new ClientError({message: 'Цей логін вже використовується', status: 422}));
           }
         })
         .catch((err) => reject(new DbError()));
@@ -64,7 +60,7 @@ function isEmailExists(email, provider) {
           if (user) {
             resolve(user);
           } else {
-            reject(new ClientError('Email не знайдено', 401));
+            reject(new ClientError({message: 'Email не знайдено', status: 401}));
           }
         })
         .catch((err) => reject(new DbError()));
@@ -84,7 +80,7 @@ function isLoginExists(login) {
           if (user) {
             resolve(user);
           } else {
-            reject(new ClientError('Користувача не знайдено', 401));
+            reject(new ClientError({message: 'Користувача не знайдено', status: 401}));
           }
         })
         .catch((err) => reject(new DbError()));
@@ -101,11 +97,11 @@ function isPasswordLocked(userFromDb) {
   return new Promise((resolve, reject) => {
     if (userFromDb.isPasswordLocked) {
       const estimatedTime = userFromDb.passwordLockUntil - Date.now();
-      reject(new ClientError(
-          `Вхід заблоковано, спробуйте через 
-          ${Math.round(estimatedTime / 1000 / 60)} хвилин.`,
-          401
-      ));
+      reject(new ClientError({
+        message: `Вхід заблоковано, спробуйте через 
+        ${Math.round(estimatedTime / 1000 / 60)} хвилин.`,
+        status: 401,
+      }))
     } else {
       resolve(userFromDb);
     }
@@ -128,13 +124,10 @@ function isPasswordMatched(userCandidate, userFromDb) {
             resolve(userFromDb);
           } else {
             updatePasswordLockOptions(userFromDb)
-                .then(
-                    () => reject(new ClientError('Невірний пароль', 401)),
-                    (err) => reject(new ClientError('Невірний пароль_', 401))
-                );
+                .then(() => reject(new ClientError({message: 'Невірний пароль', sattus: 401})));
           }
         })
-        .catch((err) => reject(new ApplicationError()));
+        .catch((err) => reject(err));
   });
 }
 
