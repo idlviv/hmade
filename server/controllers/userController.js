@@ -24,6 +24,7 @@ const passwordResetCheckEmail = function(req, res, next) {
         return bcrypt.hash(code, 10);
       })
       .catch((err) => {
+        log.debug('err1', err);
         throw new ServerError();
       })
       .then((hash) => {
@@ -31,6 +32,8 @@ const passwordResetCheckEmail = function(req, res, next) {
         return UserModel.updateOne({_id: user._doc._id}, {$set: {code: hash, codeTries: 1}});
       })
       .catch((err) => {
+        log.debug('err2', err);
+
         throw new ServerError(err);
       })
       .then((result) => {
