@@ -463,7 +463,7 @@ var UserLoginComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n  <div class=\"cell\" fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\r\n\r\n  <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\r\n\r\n    <div class=\"item centered-container\">\r\n      <mat-card class=\"form-block\">\r\n        <mat-card-header>\r\n          <mat-card-title>\r\n            <h2 class=\"mat-h2\">Відновлення паролю</h2>\r\n            <mat-spinner *ngIf=\"processing\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n          </mat-card-title>\r\n        </mat-card-header>\r\n\r\n\r\n        <mat-card-content>\r\n          <div class=\"padding-bottom\" fxLayout fxLayoutAlign=\"center center\">\r\n            <img class=\"responsive-image\" src=\"./assets/images/hmade_logo_dark.svg\" width=\"367px\">\r\n          </div>\r\n          <mat-vertical-stepper #stepper linear>\r\n            <mat-step [stepControl]=\"emailForm\" editable=\"false\" >\r\n              <form [formGroup]=\"emailForm\" validate (submit)=\"onEmailSubmit(stepper)\">\r\n                <ng-template matStepLabel>Введіть свій email</ng-template>\r\n                <div fxLayout=\"row\">\r\n                  <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n                    <mat-icon color=\"primary\">mail_outline</mat-icon>\r\n                  </div>\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Email\" formControlName=\"email\" type=\"email\" required>\r\n\r\n                    <mat-error\r\n                      *ngIf=\"(emailForm.get('email').errors?.minlength ||\r\n                        emailForm.get('email').errors?.maxlength ||\r\n                        emailForm.get('email').errors?.required) &&\r\n                        emailForm.get('email').touched\">\r\n                      Довжина повинна бути від 5 до 30 символів\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"emailForm.get('email').errors?.pattern &&\r\n                        emailForm.get('email').touched\">\r\n                      Введіть правільну адресу\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"emailForm.get('email').errors?.invalidEmail &&\r\n                        emailForm.get('email').touched\">\r\n                      Користувач з такою поштою не зареєстрований\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"emailForm.get('email').errors?.unrecognizedError &&\r\n                        emailForm.get('email').touched\">\r\n                        'Сталася помилка'\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n<!-- \r\n                <re-captcha [ngClass]=\"{'display-none': !emailForm.get('email').valid}\"\r\n                  [formControlName]=\"'recaptcha'\" #recaptchaRef\r\n                            siteKey=\"6Lc0uE8UAAAAAKyekxrsdhSdrgV9zhPW-lMY-srm\">\r\n                </re-captcha> -->\r\n                <div>\r\n                  <button mat-button [disabled]=\"!emailForm.valid || processing\">Далі</button>\r\n                </div>\r\n              </form>\r\n            </mat-step>\r\n\r\n            <mat-step [stepControl]=\"codeForm\" editable=\"false\">\r\n\r\n              <form [formGroup]=\"codeForm\" (submit)=\"onCodeSubmit()\">\r\n                <!--<div *ngIf=\"codeForm.get('code').errors\">field {{codeForm.get('code').errors | json}}</div>-->\r\n                <!--<div *ngIf=\"codeForm.errors\">form {{codeForm.errors | json}}</div>-->\r\n\r\n                <ng-template matStepLabel>Введіть код, що надійшов на email</ng-template>\r\n                <div fxLayout=\"row\">\r\n                  <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n                    <mat-icon color=\"primary\">settings_ethernet</mat-icon>\r\n                  </div>\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Код підтвердження\" formControlName=\"code\" required>\r\n                    <mat-error\r\n                      *ngIf=\"codeForm.get('code').errors?.required &&\r\n                    codeForm.get('code').touched\">\r\n                      Введіть код\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"codeForm.get('code').errors?.invalidCode &&\r\n                        codeForm.get('code').touched\">\r\n                      Код введено не вірно\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"codeForm.get('code').errors?.maxTries\">\r\n                      Ви зробили максимальну кількість спроб\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"codeForm.get('code').errors?.unrecognizedError &&\r\n                        codeForm.get('code').touched\">\r\n                      Сталася помилка\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div>\r\n                  <button mat-button [disabled]=\"!codeForm.valid || processing\">Далі</button>\r\n                  <button *ngIf=\"codeForm.get('code').errors?.maxTries\"\r\n                          mat-button (click)=\"refresh()\">Оновити сторінку</button>\r\n                </div>\r\n              </form>\r\n            </mat-step>\r\n            <mat-step [stepControl]=\"passwordForm\" editable=\"false\">\r\n              <form [formGroup]=\"passwordForm\" (submit)=\"onPasswordSubmit()\">\r\n                <ng-template matStepLabel>Введіть новий пароль</ng-template>\r\n                <div fxLayout=\"row\">\r\n                  <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n                    <mat-icon color=\"primary\">lock_outline</mat-icon>\r\n                  </div>\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Пароль\" formControlName=\"password\"\r\n                           required [type]=\"hidePassword ? 'password' : 'text'\">\r\n                    <mat-icon class=\"muted\" matSuffix (click)=\"hidePassword = !hidePassword\">\r\n                      {{hidePassword ? 'visibility' : 'visibility_off'}}\r\n                    </mat-icon>\r\n                    <mat-error\r\n                      *ngIf=\"(passwordForm.get('password').errors?.minlength ||\r\n                          passwordForm.get('password').errors?.maxlength ||\r\n                          passwordForm.get('password').errors?.required) &&\r\n                          passwordForm.get('password').touched\">\r\n                      Довжина повинна бути від 6 до 15 символів\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"passwordForm.get('password').errors?.pattern &&\r\n                         passwordForm.get('password').touched\">\r\n                      Використовуйте тільки латинські символи та цифри\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n\r\n                <div fxLayout=\"row\">\r\n                  <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n                    <!--<mat-icon color=\"primary\">lock</mat-icon>-->\r\n                  </div>\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Підтвердіть пароль\" formControlName=\"passwordConfirm\"\r\n                           required [type]=\"hidePassword ? 'password' : 'text'\">\r\n                    <mat-error\r\n                      *ngIf=\"passwordForm.get('passwordConfirm').errors?.mismatch &&\r\n                      passwordForm.get('passwordConfirm').touched\">\r\n                      Пароль не збігається\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div>\r\n                  <button mat-button [disabled]=\"!passwordForm.valid || processing\">Завершити</button>\r\n                </div>\r\n              </form>\r\n            </mat-step>\r\n          </mat-vertical-stepper>\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n  <div class=\"cell\" fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\r\n\r\n  <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\r\n\r\n    <div class=\"item centered-container\">\r\n      <mat-card class=\"form-block\">\r\n        <mat-card-header>\r\n          <mat-card-title>\r\n            <h2 class=\"mat-h2\">Відновлення паролю</h2>\r\n          </mat-card-title>\r\n        </mat-card-header>\r\n\r\n        <mat-card-content>\r\n          <div class=\"padding-bottom\" fxLayout fxLayoutAlign=\"center center\">\r\n            <img class=\"responsive-image\" src=\"./assets/images/hmade_logo_dark.svg\" width=\"367px\">\r\n          </div>\r\n          <div *ngIf=\"processing\" class=\"row\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\r\n            <div class=\"cell\" fxFlex=\"100\">\r\n              <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\r\n            </div>\r\n          </div>\r\n          <mat-vertical-stepper #stepper linear>\r\n            <mat-step [stepControl]=\"emailForm\" editable=\"false\" >\r\n              <form [formGroup]=\"emailForm\" validate (submit)=\"onEmailSubmit(stepper)\">\r\n                <ng-template matStepLabel>Введіть свій email</ng-template>\r\n                <div fxLayout=\"row\">\r\n                  <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n                    <mat-icon color=\"primary\">mail_outline</mat-icon>\r\n                  </div>\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Email\" formControlName=\"email\" type=\"email\" required>\r\n\r\n                    <mat-error\r\n                      *ngIf=\"(emailForm.get('email').errors?.minlength ||\r\n                        emailForm.get('email').errors?.maxlength ||\r\n                        emailForm.get('email').errors?.required) &&\r\n                        emailForm.get('email').touched\">\r\n                      Довжина повинна бути від 5 до 30 символів\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"emailForm.get('email').errors?.pattern &&\r\n                        emailForm.get('email').touched\">\r\n                      Введіть правільну адресу\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"emailForm.get('email').errors?.invalidEmail &&\r\n                        emailForm.get('email').touched\">\r\n                      Користувач з такою поштою не зареєстрований\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"emailForm.get('email').errors?.unrecognizedError &&\r\n                        emailForm.get('email').touched\">\r\n                        'Сталася помилка'\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n<!-- \r\n                <re-captcha [ngClass]=\"{'display-none': !emailForm.get('email').valid}\"\r\n                  [formControlName]=\"'recaptcha'\" #recaptchaRef\r\n                            siteKey=\"6Lc0uE8UAAAAAKyekxrsdhSdrgV9zhPW-lMY-srm\">\r\n                </re-captcha> -->\r\n                <div>\r\n                  <button mat-button [disabled]=\"!emailForm.valid || processing\">Далі</button>\r\n                </div>\r\n              </form>\r\n            </mat-step>\r\n\r\n            <mat-step [stepControl]=\"codeForm\" editable=\"false\">\r\n\r\n              <form [formGroup]=\"codeForm\" (submit)=\"onCodeSubmit()\">\r\n                <!--<div *ngIf=\"codeForm.get('code').errors\">field {{codeForm.get('code').errors | json}}</div>-->\r\n                <!--<div *ngIf=\"codeForm.errors\">form {{codeForm.errors | json}}</div>-->\r\n\r\n                <ng-template matStepLabel>Введіть код, що надійшов на email</ng-template>\r\n                <div fxLayout=\"row\">\r\n                  <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n                    <mat-icon color=\"primary\">settings_ethernet</mat-icon>\r\n                  </div>\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Код підтвердження\" formControlName=\"code\" required>\r\n                    <mat-error\r\n                      *ngIf=\"codeForm.get('code').errors?.required &&\r\n                    codeForm.get('code').touched\">\r\n                      Введіть код\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"codeForm.get('code').errors?.invalidCode &&\r\n                        codeForm.get('code').touched\">\r\n                      Код введено не вірно\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"codeForm.get('code').errors?.maxTries\">\r\n                      Ви зробили максимальну кількість спроб\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"codeForm.get('code').errors?.unrecognizedError &&\r\n                        codeForm.get('code').touched\">\r\n                      Сталася помилка\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div>\r\n                  <button mat-button [disabled]=\"!codeForm.valid || processing\">Далі</button>\r\n                  <button *ngIf=\"codeForm.get('code').errors?.maxTries\"\r\n                          mat-button (click)=\"refresh()\">Оновити сторінку</button>\r\n                </div>\r\n              </form>\r\n            </mat-step>\r\n            <mat-step [stepControl]=\"passwordForm\" editable=\"false\">\r\n              <form [formGroup]=\"passwordForm\" (submit)=\"onPasswordSubmit()\">\r\n                <ng-template matStepLabel>Введіть новий пароль</ng-template>\r\n                <div fxLayout=\"row\">\r\n                  <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n                    <mat-icon color=\"primary\">lock_outline</mat-icon>\r\n                  </div>\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Пароль\" formControlName=\"password\"\r\n                           required [type]=\"hidePassword ? 'password' : 'text'\">\r\n                    <mat-icon class=\"muted\" matSuffix (click)=\"hidePassword = !hidePassword\">\r\n                      {{hidePassword ? 'visibility' : 'visibility_off'}}\r\n                    </mat-icon>\r\n                    <mat-error\r\n                      *ngIf=\"(passwordForm.get('password').errors?.minlength ||\r\n                          passwordForm.get('password').errors?.maxlength ||\r\n                          passwordForm.get('password').errors?.required) &&\r\n                          passwordForm.get('password').touched\">\r\n                      Довжина повинна бути від 6 до 15 символів\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"passwordForm.get('password').errors?.pattern &&\r\n                         passwordForm.get('password').touched\">\r\n                      Використовуйте тільки латинські символи та цифри\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n\r\n                <div fxLayout=\"row\">\r\n                  <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n                    <!--<mat-icon color=\"primary\">lock</mat-icon>-->\r\n                  </div>\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Підтвердіть пароль\" formControlName=\"passwordConfirm\"\r\n                           required [type]=\"hidePassword ? 'password' : 'text'\">\r\n                    <mat-error\r\n                      *ngIf=\"passwordForm.get('passwordConfirm').errors?.mismatch &&\r\n                      passwordForm.get('passwordConfirm').touched\">\r\n                      Пароль не збігається\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div>\r\n                  <button mat-button [disabled]=\"!passwordForm.valid || processing\">Завершити</button>\r\n                </div>\r\n              </form>\r\n            </mat-step>\r\n          </mat-vertical-stepper>\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -520,7 +520,6 @@ var UserPasswordResetComponent = /** @class */ (function () {
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_6__["config"];
         this.hidePassword = true;
         this.processing = false;
-        this.result = false;
     }
     UserPasswordResetComponent.prototype.ngOnInit = function () {
         var emailPattern = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
@@ -565,7 +564,6 @@ var UserPasswordResetComponent = /** @class */ (function () {
             _this.matStepper.next();
             var codeToken = result;
             _this.userService.userLocalSetToken('codeToken', codeToken);
-            console.log(result);
         }, function (err) {
             _this.processing = false;
             if (err.error.code === 'wrongCredentials') {
@@ -576,29 +574,25 @@ var UserPasswordResetComponent = /** @class */ (function () {
                 _this.matSnackBar.open('Сталася помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
             }
         });
-        // console.log('this.matStepper', this.matStepper);
     };
     UserPasswordResetComponent.prototype.onCodeSubmit = function () {
         var _this = this;
         this.processing = true;
-        console.log('onCodeSubmit');
         var code = this.codeForm.get('code').value;
         var codeToken = this.userService.userLocalGetToken('codeToken');
         this.userService.userPasswordResetCode(code, codeToken)
-            .subscribe(function (result) {
+            .subscribe(function (passwordResetToken) {
             _this.processing = false;
             _this.codeForm.get('code').setErrors(null);
             _this.matStepper.next();
-            console.log('check code', result);
             _this.userService.userLocalRemoveToken('codeToken');
-            var passwordResetToken = result.data;
             _this.userService.userLocalSetToken('passwordResetToken', passwordResetToken);
         }, function (err) {
             _this.processing = false;
-            if (err.error === 'wrongCredentials') {
+            if (err.error.code === 'wrongCredentials') {
                 _this.codeForm.get('code').setErrors({ invalidCode: true });
             }
-            else if (err.error === 'maxTries') {
+            else if (err.error.code === 'maxTries') {
                 _this.codeForm.get('code').setErrors({ maxTries: true });
                 _this.codeForm.setValidators(_this.validateService.maxTries);
                 setTimeout(function () {
@@ -608,29 +602,25 @@ var UserPasswordResetComponent = /** @class */ (function () {
             }
             else {
                 _this.codeForm.get('code').setErrors({ unrecognizedError: true });
-                console.log(err);
             }
         });
     };
     UserPasswordResetComponent.prototype.onPasswordSubmit = function () {
         var _this = this;
         this.processing = true;
-        console.log('onPasswordSubmit');
         var password = this.passwordForm.get('password').value;
         var passwordResetToken = this.userService.userLocalGetToken('passwordResetToken');
         this.userService.userPasswordReset(password, passwordResetToken)
             .subscribe(function (result) {
-            var token = result.data;
+            var token = result;
             _this.processing = false;
-            _this.result = true;
-            // this.matStepper.next();
             _this.userService.userLocalRemoveToken('passwordResetToken');
             _this.userService.userLocalLogin(token);
             _this.router.navigate(['/user', 'profile']);
-            _this.matSnackBar.open(result.message, '', { duration: 3000, panelClass: 'snack-bar-danger' });
+            _this.matSnackBar.open('Пароль відновлено', '', { duration: 3000, panelClass: 'snack-bar-danger' });
         }, function (err) {
             _this.processing = false;
-            _this.matSnackBar.open('Пароль не змінено', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+            _this.matSnackBar.open(err.error.message || 'Сталася помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
         });
     };
     UserPasswordResetComponent.prototype.goHomePage = function () {
@@ -669,7 +659,7 @@ var UserPasswordResetComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n  <div class=\"cell\" fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\r\n\r\n  <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\r\n\r\n    <div class=\"item centered-container\" *ngIf=\"user\">\r\n      <div class=\"info-block mat-elevation-z4\">\r\n\r\n        <div class=\"avatar-block\">\r\n          <form [formGroup]=\"changeAvatarForm\" (submit)=\"onSubmitChangeAvatarForm()\">\r\n\r\n          <div class=\"avatar-img-wrapper\">\r\n            <img *ngIf=\"!previewAvatarUrl\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_180,h_180,f_auto/' +\r\n              user.avatar}}\" alt=\"avatar\">\r\n            <img *ngIf=\"previewAvatarUrl\"  src=\"{{previewAvatarUrl}}\" alt=\"avatar\">\r\n\r\n            <div *ngIf=\"processingChangeAvatar\" class=\"avatar-div-processing\">\r\n              <div class=\"spinner-wrapper\">\r\n                <mat-spinner [diameter]=\"24\"></mat-spinner>\r\n              </div>\r\n            </div>\r\n\r\n            <div *ngIf=\"!editAvatar && !processingChangeAvatar\" class=\"avatar-div-change\"></div>\r\n            <div *ngIf=\"!editAvatar && !processingChangeAvatar\" class=\"avatar-button-change\">\r\n              <input type=\"file\" accept=\".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif\" (change)=\"changeAvatar($event)\" id=\"input-file\">\r\n              <label for=\"input-file\">Змінити\r\n              </label>\r\n            </div>\r\n\r\n\r\n            <div *ngIf=\"editAvatar && !processingChangeAvatar\">\r\n              <div class=\"avatar-div-ok\" >\r\n              </div>\r\n              <div class=\"avatar-div-cancel\">\r\n              </div>\r\n              <button class=\"avatar-button-ok\" [disabled]=\"!changeAvatarForm.valid\">\r\n                <mat-icon>done</mat-icon>\r\n              </button>\r\n              <button type=\"button\" class=\"avatar-button-cancel\" (click)=\"cancelChangeAvatar()\">\r\n                <mat-icon>cancel</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n          </form>\r\n\r\n        </div>\r\n\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div class=\"info-block-row-title mat-title\">{{user.login}}</div>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"info-block-row-wrapper\">\r\n            <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n              <!--<div fxFlex=\"100%\">-->\r\n                <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">Email</div>\r\n                <div class=\"mat-body-1 muted\" fxFlex=\"60%\">{{user.email}}</div>\r\n                <mat-icon *ngIf=\"processing !== 'email'\" fxFlex=\"30px\"\r\n                          (click)=\"openDialog(makeEmailObject())\" class=\"muted\">edit</mat-icon>\r\n                <mat-spinner *ngIf=\"processing === 'email'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n              <!--</div>-->\r\n            </div>\r\n        </div>\r\n\r\n        <div *ngIf=\"user.role === 'guest' && !verificationSent\" class=\"info-block-row-wrapper border-0\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row mail-verification\">\r\n            <div class=\"mat-body-1\" fxFlex=\"100%\">\r\n              <p>Пошту не верифіковано, надіслати код.</p>\r\n              <p>Деякі функції будуть недоступні. Наприклад, відправка коментарів</p>\r\n            </div>\r\n            <mat-icon *ngIf=\"processing !== 'verification'\" fxFlex=\"30px\" (click)=\"onVerificationSend()\">mail</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'verification'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n          </div>\r\n        </div>\r\n\r\n        <div *ngIf=\"user.role === 'guest' && verificationSent\" class=\"info-block-row-wrapper border-0\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row mail-verification\">\r\n            <div class=\"mat-body-1 muted\" fxFlex=\"100%\">На пошту надіслано посилання</div>\r\n            <mat-icon *ngIf=\"processing !== 'verification'\" fxFlex=\"30px\" class=\"muted\" (click)=\"onVerificationSend()\">refresh</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'verification'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">Ім'я</div>\r\n            <!--<div fxFlex></div>-->\r\n            <div class=\"mat-subheading-2 muted\" fxFlex=\"60%\">{{user.name}}</div>\r\n            <mat-icon *ngIf=\"processing !== 'name'\" fxFlex=\"30px\"\r\n                      (click)=\"openDialog(makeNameObject())\" class=\"muted\">edit</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'name'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">Прізвище</div>\r\n            <!--<div fxFlex></div>-->\r\n            <div class=\"mat-subheading-2 muted\" fxFlex=\"60%\">{{user.surname}}</div>\r\n            <mat-icon *ngIf=\"processing !== 'surname'\" fxFlex=\"30px\"\r\n                      (click)=\"openDialog(makeSurnameObject())\" class=\"muted\">edit</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'surname'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div fxFlex=\"60%\"></div>\r\n            <div fxFlex=\"40%\">\r\n              <button mat-button (click)=\"openDialog(makePasswordObject())\">\r\n                <span *ngIf=\"processing !== 'password'\">Змінити пароль</span>\r\n                <mat-spinner *ngIf=\"processing === 'password'\" [diameter]=\"24\"></mat-spinner>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n  <div class=\"cell\" fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\r\n\r\n  <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\r\n\r\n    <div class=\"item centered-container\" *ngIf=\"user\">\r\n      <div class=\"info-block mat-elevation-z4\">\r\n\r\n        <div class=\"avatar-block\">\r\n          <form [formGroup]=\"changeAvatarForm\" (submit)=\"onSubmitChangeAvatarForm()\">\r\n\r\n          <div class=\"avatar-img-wrapper\">\r\n            <img *ngIf=\"!previewAvatarUrl\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_180,h_180,f_auto/' +\r\n              user.avatar}}\" alt=\"avatar\">\r\n            <img *ngIf=\"previewAvatarUrl\"  src=\"{{previewAvatarUrl}}\" alt=\"avatar\">\r\n\r\n            <div *ngIf=\"processingChangeAvatar\" class=\"avatar-div-processing\">\r\n              <div class=\"spinner-wrapper\">\r\n                <mat-spinner [diameter]=\"24\"></mat-spinner>\r\n              </div>\r\n            </div>\r\n\r\n            <div *ngIf=\"!editAvatar && !processingChangeAvatar\" class=\"avatar-div-change\"></div>\r\n            <div *ngIf=\"!editAvatar && !processingChangeAvatar\" class=\"avatar-button-change\">\r\n              <input type=\"file\" accept=\".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif\" (change)=\"changeAvatar($event)\" id=\"input-file\">\r\n              <label for=\"input-file\">Змінити\r\n              </label>\r\n            </div>\r\n\r\n\r\n            <div *ngIf=\"editAvatar && !processingChangeAvatar\">\r\n              <div class=\"avatar-div-ok\" >\r\n              </div>\r\n              <div class=\"avatar-div-cancel\">\r\n              </div>\r\n              <button class=\"avatar-button-ok\" [disabled]=\"!changeAvatarForm.valid\">\r\n                <mat-icon>done</mat-icon>\r\n              </button>\r\n              <button type=\"button\" class=\"avatar-button-cancel\" (click)=\"cancelChangeAvatar()\">\r\n                <mat-icon>cancel</mat-icon>\r\n              </button>\r\n            </div>\r\n          </div>\r\n          </form>\r\n\r\n        </div>\r\n\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div class=\"info-block-row-title mat-title\">{{user.login}}</div>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"info-block-row-wrapper\">\r\n            <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n              <!--<div fxFlex=\"100%\">-->\r\n                <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">Email</div>\r\n                <div class=\"mat-body-1 muted\" fxFlex=\"60%\">{{user.email}}</div>\r\n                <!-- <mat-icon *ngIf=\"processing !== 'email'\" fxFlex=\"30px\"\r\n                          (click)=\"openDialog(makeEmailObject())\" class=\"muted\">edit</mat-icon> -->\r\n                <mat-spinner *ngIf=\"processing === 'email'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n              <!--</div>-->\r\n            </div>\r\n        </div>\r\n\r\n        <div *ngIf=\"user.role === 'guest' && !verificationSent\" class=\"info-block-row-wrapper border-0\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row mail-verification\">\r\n            <div class=\"mat-body-1\" fxFlex=\"100%\">\r\n              <p>Пошту не верифіковано, надіслати код.</p>\r\n              <p>Деякі функції будуть недоступні. Наприклад, відправка коментарів</p>\r\n            </div>\r\n            <mat-icon *ngIf=\"processing !== 'verification'\" fxFlex=\"30px\" (click)=\"onVerificationSend()\">mail</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'verification'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n          </div>\r\n        </div>\r\n\r\n        <div *ngIf=\"user.role === 'guest' && verificationSent\" class=\"info-block-row-wrapper border-0\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row mail-verification\">\r\n            <div class=\"mat-body-1 muted\" fxFlex=\"100%\">На пошту надіслано посилання</div>\r\n            <mat-icon *ngIf=\"processing !== 'verification'\" fxFlex=\"30px\" class=\"muted\" (click)=\"onVerificationSend()\">refresh</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'verification'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">Ім'я</div>\r\n            <!--<div fxFlex></div>-->\r\n            <div class=\"mat-subheading-2 muted\" fxFlex=\"60%\">{{user.name}}</div>\r\n            <mat-icon *ngIf=\"processing !== 'name'\" fxFlex=\"30px\"\r\n                      (click)=\"openDialog(makeNameObject())\" class=\"muted\">edit</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'name'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">Прізвище</div>\r\n            <!--<div fxFlex></div>-->\r\n            <div class=\"mat-subheading-2 muted\" fxFlex=\"60%\">{{user.surname}}</div>\r\n            <mat-icon *ngIf=\"processing !== 'surname'\" fxFlex=\"30px\"\r\n                      (click)=\"openDialog(makeSurnameObject())\" class=\"muted\">edit</mat-icon>\r\n            <mat-spinner *ngIf=\"processing === 'surname'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\r\n\r\n          </div>\r\n        </div>\r\n        <div class=\"info-block-row-wrapper\">\r\n          <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\r\n            <div fxFlex=\"60%\"></div>\r\n            <div fxFlex=\"40%\">\r\n              <button mat-button (click)=\"openDialog(makePasswordObject())\">\r\n                <span *ngIf=\"processing !== 'password'\">Змінити пароль</span>\r\n                <mat-spinner *ngIf=\"processing === 'password'\" [diameter]=\"24\"></mat-spinner>\r\n              </button>\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -812,28 +802,23 @@ var UserProfileComponent = /** @class */ (function () {
             if (result) {
                 return _this.userService.userEdit(result);
             }
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])({
-                success: false,
-                message: 'dialog wasn\'t submitted',
-                data: 'doNothing'
-            });
+            else {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_7__["of"])(null);
+            }
         }))
             .subscribe(function (result) {
             _this.processing = null;
-            if (!result.success) {
+            if (!result) {
                 // didn't get data from dialog
-                if (result.data === 'doNothing') {
-                    return;
-                }
                 return;
             }
             else {
-                _this.matSnackBar.open('Дані успішно збережено', '', { duration: 3000 });
+                _this.matSnackBar.open(result, '', { duration: 3000 });
                 _this.getProfile();
             }
         }, function (err) {
             _this.processing = null;
-            _this.matSnackBar.open(err.error || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+            _this.matSnackBar.open(err.error.message || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
         });
     };
     UserProfileComponent.prototype.makePasswordObject = function () {
@@ -912,54 +897,54 @@ var UserProfileComponent = /** @class */ (function () {
             }
         };
     };
-    UserProfileComponent.prototype.makeEmailObject = function () {
-        this.processing = 'email';
-        var emailPattern = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-        return {
-            payload: [{
-                    name: 'email',
-                    label: 'Email',
-                    type: 'email',
-                    icon: 'mail_outline',
-                    oldValue: this.user.email,
-                    validators: [
-                        {
-                            name: 'length',
-                            message: 'Довжина повинна бути від 5 до 30 символів'
-                        },
-                        {
-                            name: 'pattern',
-                            message: 'Введіть правільну адресу'
-                        }
-                    ],
-                },
-                {
-                    name: 'passwordCurrent',
-                    label: 'Введіть пароль',
-                    type: 'password',
-                    icon: '',
-                    validators: [
-                        {
-                            name: 'require',
-                            message: 'Це поле не може бути пустим'
-                        }
-                    ],
-                }],
-            initForm: function () {
-                return new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
-                    email: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(5),
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(30),
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern(emailPattern),
-                    ]),
-                    passwordCurrent: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
-                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
-                    ]),
-                });
-            },
-        };
-    };
+    // makeEmailObject() {
+    //   this.processing = 'email';
+    //   const emailPattern = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    //   return {
+    //     payload: [{
+    //       name: 'email',
+    //       label: 'Email',
+    //       type: 'email',
+    //       icon: 'mail_outline',
+    //       oldValue: this.user.email,
+    //       validators: [
+    //         {
+    //           name: 'length',
+    //           message: 'Довжина повинна бути від 5 до 30 символів'
+    //         },
+    //         {
+    //           name: 'pattern',
+    //           message: 'Введіть правільну адресу'
+    //         }
+    //       ],
+    //       },
+    //       {
+    //       name: 'passwordCurrent',
+    //       label: 'Введіть пароль',
+    //       type: 'password',
+    //       icon: '',
+    //       validators: [
+    //         {
+    //           name: 'require',
+    //           message : 'Це поле не може бути пустим'
+    //         }
+    //       ],
+    //     }],
+    //     initForm: function () {
+    //       return new FormGroup({
+    //         email: new FormControl('', [
+    //           Validators.required,
+    //           Validators.minLength(5),
+    //           Validators.maxLength(30),
+    //           Validators.pattern(emailPattern),
+    //         ]),
+    //         passwordCurrent: new FormControl('', [
+    //           Validators.required,
+    //         ]),
+    //       });
+    //     },
+    //   };
+    // }
     UserProfileComponent.prototype.makeNameObject = function () {
         this.processing = 'name';
         return {

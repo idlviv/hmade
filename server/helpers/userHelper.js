@@ -100,7 +100,7 @@ function isPasswordLocked(userFromDb) {
       reject(new ClientError({
         message: `Вхід заблоковано, спробуйте через 
         ${Math.round(estimatedTime / 1000 / 60)} хвилин.`,
-        status: 401,
+        status: 403,
       }));
     } else {
       resolve(userFromDb);
@@ -112,17 +112,19 @@ function isPasswordLocked(userFromDb) {
  * compare password from request (candidate)
  * with password from db
  *
- * @param {*} userCandidate
- * @param {UserModel} userFromDb
+ * @param {string} passwordCandidate
+ * @param {string} passwordFromDb
+ * @param {UserModel} userFromDb // added to pass user data on next step
  * @return {Promise<UserModel>}
  */
-function isPasswordMatched(userCandidate, userFromDb) {
+function isPasswordMatched(passwordCandidate, passwordFromDb, userFromDb) {
   return new Promise((resolve, reject) => {
-    bcrypt.compare(userCandidate.password, userFromDb._doc.password)
+    bcrypt.compare(passwordCandidate, passwordFromDb)
         .then((passwordMatched) => {
           if (passwordMatched) {
             resolve(userFromDb);
           } else {
+            log.debug('reject');
             reject(new ClientError({message: 'Невірний пароль', status: 401, code: 'wrongCredentials'}));
           }
         })
@@ -131,10 +133,33 @@ function isPasswordMatched(userCandidate, userFromDb) {
 }
 
 /**
+ * Wrapper for Mongo updateOne
+ *
+ * @param {*} filter
+ * @param {*} update
+ * @param {*} options
+ * @return {Promise<object>}
+ */
+function updateDocument(filter, update, options) {
+  return new Promise(function(resolve, reject) {
+    UserModel.updateOne(filter, update, options)
+        .then(
+            (result) => {
+              if (result.ok !== 1) {
+                reject(new DbError());
+              }
+              resolve(result);
+            },
+            (err) => reject(new DbError())
+        );
+  });
+};
+
+/**
  * update user (password lock options) after wrong password input
  *
  * @param {UserModel} user
- * @return {Promise<UserModel>}
+ * @return {Promise<object>}
  */
 function updatePasswordLockOptions(user) {
   return new Promise((resolve, reject) => {
@@ -161,15 +186,27 @@ function updatePasswordLockOptions(user) {
       };
     }
 
-    UserModel.updateOne({_id: user._id}, query)
-        .then((result)=>{
-          if (result.ok !== 1) {
-            reject(new DbError());
-          }
-          resolve(user);
-        },
-        (err) => reject(new DbError())
-        );
+    updateDocument({_id: user._id}, query)
+        .then((result)=> resolve(result))
+        .catch((err) => reject(new DbError()));
+  });
+}
+
+/**
+ * update user (password lock options) after wrong password input
+ *
+ * @param {UserModel} user
+ * @return {Promise<object>}
+ */
+function updatePasswordResetOptions(user) {
+  return new Promise((resolve, reject) => {
+    updateDocument(
+        {_id: user._doc._id},
+        {$inc: {'codeTries': 1}},
+        {upsert: true}
+    )
+        .then((result)=> resolve(result))
+        .catch((err) => reject(new DbError()));
   });
 }
 
@@ -180,5 +217,7 @@ module.exports = {
   isLoginExists,
   isPasswordLocked,
   isPasswordMatched,
+  updateDocument,
   updatePasswordLockOptions,
+  updatePasswordResetOptions,
 };

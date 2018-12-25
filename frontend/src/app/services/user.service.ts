@@ -121,11 +121,11 @@ export class UserService {
   /** Session
    * Used for router guard (canActivate)
    *
-   * @param {*} requiredRoleForAuthentication
+   * @param {string} requiredRoleForAuthentication
    * @returns {Observable<boolean>}
    * @memberof UserService
    */
-  userCheckAuthorization(requiredRoleForAuthentication): Observable<boolean> {
+  userCheckAuthorization(requiredRoleForAuthentication: string): Observable<boolean> {
     const token = this.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
@@ -188,7 +188,16 @@ export class UserService {
     }
   }
 
-  userPasswordResetEmail(email, recaptcha): Observable<IResponse> {
+  /**
+   * First step to reset password
+   * Send reset code on email and write its hash in db
+   *
+   * @param {string} email
+   * @param {string} recaptcha
+   * @returns {Observable<string>}
+   * @memberof UserService
+   */
+  userPasswordResetEmail(email: string, recaptcha: string): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -197,13 +206,22 @@ export class UserService {
         email, recaptcha
       }})
     };
-    return this.http.get<IResponse>(
+    return this.http.get<string>(
       'api/user/password-reset-check-email',
       httpOptions
     );
   }
 
-  userPasswordResetCode(code, codeToken): Observable<IResponse> {
+  /**
+   * Second step to reset password
+   * Compare code from email with one in db
+   *
+   * @param {string} code
+   * @param {string} codeToken
+   * @returns {Observable<string>}
+   * @memberof UserService
+   */
+  userPasswordResetCode(code: string, codeToken: string): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -213,13 +231,21 @@ export class UserService {
         code,
       }})
     };
-    return this.http.get<IResponse>(
+    return this.http.get<string>(
       'api/user/password-reset-check-code',
       httpOptions
     );
   }
 
-  userPasswordReset(password, passwordResetToken): Observable<IResponse> {
+  /**
+   *
+   *
+   * @param {string} password
+   * @param {string} passwordResetToken
+   * @returns {Observable<string>}
+   * @memberof UserService
+   */
+  userPasswordReset(password: string, passwordResetToken: string): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -229,7 +255,7 @@ export class UserService {
         password,
       }})
     };
-    return this.http.get<IResponse>(
+    return this.http.get<string>(
       'api/user/password-reset',
       httpOptions
     );
@@ -249,15 +275,15 @@ export class UserService {
     );
   }
 
-  userEdit(data: {}): Observable<IResponse> {
-    const token = this.userLocalGetToken('token');
+  userEdit(data: {name: string, value: string, password: string}): Observable<string> {
+    // const token = this.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': token
+        // 'Authorization': token
       })
     };
-    return this.http.put<IResponse>(
+    return this.http.put<string>(
       'api/user/edit',
       data,
       httpOptions

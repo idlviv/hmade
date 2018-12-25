@@ -265,6 +265,7 @@ router.get('/user/checkAuthorization',
     userController.userCheckAuthorization
 );
 
+// edit 'local users' credentials (name, surname, password)
 router.put('/user/edit',
     authentication,
     userController.userEdit
@@ -285,19 +286,29 @@ router.get('/user/email-verification',
     userController.userEmailVerificationReceive
 );
 
+// first step to reset password
 router.get('/user/password-reset-check-email',
+    // logout if user already logged in
+    function(req, res, next) {
+      req.logout();
+      next();
+    },
     // recaptcha,
     userController.passwordResetCheckEmail
 );
 
+// second step to reset password
 router.get('/user/password-reset-check-code',
     passport.authenticate('jwt.passwordResetCheckCode', {session: false}),
     userController.passwordResetCheckCode
 );
 
+// third step to reset password
 router.get('/user/password-reset',
-    passport.authenticate('jwt.passwordReset', {session: true}),
-    userController.passwordReset
+    passport.authenticate('jwt.passwordReset', {session: false}),
+    userController.passwordReset,
+    passport.authenticate('localWithoutPassword'),
+    userController.userLogin
 );
 
 /**

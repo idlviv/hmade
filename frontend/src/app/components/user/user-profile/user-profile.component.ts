@@ -131,35 +131,27 @@ export class UserProfileComponent implements OnInit {
 
     dialogRef.afterClosed().pipe(
       mergeMap(result => {
-
         if (result) {
           return this.userService.userEdit(result);
+        } else {
+          return of(null);
         }
-        return of(<IResponse>{
-          success: false,
-          message: 'dialog wasn\'t submitted',
-          data: 'doNothing'
-        });
       })
     )
       .subscribe(result => {
           this.processing = null;
-
-          if (!result.success) {
+          if (!result) {
             // didn't get data from dialog
-            if (result.data === 'doNothing') {
-              return;
-            }
             return;
           } else {
-            this.matSnackBar.open('Дані успішно збережено', '',
+            this.matSnackBar.open(result, '',
               {duration: 3000});
             this.getProfile();
           }
         },
         err => {
           this.processing = null;
-          this.matSnackBar.open(err.error || 'Помилка', '',
+          this.matSnackBar.open(err.error.message || 'Помилка', '',
             {duration: 3000, panelClass: 'snack-bar-danger'});
         }
       );
@@ -243,54 +235,54 @@ export class UserProfileComponent implements OnInit {
     };
   }
 
-  makeEmailObject() {
-    this.processing = 'email';
-    const emailPattern = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
-    return {
-      payload: [{
-        name: 'email',
-        label: 'Email',
-        type: 'email',
-        icon: 'mail_outline',
-        oldValue: this.user.email,
-        validators: [
-          {
-            name: 'length',
-            message: 'Довжина повинна бути від 5 до 30 символів'
-          },
-          {
-            name: 'pattern',
-            message: 'Введіть правільну адресу'
-          }
-        ],
-        },
-        {
-        name: 'passwordCurrent',
-        label: 'Введіть пароль',
-        type: 'password',
-        icon: '',
-        validators: [
-          {
-            name: 'require',
-            message : 'Це поле не може бути пустим'
-          }
-        ],
-      }],
-      initForm: function () {
-        return new FormGroup({
-          email: new FormControl('', [
-            Validators.required,
-            Validators.minLength(5),
-            Validators.maxLength(30),
-            Validators.pattern(emailPattern),
-          ]),
-          passwordCurrent: new FormControl('', [
-            Validators.required,
-          ]),
-        });
-      },
-    };
-  }
+  // makeEmailObject() {
+  //   this.processing = 'email';
+  //   const emailPattern = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+  //   return {
+  //     payload: [{
+  //       name: 'email',
+  //       label: 'Email',
+  //       type: 'email',
+  //       icon: 'mail_outline',
+  //       oldValue: this.user.email,
+  //       validators: [
+  //         {
+  //           name: 'length',
+  //           message: 'Довжина повинна бути від 5 до 30 символів'
+  //         },
+  //         {
+  //           name: 'pattern',
+  //           message: 'Введіть правільну адресу'
+  //         }
+  //       ],
+  //       },
+  //       {
+  //       name: 'passwordCurrent',
+  //       label: 'Введіть пароль',
+  //       type: 'password',
+  //       icon: '',
+  //       validators: [
+  //         {
+  //           name: 'require',
+  //           message : 'Це поле не може бути пустим'
+  //         }
+  //       ],
+  //     }],
+  //     initForm: function () {
+  //       return new FormGroup({
+  //         email: new FormControl('', [
+  //           Validators.required,
+  //           Validators.minLength(5),
+  //           Validators.maxLength(30),
+  //           Validators.pattern(emailPattern),
+  //         ]),
+  //         passwordCurrent: new FormControl('', [
+  //           Validators.required,
+  //         ]),
+  //       });
+  //     },
+  //   };
+  // }
 
   makeNameObject() {
     this.processing = 'name';

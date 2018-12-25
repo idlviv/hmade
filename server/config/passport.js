@@ -40,7 +40,8 @@ module.exports = function(passport) {
               user = userFromDb;
               return userHelper.isPasswordLocked(userFromDb);
             })
-            .then((userFromDb) => userHelper.isPasswordMatched(userCandidate, userFromDb))
+            // if password doesn't match then throw error with code 'wrongCredentials' here
+            .then((userFromDb) => userHelper.isPasswordMatched(userCandidate.password, userFromDb._doc.password, userFromDb))
             .then((userFromDb) => done(null, userFromDb))
             .catch((err) => {
               if (err.code === 'wrongCredentials') {
