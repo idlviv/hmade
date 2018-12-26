@@ -41,9 +41,9 @@ export class UserPasswordResetComponent implements OnInit {
         Validators.maxLength(30),
         Validators.pattern(emailPattern),
       ]),
-      // recaptcha: new FormControl('', [
-      //   Validators.required
-      // ])
+      recaptcha: new FormControl('', [
+        Validators.required
+      ])
       },
     );
 
@@ -67,7 +67,6 @@ export class UserPasswordResetComponent implements OnInit {
       },
       this.validateService.matchPassword
     );
-
   }
 
   onEmailSubmit(stepper) {
@@ -77,8 +76,7 @@ export class UserPasswordResetComponent implements OnInit {
     this.userService.userLocalRemoveToken('passwordResetToken');
 
     const email = this.emailForm.get('email').value;
-    // const recaptcha = this.emailForm.get('recaptcha').value;
-    const recaptcha = 'value';
+    const recaptcha = this.emailForm.get('recaptcha').value;
     this.userService.userPasswordResetEmail(email, recaptcha)
       .subscribe(
         result => {

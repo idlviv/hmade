@@ -5,7 +5,8 @@ const cloudinary = require('../config/cloudinary');
 const formidable = require('formidable');
 util = require('util');
 const ApplicationError = require('../errors/applicationError');
-const userController = require('./userController');
+const ServerError = require('../errors/serverError');
+const userHelper = require('../helpers/userHelper');
 
 
 module.exports.userEditAvatar = function(req, res, next) {
@@ -13,16 +14,16 @@ module.exports.userEditAvatar = function(req, res, next) {
   form.parse(req, function(err, fields, files) {
     if (err) {
       console.log(err);
-      return next(new ApplicationError('Помилка завантаження аватара - form parse', 400));
+      return next(new ServerError({message: 'Помилка завантаження аватара - form parse', status: 400}));
     }
 
-    let moderator = {};
-    Object.assign(moderator, req.user._doc);
+    let user = {};
+    Object.assign(user, req.user._doc);
 
     cloudinary.v2.uploader.upload(
         files.file.path,
         {
-          public_id: 'avatar_' + moderator._id, // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
+          public_id: 'avatar_' + user._id, // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
           eager: [
             {width: 180, height: 180, crop: 'fill', fetch_format: 'auto'},
             {width: 50, height: 50, crop: 'fill', fetch_format: 'auto'},
@@ -31,18 +32,23 @@ module.exports.userEditAvatar = function(req, res, next) {
         function(err, result) {
           if (err) {
             return next(
-                new ApplicationError('Помилка завантаження аватара - uploadController: ' + err.message, err.http_code)
+                new ServerError({message: 'Помилка завантаження аватара - cloudinary', status: err.http_code})
             );
           }
-          let modificationRequest = {
-            name: 'avatar',
-            value: result.public_id, // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
-            password: null,
-          };
+          // let modificationRequest = {
+          //   name: 'avatar',
+          //   value: result.public_id, // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
+          //   password: null,
+          // };
 
-          userController.updateUserField(moderator, modificationRequest)
+          userHelper.updateDocument(
+              {_id: user._id},
+              {$set: {
+                avatar: result.public_id,
+              }}
+          )
               .then(
-                  (result) => res.status(200).json(result),
+                  (result) => res.status(200).json('Зміни внесено'),
                   (err) => next(err)
               );
         });

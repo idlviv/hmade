@@ -290,29 +290,23 @@ export class UserService {
     );
   }
 
-  userEditAvatar(file): Observable<IResponse> {
-  // uploadPic(file, user) {
-
+  userEditAvatar(file): Observable<string> {
     const formData: FormData = new FormData();
-
-    // for (let i = 0; i < files.length; i++) {
-    //   formData.append('file[]', files[i]);
-    // }
-
     formData.append('file', file, file.name);
+
     // if role manager or admin, allow to change avatar for user_id
     // if not, user changes it for itself
     // let user_id = user._id;
     // formData.append('user_id', user_id);
 
-    const token = this.userLocalGetToken('token');
+    // const token = this.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         // 'Content-Type':  'application/json',
-        'Authorization': token
+        // 'Authorization': token
       })
     };
-    return this.http.put<IResponse>(
+    return this.http.put<string>(
       'api/user/edit-avatar',
       formData,
       httpOptions

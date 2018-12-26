@@ -3817,21 +3817,17 @@ var UserService = /** @class */ (function () {
         return this.http.put('api/user/edit', data, httpOptions);
     };
     UserService.prototype.userEditAvatar = function (file) {
-        // uploadPic(file, user) {
         var formData = new FormData();
-        // for (let i = 0; i < files.length; i++) {
-        //   formData.append('file[]', files[i]);
-        // }
         formData.append('file', file, file.name);
         // if role manager or admin, allow to change avatar for user_id
         // if not, user changes it for itself
         // let user_id = user._id;
         // formData.append('user_id', user_id);
-        var token = this.userLocalGetToken('token');
+        // const token = this.userLocalGetToken('token');
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                // 'Content-Type':  'application/json',
-                'Authorization': token
+            // 'Content-Type':  'application/json',
+            // 'Authorization': token
             })
         };
         return this.http.put('api/user/edit-avatar', formData, httpOptions);

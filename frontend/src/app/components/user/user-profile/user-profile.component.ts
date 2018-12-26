@@ -49,11 +49,10 @@ export class UserProfileComponent implements OnInit {
     this.processing = 'verification';
     this.userService.userEmailVerification()
       .subscribe(result => {
-          this.processing = '';
+        this.processing = '';
         this.matSnackBar.open(result.message, '',
           {duration: 3000});
       },
-
         err => {
           this.processing = '';
           // this.matSnackBar.open(err.error || 'Помилка', '',
@@ -67,7 +66,7 @@ export class UserProfileComponent implements OnInit {
     this.processingChangeAvatar = true;
     this.userService.userEditAvatar(this.changeAvatarForm.get('file').value)
       .subscribe(result => {
-        this.matSnackBar.open(result.message, '',
+        this.matSnackBar.open(result, '',
             {duration: 3000});
         this.getProfile();
         this.previewAvatarUrl = null;
@@ -75,7 +74,7 @@ export class UserProfileComponent implements OnInit {
         this.editAvatar = false;
       },
         err =>
-          this.matSnackBar.open(err.error || 'Помилка', '',
+          this.matSnackBar.open(err.error.message || 'Помилка', '',
             {duration: 3000, panelClass: 'snack-bar-danger'})
       );
   }

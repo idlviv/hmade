@@ -287,38 +287,38 @@ const userEdit = function(req, res, next) {
   //     );
 };
 
-/**
- * if password match resolves promise
- *
- * @param _id
- * @param passwordCandidate
- * @return {Promise}
- */
-function comparePassword(_id, passwordCandidate) {
-  return new Promise(function(resolve, reject) {
-    UserModel.findOne({_id})
-        .then(
-            (user) => {
-              if (!user) {
-                reject(new ApplicationError('Користувача не знайдено', 401));
-              }
-              bcrypt.compare(passwordCandidate, user.password)
-                  .then(
-                      (passwordMatched) => {
-                        if (!passwordMatched) {
-                          reject(new ApplicationError('Невірний пароль', 401));
-                        }
-                        resolve();
-                      },
-                      (err) => {
-                        reject(new ApplicationError('Помилка перевірки пароля', 401));
-                      }
-                  );
-            },
-            (err) => reject(new DbError(err.message, err.code))
-        );
-  });
-}
+// /**
+//  * if password match resolves promise
+//  *
+//  * @param _id
+//  * @param passwordCandidate
+//  * @return {Promise}
+//  */
+// function comparePassword(_id, passwordCandidate) {
+//   return new Promise(function(resolve, reject) {
+//     UserModel.findOne({_id})
+//         .then(
+//             (user) => {
+//               if (!user) {
+//                 reject(new ApplicationError('Користувача не знайдено', 401));
+//               }
+//               bcrypt.compare(passwordCandidate, user.password)
+//                   .then(
+//                       (passwordMatched) => {
+//                         if (!passwordMatched) {
+//                           reject(new ApplicationError('Невірний пароль', 401));
+//                         }
+//                         resolve();
+//                       },
+//                       (err) => {
+//                         reject(new ApplicationError('Помилка перевірки пароля', 401));
+//                       }
+//                   );
+//             },
+//             (err) => reject(new DbError(err.message, err.code))
+//         );
+//   });
+// }
 
 /**
  * Return users credentials

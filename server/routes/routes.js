@@ -293,7 +293,7 @@ router.get('/user/password-reset-check-email',
       req.logout();
       next();
     },
-    // recaptcha,
+    recaptcha,
     userController.passwordResetCheckEmail
 );
 
