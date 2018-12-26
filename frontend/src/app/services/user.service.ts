@@ -275,12 +275,17 @@ export class UserService {
     );
   }
 
+  /**
+   *
+   *
+   * @param {{name: string, value: string, password: string}} data
+   * @returns {Observable<string>}
+   * @memberof UserService
+   */
   userEdit(data: {name: string, value: string, password: string}): Observable<string> {
-    // const token = this.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        // 'Authorization': token
       })
     };
     return this.http.put<string>(
@@ -290,20 +295,20 @@ export class UserService {
     );
   }
 
+  /**
+   *
+   *
+   * @param {*} file
+   * @returns {Observable<string>}
+   * @memberof UserService
+   */
   userEditAvatar(file): Observable<string> {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
 
-    // if role manager or admin, allow to change avatar for user_id
-    // if not, user changes it for itself
-    // let user_id = user._id;
-    // formData.append('user_id', user_id);
-
-    // const token = this.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         // 'Content-Type':  'application/json',
-        // 'Authorization': token
       })
     };
     return this.http.put<string>(

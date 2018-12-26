@@ -99,4 +99,8 @@ export class ContentComponent implements OnInit, AfterViewChecked {
     this.settingsSideMenuTrigger.closeMenu();
   }
 
+  allowTo(permitedRole): boolean {
+    return this.userService.allowTo(permitedRole);
+  }
+
 }

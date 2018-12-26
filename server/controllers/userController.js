@@ -413,6 +413,8 @@ const userGoogleSignin = function(req, res, next) {
  * @return {boolean}
  */
 const userCheckAuthorization = function(req, res, next) {
+  log.debug('req.user._doc.role', req.user._doc.role);
+  log.debug('req.query.role', req.query.role);
   let roleFromSession;
   if (req.user) {
     roleFromSession = req.user._doc.role || 'casual';
