@@ -8,7 +8,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserPasswordResetComponent } from './user-password-reset/user-password-reset.component';
 import { AuthGuard } from '../../guards/auth.guard';
 import { Page404Component } from '../shared/page-404/page-404.component';
-import { RedirectedFromOauthComponent } from './redirected-from-oauth/redirected-from-oauth.component';
+import { RedirectionWithTokenComponent } from './redirection-with-token/redirection-with-token.component';
 
 const userRoutes: Routes = [
   {
@@ -36,8 +36,8 @@ const userRoutes: Routes = [
         component: UserPasswordResetComponent,
       },
       {
-        path: 'redirected-from-oauth/:token',
-        component: RedirectedFromOauthComponent,
+        path: 'redirection-with-token/:token',
+        component: RedirectionWithTokenComponent,
       },
       { path: '', component: Page404Component },
 

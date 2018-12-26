@@ -1,20 +1,20 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["components-dashboard-dashboard-module~components-user-user-module"],{
 
-/***/ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.html":
-/*!********************************************************************************************!*\
-  !*** ./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.html ***!
-  \********************************************************************************************/
+/***/ "./src/app/components/user/redirection-with-token/redirection-with-token.component.html":
+/*!**********************************************************************************************!*\
+  !*** ./src/app/components/user/redirection-with-token/redirection-with-token.component.html ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  redirected-from-oauth works!\r\n</p>\r\n"
+module.exports = "<p>\n  redirection-with-token works!\n</p>\n"
 
 /***/ }),
 
-/***/ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.scss":
-/*!********************************************************************************************!*\
-  !*** ./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.scss ***!
-  \********************************************************************************************/
+/***/ "./src/app/components/user/redirection-with-token/redirection-with-token.component.scss":
+/*!**********************************************************************************************!*\
+  !*** ./src/app/components/user/redirection-with-token/redirection-with-token.component.scss ***!
+  \**********************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
@@ -22,16 +22,16 @@ module.exports = ""
 
 /***/ }),
 
-/***/ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.ts":
-/*!******************************************************************************************!*\
-  !*** ./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.ts ***!
-  \******************************************************************************************/
-/*! exports provided: RedirectedFromOauthComponent */
+/***/ "./src/app/components/user/redirection-with-token/redirection-with-token.component.ts":
+/*!********************************************************************************************!*\
+  !*** ./src/app/components/user/redirection-with-token/redirection-with-token.component.ts ***!
+  \********************************************************************************************/
+/*! exports provided: RedirectionWithTokenComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RedirectedFromOauthComponent", function() { return RedirectedFromOauthComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RedirectionWithTokenComponent", function() { return RedirectionWithTokenComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
@@ -49,35 +49,34 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var RedirectedFromOauthComponent = /** @class */ (function () {
-    function RedirectedFromOauthComponent(router, route, userService, matSnackBar) {
+var RedirectionWithTokenComponent = /** @class */ (function () {
+    function RedirectionWithTokenComponent(router, route, userService, matSnackBar) {
         this.router = router;
         this.route = route;
         this.userService = userService;
         this.matSnackBar = matSnackBar;
     }
-    RedirectedFromOauthComponent.prototype.ngOnInit = function () {
+    RedirectionWithTokenComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.route.params
             .subscribe(function (params) {
             var token = params.token;
             _this.userService.userLocalLogin(token);
-            // this.matSnackBar.open('Logged in', '', {duration: 3000});
             _this.router.navigate(['/user', 'profile']);
         }, function (err) { return console.log('err', err); });
     };
-    RedirectedFromOauthComponent = __decorate([
+    RedirectionWithTokenComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-redirected-from-oauth',
-            template: __webpack_require__(/*! ./redirected-from-oauth.component.html */ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.html"),
-            styles: [__webpack_require__(/*! ./redirected-from-oauth.component.scss */ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.scss")]
+            selector: 'app-redirection-with-token',
+            template: __webpack_require__(/*! ./redirection-with-token.component.html */ "./src/app/components/user/redirection-with-token/redirection-with-token.component.html"),
+            styles: [__webpack_require__(/*! ./redirection-with-token.component.scss */ "./src/app/components/user/redirection-with-token/redirection-with-token.component.scss")]
         }),
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
             _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
             src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
             _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"]])
-    ], RedirectedFromOauthComponent);
-    return RedirectedFromOauthComponent;
+    ], RedirectionWithTokenComponent);
+    return RedirectionWithTokenComponent;
 }());
 
 
@@ -1076,7 +1075,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_password_reset_user_password_reset_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./user-password-reset/user-password-reset.component */ "./src/app/components/user/user-password-reset/user-password-reset.component.ts");
 /* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../guards/auth.guard */ "./src/app/guards/auth.guard.ts");
 /* harmony import */ var _shared_page_404_page_404_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../shared/page-404/page-404.component */ "./src/app/components/shared/page-404/page-404.component.ts");
-/* harmony import */ var _redirected_from_oauth_redirected_from_oauth_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./redirected-from-oauth/redirected-from-oauth.component */ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.ts");
+/* harmony import */ var _redirection_with_token_redirection_with_token_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./redirection-with-token/redirection-with-token.component */ "./src/app/components/user/redirection-with-token/redirection-with-token.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1117,8 +1116,8 @@ var userRoutes = [
                 component: _user_password_reset_user_password_reset_component__WEBPACK_IMPORTED_MODULE_6__["UserPasswordResetComponent"],
             },
             {
-                path: 'redirected-from-oauth/:token',
-                component: _redirected_from_oauth_redirected_from_oauth_component__WEBPACK_IMPORTED_MODULE_9__["RedirectedFromOauthComponent"],
+                path: 'redirection-with-token/:token',
+                component: _redirection_with_token_redirection_with_token_component__WEBPACK_IMPORTED_MODULE_9__["RedirectionWithTokenComponent"],
             },
             { path: '', component: _shared_page_404_page_404_component__WEBPACK_IMPORTED_MODULE_8__["Page404Component"] },
         ],
@@ -1231,7 +1230,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ng-recaptcha/forms */ "./node_modules/ng-recaptcha/forms.js");
 /* harmony import */ var ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/components/shared/shared.module.ts");
-/* harmony import */ var _redirected_from_oauth_redirected_from_oauth_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./redirected-from-oauth/redirected-from-oauth.component */ "./src/app/components/user/redirected-from-oauth/redirected-from-oauth.component.ts");
+/* harmony import */ var _redirection_with_token_redirection_with_token_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./redirection-with-token/redirection-with-token.component */ "./src/app/components/user/redirection-with-token/redirection-with-token.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1265,7 +1264,7 @@ var UserModule = /** @class */ (function () {
                 _user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_8__["UserProfileComponent"],
                 _user_dialog_user_dialog_component__WEBPACK_IMPORTED_MODULE_9__["UserDialogComponent"],
                 _user_password_reset_user_password_reset_component__WEBPACK_IMPORTED_MODULE_10__["UserPasswordResetComponent"],
-                _redirected_from_oauth_redirected_from_oauth_component__WEBPACK_IMPORTED_MODULE_14__["RedirectedFromOauthComponent"],
+                _redirection_with_token_redirection_with_token_component__WEBPACK_IMPORTED_MODULE_14__["RedirectionWithTokenComponent"],
             ],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],

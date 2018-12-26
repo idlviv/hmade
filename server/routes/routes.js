@@ -284,7 +284,6 @@ router.get('/user/email-verification-send',
 router.get('/user/email-verification',
     passport.authenticate('jwt.email.verification', {session: true}),
     userController.userEmailVerificationReceive,
-    userController.userLogin
 );
 
 // first step to reset password

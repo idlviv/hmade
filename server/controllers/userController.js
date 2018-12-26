@@ -161,7 +161,7 @@ const userEmailVerificationReceive = function(req, res, next) {
         } else if (result.email !== user.email) {
           res.redirect(req.protocol + '://' + req.get('host'));
         } else {
-          UserModel.update({_id: user._id},
+          UserModel.updateOne({_id: user._id},
               {$set: {'role': 'user'}})
               .then(
                   (result) => {
@@ -170,12 +170,19 @@ const userEmailVerificationReceive = function(req, res, next) {
                       // return new ApplicationError('Не вдалося внести зміни', 400);
                       log.debug('!1', result);
                     }
-                    res.redirect(req.protocol + '://' + req.get('host') + '/user/profile');
-                    // return new ResObj(true, 'Зміни внесено');
-                    log.debug('ok', result);
+                    const sub = {
+                      _id: req.user._doc._id,
+                      login: req.user._doc.login,
+                      name: req.user._doc.name,
+                      surname: req.user._doc.surname,
+                      avatar: req.user._doc.avatar,
+                      provider: req.user._doc.provider,
+                      role: 'user',
+                    };
+                    const token = sharedHelper.createJWTToken('', sub, 604800, 'JWT_SECRET');
+                    res.redirect(req.protocol + '://' + req.get('host') + '/user/redirection-with-token/' + token);
                   },
                   (err) => {
-                    log.debug('err', err);
                     res.redirect(req.protocol + '://' + req.get('host'));
                   }
               );
@@ -401,7 +408,7 @@ const userGoogleSignin = function(req, res, next) {
     role: req.user._doc.role,
   };
   const token = sharedHelper.createJWTToken('', sub, 604800, 'JWT_SECRET');
-  res.redirect('/user/redirected-from-oauth/' + token);
+  res.redirect('/user/redirection-with-token/' + token);
 };
 
 /**
@@ -413,8 +420,6 @@ const userGoogleSignin = function(req, res, next) {
  * @return {boolean}
  */
 const userCheckAuthorization = function(req, res, next) {
-  log.debug('req.user._doc.role', req.user._doc.role);
-  log.debug('req.query.role', req.query.role);
   let roleFromSession;
   if (req.user) {
     roleFromSession = req.user._doc.role || 'casual';
