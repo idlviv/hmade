@@ -1,4 +1,4 @@
-const ApplicationError = require('../errors/applicationError');
+const ClientError = require('../errors/clientError');
 const DbError = require('../errors/dbError');
 const log = require('../config/winston')(module);
 const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
@@ -12,7 +12,6 @@ const userHelper = require('../helpers/userHelper');
 const config = require('../config');
 
 module.exports = function(passport) {
-
   passport.serializeUser((user, done) => {
     return done(null, user._id);
   });
@@ -35,11 +34,23 @@ module.exports = function(passport) {
           login,
           password,
         };
+        let user;
         userHelper.isLoginExists(userCandidate.login)
-            .then((userFromDb) => userHelper.isPasswordLocked(userFromDb))
-            .then((userFromDb) => userHelper.isPasswordMatched(userCandidate, userFromDb))
+            .then((userFromDb) => {
+              user = userFromDb;
+              return userHelper.isPasswordLocked(userFromDb);
+            })
+            // if password doesn't match then throw error with code 'wrongCredentials' here
+            .then((userFromDb) => userHelper.isPasswordMatched(userCandidate.password, userFromDb._doc.password, userFromDb))
             .then((userFromDb) => done(null, userFromDb))
-            .catch((err) => done(err, false));
+            .catch((err) => {
+              if (err.code === 'wrongCredentials') {
+                userHelper.updatePasswordLockOptions(user)
+                    .then(() => done(err, false));
+              } else {
+                done(err, false);
+              }
+            });
       }
   ));
 
@@ -154,9 +165,9 @@ module.exports = function(passport) {
   jwtOptionsPasswordResetCheckCode.jwtFromRequest = ExtractJwt.fromAuthHeaderWithScheme('jwt');
   jwtOptionsPasswordResetCheckCode.secretOrKey = config.get('JWT_SECRET_CODE');
 
+  // extract _id from token to identify user, which resets password
   passport.use('jwt.passwordResetCheckCode',
       new JwtStrategy(jwtOptionsPasswordResetCheckCode, (jwtPayload, done) => {
-        // console.log('passport sub', jwtPayload.sub);
         UserModel.findOne({_id: jwtPayload.sub._id})
             .then((user) => {
               if (user) {

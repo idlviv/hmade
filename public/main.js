@@ -3673,7 +3673,7 @@ var UserService = /** @class */ (function () {
     /** Session
      * Used for router guard (canActivate)
      *
-     * @param {*} requiredRoleForAuthentication
+     * @param {string} requiredRoleForAuthentication
      * @returns {Observable<boolean>}
      * @memberof UserService
      */
@@ -3736,6 +3736,15 @@ var UserService = /** @class */ (function () {
             return ({ success: true, message: '' });
         }
     };
+    /**
+     * First step to reset password
+     * Send reset code on email and write its hash in db
+     *
+     * @param {string} email
+     * @param {string} recaptcha
+     * @returns {Observable<string>}
+     * @memberof UserService
+     */
     UserService.prototype.userPasswordResetEmail = function (email, recaptcha) {
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
@@ -3747,6 +3756,15 @@ var UserService = /** @class */ (function () {
         };
         return this.http.get('api/user/password-reset-check-email', httpOptions);
     };
+    /**
+     * Second step to reset password
+     * Compare code from email with one in db
+     *
+     * @param {string} code
+     * @param {string} codeToken
+     * @returns {Observable<string>}
+     * @memberof UserService
+     */
     UserService.prototype.userPasswordResetCode = function (code, codeToken) {
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
@@ -3759,6 +3777,14 @@ var UserService = /** @class */ (function () {
         };
         return this.http.get('api/user/password-reset-check-code', httpOptions);
     };
+    /**
+     *
+     *
+     * @param {string} password
+     * @param {string} passwordResetToken
+     * @returns {Observable<string>}
+     * @memberof UserService
+     */
     UserService.prototype.userPasswordReset = function (password, passwordResetToken) {
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
@@ -3782,11 +3808,10 @@ var UserService = /** @class */ (function () {
         return this.http.get('api/user/email-verification-send', httpOptions);
     };
     UserService.prototype.userEdit = function (data) {
-        var token = this.userLocalGetToken('token');
+        // const token = this.userLocalGetToken('token');
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                 'Content-Type': 'application/json',
-                'Authorization': token
             })
         };
         return this.http.put('api/user/edit', data, httpOptions);
@@ -3925,7 +3950,7 @@ var ValidateService = /** @class */ (function () {
         }
     };
     ValidateService.prototype.maxTries = function (abstractControl) {
-        // set error  to form control
+        // set error to form control
         // !! abstractControl.value
         abstractControl.get('code').setErrors({ maxTries: true });
         return null; // set no errors to form

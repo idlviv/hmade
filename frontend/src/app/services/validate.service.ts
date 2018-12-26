@@ -27,7 +27,7 @@ export class ValidateService {
   }
 
   maxTries(abstractControl: AbstractControl) {
-    // set error  to form control
+    // set error to form control
     // !! abstractControl.value
     abstractControl.get('code').setErrors({maxTries: true});
     return null; // set no errors to form

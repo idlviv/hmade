@@ -19,7 +19,7 @@ export class UserPasswordResetComponent implements OnInit {
   passwordForm: FormGroup;
   hidePassword = true;
   processing = false;
-  result = false;
+  // result = false;
   error: {};
   @ViewChild('stepper') matStepper: MatStepper;
   @ViewChild('recaptchaRef') recaptchaRef;
@@ -85,9 +85,8 @@ export class UserPasswordResetComponent implements OnInit {
           this.processing = false;
           this.emailForm.get('email').setErrors(null);
           this.matStepper.next();
-          const codeToken = result.data;
+          const codeToken = result;
           this.userService.userLocalSetToken('codeToken', codeToken);
-          console.log(result);
         },
         err => {
           this.processing = false;
@@ -100,68 +99,60 @@ export class UserPasswordResetComponent implements OnInit {
           }
         }
       );
-    // console.log('this.matStepper', this.matStepper);
   }
 
   onCodeSubmit() {
     this.processing = true;
-    console.log('onCodeSubmit');
     const code = this.codeForm.get('code').value;
 
     const codeToken = this.userService.userLocalGetToken('codeToken');
     this.userService.userPasswordResetCode(code, codeToken)
       .subscribe(
-        result => {
+        passwordResetToken => {
           this.processing = false;
           this.codeForm.get('code').setErrors(null);
           this.matStepper.next();
-          console.log('check code', result);
           this.userService.userLocalRemoveToken('codeToken');
-          const passwordResetToken = result.data;
           this.userService.userLocalSetToken('passwordResetToken', passwordResetToken);
         },
         err => {
           this.processing = false;
-          if (err.error === 'wrongCredentials') {
+          if (err.error.code === 'wrongCredentials') {
             this.codeForm.get('code').setErrors({invalidCode: true});
-          } else if (err.error === 'maxTries') {
+          } else if (err.error.code === 'maxTries') {
             this.codeForm.get('code').setErrors({maxTries: true});
             this.codeForm.setValidators(this.validateService.maxTries);
             setTimeout(() => {
-              this.router.navigate(['/'])}, 3000);
+              this.router.navigate(['/']);
+            }, 3000);
               this.matSnackBar.open('Код невірний, спрпобуйте пізніше', '',
               {duration: 4000, panelClass: 'snack-bar-danger'});
 
           } else {
             this.codeForm.get('code').setErrors({unrecognizedError: true});
-            console.log(err);
           }
         }
       );
   }
 
-
   onPasswordSubmit() {
     this.processing = true;
-    console.log('onPasswordSubmit');
     const password = this.passwordForm.get('password').value;
 
     const passwordResetToken = this.userService.userLocalGetToken('passwordResetToken');
     this.userService.userPasswordReset(password, passwordResetToken)
       .subscribe(result => {
-          const token = result.data;
+          const token = result;
           this.processing = false;
-          this.result = true;
-          // this.matStepper.next();
           this.userService.userLocalRemoveToken('passwordResetToken');
           this.userService.userLocalLogin(token);
           this.router.navigate(['/user', 'profile']);
-          this.matSnackBar.open(result.message, '',
+          this.matSnackBar.open('Пароль відновлено', '',
             {duration: 3000, panelClass: 'snack-bar-danger'});
         },
         err => {
           this.processing = false;
-          this.matSnackBar.open('Пароль не змінено', '',
+          this.matSnackBar.open(err.error.message || 'Сталася помилка', '',
             {duration: 3000, panelClass: 'snack-bar-danger'});
         }
       );
