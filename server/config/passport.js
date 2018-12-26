@@ -104,7 +104,7 @@ module.exports = function(passport) {
                       avatar: profile._json.image.url,
                       name: profile._json.name.givenName,
                       surname: profile._json.name.familyName,
-                      role: 'user',
+                      role: 'google',
                       ban: 0,
                       createdAt: Date.now(),
                       providersId: profile._json.id,

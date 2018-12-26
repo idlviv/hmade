@@ -53,7 +53,10 @@ export class ContentComponent implements OnInit, AfterViewChecked {
 
     // initial subscribe on user
     this.userService.getUserLocal()
-      .subscribe(user => this.user = user);
+      .subscribe(user => {
+        this.user = user;
+        console.log('user', user);
+      } );
 
 
     // initial login user, token will be taken from localStorage
@@ -99,8 +102,12 @@ export class ContentComponent implements OnInit, AfterViewChecked {
     this.settingsSideMenuTrigger.closeMenu();
   }
 
-  allowTo(permitedRole): boolean {
+  allowTo(permitedRole: string): boolean {
     return this.userService.allowTo(permitedRole);
+  }
+
+  restrictTo(restrictedRoles: string[]): boolean {
+    return this.userService.restrictTo(restrictedRoles);
   }
 
 }

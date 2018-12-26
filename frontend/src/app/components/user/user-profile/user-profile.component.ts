@@ -44,6 +44,14 @@ export class UserProfileComponent implements OnInit {
     });
   }
 
+  allowTo(permitedRole: string): boolean {
+    return this.userService.allowTo(permitedRole);
+  }
+
+  restrictTo(restrictedRoles: string[]): boolean {
+    return this.userService.restrictTo(restrictedRoles);
+  }
+  
   onVerificationSend() {
     this.verificationSent = true;
     this.processing = 'verification';

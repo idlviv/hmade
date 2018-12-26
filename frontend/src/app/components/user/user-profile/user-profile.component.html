@@ -90,7 +90,7 @@
             <div class="info-block-row-title mat-subheading-1" fxFlex="40%">Ім'я</div>
             <!--<div fxFlex></div>-->
             <div class="mat-subheading-2 muted" fxFlex="60%">{{user.name}}</div>
-            <mat-icon *ngIf="processing !== 'name'" fxFlex="30px"
+            <mat-icon *ngIf="processing !== 'name' && restrictTo(['google'])" fxFlex="30px"
                       (click)="openDialog(makeNameObject())" class="muted">edit</mat-icon>
             <mat-spinner *ngIf="processing === 'name'" fxFlex="30px" [diameter]="24"></mat-spinner>
 

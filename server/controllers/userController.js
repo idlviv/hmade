@@ -256,76 +256,7 @@ const userEdit = function(req, res, next) {
       })
       .then((result) => res.status(200).json('Зміни внесено'))
       .catch((err) => next(err));
-
-  // comparePassword(moderator._id, modificationRequest.password)
-  //     .then(() => {
-  //       if (modificationRequest.name === 'password') {
-  //         bcrypt.hash(modificationRequest.value, 10)
-  //             .then(
-  //                 (hash) => {
-  //                   modificationRequest.value = hash;
-  //                   updateUserField(moderator._id, modificationRequest)
-  //                       .then(
-  //                           (result) => res.status(200).json(result),
-  //                           (err) => next(err)
-  //                       );
-  //                 },
-  //                 (err) => next(new ApplicationError(err.message, err.status, err.code))
-  //             );
-  //       } else if (modificationRequest.name === 'email') {
-  //         const modificationRequestObject = {
-  //           email: modificationRequest.value,
-  //           role: 'guest',
-  //         };
-  //         updateUserFields(moderator._id, modificationRequestObject)
-  //             .then(
-  //                 (result) => res.status(200).json(result),
-  //                 (err) => next(err)
-  //             );
-  //       } else {
-  //         updateUserField(moderator._id, modificationRequest)
-  //             .then(
-  //                 (result) => res.status(200).json(result),
-  //                 (err) => next(err)
-  //             );
-  //       }
-  //     },
-  //     (err) => next(err)
-  //     );
 };
-
-// /**
-//  * if password match resolves promise
-//  *
-//  * @param _id
-//  * @param passwordCandidate
-//  * @return {Promise}
-//  */
-// function comparePassword(_id, passwordCandidate) {
-//   return new Promise(function(resolve, reject) {
-//     UserModel.findOne({_id})
-//         .then(
-//             (user) => {
-//               if (!user) {
-//                 reject(new ApplicationError('Користувача не знайдено', 401));
-//               }
-//               bcrypt.compare(passwordCandidate, user.password)
-//                   .then(
-//                       (passwordMatched) => {
-//                         if (!passwordMatched) {
-//                           reject(new ApplicationError('Невірний пароль', 401));
-//                         }
-//                         resolve();
-//                       },
-//                       (err) => {
-//                         reject(new ApplicationError('Помилка перевірки пароля', 401));
-//                       }
-//                   );
-//             },
-//             (err) => reject(new DbError(err.message, err.code))
-//         );
-//   });
-// }
 
 /**
  * Return users credentials

@@ -151,7 +151,7 @@ export class UserService {
    */
   allowTo(permitedRole: string): boolean {
     const permissions = config.permissions;
-    const user = this.userLocalGetCredentials('token');
+    const user = this.userLocalGetCredentials();
     if (!user) {
       return false;
     }
@@ -160,6 +160,19 @@ export class UserService {
       return true;
     } else {
       return false;
+    }
+  }
+
+  restrictTo(restrictedRoles: string[]): boolean {
+    const user = this.userLocalGetCredentials();
+    if (!user) {
+      return true;
+    }
+    const roleFromLocalStorage = user.role;
+    if (restrictedRoles.indexOf(roleFromLocalStorage) >= 0) {
+      return false;
+    } else {
+      return true;
     }
   }
 
@@ -325,7 +338,7 @@ export class UserService {
     if (token) {
       this.userLocalSetToken('token', token);
     }
-    const user = this.userLocalGetCredentials('token');
+    const user = this.userLocalGetCredentials();
     this._logging.next(user);
   }
 
@@ -377,8 +390,8 @@ export class UserService {
     return token;
   }
 
-  userLocalGetCredentials(tokenKey) {
-    const token = this.userLocalGetToken(tokenKey);
+  userLocalGetCredentials() {
+    const token = this.userLocalGetToken('token');
     if (!token) {
       return null;
     }

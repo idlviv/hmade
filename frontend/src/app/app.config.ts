@@ -36,9 +36,10 @@ export const config = {
     commentsLength: 10,
   },
   permissions: {
-    admin: ['casual', 'guest', 'user', 'manager', 'admin'],
-    manager: ['casual', 'guest', 'user', 'manager'],
-    user: ['casual', 'guest', 'user'],
+    admin: ['casual', 'guest', 'user', 'manager', 'admin', 'google'],
+    manager: ['casual', 'guest', 'user', 'manager', 'google'],
+    user: ['casual', 'guest', 'user', 'google'],
+    google: ['casual', 'guest', 'user', 'google'],
     guest: ['casual', 'guest'],
     casual: ['casual']
   },

@@ -16,7 +16,7 @@
   <div fxFlex></div>
 
   <div fxShow="true" fxHide.lt-md="true">
-    <a *ngIf="allowTo('user')" class="link" [matMenuTriggerFor]="settingsMenu" #settingsMenuTrigger="matMenuTrigger" (mouseover)="onSettingsMenuMouseover()">
+    <a *ngIf="allowTo('guest')" class="link" [matMenuTriggerFor]="settingsMenu" #settingsMenuTrigger="matMenuTrigger" (mouseover)="onSettingsMenuMouseover()">
       <span class="type2">
         <mat-icon class="mat-icon-aligner">settings</mat-icon>{{user.login}}
       </span>
@@ -25,20 +25,20 @@
 
     <mat-menu #settingsMenu="matMenu" xPosition="after" yPosition="above" [overlapTrigger]="false">
       <span (mouseleave)="onSettingsMenuMouseleave()">
-        <a *ngIf="user" mat-menu-item [routerLink]="['/user/profile']" [routerLinkActive]="['accent']"
+        <a *ngIf="allowTo('guest')" mat-menu-item [routerLink]="['/user/profile']" [routerLinkActive]="['accent']"
           [routerLinkActiveOptions]="{exact: true}">
           <mat-icon>account_circle</mat-icon><span>Профіль</span>
         </a>
-        <a *ngIf="user && (user?.role === 'manager' || user?.role === 'admin')" mat-menu-item [routerLink]="['/dashboard']"
+        <a *ngIf="allowTo('manager')" mat-menu-item [routerLink]="['/dashboard']"
           [routerLinkActive]="['accent']" [routerLinkActiveOptions]="{exact: true}">
           <mat-icon>settings</mat-icon><span>Dashboard</span>
         </a>
       </span>
     </mat-menu>
 
-    <a *ngIf='!user' class="link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
+    <a *ngIf="!user" class="link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
       [routerLink]="['/user/login']"><span class="type1">Вхід</span></a>
-    <a *ngIf='user' class="link" (click)="userLogout()"><span class="type2">Вихід</span></a>
+    <a *ngIf="allowTo('guest')" class="link" (click)="userLogout()"><span class="type2">Вихід</span></a>
   </div>
 
   <div class="menu-button" fxShow="true" fxHide.gt-sm="true">
@@ -71,7 +71,7 @@
           </a>
         </mat-list-item>
 
-        <mat-expansion-panel *ngIf="user" class="mat-elevation-z0">
+        <mat-expansion-panel *ngIf="allowTo('guest')" class="mat-elevation-z0">
           <mat-expansion-panel-header class="sidenav-expansion-panel">
             <!-- <mat-panel-title> -->
               <!-- <mat-list-item> -->
@@ -81,13 +81,13 @@
             <!-- </mat-panel-title> -->
 
           </mat-expansion-panel-header>
-          <mat-list-item *ngIf="user">
+          <mat-list-item *ngIf="allowTo('guest')">
             <mat-icon matListIcon>account_circle</mat-icon>
             <a matLine [routerLink]="['/user/profile']" [routerLinkActive]="['muted']" [routerLinkActiveOptions]="{exact: true}"
               (click)="sidenav.toggle()">
               Профіль</a>
           </mat-list-item>
-          <mat-list-item *ngIf="user && user?.role === 'manager' || user?.role === 'admin'">
+          <mat-list-item *ngIf="allowTo('manager')">
             <mat-icon matListIcon>settings</mat-icon>
             <a matLine [routerLink]="['/dashboard']" [routerLinkActive]="['muted']" [routerLinkActiveOptions]="{exact: true}"
               (click)="sidenav.toggle()">
@@ -99,7 +99,7 @@
           <a matLine [routerLinkActive]="['muted']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/user/login']"
             (click)="sidenav.toggle()">Вхід</a>
         </mat-list-item>
-        <mat-list-item *ngIf='user'>
+        <mat-list-item *ngIf="allowTo('guest')">
           <a matLine (click)="userLocalLogout()" (click)="sidenav.toggle()">
             Вихід
           </a>

@@ -32,7 +32,7 @@ const UserSchema = new Schema({
   },
   role: {
     type: String,
-    enum: ['casual', 'guest', 'user', 'manager', 'admin'],
+    enum: ['casual', 'guest', 'user', 'manager', 'admin', 'google', 'facebook'],
     default: 'guest',
   },
   ban: {
