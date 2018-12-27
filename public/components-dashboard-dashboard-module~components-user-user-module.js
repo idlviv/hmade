@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  redirection-with-token works!\r\n</p>\r\n"
+module.exports = "<p>\n  redirection-with-token works!\n</p>\n"
 
 /***/ }),
 
@@ -257,7 +257,7 @@ var UserCreateComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 mat-dialog-title>Внести зміни</h1>\n<div class=\"form-block\">\n    <form [formGroup]=\"userEditForm\" (submit)=\"onSubmit()\">\n\n      <div fxLayout=\"row\" *ngFor=\"let dataPayload of data.payload\">\n        <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n          <mat-icon color=\"primary\">{{dataPayload.icon}}</mat-icon>\n        </div>\n        <mat-form-field>\n            <input matInput placeholder=\"{{dataPayload.label}}\" formControlName=\"{{dataPayload.name}}\"\n                   autocomplete=\"false\" type=\"{{dataPayload.type}}\" required>\n            <mat-error *ngFor=\"let validator of dataPayload.validators\">\n              <div\n                *ngIf=\"(validator.name === 'length' &&\n                (userEditForm.get(dataPayload.name).errors?.minlength ||\n                userEditForm.get(dataPayload.name).errors?.maxlength ||\n                userEditForm.get(dataPayload.name).errors?.required) &&\n                userEditForm.get(dataPayload.name).touched)\">\n                {{validator.message}}\n              </div>\n              <div\n                *ngIf=\"(validator.name === 'pattern' &&\n                userEditForm.get(dataPayload.name).errors?.pattern &&\n                userEditForm.get(dataPayload.name).touched)\">\n                {{validator.message}}\n              </div>\n              <div\n                *ngIf=\"(validator.name === 'require' &&\n                userEditForm.get(dataPayload.name).errors?.required &&\n                userEditForm.get(dataPayload.name).touched)\">\n                {{validator.message}}\n              </div>\n              <div\n                *ngIf=\"(validator.name === 'match' &&\n                userEditForm.get(dataPayload.name).errors?.mismatch &&\n                userEditForm.get(dataPayload.name).touched)\">\n                {{validator.message}}\n              </div>\n            </mat-error>\n          </mat-form-field>\n\n      </div>\n      <div class=\"submit-button-wrapper\">\n        <button type=\"reset\" mat-button color=\"primary\" (click)=\"onNoClick()\">Повернутись</button>\n        <span fxFlex></span>\n        <button mat-raised-button color=\"primary\" [disabled]=\"!userEditForm.valid\">Ok</button>\n      </div>\n\n    </form>\n<p *ngIf=\"data.oldValue\" class=\"mat-body-1\">поточне значення: <span class=\"mat-body-2\">{{data.oldValue}}</span></p>\n\n</div>\n"
+module.exports = "<h1 mat-dialog-title>Внести зміни</h1>\r\n<div class=\"form-block\">\r\n    <form [formGroup]=\"userEditForm\" (submit)=\"onSubmit()\">\r\n\r\n      <div fxLayout=\"row\" *ngFor=\"let dataPayload of data.payload\">\r\n        <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n          <mat-icon color=\"primary\">{{dataPayload.icon}}</mat-icon>\r\n        </div>\r\n        <mat-form-field>\r\n            <input matInput placeholder=\"{{dataPayload.label}}\" formControlName=\"{{dataPayload.name}}\"\r\n                   autocomplete=\"false\" type=\"{{dataPayload.type}}\" required>\r\n            <mat-error *ngFor=\"let validator of dataPayload.validators\">\r\n              <div\r\n                *ngIf=\"(validator.name === 'length' &&\r\n                (userEditForm.get(dataPayload.name).errors?.minlength ||\r\n                userEditForm.get(dataPayload.name).errors?.maxlength ||\r\n                userEditForm.get(dataPayload.name).errors?.required) &&\r\n                userEditForm.get(dataPayload.name).touched)\">\r\n                {{validator.message}}\r\n              </div>\r\n              <div\r\n                *ngIf=\"(validator.name === 'pattern' &&\r\n                userEditForm.get(dataPayload.name).errors?.pattern &&\r\n                userEditForm.get(dataPayload.name).touched)\">\r\n                {{validator.message}}\r\n              </div>\r\n              <div\r\n                *ngIf=\"(validator.name === 'require' &&\r\n                userEditForm.get(dataPayload.name).errors?.required &&\r\n                userEditForm.get(dataPayload.name).touched)\">\r\n                {{validator.message}}\r\n              </div>\r\n              <div\r\n                *ngIf=\"(validator.name === 'match' &&\r\n                userEditForm.get(dataPayload.name).errors?.mismatch &&\r\n                userEditForm.get(dataPayload.name).touched)\">\r\n                {{validator.message}}\r\n              </div>\r\n            </mat-error>\r\n          </mat-form-field>\r\n\r\n      </div>\r\n      <div class=\"submit-button-wrapper\">\r\n        <button type=\"reset\" mat-button color=\"primary\" (click)=\"onNoClick()\">Повернутись</button>\r\n        <span fxFlex></span>\r\n        <button mat-raised-button color=\"primary\" [disabled]=\"!userEditForm.valid\">Ok</button>\r\n      </div>\r\n\r\n    </form>\r\n<p *ngIf=\"data.oldValue\" class=\"mat-body-1\">поточне значення: <span class=\"mat-body-2\">{{data.oldValue}}</span></p>\r\n\r\n</div>\r\n"
 
 /***/ }),
 
@@ -1080,14 +1080,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./user-profile/user-profile.component */ "./src/app/components/user/user-profile/user-profile.component.ts");
 /* harmony import */ var _user_password_reset_user_password_reset_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./user-password-reset/user-password-reset.component */ "./src/app/components/user/user-password-reset/user-password-reset.component.ts");
 /* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../guards/auth.guard */ "./src/app/guards/auth.guard.ts");
-/* harmony import */ var _shared_page_404_page_404_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../shared/page-404/page-404.component */ "./src/app/components/shared/page-404/page-404.component.ts");
-/* harmony import */ var _redirection_with_token_redirection_with_token_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./redirection-with-token/redirection-with-token.component */ "./src/app/components/user/redirection-with-token/redirection-with-token.component.ts");
+/* harmony import */ var _guards_no_auth_guard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../guards/no-auth.guard */ "./src/app/guards/no-auth.guard.ts");
+/* harmony import */ var _shared_page_404_page_404_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../shared/page-404/page-404.component */ "./src/app/components/shared/page-404/page-404.component.ts");
+/* harmony import */ var _redirection_with_token_redirection_with_token_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./redirection-with-token/redirection-with-token.component */ "./src/app/components/user/redirection-with-token/redirection-with-token.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -1110,6 +1112,8 @@ var userRoutes = [
             {
                 path: 'login',
                 component: _user_login_user_login_component__WEBPACK_IMPORTED_MODULE_4__["UserLoginComponent"],
+                canActivate: [_guards_no_auth_guard__WEBPACK_IMPORTED_MODULE_8__["NoAuthGuard"]],
+                data: { auth: ['guest', 'user', 'manager', 'admin', 'google', 'facebook'] },
             },
             {
                 path: 'profile',
@@ -1123,9 +1127,9 @@ var userRoutes = [
             },
             {
                 path: 'redirection-with-token/:token',
-                component: _redirection_with_token_redirection_with_token_component__WEBPACK_IMPORTED_MODULE_9__["RedirectionWithTokenComponent"],
+                component: _redirection_with_token_redirection_with_token_component__WEBPACK_IMPORTED_MODULE_10__["RedirectionWithTokenComponent"],
             },
-            { path: '', component: _shared_page_404_page_404_component__WEBPACK_IMPORTED_MODULE_8__["Page404Component"] },
+            { path: '', component: _shared_page_404_page_404_component__WEBPACK_IMPORTED_MODULE_9__["Page404Component"] },
         ],
     },
 ];

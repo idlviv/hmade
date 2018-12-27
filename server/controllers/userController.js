@@ -117,40 +117,6 @@ const passwordReset = function(req, res, next) {
       .catch((err) => next(err));
 };
 
-
-// const updateUserField = function(_id, modificationRequest) {
-//   return new Promise(function(resolve, reject) {
-//     UserModel.updateOne({_id},
-//         {$set: {[modificationRequest.name]: modificationRequest.value}})
-//         .then(
-//             (result) => {
-//               if (result.ok !== 1) {
-//                 reject(new ApplicationError('Не вдалося внести зміни', 400));
-//               }
-//               resolve(new ResObj(true, 'Зміни внесено'));
-//             },
-//             (err) => reject(new DbError(err.message, err.code))
-//         );
-//   });
-// };
-
-// const updateUserFields = function(_id, modificationRequestObject) {
-//   return new Promise(function(resolve, reject) {
-//     UserModel.updateOne({_id},
-//         {$set: modificationRequestObject})
-//         .then(
-//             (result) => {
-//               if (result.ok !== 1) {
-//                 reject(new ApplicationError('Не вдалося внести зміни', 400));
-//               }
-//               resolve(new ResObj(true, 'Зміни внесено'));
-//             },
-//             (err) => reject(new DbError(err.message, err.code))
-//         );
-//   });
-// };
-
-
 const userEmailVerificationReceive = function(req, res, next) {
   let user = {};
   Object.assign(user, req.user._doc);
@@ -170,6 +136,8 @@ const userEmailVerificationReceive = function(req, res, next) {
                       // return new ApplicationError('Не вдалося внести зміни', 400);
                       log.debug('!1', result);
                     }
+
+                    // update token with changes (local login)
                     const sub = {
                       _id: req.user._doc._id,
                       login: req.user._doc.login,
@@ -313,12 +281,30 @@ const userLogin = function(req, res, next) {
       provider: req.user._doc.provider,
       role: req.user._doc.role,
     };
-    const token = sharedHelper.createJWTToken('', sub, 604800, 'JWT_SECRET');
+    const token = sharedHelper.createJWTToken('', sub, 60, 'JWT_SECRET'); // 604800
     return res.status(200).json(token);
   } else {
     return next(new ClientError({message: 'Помилка авторизації', status: 401}));
   }
 };
+
+// const syncTokenToSession = function(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     const sub = {
+//       _id: req.user._doc._id,
+//       login: req.user._doc.login,
+//       name: req.user._doc.name,
+//       surname: req.user._doc.surname,
+//       avatar: req.user._doc.avatar,
+//       provider: req.user._doc.provider,
+//       role: req.user._doc.role,
+//     };
+//     const token = sharedHelper.createJWTToken('', sub, 60, 'JWT_SECRET'); // 604800
+//     return res.status(200).json(token);
+//   } else {
+//     res.status(200).json('');
+//   }
+// };
 
 /**
  * After successful google social signin
@@ -352,19 +338,33 @@ const userGoogleSignin = function(req, res, next) {
  */
 const userCheckAuthorization = function(req, res, next) {
   let roleFromSession;
+
+  // if session active set token to frontend for local login
+  let token;
   if (req.user) {
     roleFromSession = req.user._doc.role || 'casual';
+    const sub = {
+      _id: req.user._doc._id,
+      login: req.user._doc.login,
+      name: req.user._doc.name,
+      surname: req.user._doc.surname,
+      avatar: req.user._doc.avatar,
+      provider: req.user._doc.provider,
+      role: req.user._doc.role,
+    };
+    token = sharedHelper.createJWTToken('', sub, 60, 'JWT_SECRET'); // 604800
   } else {
     roleFromSession = 'casual';
+    token = null;
   }
   const requiredRoleForAuthorization = req.query.role;
 
   const permissions = config.get('permissions');
 
   if (permissions[roleFromSession].indexOf(requiredRoleForAuthorization) >= 0) {
-    return res.status(200).json(true);
+    return res.status(200).json({permission: true, token});
   } else {
-    return res.status(200).json(false);
+    return res.status(200).json({permission: false, token});
   }
 };
 
@@ -399,6 +399,7 @@ const userCreate = function(req, res, next) {
 
 module.exports = {
   userCheckAuthorization,
+  // syncTokenToSession,
   userProfile,
   userLogin,
   userLogout,

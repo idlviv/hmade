@@ -19,6 +19,7 @@ import { ProductService } from './services/product.service';
 import { SharedService } from './services/shared.service';
 
 import { AuthGuard } from './guards/auth.guard';
+import { NoAuthGuard } from './guards/no-auth.guard';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ConfirmPopupComponent } from './components/shared/confirm-popup/confirm-popup.component';
@@ -57,6 +58,7 @@ import { ScrollingDirective } from './directives/scrolling.directive';
     ProductService,
     SharedService,
     AuthGuard,
+    NoAuthGuard,
   ],
   exports: [
   ],

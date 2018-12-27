@@ -4,9 +4,9 @@ import { Injectable } from '@angular/core';
 import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
 import { UserService } from '../services/user.service';
 
-
-
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class AuthGuard implements CanActivate {
 
   constructor(
@@ -18,10 +18,20 @@ export class AuthGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
 
-    const requiredRoleForAuthentication = next.data.auth; // from routing.module
-    return this.userService.userCheckAuthorization(requiredRoleForAuthentication).pipe(
-      map(permission => permission),
-      catchError(err => of(false))
+    const requiredRoleForAuthorization = next.data.auth; // from routing.module
+    return this.userService.userCheckAuthorization(requiredRoleForAuthorization)
+      .pipe(
+        map((result) => {
+
+          // set token for local login every time when check canActivate for router
+          if (result.token) {
+            this.userService.userLocalLogin(result.token);
+          } else {
+            this.userService.userLocalRemoveToken('token');
+          }
+          return result.permission;
+        }),
+        catchError(err => of(false))
       );
 
   }

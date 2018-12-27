@@ -122,11 +122,11 @@ export class UserService {
    * Used for router guard (canActivate)
    *
    * @param {string} requiredRoleForAuthentication
-   * @returns {Observable<boolean>}
+   * @returns {Observable<{permission: boolean, token: string}>}
    * @memberof UserService
    */
-  userCheckAuthorization(requiredRoleForAuthentication: string): Observable<boolean> {
-    const token = this.userLocalGetToken('token');
+  userCheckAuthorization(requiredRoleForAuthentication: string): Observable<{permission: boolean, token: string}> {
+    // const token = this.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -134,7 +134,7 @@ export class UserService {
       params: new HttpParams({fromString: `role=${requiredRoleForAuthentication}`})
 
     };
-    return this.http.get<boolean>(
+    return this.http.get<{permission: boolean, token: string}>(
       'api/user/checkAuthorization',
       httpOptions
     );
@@ -152,6 +152,7 @@ export class UserService {
   allowTo(permitedRole: string): boolean {
     const permissions = config.permissions;
     const user = this.userLocalGetCredentials();
+
     if (!user) {
       return false;
     }
@@ -331,7 +332,17 @@ export class UserService {
     );
   }
 
-
+  // syncTokenToSession(): Observable<string> {
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type':  'application/json',
+  //     })
+  //   };
+  //   return this.http.get<string>(
+  //     'api/user/sync-token-to-session',
+  //     httpOptions
+  //   );
+  // }
 
   // create Observable for user login watch
   userLocalLogin(token) {
@@ -373,9 +384,6 @@ export class UserService {
       return true;
     }
     const helper = new JwtHelperService();
-    if (helper.isTokenExpired(token)) {
-      this.userLocalRemoveToken(tokenKey);
-    }
     return helper.isTokenExpired(token);
   }
 
@@ -390,13 +398,31 @@ export class UserService {
     return token;
   }
 
-  userLocalGetCredentials() {
-    const token = this.userLocalGetToken('token');
-    if (!token) {
+  userLocalGetCredentials(): IUser | null {
+    const tokenFromStorage = localStorage.getItem('token');
+    if (!tokenFromStorage) {
       return null;
     }
+    // if (this.userLocalCheckExpiration('token')) {
+    //   this.syncTokenToSession()
+    //     .subscribe((token) => {
+    //       if (token) {
+    //         this.userLocalLogin(token);
+    //         const helper = new JwtHelperService();
+    //         console.log('helper.decodeToken(token)', helper.decodeToken(token));
+    //         return helper.decodeToken(token).sub;
+    //       } else {
+    //         localStorage.removeItem('token');
+    //         return null;
+    //       }
+    //     },
+    //     (err) => {
+    //       localStorage.removeItem('token');
+    //       return null;
+    //     });
+    // }
     const helper = new JwtHelperService();
-    return helper.decodeToken(token).sub;
+    return <IUser>helper.decodeToken(tokenFromStorage).sub;
   }
 
   userLocalGetExpirationDate(tokenKey): Date {

@@ -265,6 +265,11 @@ router.get('/user/checkAuthorization',
     userController.userCheckAuthorization
 );
 
+// router.get('/user/sync-token-to-session',
+//     userController.syncTokenToSession
+// );
+
+
 // edit 'local users' credentials (name, surname, password)
 router.put('/user/edit',
     authentication,
