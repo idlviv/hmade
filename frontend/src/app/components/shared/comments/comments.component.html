@@ -7,7 +7,8 @@
                   <div class="cell" fxFlex="10" fxLayoutAlign="center center">
 
                     <img *ngIf="user" class="responsive-image"
-                      src="{{
+                      src="{{user.role === 'google' ? 
+                        user.avatar :
                         config.imgPath +
                         config.cloudinary.cloud_name +
                         '/c_fill,w_50,h_50,f_auto/' +
@@ -70,7 +71,8 @@
       <div  class="cell" fxFlex="10" fxLayoutAlign="center center">
 
                 <img *ngIf="comment.user && comment.user.avatar" class="responsive-image"
-                  src="{{
+                  src="{{user.role === 'google' ? 
+                    user.avatar :
                     config.imgPath +
                     config.cloudinary.cloud_name +
                     '/c_fill,w_50,h_50,f_auto/' +
@@ -84,7 +86,9 @@
       </div>
       <div class="cell" fxFlex="80">
         <p>
-          <span class="mat-body-2">{{comment.user && comment.user.login ? comment.user.login : 'Гість'}}</span>
+          <span class="mat-body-2">
+            {{comment.user && comment.user.login ? comment.user.name + ' ' + comment.user.surname : 'Гість'}}
+          </span>
           <span fxFlex></span>
           <span class="mat-body-1">{{comment.commentedAt | date: 'dd.MM.yyyy HH:mm'}}</span>
         </p>

@@ -10,7 +10,8 @@
           <form [formGroup]="changeAvatarForm" (submit)="onSubmitChangeAvatarForm()">
 
           <div class="avatar-img-wrapper">
-            <img *ngIf="!previewAvatarUrl" src="{{
+            <img *ngIf="!previewAvatarUrl" src="{{user.role === 'google' ? 
+              user.avatar :
               config.imgPath +
               config.cloudinary.cloud_name +
               '/c_fill,w_180,h_180,f_auto/' +
@@ -23,8 +24,8 @@
               </div>
             </div>
 
-            <div *ngIf="!editAvatar && !processingChangeAvatar" class="avatar-div-change"></div>
-            <div *ngIf="!editAvatar && !processingChangeAvatar" class="avatar-button-change">
+            <div *ngIf="!editAvatar && !processingChangeAvatar && restrictTo(['google', 'facebook'])" class="avatar-div-change"></div>
+            <div *ngIf="!editAvatar && !processingChangeAvatar && restrictTo(['google', 'facebook'])" class="avatar-button-change">
               <input type="file" accept=".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif" (change)="changeAvatar($event)" id="input-file">
               <label for="input-file">Змінити
               </label>
@@ -50,7 +51,7 @@
 
         <div class="info-block-row-wrapper">
           <div fxLayout="row" fxLayoutAlign="center" class="info-block-row">
-            <div class="info-block-row-title mat-title">{{user.login}}</div>
+            <div class="info-block-row-title mat-title">{{user.name}} {{user.surname}}</div>
           </div>
         </div>
 
@@ -101,13 +102,13 @@
             <div class="info-block-row-title mat-subheading-1" fxFlex="40%">Прізвище</div>
             <!--<div fxFlex></div>-->
             <div class="mat-subheading-2 muted" fxFlex="60%">{{user.surname}}</div>
-            <mat-icon *ngIf="processing !== 'surname'" fxFlex="30px"
+            <mat-icon *ngIf="processing !== 'surname' && restrictTo(['google'])" fxFlex="30px"
                       (click)="openDialog(makeSurnameObject())" class="muted">edit</mat-icon>
             <mat-spinner *ngIf="processing === 'surname'" fxFlex="30px" [diameter]="24"></mat-spinner>
 
           </div>
         </div>
-        <div class="info-block-row-wrapper">
+        <div *ngIf="restrictTo(['google'])" class="info-block-row-wrapper">
           <div fxLayout="row" fxLayoutAlign="center" class="info-block-row">
             <div fxFlex="60%"></div>
             <div fxFlex="40%">

@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   cloud_name: 'hmm6pjfgk',
+  host: 'http://localhost:8081'
 };
 
 /*

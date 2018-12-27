@@ -55,7 +55,6 @@ export class ContentComponent implements OnInit, AfterViewChecked {
     this.userService.getUserLocal()
       .subscribe(user => {
         this.user = user;
-        console.log('user', user);
       } );
 
 
@@ -77,13 +76,13 @@ export class ContentComponent implements OnInit, AfterViewChecked {
     this.userService.userLogout()
       .subscribe(message => {
         this.userService.userLocalLogout();
-        console.log(message);
+        console.log('logout message', message);
+        this.router.navigate(['/user', 'login']);
+
       },
     err => {
       console.log(err.error);
     });
-    ;
-    this.router.navigate(['/user', 'login']);
   }
 
   onSettingsMenuMouseover() {

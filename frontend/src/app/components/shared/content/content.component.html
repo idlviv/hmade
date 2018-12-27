@@ -18,7 +18,7 @@
   <div fxShow="true" fxHide.lt-md="true">
     <a *ngIf="allowTo('guest')" class="link" [matMenuTriggerFor]="settingsMenu" #settingsMenuTrigger="matMenuTrigger" (mouseover)="onSettingsMenuMouseover()">
       <span class="type2">
-        <mat-icon class="mat-icon-aligner">settings</mat-icon>{{user.login}}
+        <mat-icon class="mat-icon-aligner">settings</mat-icon>{{user.name}} {{user.surname}}
       </span>
 
     </a>

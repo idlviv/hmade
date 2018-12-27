@@ -16,6 +16,7 @@ const authentication = require('../middleware/auth').authentication;
 const notGuardExtarctUser_id = require('../middleware/auth')
     .notGuardExtarctUser_id;
 const log = require('../config/winston')(module);
+const config = require('../config');
 
 /**
  * social routes

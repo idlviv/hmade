@@ -1,6 +1,7 @@
 import { environment } from '../environments/environment';
 
 export const config = {
+  host: environment.host,
   serverUrl: '/',
   defaultProductImg: 'default_product',
   defaultAvatar: 'default_avatar',

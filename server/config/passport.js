@@ -76,6 +76,7 @@ module.exports = function(passport) {
             callbackURL: config.get('SERVER_URL') + '/api/user/auth/google/redirect',
           },
           function(accessToken, refreshToken, profile, done) {
+            
             // extract 'account' email
             let email;
             for (let i = 0; i < profile.emails.length; i++) {
