@@ -34,7 +34,7 @@
     "request-promise-native": "^1.0.5",
     "winston": "^2.4.2"
   },
-  "engine": {
+  "engines": {
     "node": "8.9.4",
     "npm": "6.4.1"
   },
