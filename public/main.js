@@ -215,6 +215,7 @@ var config = {
     logoLight: 'hmade_logo_light',
     logoDark: 'hmade_logo_dark',
     icon: 'hmade_icon',
+    recaptchaSiteKey: '6Le5XoUUAAAAACCWkV0muQG0SFc75G_7udZzbqs1',
     social: {
         showLikes: true,
         showViews: true,
@@ -2505,6 +2506,7 @@ var AuthGuard = /** @class */ (function () {
         var requiredRoleForAuthorization = next.data.auth; // from routing.module
         return this.userService.userCheckAuthorization(requiredRoleForAuthorization)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (result) {
+            console.log('authguard');
             // set token for local login every time when check canActivate for router
             if (result.token) {
                 _this.userService.userLocalLogin(result.token);

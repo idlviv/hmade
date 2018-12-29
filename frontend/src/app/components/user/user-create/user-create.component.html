@@ -143,7 +143,7 @@
           !userCreateForm.get('email').valid || !userCreateForm.get('login').valid ||
           !userCreateForm.get('password').valid || !userCreateForm.get('passwordConfirm').valid}"
                       [formControlName]="'recaptcha'" #recaptchaRef
-                      siteKey="6Lc0uE8UAAAAAKyekxrsdhSdrgV9zhPW-lMY-srm">
+                      siteKey="{{config.recaptchaSiteKey}}">
           </re-captcha>
 
           <div class="submit-button-wrapper">
