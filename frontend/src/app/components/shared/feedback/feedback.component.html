@@ -60,7 +60,7 @@
           !feedbackForm.get('contacts').valid || !feedbackForm.get('contacts').valid ||
           !feedbackForm.get('message').valid}"
                           [formControlName]="'recaptcha'" #recaptchaRef
-                          siteKey="6Lc0uE8UAAAAAKyekxrsdhSdrgV9zhPW-lMY-srm">
+                          siteKey="{{config.recaptchaSiteKey}}">
               </re-captcha>
               <!--<div *ngIf="!processing" fxLayout="row">-->
                 <!--<object type="image/svg+xml" data="./assets/images/loading.svg" width="50px" height="20px">-->

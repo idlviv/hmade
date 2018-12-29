@@ -53,7 +53,7 @@
                 <div class="row" fxLayout="row" fxLayoutAlign="end">
                   <re-captcha [ngClass]="{'display-none': !commentForm.get('comment').valid}"
                     [formControlName]="'recaptcha'" #recaptchaRef
-                    siteKey="6Lc0uE8UAAAAAKyekxrsdhSdrgV9zhPW-lMY-srm">
+                    siteKey="{{config.recaptchaSiteKey}}">
                   </re-captcha> 
                 </div>
               </form>

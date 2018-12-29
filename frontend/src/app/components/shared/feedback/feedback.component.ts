@@ -5,6 +5,7 @@ import { IFeedback } from '../../../interfaces/interface';
 import { Location } from '@angular/common';
 import { SharedService } from '../../../services/shared.service';
 import { MatSnackBar } from '@angular/material';
+import { config } from '../../../app.config';
 
 @Component({
   selector: 'app-feedback',
@@ -16,6 +17,7 @@ export class FeedbackComponent implements OnInit {
   feedback: IFeedback;
   @ViewChild('fForm') fFormDirective: FormGroupDirective;
   processing = false;
+  config = config;
 
   constructor(
     private location: Location,

@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  cloud_name: 'hmm6pjfgk',
+  cloud_name: 'hd1oejweg',
   host: 'http://localhost:8081'
 };
 
