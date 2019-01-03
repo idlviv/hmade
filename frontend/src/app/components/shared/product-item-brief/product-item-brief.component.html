@@ -73,14 +73,15 @@
 
     <!-- product level (no children)-->
     <section *ngIf="!child && product" class="row product-brief-section" fxFlex="row">
-      <div class="cell" fxFlex="100">
+      <div class="cell" fxFlex="100" fxLayoutAlign="center center">
         <h2 class="mat-h2 title">{{product.name}}</h2>
        </div>
       <div class="cell product-brief-description" fxFlex="100" fxLayoutAlign="center center">
         <p class="mat-body">{{product.description}}</p>
       </div>
     </section>
-    <section *ngIf="!child && product" class="cell-px0 social-feed-section" fxFlex="100" fxLayout="row">
+    <section *ngIf="!child && product && (product.dimensions.width || product.dimensions.height)" 
+     class="cell-px0 social-feed-section" fxFlex="100" fxLayout="row">
       <div class="item text-align-center" fxFlex>
         <mat-icon>swap_horiz</mat-icon>
         <span> {{product?.dimensions?.width}}</span>

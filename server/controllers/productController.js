@@ -379,7 +379,6 @@ module.exports.getProductsByParent = function(req, res, next) {
   displayFilter === 'true' ?
       query = {parents: parent, display: true} : query = {parents: parent};
 
-  log.debug('col', collection === 'products');
   switch (collection) {
     case 'products':
       ProductModel.find(query)
