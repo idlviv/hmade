@@ -242,6 +242,7 @@ module.exports.productAddMenuImage = function(req, res, next) {
             {width: 590, height: 443, crop: 'fill', fetch_format: 'auto'},
             {width: 460, height: 345, crop: 'fill', fetch_format: 'auto'},
             {width: 400, height: 300, crop: 'fill', fetch_format: 'auto'},
+            {width: 80, height: 60, crop: 'fill', fetch_format: 'auto'},
             {width: 180, height: 180, crop: 'fill', fetch_format: 'auto'},
           ],
         },

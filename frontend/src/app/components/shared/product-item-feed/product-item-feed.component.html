@@ -1,0 +1,17 @@
+<div class="row" fxLayout="row">
+  <div class="cell" fxFlex="100">
+    <div class="item" fxFlex="92px" fxLayoutAlign="center center">
+      <img class="responsive-image-stretch" src="{{
+          config.imgPath +
+          config.cloudinary.cloud_name +
+          '/c_fill,w_80,h_60,f_auto/' +
+          product.menuImage}}"
+         alt="Image">
+    </div>
+    <div class="item" fxFlex="100%-92px">
+      <p class="body-1 muted">{{product.name}}</p>
+      <p class="caption text-justify">{{product.description}}</p>
+    </div>
+  </div>
+</div>
+       

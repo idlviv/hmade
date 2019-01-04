@@ -22,6 +22,7 @@ import { CommentsComponent } from './comments/comments.component';
 import { ScreenTestComponent } from './screen-test/screen-test.component';
 import { McsItemBriefComponent } from './mcs-item-brief/mcs-item-brief.component';
 import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.component';
+import { ProductItemFeedComponent } from './product-item-feed/product-item-feed.component';
 
 @NgModule({
   imports: [
@@ -36,6 +37,7 @@ import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.compon
     Page404Component,
     ProductItemBriefComponent,
     ProductItemDetailComponent,
+    ProductItemFeedComponent,
     CrslComponent,
     FeedbackComponent,
     HeaderComponent,
@@ -63,7 +65,8 @@ import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.compon
     CommentsComponent,
     ScreenTestComponent,
     McsItemBriefComponent,
-    McsItemDetailComponent
+    McsItemDetailComponent,
+    ProductItemFeedComponent
   ],
 })
 export class SharedModule { }

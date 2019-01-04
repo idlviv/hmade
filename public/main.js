@@ -1626,7 +1626,7 @@ var HeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"landing\" class=\"container\">\r\n  <div class=\"row\" fxLayout=\"row\">\r\n    <div class=\"app-container-v left-side-container\" fxFlex=\"100\" fxFlex.gt-md=\"20\">\r\n      <div class=\"container\">\r\n        <div class=\"row\">\r\n          <div class=\"cell\">\r\n            <div class=\"avatar-big-block\">\r\n              <img class=\"avatar-big\" src=\"./assets/images/my-photo180x180.png\" alt=\"my photo\">\r\n            </div>\r\n              <h3 class=\"mat-h3\">Про себе</h3>\r\n              <p class=\"mat-body-1 text-justify\">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.\r\n              Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,\r\n              шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..\r\n              Ще багато можна писати про себе та мої захоплення, але згодом..\r\n                Завітайте у мою майстерню.</p>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"app-container-v main-container\"  fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"50\" fxFlex.gt-md=\"60\">\r\n      <div class=\"container\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <div *ngFor=\"let mc of mcs\" class=\"cell\" fxFlex=\"100\">\r\n            <app-mcs-item-brief [mc]=\"mc\"></app-mcs-item-brief>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"app-container-v right-side-container\"  fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"50\" fxFlex.gt-md=\"20\">\r\n        <div class=\"container\">\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div *ngFor=\"let product of products\" class=\"cell\" fxFlex=\"100\">\r\n              <app-product-item-brief [product]=\"product\"></app-product-item-brief>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n  </div>\r\n</div>\r\n\r\n    <!-- <app-screen-test></app-screen-test>  -->\r\n  \r\n \r\n  <!-- <div id=\"home-left\">\r\n    <img src=\"./assets/images/hmade_logo_dark.svg\" id=\"home-logo\" alt=\"logo\">\r\n    <div>\r\n      <a mat-flat-button class=\"radius-5\" href=\"/products/ch\" id=\"home-action\">Перейти</a>\r\n      <button mat-fab-button class=\"radius-5\" (click)=\"onScroll()\">Down</button>\r\n      <button color=\"primary\" mat-mini-fab (click)=\"onScroll()\" id=\"scroll-down-btn\">\r\n        <mat-icon>keyboard_arrow_down</mat-icon></button>\r\n    </div>\r\n  </div>\r\n  <div id=\"home-right\" #scrollPoint>\r\n    <p>right</p>\r\n  </div>\r\n  <div id=\"home-bottom\">\r\n    <div fxLayout=\"row full-width\">\r\n      <div fxFlex=\"10\"></div>\r\n      <div class=\"row wrap full-width\" fxFlex=\"80\" fxLayout=\"row\" fxLayoutAlign=\"space-between\">\r\n        <div class=\"cell-padding\" fxFlex=\"1 1 auto\" *ngFor=\"let descendant of descendants\" fxLayout=\"row\">\r\n          <a fxFlex=\"1 1 auto\" mat-stroked-button class=\"radius-5 text-center\" color=\"accent\"\r\n             [routerLink]=\"['/products', 'ch', {outlets: {primary: [descendant._id], breadcrumb: [descendant._id]}}]\"\r\n             [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n             {{descendant.name}}\r\n          </a>\r\n\r\n        </div>\r\n\r\n      </div>\r\n\r\n    </div>\r\n  </div> -->\r\n\r\n"
+module.exports = "<div id=\"landing\" class=\"container\">\r\n  <div class=\"row\" fxLayout=\"row\">\r\n    <div class=\"app-container-v left-side-container\" fxFlex=\"100\" fxFlex.gt-md=\"20\">\r\n      <div class=\"container\">\r\n        <div class=\"row\">\r\n          <div class=\"cell\">\r\n            <div class=\"avatar-big-block\">\r\n              <img class=\"avatar-big\" src=\"./assets/images/my-photo180x180.png\" alt=\"my photo\">\r\n            </div>\r\n              <h3 class=\"mat-h3\">Про себе</h3>\r\n              <p class=\"mat-body-1 text-justify\">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.\r\n              Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,\r\n              шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..\r\n              Ще багато можна писати про себе та мої захоплення, але згодом..\r\n                Завітайте у мою майстерню.</p>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"app-container-v main-container\"  fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"50\" fxFlex.gt-md=\"60\">\r\n      <div class=\"container\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <div *ngFor=\"let mc of mcs\" class=\"cell\" fxFlex=\"100\">\r\n            <app-mcs-item-brief [mc]=\"mc\"></app-mcs-item-brief>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"app-container-v right-side-container\"  fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"50\" fxFlex.gt-md=\"20\">\r\n        <div class=\"container\">\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div *ngFor=\"let product of products\" class=\"cell\" fxFlex=\"100\">\r\n              <app-product-item-feed [product]=\"product\"></app-product-item-feed>\r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n  </div>\r\n</div>\r\n\r\n    <!-- <app-screen-test></app-screen-test>  -->\r\n  \r\n \r\n  <!-- <div id=\"home-left\">\r\n    <img src=\"./assets/images/hmade_logo_dark.svg\" id=\"home-logo\" alt=\"logo\">\r\n    <div>\r\n      <a mat-flat-button class=\"radius-5\" href=\"/products/ch\" id=\"home-action\">Перейти</a>\r\n      <button mat-fab-button class=\"radius-5\" (click)=\"onScroll()\">Down</button>\r\n      <button color=\"primary\" mat-mini-fab (click)=\"onScroll()\" id=\"scroll-down-btn\">\r\n        <mat-icon>keyboard_arrow_down</mat-icon></button>\r\n    </div>\r\n  </div>\r\n  <div id=\"home-right\" #scrollPoint>\r\n    <p>right</p>\r\n  </div>\r\n  <div id=\"home-bottom\">\r\n    <div fxLayout=\"row full-width\">\r\n      <div fxFlex=\"10\"></div>\r\n      <div class=\"row wrap full-width\" fxFlex=\"80\" fxLayout=\"row\" fxLayoutAlign=\"space-between\">\r\n        <div class=\"cell-padding\" fxFlex=\"1 1 auto\" *ngFor=\"let descendant of descendants\" fxLayout=\"row\">\r\n          <a fxFlex=\"1 1 auto\" mat-stroked-button class=\"radius-5 text-center\" color=\"accent\"\r\n             [routerLink]=\"['/products', 'ch', {outlets: {primary: [descendant._id], breadcrumb: [descendant._id]}}]\"\r\n             [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n             {{descendant.name}}\r\n          </a>\r\n\r\n        </div>\r\n\r\n      </div>\r\n\r\n    </div>\r\n  </div> -->\r\n\r\n"
 
 /***/ }),
 
@@ -2236,6 +2236,76 @@ var ProductItemDetailComponent = /** @class */ (function () {
 
 /***/ }),
 
+/***/ "./src/app/components/shared/product-item-feed/product-item-feed.component.html":
+/*!**************************************************************************************!*\
+  !*** ./src/app/components/shared/product-item-feed/product-item-feed.component.html ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n    <div class=\"item\" fxFlex=\"92px\" fxLayoutAlign=\"center center\">\r\n      <img class=\"responsive-image-stretch\" src=\"{{\r\n          config.imgPath +\r\n          config.cloudinary.cloud_name +\r\n          '/c_fill,w_80,h_60,f_auto/' +\r\n          product.menuImage}}\"\r\n         alt=\"Image\">\r\n    </div>\r\n    <div class=\"item\" fxFlex=\"100%-92px\">\r\n      <p class=\"body-1 muted\">{{product.name}}</p>\r\n      <p class=\"caption text-justify\">{{product.description}}</p>\r\n    </div>\r\n  </div>\r\n</div>\r\n       "
+
+/***/ }),
+
+/***/ "./src/app/components/shared/product-item-feed/product-item-feed.component.scss":
+/*!**************************************************************************************!*\
+  !*** ./src/app/components/shared/product-item-feed/product-item-feed.component.scss ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/shared/product-item-feed/product-item-feed.component.ts":
+/*!************************************************************************************!*\
+  !*** ./src/app/components/shared/product-item-feed/product-item-feed.component.ts ***!
+  \************************************************************************************/
+/*! exports provided: ProductItemFeedComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductItemFeedComponent", function() { return ProductItemFeedComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ProductItemFeedComponent = /** @class */ (function () {
+    function ProductItemFeedComponent() {
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"];
+    }
+    ProductItemFeedComponent.prototype.ngOnInit = function () {
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Object)
+    ], ProductItemFeedComponent.prototype, "product", void 0);
+    ProductItemFeedComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-product-item-feed',
+            template: __webpack_require__(/*! ./product-item-feed.component.html */ "./src/app/components/shared/product-item-feed/product-item-feed.component.html"),
+            styles: [__webpack_require__(/*! ./product-item-feed.component.scss */ "./src/app/components/shared/product-item-feed/product-item-feed.component.scss")]
+        }),
+        __metadata("design:paramtypes", [])
+    ], ProductItemFeedComponent);
+    return ProductItemFeedComponent;
+}());
+
+
+
+/***/ }),
+
 /***/ "./src/app/components/shared/screen-test/screen-test.component.html":
 /*!**************************************************************************!*\
   !*** ./src/app/components/shared/screen-test/screen-test.component.html ***!
@@ -2339,12 +2409,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _screen_test_screen_test_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./screen-test/screen-test.component */ "./src/app/components/shared/screen-test/screen-test.component.ts");
 /* harmony import */ var _mcs_item_brief_mcs_item_brief_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./mcs-item-brief/mcs-item-brief.component */ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.ts");
 /* harmony import */ var _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./mcs-item-detail/mcs-item-detail.component */ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.ts");
+/* harmony import */ var _product_item_feed_product_item_feed_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./product-item-feed/product-item-feed.component */ "./src/app/components/shared/product-item-feed/product-item-feed.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -2386,6 +2458,7 @@ var SharedModule = /** @class */ (function () {
                 _page_404_page_404_component__WEBPACK_IMPORTED_MODULE_2__["Page404Component"],
                 _product_item_brief_product_item_brief_component__WEBPACK_IMPORTED_MODULE_6__["ProductItemBriefComponent"],
                 _product_item_detail_product_item_detail_component__WEBPACK_IMPORTED_MODULE_7__["ProductItemDetailComponent"],
+                _product_item_feed_product_item_feed_component__WEBPACK_IMPORTED_MODULE_24__["ProductItemFeedComponent"],
                 _crsl_crsl_component__WEBPACK_IMPORTED_MODULE_9__["CrslComponent"],
                 _feedback_feedback_component__WEBPACK_IMPORTED_MODULE_10__["FeedbackComponent"],
                 _header_header_component__WEBPACK_IMPORTED_MODULE_15__["HeaderComponent"],
@@ -2413,7 +2486,8 @@ var SharedModule = /** @class */ (function () {
                 _comments_comments_component__WEBPACK_IMPORTED_MODULE_20__["CommentsComponent"],
                 _screen_test_screen_test_component__WEBPACK_IMPORTED_MODULE_21__["ScreenTestComponent"],
                 _mcs_item_brief_mcs_item_brief_component__WEBPACK_IMPORTED_MODULE_22__["McsItemBriefComponent"],
-                _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_23__["McsItemDetailComponent"]
+                _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_23__["McsItemDetailComponent"],
+                _product_item_feed_product_item_feed_component__WEBPACK_IMPORTED_MODULE_24__["ProductItemFeedComponent"]
             ],
         })
     ], SharedModule);
