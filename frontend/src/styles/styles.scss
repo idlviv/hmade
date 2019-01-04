@@ -1,6 +1,6 @@
 @import './mixins';
 // @import './materialTypography';
-@import './materialTypography';  // ~@angular/material/theming -> ./material -> ./materialTypography
+@import './material';  // ~@angular/material/theming -> ./material -> ./materialTypography
 
 html {
   font-size: 16px;
