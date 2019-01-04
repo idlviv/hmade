@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { config } from '../../../app.config';
 import { ObservableMedia } from '@angular/flex-layout';
+import { UserService } from 'src/app/services/user.service';
 
 @Component({
   selector: 'app-product-item-brief',
@@ -19,10 +20,14 @@ export class ProductItemBriefComponent implements OnInit {
 
   constructor(
     public media: ObservableMedia,
+    private userService: UserService
   ) { }
 
   ngOnInit() {
+  }
 
+  allowTo(permitedRole: string): boolean {
+    return this.userService.allowTo(permitedRole);
   }
 
 }

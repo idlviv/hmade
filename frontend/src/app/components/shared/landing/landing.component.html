@@ -1,6 +1,6 @@
 <div id="landing" class="container">
   <div class="row" fxLayout="row">
-    <div class="app-container-v left-side-container" fxFlex="20">
+    <div class="app-container-v left-side-container" fxFlex="100" fxFlex.gt-md="20">
       <div class="container">
         <div class="row">
           <div class="cell">
@@ -18,7 +18,7 @@
       </div>
     </div>
 
-    <div class="app-container-v main-container" fxFlex="60">
+    <div class="app-container-v main-container"  fxFlex="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.gt-md="60">
       <div class="container">
         <div class="row" fxLayout="row">
           <div *ngFor="let mc of mcs" class="cell" fxFlex="100">
@@ -28,7 +28,7 @@
       </div>
     </div>
 
-    <div class="app-container-v right-side-container" fxFlex="20">
+    <div class="app-container-v right-side-container"  fxFlex="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.gt-md="20">
         <div class="container">
           <div class="row" fxLayout="row">
             <div *ngFor="let product of products" class="cell" fxFlex="100">
