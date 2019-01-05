@@ -1,21 +1,18 @@
-<div id="toolbar" class="mat-elevation-z4">
-  <div class="logo">
+<div id="toolbar" class="mat-elevation-z4" fxLayout="row" fxLayoutAlign="center center">
+  <div class="logo" fxFlex.lt-md="80" fxFlex="30" fxLayoutAlign="start center">
     <a href="">
       <img src="./assets/images/hmade_logo_light.svg" height="36px" alt="HandMADE logo">
     </a>
   </div>
 
-  <div fxFlex></div>
-
-  <div fxShow="true" fxHide.lt-md="true">
+  <div fxShow="true" fxHide.lt-md="true" fxFlex="40" fxLayoutAlign="center center">
     <a *ngFor="let mainMenuCommonItem of mainMenuCommonItems" class="link" [routerLink]="['/', mainMenuCommonItem._id, 'ch']"
       [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: false}">
       <span class="type1">{{mainMenuCommonItem.name}}</span>
     </a>
   </div>
-  <div fxFlex></div>
 
-  <div fxShow="true" fxHide.lt-md="true">
+  <div fxShow="true" fxHide.lt-md="true" fxFlex="30" fxLayoutAlign="end center">
     <a *ngIf="allowTo('guest')" class="link" [matMenuTriggerFor]="settingsMenu" #settingsMenuTrigger="matMenuTrigger" (mouseover)="onSettingsMenuMouseover()">
       <span class="type2">
         <mat-icon class="mat-icon-aligner">settings</mat-icon>{{user.name}} {{user.surname}}
@@ -41,7 +38,7 @@
     <a *ngIf="allowTo('guest')" class="link" (click)="userLogout()"><span class="type2">Вихід</span></a>
   </div>
 
-  <div class="menu-button" fxShow="true" fxHide.gt-sm="true">
+  <div class="menu-button" fxShow="true" fxHide.gt-sm="true" fxFlex="20" fxLayoutAlign="end center">
     <button mat-button (click)="sidenav.toggle()">
       <mat-icon *ngIf="sidenav.opened">format_indent_increase</mat-icon>
       <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>

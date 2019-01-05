@@ -1,75 +1,56 @@
-<div id="landing" class="container">
-  <div class="row" fxLayout="row">
-    <div class="app-container-v left-side-container" fxFlex="100" fxFlex.gt-md="20">
+<div id="landing" fxLayoutAlign="center center">
+  <div class="container">
+        <div class="app-container-h app-container-v">
       <div class="container">
-        <div class="row">
-          <div class="cell">
-            <div class="avatar-big-block">
-              <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo">
-            </div>
-              <h3 class="mat-h3">Про себе</h3>
-              <p class="mat-body-1 text-justify">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.
-              Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,
-              шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..
-              Ще багато можна писати про себе та мої захоплення, але згодом..
-                Завітайте у мою майстерню.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="app-container-v main-container"  fxFlex="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.gt-md="60">
-      <div class="container">
-        <div class="row" fxLayout="row">
-          <div *ngFor="let mc of mcs" class="cell" fxFlex="100">
-            <app-mcs-item-brief [mc]="mc"></app-mcs-item-brief>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="app-container-v right-side-container"  fxFlex="100" fxFlex.sm="50" fxFlex.md="50" fxFlex.gt-md="20">
-        <div class="container">
           <div class="row" fxLayout="row">
-            <div *ngFor="let product of products" class="cell" fxFlex="100">
-              <app-product-item-feed [product]="product"></app-product-item-feed>
-            </div>
+
+              <div id="landing-left" class="container" fxFlex.lt-md="100" fxFlex="35" fxLayoutAlign="center center">
+                  <div class="row" fxLayoutAlign="center center">
+                    <div class="cell">
+                        <img class="responsive-image-stretch" src="{{
+                          config.imgPath +
+                          config.cloudinary.cloud_name +
+                          '/c_fill,w_500,h_500,f_auto/' +
+                          'default_product'}}"
+                         alt="Image">
+                    </div>
+                  </div>
+              </div>
+          
+              <div class="app-container-v" fxFlex.lt-md="100" fxFlex="30">
+                <div class="container">
+                  <div class="row">
+                    <div class="cell">
+                      <div class="avatar-big-block">
+                        <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo">
+                      </div>
+                        <h3 class="mat-h2 text-align-center">В І Т А Ю !</h3>
+                        <p class="mat-body-1 muted text-align-center">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.
+                        Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,
+                        шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..
+                        Ще багато можна писати про себе та мої захоплення, але згодом..
+                          Завітайте у мою майстерню.</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+          
+              <div id="landing-right" class="container" fxFlex.lt-md="100" fxFlex="35" fxLayoutAlign="center center">
+                  <div class="row" fxLayoutAlign="center center">
+                    <div class="cell">
+                        <img class="responsive-image-stretch" src="{{
+                          config.imgPath +
+                          config.cloudinary.cloud_name +
+                          '/c_fill,w_500,h_500,f_auto/' +
+                          'default_product'}}"
+                         alt="Image">
+                    </div>
+                  </div>
+              </div>
           </div>
-        </div>
       </div>
+         
+    </div>
   </div>
+
 </div>
-
-    <!-- <app-screen-test></app-screen-test>  -->
-  
- 
-  <!-- <div id="home-left">
-    <img src="./assets/images/hmade_logo_dark.svg" id="home-logo" alt="logo">
-    <div>
-      <a mat-flat-button class="radius-5" href="/products/ch" id="home-action">Перейти</a>
-      <button mat-fab-button class="radius-5" (click)="onScroll()">Down</button>
-      <button color="primary" mat-mini-fab (click)="onScroll()" id="scroll-down-btn">
-        <mat-icon>keyboard_arrow_down</mat-icon></button>
-    </div>
-  </div>
-  <div id="home-right" #scrollPoint>
-    <p>right</p>
-  </div>
-  <div id="home-bottom">
-    <div fxLayout="row full-width">
-      <div fxFlex="10"></div>
-      <div class="row wrap full-width" fxFlex="80" fxLayout="row" fxLayoutAlign="space-between">
-        <div class="cell-padding" fxFlex="1 1 auto" *ngFor="let descendant of descendants" fxLayout="row">
-          <a fxFlex="1 1 auto" mat-stroked-button class="radius-5 text-center" color="accent"
-             [routerLink]="['/products', 'ch', {outlets: {primary: [descendant._id], breadcrumb: [descendant._id]}}]"
-             [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
-             {{descendant.name}}
-          </a>
-
-        </div>
-
-      </div>
-
-    </div>
-  </div> -->
-

@@ -392,7 +392,7 @@ var McsRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container-h app-container-v\">\r\n  <div class=\"container\">\r\n    <div class=\"row\" FxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <router-outlet name=\"mcsFilters\"></router-outlet>\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <router-outlet></router-outlet>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div id=\"mcs\">\r\n  <div class=\"container\">\r\n    <div class=\"app-container-h app-container-v\">\r\n      <div class=\"container\">\r\n\r\n        <div class=\"row\" FxLayout=\"row\">\r\n          <div class=\"cell\" fxFlex=\"100\">\r\n            <router-outlet name=\"mcsFilters\"></router-outlet>\r\n          </div>\r\n          <div class=\"cell\" fxFlex=\"100\">\r\n            <router-outlet></router-outlet>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 

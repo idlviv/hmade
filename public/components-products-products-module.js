@@ -100,11 +100,7 @@ var BreadcrumbComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-<<<<<<< HEAD
 module.exports = "<!--<a *ngFor=\"let sibling of siblings\" mat-button-->\n   <!--[routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', sibling._id],-->\n     <!--breadcrumb: [category_id, 'details', sibling._id]}}]\"-->\n   <!--[queryParams]=\"{name: sibling.name}\"-->\n   <!--[routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">-->\n  <!--{{sibling.name}}-->\n<!--</a>-->\n\n<mat-nav-list>\n    <a mat-list-item *ngFor=\"let sibling of siblings\"\n       [routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', sibling._id],\n     breadcrumb: [category_id, 'details', sibling._id]}}]\"\n       [queryParams]=\"{name: sibling.name}\"\n       [routerLinkActive]=\"['primary']\" [routerLinkActiveOptions]=\"{exact: true}\">\n      {{sibling.name}}\n    </a>\n</mat-nav-list>"
-=======
-module.exports = "<!--<a *ngFor=\"let sibling of siblings\" mat-button-->\r\n   <!--[routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', sibling._id],-->\r\n     <!--breadcrumb: [category_id, 'details', sibling._id]}}]\"-->\r\n   <!--[queryParams]=\"{name: sibling.name}\"-->\r\n   <!--[routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">-->\r\n  <!--{{sibling.name}}-->\r\n<!--</a>-->\r\n\r\n<mat-nav-list>\r\n    <a mat-list-item *ngFor=\"let sibling of siblings\"\r\n       [routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', sibling._id],\r\n     breadcrumb: [category_id, 'details', sibling._id]}}]\"\r\n       [queryParams]=\"{name: sibling.name}\"\r\n       [routerLinkActive]=\"['primary']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n      {{sibling.name}}\r\n    </a>\r\n</mat-nav-list>"
->>>>>>> 3ec0daa2419b4a20549f4df073634917dafc502c
 
 /***/ }),
 
@@ -263,7 +259,7 @@ var ProductsDetailComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div *ngIf=\"category?.description\" class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n    <mat-card>\r\n      <mat-card-content>\r\n        <div class=\"text-justify\">\r\n          <div class=\"category-description-body\">\r\n            <p [innerHTML]=\"category?.description\"></p>\r\n          </div>\r\n\r\n\r\n        </div>\r\n      </mat-card-content>\r\n    </mat-card>\r\n  </div>\r\n</div>\r\n<div class=\"row\" fxLayout=\"row\" >\r\n  <div *ngFor=\"let product of products\"  class=\"cell\"\r\n       fxFlex.xs=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n    <app-product-item-brief [product]=\"product\" [category_id]=\"category_id\"></app-product-item-brief>\r\n  </div>\r\n  <div *ngFor=\"let child of children\" class=\"cell\"\r\n       fxFlex.xs=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n    <app-product-item-brief  [child]=\"child\"></app-product-item-brief>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div id=\"products\">\r\n  <div class=\"container\">\r\n    <div class=\"app-container-h app-container-v\">\r\n      <!-- <div class=\"container\">\r\n        <div class=\"row\" fxLayout=\"row\"> -->\r\n\r\n          <div class=\"container\">\r\n            <!-- <div *ngIf=\"category?.description\" class=\"row\" fxLayout=\"row\" fxFlex=\"100\">\r\n              <div class=\"cell\" fxFlex=\"100\">\r\n                <mat-card>\r\n                  <mat-card-content>\r\n                    <div class=\"text-justify\">\r\n                      <div class=\"category-description-body\">\r\n                        <p [innerHTML]=\"category?.description\"></p>\r\n                      </div>\r\n\r\n\r\n                    </div>\r\n                  </mat-card-content>\r\n                </mat-card>\r\n              </div>\r\n            </div> -->\r\n            <div class=\"row\" fxLayout=\"row\">\r\n              <div *ngFor=\"let product of products\" class=\"cell\"\r\n                  fxFlex.xs=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n                <app-product-item-brief [product]=\"product\" [category_id]=\"category_id\"></app-product-item-brief>\r\n              </div>\r\n              <div *ngFor=\"let child of children\" class=\"cell\"\r\n                  fxFlex.xs=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n                <app-product-item-brief  [child]=\"child\"></app-product-item-brief>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        <!-- </div>\r\n      </div> -->\r\n    </div>\r\n  </div>\r\n\r\n</div>"
 
 /***/ }),
 
@@ -454,7 +450,7 @@ var ProductsRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!--<div class=\"app-container-h\">-->\r\n  <!--<div class=\"container\">-->\r\n    <router-outlet name=\"breadcrumb\"></router-outlet>\r\n  <!--</div>-->\r\n<!--</div>-->\r\n<div class=\"app-container-h app-container-v\">\r\n  <div class=\"container\">\r\n    <router-outlet></router-outlet>\r\n  </div>\r\n</div>"
+module.exports = "<!--<div class=\"app-container-h\">-->\r\n  <!--<div class=\"container\">-->\r\n    <router-outlet name=\"breadcrumb\"></router-outlet>\r\n  <!--</div>-->\r\n<!--</div>-->\r\n<!-- <div id=\"products\" class=\"app-container-h app-container-v\">\r\n  <div class=\"container\"> -->\r\n    <router-outlet></router-outlet>\r\n  <!-- </div>\r\n</div> -->"
 
 /***/ }),
 

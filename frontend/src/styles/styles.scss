@@ -17,21 +17,21 @@ body {
 //   background-color: transparent;
 // }
 
-.home-container {
-  @include gt-md {
-    z-index: -9999;
-    height: 500px;
-  }
-  @include md {
-    padding: 12px 0;
-  }
-  @include sm {
-    padding: 8px 0;
-  }
-  @include xs {
-    padding: 8px 0;
-  }
-}
+// .home-container {
+//   @include gt-md {
+//     z-index: -9999;
+//     height: 500px;
+//   }
+//   @include md {
+//     padding: 12px 0;
+//   }
+//   @include sm {
+//     padding: 8px 0;
+//   }
+//   @include xs {
+//     padding: 8px 0;
+//   }
+// }
 
 .container-sidenav,
 .container-px0 {
@@ -80,8 +80,8 @@ body {
     padding: 8px;
   }
   @include xs {
-    padding: 8px 0;
-    //padding: 8px;
+    // padding: 8px 0;
+    padding: 8px;
   }
 }
 
@@ -99,8 +99,8 @@ body {
     margin: -8px;
   }
   @include xs {
-    margin: -8px 0;
-    //margin: -8px;
+    // margin: -8px 0;
+    margin: -8px;
   }
 }
 //gt-sm
@@ -115,8 +115,8 @@ body {
     padding: 8px;
   }
   @include xs {
-    padding: 8px 0;
-    //padding: 8px;
+    // padding: 8px 0;
+    padding: 8px;
   }
 }
 
@@ -597,12 +597,12 @@ div.form-block {
   }
 }
 
-mat-sidenav-content {
-  min-height: calc(100vh - 144px); // header and footer
-  @include lt-sm {
-    min-height: calc(100vh - 128px); // header and footer
-  }
-}
+// mat-sidenav-content {
+//   min-height: calc(100vh - 144px); // header and footer
+//   @include lt-sm {
+//     min-height: calc(100vh - 128px); // header and footer
+//   }
+// }
 
 .toolbar-branding {
   margin: 0;
@@ -1101,12 +1101,9 @@ td.mat-cell {
 }
 
 
+//main blocks - app-header + app-content + app-footer
 
-#product-item-brief {
-
- 
-}
-
+// elements
 #toolbar, #footer, #breadcrumb {
   position: relative;
   z-index: 4;
@@ -1157,23 +1154,76 @@ td.mat-cell {
   }
 }
 
-#footer, #breadcrumb {
+#breadcrumb {
   @include gt-xs {
     height: 64px;
     padding: 8px 16px;
   }
   @include xs {
-    padding: 8px 16px;
     height: 56px;
+    padding: 8px 16px;
   }
 }
 
+#footer {
+  @include gt-xs {
+    height: 64px;
+    padding: 8px 16px;
+  }
+  @include xs {
+    height: 56px;
+    padding: 8px 16px;
+  }
+}
 
+//products page
+#products {
+  @include gt-md {
+    min-height: calc(100vh - 258px); // footer 64px + toolbar 130px + breadcrumb 64px
+  }
+  @include md {
+    min-height: calc(100vh - 228px); // footer 64px + toolbar 100px + breadcrumb 64px
+  }
+  @include sm {
+    min-height: calc(100vh - 192px); // footer 64px + toolbar 64px + breadcrumb 64px
+  }
+  @include xs {
+    min-height: calc(100vh - 168px); // footer 56px + toolbar 56px + breadcrumb 56px
+  }
+}
 
+#mcs {
+  @include gt-md {
+    min-height: calc(100vh - 194px); // footer 64px + toolbar 130px
+  }
+  @include md {
+    min-height: calc(100vh - 164px); // footer 64px + toolbar 100px
+  }
+  @include sm {
+    min-height: calc(100vh - 128px); // footer 64px + toolbar 64px
+  }
+  @include xs {
+    min-height: calc(100vh - 112px); // footer 56px + toolbar 56px
+  }
+}
+
+// home page
 #landing {
+  @include gt-md {
+    min-height: calc(100vh - 194px); // footer 64px + toolbar 130px
+  }
+  @include md {
+    min-height: calc(100vh - 164px); // footer 64px + toolbar 100px
+  }
+  @include sm {
+    min-height: calc(100vh - 128px); // footer 64px + toolbar 64px
+  }
+  @include xs {
+    min-height: calc(100vh - 112px); // footer 56px + toolbar 56px
+  }
+  
   .avatar-big-block {
     width: 100%;
-    max-height: 180px;
     margin-bottom: 1rem;
     //margin-left: auto;
     //margin-right: auto;
@@ -1216,39 +1266,27 @@ td.mat-cell {
 
 }
 
-// .googleButton {
-    // display: inline-block;
-    // background: white;
-    // color: #444;
-    // width: 190px;
-    // border-radius: 5px;
-    // border: thin solid #888;
-    // box-shadow: 1px 1px 1px grey;
-    // white-space: nowrap;
-  // }
-  // #customBtn:hover {
-  //   cursor: pointer;
-  // }
-  // span.label {
-  //   font-family: serif;
-  //   font-weight: normal;
-  // }
-  // span.icon {
-  //   background: url('../assets/other/btn_google_signin_light_normal_web.png') transparent 5px 50% no-repeat;
-  //   display: inline-block;
-  //   vertical-align: middle;
-  //   width: 42px;
-  //   height: 42px;
-  // }
-//   span.buttonText {
-//     display: inline-block;
-//     vertical-align: middle;
-//     padding-left: 42px;
-//     padding-right: 42px;
-//     font-size: 14px;
-//     font-weight: bold;
-//     font-family: 'Roboto', sans-serif;
-// }
+#landing-left {
+  border: solid gray 1px;
+  // background:url('../assets/images/bg3.svg');
+  @include gt-sm {
+    border-right: 0;
+  }
+  @include lt-md {
+    border: 0;
+  }
+}
+
+#landing-right {
+  border: solid gray 1px;
+  // background: url('../assets/images/bg3.svg');
+  @include gt-sm {
+    border-left: 0;
+  }
+  @include lt-md {
+    border: 0;
+  }
+}
 
 .google-button {
   color: rgba(0, 0, 0, .54);
