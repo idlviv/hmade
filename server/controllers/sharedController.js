@@ -8,7 +8,7 @@ module.exports.sendFeedbackMessage = function(req, res, next) {
   Object.assign(feedback, req.body);
 
   let mailOptions = {
-    from: 'Grabo <postmaster@sandbox4d505533524a4360b5506928e2ed0726.mailgun.org>',
+    from: 'HMade <postmaster@sandbox4d505533524a4360b5506928e2ed0726.mailgun.org>',
     to: 'hmadedotwork@gmail.com',
     subject: 'Питання з сайту',
     text: 'Питання ${feedback.message}. Контакти ${feedback.contacts}. Ім\'я ${feedback.name}',
