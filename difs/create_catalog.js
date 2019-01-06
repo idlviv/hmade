@@ -14,7 +14,7 @@ db.getCollection('catalogs')
 
         { _id: 'toys', ancestors: ['home', 'common', 'products'], parent: 'products', order: 1,
           assets: ['default_product'], prefix: 'toy',
-          name: 'Ірашки', description: ''},
+          name: 'Іграшки', description: ''},
         { _id: 'wreaths', ancestors: ['home', 'common', 'products'], parent: 'products', order: 2,
           assets: ['default_product'], prefix: 'wrh',
           name: 'Віночки', description: ''},
@@ -74,8 +74,8 @@ db.getCollection('catalogs')
 
       {_id: 'dashboard', name:'Dashboard', ancestors: ['home', 'system'], parent :'system',
         auth: 'guest', order: 1, assets:['catalog'],  description:''},
-        {_id: 'profile', name: 'Профіль', ancestors: ['home', 'system', 'dashboard'], parent: 'dashboard',
-          auth: 'guest', order: 1, assets: ['catalog'],description: ''},
+        // {_id: 'profile', name: 'Профіль', ancestors: ['home', 'system', 'dashboard'], parent: 'dashboard',
+        //   auth: 'guest', order: 1, assets: ['catalog'],description: ''},
         {_id: 'product-editor', name: 'Редактор виробів', ancestors: ['home', 'system', 'dashboard'], parent: 'dashboard',
           auth: 'manager', order: 2, assets: ['catalog'], description: ''},
         {_id: 'mc-editor', name: 'Редактор майстеркласів', ancestors: ['home', 'system', 'dashboard'], parent: 'dashboard',
