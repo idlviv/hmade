@@ -92,7 +92,7 @@
           <span fxFlex></span>
           <span class="mat-body-1">{{comment.commentedAt | date: 'dd.MM.yyyy HH:mm'}}</span>
         </p>
-        <p class="text-align-justify">{{comment.comment}} {{comment | json}}</p>
+        <p class="text-align-justify">{{comment.comment}}</p>
       </div>
       <div class="cell" fxFlex="10">
         <p *ngIf="allowTo('manager')"><button class="mat-icon-button" (click)="deleteComment(comment)"><mat-icon class="mat-18">delete_outline</mat-icon></button></p>

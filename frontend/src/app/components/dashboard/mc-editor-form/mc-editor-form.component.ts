@@ -211,7 +211,6 @@ export class McEditorFormComponent implements OnInit {
 
     this.mcService.mcUpsert(this.mc)
     .subscribe(result => {
-        console.log('result', result.data);
         this.matSnackBar.open(result.message, '',
           {duration: 3000});
         if (goBackAndReset) {

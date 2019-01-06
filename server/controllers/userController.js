@@ -180,7 +180,7 @@ const userEmailVerificationSend = function(req, res, next) {
   const email = user.email;
 
   let mailOptions = {
-    from: 'Hmade <postmaster@sandbox4d505533524a4360b5506928e2ed0726.mailgun.org>', // FIXME: change email credentials
+    from: 'Hmade <postmaster@sandbox4d505533524a4360b5506928e2ed0726.mailgun.org>',
     to: email,
     subject: 'Підтвердіть пошту',
     text: 'Будь ласка, перейдіть за посиланням ' + url,

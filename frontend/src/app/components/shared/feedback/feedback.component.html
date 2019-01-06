@@ -1,3 +1,7 @@
+<div id="feedback">
+    <div class="container">
+      <div class="app-container-h app-container-v">
+
 <div class="container">
 
   <div class="row" fxLayout="column" fxLayout.gt-xs="row">
@@ -8,9 +12,9 @@
       <div class="centered-container-600">
         <mat-card  class="form-block">
           <mat-card-content>
-            <div class="padding-bottom" fxLayout fxLayoutAlign="center center">
-              <img class="responsive-image" src="./assets/images/graboplast_logo.svg" width="367px">
-            </div>
+              <div class="padding-bottom" fxLayout fxLayoutAlign="center center">
+                <img class="responsive-image" src="./assets/images/hmade_logo_dark.svg" width="367px">
+              </div>
             <form #fForm="ngForm" [formGroup]="feedbackForm" (submit)="onFeedbackFormSubmit()">
 
               <div fxLayout="row">
@@ -71,7 +75,7 @@
               <div class="submit-button-wrapper">
                 <!--<span fxFlex></span>-->
                 <button mat-raised-button class="full-width" color="primary" [disabled]="!feedbackForm.valid || processing">
-                  <mat-icon *ngIf="!processing">message</mat-icon> Написати нам</button>
+                  <mat-icon *ngIf="!processing">message</mat-icon> Написати мені</button>
               </div>
 
             </form>
@@ -83,4 +87,7 @@
 
     </div>
   </div>
+</div>
+</div>
+</div>
 </div>

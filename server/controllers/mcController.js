@@ -38,13 +38,18 @@ module.exports.mcUpsert = function(req, res, next) {
         } else {
           mc.createdAt = Date.now();
           mc.updatedAt = Date.now();
+          mc.likes = {
+            likedBy: [],
+            dislikedBy: [],
+          };
+          mc.views = 0;
+          mc.comments = [];
         }
-
         return McModel.findOneAndUpdate(
             {_id: mc._id},
             {$set: mc},
             {upsert: true, new: true}
-        ); // upsert + return updated object)
+        ); // upsert + return updated object
       })
       .then((result) => res.status(200).json(
           new ResObj(true, 'Майстерклас додано/змінено', result)
@@ -364,7 +369,10 @@ module.exports.getMcsByFilter = function(req, res, next) {
           },
         ])
         .then((result) => res.status(200).json(result))
-        .catch((err) => next(new DbError()));
+        .catch((err) => {
+          log.debug('err', err);
+          return next(new DbError());
+        });
   }
 };
 
