@@ -18,7 +18,7 @@ module.exports.deleteComment = function(req, res, next) {
       {$pull: {comments: {_id: comment_id}}}
   )
       .then((result) =>res.status(200).json(true))
-      .catch((err) => next(new DbError(err.message)));
+      .catch((err) => next(new DbError()));
 
 };
 

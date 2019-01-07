@@ -27,7 +27,7 @@ const dashboardRoutes: Routes = [
       },
       {
         path: '',
-        component: UserProfileComponent,
+        component: ProductEditorComponent,
         canActivate: [AuthGuard],
         data: { auth: 'manager' },
       },

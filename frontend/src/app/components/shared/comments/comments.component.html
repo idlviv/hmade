@@ -69,10 +69,9 @@
     <div class="row padding-bottom" [ngClass]="{'muted-strong': !comment.display}"
      *ngFor="let comment of comments" fxLayout="row">
       <div  class="cell" fxFlex="10" fxLayoutAlign="center center">
-
                 <img *ngIf="comment.user && comment.user.avatar" class="responsive-image"
-                  src="{{user.role === 'google' ? 
-                    user.avatar :
+                  src="{{comment.user.role === 'google' ? 
+                    comment.user.avatar :
                     config.imgPath +
                     config.cloudinary.cloud_name +
                     '/c_fill,w_50,h_50,f_auto/' +

@@ -1,6 +1,11 @@
 export interface IConfirmPopupData {
   message?: string;
-  data?: object;
+  payload?: object;
+}
+
+export interface IConfirmPopupChoise {
+  choise?: boolean;
+  payload?: object;
 }
 
 export interface IDesign {

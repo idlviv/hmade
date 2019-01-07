@@ -1,6 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-import { IConfirmPopupData } from '../../../interfaces/interface';
+import { IConfirmPopupData, IConfirmPopupChoise } from '../../../interfaces/interface';
 
 @Component({
   selector: 'app-confirm-popup',
@@ -8,19 +8,19 @@ import { IConfirmPopupData } from '../../../interfaces/interface';
   styleUrls: ['./confirm-popup.component.scss']
 })
 export class ConfirmPopupComponent implements OnInit {
-  confirmPopupData: IConfirmPopupData;
+  confirmPopupChoise: IConfirmPopupChoise;
 
   constructor(
     public dialogRef: MatDialogRef<ConfirmPopupComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any
+    @Inject(MAT_DIALOG_DATA) public data: IConfirmPopupData
   ) { }
 
   ngOnInit() {
 
 
   }
-  onClose(choice, _id) {
-    this.confirmPopupData = {data: {choice, _id}};
-    this.dialogRef.close(this.confirmPopupData);
+  onClose(choise: boolean, payload: object) {
+    this.confirmPopupChoise = {choise, payload};
+    this.dialogRef.close(this.confirmPopupChoise);
   }
 }

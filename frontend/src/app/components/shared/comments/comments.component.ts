@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
-import { IComment, IConfirmPopupData } from 'src/app/interfaces/interface';
+import { IComment, IConfirmPopupData, IConfirmPopupChoise } from 'src/app/interfaces/interface';
 import { UserService } from 'src/app/services/user.service';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { config } from '../../../app.config';
@@ -120,10 +120,9 @@ export class CommentsComponent implements OnInit {
   }
 
   deleteComment(comment: IComment): void {
-
     const confirmObject = <IConfirmPopupData>{
       message: `Дійсно видалити коментар: ${comment.comment} ?`,
-      data: {_id: comment._id}
+      payload: {_id: comment._id}
     };
 
     const dialogRef = this.dialog.open(ConfirmPopupComponent, {
@@ -133,8 +132,8 @@ export class CommentsComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(res => {
-          if (res.data.choice) {
-            this.socialService.deleteComment(this.parent_id, this.parentCategory, res.data._id)
+          if (res.choise) {
+            this.socialService.deleteComment(this.parent_id, this.parentCategory, res.payload._id)
               .pipe(
                 mergeMap(result => {
                   if (result) {
