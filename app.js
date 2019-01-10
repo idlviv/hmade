@@ -11,6 +11,7 @@ const csrf = require('csurf');
 // config custom cookie for angular XSRF-TOKEN
 const csrfCookie = require('./server/config/csrf');
 
+// const cors = require('./server/config/cors');
 const logger = require('morgan');
 const log = require('./server/config/winston')(module);
 
@@ -35,6 +36,8 @@ app.use(compression());
 
 // app.use(logger('tiny'));
 // app.use(logger('dev'));
+
+// app.use(cors());
 
 app.use(express.static(path.join(__dirname, 'public')));
 

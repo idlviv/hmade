@@ -7,12 +7,14 @@
               <div id="landing-left" class="container" fxFlex.lt-md="100" fxFlex="35" fxLayoutAlign="center center">
                   <div class="row" fxLayoutAlign="center center">
                     <div class="cell">
+                      <a [routerLink]="['/products', 'ch']">  
                         <img class="responsive-image-stretch" src="{{
                           config.imgPath +
                           config.cloudinary.cloud_name +
                           '/c_fill,w_500,h_500,f_auto/' +
-                          'default_product'}}"
+                          'products-logo'}}"
                          alt="Image">
+                        </a>
                     </div>
                   </div>
               </div>
@@ -38,12 +40,15 @@
               <div id="landing-right" class="container" fxFlex.lt-md="100" fxFlex="35" fxLayoutAlign="center center">
                   <div class="row" fxLayoutAlign="center center">
                     <div class="cell">
+                      <a [routerLink]="['/mcs', 'ch']">  
                         <img class="responsive-image-stretch" src="{{
                           config.imgPath +
                           config.cloudinary.cloud_name +
                           '/c_fill,w_500,h_500,f_auto/' +
-                          'default_product'}}"
+                          'mcs-logo'}}"
                          alt="Image">
+                      </a>
+                      
                     </div>
                   </div>
               </div>
