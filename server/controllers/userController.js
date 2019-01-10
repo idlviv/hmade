@@ -147,7 +147,7 @@ const userEmailVerificationReceive = function(req, res, next) {
                       provider: req.user._doc.provider,
                       role: 'user',
                     };
-                    const token = sharedHelper.createJWTToken('', sub, 604800, 'JWT_SECRET');
+                    const token = sharedHelper.createJWTToken('', sub, 60, 'JWT_SECRET');
                     res.redirect(req.protocol + '://' + req.get('host') + '/user/redirection-with-token/' + token);
                   },
                   (err) => {
@@ -288,23 +288,23 @@ const userLogin = function(req, res, next) {
   }
 };
 
-// const syncTokenToSession = function(req, res, next) {
-//   if (req.isAuthenticated()) {
-//     const sub = {
-//       _id: req.user._doc._id,
-//       login: req.user._doc.login,
-//       name: req.user._doc.name,
-//       surname: req.user._doc.surname,
-//       avatar: req.user._doc.avatar,
-//       provider: req.user._doc.provider,
-//       role: req.user._doc.role,
-//     };
-//     const token = sharedHelper.createJWTToken('', sub, 60, 'JWT_SECRET'); // 604800
-//     return res.status(200).json(token);
-//   } else {
-//     res.status(200).json('');
-//   }
-// };
+const syncTokenToSession = function(req, res, next) {
+  if (req.isAuthenticated()) {
+    const sub = {
+      _id: req.user._doc._id,
+      login: req.user._doc.login,
+      name: req.user._doc.name,
+      surname: req.user._doc.surname,
+      avatar: req.user._doc.avatar,
+      provider: req.user._doc.provider,
+      role: req.user._doc.role,
+    };
+    const token = sharedHelper.createJWTToken('', sub, 60, 'JWT_SECRET'); // 604800
+    return res.status(200).json(token);
+  } else {
+    res.status(200).json('');
+  }
+};
 
 /**
  * After successful google social signin
@@ -324,7 +324,7 @@ const userGoogleSignin = function(req, res, next) {
     provider: req.user._doc.provider,
     role: req.user._doc.role,
   };
-  const token = sharedHelper.createJWTToken('', sub, 604800, 'JWT_SECRET');
+  const token = sharedHelper.createJWTToken('', sub, 60, 'JWT_SECRET');
   res.redirect('/user/redirection-with-token/' + token);
 };
 
@@ -399,7 +399,7 @@ const userCreate = function(req, res, next) {
 
 module.exports = {
   userCheckAuthorization,
-  // syncTokenToSession,
+  syncTokenToSession,
   userProfile,
   userLogin,
   userLogout,

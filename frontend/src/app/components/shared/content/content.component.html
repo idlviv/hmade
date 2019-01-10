@@ -33,7 +33,7 @@
       </span>
     </mat-menu>
 
-    <a *ngIf="!user" class="link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
+    <a *ngIf="allowTo('notUser')" class="link" [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}"
       [routerLink]="['/user/login']"><span class="type1">Вхід</span></a>
     <a *ngIf="allowTo('guest')" class="link" (click)="userLogout()"><span class="type2">Вихід</span></a>
   </div>
@@ -73,7 +73,7 @@
             <!-- <mat-panel-title> -->
               <!-- <mat-list-item> -->
                 
-                <span matLine><span><mat-icon class="mat-icon-aligner">settings</mat-icon>{{user.login}}</span></span>
+                <span matLine><span><mat-icon class="mat-icon-aligner">settings</mat-icon>{{user.name}} {{user.surname}}</span></span>
               <!-- </mat-list-item> -->
             <!-- </mat-panel-title> -->
 
@@ -92,7 +92,7 @@
           </mat-list-item>
         </mat-expansion-panel>
 
-        <mat-list-item *ngIf='!user'>
+        <mat-list-item *ngIf="allowTo('notUser')">
           <a matLine [routerLinkActive]="['muted']" [routerLinkActiveOptions]="{exact: true}" [routerLink]="['/user/login']"
             (click)="sidenav.toggle()">Вхід</a>
         </mat-list-item>

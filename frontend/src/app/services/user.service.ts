@@ -153,6 +153,9 @@ export class UserService {
     const permissions = config.permissions;
     const user = this.userLocalGetCredentials();
 
+    if (!user && permitedRole === 'notUser') {
+      return true;
+    }
     if (!user) {
       return false;
     }
@@ -165,6 +168,7 @@ export class UserService {
   }
 
   restrictTo(restrictedRoles: string[]): boolean {
+
     const user = this.userLocalGetCredentials();
     if (!user) {
       return true;
@@ -332,17 +336,17 @@ export class UserService {
     );
   }
 
-  // syncTokenToSession(): Observable<string> {
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type':  'application/json',
-  //     })
-  //   };
-  //   return this.http.get<string>(
-  //     'api/user/sync-token-to-session',
-  //     httpOptions
-  //   );
-  // }
+  syncTokenToSession(): Observable<string> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    };
+    return this.http.get<string>(
+      'api/user/sync-token-to-session',
+      httpOptions
+    );
+  }
 
   // create Observable for user login watch
   userLocalLogin(token) {
@@ -403,24 +407,24 @@ export class UserService {
     if (!tokenFromStorage) {
       return null;
     }
-    // if (this.userLocalCheckExpiration('token')) {
-    //   this.syncTokenToSession()
-    //     .subscribe((token) => {
-    //       if (token) {
-    //         this.userLocalLogin(token);
-    //         const helper = new JwtHelperService();
-    //         console.log('helper.decodeToken(token)', helper.decodeToken(token));
-    //         return helper.decodeToken(token).sub;
-    //       } else {
-    //         localStorage.removeItem('token');
-    //         return null;
-    //       }
-    //     },
-    //     (err) => {
-    //       localStorage.removeItem('token');
-    //       return null;
-    //     });
-    // }
+    if (this.userLocalCheckExpiration('token')) {
+      this.syncTokenToSession()
+        .subscribe((token) => {
+          if (token) {
+            this.userLocalLogin(token);
+            const helper = new JwtHelperService();
+            console.log('helper.decodeToken(token)', helper.decodeToken(token));
+            return helper.decodeToken(token).sub;
+          } else {
+            localStorage.removeItem('token');
+            return null;
+          }
+        },
+        (err) => {
+          localStorage.removeItem('token');
+          return null;
+        });
+    }
     const helper = new JwtHelperService();
     return <IUser>helper.decodeToken(tokenFromStorage).sub;
   }

@@ -50,12 +50,13 @@ app.use(session({
   cookie: {
     path: '/',
     httpOnly: true, // not reachable for js (XSS)
-    // secure: true,
+    secure: config.get('NODE_ENV') === 'production',
     sameSite: 'Strict',
     maxAge: null, // never expires, but will be deleted after closing browser
   },
   store: new MongoStore({mongooseConnection: mongoose.connection}),
 }));
+
 
 // check cookie, add req.csrfToken(),
 app.use(csrf({cookie: true}));
@@ -65,16 +66,31 @@ app.use(csrfCookie);
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function(req, res, next) {
-  if (req.user) {
-    // log.debug('user');
-  } else {
-    // log.debug('NOT USER');
-  }
-  // req.session.number += 1;
-  // console.log('ses', req.session);
-  next();
-});
+
+
+// app.use(function(req, res, next) {
+//   if (req.user) {
+//     log.debug('user');
+//     req.session.user = {
+//       _id: req.user._doc._id,
+//       login: req.user._doc.login,y
+//       name: req.user._doc.name,
+//       surname: req.user._doc.surname,
+//       avatar: req.user._doc.avatar,
+//       provider: req.user._doc.provider,
+//       role: req.user._doc.role,
+//     };
+//   } else {
+//     log.debug('NOT USER');
+//     req.session.user = null;
+//   }
+//   next();
+// });
+
+// app.use((req, res, next) => {
+//   log.debug('cookie', req.session);
+//   next();
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'server/views'));
