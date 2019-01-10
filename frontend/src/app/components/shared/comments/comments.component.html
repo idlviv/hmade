@@ -6,7 +6,7 @@
                 <div class="row" fxLayout="row">
                   <div class="cell" fxFlex="10" fxLayoutAlign="center center">
 
-                    <img *ngIf="user" class="responsive-image"
+                    <img *ngIf="allowTo('guest')" class="responsive-image"
                       src="{{user.role === 'google' ? 
                         user.avatar :
                         config.imgPath +

@@ -88,10 +88,6 @@ export class CommentsComponent implements OnInit {
       });
   }
 
-  allowTo(permitedRole): boolean {
-    return this.userService.allowTo(permitedRole);
-  }
-
   sendComment() {
     const comment = this.commentForm.get('comment').value;
     const recaptcha = this.commentForm.get('recaptcha').value;
@@ -188,4 +184,11 @@ export class CommentsComponent implements OnInit {
       );
   }
 
+  allowTo(permitedRole: string): boolean {
+    return this.userService.allowTo(permitedRole);
+  }
+
+  restrictTo(restrictedRoles: string[]): boolean {
+    return this.userService.restrictTo(restrictedRoles);
+  }
 }

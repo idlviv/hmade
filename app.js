@@ -50,7 +50,7 @@ app.use(session({
   cookie: {
     path: '/',
     httpOnly: true, // not reachable for js (XSS)
-    secure: config.get('NODE_ENV') === 'production',
+    // secure: config.get('NODE_ENV') === 'production',
     sameSite: 'Strict',
     maxAge: null, // never expires, but will be deleted after closing browser
   },
