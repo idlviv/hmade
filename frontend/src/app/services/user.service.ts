@@ -169,7 +169,7 @@ export class UserService {
           return false;
         }
       });
-  }
+ }
 
   restrictTo(restrictedRoles: string[]): boolean {
     const user = this.userLocalGetCredentials();
