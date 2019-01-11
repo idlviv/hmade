@@ -1,0 +1,34 @@
+<div fxLayout="column">
+  <div class="cell" fxLayout>
+    <div fxFlex="calc(100%-40px)" fxLayoutAlign="center center">
+      <h3 class="h3 muted">{{data.title}}</h3>
+    </div>
+
+    <div fxFlex="40px" fxLayoutAlign="end center">
+      <div>
+        <button mat-icon-button color="accent" (click)="onClose()">
+          <mat-icon>close</mat-icon>
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="responsive-image-popup-container">
+      <img class="responsive-image-popup" src="{{
+          config.imgPath +
+          config.cloudinary.cloud_name +
+          data.cloudinaryOptions +
+          data.image}}"
+           alt="design">
+  </div>
+
+
+
+</div>
+
+
+
+
+
+

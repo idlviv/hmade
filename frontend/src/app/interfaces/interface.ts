@@ -8,6 +8,12 @@ export interface IConfirmPopupChoise {
   payload?: object;
 }
 
+export interface IImagePopUpData {
+  image: string;
+  title?: string;
+  cloudinaryOptions?: string;
+}
+
 export interface IDesign {
   _id: string;
   structure: string;

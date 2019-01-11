@@ -70,25 +70,24 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-
-// app.use(function(req, res, next) {
-//   if (req.user) {
-//     log.debug('user');
-//     req.session.user = {
-//       _id: req.user._doc._id,
-//       login: req.user._doc.login,y
-//       name: req.user._doc.name,
-//       surname: req.user._doc.surname,
-//       avatar: req.user._doc.avatar,
-//       provider: req.user._doc.provider,
-//       role: req.user._doc.role,
-//     };
-//   } else {
-//     log.debug('NOT USER');
-//     req.session.user = null;
-//   }
-//   next();
-// });
+app.use(function(req, res, next) {
+  if (req.user) {
+    log.debug('user');
+    // req.session.user = {
+    //   _id: req.user._doc._id,
+    //   login: req.user._doc.login,y
+    //   name: req.user._doc.name,
+    //   surname: req.user._doc.surname,
+    //   avatar: req.user._doc.avatar,
+    //   provider: req.user._doc.provider,
+    //   role: req.user._doc.role,
+    // };
+  } else {
+    log.debug('NOT USER');
+    // req.session.user = null;
+  }
+  next();
+});
 
 // app.use((req, res, next) => {
 //   log.debug('cookie', req.session);

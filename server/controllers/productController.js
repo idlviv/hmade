@@ -239,6 +239,7 @@ module.exports.productAddMenuImage = function(req, res, next) {
           // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
           eager: [
             {width: 1100, height: 825, crop: 'fill', fetch_format: 'auto'},
+            {width: 900, height: 675, crop: 'fill', fetch_format: 'auto'},
             {width: 590, height: 443, crop: 'fill', fetch_format: 'auto'},
             {width: 460, height: 345, crop: 'fill', fetch_format: 'auto'},
             {width: 400, height: 300, crop: 'fill', fetch_format: 'auto'},

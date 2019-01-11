@@ -5,13 +5,14 @@ import { IResponse } from '../interfaces/server-response-interface';
 import { Observable ,  ReplaySubject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { config } from '../app.config';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 
 @Injectable()
 export class UserService {
   user: IUser;
   private _logging: ReplaySubject<IUser> = new ReplaySubject(1);
+  tokenSyncronizatonProgress = false;
 
   constructor(
     private http: HttpClient
@@ -151,24 +152,26 @@ export class UserService {
    */
   allowTo(permitedRole: string): boolean {
     const permissions = config.permissions;
-    const user = this.userLocalGetCredentials();
-
-    if (!user && permitedRole === 'notUser') {
-      return true;
-    }
-    if (!user) {
-      return false;
-    }
-    const roleFromLocalStorage = user.role;
-    if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
-      return true;
-    } else {
-      return false;
-    }
+    let user;
+    this.userLocalGetCredentials()
+      .subscribe((result) => {
+         user = result;
+         if (!user && permitedRole === 'notUser') {
+          return true;
+        }
+        if (!user) {
+          return false;
+        }
+        const roleFromLocalStorage = user.role;
+        if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
+          return true;
+        } else {
+          return false;
+        }
+      });
   }
 
   restrictTo(restrictedRoles: string[]): boolean {
-
     const user = this.userLocalGetCredentials();
     if (!user) {
       return true;
@@ -402,19 +405,22 @@ export class UserService {
     return token;
   }
 
-  userLocalGetCredentials(): IUser | null {
+  userLocalGetCredentials(): Observable <IUser | null> {
     const tokenFromStorage = localStorage.getItem('token');
-    if (!tokenFromStorage) {
-      return null;
-    }
-    if (this.userLocalCheckExpiration('token')) {
-      this.syncTokenToSession()
-        .subscribe((token) => {
+    // if (!tokenFromStorage) {
+    //   return null;
+    // }
+    if ((this.userLocalCheckExpiration('token') && !this.tokenSyncronizatonProgress) || !tokenFromStorage) {
+      // if tokenSyncronizaton in Progress then wait for result
+      // to prevent multi requests to server
+      this.tokenSyncronizatonProgress = true;
+      return this.syncTokenToSession().pipe(
+        map((token) => {
           if (token) {
             this.userLocalLogin(token);
+            this.tokenSyncronizatonProgress = false;
             const helper = new JwtHelperService();
-            console.log('helper.decodeToken(token)', helper.decodeToken(token));
-            return helper.decodeToken(token).sub;
+            return <IUser>helper.decodeToken(token).sub;
           } else {
             localStorage.removeItem('token');
             return null;
@@ -422,11 +428,13 @@ export class UserService {
         },
         (err) => {
           localStorage.removeItem('token');
+          this.tokenSyncronizatonProgress = false;
           return null;
-        });
+        })
+      );
     }
-    const helper = new JwtHelperService();
-    return <IUser>helper.decodeToken(tokenFromStorage).sub;
+    // const helper = new JwtHelperService();
+    // return <IUser>helper.decodeToken(tokenFromStorage).sub;
   }
 
   userLocalGetExpirationDate(tokenKey): Date {

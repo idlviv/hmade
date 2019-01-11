@@ -23,6 +23,7 @@ import { ScreenTestComponent } from './screen-test/screen-test.component';
 import { McsItemBriefComponent } from './mcs-item-brief/mcs-item-brief.component';
 import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.component';
 import { ProductItemFeedComponent } from './product-item-feed/product-item-feed.component';
+import { ImagePopupComponent } from './image-popup/image-popup.component';
 
 @NgModule({
   imports: [
@@ -66,7 +67,8 @@ import { ProductItemFeedComponent } from './product-item-feed/product-item-feed.
     ScreenTestComponent,
     McsItemBriefComponent,
     McsItemDetailComponent,
-    ProductItemFeedComponent
+    ProductItemFeedComponent,
+    ImagePopupComponent
   ],
 })
 export class SharedModule { }

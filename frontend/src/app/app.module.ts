@@ -27,6 +27,7 @@ import { DesignPopupComponent } from './components/shared/design-popup/design-po
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { ScrollingDirective } from './directives/scrolling.directive';
+import { ImagePopupComponent } from './components/shared/image-popup/image-popup.component';
 
 @NgModule({
   declarations: [
@@ -65,6 +66,7 @@ import { ScrollingDirective } from './directives/scrolling.directive';
   entryComponents: [
     ConfirmPopupComponent,
     DesignPopupComponent,
+    ImagePopupComponent,
   ],
   bootstrap: [ AppComponent ]
 })
