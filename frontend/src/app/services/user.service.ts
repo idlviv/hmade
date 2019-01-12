@@ -7,6 +7,7 @@ import { JwtHelperService } from '@auth0/angular-jwt';
 import { config } from '../app.config';
 import { mergeMap, map } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { CookieService } from 'ngx-cookie-service';
 
 @Injectable()
 export class UserService {
@@ -15,7 +16,8 @@ export class UserService {
   tokenSyncronizatonProgress = false;
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private cookieService: CookieService,
   ) { }
 
   /**
@@ -151,32 +153,32 @@ export class UserService {
    * @memberof UserService
    */
   allowTo(permitedRole: string): boolean {
+    const user = JSON.parse(this.cookieService.get('hmade'));
+    console.log('cookie', user);
     const permissions = config.permissions;
-    let user;
-    this.userLocalGetCredentials()
-      .subscribe((result) => {
-         user = result;
-         if (!user && permitedRole === 'notUser') {
-          return true;
-        }
-        if (!user) {
-          return false;
-        }
-        const roleFromLocalStorage = user.role;
-        if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
-          return true;
-        } else {
-          return false;
-        }
-      });
- }
-
-  restrictTo(restrictedRoles: string[]): boolean {
-    const user = this.userLocalGetCredentials();
-    if (!user) {
+    if (user && permitedRole === 'notUser') {
       return true;
     }
+    if (user) {
+      return false;
+    }
+
     const roleFromLocalStorage = user.role;
+    if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
+      return true;
+    } else {
+      return false;
+    }
+    // this.userLocalGetCredentials();
+ }
+
+
+  restrictTo(restrictedRoles: string[]): boolean {
+    const user = JSON.parse(this.cookieService.get('hmade'));
+    if (!this.user) {
+      return true;
+    }
+    const roleFromLocalStorage = this.user.role;
     if (restrictedRoles.indexOf(roleFromLocalStorage) >= 0) {
       return false;
     } else {
@@ -356,8 +358,8 @@ export class UserService {
     if (token) {
       this.userLocalSetToken('token', token);
     }
-    const user = this.userLocalGetCredentials();
-    this._logging.next(user);
+    this.userLocalGetCredentials();
+    // this._logging.next(user);
   }
 
   userLocalLogout() {
@@ -370,8 +372,6 @@ export class UserService {
     return this._logging.asObservable();
   }
   // end of observable
-
-
 
    /**
    * Token manipulations
@@ -405,7 +405,8 @@ export class UserService {
     return token;
   }
 
-  userLocalGetCredentials(): Observable <IUser | null> {
+  userLocalGetCredentials(): void {
+    return JSON.parse(this.cookieService.get('hmade'));
     const tokenFromStorage = localStorage.getItem('token');
     // if (!tokenFromStorage) {
     //   return null;
@@ -414,27 +415,26 @@ export class UserService {
       // if tokenSyncronizaton in Progress then wait for result
       // to prevent multi requests to server
       this.tokenSyncronizatonProgress = true;
-      return this.syncTokenToSession().pipe(
-        map((token) => {
-          if (token) {
-            this.userLocalLogin(token);
-            this.tokenSyncronizatonProgress = false;
-            const helper = new JwtHelperService();
-            return <IUser>helper.decodeToken(token).sub;
-          } else {
-            localStorage.removeItem('token');
-            return null;
-          }
-        },
-        (err) => {
-          localStorage.removeItem('token');
-          this.tokenSyncronizatonProgress = false;
-          return null;
-        })
-      );
+      // this.syncTokenToSession()
+      //   .subscribe((token) => {
+      //     if (token) {
+      //       this.userLocalSetToken('token', token);
+      //       this.tokenSyncronizatonProgress = false;
+      //       const helper = new JwtHelperService();
+      //       this._logging.next(<IUser>helper.decodeToken(token).sub);
+      //     } else {
+      //       this.userLocalRemoveToken('token');
+      //       this.tokenSyncronizatonProgress = false;
+      //       this._logging.next(null);
+      //     }
+      //   },
+      //   (err) => {
+      //     this.userLocalRemoveToken('token');
+      //     this.tokenSyncronizatonProgress = false;
+      //     this._logging.next(null);
+      //   }
+      // );
     }
-    // const helper = new JwtHelperService();
-    // return <IUser>helper.decodeToken(tokenFromStorage).sub;
   }
 
   userLocalGetExpirationDate(tokenKey): Date {

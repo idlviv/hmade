@@ -473,12 +473,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _directives_scrolling_directive__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./directives/scrolling.directive */ "./src/app/directives/scrolling.directive.ts");
 /* harmony import */ var _components_shared_image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/shared/image-popup/image-popup.component */ "./src/app/components/shared/image-popup/image-popup.component.ts");
+/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -534,6 +536,7 @@ var AppModule = /** @class */ (function () {
                 _services_shared_service__WEBPACK_IMPORTED_MODULE_14__["SharedService"],
                 _guards_auth_guard__WEBPACK_IMPORTED_MODULE_15__["AuthGuard"],
                 _guards_no_auth_guard__WEBPACK_IMPORTED_MODULE_16__["NoAuthGuard"],
+                ngx_cookie_service__WEBPACK_IMPORTED_MODULE_24__["CookieService"]
             ],
             exports: [],
             entryComponents: [
@@ -683,6 +686,7 @@ var CommentsComponent = /** @class */ (function () {
         this.processing = false;
     }
     CommentsComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.commentForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]({
             comment: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]({
                 value: '',
@@ -697,11 +701,11 @@ var CommentsComponent = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required
             ])
         });
-        // this.userService.getUserLocal()
-        // .subscribe(user => {
-        //   this.user = user;
-        // });
-        this.user = this.userService.userLocalGetCredentials();
+        this.userService.getUserLocal()
+            .subscribe(function (user) {
+            _this.user = user;
+        });
+        // this.user = this.userService.userLocalGetCredentials();
         this.loadComments(-1, 0, 5, !this.allowTo('manager'));
     };
     // Listening of page bottom reached
@@ -1409,7 +1413,7 @@ var FeedbackComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"mat-elevation-z16\" id=\"footer\">\r\n  <div fxFlex></div>\r\n  <a mat-button [routerLink]=\"['/feedback']\" class=\"primary-light\"\r\n     [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n    <mat-icon>mail</mat-icon> Задати питання\r\n  </a>\r\n</div>\r\n"
+module.exports = "<div class=\"mat-elevation-z16\" id=\"footer\">\n  <div fxFlex></div>\n  <a mat-button [routerLink]=\"['/feedback']\" class=\"primary-light\"\n     [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n    <mat-icon>mail</mat-icon> Задати питання\n  </a>\n</div>\n"
 
 /***/ }),
 
@@ -1472,7 +1476,7 @@ var FooterComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container-h\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n      <h1 class=\"mat-display-1\">Галерея</h1>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\r\n        <mat-card>\r\n          <mat-card-subtitle>\r\n            <a mat-button\r\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\r\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\r\n               [queryParams]=\"{name: product.name}\"\r\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n              {{product.name}}\r\n            </a>\r\n          </mat-card-subtitle>\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\r\n\r\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\r\n                 fxLayout fxLayoutAlign=\"center center\"\r\n                 *ngFor=\"let productAsset of product.assets\">\r\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_590,h_295,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n\r\n\r\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_350,h_175,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n            </div>\r\n          </div>\r\n        </mat-card>\r\n      </div>\r\n    </div>\r\n\r\n\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"app-container-h\">\n  <div class=\"container\">\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\">\n      <h1 class=\"mat-display-1\">Галерея</h1>\n      </div>\n    </div>\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\n        <mat-card>\n          <mat-card-subtitle>\n            <a mat-button\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\n               [queryParams]=\"{name: product.name}\"\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\n              {{product.name}}\n            </a>\n          </mat-card-subtitle>\n          <div class=\"row\" fxLayout=\"row\">\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\n\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\n                 fxLayout fxLayoutAlign=\"center center\"\n                 *ngFor=\"let productAsset of product.assets\">\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_590,h_295,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n\n\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_350,h_175,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n            </div>\n          </div>\n        </mat-card>\n      </div>\n    </div>\n\n\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1570,7 +1574,7 @@ var GalleryComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container-h primary-background\" id=\"header\">\r\n\r\n  <div class=\"container\" fxHide.lt-md=\"true\">\r\n    <div class=\"row primary-background\">\r\n      <div class=\"cell\">\r\n        <a href=\"\">\r\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\r\n        </a>\r\n      </div>\r\n      <div fxFlex></div>\r\n    <div class=\"cell\">\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\"\r\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n            <mat-icon>mail</mat-icon> Задати питання\r\n          </a>\r\n        </div>\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button class=\"muted\"\r\n             href=\"tel:+380985443968\">\r\n            <mat-icon>phone</mat-icon> 098 544 39 68\r\n          </a>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"app-container-h primary-background\" id=\"header\">\n\n  <div class=\"container\" fxHide.lt-md=\"true\">\n    <div class=\"row primary-background\">\n      <div class=\"cell\">\n        <a href=\"\">\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\n        </a>\n      </div>\n      <div fxFlex></div>\n    <div class=\"cell\">\n      <div class=\"row\" fxLayout=\"row\">\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\"\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n            <mat-icon>mail</mat-icon> Задати питання\n          </a>\n        </div>\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button class=\"muted\"\n             href=\"tel:+380985443968\">\n            <mat-icon>phone</mat-icon> 098 544 39 68\n          </a>\n        </div>\n      </div>\n    </div>\n\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1632,7 +1636,7 @@ var HeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\">\n  <div class=\"cell\" fxLayout>\n    <div fxFlex=\"calc(100%-40px)\" fxLayoutAlign=\"center center\">\n      <h3 class=\"h3 muted\">{{data.title}}</h3>\n    </div>\n\n    <div fxFlex=\"40px\" fxLayoutAlign=\"end center\">\n      <div>\n        <button mat-icon-button color=\"accent\" (click)=\"onClose()\">\n          <mat-icon>close</mat-icon>\n        </button>\n      </div>\n\n    </div>\n  </div>\n\n  <div class=\"responsive-image-popup-container\">\n      <img class=\"responsive-image-popup\" src=\"{{\n          config.imgPath +\n          config.cloudinary.cloud_name +\n          data.cloudinaryOptions +\n          data.image}}\"\n           alt=\"design\">\n  </div>\n\n\n\n</div>\n\n\n\n\n\n\n"
+module.exports = "<div fxLayout=\"column\">\r\n  <div class=\"cell\" fxLayout>\r\n    <div fxFlex=\"calc(100%-40px)\" fxLayoutAlign=\"center center\">\r\n      <h3 class=\"h3 muted\">{{data.title}}</h3>\r\n    </div>\r\n\r\n    <div fxFlex=\"40px\" fxLayoutAlign=\"end center\">\r\n      <div>\r\n        <button mat-icon-button color=\"accent\" (click)=\"onClose()\">\r\n          <mat-icon>close</mat-icon>\r\n        </button>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"responsive-image-popup-container\">\r\n      <img class=\"responsive-image-popup\" src=\"{{\r\n          config.imgPath +\r\n          config.cloudinary.cloud_name +\r\n          data.cloudinaryOptions +\r\n          data.image}}\"\r\n           alt=\"design\">\r\n  </div>\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -2352,7 +2356,7 @@ var ProductItemDetailComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n    <div class=\"item\" fxFlex=\"92px\" fxLayoutAlign=\"center center\">\n      <img class=\"responsive-image-stretch\" src=\"{{\n          config.imgPath +\n          config.cloudinary.cloud_name +\n          '/c_fill,w_80,h_60,f_auto/' +\n          product.menuImage}}\"\n         alt=\"Image\">\n    </div>\n    <div class=\"item\" fxFlex=\"100%-92px\">\n      <p class=\"body-1 muted\">{{product.name}}</p>\n      <p class=\"caption text-justify\">{{product.description}}</p>\n    </div>\n  </div>\n</div>\n       "
+module.exports = "<div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n    <div class=\"item\" fxFlex=\"92px\" fxLayoutAlign=\"center center\">\r\n      <img class=\"responsive-image-stretch\" src=\"{{\r\n          config.imgPath +\r\n          config.cloudinary.cloud_name +\r\n          '/c_fill,w_80,h_60,f_auto/' +\r\n          product.menuImage}}\"\r\n         alt=\"Image\">\r\n    </div>\r\n    <div class=\"item\" fxFlex=\"100%-92px\">\r\n      <p class=\"body-1 muted\">{{product.name}}</p>\r\n      <p class=\"caption text-justify\">{{product.description}}</p>\r\n    </div>\r\n  </div>\r\n</div>\r\n       "
 
 /***/ }),
 
@@ -2422,7 +2426,7 @@ var ProductItemFeedComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n    <div class=\"cell\">\r\n      <p class=\"muted\">height {{height}}</p>\r\n      <p class=\"muted\"> width {{width}}</p>\r\n  \r\n    </div>\r\n  <div class=\"w393\">393</div>\r\n  <div class=\"w360\">360</div>\r\n  <div class=\"w350\">350</div>\r\n  <div class=\"w100\">100</div>\r\n  <div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\r\n  <div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\r\n"
+module.exports = "<div>\n    <div class=\"cell\">\n      <p class=\"muted\">height {{height}}</p>\n      <p class=\"muted\"> width {{width}}</p>\n  \n    </div>\n  <div class=\"w393\">393</div>\n  <div class=\"w360\">360</div>\n  <div class=\"w350\">350</div>\n  <div class=\"w100\">100</div>\n  <div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\n  <div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\n"
 
 /***/ }),
 
@@ -2754,10 +2758,11 @@ var NoAuthGuard = /** @class */ (function () {
         this.userService = userService;
     }
     NoAuthGuard.prototype.canActivate = function (next, state) {
-        // access permitted for all roles included 'null' 
+        // access permitted for all roles included 'null'
         // access denied from next.data.auth
         var restrictedRoleForAuthorization = next.data.auth; // from routing.module
-        var user = this.userService.userLocalGetCredentials();
+        // const user = this.userService.userLocalGetCredentials();
+        var user = null;
         if (!user) {
             return true;
         }
@@ -3846,7 +3851,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 /* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/index.js");
 /* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3863,8 +3868,9 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 var UserService = /** @class */ (function () {
-    function UserService(http) {
+    function UserService(http, cookieService) {
         this.http = http;
+        this.cookieService = cookieService;
         this._logging = new rxjs__WEBPACK_IMPORTED_MODULE_2__["ReplaySubject"](1);
         this.tokenSyncronizatonProgress = false;
     }
@@ -3975,32 +3981,30 @@ var UserService = /** @class */ (function () {
      * @memberof UserService
      */
     UserService.prototype.allowTo = function (permitedRole) {
+        var user = JSON.parse(this.cookieService.get('hmade'));
+        console.log('cookie', user);
         var permissions = _app_config__WEBPACK_IMPORTED_MODULE_4__["config"].permissions;
-        var user;
-        this.userLocalGetCredentials()
-            .subscribe(function (result) {
-            user = result;
-            if (!user && permitedRole === 'notUser') {
-                return true;
-            }
-            if (!user) {
-                return false;
-            }
-            var roleFromLocalStorage = user.role;
-            if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
-                return true;
-            }
-            else {
-                return false;
-            }
-        });
-    };
-    UserService.prototype.restrictTo = function (restrictedRoles) {
-        var user = this.userLocalGetCredentials();
-        if (!user) {
+        if (user && permitedRole === 'notUser') {
             return true;
         }
+        if (user) {
+            return false;
+        }
         var roleFromLocalStorage = user.role;
+        if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
+            return true;
+        }
+        else {
+            return false;
+        }
+        // this.userLocalGetCredentials();
+    };
+    UserService.prototype.restrictTo = function (restrictedRoles) {
+        var user = JSON.parse(this.cookieService.get('hmade'));
+        if (!this.user) {
+            return true;
+        }
+        var roleFromLocalStorage = this.user.role;
         if (restrictedRoles.indexOf(roleFromLocalStorage) >= 0) {
             return false;
         }
@@ -4150,8 +4154,8 @@ var UserService = /** @class */ (function () {
         if (token) {
             this.userLocalSetToken('token', token);
         }
-        var user = this.userLocalGetCredentials();
-        this._logging.next(user);
+        this.userLocalGetCredentials();
+        // this._logging.next(user);
     };
     UserService.prototype.userLocalLogout = function () {
         this.userLocalRemoveToken('token');
@@ -4190,7 +4194,7 @@ var UserService = /** @class */ (function () {
         return token;
     };
     UserService.prototype.userLocalGetCredentials = function () {
-        var _this = this;
+        return JSON.parse(this.cookieService.get('hmade'));
         var tokenFromStorage = localStorage.getItem('token');
         // if (!tokenFromStorage) {
         //   return null;
@@ -4199,25 +4203,26 @@ var UserService = /** @class */ (function () {
             // if tokenSyncronizaton in Progress then wait for result
             // to prevent multi requests to server
             this.tokenSyncronizatonProgress = true;
-            return this.syncTokenToSession().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])(function (token) {
-                if (token) {
-                    _this.userLocalLogin(token);
-                    _this.tokenSyncronizatonProgress = false;
-                    var helper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__["JwtHelperService"]();
-                    return helper.decodeToken(token).sub;
-                }
-                else {
-                    localStorage.removeItem('token');
-                    return null;
-                }
-            }, function (err) {
-                localStorage.removeItem('token');
-                _this.tokenSyncronizatonProgress = false;
-                return null;
-            }));
+            // this.syncTokenToSession()
+            //   .subscribe((token) => {
+            //     if (token) {
+            //       this.userLocalSetToken('token', token);
+            //       this.tokenSyncronizatonProgress = false;
+            //       const helper = new JwtHelperService();
+            //       this._logging.next(<IUser>helper.decodeToken(token).sub);
+            //     } else {
+            //       this.userLocalRemoveToken('token');
+            //       this.tokenSyncronizatonProgress = false;
+            //       this._logging.next(null);
+            //     }
+            //   },
+            //   (err) => {
+            //     this.userLocalRemoveToken('token');
+            //     this.tokenSyncronizatonProgress = false;
+            //     this._logging.next(null);
+            //   }
+            // );
         }
-        // const helper = new JwtHelperService();
-        // return <IUser>helper.decodeToken(tokenFromStorage).sub;
     };
     UserService.prototype.userLocalGetExpirationDate = function (tokenKey) {
         var token = localStorage.getItem(tokenKey);
@@ -4226,7 +4231,8 @@ var UserService = /** @class */ (function () {
     };
     UserService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])(),
-        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
+        __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"],
+            ngx_cookie_service__WEBPACK_IMPORTED_MODULE_5__["CookieService"]])
     ], UserService);
     return UserService;
 }());

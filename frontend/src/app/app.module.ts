@@ -29,6 +29,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ScrollingDirective } from './directives/scrolling.directive';
 import { ImagePopupComponent } from './components/shared/image-popup/image-popup.component';
 
+import { CookieService } from 'ngx-cookie-service';
 @NgModule({
   declarations: [
     AppComponent,
@@ -60,6 +61,7 @@ import { ImagePopupComponent } from './components/shared/image-popup/image-popup
     SharedService,
     AuthGuard,
     NoAuthGuard,
+    CookieService
   ],
   exports: [
   ],

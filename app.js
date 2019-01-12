@@ -4,7 +4,7 @@ const path = require('path');
 
 const passport = require('passport');
 // passport configuration
-require('./server/config/passport')(passport); 
+require('./server/config/passport')(passport);
 
 // const cors = require('cors');
 const csrf = require('csurf');
@@ -73,18 +73,42 @@ app.use(passport.session());
 app.use(function(req, res, next) {
   if (req.user) {
     log.debug('user');
-    // req.session.user = {
-    //   _id: req.user._doc._id,
-    //   login: req.user._doc.login,y
-    //   name: req.user._doc.name,
-    //   surname: req.user._doc.surname,
-    //   avatar: req.user._doc.avatar,
-    //   provider: req.user._doc.provider,
-    //   role: req.user._doc.role,
-    // };
+    const user = {
+      _id: req.user._doc._id,
+      login: req.user._doc.login,
+      name: req.user._doc.name,
+      surname: req.user._doc.surname,
+      avatar: req.user._doc.avatar,
+      provider: req.user._doc.provider,
+      role: req.user._doc.role,
+    };
+    res.cookie(
+        'hmade',
+        JSON.stringify(user),
+        {
+        // 'secure': false,
+          httpOnly: false,
+          // 'maxAge': null,
+          sameSite: 'Strict',
+          path: '/',
+        }
+    );
+    // log.debug('res', req);
   } else {
-    log.debug('NOT USER');
-    // req.session.user = null;
+    req.session.user = null;
+
+    log.debug('NOT USER', req.path);
+    res.cookie(
+        'hmade',
+        null,
+        {
+        // 'secure': false,
+          httpOnly: false,
+          // 'maxAge': null,
+          sameSite: 'Strict',
+          path: '/',
+        }
+    );
   }
   next();
 });

@@ -16,10 +16,11 @@ export class NoAuthGuard implements CanActivate {
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
 
-    // access permitted for all roles included 'null' 
+    // access permitted for all roles included 'null'
     // access denied from next.data.auth
     const restrictedRoleForAuthorization = next.data.auth; // from routing.module
-    const user = this.userService.userLocalGetCredentials();
+    // const user = this.userService.userLocalGetCredentials();
+    const user = null;
 
     if (!user) {
       return true;
@@ -27,6 +28,4 @@ export class NoAuthGuard implements CanActivate {
       return !(restrictedRoleForAuthorization.indexOf(user.role) >= 0);
     }
   }
-
-
 }

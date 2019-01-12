@@ -53,11 +53,11 @@ export class CommentsComponent implements OnInit {
         ])
     });
 
-    // this.userService.getUserLocal()
-    // .subscribe(user => {
-    //   this.user = user;
-    // });
-    this.user = this.userService.userLocalGetCredentials();
+    this.userService.getUserLocal()
+    .subscribe(user => {
+      this.user = user;
+    });
+    // this.user = this.userService.userLocalGetCredentials();
 
     this.loadComments(-1, 0, 5, !this.allowTo('manager'));
   }
