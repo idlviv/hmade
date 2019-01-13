@@ -19,8 +19,7 @@ export class NoAuthGuard implements CanActivate {
     // access permitted for all roles included 'null'
     // access denied from next.data.auth
     const restrictedRoleForAuthorization = next.data.auth; // from routing.module
-    // const user = this.userService.userLocalGetCredentials();
-    const user = null;
+    const user = this.userService.userCookieExtractor();
 
     if (!user) {
       return true;

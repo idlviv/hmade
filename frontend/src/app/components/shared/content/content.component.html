@@ -4,7 +4,6 @@
       <img src="./assets/images/hmade_logo_light.svg" height="36px" alt="HandMADE logo">
     </a>
   </div>
-
   <div fxShow="true" fxHide.lt-md="true" fxFlex="40" fxLayoutAlign="center center">
     <a *ngFor="let mainMenuCommonItem of mainMenuCommonItems" class="link" [routerLink]="['/', mainMenuCommonItem._id, 'ch']"
       [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: false}">
@@ -97,6 +96,7 @@
             (click)="sidenav.toggle()">Вхід</a>
         </mat-list-item>
         <mat-list-item *ngIf="allowTo('guest')">
+
           <a matLine (click)="userLocalLogout()" (click)="sidenav.toggle()">
             Вихід
           </a>

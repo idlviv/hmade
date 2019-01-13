@@ -12,7 +12,7 @@ const ServerError = require('../errors/serverError');
  * @param {string} secret - object key from config
  * @return {string}
  */
-const createJWTToken = function(prefix, sub, expire, secret) {
+const createJWT = function(prefix, sub, expire, secret) {
   const date = Math.floor(Date.now() / 1000); // in seconds
   return prefix + jwt.sign(
       {
@@ -45,6 +45,6 @@ const sendMail = function(mailOptions) {
 
 
 module.exports = {
-  createJWTToken,
+  createJWT,
   sendMail,
 };

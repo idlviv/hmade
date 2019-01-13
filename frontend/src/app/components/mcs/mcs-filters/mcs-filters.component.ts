@@ -34,10 +34,6 @@ export class McsFiltersComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
-    this.userService.getUserLocal()
-      .subscribe(user => this.user = user);
-
     this.filterForm = new FormGroup({
       mcSort: new FormControl([]),
       parents : new FormArray([
@@ -153,6 +149,10 @@ export class McsFiltersComponent implements OnInit {
         noMoreChildren: this.noMoreChildren,
       }
     });
+  }
+
+  allowTo(permitedRole: string): boolean {
+    return this.userService.allowTo(permitedRole);
   }
 
   addMcsItem(parent_id) {

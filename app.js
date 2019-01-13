@@ -26,6 +26,7 @@ const MongoStore = require('connect-mongo')(session);
 const index = require('./server/routes');
 const routes = require('./server/routes/routes');
 const config = require('./server/config');
+const setUserCookie = require('./server/middleware/cookie').setUserCookie;
 
 const ApplicationError = require('./server/errors/applicationError');
 const errorHandler = require('./server/errors/errorHandler');
@@ -70,48 +71,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-app.use(function(req, res, next) {
-  if (req.user) {
-    log.debug('user');
-    const user = {
-      _id: req.user._doc._id,
-      login: req.user._doc.login,
-      name: req.user._doc.name,
-      surname: req.user._doc.surname,
-      avatar: req.user._doc.avatar,
-      provider: req.user._doc.provider,
-      role: req.user._doc.role,
-    };
-    res.cookie(
-        'hmade',
-        JSON.stringify(user),
-        {
-        // 'secure': false,
-          httpOnly: false,
-          // 'maxAge': null,
-          sameSite: 'Strict',
-          path: '/',
-        }
-    );
-    // log.debug('res', req);
-  } else {
-    req.session.user = null;
-
-    log.debug('NOT USER', req.path);
-    res.cookie(
-        'hmade',
-        null,
-        {
-        // 'secure': false,
-          httpOnly: false,
-          // 'maxAge': null,
-          sameSite: 'Strict',
-          path: '/',
-        }
-    );
-  }
-  next();
-});
+app.use(setUserCookie);
 
 // app.use((req, res, next) => {
 //   log.debug('cookie', req.session);

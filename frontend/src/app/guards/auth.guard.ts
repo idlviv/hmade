@@ -22,13 +22,13 @@ export class AuthGuard implements CanActivate {
     return this.userService.userCheckAuthorization(requiredRoleForAuthorization)
       .pipe(
         map((result) => {
-          console.log('authguard');
-          // set token for local login every time when check canActivate for router
-          if (result.token) {
-            this.userService.userLocalLogin(result.token);
-          } else {
-            this.userService.userLocalRemoveToken('token');
-          }
+          // console.log('authguard');
+          // // set token for local login every time when check canActivate for router
+          // if (result.token) {
+          //   this.userService.userLocalLogin(result.token);
+          // } else {
+          //   this.userService.userLocalRemoveToken('token');
+          // }
           return result.permission;
         }),
         catchError(err => of(false))

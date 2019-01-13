@@ -143,7 +143,7 @@ export class UserPasswordResetComponent implements OnInit {
           const token = result;
           this.processing = false;
           this.userService.userLocalRemoveToken('passwordResetToken');
-          this.userService.userLocalLogin(token);
+          this.userService.logging();
           this.router.navigate(['/user', 'profile']);
           this.matSnackBar.open('Пароль відновлено', '',
             {duration: 3000, panelClass: 'snack-bar-danger'});

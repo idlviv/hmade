@@ -35,7 +35,7 @@ const authentication = function(req, res, next) {
 module.exports = {
   authorization,
   authentication,
-}
+};
 
 // function headersExtractor(req) {
 //   let token = null;

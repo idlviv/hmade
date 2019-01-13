@@ -23,8 +23,6 @@ export class McsItemBriefComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnInit() {
-  this.userService.getUserLocal()
-    .subscribe(user => this.user = user);
   }
 
   allowTo(permitedRole): boolean {

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewChecked } from '@angular/core';
+import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewChecked, AfterViewInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { IUser } from '../../../interfaces/user-interface';
 import { Router } from '@angular/router';
@@ -7,13 +7,14 @@ import { ICatalog } from '../../../interfaces/catalog-interface';
 import { MatDrawerContainer, MatMenuTrigger } from '@angular/material';
 import { config } from '../../../app.config';
 import { SharedService } from '../../../services/shared.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
   styleUrls: ['./content.component.scss']
 })
-export class ContentComponent implements OnInit, AfterViewChecked {
+export class ContentComponent implements OnInit, AfterViewInit {
 
   config = config;
   user: IUser;
@@ -35,10 +36,11 @@ export class ContentComponent implements OnInit, AfterViewChecked {
     private cd: ChangeDetectorRef,
   ) { }
 
+
+  ngAfterViewInit() {
   // Solve error ExpressionChangedAfterItHasBeenCheckedError
   // After redirection from auth2 signin (server) view changes (*ngIf)
   // was user=null becomes user which logged
-  ngAfterViewChecked() {
     this.cd.detectChanges();
   }
 
@@ -51,15 +53,14 @@ export class ContentComponent implements OnInit, AfterViewChecked {
         }
       });
 
-    // initial subscribe on user
-    this.userService.getUserLocal()
-      .subscribe(user => {
-        this.user = user;
-      } );
-
+    // this.userService.getUserLocal()
+    //   .subscribe((user) => {
+    //     this.user = user;
+    //     console.log('user');
+    //   });
 
     // initial login user, token will be taken from localStorage
-    this.userService.userLocalLogin(null);
+    // this.userService.userLocalLogin(null);
 
     // get main menu items
     this.catalogService.getMainMenu()
@@ -75,8 +76,8 @@ export class ContentComponent implements OnInit, AfterViewChecked {
   userLogout() {
     this.userService.userLogout()
       .subscribe(message => {
-        this.userService.userLocalLogout();
-        console.log('logout message', message);
+        this.userService.logging();
+        console.log(message);
         this.router.navigate(['/user', 'login']);
 
       },
@@ -102,10 +103,12 @@ export class ContentComponent implements OnInit, AfterViewChecked {
   }
 
   allowTo(permitedRole: string): boolean {
+    this.user = this.userService.userCookieExtractor();
     return this.userService.allowTo(permitedRole);
   }
 
   restrictTo(restrictedRoles: string[]): boolean {
+    this.user = this.userService.userCookieExtractor();
     return this.userService.restrictTo(restrictedRoles);
   }
 

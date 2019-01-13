@@ -60,8 +60,8 @@ var RedirectionWithTokenComponent = /** @class */ (function () {
         var _this = this;
         this.route.params
             .subscribe(function (params) {
-            var token = params.token;
-            _this.userService.userLocalLogin(token);
+            // const token = params.token;
+            _this.userService.logging();
             _this.router.navigate(['/user', 'profile']);
         }, function (err) { return console.log('err', err); });
     };
@@ -207,7 +207,7 @@ var UserCreateComponent = /** @class */ (function () {
             _this.resetForm();
             _this.matSnackBar.open('Користувача створено, вхід виконано', '', { duration: 3000 });
             // login new user
-            _this.userService.userLocalLogin(token);
+            _this.userService.logging();
             _this.router.navigate(['/user', 'profile']);
         }, function (err) {
             // 422 or 400
@@ -420,7 +420,7 @@ var UserLoginComponent = /** @class */ (function () {
             .subscribe(function (token) {
             if (token) {
                 _this.resetForm();
-                _this.userService.userLocalLogin(token);
+                _this.userService.logging();
                 // const login = this.userService.userLocalGetCredentials().login;
                 _this.matSnackBar.open(_this.user.login + ", \u0432\u0438 \u0443\u0432\u0456\u0439\u0448\u043B\u0438 \u043D\u0430 \u0441\u0430\u0439\u0442", '', { duration: 5000 });
                 _this.router.navigate(['/user', 'profile']);
@@ -616,7 +616,7 @@ var UserPasswordResetComponent = /** @class */ (function () {
             var token = result;
             _this.processing = false;
             _this.userService.userLocalRemoveToken('passwordResetToken');
-            _this.userService.userLocalLogin(token);
+            _this.userService.logging();
             _this.router.navigate(['/user', 'profile']);
             _this.matSnackBar.open('Пароль відновлено', '', { duration: 3000, panelClass: 'snack-bar-danger' });
         }, function (err) {

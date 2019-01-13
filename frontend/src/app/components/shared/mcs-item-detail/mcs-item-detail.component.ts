@@ -29,14 +29,6 @@ export class McsItemDetailComponent implements OnInit {
 
   ngOnInit() {
 
-    this.userService.getUserLocal()
-      .subscribe(
-        (user) => {
-          this.user = user;
-        },
-        (err) => console.log('err', err)
-      );
-
     this.route.params.pipe(
       mergeMap(
         (params) => {

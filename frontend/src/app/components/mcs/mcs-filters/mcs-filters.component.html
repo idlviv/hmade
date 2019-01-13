@@ -34,7 +34,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div *ngIf="noMoreChildren === 'true' && (user && (user.role === 'admin' || user.role === 'manager'))" class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
+        <div *ngIf="noMoreChildren === 'true' && allowTo('manager')" class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
           <div class="item text-align-center muted" fxFlex fxLayoutAlign="center center">
             <a mat-button (click)=addMcsItem(parent_id)>
               <mat-icon>add</mat-icon> Додати майстерклас

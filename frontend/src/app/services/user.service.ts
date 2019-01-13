@@ -144,6 +144,20 @@ export class UserService {
   }
 
   /**
+   * Extract user from cookie
+   *
+   * @returns {IUser|null}
+   * @memberof UserService
+   */
+  userCookieExtractor(): IUser|null {
+    if (this.cookieService.get('hmade')) {
+      const helper = new JwtHelperService();
+      return helper.decodeToken(this.cookieService.get('hmade')).sub;
+    }
+    return null;
+  }
+
+  /**
    * Helper for frontend authorization
    * Check user permittion for some restricted actions
    * like menu displaying..
@@ -153,33 +167,30 @@ export class UserService {
    * @memberof UserService
    */
   allowTo(permitedRole: string): boolean {
-    const user = JSON.parse(this.cookieService.get('hmade'));
-    console.log('cookie', user);
+    const user = this.userCookieExtractor();
     const permissions = config.permissions;
-    if (user && permitedRole === 'notUser') {
+    if (!user && permitedRole === 'notUser') {
       return true;
     }
-    if (user) {
+    if (!user) {
       return false;
     }
 
-    const roleFromLocalStorage = user.role;
-    if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
+    const roleFromCookie = user.role;
+    if (permissions[roleFromCookie].indexOf(permitedRole) >= 0) {
       return true;
     } else {
       return false;
     }
-    // this.userLocalGetCredentials();
  }
 
-
   restrictTo(restrictedRoles: string[]): boolean {
-    const user = JSON.parse(this.cookieService.get('hmade'));
-    if (!this.user) {
+    const user = this.userCookieExtractor();
+    if (!user) {
       return true;
     }
-    const roleFromLocalStorage = this.user.role;
-    if (restrictedRoles.indexOf(roleFromLocalStorage) >= 0) {
+    const roleFromCookie = user.role;
+    if (restrictedRoles.indexOf(roleFromCookie) >= 0) {
       return false;
     } else {
       return true;
@@ -285,7 +296,7 @@ export class UserService {
   }
 
   userEmailVerification(): Observable<IResponse> {
-    const token = this.userLocalGetToken('token');
+    const token = localStorage.getItem('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -341,34 +352,41 @@ export class UserService {
     );
   }
 
-  syncTokenToSession(): Observable<string> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type':  'application/json',
-      })
-    };
-    return this.http.get<string>(
-      'api/user/sync-token-to-session',
-      httpOptions
-    );
+  // syncTokenToSession(): Observable<string> {
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type':  'application/json',
+  //     })
+  //   };
+  //   return this.http.get<string>(
+  //     'api/user/sync-token-to-session',
+  //     httpOptions
+  //   );
+  // }
+
+  logging() {
+        const user = this.userCookieExtractor();
+          this._logging.next(user);
   }
 
   // create Observable for user login watch
-  userLocalLogin(token) {
-    if (token) {
-      this.userLocalSetToken('token', token);
-    }
-    this.userLocalGetCredentials();
-    // this._logging.next(user);
-  }
+  // userLocalLogin(token) {
+  //   user = this.userCookieExtractor();
+  //   // if (token) {
+  //   //   this.userLocalSetToken('token', token);
+  //   // }
+  //   // this.userLocalGetCredentials();
+  //   this._logging.next(user);
+  // }
 
-  userLocalLogout() {
-    this.userLocalRemoveToken('token');
-    const user = null;
-    this._logging.next(user);
-  }
+  // userLocalLogout() {
+  //   this.userLocalRemoveToken('token');
+  //   const user = null;
+  //   this._logging.next(user);
+  // }
 
-  getUserLocal(): Observable <IUser> {
+  getUserLocal(): Observable<IUser|null> {
+    // return this.userCookieExtractor();
     return this._logging.asObservable();
   }
   // end of observable
@@ -405,37 +423,37 @@ export class UserService {
     return token;
   }
 
-  userLocalGetCredentials(): void {
-    return JSON.parse(this.cookieService.get('hmade'));
-    const tokenFromStorage = localStorage.getItem('token');
-    // if (!tokenFromStorage) {
-    //   return null;
-    // }
-    if ((this.userLocalCheckExpiration('token') && !this.tokenSyncronizatonProgress) || !tokenFromStorage) {
-      // if tokenSyncronizaton in Progress then wait for result
-      // to prevent multi requests to server
-      this.tokenSyncronizatonProgress = true;
-      // this.syncTokenToSession()
-      //   .subscribe((token) => {
-      //     if (token) {
-      //       this.userLocalSetToken('token', token);
-      //       this.tokenSyncronizatonProgress = false;
-      //       const helper = new JwtHelperService();
-      //       this._logging.next(<IUser>helper.decodeToken(token).sub);
-      //     } else {
-      //       this.userLocalRemoveToken('token');
-      //       this.tokenSyncronizatonProgress = false;
-      //       this._logging.next(null);
-      //     }
-      //   },
-      //   (err) => {
-      //     this.userLocalRemoveToken('token');
-      //     this.tokenSyncronizatonProgress = false;
-      //     this._logging.next(null);
-      //   }
-      // );
-    }
-  }
+  // userLocalGetCredentials() {
+  //   return this.userCookieExtractor();
+  //   const tokenFromStorage = localStorage.getItem('token');
+  //   // if (!tokenFromStorage) {
+  //   //   return null;
+  //   // }
+  //   if ((this.userLocalCheckExpiration('token') && !this.tokenSyncronizatonProgress) || !tokenFromStorage) {
+  //     // if tokenSyncronizaton in Progress then wait for result
+  //     // to prevent multi requests to server
+  //     this.tokenSyncronizatonProgress = true;
+  //     // this.syncTokenToSession()
+  //     //   .subscribe((token) => {
+  //     //     if (token) {
+  //     //       this.userLocalSetToken('token', token);
+  //     //       this.tokenSyncronizatonProgress = false;
+  //     //       const helper = new JwtHelperService();
+  //     //       this._logging.next(<IUser>helper.decodeToken(token).sub);
+  //     //     } else {
+  //     //       this.userLocalRemoveToken('token');
+  //     //       this.tokenSyncronizatonProgress = false;
+  //     //       this._logging.next(null);
+  //     //     }
+  //     //   },
+  //     //   (err) => {
+  //     //     this.userLocalRemoveToken('token');
+  //     //     this.tokenSyncronizatonProgress = false;
+  //     //     this._logging.next(null);
+  //     //   }
+  //     // );
+  //   }
+  // }
 
   userLocalGetExpirationDate(tokenKey): Date {
     const token = localStorage.getItem(tokenKey);

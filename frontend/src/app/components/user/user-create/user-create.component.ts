@@ -94,7 +94,7 @@ export class UserCreateComponent implements OnInit {
           this.resetForm();
           this.matSnackBar.open('Користувача створено, вхід виконано', '', {duration: 3000});
           // login new user
-          this.userService.userLocalLogin(token);
+          this.userService.logging();
           this.router.navigate(['/user', 'profile']);
         },
         err => {

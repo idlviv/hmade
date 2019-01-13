@@ -12,6 +12,7 @@ const sharedController = require('../controllers/sharedController');
 const recaptcha = require('../middleware/recaptcha');
 const authorization = require('../middleware/auth').authorization;
 const authentication = require('../middleware/auth').authentication;
+const setUserCookie = require('../middleware/cookie').setUserCookie;
 
 const notGuardExtarctUser_id = require('../middleware/auth')
     .notGuardExtarctUser_id;
@@ -223,12 +224,12 @@ router.post('/user/create',
     recaptcha,
     userController.userCreate,
     passport.authenticate('localWithoutPassword'),
-    userController.userLogin
+    userController.userLogin,
 );
 
 router.get('/user/login',
     passport.authenticate('local'),
-    userController.userLogin
+    userController.userLogin,
 );
 
 // 1step: on google authenticate buntton press
@@ -254,7 +255,7 @@ router.get('/user/auth/google/redirect',
 );
 
 router.get('/user/logout',
-    userController.userLogout
+    userController.userLogout,
 );
 
 router.get('/user/profile',
@@ -299,6 +300,7 @@ router.get('/user/password-reset-check-email',
       req.logout();
       next();
     },
+    setUserCookie,
     recaptcha,
     userController.passwordResetCheckEmail
 );
@@ -314,7 +316,7 @@ router.get('/user/password-reset',
     passport.authenticate('jwt.passwordReset', {session: false}),
     userController.passwordReset,
     passport.authenticate('localWithoutPassword'),
-    userController.userLogin
+    userController.userLogin,
 );
 
 /**

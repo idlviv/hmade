@@ -21,8 +21,8 @@ export class RedirectionWithTokenComponent implements OnInit {
     this.route.params
       .subscribe(
         (params) => {
-          const token = params.token;
-          this.userService.userLocalLogin(token);
+          // const token = params.token;
+          this.userService.logging();
           this.router.navigate(['/user', 'profile']);
         },
       (err) => console.log('err', err)

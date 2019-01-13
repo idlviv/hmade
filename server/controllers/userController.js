@@ -11,6 +11,7 @@ const config = require('../config');
 const transporter = require('../config/mailgun');
 const userHelper = require('../helpers/userHelper');
 const sharedHelper = require('../helpers/sharedHelper');
+const setUserCookie = require('../helpers/cookieHelper').setUserCookie;
 
 /**
  * First step to reset password
@@ -45,7 +46,7 @@ const passwordResetCheckEmail = function(req, res, next) {
       .then((info) => {
         const sub = {_id: user._id};
         // token to identify user
-        const codeToken = sharedHelper.createJWTToken('JWT ', sub, 300, 'JWT_SECRET_CODE');
+        const codeToken = sharedHelper.createJWT('JWT ', sub, 300, 'JWT_SECRET_CODE');
         return res.status(200).json(codeToken);
       })
       .catch((err) => next(err));
@@ -77,7 +78,7 @@ const passwordResetCheckCode = function(req, res, next) {
       .then((userFromDb) => {
         const sub = {_id: userFromDb._doc._id};
         // token to identify user
-        const changePasswordToken = sharedHelper.createJWTToken('JWT ', sub, 300, 'JWT_SECRET_CHANGE_PASSWORD');
+        const changePasswordToken = sharedHelper.createJWT('JWT ', sub, 300, 'JWT_SECRET_CHANGE_PASSWORD');
         return res.status(200).json(changePasswordToken);
       })
       .catch((err) => {
@@ -147,7 +148,7 @@ const userEmailVerificationReceive = function(req, res, next) {
                       provider: req.user._doc.provider,
                       role: 'user',
                     };
-                    const token = sharedHelper.createJWTToken('', sub, 60, 'JWT_SECRET');
+                    const token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET');
                     res.redirect(req.protocol + '://' + req.get('host') + '/user/redirection-with-token/' + token);
                   },
                   (err) => {
@@ -253,11 +254,14 @@ const userProfile = function(req, res, next) {
  * @param {*} req
  * @param {*} res
  * @param {*} next
- * @return {string}
+ * @return {*}
  */
 const userLogout = function(req, res, next) {
   req.logout();
-  return res.status(200).json('Logged out');
+  setUserCookie(null)(req, res, next)
+      .then(() => {
+        return res.status(200).json('Logged out');
+      });
 };
 
 /**
@@ -272,7 +276,7 @@ const userLogout = function(req, res, next) {
  */
 const userLogin = function(req, res, next) {
   if (req.user) {
-    const sub = {
+    const user = {
       _id: req.user._doc._id,
       login: req.user._doc.login,
       name: req.user._doc.name,
@@ -281,8 +285,12 @@ const userLogin = function(req, res, next) {
       provider: req.user._doc.provider,
       role: req.user._doc.role,
     };
-    const token = sharedHelper.createJWTToken('', sub, 60, 'JWT_SECRET'); // 604800
-    return res.status(200).json(token);
+    console.log('login');
+    setUserCookie(user)(req, res, next)
+        .then(() => {
+          const token = sharedHelper.createJWT('', user, 60, 'JWT_SECRET');
+          return res.status(200).json(token);
+        });
   } else {
     return next(new ClientError({message: 'Помилка авторизації', status: 401}));
   }
@@ -299,7 +307,7 @@ const syncTokenToSession = function(req, res, next) {
       provider: req.user._doc.provider,
       role: req.user._doc.role,
     };
-    const token = sharedHelper.createJWTToken('', sub, 60, 'JWT_SECRET'); // 604800
+    const token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET'); // 604800
     return res.status(200).json(token);
   } else {
     res.status(200).json('');
@@ -324,7 +332,7 @@ const userGoogleSignin = function(req, res, next) {
     provider: req.user._doc.provider,
     role: req.user._doc.role,
   };
-  const token = sharedHelper.createJWTToken('', sub, 60, 'JWT_SECRET');
+  const token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET');
   res.redirect('/user/redirection-with-token/' + token);
 };
 
@@ -352,7 +360,7 @@ const userCheckAuthorization = function(req, res, next) {
       provider: req.user._doc.provider,
       role: req.user._doc.role,
     };
-    token = sharedHelper.createJWTToken('', sub, 60, 'JWT_SECRET'); // 604800
+    token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET'); // 604800
   } else {
     roleFromSession = 'casual';
     token = null;

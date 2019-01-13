@@ -53,12 +53,6 @@ export class CommentsComponent implements OnInit {
         ])
     });
 
-    this.userService.getUserLocal()
-    .subscribe(user => {
-      this.user = user;
-    });
-    // this.user = this.userService.userLocalGetCredentials();
-
     this.loadComments(-1, 0, 5, !this.allowTo('manager'));
   }
 
@@ -185,10 +179,12 @@ export class CommentsComponent implements OnInit {
   }
 
   allowTo(permitedRole: string): boolean {
+    this.user = this.userService.userCookieExtractor();
     return this.userService.allowTo(permitedRole);
   }
 
   restrictTo(restrictedRoles: string[]): boolean {
+    this.user = this.userService.userCookieExtractor();
     return this.userService.restrictTo(restrictedRoles);
   }
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { filter } from 'rxjs/operators';
 import { NavigationStart, Router } from '@angular/router';
+import { UserService } from './services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -12,8 +13,10 @@ export class AppComponent implements OnInit {
   showHeader = false;
 
   constructor(
+    private userService: UserService
    ) { }
 
   ngOnInit() {
+    this.userService.logging();
   }
 }

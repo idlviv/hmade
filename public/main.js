@@ -164,6 +164,7 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/user.service */ "./src/app/services/user.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -174,11 +175,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
 var AppComponent = /** @class */ (function () {
-    function AppComponent() {
+    function AppComponent(userService) {
+        this.userService = userService;
         this.showHeader = false;
     }
     AppComponent.prototype.ngOnInit = function () {
+        this.userService.logging();
     };
     AppComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -186,7 +190,7 @@ var AppComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -686,7 +690,6 @@ var CommentsComponent = /** @class */ (function () {
         this.processing = false;
     }
     CommentsComponent.prototype.ngOnInit = function () {
-        var _this = this;
         this.commentForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]({
             comment: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]({
                 value: '',
@@ -701,11 +704,6 @@ var CommentsComponent = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required
             ])
         });
-        this.userService.getUserLocal()
-            .subscribe(function (user) {
-            _this.user = user;
-        });
-        // this.user = this.userService.userLocalGetCredentials();
         this.loadComments(-1, 0, 5, !this.allowTo('manager'));
     };
     // Listening of page bottom reached
@@ -806,9 +804,11 @@ var CommentsComponent = /** @class */ (function () {
         }, function (err) { return console.log('add comment err', err); });
     };
     CommentsComponent.prototype.allowTo = function (permitedRole) {
+        this.user = this.userService.userCookieExtractor();
         return this.userService.allowTo(permitedRole);
     };
     CommentsComponent.prototype.restrictTo = function (restrictedRoles) {
+        this.user = this.userService.userCookieExtractor();
         return this.userService.restrictTo(restrictedRoles);
     };
     __decorate([
@@ -932,7 +932,7 @@ var ConfirmPopupComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"toolbar\" class=\"mat-elevation-z4\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\r\n  <div class=\"logo\" fxFlex.lt-md=\"80\" fxFlex=\"30\" fxLayoutAlign=\"start center\">\r\n    <a href=\"\">\r\n      <img src=\"./assets/images/hmade_logo_light.svg\" height=\"36px\" alt=\"HandMADE logo\">\r\n    </a>\r\n  </div>\r\n\r\n  <div fxShow=\"true\" fxHide.lt-md=\"true\" fxFlex=\"40\" fxLayoutAlign=\"center center\">\r\n    <a *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\" class=\"link\" [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\"\r\n      [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact: false}\">\r\n      <span class=\"type1\">{{mainMenuCommonItem.name}}</span>\r\n    </a>\r\n  </div>\r\n\r\n  <div fxShow=\"true\" fxHide.lt-md=\"true\" fxFlex=\"30\" fxLayoutAlign=\"end center\">\r\n    <a *ngIf=\"allowTo('guest')\" class=\"link\" [matMenuTriggerFor]=\"settingsMenu\" #settingsMenuTrigger=\"matMenuTrigger\" (mouseover)=\"onSettingsMenuMouseover()\">\r\n      <span class=\"type2\">\r\n        <mat-icon class=\"mat-icon-aligner\">settings</mat-icon>{{user.name}} {{user.surname}}\r\n      </span>\r\n\r\n    </a>\r\n\r\n    <mat-menu #settingsMenu=\"matMenu\" xPosition=\"after\" yPosition=\"above\" [overlapTrigger]=\"false\">\r\n      <span (mouseleave)=\"onSettingsMenuMouseleave()\">\r\n        <a *ngIf=\"allowTo('guest')\" mat-menu-item [routerLink]=\"['/user/profile']\" [routerLinkActive]=\"['accent']\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <mat-icon>account_circle</mat-icon><span>Профіль</span>\r\n        </a>\r\n        <a *ngIf=\"allowTo('manager')\" mat-menu-item [routerLink]=\"['/dashboard']\"\r\n          [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <mat-icon>settings</mat-icon><span>Dashboard</span>\r\n        </a>\r\n      </span>\r\n    </mat-menu>\r\n\r\n    <a *ngIf=\"allowTo('notUser')\" class=\"link\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n      [routerLink]=\"['/user/login']\"><span class=\"type1\">Вхід</span></a>\r\n    <a *ngIf=\"allowTo('guest')\" class=\"link\" (click)=\"userLogout()\"><span class=\"type2\">Вихід</span></a>\r\n  </div>\r\n\r\n  <div class=\"menu-button\" fxShow=\"true\" fxHide.gt-sm=\"true\" fxFlex=\"20\" fxLayoutAlign=\"end center\">\r\n    <button mat-button (click)=\"sidenav.toggle()\">\r\n      <mat-icon *ngIf=\"sidenav.opened\">format_indent_increase</mat-icon>\r\n      <mat-icon *ngIf=\"!sidenav.opened\">menu</mat-icon>\r\n    </button>\r\n  </div>\r\n  <!-- </mat-toolbar-row> -->\r\n  <!-- </mat-toolbar> -->\r\n</div>\r\n<!-- <div class=\"toolbar\" fxLayoutAlign=\"center end\">\r\n    <div fxShow=\"true\" fxHide.lt-md=\"true\" fxLayout=\"row\" fxLayoutAlign=\"center\">\r\n      <a *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\" mat-button\r\n          [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\"\r\n          [routerLinkActive]=\"['primary-light']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{mainMenuCommonItem.name}}\r\n      </a>\r\n    </div>\r\n</div> -->\r\n\r\n<mat-sidenav-container fxFlexFill>\r\n  <mat-sidenav #sidenav fxLayout=\"column\" position=\"end\" class=\"sidenav mat-elevation-z4\" role=\"navigation\" mode=\"side\">\r\n    <div fxLayout=\"column\">\r\n      <mat-nav-list>\r\n        <mat-list-item *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\">\r\n          <a matLine [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\" [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\"\r\n            (click)=\"sidenav.toggle()\">\r\n            {{mainMenuCommonItem.name}}\r\n          </a>\r\n        </mat-list-item>\r\n\r\n        <mat-expansion-panel *ngIf=\"allowTo('guest')\" class=\"mat-elevation-z0\">\r\n          <mat-expansion-panel-header class=\"sidenav-expansion-panel\">\r\n            <!-- <mat-panel-title> -->\r\n              <!-- <mat-list-item> -->\r\n                \r\n                <span matLine><span><mat-icon class=\"mat-icon-aligner\">settings</mat-icon>{{user.name}} {{user.surname}}</span></span>\r\n              <!-- </mat-list-item> -->\r\n            <!-- </mat-panel-title> -->\r\n\r\n          </mat-expansion-panel-header>\r\n          <mat-list-item *ngIf=\"allowTo('guest')\">\r\n            <mat-icon matListIcon>account_circle</mat-icon>\r\n            <a matLine [routerLink]=\"['/user/profile']\" [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n              (click)=\"sidenav.toggle()\">\r\n              Профіль</a>\r\n          </mat-list-item>\r\n          <mat-list-item *ngIf=\"allowTo('manager')\">\r\n            <mat-icon matListIcon>settings</mat-icon>\r\n            <a matLine [routerLink]=\"['/dashboard']\" [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n              (click)=\"sidenav.toggle()\">\r\n              Dashboard</a>\r\n          </mat-list-item>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-list-item *ngIf=\"allowTo('notUser')\">\r\n          <a matLine [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\" [routerLink]=\"['/user/login']\"\r\n            (click)=\"sidenav.toggle()\">Вхід</a>\r\n        </mat-list-item>\r\n        <mat-list-item *ngIf=\"allowTo('guest')\">\r\n          <a matLine (click)=\"userLocalLogout()\" (click)=\"sidenav.toggle()\">\r\n            Вихід\r\n          </a>\r\n          <mat-icon matListIcon>exit_to_app</mat-icon>\r\n        </mat-list-item>\r\n      </mat-nav-list>\r\n    </div>\r\n  </mat-sidenav>\r\n  <mat-sidenav-content>\r\n    <router-outlet></router-outlet>\r\n  </mat-sidenav-content>\r\n</mat-sidenav-container>"
+module.exports = "<div id=\"toolbar\" class=\"mat-elevation-z4\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\r\n  <div class=\"logo\" fxFlex.lt-md=\"80\" fxFlex=\"30\" fxLayoutAlign=\"start center\">\r\n    <a href=\"\">\r\n      <img src=\"./assets/images/hmade_logo_light.svg\" height=\"36px\" alt=\"HandMADE logo\">\r\n    </a>\r\n  </div>\r\n  <div fxShow=\"true\" fxHide.lt-md=\"true\" fxFlex=\"40\" fxLayoutAlign=\"center center\">\r\n    <a *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\" class=\"link\" [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\"\r\n      [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact: false}\">\r\n      <span class=\"type1\">{{mainMenuCommonItem.name}}</span>\r\n    </a>\r\n  </div>\r\n\r\n  <div fxShow=\"true\" fxHide.lt-md=\"true\" fxFlex=\"30\" fxLayoutAlign=\"end center\">\r\n    <a *ngIf=\"allowTo('guest')\" class=\"link\" [matMenuTriggerFor]=\"settingsMenu\" #settingsMenuTrigger=\"matMenuTrigger\" (mouseover)=\"onSettingsMenuMouseover()\">\r\n      <span class=\"type2\">\r\n        <mat-icon class=\"mat-icon-aligner\">settings</mat-icon>{{user.name}} {{user.surname}}\r\n      </span>\r\n\r\n    </a>\r\n\r\n    <mat-menu #settingsMenu=\"matMenu\" xPosition=\"after\" yPosition=\"above\" [overlapTrigger]=\"false\">\r\n      <span (mouseleave)=\"onSettingsMenuMouseleave()\">\r\n        <a *ngIf=\"allowTo('guest')\" mat-menu-item [routerLink]=\"['/user/profile']\" [routerLinkActive]=\"['accent']\"\r\n          [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <mat-icon>account_circle</mat-icon><span>Профіль</span>\r\n        </a>\r\n        <a *ngIf=\"allowTo('manager')\" mat-menu-item [routerLink]=\"['/dashboard']\"\r\n          [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n          <mat-icon>settings</mat-icon><span>Dashboard</span>\r\n        </a>\r\n      </span>\r\n    </mat-menu>\r\n\r\n    <a *ngIf=\"allowTo('notUser')\" class=\"link\" [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n      [routerLink]=\"['/user/login']\"><span class=\"type1\">Вхід</span></a>\r\n    <a *ngIf=\"allowTo('guest')\" class=\"link\" (click)=\"userLogout()\"><span class=\"type2\">Вихід</span></a>\r\n  </div>\r\n\r\n  <div class=\"menu-button\" fxShow=\"true\" fxHide.gt-sm=\"true\" fxFlex=\"20\" fxLayoutAlign=\"end center\">\r\n    <button mat-button (click)=\"sidenav.toggle()\">\r\n      <mat-icon *ngIf=\"sidenav.opened\">format_indent_increase</mat-icon>\r\n      <mat-icon *ngIf=\"!sidenav.opened\">menu</mat-icon>\r\n    </button>\r\n  </div>\r\n  <!-- </mat-toolbar-row> -->\r\n  <!-- </mat-toolbar> -->\r\n</div>\r\n<!-- <div class=\"toolbar\" fxLayoutAlign=\"center end\">\r\n    <div fxShow=\"true\" fxHide.lt-md=\"true\" fxLayout=\"row\" fxLayoutAlign=\"center\">\r\n      <a *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\" mat-button\r\n          [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\"\r\n          [routerLinkActive]=\"['primary-light']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{mainMenuCommonItem.name}}\r\n      </a>\r\n    </div>\r\n</div> -->\r\n\r\n<mat-sidenav-container fxFlexFill>\r\n  <mat-sidenav #sidenav fxLayout=\"column\" position=\"end\" class=\"sidenav mat-elevation-z4\" role=\"navigation\" mode=\"side\">\r\n    <div fxLayout=\"column\">\r\n      <mat-nav-list>\r\n        <mat-list-item *ngFor=\"let mainMenuCommonItem of mainMenuCommonItems\">\r\n          <a matLine [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\" [routerLink]=\"['/', mainMenuCommonItem._id, 'ch']\"\r\n            (click)=\"sidenav.toggle()\">\r\n            {{mainMenuCommonItem.name}}\r\n          </a>\r\n        </mat-list-item>\r\n\r\n        <mat-expansion-panel *ngIf=\"allowTo('guest')\" class=\"mat-elevation-z0\">\r\n          <mat-expansion-panel-header class=\"sidenav-expansion-panel\">\r\n            <!-- <mat-panel-title> -->\r\n              <!-- <mat-list-item> -->\r\n                \r\n                <span matLine><span><mat-icon class=\"mat-icon-aligner\">settings</mat-icon>{{user.name}} {{user.surname}}</span></span>\r\n              <!-- </mat-list-item> -->\r\n            <!-- </mat-panel-title> -->\r\n\r\n          </mat-expansion-panel-header>\r\n          <mat-list-item *ngIf=\"allowTo('guest')\">\r\n            <mat-icon matListIcon>account_circle</mat-icon>\r\n            <a matLine [routerLink]=\"['/user/profile']\" [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n              (click)=\"sidenav.toggle()\">\r\n              Профіль</a>\r\n          </mat-list-item>\r\n          <mat-list-item *ngIf=\"allowTo('manager')\">\r\n            <mat-icon matListIcon>settings</mat-icon>\r\n            <a matLine [routerLink]=\"['/dashboard']\" [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n              (click)=\"sidenav.toggle()\">\r\n              Dashboard</a>\r\n          </mat-list-item>\r\n        </mat-expansion-panel>\r\n\r\n        <mat-list-item *ngIf=\"allowTo('notUser')\">\r\n          <a matLine [routerLinkActive]=\"['muted']\" [routerLinkActiveOptions]=\"{exact: true}\" [routerLink]=\"['/user/login']\"\r\n            (click)=\"sidenav.toggle()\">Вхід</a>\r\n        </mat-list-item>\r\n        <mat-list-item *ngIf=\"allowTo('guest')\">\r\n\r\n          <a matLine (click)=\"userLocalLogout()\" (click)=\"sidenav.toggle()\">\r\n            Вихід\r\n          </a>\r\n          <mat-icon matListIcon>exit_to_app</mat-icon>\r\n        </mat-list-item>\r\n      </mat-nav-list>\r\n    </div>\r\n  </mat-sidenav>\r\n  <mat-sidenav-content>\r\n    <router-outlet></router-outlet>\r\n  </mat-sidenav-content>\r\n</mat-sidenav-container>"
 
 /***/ }),
 
@@ -990,10 +990,10 @@ var ContentComponent = /** @class */ (function () {
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
         this.hierarchyCategory = [];
     }
-    // Solve error ExpressionChangedAfterItHasBeenCheckedError
-    // After redirection from auth2 signin (server) view changes (*ngIf)
-    // was user=null becomes user which logged
-    ContentComponent.prototype.ngAfterViewChecked = function () {
+    ContentComponent.prototype.ngAfterViewInit = function () {
+        // Solve error ExpressionChangedAfterItHasBeenCheckedError
+        // After redirection from auth2 signin (server) view changes (*ngIf)
+        // was user=null becomes user which logged
         this.cd.detectChanges();
     };
     ContentComponent.prototype.ngOnInit = function () {
@@ -1004,13 +1004,13 @@ var ContentComponent = /** @class */ (function () {
                 _this.sidenav.close();
             }
         });
-        // initial subscribe on user
-        this.userService.getUserLocal()
-            .subscribe(function (user) {
-            _this.user = user;
-        });
+        // this.userService.getUserLocal()
+        //   .subscribe((user) => {
+        //     this.user = user;
+        //     console.log('user');
+        //   });
         // initial login user, token will be taken from localStorage
-        this.userService.userLocalLogin(null);
+        // this.userService.userLocalLogin(null);
         // get main menu items
         this.catalogService.getMainMenu()
             .subscribe(function (menuItems) {
@@ -1024,8 +1024,8 @@ var ContentComponent = /** @class */ (function () {
         var _this = this;
         this.userService.userLogout()
             .subscribe(function (message) {
-            _this.userService.userLocalLogout();
-            console.log('logout message', message);
+            _this.userService.logging();
+            console.log(message);
             _this.router.navigate(['/user', 'login']);
         }, function (err) {
             console.log(err.error);
@@ -1044,9 +1044,11 @@ var ContentComponent = /** @class */ (function () {
         this.settingsSideMenuTrigger.closeMenu();
     };
     ContentComponent.prototype.allowTo = function (permitedRole) {
+        this.user = this.userService.userCookieExtractor();
         return this.userService.allowTo(permitedRole);
     };
     ContentComponent.prototype.restrictTo = function (restrictedRoles) {
+        this.user = this.userService.userCookieExtractor();
         return this.userService.restrictTo(restrictedRoles);
     };
     __decorate([
@@ -1867,9 +1869,6 @@ var McsItemBriefComponent = /** @class */ (function () {
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"];
     }
     McsItemBriefComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.userService.getUserLocal()
-            .subscribe(function (user) { return _this.user = user; });
     };
     McsItemBriefComponent.prototype.allowTo = function (permitedRole) {
         return this.userService.allowTo(permitedRole);
@@ -1987,10 +1986,6 @@ var McsItemDetailComponent = /** @class */ (function () {
     }
     McsItemDetailComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.userService.getUserLocal()
-            .subscribe(function (user) {
-            _this.user = user;
-        }, function (err) { return console.log('err', err); });
         this.route.params.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])(function (params) {
             return _this.mcService.getMcByIdAndIncViews(params._id);
         }))
@@ -2702,18 +2697,16 @@ var AuthGuard = /** @class */ (function () {
         this.userService = userService;
     }
     AuthGuard.prototype.canActivate = function (next, state) {
-        var _this = this;
         var requiredRoleForAuthorization = next.data.auth; // from routing.module
         return this.userService.userCheckAuthorization(requiredRoleForAuthorization)
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (result) {
-            console.log('authguard');
-            // set token for local login every time when check canActivate for router
-            if (result.token) {
-                _this.userService.userLocalLogin(result.token);
-            }
-            else {
-                _this.userService.userLocalRemoveToken('token');
-            }
+            // console.log('authguard');
+            // // set token for local login every time when check canActivate for router
+            // if (result.token) {
+            //   this.userService.userLocalLogin(result.token);
+            // } else {
+            //   this.userService.userLocalRemoveToken('token');
+            // }
             return result.permission;
         }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (err) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"])(false); }));
     };
@@ -2761,8 +2754,7 @@ var NoAuthGuard = /** @class */ (function () {
         // access permitted for all roles included 'null'
         // access denied from next.data.auth
         var restrictedRoleForAuthorization = next.data.auth; // from routing.module
-        // const user = this.userService.userLocalGetCredentials();
-        var user = null;
+        var user = this.userService.userCookieExtractor();
         if (!user) {
             return true;
         }
@@ -3972,6 +3964,19 @@ var UserService = /** @class */ (function () {
         return this.http.get('api/user/checkAuthorization', httpOptions);
     };
     /**
+     * Extract user from cookie
+     *
+     * @returns {IUser|null}
+     * @memberof UserService
+     */
+    UserService.prototype.userCookieExtractor = function () {
+        if (this.cookieService.get('hmade')) {
+            var helper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__["JwtHelperService"]();
+            return helper.decodeToken(this.cookieService.get('hmade')).sub;
+        }
+        return null;
+    };
+    /**
      * Helper for frontend authorization
      * Check user permittion for some restricted actions
      * like menu displaying..
@@ -3981,31 +3986,29 @@ var UserService = /** @class */ (function () {
      * @memberof UserService
      */
     UserService.prototype.allowTo = function (permitedRole) {
-        var user = JSON.parse(this.cookieService.get('hmade'));
-        console.log('cookie', user);
+        var user = this.userCookieExtractor();
         var permissions = _app_config__WEBPACK_IMPORTED_MODULE_4__["config"].permissions;
-        if (user && permitedRole === 'notUser') {
+        if (!user && permitedRole === 'notUser') {
             return true;
         }
-        if (user) {
+        if (!user) {
             return false;
         }
-        var roleFromLocalStorage = user.role;
-        if (permissions[roleFromLocalStorage].indexOf(permitedRole) >= 0) {
+        var roleFromCookie = user.role;
+        if (permissions[roleFromCookie].indexOf(permitedRole) >= 0) {
             return true;
         }
         else {
             return false;
         }
-        // this.userLocalGetCredentials();
     };
     UserService.prototype.restrictTo = function (restrictedRoles) {
-        var user = JSON.parse(this.cookieService.get('hmade'));
-        if (!this.user) {
+        var user = this.userCookieExtractor();
+        if (!user) {
             return true;
         }
-        var roleFromLocalStorage = this.user.role;
-        if (restrictedRoles.indexOf(roleFromLocalStorage) >= 0) {
+        var roleFromCookie = user.role;
+        if (restrictedRoles.indexOf(roleFromCookie) >= 0) {
             return false;
         }
         else {
@@ -4100,7 +4103,7 @@ var UserService = /** @class */ (function () {
         return this.http.get('api/user/password-reset', httpOptions);
     };
     UserService.prototype.userEmailVerification = function () {
-        var token = this.userLocalGetToken('token');
+        var token = localStorage.getItem('token');
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -4141,28 +4144,37 @@ var UserService = /** @class */ (function () {
         };
         return this.http.put('api/user/edit-avatar', formData, httpOptions);
     };
-    UserService.prototype.syncTokenToSession = function () {
-        var httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-            })
-        };
-        return this.http.get('api/user/sync-token-to-session', httpOptions);
-    };
-    // create Observable for user login watch
-    UserService.prototype.userLocalLogin = function (token) {
-        if (token) {
-            this.userLocalSetToken('token', token);
-        }
-        this.userLocalGetCredentials();
-        // this._logging.next(user);
-    };
-    UserService.prototype.userLocalLogout = function () {
-        this.userLocalRemoveToken('token');
-        var user = null;
+    // syncTokenToSession(): Observable<string> {
+    //   const httpOptions = {
+    //     headers: new HttpHeaders({
+    //       'Content-Type':  'application/json',
+    //     })
+    //   };
+    //   return this.http.get<string>(
+    //     'api/user/sync-token-to-session',
+    //     httpOptions
+    //   );
+    // }
+    UserService.prototype.logging = function () {
+        var user = this.userCookieExtractor();
         this._logging.next(user);
     };
+    // create Observable for user login watch
+    // userLocalLogin(token) {
+    //   user = this.userCookieExtractor();
+    //   // if (token) {
+    //   //   this.userLocalSetToken('token', token);
+    //   // }
+    //   // this.userLocalGetCredentials();
+    //   this._logging.next(user);
+    // }
+    // userLocalLogout() {
+    //   this.userLocalRemoveToken('token');
+    //   const user = null;
+    //   this._logging.next(user);
+    // }
     UserService.prototype.getUserLocal = function () {
+        // return this.userCookieExtractor();
         return this._logging.asObservable();
     };
     // end of observable
@@ -4193,37 +4205,37 @@ var UserService = /** @class */ (function () {
         }
         return token;
     };
-    UserService.prototype.userLocalGetCredentials = function () {
-        return JSON.parse(this.cookieService.get('hmade'));
-        var tokenFromStorage = localStorage.getItem('token');
-        // if (!tokenFromStorage) {
-        //   return null;
-        // }
-        if ((this.userLocalCheckExpiration('token') && !this.tokenSyncronizatonProgress) || !tokenFromStorage) {
-            // if tokenSyncronizaton in Progress then wait for result
-            // to prevent multi requests to server
-            this.tokenSyncronizatonProgress = true;
-            // this.syncTokenToSession()
-            //   .subscribe((token) => {
-            //     if (token) {
-            //       this.userLocalSetToken('token', token);
-            //       this.tokenSyncronizatonProgress = false;
-            //       const helper = new JwtHelperService();
-            //       this._logging.next(<IUser>helper.decodeToken(token).sub);
-            //     } else {
-            //       this.userLocalRemoveToken('token');
-            //       this.tokenSyncronizatonProgress = false;
-            //       this._logging.next(null);
-            //     }
-            //   },
-            //   (err) => {
-            //     this.userLocalRemoveToken('token');
-            //     this.tokenSyncronizatonProgress = false;
-            //     this._logging.next(null);
-            //   }
-            // );
-        }
-    };
+    // userLocalGetCredentials() {
+    //   return this.userCookieExtractor();
+    //   const tokenFromStorage = localStorage.getItem('token');
+    //   // if (!tokenFromStorage) {
+    //   //   return null;
+    //   // }
+    //   if ((this.userLocalCheckExpiration('token') && !this.tokenSyncronizatonProgress) || !tokenFromStorage) {
+    //     // if tokenSyncronizaton in Progress then wait for result
+    //     // to prevent multi requests to server
+    //     this.tokenSyncronizatonProgress = true;
+    //     // this.syncTokenToSession()
+    //     //   .subscribe((token) => {
+    //     //     if (token) {
+    //     //       this.userLocalSetToken('token', token);
+    //     //       this.tokenSyncronizatonProgress = false;
+    //     //       const helper = new JwtHelperService();
+    //     //       this._logging.next(<IUser>helper.decodeToken(token).sub);
+    //     //     } else {
+    //     //       this.userLocalRemoveToken('token');
+    //     //       this.tokenSyncronizatonProgress = false;
+    //     //       this._logging.next(null);
+    //     //     }
+    //     //   },
+    //     //   (err) => {
+    //     //     this.userLocalRemoveToken('token');
+    //     //     this.tokenSyncronizatonProgress = false;
+    //     //     this._logging.next(null);
+    //     //   }
+    //     // );
+    //   }
+    // }
     UserService.prototype.userLocalGetExpirationDate = function (tokenKey) {
         var token = localStorage.getItem(tokenKey);
         var helper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__["JwtHelperService"]();
