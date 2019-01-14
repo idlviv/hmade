@@ -122,10 +122,12 @@ export class CommentsComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(res => {
-          if (res.choise) {
+          console.log('resp', res);
+          if (res && res.choise) {
             this.socialService.deleteComment(this.parent_id, this.parentCategory, res.payload._id)
               .pipe(
                 mergeMap(result => {
+                  console.log('result', result);
                   if (result) {
                     // successfuly delete
                     return this.socialService.getComments(
@@ -133,13 +135,15 @@ export class CommentsComponent implements OnInit {
                       );
                   } else {
                     // not delete, do nothing
-                    return of({comments: [], commentsTotalLength: 0});
+                    return of(null);
                   }
                 }
                 )
               )
               .subscribe(result => {
-                if (result.comments.length) {
+                console.log('result', result);
+
+                if (result) {
                   this.comments = result.comments;
                   this.commentsTotalLength = result.commentsTotalLength;
                 }

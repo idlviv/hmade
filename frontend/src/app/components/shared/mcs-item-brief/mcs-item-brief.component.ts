@@ -3,6 +3,7 @@ import { config } from '../../../app.config';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-mcs-item-brief',
@@ -20,6 +21,7 @@ export class McsItemBriefComponent implements OnInit, OnChanges {
   constructor(
     private userService: UserService,
     private router: Router,
+    public dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -51,8 +53,52 @@ export class McsItemBriefComponent implements OnInit, OnChanges {
     this.router.navigate(['/dashboard', 'mc', 'edit', _id]);
   }
 
-  deleteMcsItem(_id) {
+  deleteMcsItem(_id: string): void {
     console.log(`deleteMcsItem ${_id}`);
+    // const confirmObject = <IConfirmPopupData>{
+    //   message: `Дійсно видалити коментар: ${comment.comment} ?`,
+    //   payload: {_id: comment._id}
+    // };
+
+    // const dialogRef = this.dialog.open(ConfirmPopupComponent, {
+    //   data: confirmObject,
+    //   // panelClass: 'custom-dialog-container'
+    // });
+
+    // dialogRef.afterClosed()
+    //   .subscribe(res => {
+    //       console.log('resp', res);
+    //       if (res && res.choise) {
+    //         this.socialService.deleteComment(this.parent_id, this.parentCategory, res.payload._id)
+    //           .pipe(
+    //             mergeMap(result => {
+    //               console.log('result', result);
+    //               if (result) {
+    //                 // successfuly delete
+    //                 return this.socialService.getComments(
+    //                   this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
+    //                   );
+    //               } else {
+    //                 // not delete, do nothing
+    //                 return of(null);
+    //               }
+    //             }
+    //             )
+    //           )
+    //           .subscribe(result => {
+    //             console.log('result', result);
+
+    //             if (result) {
+    //               this.comments = result.comments;
+    //               this.commentsTotalLength = result.commentsTotalLength;
+    //             }
+    //           },
+    //             err => console.log('add comment err', err)
+    //           );
+    //       }
+    //     },
+    //     err => console.log('err delete', err)
+    //   );
   }
 
 }
