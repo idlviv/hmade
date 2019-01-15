@@ -23,7 +23,7 @@
             <div class="row" fxLayout="row">
               <div *ngFor="let product of products" class="cell"
                   fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
-                <app-product-item-brief [product]="product" [category_id]="category_id"></app-product-item-brief>
+                <app-product-item-brief [product]="product" [category_id]="category_id" (refreshProducts)="refreshProducts()"></app-product-item-brief>
               </div>
               <div *ngFor="let child of children" class="cell"
                   fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">

@@ -26,6 +26,10 @@ export class ProductsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+   this.refreshProducts();
+  }
+
+  refreshProducts() {
     this.route.paramMap.pipe(
       mergeMap(param => {
         this.category_id = param.get('category_id');

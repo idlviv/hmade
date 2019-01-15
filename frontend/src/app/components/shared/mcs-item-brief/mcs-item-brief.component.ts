@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, OnChanges, SimpleChanges, SimpleChange } from '@angular/core';
+import { Component, OnInit, Input, Output, OnChanges, SimpleChanges, SimpleChange, EventEmitter } from '@angular/core';
 import { config } from '../../../app.config';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { UserService } from 'src/app/services/user.service';
@@ -7,6 +7,9 @@ import { MatDialog } from '@angular/material';
 import { IConfirmPopupData } from 'src/app/interfaces/interface';
 import { ConfirmPopupComponent } from '../confirm-popup/confirm-popup.component';
 import { McService } from 'src/app/services/mc.service';
+import { mergeMap } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-mcs-item-brief',
@@ -20,12 +23,14 @@ export class McsItemBriefComponent implements OnInit, OnChanges {
 
   @Input() mc;
   @Input() parentCategory_id;
+  @Output() refreshMcs = new EventEmitter<boolean>();
 
   constructor(
     private userService: UserService,
     private mcService: McService,
     private router: Router,
     public dialog: MatDialog,
+    private matSnackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -60,7 +65,7 @@ export class McsItemBriefComponent implements OnInit, OnChanges {
   deleteMcsItem(_id: string, nmae: string): void {
     console.log(`deleteMcsItem ${_id}`);
     const confirmObject = <IConfirmPopupData>{
-      message: `Дійсно видалити коментар: ${name} ?`,
+      message: `Дійсно видалити майстерклас: ${name} ?`,
       payload: {_id}
     };
 
@@ -70,40 +75,23 @@ export class McsItemBriefComponent implements OnInit, OnChanges {
     });
 
     dialogRef.afterClosed()
-      .subscribe(res => {
-          console.log('res', res);
-          if (res && res.choise) {
-            this.mcService.deleteMc(res.payload._id)
-              .subscribe(result => {
-                console.log('result', result);
-              },
-            // this.mcService.deleteMc(res.payload._id)
-            //   .pipe(
-            //     mergeMap(result => {
-            //       console.log('result', result);
-            //       if (result) {
-            //         // successfuly delete
-            //         return this.socialService.getComments(
-            //           this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
-            //           );
-            //       } else {
-            //         // not delete, do nothing
-            //         return of(null);
-            //       }
-            //     }
-            //     )
-            //   )
-            //   .subscribe(result => {
-            //     console.log('result', result);
-
-            //     if (result) {
-            //       this.comments = result.comments;
-            //       this.commentsTotalLength = result.commentsTotalLength;
-            //     }
-            //   },
-            //     err => console.log('add comment err', err)
-            //   );
-        err => console.log('err delete', err)
+      .pipe(
+        mergeMap(result => {
+          if (result && result.choise) {
+            return this.mcService.deleteMc(result.payload._id);
+          }
+          return of(null);
+        })
+      )
+      .subscribe(result => {
+        if (result) {
+          this.refreshMcs.emit();
+          this.matSnackBar.open(result, '',
+            {duration: 3000, panelClass: 'snack-bar-danger'})
+        }
+      },
+        err => this.matSnackBar.open(err.error.message || 'Сталася помилка', '',
+          {duration: 3000, panelClass: 'snack-bar-danger'})
       );
   }
 

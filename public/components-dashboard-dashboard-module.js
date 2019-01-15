@@ -1439,30 +1439,6 @@ exports.defer = defer;
 
 /***/ }),
 
-/***/ "./node_modules/rxjs/internal/observable/empty.js":
-/*!********************************************************!*\
-  !*** ./node_modules/rxjs/internal/observable/empty.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
-exports.EMPTY = new Observable_1.Observable(function (subscriber) { return subscriber.complete(); });
-function empty(scheduler) {
-    return scheduler ? emptyScheduled(scheduler) : exports.EMPTY;
-}
-exports.empty = empty;
-function emptyScheduled(scheduler) {
-    return new Observable_1.Observable(function (subscriber) { return scheduler.schedule(function () { return subscriber.complete(); }); });
-}
-exports.emptyScheduled = emptyScheduled;
-//# sourceMappingURL=empty.js.map
-
-/***/ }),
-
 /***/ "./node_modules/rxjs/internal/observable/forkJoin.js":
 /*!***********************************************************!*\
   !*** ./node_modules/rxjs/internal/observable/forkJoin.js ***!
@@ -1942,46 +1918,6 @@ exports.never = never;
 
 /***/ }),
 
-/***/ "./node_modules/rxjs/internal/observable/of.js":
-/*!*****************************************************!*\
-  !*** ./node_modules/rxjs/internal/observable/of.js ***!
-  \*****************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var isScheduler_1 = __webpack_require__(/*! ../util/isScheduler */ "./node_modules/rxjs/internal/util/isScheduler.js");
-var fromArray_1 = __webpack_require__(/*! ./fromArray */ "./node_modules/rxjs/internal/observable/fromArray.js");
-var empty_1 = __webpack_require__(/*! ./empty */ "./node_modules/rxjs/internal/observable/empty.js");
-var scalar_1 = __webpack_require__(/*! ./scalar */ "./node_modules/rxjs/internal/observable/scalar.js");
-function of() {
-    var args = [];
-    for (var _i = 0; _i < arguments.length; _i++) {
-        args[_i] = arguments[_i];
-    }
-    var scheduler = args[args.length - 1];
-    if (isScheduler_1.isScheduler(scheduler)) {
-        args.pop();
-    }
-    else {
-        scheduler = undefined;
-    }
-    switch (args.length) {
-        case 0:
-            return empty_1.empty(scheduler);
-        case 1:
-            return scheduler ? fromArray_1.fromArray(args, scheduler) : scalar_1.scalar(args[0]);
-        default:
-            return fromArray_1.fromArray(args, scheduler);
-    }
-}
-exports.of = of;
-//# sourceMappingURL=of.js.map
-
-/***/ }),
-
 /***/ "./node_modules/rxjs/internal/observable/onErrorResumeNext.js":
 /*!********************************************************************!*\
   !*** ./node_modules/rxjs/internal/observable/onErrorResumeNext.js ***!
@@ -2232,31 +2168,6 @@ function dispatch(state) {
 }
 exports.dispatch = dispatch;
 //# sourceMappingURL=range.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/internal/observable/scalar.js":
-/*!*********************************************************!*\
-  !*** ./node_modules/rxjs/internal/observable/scalar.js ***!
-  \*********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
-function scalar(value) {
-    var result = new Observable_1.Observable(function (subscriber) {
-        subscriber.next(value);
-        subscriber.complete();
-    });
-    result._isScalar = true;
-    result.value = value;
-    return result;
-}
-exports.scalar = scalar;
-//# sourceMappingURL=scalar.js.map
 
 /***/ }),
 
@@ -4154,24 +4065,6 @@ function isObservable(obj) {
 }
 exports.isObservable = isObservable;
 //# sourceMappingURL=isObservable.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/internal/util/isScheduler.js":
-/*!********************************************************!*\
-  !*** ./node_modules/rxjs/internal/util/isScheduler.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-function isScheduler(value) {
-    return value && typeof value.schedule === 'function';
-}
-exports.isScheduler = isScheduler;
-//# sourceMappingURL=isScheduler.js.map
 
 /***/ }),
 

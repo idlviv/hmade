@@ -23,6 +23,11 @@ export class McsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+   this.refreshMcs();
+  }
+
+  refreshMcs() {
+    console.log('refresh');
     this.route.queryParams
     .pipe(
       mergeMap(
@@ -63,5 +68,4 @@ export class McsListComponent implements OnInit {
       err => console.log(err)
     );
   }
-
 }

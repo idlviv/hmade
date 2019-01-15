@@ -162,17 +162,13 @@ export class ProductService {
     );
   }
 
-  productDelete(_id: string): Observable<IResponse> {
-    console.log('config', config.serverUrl);
-    console.log('this.config', this.config.serverUrl);
-    const token = this.userService.userLocalGetToken('token');
+  deleteProduct(_id: string): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': token
       })
     };
-    return this.http.delete<IResponse>(
+    return this.http.delete<string>(
       'api/product/delete/' + _id,
       httpOptions
     );

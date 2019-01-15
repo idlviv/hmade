@@ -57,8 +57,6 @@ module.exports.getProducts = function(req, res, next) {
 };
 
 
-
-
 module.exports.productAddImage = function(req, res, next) {
   let form = new formidable.IncomingForm({maxFileSize: 10500000});
   // form.on('file', function(file) {
@@ -138,21 +136,19 @@ module.exports.productAddImage = function(req, res, next) {
 //       );
 // };
 
-module.exports.productDelete = function(req, res, next) {
+module.exports.deleteProduct = function(req, res, next) {
   const _id = req.params._id;
-  // const productModel = new ProductModel(product);
 
-  // res.status(200).json(new ResObj(true, 'FAKE !! Продукт видалено'));
-  ProductModel.deleteOne({_id: new ObjectId(_id)})
+  ProductModel.deleteOne({_id})
       .then(
           (result) => {
             if (result.n !== 1) {
-              next(new ApplicationError('Не вдалося внести зміни', 400));
+              next(new DbError());
             } else {
-              return res.status(200).json(new ResObj(true, 'Продукт видалено'));
+              return res.status(200).json('Продукт видалено');
             }
           },
-          (err) => next(new DbError(err.message, err.code))
+          (err) => next(new DbError())
       );
 };
 

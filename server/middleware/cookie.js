@@ -21,10 +21,8 @@ function setUserCookie(req, res, next) {
       role: req.user._doc.role,
     };
     token = createJWT('', user, null, 'JWT_SECRET');
-    log.debug('user', user.name, 'url', req.url);
   } else {
     token = createJWT('', null, null, 'JWT_SECRET');
-    log.debug('NOT USER', req.url);
   }
   res.cookie(
       'hmade',

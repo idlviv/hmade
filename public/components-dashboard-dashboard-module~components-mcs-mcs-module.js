@@ -215,7 +215,7 @@ var McsFiltersComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "  <div class=\"comtainer\">\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div *ngFor=\"let mc of mcs\" class=\"cell\" fxFlex=\"100\">\r\n            <app-mcs-item-brief [mc]=\"mc\"></app-mcs-item-brief>\r\n      </div>\r\n    </div>\r\n  </div>\r\n"
+module.exports = "  <div class=\"comtainer\">\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div *ngFor=\"let mc of mcs\" class=\"cell\" fxFlex=\"100\">\r\n            <app-mcs-item-brief [mc]=\"mc\" (refreshMcs)=\"refreshMcs()\"></app-mcs-item-brief>\r\n      </div>\r\n    </div>\r\n  </div>\r\n"
 
 /***/ }),
 
@@ -269,7 +269,11 @@ var McsListComponent = /** @class */ (function () {
         this.mcLimitValue = src_app_app_config__WEBPACK_IMPORTED_MODULE_3__["config"].mcLimitValue;
     }
     McsListComponent.prototype.ngOnInit = function () {
+        this.refreshMcs();
+    };
+    McsListComponent.prototype.refreshMcs = function () {
         var _this = this;
+        console.log('refresh');
         this.route.queryParams
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function (queryParams) {
             if (!queryParams.mcSortValue ||

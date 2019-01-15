@@ -2,7 +2,7 @@ import { Component,  OnInit, ViewChild } from '@angular/core';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
 import { ValidateService } from '../../../services/validate.service';
-import { MatSnackBar, MatStepper, MatVerticalStepper } from '@angular/material';
+import { MatSnackBar, MatStepper } from '@angular/material';
 import { Router } from '@angular/router';
 import { config } from '../../../app.config';
 

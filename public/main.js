@@ -1855,6 +1855,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../confirm-popup/confirm-popup.component */ "./src/app/components/shared/confirm-popup/confirm-popup.component.ts");
 /* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1871,13 +1873,18 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
+
 var McsItemBriefComponent = /** @class */ (function () {
-    function McsItemBriefComponent(userService, mcService, router, dialog) {
+    function McsItemBriefComponent(userService, mcService, router, dialog, matSnackBar) {
         this.userService = userService;
         this.mcService = mcService;
         this.router = router;
         this.dialog = dialog;
+        this.matSnackBar = matSnackBar;
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"];
+        this.refreshMcs = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
     }
     McsItemBriefComponent.prototype.ngOnInit = function () {
     };
@@ -1906,48 +1913,25 @@ var McsItemBriefComponent = /** @class */ (function () {
         var _this = this;
         console.log("deleteMcsItem " + _id);
         var confirmObject = {
-            message: "\u0414\u0456\u0439\u0441\u043D\u043E \u0432\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u043A\u043E\u043C\u0435\u043D\u0442\u0430\u0440: " + name + " ?",
+            message: "\u0414\u0456\u0439\u0441\u043D\u043E \u0432\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u043C\u0430\u0439\u0441\u0442\u0435\u0440\u043A\u043B\u0430\u0441: " + name + " ?",
             payload: { _id: _id }
         };
         var dialogRef = this.dialog.open(_confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_5__["ConfirmPopupComponent"], {
             data: confirmObject,
         });
         dialogRef.afterClosed()
-            .subscribe(function (res) {
-            console.log('res', res);
-            if (res && res.choise) {
-                _this.mcService.deleteMc(res.payload._id)
-                    .subscribe(function (result) {
-                    console.log('result', result);
-                }, 
-                // this.mcService.deleteMc(res.payload._id)
-                //   .pipe(
-                //     mergeMap(result => {
-                //       console.log('result', result);
-                //       if (result) {
-                //         // successfuly delete
-                //         return this.socialService.getComments(
-                //           this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
-                //           );
-                //       } else {
-                //         // not delete, do nothing
-                //         return of(null);
-                //       }
-                //     }
-                //     )
-                //   )
-                //   .subscribe(result => {
-                //     console.log('result', result);
-                //     if (result) {
-                //       this.comments = result.comments;
-                //       this.commentsTotalLength = result.commentsTotalLength;
-                //     }
-                //   },
-                //     err => console.log('add comment err', err)
-                //   );
-                function (err) { return console.log('err delete', err); });
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["mergeMap"])(function (result) {
+            if (result && result.choise) {
+                return _this.mcService.deleteMc(result.payload._id);
             }
-        });
+            return Object(rxjs__WEBPACK_IMPORTED_MODULE_8__["of"])(null);
+        }))
+            .subscribe(function (result) {
+            if (result) {
+                _this.refreshMcs.emit();
+                _this.matSnackBar.open(result, '', { duration: 3000, panelClass: 'snack-bar-danger' });
+            }
+        }, function (err) { return _this.matSnackBar.open(err.error.message || 'Сталася помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' }); });
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -1957,6 +1941,10 @@ var McsItemBriefComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Object)
     ], McsItemBriefComponent.prototype, "parentCategory_id", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], McsItemBriefComponent.prototype, "refreshMcs", void 0);
     McsItemBriefComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-mcs-item-brief',
@@ -1966,7 +1954,8 @@ var McsItemBriefComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
             src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_6__["McService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatDialog"]])
+            _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatDialog"],
+            _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSnackBar"]])
     ], McsItemBriefComponent);
     return McsItemBriefComponent;
 }());
@@ -2170,7 +2159,7 @@ var Page404Component = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<mat-card id=\"product-item-brief\">\r\n  <mat-card-content class=\"wrap\">\r\n    <!-- <div *ngIf=\"product\" class=\"container-px0\" fxFlex=\"100\">\r\n      <div class=\"row\" fxLayout=\"row\">\r\n          <section class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\">\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                <mat-icon>thumb_up_alt</mat-icon>\r\n                <span>{{product.likes}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                  <mat-icon>thumb_down_alt</mat-icon>\r\n                  <span>{{product.dislikes}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showViews\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>remove_red_eye</mat-icon>\r\n                  <span>{{product.views}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showComments\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>comment</mat-icon>\r\n                  <span>{{product.comments.length}}</span>\r\n              </div>\r\n          </section>\r\n        </div>\r\n    </div> -->\r\n\r\n    <div class=\"mat-card-wide-image\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\r\n      <!-- product level (no children)-->\r\n      <div *ngIf=\"product\" fxFlex=\"100\">\r\n\r\n        <img *ngIf=\"media.isActive('gt-sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_400,h_300,f_auto/' +\r\n              product.menuImage}}\"\r\n             alt=\"Image\" (click)=\"openDialog(product.menuImage, '/c_fill,w_1100,h_550,f_auto/', product.name)\">\r\n        <img *ngIf=\"media.isActive('sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_460,h_345,f_auto/' +\r\n              product.menuImage}}\"\r\n              alt=\"Image\" (click)=\"openDialog(product.menuImage, '/c_fill,w_900,h_675,f_auto/', product.name)\">\r\n     \r\n        <img *ngIf=\"media.isActive('xs')\" class=\"responsive-image-stretch\" src=\"{{\r\n            config.imgPath +\r\n            config.cloudinary.cloud_name +\r\n            '/c_fill,w_590,h_443,f_auto/' +\r\n            product.menuImage}}\"\r\n            alt=\"Image\" (click)=\"openDialog(product.menuImage, '/c_fill,w_590,h_443,f_auto/', product.name)\">\r\n          \r\n      </div>\r\n\r\n      <!-- catalog level -->\r\n      <div *ngIf=\"child\" fxFlex=\"100\">\r\n        <img *ngIf=\"media.isActive('gt-sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_400,h_300,f_auto/' +\r\n              child.assets[0]}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_460,h_345,f_auto/' +\r\n              child.assets[0]}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('xs')\" class=\"responsive-image-stretch\" src=\"{{\r\n            config.imgPath +\r\n            config.cloudinary.cloud_name +\r\n            '/c_fill,w_590,h_443,f_auto/' +\r\n            child.assets[0]}}\"\r\n             alt=\"Image\">\r\n      </div>\r\n    </div>\r\n\r\n    <!-- product level (no children)-->\r\n    <section *ngIf=\"!child && product\" class=\"row product-brief-section\" fxFlex=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\" fxLayoutAlign=\"center center\">\r\n        <h2 class=\"mat-h2 title\">{{product.name}}</h2>\r\n       </div>\r\n      <div class=\"cell product-brief-description\" fxFlex=\"100\" fxLayoutAlign=\"center center\">\r\n        <p class=\"mat-body\">{{product.description}}</p>\r\n      </div>\r\n    </section>\r\n    <section *ngIf=\"!child && product && (product.dimensions.width || product.dimensions.height)\" \r\n     class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\">\r\n      <div class=\"item text-align-center\" fxFlex>\r\n        <mat-icon>swap_horiz</mat-icon>\r\n        <span> {{product?.dimensions?.width}}</span>\r\n        <span> см</span>\r\n      </div>\r\n      <div class=\"item text-align-center\" fxFlex>\r\n        <mat-icon>swap_vert</mat-icon>\r\n        <span> {{product?.dimensions?.height}}</span>\r\n        <span> см</span>\r\n      </div>\r\n      </section>\r\n\r\n  </mat-card-content>\r\n  <mat-card-actions fxLayout=\"row\">\r\n    <div fxFlex>\r\n      <!--using with catalog, when no children (product level)\r\n      category_id for breadcrumb-->\r\n      <!-- <a *ngIf=\"!child && category_id\" mat-button\r\n         [routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', product._id],\r\n         breadcrumb: [category_id, 'details', product._id]}}]\"\r\n         [queryParams]=\"{name: product.name}\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{product.name}}\r\n      </a> -->\r\n      <!--using with dashboard-->\r\n      <a *ngIf=\"!child && allowTo('manager')\" mat-button\r\n         [routerLink]=\"['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        Редагувати\r\n      </a>\r\n      <!--using with catalog, when children present-->\r\n      <a *ngIf=\"child\" mat-button\r\n         [routerLink]=\"['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n         {{child.name}}\r\n      </a>\r\n    </div>\r\n  </mat-card-actions>\r\n</mat-card>\r\n"
+module.exports = "<mat-card id=\"product-item-brief\">\r\n  <mat-card-content class=\"wrap\">\r\n    <!-- <div *ngIf=\"product\" class=\"container-px0\" fxFlex=\"100\">\r\n      <div class=\"row\" fxLayout=\"row\">\r\n          <section class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\">\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                <mat-icon>thumb_up_alt</mat-icon>\r\n                <span>{{product.likes}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                  <mat-icon>thumb_down_alt</mat-icon>\r\n                  <span>{{product.dislikes}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showViews\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>remove_red_eye</mat-icon>\r\n                  <span>{{product.views}}</span>\r\n              </div>\r\n              <div *ngIf=\"config.social.showComments\" class=\"item text-align-center muted\" fxFlex>\r\n                  <mat-icon>comment</mat-icon>\r\n                  <span>{{product.comments.length}}</span>\r\n              </div>\r\n          </section>\r\n        </div>\r\n    </div> -->\r\n\r\n    <div class=\"mat-card-wide-image\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\r\n      <!-- product level (no children)-->\r\n      <div *ngIf=\"product\" fxFlex=\"100\">\r\n\r\n        <img *ngIf=\"media.isActive('gt-sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_400,h_300,f_auto/' +\r\n              product.menuImage}}\"\r\n             alt=\"Image\" (click)=\"openDialog(product.menuImage, '/c_fill,w_1100,h_550,f_auto/', product.name)\">\r\n        <img *ngIf=\"media.isActive('sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_460,h_345,f_auto/' +\r\n              product.menuImage}}\"\r\n              alt=\"Image\" (click)=\"openDialog(product.menuImage, '/c_fill,w_900,h_675,f_auto/', product.name)\">\r\n     \r\n        <img *ngIf=\"media.isActive('xs')\" class=\"responsive-image-stretch\" src=\"{{\r\n            config.imgPath +\r\n            config.cloudinary.cloud_name +\r\n            '/c_fill,w_590,h_443,f_auto/' +\r\n            product.menuImage}}\"\r\n            alt=\"Image\" (click)=\"openDialog(product.menuImage, '/c_fill,w_590,h_443,f_auto/', product.name)\">\r\n          \r\n      </div>\r\n\r\n      <!-- catalog level -->\r\n      <div *ngIf=\"child\" fxFlex=\"100\">\r\n        <img *ngIf=\"media.isActive('gt-sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_400,h_300,f_auto/' +\r\n              child.assets[0]}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_460,h_345,f_auto/' +\r\n              child.assets[0]}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('xs')\" class=\"responsive-image-stretch\" src=\"{{\r\n            config.imgPath +\r\n            config.cloudinary.cloud_name +\r\n            '/c_fill,w_590,h_443,f_auto/' +\r\n            child.assets[0]}}\"\r\n             alt=\"Image\">\r\n      </div>\r\n    </div>\r\n\r\n    <!-- product level (no children)-->\r\n    <section *ngIf=\"!child && product\" class=\"row product-brief-section\" fxFlex=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\" fxLayoutAlign=\"center center\">\r\n        <h2 class=\"mat-h2 title\">{{product.name}}</h2>\r\n       </div>\r\n      <div class=\"cell product-brief-description\" fxFlex=\"100\" fxLayoutAlign=\"center center\">\r\n        <p class=\"mat-body\">{{product.description}}</p>\r\n      </div>\r\n    </section>\r\n    <section *ngIf=\"!child && product && (product.dimensions.width || product.dimensions.height)\" \r\n     class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\">\r\n      <div class=\"item text-align-center\" fxFlex>\r\n        <mat-icon>swap_horiz</mat-icon>\r\n        <span> {{product?.dimensions?.width}}</span>\r\n        <span> см</span>\r\n      </div>\r\n      <div class=\"item text-align-center\" fxFlex>\r\n        <mat-icon>swap_vert</mat-icon>\r\n        <span> {{product?.dimensions?.height}}</span>\r\n        <span> см</span>\r\n      </div>\r\n      </section>\r\n\r\n  </mat-card-content>\r\n  <mat-card-actions fxLayout=\"row\">\r\n    <div fxFlex>\r\n      <!--using with catalog, when no children (product level)\r\n      category_id for breadcrumb-->\r\n      <!-- <a *ngIf=\"!child && category_id\" mat-button\r\n         [routerLink]=\"['/products', 'ch', {outlets: {primary: [category_id, 'details', product._id],\r\n         breadcrumb: [category_id, 'details', product._id]}}]\"\r\n         [queryParams]=\"{name: product.name}\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{product.name}}\r\n      </a> -->\r\n      <!--using with dashboard-->\r\n      <a *ngIf=\"!child && allowTo('manager')\" mat-button\r\n         [routerLink]=\"['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        Редагувати\r\n      </a>\r\n      <a *ngIf=\"!child && allowTo('manager')\" mat-button\r\n        (click)=\"deleteProductItem(product._id, product.name)\">\r\n        Видалити\r\n      </a>\r\n      <!--using with catalog, when children present-->\r\n      <a *ngIf=\"child\" mat-button\r\n         [routerLink]=\"['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n         {{child.name}}\r\n      </a>\r\n    </div>\r\n  </mat-card-actions>\r\n</mat-card>\r\n"
 
 /***/ }),
 
@@ -2201,6 +2190,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../image-popup/image-popup.component */ "./src/app/components/shared/image-popup/image-popup.component.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../confirm-popup/confirm-popup.component */ "./src/app/components/shared/confirm-popup/confirm-popup.component.ts");
+/* harmony import */ var src_app_services_product_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/services/product.service */ "./src/app/services/product.service.ts");
+/* harmony import */ var rxjs_internal_observable_of__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/internal/observable/of */ "./node_modules/rxjs/internal/observable/of.js");
+/* harmony import */ var rxjs_internal_observable_of__WEBPACK_IMPORTED_MODULE_9___default = /*#__PURE__*/__webpack_require__.n(rxjs_internal_observable_of__WEBPACK_IMPORTED_MODULE_9__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2216,11 +2210,19 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
+
+
+
 var ProductItemBriefComponent = /** @class */ (function () {
-    function ProductItemBriefComponent(media, userService, dialog) {
+    function ProductItemBriefComponent(media, userService, dialog, productService, matSnackBar) {
         this.media = media;
         this.userService = userService;
         this.dialog = dialog;
+        this.productService = productService;
+        this.matSnackBar = matSnackBar;
+        this.refreshProducts = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"];
     }
     ProductItemBriefComponent.prototype.ngOnInit = function () {
@@ -2242,6 +2244,30 @@ var ProductItemBriefComponent = /** @class */ (function () {
             .subscribe(function (result) {
         }, function (err) { return console.log('err delete', err); });
     };
+    ProductItemBriefComponent.prototype.deleteProductItem = function (_id, name) {
+        var _this = this;
+        console.log('_id, name', _id, name);
+        var confirmObject = {
+            message: "\u0414\u0456\u0439\u0441\u043D\u043E \u0432\u0438\u0434\u0430\u043B\u0438\u0442\u0438: " + name + " ?",
+            payload: { _id: _id }
+        };
+        var dialogRef = this.dialog.open(_confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_7__["ConfirmPopupComponent"], {
+            data: confirmObject,
+        });
+        dialogRef.afterClosed()
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["mergeMap"])(function (result) {
+            if (result && result.choise) {
+                return _this.productService.deleteProduct(result.payload._id);
+            }
+            return Object(rxjs_internal_observable_of__WEBPACK_IMPORTED_MODULE_9__["of"])(null);
+        }))
+            .subscribe(function (result) {
+            if (result) {
+                _this.refreshProducts.emit();
+                _this.matSnackBar.open(result, '', { duration: 3000, panelClass: 'snack-bar-danger' });
+            }
+        }, function (err) { return _this.matSnackBar.open(err.error.message || 'Сталася помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' }); });
+    };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Object)
@@ -2262,6 +2288,10 @@ var ProductItemBriefComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", Object)
     ], ProductItemBriefComponent.prototype, "child", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], ProductItemBriefComponent.prototype, "refreshProducts", void 0);
     ProductItemBriefComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-product-item-brief',
@@ -2270,7 +2300,9 @@ var ProductItemBriefComponent = /** @class */ (function () {
         }),
         __metadata("design:paramtypes", [_angular_flex_layout__WEBPACK_IMPORTED_MODULE_2__["ObservableMedia"],
             src_app_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatDialog"]])
+            _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatDialog"],
+            src_app_services_product_service__WEBPACK_IMPORTED_MODULE_8__["ProductService"],
+            _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSnackBar"]])
     ], ProductItemBriefComponent);
     return ProductItemBriefComponent;
 }());
@@ -3451,14 +3483,10 @@ var ProductService = /** @class */ (function () {
         };
         return this.http.put('api/product/edit', product, httpOptions);
     };
-    ProductService.prototype.productDelete = function (_id) {
-        console.log('config', _app_config__WEBPACK_IMPORTED_MODULE_4__["config"].serverUrl);
-        console.log('this.config', this.config.serverUrl);
-        var token = this.userService.userLocalGetToken('token');
+    ProductService.prototype.deleteProduct = function (_id) {
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                 'Content-Type': 'application/json',
-                'Authorization': token
             })
         };
         return this.http.delete('api/product/delete/' + _id, httpOptions);

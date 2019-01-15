@@ -4,6 +4,7 @@ import { IResponse } from '../interfaces/server-response-interface';
 import { Observable } from 'rxjs';
 import { IMc } from '../interfaces/interface';
 import { UserService } from './user.service';
+import { AnimationStyleNormalizer } from '@angular/animations/browser/src/dsl/style_normalization/animation_style_normalizer';
 
 @Injectable({
   providedIn: 'root'
@@ -67,13 +68,13 @@ export class McService {
     );
   }
 
-  deleteMc(_id: string): Observable<string> {
+  deleteMc(_id: string): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     };
-    return this.http.delete<string>(
+    return this.http.delete<AnimationStyleNormalizer>(
       'api/mc/delete/' + _id,
       httpOptions
     );

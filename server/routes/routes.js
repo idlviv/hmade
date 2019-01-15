@@ -144,7 +144,7 @@ router.get('/product/get-main-page-products',
 router.delete('/product/delete/:_id',
     authentication,
     authorization('manager'),
-    productController.productDelete
+    productController.deleteProduct
 );
 
 router.post('/product/add-image',

@@ -113,6 +113,10 @@
          [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
         Редагувати
       </a>
+      <a *ngIf="!child && allowTo('manager')" mat-button
+        (click)="deleteProductItem(product._id, product.name)">
+        Видалити
+      </a>
       <!--using with catalog, when children present-->
       <a *ngIf="child" mat-button
          [routerLink]="['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]"

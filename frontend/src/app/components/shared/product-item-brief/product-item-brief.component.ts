@@ -1,10 +1,15 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { config } from '../../../app.config';
 import { ObservableMedia } from '@angular/flex-layout';
 import { UserService } from 'src/app/services/user.service';
 import { MatDialog } from '@angular/material';
-import { IImagePopUpData } from 'src/app/interfaces/interface';
+import { IImagePopUpData, IConfirmPopupData } from 'src/app/interfaces/interface';
 import { ImagePopupComponent } from '../image-popup/image-popup.component';
+import { mergeMap } from 'rxjs/operators';
+import { ConfirmPopupComponent } from '../confirm-popup/confirm-popup.component';
+import { ProductService } from 'src/app/services/product.service';
+import { of } from 'rxjs/internal/observable/of';
+import { MatSnackBar } from '@angular/material';
 
 @Component({
   selector: 'app-product-item-brief',
@@ -18,6 +23,7 @@ export class ProductItemBriefComponent implements OnInit {
   @Input() parentCategory_id;
   @Input() parentCategoryName;
   @Input() child;
+  @Output() refreshProducts = new EventEmitter<boolean>();
 
   config = config;
 
@@ -25,6 +31,8 @@ export class ProductItemBriefComponent implements OnInit {
     public media: ObservableMedia,
     private userService: UserService,
     public dialog: MatDialog,
+    private productService: ProductService,
+    private matSnackBar: MatSnackBar,
   ) { }
 
   ngOnInit() {
@@ -51,6 +59,39 @@ export class ProductItemBriefComponent implements OnInit {
       .subscribe(result => {
         },
         err => console.log('err delete', err)
+      );
+  }
+
+  deleteProductItem(_id: string, name: string) {
+    console.log('_id, name', _id, name);
+    const confirmObject = <IConfirmPopupData>{
+      message: `Дійсно видалити: ${name} ?`,
+      payload: {_id}
+    };
+
+    const dialogRef = this.dialog.open(ConfirmPopupComponent, {
+      data: confirmObject,
+      // panelClass: 'custom-dialog-container'
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        mergeMap(result => {
+          if (result && result.choise) {
+            return this.productService.deleteProduct(result.payload._id);
+          }
+          return of(null);
+        })
+      )
+      .subscribe(result => {
+        if (result) {
+          this.refreshProducts.emit();
+          this.matSnackBar.open(result, '',
+            {duration: 3000, panelClass: 'snack-bar-danger'})
+        }
+      },
+        err => this.matSnackBar.open(err.error.message || 'Сталася помилка', '',
+          {duration: 3000, panelClass: 'snack-bar-danger'})
       );
   }
 
