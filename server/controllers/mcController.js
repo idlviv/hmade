@@ -20,6 +20,22 @@ const sharedController = require('../controllers/sharedController');
 //             .json(new ResObj(true, 'Масив товарів', result)))
 //       .catch((err) => next(new DbError()));
 // };
+module.exports.mcDelete = function(req, res, next) {
+  const _id = req.params._id;
+
+  res.status(200).json('FAKE !! Продукт видалено');
+  // ProductModel.deleteOne({_id: new ObjectId(_id)})
+  //     .then(
+  //         (result) => {
+  //           if (result.n !== 1) {
+  //             next(new ApplicationError('Не вдалося внести зміни', 400));
+  //           } else {
+  //             return res.status(200).json(new ResObj(true, 'Продукт видалено'));
+  //           }
+  //         },
+  //         (err) => next(new DbError(err.message, err.code))
+  //     );
+};
 
 module.exports.mcUpsert = function(req, res, next) {
   const mc = req.body;

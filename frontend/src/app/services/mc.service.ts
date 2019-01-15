@@ -67,6 +67,18 @@ export class McService {
     );
   }
 
+  deleteMc(_id: string): Observable<string> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http.delete<string>(
+      'api/mc/delete/' + _id,
+      httpOptions
+    );
+  }
+
   /**
    *
    *
@@ -74,7 +86,7 @@ export class McService {
    * @returns {Observable<IMc>}
    * @memberof McService
    */
-  getMcById(_id: string): Observable<IMc>  {
+  getMcById(_id: string): Observable<IMc> {
     const token = this.userService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({

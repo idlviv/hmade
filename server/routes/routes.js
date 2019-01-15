@@ -102,6 +102,12 @@ router.post('/mc/upsert',
     mcController.mcUpsert
 );
 
+router.delete('/mc/delete/:_id',
+    authentication,
+    authorization('manager'),
+    mcController.mcDelete
+);
+
 /**
  * product routes
  */

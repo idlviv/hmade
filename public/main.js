@@ -1418,7 +1418,7 @@ var FeedbackComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"mat-elevation-z16\" id=\"footer\">\r\n  <div fxFlex></div>\r\n  <a mat-button [routerLink]=\"['/feedback']\" class=\"primary-light\"\r\n     [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n    <mat-icon>mail</mat-icon> Задати питання\r\n  </a>\r\n</div>\r\n"
+module.exports = "<div class=\"mat-elevation-z16\" id=\"footer\">\n  <div fxFlex></div>\n  <a mat-button [routerLink]=\"['/feedback']\" class=\"primary-light\"\n     [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n    <mat-icon>mail</mat-icon> Задати питання\n  </a>\n</div>\n"
 
 /***/ }),
 
@@ -1481,7 +1481,7 @@ var FooterComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container-h\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n      <h1 class=\"mat-display-1\">Галерея</h1>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\r\n        <mat-card>\r\n          <mat-card-subtitle>\r\n            <a mat-button\r\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\r\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\r\n               [queryParams]=\"{name: product.name}\"\r\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n              {{product.name}}\r\n            </a>\r\n          </mat-card-subtitle>\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\r\n\r\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\r\n                 fxLayout fxLayoutAlign=\"center center\"\r\n                 *ngFor=\"let productAsset of product.assets\">\r\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_590,h_295,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n\r\n\r\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_350,h_175,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n            </div>\r\n          </div>\r\n        </mat-card>\r\n      </div>\r\n    </div>\r\n\r\n\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"app-container-h\">\n  <div class=\"container\">\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\">\n      <h1 class=\"mat-display-1\">Галерея</h1>\n      </div>\n    </div>\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\n        <mat-card>\n          <mat-card-subtitle>\n            <a mat-button\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\n               [queryParams]=\"{name: product.name}\"\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\n              {{product.name}}\n            </a>\n          </mat-card-subtitle>\n          <div class=\"row\" fxLayout=\"row\">\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\n\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\n                 fxLayout fxLayoutAlign=\"center center\"\n                 *ngFor=\"let productAsset of product.assets\">\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_590,h_295,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n\n\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_350,h_175,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n            </div>\n          </div>\n        </mat-card>\n      </div>\n    </div>\n\n\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1579,7 +1579,7 @@ var GalleryComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container-h primary-background\" id=\"header\">\r\n\r\n  <div class=\"container\" fxHide.lt-md=\"true\">\r\n    <div class=\"row primary-background\">\r\n      <div class=\"cell\">\r\n        <a href=\"\">\r\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\r\n        </a>\r\n      </div>\r\n      <div fxFlex></div>\r\n    <div class=\"cell\">\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\"\r\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n            <mat-icon>mail</mat-icon> Задати питання\r\n          </a>\r\n        </div>\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button class=\"muted\"\r\n             href=\"tel:+380985443968\">\r\n            <mat-icon>phone</mat-icon> 098 544 39 68\r\n          </a>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    </div>\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"app-container-h primary-background\" id=\"header\">\n\n  <div class=\"container\" fxHide.lt-md=\"true\">\n    <div class=\"row primary-background\">\n      <div class=\"cell\">\n        <a href=\"\">\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\n        </a>\n      </div>\n      <div fxFlex></div>\n    <div class=\"cell\">\n      <div class=\"row\" fxLayout=\"row\">\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\"\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n            <mat-icon>mail</mat-icon> Задати питання\n          </a>\n        </div>\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button class=\"muted\"\n             href=\"tel:+380985443968\">\n            <mat-icon>phone</mat-icon> 098 544 39 68\n          </a>\n        </div>\n      </div>\n    </div>\n\n    </div>\n  </div>\n</div>\n"
 
 /***/ }),
 
@@ -1641,7 +1641,7 @@ var HeaderComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div fxLayout=\"column\">\n  <div class=\"cell\" fxLayout>\n    <div fxFlex=\"calc(100%-40px)\" fxLayoutAlign=\"center center\">\n      <h3 class=\"h3 muted\">{{data.title}}</h3>\n    </div>\n\n    <div fxFlex=\"40px\" fxLayoutAlign=\"end center\">\n      <div>\n        <button mat-icon-button color=\"accent\" (click)=\"onClose()\">\n          <mat-icon>close</mat-icon>\n        </button>\n      </div>\n\n    </div>\n  </div>\n\n  <div class=\"responsive-image-popup-container\">\n      <img class=\"responsive-image-popup\" src=\"{{\n          config.imgPath +\n          config.cloudinary.cloud_name +\n          data.cloudinaryOptions +\n          data.image}}\"\n           alt=\"design\">\n  </div>\n\n\n\n</div>\n\n\n\n\n\n\n"
+module.exports = "<div fxLayout=\"column\">\r\n  <div class=\"cell\" fxLayout>\r\n    <div fxFlex=\"calc(100%-40px)\" fxLayoutAlign=\"center center\">\r\n      <h3 class=\"h3 muted\">{{data.title}}</h3>\r\n    </div>\r\n\r\n    <div fxFlex=\"40px\" fxLayoutAlign=\"end center\">\r\n      <div>\r\n        <button mat-icon-button color=\"accent\" (click)=\"onClose()\">\r\n          <mat-icon>close</mat-icon>\r\n        </button>\r\n      </div>\r\n\r\n    </div>\r\n  </div>\r\n\r\n  <div class=\"responsive-image-popup-container\">\r\n      <img class=\"responsive-image-popup\" src=\"{{\r\n          config.imgPath +\r\n          config.cloudinary.cloud_name +\r\n          data.cloudinaryOptions +\r\n          data.image}}\"\r\n           alt=\"design\">\r\n  </div>\r\n\r\n\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n\r\n\r\n"
 
 /***/ }),
 
@@ -1823,7 +1823,7 @@ var LandingComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "    <div class=\"mcs-item\">\r\n      <div class=\"container mat-elevation-z4\">\r\n          <div class=\"row\" fxLayout=\"row\">\r\n              <div class=\"mc-social\" fxFlex=\"100\">\r\n                    <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                    <mat-icon>thumb_up_alt</mat-icon>\r\n                    <span>{{mc.likes.likedByLength || 0}}</span>\r\n                  </div>\r\n                  <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                      <mat-icon>thumb_down_alt</mat-icon>\r\n                      <span>{{mc.likes.dislikedByLength || 0}}</span>\r\n                  </div>\r\n                  <div *ngIf=\"config.social.showViews\" class=\"item text-align-center\" fxFlex>\r\n                      <mat-icon>remove_red_eye</mat-icon>\r\n                      <span>{{mc.views || 0}}</span>\r\n                  </div>\r\n                  <div *ngIf=\"config.social.showComments\" class=\"item text-align-center\" fxFlex>\r\n                      <mat-icon>comment</mat-icon>\r\n                      <span>{{mc.comments?.length || 0}}</span>\r\n                  </div>\r\n                   <div class=\"item text-align-center\" fxFlex>\r\n                      <mat-icon>calendar_today</mat-icon>\r\n                      <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>\r\n                  </div>\r\n                </div>\r\n            </div>\r\n    \r\n          <!-- </div>\r\n        </div> -->\r\n    \r\n        <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n          <div class=\"cell\" fxFlex=\"20\" fxLayoutAlign=\"center center\">\r\n              <img class=\"responsive-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_535,h_350,f_auto/' +\r\n                mc.mainImage}}\"\r\n                alt=\"master class image\">\r\n          </div>\r\n          <div class=\"cell\" fxFlex=\"80\">\r\n              <div class=\"row\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"100\" fxLayoutAlign=\"center\">\r\n                  <h2 class=\"mat-h1\">\r\n                    {{mc.name}}\r\n                  </h2>\r\n                </div>\r\n              </div>\r\n              <div class=\"row\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"100\">\r\n                  <p class=\"mat-body-1 text-align-justify\">\r\n                    {{mc.description}}\r\n                  </p>\r\n                </div>\r\n              </div>\r\n    \r\n          </div>\r\n        </div>\r\n      <!-- </mat-card-content>\r\n      <mat-card-actions> -->\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <section class=\"cell-px0\" fxFlex=\"100\" fxLayout=\"row\" fxLayoutAlign=\"space-around center\">\r\n              <div class=\"item text-align-center muted\" fxFlex>\r\n                 <!-- (click)=\"goToMcsItemDetail(mc._id)\"> -->\r\n    \r\n                <a mat-raised-button color=\"accent\"\r\n                  [routerLink]=\"['/mcs','show', mc._id]\"\r\n                  [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n                  Докладно\r\n               </a>\r\n    \r\n              </div>\r\n              <div *ngIf=\"allowTo('manager')\" class=\"item text-align-center muted\" fxFlex>\r\n                <a mat-button (click)=\"editMcsItem(mc._id)\">\r\n                  <mat-icon>edit</mat-icon>\r\n                </a>\r\n              </div>\r\n              <div *ngIf=\"allowTo('manager')\" class=\"item text-align-center muted\" fxFlex>\r\n                <a mat-button (click)=\"deleteMcsItem(mc._id)\">\r\n                  <mat-icon>delete</mat-icon>\r\n                </a>\r\n              </div>\r\n    \r\n            </section>\r\n        </div>\r\n      </div>\r\n      \r\n    </div>\r\n    \r\n  <!-- </mat-card-actions>\r\n</mat-card> -->\r\n\r\n"
+module.exports = "    <div class=\"mcs-item\">\r\n      <div class=\"container mat-elevation-z4\">\r\n          <div class=\"row\" fxLayout=\"row\">\r\n              <div class=\"mc-social\" fxFlex=\"100\">\r\n                    <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                    <mat-icon>thumb_up_alt</mat-icon>\r\n                    <span>{{mc.likes.likedByLength || 0}}</span>\r\n                  </div>\r\n                  <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                      <mat-icon>thumb_down_alt</mat-icon>\r\n                      <span>{{mc.likes.dislikedByLength || 0}}</span>\r\n                  </div>\r\n                  <div *ngIf=\"config.social.showViews\" class=\"item text-align-center\" fxFlex>\r\n                      <mat-icon>remove_red_eye</mat-icon>\r\n                      <span>{{mc.views || 0}}</span>\r\n                  </div>\r\n                  <div *ngIf=\"config.social.showComments\" class=\"item text-align-center\" fxFlex>\r\n                      <mat-icon>comment</mat-icon>\r\n                      <span>{{mc.comments?.length || 0}}</span>\r\n                  </div>\r\n                   <div class=\"item text-align-center\" fxFlex>\r\n                      <mat-icon>calendar_today</mat-icon>\r\n                      <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>\r\n                  </div>\r\n                </div>\r\n            </div>\r\n    \r\n          <!-- </div>\r\n        </div> -->\r\n    \r\n        <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n          <div class=\"cell\" fxFlex=\"20\" fxLayoutAlign=\"center center\">\r\n              <img class=\"responsive-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_535,h_350,f_auto/' +\r\n                mc.mainImage}}\"\r\n                alt=\"master class image\">\r\n          </div>\r\n          <div class=\"cell\" fxFlex=\"80\">\r\n              <div class=\"row\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"100\" fxLayoutAlign=\"center\">\r\n                  <h2 class=\"mat-h1\">\r\n                    {{mc.name}}\r\n                  </h2>\r\n                </div>\r\n              </div>\r\n              <div class=\"row\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"100\">\r\n                  <p class=\"mat-body-1 text-align-justify\">\r\n                    {{mc.description}}\r\n                  </p>\r\n                </div>\r\n              </div>\r\n    \r\n          </div>\r\n        </div>\r\n      <!-- </mat-card-content>\r\n      <mat-card-actions> -->\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <section class=\"cell-px0\" fxFlex=\"100\" fxLayout=\"row\" fxLayoutAlign=\"space-around center\">\r\n              <div class=\"item text-align-center muted\" fxFlex>\r\n                 <!-- (click)=\"goToMcsItemDetail(mc._id)\"> -->\r\n    \r\n                <a mat-raised-button color=\"accent\"\r\n                  [routerLink]=\"['/mcs','show', mc._id]\"\r\n                  [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n                  Докладно\r\n               </a>\r\n    \r\n              </div>\r\n              <div *ngIf=\"allowTo('manager')\" class=\"item text-align-center muted\" fxFlex>\r\n                <a mat-button (click)=\"editMcsItem(mc._id)\">\r\n                  <mat-icon>edit</mat-icon>\r\n                </a>\r\n              </div>\r\n              <div *ngIf=\"allowTo('manager')\" class=\"item text-align-center muted\" fxFlex>\r\n                <a mat-button (click)=\"deleteMcsItem(mc._id, mc.name)\">\r\n                  <mat-icon>delete</mat-icon>\r\n                </a>\r\n              </div>\r\n    \r\n            </section>\r\n        </div>\r\n      </div>\r\n      \r\n    </div>\r\n    \r\n  <!-- </mat-card-actions>\r\n</mat-card> -->\r\n\r\n"
 
 /***/ }),
 
@@ -1853,6 +1853,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var _confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../confirm-popup/confirm-popup.component */ "./src/app/components/shared/confirm-popup/confirm-popup.component.ts");
+/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1867,9 +1869,12 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var McsItemBriefComponent = /** @class */ (function () {
-    function McsItemBriefComponent(userService, router, dialog) {
+    function McsItemBriefComponent(userService, mcService, router, dialog) {
         this.userService = userService;
+        this.mcService = mcService;
         this.router = router;
         this.dialog = dialog;
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"];
@@ -1897,49 +1902,52 @@ var McsItemBriefComponent = /** @class */ (function () {
         console.log("editMcsItem " + _id);
         this.router.navigate(['/dashboard', 'mc', 'edit', _id]);
     };
-    McsItemBriefComponent.prototype.deleteMcsItem = function (_id) {
+    McsItemBriefComponent.prototype.deleteMcsItem = function (_id, nmae) {
+        var _this = this;
         console.log("deleteMcsItem " + _id);
-        // const confirmObject = <IConfirmPopupData>{
-        //   message: `Дійсно видалити коментар: ${comment.comment} ?`,
-        //   payload: {_id: comment._id}
-        // };
-        // const dialogRef = this.dialog.open(ConfirmPopupComponent, {
-        //   data: confirmObject,
-        //   // panelClass: 'custom-dialog-container'
-        // });
-        // dialogRef.afterClosed()
-        //   .subscribe(res => {
-        //       console.log('resp', res);
-        //       if (res && res.choise) {
-        //         this.socialService.deleteComment(this.parent_id, this.parentCategory, res.payload._id)
-        //           .pipe(
-        //             mergeMap(result => {
-        //               console.log('result', result);
-        //               if (result) {
-        //                 // successfuly delete
-        //                 return this.socialService.getComments(
-        //                   this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
-        //                   );
-        //               } else {
-        //                 // not delete, do nothing
-        //                 return of(null);
-        //               }
-        //             }
-        //             )
-        //           )
-        //           .subscribe(result => {
-        //             console.log('result', result);
-        //             if (result) {
-        //               this.comments = result.comments;
-        //               this.commentsTotalLength = result.commentsTotalLength;
-        //             }
-        //           },
-        //             err => console.log('add comment err', err)
-        //           );
-        //       }
-        //     },
-        //     err => console.log('err delete', err)
-        //   );
+        var confirmObject = {
+            message: "\u0414\u0456\u0439\u0441\u043D\u043E \u0432\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u043A\u043E\u043C\u0435\u043D\u0442\u0430\u0440: " + name + " ?",
+            payload: { _id: _id }
+        };
+        var dialogRef = this.dialog.open(_confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_5__["ConfirmPopupComponent"], {
+            data: confirmObject,
+        });
+        dialogRef.afterClosed()
+            .subscribe(function (res) {
+            console.log('res', res);
+            if (res && res.choise) {
+                _this.mcService.deleteMc(res.payload._id)
+                    .subscribe(function (result) {
+                    console.log('result', result);
+                }, 
+                // this.mcService.deleteMc(res.payload._id)
+                //   .pipe(
+                //     mergeMap(result => {
+                //       console.log('result', result);
+                //       if (result) {
+                //         // successfuly delete
+                //         return this.socialService.getComments(
+                //           this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
+                //           );
+                //       } else {
+                //         // not delete, do nothing
+                //         return of(null);
+                //       }
+                //     }
+                //     )
+                //   )
+                //   .subscribe(result => {
+                //     console.log('result', result);
+                //     if (result) {
+                //       this.comments = result.comments;
+                //       this.commentsTotalLength = result.commentsTotalLength;
+                //     }
+                //   },
+                //     err => console.log('add comment err', err)
+                //   );
+                function (err) { return console.log('err delete', err); });
+            }
+        });
     };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
@@ -1956,6 +1964,7 @@ var McsItemBriefComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./mcs-item-brief.component.scss */ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.scss")]
         }),
         __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
+            src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_6__["McService"],
             _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
             _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatDialog"]])
     ], McsItemBriefComponent);
@@ -2399,7 +2408,7 @@ var ProductItemDetailComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n    <div class=\"item\" fxFlex=\"92px\" fxLayoutAlign=\"center center\">\n      <img class=\"responsive-image-stretch\" src=\"{{\n          config.imgPath +\n          config.cloudinary.cloud_name +\n          '/c_fill,w_80,h_60,f_auto/' +\n          product.menuImage}}\"\n         alt=\"Image\">\n    </div>\n    <div class=\"item\" fxFlex=\"100%-92px\">\n      <p class=\"body-1 muted\">{{product.name}}</p>\n      <p class=\"caption text-justify\">{{product.description}}</p>\n    </div>\n  </div>\n</div>\n       "
+module.exports = "<div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n    <div class=\"item\" fxFlex=\"92px\" fxLayoutAlign=\"center center\">\r\n      <img class=\"responsive-image-stretch\" src=\"{{\r\n          config.imgPath +\r\n          config.cloudinary.cloud_name +\r\n          '/c_fill,w_80,h_60,f_auto/' +\r\n          product.menuImage}}\"\r\n         alt=\"Image\">\r\n    </div>\r\n    <div class=\"item\" fxFlex=\"100%-92px\">\r\n      <p class=\"body-1 muted\">{{product.name}}</p>\r\n      <p class=\"caption text-justify\">{{product.description}}</p>\r\n    </div>\r\n  </div>\r\n</div>\r\n       "
 
 /***/ }),
 
@@ -2469,7 +2478,7 @@ var ProductItemFeedComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n    <div class=\"cell\">\r\n      <p class=\"muted\">height {{height}}</p>\r\n      <p class=\"muted\"> width {{width}}</p>\r\n  \r\n    </div>\r\n  <div class=\"w393\">393</div>\r\n  <div class=\"w360\">360</div>\r\n  <div class=\"w350\">350</div>\r\n  <div class=\"w100\">100</div>\r\n  <div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\r\n  <div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\r\n"
+module.exports = "<div>\n    <div class=\"cell\">\n      <p class=\"muted\">height {{height}}</p>\n      <p class=\"muted\"> width {{width}}</p>\n  \n    </div>\n  <div class=\"w393\">393</div>\n  <div class=\"w360\">360</div>\n  <div class=\"w350\">350</div>\n  <div class=\"w100\">100</div>\n  <div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\n  <div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\n"
 
 /***/ }),
 
@@ -3127,6 +3136,14 @@ var McService = /** @class */ (function () {
             })
         };
         return this.http.post('api/mc/upsert', mc, httpOptions);
+    };
+    McService.prototype.deleteMc = function (_id) {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            }),
+        };
+        return this.http.delete('api/mc/delete/' + _id, httpOptions);
     };
     /**
      *

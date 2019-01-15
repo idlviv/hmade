@@ -75,7 +75,7 @@
                 </a>
               </div>
               <div *ngIf="allowTo('manager')" class="item text-align-center muted" fxFlex>
-                <a mat-button (click)="deleteMcsItem(mc._id)">
+                <a mat-button (click)="deleteMcsItem(mc._id, mc.name)">
                   <mat-icon>delete</mat-icon>
                 </a>
               </div>
