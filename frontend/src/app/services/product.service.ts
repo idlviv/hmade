@@ -362,18 +362,16 @@ export class ProductService {
    *
    *
    * @param {IProduct} product
-   * @returns {Observable<IResponse>}
+   * @returns {Observable<string>}
    * @memberof ProductService
    */
-  productUpsert(product: IProduct): Observable<IResponse> {
-    const token = this.userService.userLocalGetToken('token');
+  productUpsert(product: IProduct): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': token
       })
     };
-    return this.http.post<IResponse>(
+    return this.http.post<string>(
       'api/product/upsert',
       product,
       httpOptions

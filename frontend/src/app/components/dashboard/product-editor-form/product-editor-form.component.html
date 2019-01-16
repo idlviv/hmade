@@ -205,21 +205,21 @@
                   <div class="cell" fxFlex="40">
 
                     <button mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(false)"
-                            [disabled]="!productForm.valid || processingLoadAssets >=0">
+                            [disabled]="!productForm.valid || processingLoadMenuImage">
                       Зберегти</button>
                   </div>
                   <div class="cell" fxFlex="40">
 
                     <button *ngIf="editMode" mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(true)"
-                              [disabled]="!productForm.valid || processingLoadAssets >=0">
+                              [disabled]="!productForm.valid || processingLoadMenuImag">
                       Зберегти і повернутись</button>
                     <button *ngIf="!editMode" mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(true)"
-                            [disabled]="!productForm.valid || processingLoadAssets >=0">
+                            [disabled]="!productForm.valid || processingLoadMenuImage">
                       Створити і повернутись</button>
                   </div>
                     <div class="cell" fxFlex="20">
                     <button mat-raised-button  type="button" (click)="goBack()" class="full-width"
-                            [disabled]="processingLoadAssets >=0">Повернутись</button>
+                            [disabled]="processingLoadMenuImage">Повернутись</button>
                   </div>
 
                 </div>

@@ -232,8 +232,7 @@ export class ProductEditorFormComponent implements OnInit {
 
     this.productService.productUpsert(this.product)
     .subscribe(result => {
-        console.log('result', result.data);
-        this.matSnackBar.open(result.message, '',
+        this.matSnackBar.open(result, '',
           {duration: 3000});
         if (goBackAndReset) {
           this.goBack();

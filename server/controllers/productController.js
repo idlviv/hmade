@@ -300,7 +300,6 @@ module.exports.productAddMainImage = function(req, res, next) {
 
 module.exports.productUpsert = function(req, res, next) {
   const product = req.body;
-
   ProductModel.findOne({_id: product._id})
       .then((result) => {
         if (result !== null && result._doc) {
@@ -308,28 +307,20 @@ module.exports.productUpsert = function(req, res, next) {
         } else {
           product.createdAt = Date.now();
         }
-        return ProductModel.findOneAndUpdate(
+        return ProductModel.updateOne(
             {_id: product._id},
             {$set: product},
-            {upsert: true, new: true}
-        ); // upsert + return updated object)
+            {upsert: true}
+        ); // upsert
       })
-      .then((result) => res.status(200).json(
-          new ResObj(true, 'Колекцію додано/змінено', result)
-      ))
-      .catch((err) => next(new DbError()));
-
-  // ProductModel.findOneAndUpdate(
-  //     {_id: product._id},
-  //     {$set: product},
-  //     {upsert: true, new: true} // upsert + return updated object
-  // )
-  //     .then((result) => {
-  //       return res.status(200).json(
-  //           new ResObj(true, 'Колекцію додано/змінено', result)
-  //       );
-  //     })
-  //     .catch((err) => next(new DbError()));
+      .then((result) => {
+        if (result.ok !== 1) {
+          next(new DbError());
+        }
+        res.status(200).json('Зміни внесено');
+      },
+      (err) => next(new DbError())
+      );
 };
 
 module.exports.getSkuList = function(req, res, next) {
