@@ -31,21 +31,27 @@
               config.imgPath +
               config.cloudinary.cloud_name +
               '/c_fill,w_400,h_300,f_auto/' +
+              'w_200,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
               product.menuImage}}"
-             alt="Image" (click)="openDialog(product.menuImage, '/c_fill,w_1100,h_825,f_auto/', product.name)">
+             alt="Image" (click)="openDialog(product.menuImage, 
+             '/c_fill,w_1100,h_825,f_auto/w_550,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)">
         <img *ngIf="media.isActive('sm')" class="responsive-image-stretch" src="{{
               config.imgPath +
               config.cloudinary.cloud_name +
               '/c_fill,w_460,h_345,f_auto/' +
+              'w_230,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
               product.menuImage}}"
-              alt="Image" (click)="openDialog(product.menuImage, '/c_fill,w_900,h_675,f_auto/', product.name)">
+              alt="Image" (click)="openDialog(product.menuImage,
+              '/c_fill,w_900,h_675,f_auto/w_450,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)">
      
         <img *ngIf="media.isActive('xs')" class="responsive-image-stretch" src="{{
             config.imgPath +
             config.cloudinary.cloud_name +
             '/c_fill,w_590,h_443,f_auto/' +
+            'w_295,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
             product.menuImage}}"
-            alt="Image" (click)="openDialog(product.menuImage, '/c_fill,w_590,h_443,f_auto/', product.name)">
+            alt="Image" (click)="openDialog(product.menuImage, 
+            '/c_fill,w_590,h_443,f_auto/w_295,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)">
           
       </div>
 
