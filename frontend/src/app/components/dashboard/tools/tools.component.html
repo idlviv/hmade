@@ -1,10 +1,25 @@
-<div class="row" fxLayout="row">
+<div class="container">
+  <div class="row" fxLayout="row">
+
   <div class="cell" fxFlex="100">
 
     <div class="container">
       <div class="row">
         <div class="cell">
           <h2 class="mat-h2">Інструменти</h2>
+        </div>
+      </div>
+
+      <div class="row" fxLayout="row" fxLayout.gt-xs="row">
+        <div class="cell" fxFlex.sm="100" fxFlex.gt-sm="100" fxLayout="row" >
+          <div fxFlex fxLayoutAlign="center center">
+            <img fxflex class="product-detail-image" src="{{
+                config.imgPath +
+                config.cloudinary.cloud_name +
+                '/c_fill,w_400,h_300/' +
+                'test'}}"
+                 alt="icon">
+          </div>
         </div>
       </div>
 
@@ -177,3 +192,5 @@
 
   </div>
 </div>
+</div>
+
