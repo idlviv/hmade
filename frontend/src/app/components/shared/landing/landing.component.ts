@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { CatalogService } from '../../../services/catalog.service';
 import { config } from '../../../app.config';
-import { ObservableMedia } from '@angular/flex-layout';
+import { ObservableMedia, FlexLayoutModule } from '@angular/flex-layout';
 import { ProductService } from 'src/app/services/product.service';
 import { IProduct } from 'src/app/interfaces/product-interface';
 import { IMc } from 'src/app/interfaces/interface';
@@ -17,8 +17,7 @@ export class LandingComponent implements OnInit {
   config = config;
   products: IProduct[];
   mcs: IMc[];
-  // descendants: any;
-
+  limit = 6;
 
   constructor(
     private catalogService: CatalogService,
@@ -28,10 +27,20 @@ export class LandingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.productService.getMainPageProducts()
+    if (this.media.isActive('xs')) {
+      this.limit = 6;
+    } else if (this.media.isActive('sm')) {
+      this.limit = 6;
+    } else if (this.media.isActive('md')) {
+      this.limit = 8;
+    } else if (this.media.isActive('gt-md')) {
+      this.limit = 10;
+    }
+
+    this.productService.getNewProducts(this.limit)
       .subscribe(
         result => this.products = result,
-        err => console.log('mainPageProducts load error', err)
+        err => console.log('newProducts load error', err)
       );
 
     this.mcService.getMainPageMcs()

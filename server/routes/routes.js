@@ -129,6 +129,10 @@ router.get('/product/get-main-page-products',
     productController.getMainPageProducts
 );
 
+router.get('/product/get-new-products',
+    productController.getNewProducts
+);
+
 // router.post('/product/create',
 //     passport.authenticate('jwt', {session: false}),
 //     authorization('manager'),

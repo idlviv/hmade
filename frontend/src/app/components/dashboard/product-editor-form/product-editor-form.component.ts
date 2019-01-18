@@ -55,8 +55,8 @@ export class ProductEditorFormComponent implements OnInit {
       ]),
       name: new FormControl('', [
         Validators.required,
-        Validators.minLength(4),
-        Validators.maxLength(50),
+        Validators.minLength(2),
+        Validators.maxLength(21),
       ]),
       display: new FormControl(true, [
       ]),

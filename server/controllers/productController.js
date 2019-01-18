@@ -198,6 +198,15 @@ module.exports.getMainPageProducts = function(req, res, next) {
       .catch((err) => next(new DbError()));
 };
 
+module.exports.getNewProducts = function(req, res, next) {
+  const limit = +req.query.limit;
+  ProductModel.find({}).sort({createdAt: -1}).limit(limit)
+      .then((result) =>
+        res.status(200).json(result)
+      )
+      .catch((err) => next(new DbError()));
+};
+
 module.exports.increaseViews = function(req, res, next) {
   const _id = req.query._id;
 

@@ -257,6 +257,28 @@ export class ProductService {
     );
   }
 
+
+  /**
+   *
+   *
+   * @param {number} limit
+   * @returns {Observable<[IProduct]>}
+   * @memberof ProductService
+   */
+  getNewProducts(limit: number): Observable<[IProduct]> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      params: new HttpParams()
+      .set('limit', limit + '')
+    };
+    return this.http.get<[IProduct]>(
+      'api/product/get-new-products',
+      httpOptions
+    );
+  }
+
   /**
    *
    *

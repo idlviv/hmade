@@ -2,9 +2,9 @@
   <div class="container">
         <div class="app-container-h app-container-v">
       <div class="container">
-          <div class="row" fxLayout="row">
+          <div class="row padding-bottom" fxLayout="row">
 
-              <div id="landing-left" class="container" fxFlexOrder.lt-sm="2" fxFlex.lt-sm="100" fxFlex="35" fxLayoutAlign="center center">
+              <div id="landing-left" class="container" fxFlexOrder.lt-md="2" fxFlex.xs="100" fxFlex.sm="50" fxFlex="35" fxLayoutAlign="center center">
                   <div class="row" fxLayoutAlign="center center">
                     <div class="cell">
                       <a [routerLink]="['/products', 'ch']">  
@@ -19,7 +19,7 @@
                   </div>
               </div>
           
-              <div class="app-container-v" fxFlexOrder.lt-sm="1" fxFlex.lt-sm="100" fxFlex="30">
+              <div class="app-container-v" fxFlexOrder.lt-md="1" fxFlex.lt-md="100" fxFlex="30">
                 <div class="container">
                   <div class="row">
                     <div class="cell">
@@ -37,7 +37,7 @@
                 </div>
               </div>
           
-              <div id="landing-right" class="container" fxFlexOrder.lt-sm="3" fxFlex.lt-sm="100" fxFlex="35" fxLayoutAlign="center center">
+              <div id="landing-right" class="container" fxFlexOrder.lt-md="3" fxFlex.xs="100" fxFlex.sm="50" fxFlex="35" fxLayoutAlign="center center">
                   <div class="row" fxLayoutAlign="center center">
                     <div class="cell">
                       <a [routerLink]="['/mcs', 'ch']">  
@@ -52,6 +52,17 @@
                     </div>
                   </div>
               </div>
+          </div>
+
+          <div *ngIf="products" class="row">
+              <div class="cell" fxFlex="100">
+                <h2 class="mat-h2">Нові роботи</h2>
+              </div>
+
+            <div *ngFor="let product of products" class="cell"
+                fxFlex.xs="100" fxFlex.sm="33.3" fxFlex.md="25" fxFlex.gt-md="20">
+              <app-product-item-brief [product]="product"></app-product-item-brief>
+            </div>
           </div>
       </div>
          
