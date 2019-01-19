@@ -57,19 +57,19 @@
 
       <!-- catalog level -->
       <div *ngIf="child" fxFlex="100">
-        <img *ngIf="media.isActive('gt-sm')" class="responsive-image-stretch" src="{{
+        <img *ngIf="media.isActive('gt-sm')" id="card" class="responsive-image-stretch" src="{{
               config.imgPath +
               config.cloudinary.cloud_name +
               '/c_fill,w_400,h_300,f_auto/' +
               child.assets[0]}}"
              alt="Image">
-        <img *ngIf="media.isActive('sm')" class="responsive-image-stretch" src="{{
+        <img *ngIf="media.isActive('sm')" id="card" class="responsive-image-stretch" src="{{
               config.imgPath +
               config.cloudinary.cloud_name +
               '/c_fill,w_460,h_345,f_auto/' +
               child.assets[0]}}"
              alt="Image">
-        <img *ngIf="media.isActive('xs')" class="responsive-image-stretch" src="{{
+        <img *ngIf="media.isActive('xs')" id="card" class="responsive-image-stretch" src="{{
             config.imgPath +
             config.cloudinary.cloud_name +
             '/c_fill,w_590,h_443,f_auto/' +

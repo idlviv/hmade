@@ -447,6 +447,10 @@ $mainTheme: $light-custom-color-theme;
     color: mat-color($foreground, text);
     // background-color: mat-color($accent);
   }
+
+  #card {
+    background-color:  mat-color($background, background);
+  }
 }
 
 @mixin dark-components-theme($theme) {
