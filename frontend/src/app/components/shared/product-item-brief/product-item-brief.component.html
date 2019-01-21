@@ -1,4 +1,4 @@
-<mat-card id="product-item-brief">
+<mat-card>
   <mat-card-content class="wrap">
     <!-- <div *ngIf="product" class="container-px0" fxFlex="100">
       <div class="row" fxLayout="row">
@@ -27,7 +27,7 @@
       <!-- product level (no children)-->
       <div *ngIf="product" fxFlex="100">
 
-        <img *ngIf="media.isActive('gt-sm')" class="responsive-image-stretch" src="{{
+        <img *ngIf="media.isActive('gt-sm')" class="responsive-image-stretch " src="{{
               config.imgPath +
               config.cloudinary.cloud_name +
               '/c_fill,w_400,h_300,f_auto/' +
@@ -80,8 +80,8 @@
 
     <!-- product level (no children)-->
     <section *ngIf="!child && product" class="row product-brief-section" fxFlex="row">
-      <div class="cell" fxFlex="100" fxLayoutAlign="center center">
-        <h2 class="mat-h2">{{product.name}}</h2>
+      <div class="cell" fxFlex="100" fxLayoutAlign="start center">
+        <h3 class="mat-h3">{{product.name}}</h3>
        </div>
       <div class="cell product-brief-description" fxFlex="100" fxLayoutAlign="center center">
         <p class="mat-body-1">{{product.description}}</p>

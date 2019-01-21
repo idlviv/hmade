@@ -278,6 +278,7 @@ body {
 .wrap {
   flex-wrap: wrap;
 }
+
 .width-200 {
   width: 200px;
 }
@@ -804,11 +805,17 @@ div.form-block {
   @include gt-xs {
     margin-left: -24px !important;
     margin-right: -24px !important;
+    margin-top: -24px !important;
   }
   @include xs {
     margin-left: -16px !important;
     margin-right: -16px !important;
+    margin-top: -16px !important;
   }
+  img, .card {
+    border-radius: 10px 10px 0 0;
+  }
+  margin-bottom: .5rem
 }
 
 .m-tab-content {
@@ -897,7 +904,7 @@ td.mat-cell {
 }
 
 .radius-5 {
-  border-radius: .5rem!important;
+  border-radius: .5rem !important;
 }
 
 .category-description-list {
@@ -1221,6 +1228,21 @@ td.mat-cell {
     min-height: calc(100vh - 112px); // footer 56px + toolbar 56px
   }
   
+  .landing-block {
+    @include gt-md {
+      min-height: calc(100vh - (130px + (8px + 12px))); // toolbar 130px
+    }
+    @include md {
+      min-height: calc(100vh - (100px + (8px + 12px))); // toolbar 100px
+    }
+    @include sm {
+      min-height: calc(100vh - (64px + (8px + 8px))); //  toolbar 64px
+    }
+    @include xs {
+      min-height: calc(100vh - (56px + (8px + 8px))); //  toolbar 56px
+    }
+  }
+
   .avatar-big-block {
     width: 100%;
     margin-bottom: 1rem;

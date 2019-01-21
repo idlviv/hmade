@@ -435,19 +435,12 @@ $mainTheme: $light-custom-color-theme;
     }
   }
 
-  // .mat-body-1 {
-  //   font: {
-  //     family: mat-font-family($config, body-1);
-  //     size: mat-font-size($config, body-1);
-  //     weight: 300;
-  //   }
-  // }
-
-  .accented,
-  .mat-h1,
-  .mat-h2,
-  .mat-h3 {
-    color: mat-color($mat-purple, 900);
+  .mat-body-1 {
+    font: {
+      family: mat-font-family($config, body-1);
+      size: mat-font-size($config, body-1);
+      weight: 200;
+    }
   }
 
   .muted {
