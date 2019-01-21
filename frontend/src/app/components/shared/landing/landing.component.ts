@@ -32,9 +32,9 @@ export class LandingComponent implements OnInit {
     } else if (this.media.isActive('sm')) {
       this.limit = 6;
     } else if (this.media.isActive('md')) {
-      this.limit = 8;
+      this.limit = 6;
     } else if (this.media.isActive('gt-md')) {
-      this.limit = 10;
+      this.limit = 8;
     }
 
     this.productService.getNewProducts(this.limit)

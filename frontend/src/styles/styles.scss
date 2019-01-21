@@ -10,7 +10,6 @@ html {
 body {
   padding: 0;
   margin: 0;
-  background-color: $background-color;
 }
 
 // .mat-drawer-container {
@@ -831,7 +830,7 @@ div.form-block {
 }
 
 mat-card {
-  border-radius: 8px !important;
+  border-radius: 10px !important;
 }
 
 .mat-horizontal-content-container {
@@ -1090,7 +1089,7 @@ td.mat-cell {
   .product-brief-description {
     height: 100px;
     p {
-      text-align: justify;
+      text-align: center;
     }
   }
 }

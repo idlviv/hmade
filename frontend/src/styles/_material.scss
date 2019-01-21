@@ -1,11 +1,10 @@
 @import '~@angular/material/theming';
 
-@import url('https://fonts.googleapis.com/css?family=Fira+Sans|Montserrat&subset=cyrillic');
-
+@import url('https://fonts.googleapis.com/css?family=Fira+Sans:200,300,400|Montserrat:300,400|Roboto:300,400&subset=cyrillic');
 // @import './material';
 
 // custom typography
-$mainFontFamily: "'Fira Sans', sans-serif";
+$mainFontFamily: "'Roboto', sans-serif";
 
 $custom-typography: mat-typography-config(
         $font-family: $mainFontFamily
@@ -332,14 +331,15 @@ $dark-accent: mat-palette($mat-light-blue);
 $dark-warn: mat-palette($mat-custom-warn);
 
 
-$dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
+$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 
 $custom-color-primary: mat-palette($mat-custom-color1);
 $custom-color-accent: mat-palette($mat-custom-color2, 500, 200, 700);
 $custom-color-warn: mat-palette($mat-custom-warn);
 
-$dark-custom-color-theme: mat-dark-theme($custom-color-primary, $custom-color-accent, $custom-color-warn);
-$light-custom-color-theme: mat-light-theme($custom-color-primary, $custom-color-accent, $custom-color-warn);
+$dark-custom-color-theme: mat-dark-theme(mat-palette($mat-blue-grey), mat-palette($mat-cyan), mat-palette($mat-red));
+$light-custom-color-theme: mat-light-theme(mat-palette($mat-blue-grey), mat-palette($mat-cyan), mat-palette($mat-red));
+
 
 $mainTheme: $light-custom-color-theme;
 
@@ -387,6 +387,7 @@ $mainTheme: $light-custom-color-theme;
         }
       }
 }
+
 @mixin mcs-item-brief-theme($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
@@ -397,13 +398,13 @@ $mainTheme: $light-custom-color-theme;
       .mc-social {
         // &.cell {
           color: mat-color($foreground, text);
-          background-color: mat-color($accent, lighter);
+          background-color: mat-color($primary, darker);
         // }
           .disabled {
             color: mat-color($foreground, disabled-button);
           }
           .enabled {
-            color: mat-color($accent);
+            color: mat-color($primary);
           }
       }
     
@@ -434,6 +435,21 @@ $mainTheme: $light-custom-color-theme;
     }
   }
 
+  // .mat-body-1 {
+  //   font: {
+  //     family: mat-font-family($config, body-1);
+  //     size: mat-font-size($config, body-1);
+  //     weight: 300;
+  //   }
+  // }
+
+  .accented,
+  .mat-h1,
+  .mat-h2,
+  .mat-h3 {
+    color: mat-color($mat-purple, 900);
+  }
+
   .muted {
     color: mat-color($foreground, secondary-text);
   }
@@ -448,7 +464,8 @@ $mainTheme: $light-custom-color-theme;
     // background-color: mat-color($accent);
   }
 
-  #card {
+  .card,
+  body {
     background-color:  mat-color($background, background);
   }
 }

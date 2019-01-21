@@ -17,11 +17,11 @@
         "/assets/images/hmade_logo_light.svg",
         "/favicon.ico",
         "/index.html",
-        "/main.3cd1fad7bb01357b8ba0.js",
+        "/main.ad60fb81b3e217a93f2c.js",
         "/polyfills.1cfab2328d8b821c04f2.js",
         "/runtime.4a406d1b4ef09ea8b154.js",
         "/scripts.d1a4a51347c220973e96.js",
-        "/styles.1e99401447d7386b50c9.css"
+        "/styles.2b2750b7bc707ca21f78.css"
       ],
       "patterns": []
     },
@@ -81,12 +81,12 @@
     "/assets/other/btn_google_signin_light_normal_web.png": "67d90cdf681b4c211582d5a6e27ea47debaa4782",
     "/assets/other/btn_google_signin_light_normal_web@2x.png": "bbf56c48cbc340ba0c67e094f0bd6d2af8043e0d",
     "/favicon.ico": "3581640704ffb32dca6a10acca86bcca2471514a",
-    "/index.html": "c1c4aa46cdbcd1bf971e536e60fa8b19d24a2c36",
-    "/main.3cd1fad7bb01357b8ba0.js": "413630d766d269f20c139d0a7f25302eff5d55d2",
+    "/index.html": "858964ba02db19fa1398a9acb1ef5fc337a8ea07",
+    "/main.ad60fb81b3e217a93f2c.js": "6713806eb23816f5edc7351c0e3ca3102065411e",
     "/polyfills.1cfab2328d8b821c04f2.js": "4c20ad2c60cfb17c16f4b1bd6180ddd8265c5bf6",
     "/runtime.4a406d1b4ef09ea8b154.js": "f1ccb6eb3532033236a721aabb319acc934f144c",
     "/scripts.d1a4a51347c220973e96.js": "4932f744a454bcf073a7f1ce2af9e21dd5169b9b",
-    "/styles.1e99401447d7386b50c9.css": "e5ab1333efb4cf736b8a3af84264bfa18df78c16"
+    "/styles.2b2750b7bc707ca21f78.css": "e36e3872f5badfb39b3854b581e66fb8dbb67057"
   },
   "navigationUrls": [
     {
