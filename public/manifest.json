@@ -1,8 +1,8 @@
 {
   "name": "HandMADE",
   "short_name": "HandMADE",
-  "theme_color": "#143642",
-  "background_color": "#143642",
+  "theme_color": "#607d8b",
+  "background_color": "#607d8b",
   "display": "standalone",
   "scope": "/",
   "start_url": "/",
