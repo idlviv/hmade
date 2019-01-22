@@ -114,17 +114,17 @@
         {{product.name}}
       </a> -->
       <!--using with dashboard-->
-      <a *ngIf="!child && allowTo('manager')" mat-button
+      <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Edit"
          [routerLink]="['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]"
          [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
         Редагувати
       </a>
-      <a *ngIf="!child && allowTo('manager')" mat-button
+      <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Delete"
         (click)="deleteProductItem(product._id, product.name)">
         Видалити
       </a>
       <!--using with catalog, when children present-->
-      <a *ngIf="child" mat-button
+      <a *ngIf="child" mat-button [attr.aria-label]="child.name"
          [routerLink]="['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]"
          [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
          {{child.name}}

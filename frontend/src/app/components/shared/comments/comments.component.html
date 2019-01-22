@@ -44,7 +44,8 @@
                       </mat-error>
                     </mat-form-field>
                   <div class="cell" fxFlex="10">
-                    <button mat-icon-button (click)="sendComment()"  [disabled]="!commentForm.valid || !allowTo('user')">
+                    <button mat-icon-button (click)="sendComment()" aria-label="Send"
+                     [disabled]="!commentForm.valid || !allowTo('user')">
                       <mat-icon>send</mat-icon>
                     </button>
            
@@ -94,12 +95,15 @@
         <p class="text-align-justify">{{comment.comment}}</p>
       </div>
       <div class="cell" fxFlex="10">
-        <p *ngIf="allowTo('manager')"><button class="mat-icon-button" (click)="deleteComment(comment)"><mat-icon class="mat-18">delete_outline</mat-icon></button></p>
+        <p *ngIf="allowTo('manager')"><button class="mat-icon-button" (click)="deleteComment(comment)" aria-label="Delete comment">
+          <mat-icon class="mat-18">delete_outline</mat-icon></button></p>
         <p *ngIf="allowTo('manager') && !comment.display">
-          <button class="mat-icon-button" (click)="displayComment(true, comment._id)"><mat-icon class="mat-18">play_circle_outline</mat-icon></button>
+          <button class="mat-icon-button" (click)="displayComment(true, comment._id)" aria-label="Display comment">
+            <mat-icon class="mat-18">play_circle_outline</mat-icon></button>
         </p>
         <p *ngIf="allowTo('manager') && comment.display">
-          <button class="mat-icon-button" (click)="displayComment(false, comment._id)"><mat-icon class="mat-18">pause_circle_outline</mat-icon></button>
+          <button class="mat-icon-button" (click)="displayComment(false, comment._id)" aria-label="Hide comment">
+            <mat-icon class="mat-18">pause_circle_outline</mat-icon></button>
         </p>
 
       </div>

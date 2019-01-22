@@ -58,19 +58,19 @@
               <div class="item text-align-center muted" fxFlex>
                  <!-- (click)="goToMcsItemDetail(mc._id)"> -->
     
-                <a mat-raised-button color="accent"
+                <a mat-raised-button color="accent" aria-label="Open"
                   [routerLink]="['/mcs','show', mc._id]"
                   [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
                   Докладно
                </a>
     
               </div>
-              <div *ngIf="allowTo('manager')" class="item text-align-center muted" fxFlex>
+              <div *ngIf="allowTo('manager')" class="item text-align-center muted" fxFlex aria-label="Edit">
                 <a mat-button (click)="editMcsItem(mc._id)">
                   <mat-icon>edit</mat-icon>
                 </a>
               </div>
-              <div *ngIf="allowTo('manager')" class="item text-align-center muted" fxFlex>
+              <div *ngIf="allowTo('manager')" class="item text-align-center muted" fxFlex aria-label="Delete">
                 <a mat-button (click)="deleteMcsItem(mc._id, mc.name)">
                   <mat-icon>delete</mat-icon>
                 </a>

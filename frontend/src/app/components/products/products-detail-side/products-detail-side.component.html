@@ -10,7 +10,7 @@
     <a mat-list-item *ngFor="let sibling of siblings"
        [routerLink]="['/products', 'ch', {outlets: {primary: [category_id, 'details', sibling._id],
      breadcrumb: [category_id, 'details', sibling._id]}}]"
-       [queryParams]="{name: sibling.name}"
+       [queryParams]="{name: sibling.name}" [attr.aria-label]="sibling.name"
        [routerLinkActive]="['primary']" [routerLinkActiveOptions]="{exact: true}">
       {{sibling.name}}
     </a>

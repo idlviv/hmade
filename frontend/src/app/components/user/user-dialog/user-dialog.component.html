@@ -41,9 +41,9 @@
 
       </div>
       <div class="submit-button-wrapper">
-        <button type="reset" mat-button color="primary" (click)="onNoClick()">Повернутись</button>
+        <button type="reset" mat-button color="primary" (click)="onNoClick()" aria-label="Back">Повернутись</button>
         <span fxFlex></span>
-        <button mat-raised-button color="primary" [disabled]="!userEditForm.valid">Ok</button>
+        <button mat-raised-button color="primary" [disabled]="!userEditForm.valid" aria-label="Ok">Ok</button>
       </div>
 
     </form>

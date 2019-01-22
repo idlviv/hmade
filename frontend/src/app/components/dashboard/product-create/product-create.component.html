@@ -18,7 +18,7 @@
 
             <div class="row" fxLayout="column" fxLayout.gt-xs="row">
               <div class="cell">
-                <button type="button" mat-raised-button (click)="addCategory()">Додати категорію</button>
+                <button type="button" mat-raised-button (click)="addCategory()" aria-label="Add category">Додати категорію</button>
               </div>
 
             </div>
@@ -205,7 +205,7 @@
 
                     <div class="preview-div-processing">
                       <div class="button-wrapper">
-                        <button mat-mini-fab color="primary" type="button"
+                        <button mat-mini-fab color="primary" type="button" aria-label="add"
                                 (click)="inputFile.click();
                                 this.productCreateForm.get('_id').disable();
                                 this.productCreateForm.get('parents').at(0).disable();"
@@ -224,9 +224,9 @@
             </div>
             <div class="submit-button-wrapper">
               <!--<span fxFlex></span>-->
-              <button *ngIf="!editMode" mat-raised-button class="full-width" color="primary"
+              <button *ngIf="!editMode" mat-raised-button class="full-width" color="primary" aria-label="Create"
                       [disabled]="!productCreateForm.valid || processingLoadFile >= 0">Створити</button>
-              <button *ngIf="editMode" mat-raised-button class="full-width" color="primary"
+              <button *ngIf="editMode" mat-raised-button class="full-width" color="primary" aria-label="Save"
                       [disabled]="!productCreateForm.valid || processingLoadFile >= 0">Зберегти</button>
             </div>
 

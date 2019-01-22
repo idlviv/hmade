@@ -5,7 +5,7 @@
    <div class="row" fxLayout="row">
       <div class="cell" fxFlex.xs="56px" fxFlex="64px" fxLayoutAlign="center center">
 
-          <button mat-icon-button (click)=resetFilters()>
+          <button mat-icon-button (click)=resetFilters() aria-label="Clear filters">
             <mat-icon>clear</mat-icon>
           </button>
 
@@ -36,7 +36,7 @@
         </div>
         <div *ngIf="noMoreChildren === 'true' && allowTo('manager')" class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
           <div class="item text-align-center muted" fxFlex fxLayoutAlign="center center">
-            <a mat-button (click)=addMcsItem(parent_id)>
+            <a mat-button (click)=addMcsItem(parent_id) aria-label="Add">
               <mat-icon>add</mat-icon> Додати майстерклас
             </a>
           </div>

@@ -74,7 +74,8 @@
 
               <div class="submit-button-wrapper">
                 <!--<span fxFlex></span>-->
-                <button mat-raised-button class="full-width" color="primary" [disabled]="!feedbackForm.valid || processing">
+                <button mat-raised-button class="full-width" color="primary" aria-label="Send message"
+                 [disabled]="!feedbackForm.valid || processing">
                   <mat-icon *ngIf="!processing">message</mat-icon> Написати мені</button>
               </div>
 

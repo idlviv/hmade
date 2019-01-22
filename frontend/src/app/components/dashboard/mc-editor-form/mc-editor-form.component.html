@@ -93,7 +93,7 @@
                   <h3 class="mat-h3 margin-0">Кроки
                     <span>
                       <button *ngIf="mcForm.get('steps').value.length < 15"
-                        mat-icon-button color="accent" type="button"
+                        mat-icon-button color="accent" type="button" aria-label="add"
                         (click)="addStepsControl()"><mat-icon>add_circle</mat-icon></button>
                     </span>
                   </h3>
@@ -132,7 +132,7 @@
                               <div *ngIf="!processingLoadStepsPic"
                                 class="button-wrapper">
                                 <button mat-mini-fab color="primary" type="button"
-                                  (click)="inputStepsPic.click();"
+                                  (click)="inputStepsPic.click();" aria-label="add Picture"
                                   [disabled]="processingLoadStepsPic">
                                   <mat-icon *ngIf="!mcForm.get('steps').at(i).get('pic').value &&
                                     !processingLoadStepsPic">add</mat-icon>
@@ -164,7 +164,7 @@
                     <div class="item" fxFlex="40px" fxLayoutAlign="center
                       center">
                       <button class="text-align-center"
-                        mat-icon-button color="accent" type="button"
+                        mat-icon-button color="accent" type="button" aria-label="remove"
                         (click)="removeControl('steps', i)"><mat-icon>remove_circle</mat-icon></button>
                     </div>
                   </mat-card>
@@ -176,7 +176,7 @@
                     <h3 class="mat-h3 margin-0">Необхідні матеріали
                       <span>
                         <button *ngIf="mcForm.get('materials').value.length <10"
-                          mat-icon-button color="accent" type="button"
+                          mat-icon-button color="accent" type="button" aria-label="add"
                           (click)="addMaterialsControl()"><mat-icon>add_circle</mat-icon></button>
                       </span>
                     </h3>
@@ -249,7 +249,7 @@
                       <div class="item" fxFlex="40px" fxLayoutAlign="center
                         center">
                         <button class="text-align-center"
-                          mat-icon-button color="accent" type="button"
+                          mat-icon-button color="accent" type="button" aria-label="remove"
                           (click)="removeControl('materials', i)"><mat-icon>remove_circle</mat-icon></button>
                       </div>
                     </mat-card>
@@ -285,7 +285,7 @@
                       </div>
                       <div *ngIf="!processingLoadMainImage"
                         class="button-wrapper">
-                        <button mat-mini-fab color="primary" type="button"
+                        <button mat-mini-fab color="primary" type="button" aria-label="add"
                           (click)="inputMainImage.click();"
                           [disabled]="processingLoadMainImage">
                           <mat-icon *ngIf="!mcForm.get('mainImage').value &&
@@ -302,7 +302,7 @@
               <div class="submit-button-wrapper row" fxLayout="row">
                 <div class="cell" fxFlex="30">
 
-                  <button mat-raised-button color="primary" class="full-width"
+                  <button mat-raised-button color="primary" class="full-width" aria-label="save"
                     type="button" (click)="onMcFormSubmit(false)"
                     [disabled]="!mcForm.valid || processingLoadMainImage">
                     Зберегти</button>
@@ -310,19 +310,19 @@
                 <div class="cell" fxFlex="40">
 
                   <button *ngIf="editMode" mat-raised-button color="primary"
-                    class="full-width" type="button"
+                    class="full-width" type="button" aria-label="Save and return"
                     (click)="onMcFormSubmit(true)"
                     [disabled]="!mcForm.valid || processingLoadMainImage">
                     Зберегти і повернутись</button>
                   <button *ngIf="!editMode" mat-raised-button color="primary"
-                    class="full-width" type="button"
+                    class="full-width" type="button" aria-label="Create and return"
                     (click)="onMcFormSubmit(true)"
                     [disabled]="!mcForm.valid || processingLoadMainImage">
                     Створити і повернутись</button>
                 </div>
                 <div class="cell" fxFlex="30">
                   <button mat-raised-button type="button" (click)="goBack()"
-                    class="full-width"
+                    class="full-width" aria-label="Go back"
                     [disabled]="processingLoadMainImage">Повернутись</button>
                 </div>
 

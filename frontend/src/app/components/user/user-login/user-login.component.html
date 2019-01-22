@@ -50,7 +50,7 @@
           </div> -->
 
           <div class="links-wrapper" fxLayoutAlign="center">
-            <button class="google-button full-width" mat-raised-button color="primary"
+            <button class="google-button full-width" mat-raised-button color="primary" aria-label="Login"
             [disabled]="!userLoginForm.valid">Увійти</button>       
           </div>
           <div fxLayout="row" class="links-wrapper">
@@ -66,7 +66,7 @@
             <!-- <a mat-stroked-button href="http://localhost:8081/api/user/auth/google">
               <i class="fab fa-google"></i> Signin with google
             </a> -->
-            <a class="google-button" mat-raised-button href="{{config.host}}/api/user/auth/google">
+            <a class="google-button" mat-raised-button href="{{config.host}}/api/user/auth/google" aria-label="Sign in with Google">
                 <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 48 48">
                   <g>
                     <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"></path>

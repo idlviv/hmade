@@ -149,14 +149,12 @@
           </re-captcha>
 
           <div class="submit-button-wrapper">
-            <!--<button type="reset" mat-button color="primary" (click)="onUserCreateReset()">Повернутись</button>-->
             <span fxFlex></span>
-            <button mat-raised-button color="primary" [disabled]="!userCreateForm.valid">Зареєструватись</button>
+            <button mat-raised-button color="primary" [disabled]="!userCreateForm.valid" aria-label="Register">Зареєструватись</button>
           </div>
 
         </form>
       </mat-card-content>
-      <!--<img mat-card-image class="mat-card-image-bottom" src="./assets/images/logo400x140-2.jpg" alt="">-->
     </mat-card>
   </div>
 

@@ -39,10 +39,10 @@
               </div>
               <div class="avatar-div-cancel">
               </div>
-              <button class="avatar-button-ok" [disabled]="!changeAvatarForm.valid">
+              <button class="avatar-button-ok" [disabled]="!changeAvatarForm.valid" aria-label="Done">
                 <mat-icon>done</mat-icon>
               </button>
-              <button type="button" class="avatar-button-cancel" (click)="cancelChangeAvatar()">
+              <button type="button" class="avatar-button-cancel" (click)="cancelChangeAvatar()" aria-label="Cancel">
                 <mat-icon>cancel</mat-icon>
               </button>
             </div>
@@ -114,7 +114,7 @@
           <div fxLayout="row" fxLayoutAlign="center" class="info-block-row">
             <div fxFlex="60%"></div>
             <div fxFlex="40%">
-              <button mat-button (click)="openDialog(makePasswordObject())">
+              <button mat-button (click)="openDialog(makePasswordObject())" aria-label="Change password">
                 <span *ngIf="processing !== 'password'">Змінити пароль</span>
                 <mat-spinner *ngIf="processing === 'password'" [diameter]="24"></mat-spinner>
               </button>

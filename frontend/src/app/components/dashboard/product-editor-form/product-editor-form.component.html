@@ -188,7 +188,7 @@
 
 
                             <div *ngIf="!processingLoadMenuImage" class="button-wrapper">
-                              <button mat-mini-fab color="primary" type="button"
+                              <button mat-mini-fab color="primary" type="button" aria-label="add"
                                       (click)="inputMenuImage.click();"
                                       [disabled]="processingLoadMenuImage">
                                 <mat-icon *ngIf="!productForm.get('menuImage').value && !processingLoadMenuImage">add</mat-icon>
@@ -205,20 +205,20 @@
                   <div class="cell" fxFlex="40">
 
                     <button mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(false)"
-                            [disabled]="!productForm.valid || processingLoadMenuImage">
+                            [disabled]="!productForm.valid || processingLoadMenuImage" aria-label="Save">
                       Зберегти</button>
                   </div>
                   <div class="cell" fxFlex="40">
 
                     <button *ngIf="editMode" mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(true)"
-                              [disabled]="!productForm.valid || processingLoadMenuImag">
+                              [disabled]="!productForm.valid || processingLoadMenuImag" aria-label="Save and return">
                       Зберегти і повернутись</button>
                     <button *ngIf="!editMode" mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(true)"
-                            [disabled]="!productForm.valid || processingLoadMenuImage">
+                            [disabled]="!productForm.valid || processingLoadMenuImage" aria-label="Create and return">
                       Створити і повернутись</button>
                   </div>
                     <div class="cell" fxFlex="20">
-                    <button mat-raised-button  type="button" (click)="goBack()" class="full-width"
+                    <button mat-raised-button  type="button" (click)="goBack()" class="full-width" aria-label="return"
                             [disabled]="processingLoadMenuImage">Повернутись</button>
                   </div>
 

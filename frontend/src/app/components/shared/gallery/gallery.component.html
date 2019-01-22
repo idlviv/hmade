@@ -11,7 +11,7 @@
       <div class="cell" fxFlex="100" *ngFor="let product of productsWithGallery">
         <mat-card>
           <mat-card-subtitle>
-            <a mat-button
+            <a mat-button [attr.aria-label]="product.name"
                [routerLink]="['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],
                     breadcrumb: [product.parent[0], 'details', product._id]}}]"
                [queryParams]="{name: product.name}"
