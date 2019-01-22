@@ -348,7 +348,7 @@ $mainTheme: $light-custom-color-theme;
 @mixin toolbar-theme($theme) {
   $primary: map-get($theme, primary);
   $accent: map-get($theme, accent);
-  $warn: map-get($theme, accent);
+  $warn: map-get($theme, warn);
   $foreground: map-get($theme, foreground);
   $background: map-get($theme, background);
   
@@ -358,13 +358,13 @@ $mainTheme: $light-custom-color-theme;
     a.link {
       &.active {
         span.type1 {
-          border-bottom-color: mat-color($primary, 300);
+          border-bottom-color: mat-color($primary, 400);
         }
       }
       span.type1 {
         border-bottom: 1px solid mat-color($foreground, text);
         &:hover {
-          border-bottom: 1px solid mat-color($primary, 200);
+          border-bottom: 1px solid mat-color($primary, 300);
         }
       }
     }

@@ -2,6 +2,13 @@
 // @import './materialTypography';
 @import './material';  // ~@angular/material/theming -> ./material -> ./materialTypography
 
+// get color theme variables
+$primary: map-get($mainTheme, primary);
+$accent: map-get($mainTheme, accent);
+$warn: map-get($mainTheme, warn);
+$foreground: map-get($mainTheme, foreground);
+$background: map-get($mainTheme, background);
+
 html {
   font-size: 16px;
   box-sizing: border-box;
@@ -1238,11 +1245,13 @@ td.mat-cell {
   
   .avatar-big {
     display: block;
-    @include radius(90px);
+    @include radius(45%);
     max-width: 180px;
     width: 100%;
     height: auto;
     margin: auto;
+    border-top: 5px solid mat-color($primary, 100);
+    border-right: 10px solid mat-color($primary, 300);
   }
   
   .top-container {
@@ -1315,6 +1324,7 @@ td.mat-cell {
   img {
     &:hover {
       cursor: pointer;
+
     }
   }
 }

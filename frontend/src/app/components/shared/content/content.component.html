@@ -97,7 +97,7 @@
         </mat-list-item>
         <mat-list-item *ngIf="allowTo('guest')">
 
-          <a matLine (click)="userLocalLogout()" (click)="sidenav.toggle()">
+          <a matLine (click)="userLogout()" (click)="sidenav.toggle()">
             Вихід
           </a>
           <mat-icon matListIcon>exit_to_app</mat-icon>
