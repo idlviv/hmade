@@ -92,8 +92,13 @@ module.exports.addMainImage = function(req, res, next) {
               Date.now(),
           // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
           eager: [
-            {width: 535, height: 350, crop: 'fill', fetch_format: 'auto'},
-            {width: 260, height: 170, crop: 'fill', fetch_format: 'auto'},
+            {width: 1100, height: 825, crop: 'fill', fetch_format: 'auto'},
+            {width: 900, height: 675, crop: 'fill', fetch_format: 'auto'},
+            {width: 590, height: 443, crop: 'fill', fetch_format: 'auto'},
+            {width: 460, height: 345, crop: 'fill', fetch_format: 'auto'},
+            {width: 400, height: 300, crop: 'fill', fetch_format: 'auto'},
+            {width: 80, height: 60, crop: 'fill', fetch_format: 'auto'},
+            {width: 180, height: 180, crop: 'fill', fetch_format: 'auto'},
           ],
         },
         function(err, result) {
@@ -130,8 +135,13 @@ module.exports.addStepsPic = function(req, res, next) {
               Date.now(),
           // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
           eager: [
-            {width: 535, height: 350, crop: 'fill', fetch_format: 'auto'},
-            {width: 260, height: 170, crop: 'fill', fetch_format: 'auto'},
+            {width: 1100, height: 825, crop: 'fill', fetch_format: 'auto'},
+            {width: 900, height: 675, crop: 'fill', fetch_format: 'auto'},
+            {width: 590, height: 443, crop: 'fill', fetch_format: 'auto'},
+            {width: 460, height: 345, crop: 'fill', fetch_format: 'auto'},
+            {width: 400, height: 300, crop: 'fill', fetch_format: 'auto'},
+            {width: 80, height: 60, crop: 'fill', fetch_format: 'auto'},
+            {width: 180, height: 180, crop: 'fill', fetch_format: 'auto'},
           ],
         },
         function(err, result) {

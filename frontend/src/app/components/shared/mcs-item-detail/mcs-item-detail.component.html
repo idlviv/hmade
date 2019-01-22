@@ -50,13 +50,18 @@
 
               <div class="cell" fxFlex="100">
                 <div class="row padding-bottom-3" fxLayout="row">
-                  <div class="cell" fxFlex="50">
+                  <div class="cell" fxFlex.xs="100" fxFlex="50">
                     <div class="row" fxLayout="row">
                       <div class="cell" fxFlex="100">
                         <p class="mat-body-1 text-justify">{{mc.description}}</p>
                       </div>
-                      <div class="cell" fxFlex="100" fxLayoutAlign="start">
-                        <table mat-table [dataSource]="mc.materials" class="mat-elevation-z0" fxFlex="100">
+                      <mat-divider></mat-divider>
+
+                      <div class="cell wrap" fxFlex="100">
+                        <div fxFlex="100">
+                            <h3 class="mat-h3">Необхідні матеріали</h3>
+                        </div>
+                        <table mat-table [dataSource]="mc.materials" class="mat-elevation-z0 app-container-h" fxFlex="100">
                           <!-- Position Column -->
                           <ng-container matColumnDef="name">
                             <!-- <th mat-header-cell *matHeaderCellDef> No. </th> -->
@@ -81,11 +86,11 @@
                       </div>
                     </div>
                   </div>
-                  <div class="cell" fxFlex="50" fxLayoutAlign="center center">
-                    <img class="responsive-image mat-elevation-z4" src="{{
+                  <div class="cell" fxFlex.xs="100" fxFlex="50" fxLayoutAlign="center center">
+                    <img class="responsive-image mat-elevation-z4 radius" src="{{
                             config.imgPath +
                             config.cloudinary.cloud_name +
-                            '/c_fill,w_535,h_350,f_auto/' +
+                            '/c_fill,w_460,h_345,f_auto/' +
                             'w_270,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
                             mc.mainImage}}"
                       alt="master class image">
@@ -93,14 +98,16 @@
       
                 </div>
               </div>  
+              <mat-divider></mat-divider>
 
               <div class="cell" fxFlex="100">
                 <div class="row padding-bottom-3" fxLayout="row" *ngFor="let step of mc.steps">
+
                   <div class="cell" fxFlex="100" fxLayoutAlign="center center">
-                    <img class="responsive-image mat-elevation-z4" src="{{
+                    <img class="responsive-image mat-elevation-z4 radius" src="{{
                           config.imgPath +
                           config.cloudinary.cloud_name +
-                          '/c_fill,w_535,h_350,f_auto/' +
+                          '/c_fill,w_460,h_345,f_auto/' +
                           'w_270,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
                           step.pic}}"
                       alt="master class image">
