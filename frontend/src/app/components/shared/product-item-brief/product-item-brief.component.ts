@@ -10,6 +10,7 @@ import { ConfirmPopupComponent } from '../confirm-popup/confirm-popup.component'
 import { ProductService } from 'src/app/services/product.service';
 import { of } from 'rxjs/internal/observable/of';
 import { MatSnackBar } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-product-item-brief',
@@ -33,6 +34,7 @@ export class ProductItemBriefComponent implements OnInit {
     public dialog: MatDialog,
     private productService: ProductService,
     private matSnackBar: MatSnackBar,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -60,6 +62,12 @@ export class ProductItemBriefComponent implements OnInit {
         },
         err => console.log('err delete', err)
       );
+  }
+
+  onCatalogRouting(child) {
+    if (child) {
+      this.router.navigate(['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]);
+    }
   }
 
   deleteProductItem(_id: string, name: string) {

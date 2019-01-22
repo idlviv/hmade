@@ -1,6 +1,30 @@
-    <div class="mcs-item">
-      <div class="container mat-elevation-z4">
+    <div class="mcs-item  mat-elevation-z4">
+      <div class="container">
           <div class="row" fxLayout="row">
+              <div class="mc-social" fxFlex="100">
+                  <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
+                    <mat-icon>thumb_up_alt</mat-icon>
+                    <div class="mat-body-1 caption">{{mc.likes.likedByLength || 0}}</div>
+                  </div>
+                  <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
+                      <mat-icon>thumb_down_alt</mat-icon>
+                      <div class="mat-body-1 caption">{{mc.likes.dislikedByLength || 0}}</div>
+                  </div>
+                  <div *ngIf="config.social.showViews" class="item text-align-center" fxFlex>
+                      <mat-icon>remove_red_eye</mat-icon>
+                      <div class="mat-body-1 caption">{{mc.views || 0}}</div>
+                  </div>
+                  <div *ngIf="config.social.showComments" class="item text-align-center" fxFlex>
+                      <mat-icon>comment</mat-icon>
+                      <div class="mat-body-1 caption">{{mc.comments?.length || 0}}</div>
+                  </div>
+                   <div class="item text-align-center" fxFlex>
+                      <mat-icon>calendar_today</mat-icon>
+                      <div class="mat-body-1 caption">{{mc.updatedAt | date: 'dd-MM-yyyy'}}</div>
+                  </div>
+                </div>
+            </div>
+            <!-- <div class="row" fxLayout="row">
               <div class="mc-social" fxFlex="100">
                     <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
                     <mat-icon>thumb_up_alt</mat-icon>
@@ -23,13 +47,10 @@
                       <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>
                   </div>
                 </div>
-            </div>
-    
-          <!-- </div>
-        </div> -->
+            </div> -->
     
         <div class="row padding-bottom" fxLayout="row">
-          <div class="cell" fxFlex="20" fxLayoutAlign="center center">
+          <div class="cell" fxFlex="100" fxFlex.sm="35" fxFlex.md="25" fxFlex.gt-md="20" fxLayoutAlign="center center">
               <img class="responsive-image" src="{{
                 config.imgPath +
                 config.cloudinary.cloud_name +
@@ -38,16 +59,14 @@
                 mc.mainImage}}"
                 alt="master class image">
           </div>
-          <div class="cell" fxFlex="80">
-              <div class="row" fxLayout="row">
-                <div class="cell" fxFlex="100" fxLayoutAlign="center">
-                  <h2 class="mat-h1">
-                    {{mc.name}}
-                  </h2>
-                </div>
-              </div>
+          <div class="cell" fxFlex="100" fxFlex.sm="65" fxFlex.md="75" fxFlex.gt-md="80" fxLayoutAlign="center center">
               <div class="row" fxLayout="row">
                 <div class="cell" fxFlex="100">
+                  <h2 class="mat-h2">
+                    {{mc.name}}
+                  </h2>
+                <!-- </div>
+                   <div class="cell" fxFlex="100"> -->
                   <p class="mat-body-1 text-align-justify">
                     {{mc.description}}
                   </p>

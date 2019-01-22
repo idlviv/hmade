@@ -12,26 +12,6 @@ body {
   margin: 0;
 }
 
-// .mat-drawer-container {
-//   background-color: transparent;
-// }
-
-// .home-container {
-//   @include gt-md {
-//     z-index: -9999;
-//     height: 500px;
-//   }
-//   @include md {
-//     padding: 12px 0;
-//   }
-//   @include sm {
-//     padding: 8px 0;
-//   }
-//   @include xs {
-//     padding: 8px 0;
-//   }
-// }
-
 .container-sidenav,
 .container-px0 {
   @include gt-md {
@@ -1067,15 +1047,17 @@ td.mat-cell {
   .mc-social {
     margin-bottom: 16px;
     padding: 4px 0;
-    font-size: 12px;
-    line-height: 20px;
     .mat-icon {
       font-size: 18px;
       height: 20px;
       width: 20px;
       line-height: 20px;
       vertical-align: middle;
-      padding-right: 5px;
+      // padding-right: 5px;
+    }
+    .caption {
+      font-size: 12px;
+      line-height: 20px;
     }
     .span {
       vertical-align: middle;
@@ -1288,24 +1270,48 @@ td.mat-cell {
 }
 
 #landing-left {
-  border: solid gray 1px;
-  // background:url('../assets/images/bg3.svg');
-  @include gt-sm {
-    border-right: 0;
+  // border: solid gray 1px;
+  // @include gt-sm {
+  //   border-right: 0;
+  // }
+  // @include lt-md {
+  //   border: 0;
+  // }
+    &:hover {
+      @include mat-elevation-transition;
+      @include mat-elevation(4);
   }
-  @include lt-md {
-    border: 0;
-  }
+ 
 }
 
 #landing-right {
-  border: solid gray 1px;
-  // background: url('../assets/images/bg3.svg');
-  @include gt-sm {
-    border-left: 0;
+  // border: solid gray 1px;
+  // @include gt-sm {
+  //   border-left: 0;
+  // }
+  // @include lt-md {
+  //   border: 0;
+  // }
+  &:hover {
+    @include mat-elevation-transition;
+    @include mat-elevation(4);
   }
-  @include lt-md {
-    border: 0;
+  img {
+    &:hover {
+      cursor: pointer;
+    }
+  }
+}
+
+#product-item-brief {
+  &:hover {
+    @include mat-elevation-transition;
+    @include mat-elevation(8);
+  }
+  img {
+    &:hover {
+      cursor: pointer;
+    }
   }
 }
 

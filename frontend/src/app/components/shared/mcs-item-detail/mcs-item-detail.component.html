@@ -3,12 +3,12 @@
     <div class="container">
       <div class="row" fxLayout="row">
         <div class="cell" fxFlex="100">
-          <div class="container mat-elevation-z4">
+          <div class="container">
 
             <div class="row" fxLayout="row">
               <div class="cell" fxFlex="100">
                 <div class="row" fxLayout="row">
-                  <div class="mc-social" fxFlex="100">
+                  <div class="mc-social mat-elevation-z4" fxFlex="100">
                     <div class="item text-align-center" fxFlex>
                       <mat-icon class="hover-cursor" (click)="goToMcs()">reply_all</mat-icon>
                     </div>
@@ -18,7 +18,7 @@
                         'enabled': mc.likes.canLike && allowTo('user'), 
                         'hover-cursor': mc.likes.canLike && allowTo('user')}"
                         (click)="onLike(true, mc.likes.canLike && allowTo('user'))">thumb_up_alt</mat-icon>
-                      <span>{{mc.likes.likedByLength || 0}}</span>
+                      <div class="mat-body-1 caption">{{mc.likes.likedByLength || 0}}</div>
                     </div>
                     <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
                       <mat-icon [ngClass]="{
@@ -26,40 +26,36 @@
                         'enabled': mc.likes.canDislike && allowTo('user'), 
                         'hover-cursor': mc.likes.canDislike && allowTo('user')}"
                         (click)="onLike(false, mc.likes.canDislike && allowTo('user'))">thumb_down_alt</mat-icon>
-                      <span>{{mc.likes.dislikedByLength || 0}}</span>
+                      <div class="mat-body-1 caption">{{mc.likes.dislikedByLength || 0}}</div>
                     </div>
                     <div *ngIf="config.social.showViews" class="item text-align-center" fxFlex>
                       <mat-icon>remove_red_eye</mat-icon>
-                      <span>{{mc.views || 0}}</span>
+                      <div class="mat-body-1 caption">{{mc.views || 0}}</div>
                     </div>
                     <div *ngIf="config.social.showComments" class="item text-align-center" fxFlex>
                       <mat-icon>comment</mat-icon>
-                      <span>{{mc.comments?.length || 0}}</span>
+                      <div class="mat-body-1 caption">{{mc.comments?.length || 0}}</div>
                     </div>
                     <div class="item text-align-center" fxFlex>
                       <mat-icon>calendar_today</mat-icon>
-                      <span>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</span>
+                      <div class="mat-body-1 caption">{{mc.updatedAt | date: 'dd-MM-yyyy'}}</div>
                     </div>
                   </div>
                 </div>
               </div>
 
               <div class="cell" fxFlex="100">
-                <div class="row" fxLayout="row">
-                  <div class="cell" fxFlex="100">
-                    <h1 class="mat-display-1">{{mc.name}}</h1>
-                  </div>
-                  <div class="cell" fxFlex="100">
-                    <p class="mat-body-2 text-justify">{{mc.description}}</p>
-                  </div>
-                </div>
+                <h1 class="mat-h2">{{mc.name}}</h1>
               </div>  
 
               <div class="cell" fxFlex="100">
                 <div class="row padding-bottom-3" fxLayout="row">
                   <div class="cell" fxFlex="50">
                     <div class="row" fxLayout="row">
-                      <div class="cell" fxFlex="100" fxLayoutAlign="center start">
+                      <div class="cell" fxFlex="100">
+                        <p class="mat-body-1 text-justify">{{mc.description}}</p>
+                      </div>
+                      <div class="cell" fxFlex="100" fxLayoutAlign="start">
                         <table mat-table [dataSource]="mc.materials" class="mat-elevation-z0" fxFlex="100">
                           <!-- Position Column -->
                           <ng-container matColumnDef="name">
@@ -86,7 +82,7 @@
                     </div>
                   </div>
                   <div class="cell" fxFlex="50" fxLayoutAlign="center center">
-                    <img class="responsive-image mat-elevation-z10" src="{{
+                    <img class="responsive-image mat-elevation-z4" src="{{
                             config.imgPath +
                             config.cloudinary.cloud_name +
                             '/c_fill,w_535,h_350,f_auto/' +
@@ -101,7 +97,7 @@
               <div class="cell" fxFlex="100">
                 <div class="row padding-bottom-3" fxLayout="row" *ngFor="let step of mc.steps">
                   <div class="cell" fxFlex="100" fxLayoutAlign="center center">
-                    <img class="responsive-image mat-elevation-z10" src="{{
+                    <img class="responsive-image mat-elevation-z4" src="{{
                           config.imgPath +
                           config.cloudinary.cloud_name +
                           '/c_fill,w_535,h_350,f_auto/' +
