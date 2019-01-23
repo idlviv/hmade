@@ -2,7 +2,7 @@
   <div class="container">
         <div class="app-container-h app-container-v">
       <div class="container">
-          <div class="row padding-bottom landing-block" fxLayout="row">
+          <section class="row padding-bottom landing-block" fxLayout="row">
 
               <div id="landing-left" class="container" fxFlexOrder.lt-md="2" fxFlex.xs="50" fxFlex.sm="50" fxFlex="35" fxLayoutAlign="center center">
                   <div class="row" fxLayoutAlign="center center">
@@ -13,7 +13,7 @@
                           config.cloudinary.cloud_name +
                           '/c_fill,w_500,h_500,f_auto/' +
                           'products-logo'}}"
-                         alt="Image">
+                          alt="Вироби">
                         </a>
                     </div>
                   </div>
@@ -26,7 +26,7 @@
                       <div class="avatar-big-block">
                         <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo">
                       </div>
-                        <h3 class="mat-h2 text-align-center">В І Т А Ю !</h3>
+                        <h2 class="mat-h2 text-align-center">Вітаю в творчій майстерні!</h2>
                         <p class="mat-body-1 muted text-align-center">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.
                         Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,
                         шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..
@@ -46,15 +46,15 @@
                           config.cloudinary.cloud_name +
                           '/c_fill,w_500,h_500,f_auto/' +
                           'mcs-logo'}}"
-                         alt="Image">
+                         alt="Майстеркласи">
                       </a>
                       
                     </div>
                   </div>
               </div>
-          </div>
+            </section>
 
-          <div *ngIf="products" class="row">
+          <section *ngIf="products" class="row">
               <div class="cell" fxFlex="100">
                 <h2 class="mat-h2">Нові роботи</h2>
               </div>
@@ -63,7 +63,7 @@
                 fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
               <app-product-item-brief [product]="product"></app-product-item-brief>
             </div>
-          </div>
+          </section>
       </div>
          
     </div>
