@@ -338,8 +338,13 @@ re-captcha > div{
   text-align: center;
 };
 
-.text-vertical-align-middle {
+.text-vertical-align-middle
+.vertical-align-middle {
   vertical-align: middle;
+}
+
+.vertical-align-baseline {
+  vertical-align: baseline;
 }
 
 .block-align-right {
@@ -853,19 +858,24 @@ mat-card {
 
 
 
+table tr:last-child td {
+  border-bottom: 0;
+}
+
 // fix for ie
 .mat-header-row, .mat-row {
   height: 48px;
 }
 
+
 td.mat-cell {
-  padding: 0 5px !important;
-  @include first {
-    text-align: left;
-  }
-  @include last {
-    text-align: right;
-  }
+  padding: 0 10px !important;
+  // @include first {
+  //   text-align: left;
+  // }
+  // @include last {
+  //   text-align: right;
+  // }
   text-align: center;
 }
 
@@ -890,9 +900,7 @@ td.mat-cell {
   margin: 0
 }
 
-.radius-5 {
-  border-radius: .5rem !important;
-}
+
 
 .category-description-list {
   @include gt-sm {
@@ -1052,6 +1060,10 @@ td.mat-cell {
 
 .radius {
   border-radius: 10px;
+}
+
+.radius-5 {
+  border-radius: .5rem !important;
 }
 
 .mcs-item {
@@ -1236,20 +1248,10 @@ td.mat-cell {
     }
   }
 
-  .avatar-big-block {
-    width: 100%;
-    margin-bottom: 1rem;
-    //margin-left: auto;
-    //margin-right: auto;
-  }
-  
+
   .avatar-big {
-    display: block;
     @include radius(45%);
     max-width: 180px;
-    width: 100%;
-    height: auto;
-    margin: auto;
     border-top: 5px solid mat-color($primary, 100);
     border-right: 10px solid mat-color($primary, 300);
   }

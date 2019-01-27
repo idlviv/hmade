@@ -73,7 +73,7 @@ module.exports.mcUpsert = function(req, res, next) {
 };
 
 module.exports.addMainImage = function(req, res, next) {
-  let form = new formidable.IncomingForm({maxFileSize: 10500000});
+  let form = new formidable.IncomingForm({maxFileSize: 26215000});
   form.parse(req, function(err, fields, files) {
     if (err) {
       return next(
@@ -97,6 +97,8 @@ module.exports.addMainImage = function(req, res, next) {
             {width: 590, height: 443, crop: 'fill', fetch_format: 'auto'},
             {width: 460, height: 345, crop: 'fill', fetch_format: 'auto'},
             {width: 400, height: 300, crop: 'fill', fetch_format: 'auto'},
+            {width: 300, height: 225, crop: 'fill', fetch_format: 'auto'},
+            {width: 360, height: 270, crop: 'fill', fetch_format: 'auto'},
             {width: 80, height: 60, crop: 'fill', fetch_format: 'auto'},
             {width: 180, height: 180, crop: 'fill', fetch_format: 'auto'},
           ],
@@ -116,7 +118,7 @@ module.exports.addMainImage = function(req, res, next) {
 };
 
 module.exports.addStepsPic = function(req, res, next) {
-  let form = new formidable.IncomingForm({maxFileSize: 10500000});
+  let form = new formidable.IncomingForm({maxFileSize: 26215000});
   form.parse(req, function(err, fields, files) {
     if (err) {
       return next(
@@ -140,6 +142,8 @@ module.exports.addStepsPic = function(req, res, next) {
             {width: 590, height: 443, crop: 'fill', fetch_format: 'auto'},
             {width: 460, height: 345, crop: 'fill', fetch_format: 'auto'},
             {width: 400, height: 300, crop: 'fill', fetch_format: 'auto'},
+            {width: 360, height: 270, crop: 'fill', fetch_format: 'auto'},
+            {width: 300, height: 225, crop: 'fill', fetch_format: 'auto'},
             {width: 80, height: 60, crop: 'fill', fetch_format: 'auto'},
             {width: 180, height: 180, crop: 'fill', fetch_format: 'auto'},
           ],

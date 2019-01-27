@@ -58,7 +58,7 @@ module.exports.getProducts = function(req, res, next) {
 
 
 module.exports.productAddImage = function(req, res, next) {
-  let form = new formidable.IncomingForm({maxFileSize: 10500000});
+  let form = new formidable.IncomingForm({maxFileSize: 26215000});
   // form.on('file', function(file) {
   //   log.verbose('file - uploaded');
   // });
@@ -153,7 +153,7 @@ module.exports.deleteProduct = function(req, res, next) {
 };
 
 module.exports.productAddAssets = function(req, res, next) {
-  let form = new formidable.IncomingForm({maxFileSize: 10500000});
+  let form = new formidable.IncomingForm({maxFileSize: 26215000});
   form.parse(req, function(err, fields, files) {
     if (err) {
       return next(new ApplicationError(
@@ -224,7 +224,7 @@ module.exports.increaseViews = function(req, res, next) {
 };
 
 module.exports.productAddMenuImage = function(req, res, next) {
-  let form = new formidable.IncomingForm({maxFileSize: 10500000});
+  let form = new formidable.IncomingForm({maxFileSize: 26215000});
   form.parse(req, function(err, fields, files) {
     if (err) {
       return next(
@@ -268,7 +268,7 @@ module.exports.productAddMenuImage = function(req, res, next) {
 };
 
 module.exports.productAddMainImage = function(req, res, next) {
-  let form = new formidable.IncomingForm({maxFileSize: 10500000});
+  let form = new formidable.IncomingForm({maxFileSize: 26215000});
   form.parse(req, function(err, fields, files) {
     if (err) {
       return next(

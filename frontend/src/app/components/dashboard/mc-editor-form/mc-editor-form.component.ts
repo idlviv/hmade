@@ -22,7 +22,7 @@ export class McEditorFormComponent implements OnInit {
   paramParent_id: string;
   editMode: boolean;
   processingLoadMainImage = false;
-  processingLoadStepsPic = false;
+  processingLoadStepsPic = -1;
   mc: IMc;
 
   @ViewChild('f') mcFormDirective: FormGroupDirective;
@@ -171,25 +171,25 @@ export class McEditorFormComponent implements OnInit {
   }
 
   addStepsPic(event, i): void {
-    this.processingLoadStepsPic = true;
+    this.processingLoadStepsPic = i;
     const file = event.target.files[0];
     const checkFile = this.sharedService.checkFile(file);
 
     if (!checkFile.success) {
       this.matSnackBar.open(checkFile.message || 'Помилка', '',
         {duration: 3000, panelClass: 'snack-bar-danger'});
-      this.processingLoadStepsPic = false;
+      this.processingLoadStepsPic = -1;
     } else {
       this.mcService.addStepsPic(file, this.mcForm.get('_id').value)
         .subscribe(result => {
             console.log('this.mcForm.get(steps).controls', this.mcForm.get('steps')['controls']);
             this.mcForm.get('steps')['controls'][i].get('pic').setValue(result);
-            this.processingLoadStepsPic = false;
+            this.processingLoadStepsPic = -1;
           },
           err => {
             this.matSnackBar.open(err.error || 'Помилка', '',
               {duration: 3000, panelClass: 'snack-bar-danger'});
-            this.processingLoadStepsPic = false;
+            this.processingLoadStepsPic = -1;
           }
         );
     }

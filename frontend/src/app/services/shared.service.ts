@@ -48,8 +48,8 @@ export class SharedService {
   checkFile(file: File): IResponse {
     if (!file) {
       return ({ success: false, message: 'Файл не вибрано' });
-    } else if (file.size > 10485760) { // 10 * 1024 * 1024
-      return ({ success: false, message: 'Розмір файлу повинен бути менше 10Мб' });
+    } else if (file.size > 26215000) { // 25 * 1024 * 1024
+      return ({ success: false, message: 'Розмір файлу повинен бути менше 25Мб' });
     } else if (
       file.type !== 'image/jpg' &&
       file.type !== 'image/jpe' &&

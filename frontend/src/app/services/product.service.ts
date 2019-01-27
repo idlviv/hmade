@@ -292,16 +292,14 @@ export class ProductService {
     formData.append('file', file, file.name);
     formData.append('_id', _id);
 
-    const token = this.userService.userLocalGetToken('token');
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Authorization': token
-      })
-    };
+    // const httpOptions = {
+    //   headers: new HttpHeaders({
+    //   })
+    // };
     return this.http.post<IResponse>(
       'api/product/add-menu-image',
       formData,
-      httpOptions
+      // httpOptions
     );
   }
 
@@ -363,8 +361,8 @@ export class ProductService {
   checkFile(file: File): IResponse {
     if (!file) {
       return ({ success: false, message: 'Файл не вибрано' });
-    } else if (file.size > 10485760) { // 10 * 1024 * 1024
-      return ({ success: false, message: 'Розмір файлу повинен бути менше 10Мб' });
+    } else if (file.size > 26215000) { // 25 * 1024 * 1024
+      return ({ success: false, message: 'Розмір файлу повинен бути менше 25Мб' });
     } else if (
       file.type !== 'image/jpg' &&
       file.type !== 'image/jpe' &&

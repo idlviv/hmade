@@ -4,7 +4,7 @@
 // @import './material';
 
 // custom typography
-$mainFontFamily: "'Roboto', sans-serif";
+$mainFontFamily: "Roboto, sans-serif";
 
 $custom-typography: mat-typography-config(
         $font-family: $mainFontFamily
@@ -398,13 +398,14 @@ $mainTheme: $light-custom-color-theme;
       .mc-social {
         // &.cell {
           color: mat-color($foreground, text);
-          background-color: mat-color($primary, darker);
+          background-color: mat-color($primary, lighter);
         // }
           .disabled {
-            color: mat-color($foreground, disabled-button);
+            color: mat-color($primary);
+            // color: mat-color($foreground, disabled-button);
           }
           .enabled {
-            color: mat-color($primary);
+            // color: mat-color($primary);
           }
       }
     
@@ -458,9 +459,12 @@ $mainTheme: $light-custom-color-theme;
   }
 
   .card,
-  body {
+  body,
+  table.mat-table {
     background-color:  mat-color($background, background);
   }
+
+
 }
 
 @mixin dark-components-theme($theme) {

@@ -8,8 +8,8 @@
             <div class="row" fxLayout="row">
               <div class="cell" fxFlex="100">
                 <div class="row" fxLayout="row">
-                  <div class="mc-social mat-elevation-z4" fxFlex="100">
-                    <div class="item text-align-center" fxFlex>
+                  <div class="mc-social mat-elevation-z2 radius-5" fxFlex="100">
+                    <div class="item" fxFlex="50px" fxLayoutAlign="end center">
                       <mat-icon class="hover-cursor" (click)="goToMcs()">reply_all</mat-icon>
                     </div>
                     <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
@@ -45,7 +45,7 @@
               </div>
 
               <div class="cell" fxFlex="100">
-                <h1 class="mat-h2">{{mc.name}}</h1>
+                <h1 class="mat-h1">{{mc.name}}</h1>
               </div>  
 
               <div class="cell" fxFlex="100">
@@ -59,35 +59,25 @@
 
                       <div class="cell wrap" fxFlex="100">
                         <div fxFlex="100">
-                            <h3 class="mat-h3">Необхідні матеріали</h3>
+                            <h2 class="mat-h2">Необхідні матеріали</h2>
                         </div>
-                        <table mat-table [dataSource]="mc.materials" class="mat-elevation-z0 app-container-h" fxFlex="100">
-                          <!-- Position Column -->
+                        <table mat-table [dataSource]="mc.materials" class="mat-elevation-z1 app-container-h radius-5" fxFlex="100">
                           <ng-container matColumnDef="name">
-                            <!-- <th mat-header-cell *matHeaderCellDef> No. </th> -->
                             <td mat-cell *matCellDef="let element"> {{element.name}} </td>
                           </ng-container>
-      
-                          <!-- Name Column -->
                           <ng-container matColumnDef="value">
-                            <!-- <th mat-header-cell *matHeaderCellDef> Name </th> -->
                             <td mat-cell *matCellDef="let element"> {{element.value}} </td>
                           </ng-container>
-      
-                          <!-- Weight Column -->
                           <ng-container matColumnDef="units">
-                            <!-- <th mat-header-cell *matHeaderCellDef> Weight </th> -->
                             <td mat-cell *matCellDef="let element"> {{element.units}} </td>
                           </ng-container>
-      
-                          <!-- <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr> -->
                           <tr mat-row *matRowDef="let row; columns: ['name', 'value', 'units'];"></tr>
                         </table>
                       </div>
                     </div>
                   </div>
                   <div class="cell" fxFlex.xs="100" fxFlex="50" fxLayoutAlign="center center">
-                    <img class="responsive-image mat-elevation-z4 radius" src="{{
+                    <img class="responsive-image mat-elevation-z2" src="{{
                             config.imgPath +
                             config.cloudinary.cloud_name +
                             '/c_fill,w_460,h_345,f_auto/' +
@@ -103,8 +93,17 @@
               <div class="cell" fxFlex="100">
                 <div class="row padding-bottom-3" fxLayout="row" *ngFor="let step of mc.steps">
 
+              
+                  <div class="cell" fxFlex="5"></div>
+                  <div class="cell" fxFlex="90" fxLayoutAlign="center center">
+                    <p class="mat-body text-justify muted">
+                      {{step.description}}
+                    </p>
+                  </div>
+                  <div class="cell" fxFlex="5"></div>   
+                   
                   <div class="cell" fxFlex="100" fxLayoutAlign="center center">
-                    <img class="responsive-image mat-elevation-z4 radius" src="{{
+                    <img class="responsive-image mat-elevation-z2 radius" src="{{
                           config.imgPath +
                           config.cloudinary.cloud_name +
                           '/c_fill,w_460,h_345,f_auto/' +
@@ -112,13 +111,6 @@
                           step.pic}}"
                       alt="master class image">
                   </div>
-                  <div class="cell" fxFlex="5"></div>
-                  <div class="cell" fxFlex="90" fxLayoutAlign="center center">
-                    <p class="mat-body text-justify muted">
-                      {{step.description}}
-                    </p>
-                  </div>
-                  <div class="cell" fxFlex="5"></div>
                 </div>
               </div>  
 

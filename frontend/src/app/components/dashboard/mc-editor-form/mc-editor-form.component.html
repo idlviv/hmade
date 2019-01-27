@@ -7,7 +7,7 @@
         <mat-card-title>
           <h2 *ngIf="editMode" class="mat-h2">Редагувати майстерклас
             <span class="accent"> {{mcForm.get('name').value}}</span></h2>
-          <h2 *ngIf="!editMode" class="mat-h2">Створити колекцію</h2>
+          <h2 *ngIf="!editMode" class="mat-h2">Створити майстерклас</h2>
         </mat-card-title>
 
         <mat-card-content>
@@ -89,6 +89,49 @@
               </div>
 
               <div class="row padding-bottom" fxLayout="row">
+                <div class="cell-header" fxLayout="row" fxFlex="100">
+                  <h3 class="mat-h3 margin-0">Головне зображення</h3>
+                </div>
+                <div class="cell" fxFlex.xs="100" fxFlex="25">
+                  <div class="preview-img-wrapper">
+                    <img *ngIf="mcForm.get('mainImage').value" src="{{
+                      config.imgPath +
+                      config.cloudinary.cloud_name +
+                      '/c_fill,w_400,h_300,f_auto/' +
+                      mcForm.get('mainImage').value}}"
+                      alt="Menu Image">
+                    <img *ngIf="!mcForm.get('mainImage').value"
+                      src="{{
+                      config.imgPath +
+                      config.cloudinary.cloud_name +
+                      '/c_fill,w_400,h_300,f_auto/'+
+                      config.defaultProductImg}}" alt="Menu Image">
+                    <input #inputMainImage type="file"
+                      (change)="addMainImage($event)"
+                      accept=".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif, .svg"
+                      style="display:none;">
+                    <div class="preview-div-processing">
+                      <div *ngIf="processingLoadMainImage"
+                        class="spinner-wrapper">
+                        <mat-spinner [diameter]="24"></mat-spinner>
+                      </div>
+                      <div *ngIf="!processingLoadMainImage"
+                        class="button-wrapper">
+                        <button mat-mini-fab color="primary" type="button" aria-label="add"
+                          (click)="inputMainImage.click();"
+                          [disabled]="processingLoadMainImage">
+                          <mat-icon *ngIf="!mcForm.get('mainImage').value &&
+                            !processingLoadMainImage">add</mat-icon>
+                          <mat-icon *ngIf="mcForm.get('mainImage').value &&
+                            !processingLoadMainImage">redo</mat-icon>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="row padding-bottom" fxLayout="row">
                 <div class="cell-header" fxLayout="row">
                   <h3 class="mat-h3 margin-0">Кроки
                     <span>
@@ -111,33 +154,33 @@
                             <img *ngIf="mcForm.get('steps').at(i).get('pic').value" src="{{
                               config.imgPath +
                               config.cloudinary.cloud_name +
-                              '/c_fill,w_260,h_170,f_auto/' +
+                              '/c_fill,w_400,h_300,f_auto/' +
                               mcForm.get('steps').at(i).get('pic').value}}"
                               alt="Menu Image">
                             <img *ngIf="!mcForm.get('steps').at(i).get('pic').value"
                               src="{{
                               config.imgPath +
                               config.cloudinary.cloud_name +
-                              '/c_fill,w_260,h_170,f_auto/'+
+                              '/c_fill,w_400,h_300,f_auto/'+
                               config.defaultProductImg}}" alt="Menu Image">
                             <input #inputStepsPic type="file"
                               (change)="addStepsPic($event, i)"
                               accept=".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif, .svg"
                               style="display:none;">
                             <div class="preview-div-processing">
-                              <div *ngIf="processingLoadStepsPic"
+                              <div *ngIf="processingLoadStepsPic === i"
                                 class="spinner-wrapper">
                                 <mat-spinner [diameter]="24"></mat-spinner>
                               </div>
-                              <div *ngIf="!processingLoadStepsPic"
+                              <div *ngIf="processingLoadStepsPic !== i"
                                 class="button-wrapper">
                                 <button mat-mini-fab color="primary" type="button"
                                   (click)="inputStepsPic.click();" aria-label="add Picture"
-                                  [disabled]="processingLoadStepsPic">
+                                  [disabled]="processingLoadStepsPic === i">
                                   <mat-icon *ngIf="!mcForm.get('steps').at(i).get('pic').value &&
-                                    !processingLoadStepsPic">add</mat-icon>
+                                    processingLoadStepsPic !== i">add</mat-icon>
                                   <mat-icon *ngIf="mcForm.get('steps').at(i).get('pic').value &&
-                                    !processingLoadStepsPic">redo</mat-icon>
+                                  processingLoadStepsPic !== i">redo</mat-icon>
                                 </button>
                               </div>
                             </div>
@@ -169,7 +212,17 @@
                     </div>
                   </mat-card>
                 </div>
+                <div class="cell-header" fxLayout="row">
+                  <h4 class="mat-h4 margin-0">Додати крок
+                    <span>
+                      <button *ngIf="mcForm.get('steps').value.length < 15"
+                        mat-icon-button color="accent" type="button" aria-label="add"
+                        (click)="addStepsControl()"><mat-icon>add_circle</mat-icon></button>
+                    </span>
+                  </h4>
+                </div>
               </div>
+
 
               <div class="row padding-bottom" fxLayout="row">
                   <div class="cell-header" fxLayout="row">
@@ -254,50 +307,18 @@
                       </div>
                     </mat-card>
                   </div>
-                </div>
-
-              <div class="row padding-bottom" fxLayout="row">
-                <div class="cell-header" fxLayout="row" fxFlex="100">
-                  <h3 class="mat-h3 margin-0">Головне зображення</h3>
-                </div>
-                <div class="cell" fxFlex.xs="100" fxFlex="25">
-                  <div class="preview-img-wrapper">
-                    <img *ngIf="mcForm.get('mainImage').value" src="{{
-                      config.imgPath +
-                      config.cloudinary.cloud_name +
-                      '/c_fill,w_260,h_170,f_auto/' +
-                      mcForm.get('mainImage').value}}"
-                      alt="Menu Image">
-                    <img *ngIf="!mcForm.get('mainImage').value"
-                      src="{{
-                      config.imgPath +
-                      config.cloudinary.cloud_name +
-                      '/c_fill,w_260,h_170,f_auto/'+
-                      config.defaultProductImg}}" alt="Menu Image">
-                    <input #inputMainImage type="file"
-                      (change)="addMainImage($event)"
-                      accept=".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif, .svg"
-                      style="display:none;">
-                    <div class="preview-div-processing">
-                      <div *ngIf="processingLoadMainImage"
-                        class="spinner-wrapper">
-                        <mat-spinner [diameter]="24"></mat-spinner>
-                      </div>
-                      <div *ngIf="!processingLoadMainImage"
-                        class="button-wrapper">
-                        <button mat-mini-fab color="primary" type="button" aria-label="add"
-                          (click)="inputMainImage.click();"
-                          [disabled]="processingLoadMainImage">
-                          <mat-icon *ngIf="!mcForm.get('mainImage').value &&
-                            !processingLoadMainImage">add</mat-icon>
-                          <mat-icon *ngIf="mcForm.get('mainImage').value &&
-                            !processingLoadMainImage">redo</mat-icon>
-                        </button>
-                      </div>
-                    </div>
+                  <div class="cell-header" fxLayout="row">
+                    <h4 class="mat-h4 margin-0">Додати матеріал
+                      <span>
+                        <button *ngIf="mcForm.get('materials').value.length <10"
+                          mat-icon-button color="accent" type="button" aria-label="add"
+                          (click)="addMaterialsControl()"><mat-icon>add_circle</mat-icon></button>
+                      </span>
+                    </h4>
                   </div>
                 </div>
-              </div>
+
+
 
               <div class="submit-button-wrapper row" fxLayout="row">
                 <div class="cell" fxFlex="30">

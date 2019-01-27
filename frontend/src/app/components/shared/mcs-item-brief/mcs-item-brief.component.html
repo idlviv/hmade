@@ -1,4 +1,4 @@
-    <article class="mcs-item  mat-elevation-z2">
+    <article class="mcs-item mat-elevation-z2">
       <div class="container">
           <div class="row" fxLayout="row">
               <div class="mc-social" fxFlex="100">
@@ -26,21 +26,28 @@
             </div>
     
         <div class="row padding-bottom" fxLayout="row">
-          <div class="cell" fxFlex="100" fxFlex.sm="35" fxFlex.md="25" fxFlex.gt-md="20" fxLayoutAlign="center center">
-              <img class="responsive-image" src="{{
+          <div class="cell" fxFlex="100" fxFlex.sm="35" fxFlex.md="30" fxFlex.gt-md="30" fxLayoutAlign="center center">
+            <img *ngIf="media.isActive('xs')" class="responsive-image radius-5" src="{{
                 config.imgPath +
                 config.cloudinary.cloud_name +
                 '/c_fill,w_535,h_350,f_auto/' +
                 'w_265,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
                 mc.mainImage}}"
                 alt="master class image">
+            <img *ngIf="media.isActive('gt-xs')" class="responsive-image radius-5" src="{{
+              config.imgPath +
+              config.cloudinary.cloud_name +
+              '/c_fill,w_360,h_270,f_auto/' +
+              'w_265,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
+              mc.mainImage}}"
+              alt="master class image">
           </div>
-          <div class="cell" fxFlex="100" fxFlex.sm="65" fxFlex.md="75" fxFlex.gt-md="80" fxLayoutAlign="center center">
+          <div class="cell" fxFlex="100" fxFlex.sm="65" fxFlex.md="70" fxFlex.gt-md="70" fxLayoutAlign="center center">
               <div class="row" fxLayout="row">
-                <div class="cell" fxFlex="100">
-                  <h2 class="mat-h2">
+                <div class="cell" fxFlex="100" >
+                  <h1 class="mat-h1">
                     {{mc.name}}
-                  </h2>
+                  </h1>
                 <!-- </div>
                    <div class="cell" fxFlex="100"> -->
                   <p class="mat-body-1 text-align-justify">
