@@ -318,6 +318,39 @@ $mat-custom-warn: (
         )
 );
 
+$mat-custom-orange: (
+  50 : #ffece1,
+  100 : #ffd0b3,
+  200 : #ffb181,
+  300 : #ff914f,
+  400 : #ff7a29,
+  500 : #ff6203,
+  600 : #ff5a03,
+  700 : #ff5002,
+  800 : #ff4602,
+  900 : #ff3401,
+  A100 : #ffffff,
+  A200 : #fff4f2,
+  A400 : #ffc9bf,
+  A700 : #ffb3a6,
+  contrast: (
+      50 : #000000,
+      100 : #000000,
+      200 : #000000,
+      300 : #000000,
+      400 : #000000,
+      500 : #000000,
+      600 : #000000,
+      700 : #ffffff,
+      800 : #ffffff,
+      900 : #ffffff,
+      A100 : #000000,
+      A200 : #000000,
+      A400 : #000000,
+      A700 : #000000,
+  )
+);
+
 // @include mat-core();
 // mat-palette accepts $palette-name, main, lighter and darker variants ($default: 500, $lighter: 100, $darker: 700)
 $light-primary: mat-palette($mat-custom-blue);
@@ -337,8 +370,8 @@ $custom-color-primary: mat-palette($mat-custom-color1);
 $custom-color-accent: mat-palette($mat-custom-color2, 500, 200, 700);
 $custom-color-warn: mat-palette($mat-custom-warn);
 
-$dark-custom-color-theme: mat-dark-theme(mat-palette($mat-blue-grey), mat-palette($mat-cyan), mat-palette($mat-red));
-$light-custom-color-theme: mat-light-theme(mat-palette($mat-blue-grey), mat-palette($mat-cyan), mat-palette($mat-red));
+$dark-custom-color-theme: mat-dark-theme(mat-palette($mat-blue-grey), mat-palette($mat-custom-orange), mat-palette($mat-red));
+$light-custom-color-theme: mat-light-theme(mat-palette($mat-blue-grey), mat-palette($mat-custom-orange), mat-palette($mat-red));
 
 
 $mainTheme: $light-custom-color-theme;
