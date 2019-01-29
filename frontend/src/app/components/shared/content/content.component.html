@@ -45,6 +45,18 @@
   </div>
 
 </nav>
+
+<!-- <nav>
+  <ul>
+    <li *ngFor="let mainMenuCommonItem of mainMenuCommonItems">
+      <a  class="link" [routerLink]="['/', mainMenuCommonItem._id, 'ch']"
+        [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: false}">
+      <span class="type1">{{mainMenuCommonItem.name}}</span>
+    </a>
+    </li>
+  </ul>
+</nav> -->
+
 <mat-sidenav-container fxFlexFill>
   <mat-sidenav #sidenav fxLayout="column" position="end" class="sidenav mat-elevation-z4" role="navigation" mode="side">
     <div fxLayout="column">
