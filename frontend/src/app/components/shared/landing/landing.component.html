@@ -1,4 +1,82 @@
-<div id="landing" fxLayoutAlign="center center">
+<div id="landing">
+    <div class="container">
+          <div class="app-container-h app-container-v">
+        <div class="container">
+            <section class="row padding-bottom landing-block" fxLayout="row">
+  
+                <div id="landing-left" class="container" fxFlexOrder.lt-md="2" fxFlex.xs="50" fxFlex.sm="50" fxFlex="35" fxLayoutAlign="center center">
+                    <div class="row" fxLayoutAlign="center center">
+                      <div class="cell">
+                        <a [routerLink]="['/products', 'ch']">  
+                          <img class="responsive-image-stretch" src="{{
+                            config.imgPath +
+                            config.cloudinary.cloud_name +
+                            '/c_fill,w_500,h_500,f_auto/' +
+                            'products-logo'}}"
+                            alt="Вироби">
+                          </a>
+                      </div>
+                      <a mat-stroked-button color="primary" alt="Вироби" class="hover-button"
+                      [routerLink]="['/products', 'ch']">Мої роботи</a>
+                    </div>
+                </div>
+            
+                  <div class="container" fxFlexOrder.lt-md="1" fxFlex.lt-md="100" fxFlex="30" fxLayoutAlign="center center">
+                    <div class="row" >
+                      <div class="cell">
+                    
+                          <h2 class="mat-h2 text-align-center">Вітаю в творчій майстерні!</h2>
+                          <div class="avatar-big-block">
+                              <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo">
+                          </div>
+                          <p class="mat-body-1 muted text-align-center">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.
+                          Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,
+                          шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..
+                          Ще багато можна писати про себе та мої захоплення, але згодом..
+                            Завітайте у мою майстерню.</p>
+                      </div>
+                    </div>
+                  </div>
+            
+                <div id="landing-right" class="container" fxFlexOrder.lt-md="3" fxFlex.xs="50" fxFlex.sm="50" fxFlex="35" fxLayoutAlign="center center">
+                    <div class="row" fxLayoutAlign="center center">
+                      <div class="cell">
+                        <a [routerLink]="['/mcs', 'ch']">  
+                          <img class="responsive-image-stretch" src="{{
+                            config.imgPath +
+                            config.cloudinary.cloud_name +
+                            '/c_fill,w_500,h_500,f_auto/' +
+                            'mcs-logo'}}"
+                           alt="Майстеркласи">
+                        </a>
+                        
+                      </div>
+                      <a mat-stroked-button class="hover-button" color="primary" alt="Майстеркласи" 
+                      [routerLink]="['/mcs', 'ch']">Майстеркласи</a>
+  
+                    </div>
+                </div>
+              </section>
+  
+            <section *ngIf="products" class="row">
+                <div class="cell" fxFlex="100">
+                  <h2 class="mat-h2">Нові роботи</h2>
+                </div>
+  
+              <div *ngFor="let product of products" class="cell"
+                  fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
+                <app-product-item-brief [product]="product"></app-product-item-brief>
+              </div>
+            </section>
+        </div>
+           
+      </div>
+    </div>
+  
+  </div>
+  
+
+<!-- <div id="landing" fxLayoutAlign="center center">
   <div class="container">
         <div class="app-container-h app-container-v">
       <div class="container">
@@ -16,17 +94,19 @@
                           alt="Вироби">
                         </a>
                     </div>
+                    <a mat-stroked-button color="primary" alt="Вироби" class="hover-button"
+                    [routerLink]="['/products', 'ch']">Мої роботи</a>
                   </div>
               </div>
           
-              <div class="app-container-v" fxFlexOrder.lt-md="1" fxFlex.lt-md="100" fxFlex="30">
-                <div class="container">
-                  <div class="row">
+                <div class="container" fxFlexOrder.lt-md="1" fxFlex.lt-md="100" fxFlex="30" fxLayoutAlign="center center">
+                  <div class="row" >
                     <div class="cell">
-                      <div class="avatar-big-block">
-                        <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo">
-                      </div>
+                  
                         <h2 class="mat-h2 text-align-center">Вітаю в творчій майстерні!</h2>
+                        <div class="avatar-big-block">
+                            <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo">
+                        </div>
                         <p class="mat-body-1 muted text-align-center">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.
                         Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,
                         шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..
@@ -35,7 +115,6 @@
                     </div>
                   </div>
                 </div>
-              </div>
           
               <div id="landing-right" class="container" fxFlexOrder.lt-md="3" fxFlex.xs="50" fxFlex.sm="50" fxFlex="35" fxLayoutAlign="center center">
                   <div class="row" fxLayoutAlign="center center">
@@ -50,6 +129,9 @@
                       </a>
                       
                     </div>
+                    <a mat-stroked-button class="hover-button" color="primary" alt="Майстеркласи" 
+                    [routerLink]="['/mcs', 'ch']">Майстеркласи</a>
+
                   </div>
               </div>
             </section>
@@ -69,4 +151,4 @@
     </div>
   </div>
 
-</div>
+</div> -->

@@ -1220,6 +1220,7 @@ td.mat-cell {
 
 // home page
 #landing {
+  // background: url(/assets/other/pattern.svg) center top repeat-x; 
   @include gt-md {
     min-height: calc(100vh - 194px); // footer 64px + toolbar 130px
   }
@@ -1284,33 +1285,12 @@ td.mat-cell {
 
 }
 
-#landing-left {
-  // border: solid gray 1px;
-  // @include gt-sm {
-  //   border-right: 0;
-  // }
-  // @include lt-md {
-  //   border: 0;
-  // }
-    &:hover {
-      @include mat-elevation-transition;
-      @include mat-elevation(4);
+a.hover-button:hover {
+@include mat-elevation-transition;
+@include mat-elevation(4);
   }
- 
-}
 
-#landing-right {
-  // border: solid gray 1px;
-  // @include gt-sm {
-  //   border-left: 0;
-  // }
-  // @include lt-md {
-  //   border: 0;
-  // }
-  &:hover {
-    @include mat-elevation-transition;
-    @include mat-elevation(4);
-  }
+#landing-right, #landing-left  {
   img {
     &:hover {
       cursor: pointer;
