@@ -469,13 +469,13 @@ $mainTheme: $light-custom-color-theme;
     }
   }
 
-  .mat-body-1 {
-    font: {
-      family: mat-font-family($config, body-1);
-      size: mat-font-size($config, body-1);
-      weight: 200;
-    }
-  }
+  // .mat-body-1 {
+  //   font: {
+  //     family: mat-font-family($config, body-1);
+  //     size: mat-font-size($config, body-1);
+  //     weight: 200;
+  //   }
+  // }
 
   .muted {
     color: mat-color($foreground, secondary-text);
