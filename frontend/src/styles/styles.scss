@@ -1,13 +1,14 @@
 @import './mixins';
-// @import './materialTypography';
+@import './variables';
 @import './material';  // ~@angular/material/theming -> ./material -> ./materialTypography
-
 // get color theme variables
+
 $primary: map-get($mainTheme, primary);
 $accent: map-get($mainTheme, accent);
 $warn: map-get($mainTheme, warn);
 $foreground: map-get($mainTheme, foreground);
 $background: map-get($mainTheme, background);
+
 
 html {
   font-size: 16px;
@@ -1067,6 +1068,7 @@ td.mat-cell {
 }
 
 .mcs-item {
+  background: $alternative-background-pattern;
   .mc-social {
     margin-bottom: 16px;
     padding: 4px 0;
@@ -1324,10 +1326,22 @@ a.hover-button:hover {
   }
 }
 
-.mcs-steps {
-  &:nth-child(odd) {
-    .mcs-steps-description {
-      order: 2;
+@include gt-xs {
+  .mcs-steps {
+    &:nth-child(odd) {
+      .mcs-steps-description {
+        order: 2;
+      }
+    }
+  }
+}
+
+@include xs {
+  .mcs-steps {
+    &:nth-child(odd) {
+      .mcs-steps-description {
+        order: 0;
+      }
     }
   }
 }

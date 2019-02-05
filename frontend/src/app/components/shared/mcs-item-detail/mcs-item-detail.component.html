@@ -43,17 +43,19 @@
                   </div>
                 </div>
               </div>
-
+<!-- 
               <div class="cell" fxFlex="100">
-                <h1 class="mat-h1">{{mc.name}}</h1>
-              </div>  
+              </div>   -->
 
               <div class="cell" fxFlex="100">
                 <div class="row padding-bottom-3" fxLayout="row">
-                  <div class="cell" fxFlex.xs="100" fxFlex="50">
-                    <div class="row" fxLayout="row" fxLayoutAlign="center center">
+                  <div class="cell" fxFlex.xs="100" fxFlex="50" fxLayoutAlign="center center">
+                    <div class="row" fxLayout="row">
                       <div class="cell" fxFlex="100">
-                        <p class="mat-body-1 text-justify">{{mc.description}}</p>
+                        
+                        <h1 class="mat-display-1">{{mc.name}}</h1>
+
+                        <p class="body-3 text-align-center">{{mc.description}}</p>
                       </div>
 
                       <div *ngIf="mc.materials?.length" class="cell wrap" fxFlex="100">
@@ -76,7 +78,7 @@
                     </div>
                   </div>
                   <div class="cell" fxFlex.xs="100" fxFlex="50" fxLayoutAlign="center center">
-                    <img class="responsive-image mat-elevation-z2" src="{{
+                    <img class="responsive-image mat-elevation-z2 alternative-background" src="{{
                             config.imgPath +
                             config.cloudinary.cloud_name +
                             '/c_fill,w_400,h_300,f_auto/' +
@@ -91,15 +93,15 @@
 
               <div class="cell" fxFlex="100">
                 <div class="app-container-h">
-                  <div class="row mcs-steps" fxLayout="row" *ngFor="let step of mc.steps">
+                  <div class="row mcs-steps padding-bottom" fxLayout="row" *ngFor="let step of mc.steps">
                   <!-- <div class="cell" fxFlex="5"></div> -->
-                  <div class="cell mcs-steps-description" fxFlex="50" fxLayoutAlign="center center">
-                    <p class="mat-body-1 text-justify muted">
+                  <div class="cell mcs-steps-description" fxFlex="100" fxFlex.gt-xs="50" fxLayoutAlign="center center">
+                    <p class="body-3 text-align-center muted">
                       {{step.description}}
                     </p>
                   </div>
-                  <div class="cell" fxFlex="50" fxLayoutAlign="center center">
-                    <img class="responsive-image mat-elevation-z2 radius" src="{{
+                  <div class="cell" fxFlex="100" fxFlex.gt-xs="50" fxLayoutAlign="center center">
+                    <img class="responsive-image mat-elevation-z2 radius alternative-background" src="{{
                           config.imgPath +
                           config.cloudinary.cloud_name +
                           '/c_fill,w_400,h_300,f_auto/' +

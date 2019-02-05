@@ -6,6 +6,11 @@
 // custom typography
 $mainFontFamily: "Roboto, sans-serif";
 
+$alternative-background-color: rgb(255, 255, 255);
+$alternative-background-gradient: linear-gradient(to bottom, rgba(96, 125, 139, 0.4),  rgba(255, 255, 255, 0.5) 20%),
+                                  linear-gradient(to right, rgba(96, 125, 139, 0.4),  rgba(255, 255, 255, 1) 30%);
+$alternative-background-pattern: url('/assets/other/pattern-vyshyvanka.png');
+
 $custom-typography: mat-typography-config(
         $font-family: $mainFontFamily
         );
@@ -431,7 +436,7 @@ $mainTheme: $light-custom-color-theme;
       .mc-social {
         // &.cell {
           color: mat-color($foreground, text);
-          background-color: mat-color($primary);
+          background: mat-color($primary);
         // }
           .disabled {
             color: mat-color($primary, 300);
@@ -461,11 +466,12 @@ $mainTheme: $light-custom-color-theme;
     }
   }
 
-  .body-1 {
+  .body-3 {
+    line-height: 1.75rem;
     font: {
       family: mat-font-family($config, body-1);
-      size: mat-font-size($config, body-1);
-      weight: mat-font-weight($config, body-1);
+      size: 1rem;
+      weight: 400;
     }
   }
 
@@ -489,6 +495,10 @@ $mainTheme: $light-custom-color-theme;
   #product-item-brief {
     color: mat-color($foreground, text);
     // background-color: mat-color($accent);
+  }
+
+  .alternative-background {
+    background: $alternative-background-gradient;
   }
 
   .card,
