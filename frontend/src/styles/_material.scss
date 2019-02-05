@@ -431,10 +431,10 @@ $mainTheme: $light-custom-color-theme;
       .mc-social {
         // &.cell {
           color: mat-color($foreground, text);
-          background-color: mat-color($primary, lighter);
+          background-color: mat-color($primary);
         // }
           .disabled {
-            color: mat-color($primary);
+            color: mat-color($primary, 300);
             // color: mat-color($foreground, disabled-button);
           }
           .enabled {
