@@ -10,7 +10,7 @@ import { McService } from 'src/app/services/mc.service';
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
-  styleUrls: ['./landing.component.scss']
+  styleUrls: ['./landing.component.scss'],
 })
 export class LandingComponent implements OnInit {
   @ViewChild('scrollPoint') scrollPoint: ElementRef;
@@ -63,6 +63,18 @@ export class LandingComponent implements OnInit {
       // );
   }
 
+  isElementScrolled(id) {
+    const elementPosition = this.el.nativeElement.querySelector(id).offsetTop;
+    return elementPosition;
+  }
+
+  _getElementPosition(id) {
+    const elementPosition = this.el.nativeElement.querySelector(id).offsetTop;
+    return elementPosition;
+  }
+
+
+
   @HostListener('window:scroll', ['$event'])
   onScroll(event): void {
     // if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 2) {
@@ -76,11 +88,8 @@ export class LandingComponent implements OnInit {
     //   //     );
     //   // }
     // }
+    const elementPosition = this._getElementPosition('#product' + this.productsPoint);
     const componentPosition = this.el.nativeElement.querySelector('#product' + this.productsPoint).offsetTop;
-    console.log('componentPosition0', componentPosition);
-    console.log('componentPosition-product22', this.el.nativeElement.querySelector('#product2').offsetTop);
-
-    console.log('productsPoint0', this.productsPoint);
 
     const scrollPosition = window.pageYOffset;
 
@@ -89,24 +98,11 @@ export class LandingComponent implements OnInit {
         this.productsPoint >= this.limit - this.portionOfProducts ?
            this.productsPoint += this.portionOfProducts :
            this.productsPoint += this.portionOfProducts - 1 ;
-        console.log('-productsPoint', this.productsPoint);
-        console.log('-scrollPosition + window.innerHeight', scrollPosition + window.innerHeight);
-        console.log('-componentPosition1', componentPosition);
-
-
-
-            // this.productService.getNewProducts(this.products.length + this.portionOfProducts)
-            //   .subscribe(
-            //     result => this.products = result,
-            //     err => console.log('newProducts load error', err)
-            //   );
           }
     } else {
       this.state = false;
     }
 
-  // console.log('componentPosition', componentPosition);
-  // console.log('scrollPosition', scrollPosition);
   }
 
   // onScroll() {

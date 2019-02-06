@@ -58,8 +58,8 @@
                 </div>
               </section>
   
-            <section *ngIf="products" class="row">
-                <div class="cell" fxFlex="100" #scrollPoint>
+            <section *ngIf="products" class="row" appScrolling>
+                <div class="cell" fxFlex="100">
                   <h2 class="mat-h2">Нові роботи</h2>
                 </div>
 
@@ -68,6 +68,7 @@
                   [ngClass]="{'landing-product': i < productsPoint && i >= productsPoint - portionOfProducts,
                    'opacity0': i >= productsPoint}"
                   fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
+                  <!-- {{isElementScrolled('#product' + i)}} -->
                 <app-product-item-brief [product]="product"></app-product-item-brief>
               </div>
             </section>

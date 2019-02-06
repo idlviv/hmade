@@ -68,7 +68,7 @@ import { ImagePopupComponent } from './image-popup/image-popup.component';
     McsItemBriefComponent,
     McsItemDetailComponent,
     ProductItemFeedComponent,
-    ImagePopupComponent
+    ImagePopupComponent,
   ],
 })
 export class SharedModule { }
