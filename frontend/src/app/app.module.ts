@@ -26,14 +26,14 @@ import { ConfirmPopupComponent } from './components/shared/confirm-popup/confirm
 import { DesignPopupComponent } from './components/shared/design-popup/design-popup.component';
 import { ReactiveFormsModule } from '@angular/forms';
 
-import { ScrollingDirective } from './directives/scrolling.directive';
+// import { ScrollingDirective } from './directives/scrolling.directive';
 import { ImagePopupComponent } from './components/shared/image-popup/image-popup.component';
 
 import { CookieService } from 'ngx-cookie-service';
 @NgModule({
   declarations: [
     AppComponent,
-    ScrollingDirective,
+    // ScrollingDirective,
   ],
   imports: [
     BrowserModule,

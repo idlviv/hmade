@@ -24,6 +24,7 @@ import { McsItemBriefComponent } from './mcs-item-brief/mcs-item-brief.component
 import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.component';
 import { ProductItemFeedComponent } from './product-item-feed/product-item-feed.component';
 import { ImagePopupComponent } from './image-popup/image-popup.component';
+import { ScrollingDirective } from 'src/app/directives/scrolling.directive';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { ImagePopupComponent } from './image-popup/image-popup.component';
     ReactiveFormsModule,
     RecaptchaModule,
     RecaptchaFormsModule,
+
   ],
   exports: [
     Page404Component,
@@ -69,6 +71,8 @@ import { ImagePopupComponent } from './image-popup/image-popup.component';
     McsItemDetailComponent,
     ProductItemFeedComponent,
     ImagePopupComponent,
+    ScrollingDirective,
+
   ],
 })
 export class SharedModule { }

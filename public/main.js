@@ -475,9 +475,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_shared_confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/shared/confirm-popup/confirm-popup.component */ "./src/app/components/shared/confirm-popup/confirm-popup.component.ts");
 /* harmony import */ var _components_shared_design_popup_design_popup_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./components/shared/design-popup/design-popup.component */ "./src/app/components/shared/design-popup/design-popup.component.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _directives_scrolling_directive__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./directives/scrolling.directive */ "./src/app/directives/scrolling.directive.ts");
-/* harmony import */ var _components_shared_image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./components/shared/image-popup/image-popup.component */ "./src/app/components/shared/image-popup/image-popup.component.ts");
-/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
+/* harmony import */ var _components_shared_image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/shared/image-popup/image-popup.component */ "./src/app/components/shared/image-popup/image-popup.component.ts");
+/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -506,7 +505,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-
+// import { ScrollingDirective } from './directives/scrolling.directive';
 
 
 var AppModule = /** @class */ (function () {
@@ -516,7 +515,6 @@ var AppModule = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             declarations: [
                 _app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"],
-                _directives_scrolling_directive__WEBPACK_IMPORTED_MODULE_22__["ScrollingDirective"],
             ],
             imports: [
                 _angular_platform_browser__WEBPACK_IMPORTED_MODULE_0__["BrowserModule"],
@@ -540,13 +538,13 @@ var AppModule = /** @class */ (function () {
                 _services_shared_service__WEBPACK_IMPORTED_MODULE_14__["SharedService"],
                 _guards_auth_guard__WEBPACK_IMPORTED_MODULE_15__["AuthGuard"],
                 _guards_no_auth_guard__WEBPACK_IMPORTED_MODULE_16__["NoAuthGuard"],
-                ngx_cookie_service__WEBPACK_IMPORTED_MODULE_24__["CookieService"]
+                ngx_cookie_service__WEBPACK_IMPORTED_MODULE_23__["CookieService"]
             ],
             exports: [],
             entryComponents: [
                 _components_shared_confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_19__["ConfirmPopupComponent"],
                 _components_shared_design_popup_design_popup_component__WEBPACK_IMPORTED_MODULE_20__["DesignPopupComponent"],
-                _components_shared_image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_23__["ImagePopupComponent"],
+                _components_shared_image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_22__["ImagePopupComponent"],
             ],
             bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
         })
@@ -1724,7 +1722,7 @@ var ImagePopupComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"landing\">\r\n    <div class=\"container\">\r\n          <div class=\"app-container-h app-container-v\">\r\n        <div class=\"container\">\r\n            <section class=\"row padding-bottom landing-block\" fxLayout=\"row\">\r\n  \r\n                <div id=\"landing-left\" class=\"container\" fxFlexOrder.lt-md=\"2\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"row\" fxLayoutAlign=\"center center\">\r\n                      <div class=\"cell\">\r\n                        <a [routerLink]=\"['/products', 'ch']\">  \r\n                          <img class=\"responsive-image-stretch\" src=\"{{\r\n                            config.imgPath +\r\n                            config.cloudinary.cloud_name +\r\n                            '/c_fill,w_500,h_500,f_auto/' +\r\n                            'products-logo'}}\"\r\n                            alt=\"Вироби\">\r\n                          </a>\r\n                      </div>\r\n                      <a mat-stroked-button color=\"primary\" alt=\"Вироби\" class=\"hover-button\"\r\n                      [routerLink]=\"['/products', 'ch']\">Мої роботи</a>\r\n                    </div>\r\n                </div>\r\n            \r\n                  <div class=\"container\" fxFlexOrder.lt-md=\"1\" fxFlex.lt-md=\"100\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"row\" >\r\n                      <div class=\"cell\">\r\n                    \r\n                          <h2 class=\"mat-h2 text-align-center\">Вітаю в творчій майстерні!</h2>\r\n                          <div class=\"avatar-big-block\">\r\n                              <img class=\"avatar-big\" src=\"./assets/images/my-photo180x180.png\" alt=\"my photo\">\r\n                          </div>\r\n                          <p class=\"body-3 muted text-align-center\">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.\r\n                          Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,\r\n                          шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..\r\n                          Ще багато можна писати про себе та мої захоплення, але згодом..\r\n                            Завітайте у мою майстерню.</p>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n            \r\n                <div id=\"landing-right\" class=\"container\" fxFlexOrder.lt-md=\"3\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"row\" fxLayoutAlign=\"center center\">\r\n                      <div class=\"cell\">\r\n                        <a [routerLink]=\"['/mcs', 'ch']\">  \r\n                          <img class=\"responsive-image-stretch\" src=\"{{\r\n                            config.imgPath +\r\n                            config.cloudinary.cloud_name +\r\n                            '/c_fill,w_500,h_500,f_auto/' +\r\n                            'mcs-logo'}}\"\r\n                           alt=\"Майстеркласи\">\r\n                        </a>\r\n                        \r\n                      </div>\r\n                      <a mat-stroked-button class=\"hover-button\" color=\"primary\" alt=\"Майстеркласи\" \r\n                      [routerLink]=\"['/mcs', 'ch']\">Майстеркласи</a>\r\n  \r\n                    </div>\r\n                </div>\r\n              </section>\r\n  \r\n            <section *ngIf=\"products\" class=\"row\" appScrolling>\r\n                <div class=\"cell\" fxFlex=\"100\">\r\n                  <h2 class=\"mat-h2\">Нові роботи</h2>\r\n                </div>\r\n\r\n  \r\n              <div *ngFor=\"let product of products; let i = index\" class=\"cell pr\" [attr.id]=\"'product' + i\"\r\n                  [ngClass]=\"{'landing-product': i < productsPoint && i >= productsPoint - portionOfProducts,\r\n                   'opacity0': i >= productsPoint}\"\r\n                  fxFlex.xs=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n                  <!-- {{isElementScrolled('#product' + i)}} -->\r\n                <app-product-item-brief [product]=\"product\"></app-product-item-brief>\r\n              </div>\r\n            </section>\r\n        </div>\r\n           \r\n      </div>\r\n    </div>\r\n  \r\n  </div>\r\n  \r\n\r\n<!-- <div id=\"landing\" fxLayoutAlign=\"center center\">\r\n  <div class=\"container\">\r\n        <div class=\"app-container-h app-container-v\">\r\n      <div class=\"container\">\r\n          <section class=\"row padding-bottom landing-block\" fxLayout=\"row\">\r\n\r\n              <div id=\"landing-left\" class=\"container\" fxFlexOrder.lt-md=\"2\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                  <div class=\"row\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"cell\">\r\n                      <a [routerLink]=\"['/products', 'ch']\">  \r\n                        <img class=\"responsive-image-stretch\" src=\"{{\r\n                          config.imgPath +\r\n                          config.cloudinary.cloud_name +\r\n                          '/c_fill,w_500,h_500,f_auto/' +\r\n                          'products-logo'}}\"\r\n                          alt=\"Вироби\">\r\n                        </a>\r\n                    </div>\r\n                    <a mat-stroked-button color=\"primary\" alt=\"Вироби\" class=\"hover-button\"\r\n                    [routerLink]=\"['/products', 'ch']\">Мої роботи</a>\r\n                  </div>\r\n              </div>\r\n          \r\n                <div class=\"container\" fxFlexOrder.lt-md=\"1\" fxFlex.lt-md=\"100\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n                  <div class=\"row\" >\r\n                    <div class=\"cell\">\r\n                  \r\n                        <h2 class=\"mat-h2 text-align-center\">Вітаю в творчій майстерні!</h2>\r\n                        <div class=\"avatar-big-block\">\r\n                            <img class=\"avatar-big\" src=\"./assets/images/my-photo180x180.png\" alt=\"my photo\">\r\n                        </div>\r\n                        <p class=\"mat-body-1 muted text-align-center\">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.\r\n                        Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,\r\n                        шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..\r\n                        Ще багато можна писати про себе та мої захоплення, але згодом..\r\n                          Завітайте у мою майстерню.</p>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n          \r\n              <div id=\"landing-right\" class=\"container\" fxFlexOrder.lt-md=\"3\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                  <div class=\"row\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"cell\">\r\n                      <a [routerLink]=\"['/mcs', 'ch']\">  \r\n                        <img class=\"responsive-image-stretch\" src=\"{{\r\n                          config.imgPath +\r\n                          config.cloudinary.cloud_name +\r\n                          '/c_fill,w_500,h_500,f_auto/' +\r\n                          'mcs-logo'}}\"\r\n                         alt=\"Майстеркласи\">\r\n                      </a>\r\n                      \r\n                    </div>\r\n                    <a mat-stroked-button class=\"hover-button\" color=\"primary\" alt=\"Майстеркласи\" \r\n                    [routerLink]=\"['/mcs', 'ch']\">Майстеркласи</a>\r\n\r\n                  </div>\r\n              </div>\r\n            </section>\r\n\r\n          <section *ngIf=\"products\" class=\"row\">\r\n              <div class=\"cell\" fxFlex=\"100\">\r\n                <h2 class=\"mat-h2\">Нові роботи</h2>\r\n              </div>\r\n\r\n            <div *ngFor=\"let product of products\" class=\"cell\"\r\n                fxFlex.xs=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n              <app-product-item-brief [product]=\"product\"></app-product-item-brief>\r\n            </div>\r\n          </section>\r\n      </div>\r\n         \r\n    </div>\r\n  </div>\r\n\r\n</div> -->\r\n"
+module.exports = "<div id=\"landing\">\r\n    <div class=\"container\">\r\n          <div class=\"app-container-h app-container-v\">\r\n        <div class=\"container\">\r\n            <section class=\"row padding-bottom landing-block\" fxLayout=\"row\">\r\n  \r\n                <div id=\"landing-left\" class=\"container\" fxFlexOrder.lt-md=\"2\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"row\" fxLayoutAlign=\"center center\">\r\n                      <div class=\"cell\">\r\n                        <a [routerLink]=\"['/products', 'ch']\">  \r\n                          <img class=\"responsive-image-stretch\" src=\"{{\r\n                            config.imgPath +\r\n                            config.cloudinary.cloud_name +\r\n                            '/c_fill,w_500,h_500,f_auto/' +\r\n                            'products-logo'}}\"\r\n                            alt=\"Вироби\">\r\n                          </a>\r\n                      </div>\r\n                      <a mat-stroked-button color=\"primary\" alt=\"Вироби\" class=\"hover-button\"\r\n                      [routerLink]=\"['/products', 'ch']\">Мої роботи</a>\r\n                    </div>\r\n                </div>\r\n            \r\n                  <div class=\"container\" fxFlexOrder.lt-md=\"1\" fxFlex.lt-md=\"100\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"row\" >\r\n                      <div class=\"cell\">\r\n                    \r\n                          <h2 class=\"mat-h2 text-align-center\">Вітаю в творчій майстерні!</h2>\r\n                          <div class=\"avatar-big-block\">\r\n                              <img class=\"avatar-big\" src=\"./assets/images/my-photo180x180.png\" alt=\"my photo\">\r\n                          </div>\r\n                          <p class=\"body-3 muted text-align-center\">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.\r\n                          Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,\r\n                          шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..\r\n                          Ще багато можна писати про себе та мої захоплення, але згодом..\r\n                            Завітайте у мою майстерню.</p>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n            \r\n                <div id=\"landing-right\" class=\"container\" fxFlexOrder.lt-md=\"3\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"row\" fxLayoutAlign=\"center center\">\r\n                      <div class=\"cell\">\r\n                        <a [routerLink]=\"['/mcs', 'ch']\">  \r\n                          <img class=\"responsive-image-stretch\" src=\"{{\r\n                            config.imgPath +\r\n                            config.cloudinary.cloud_name +\r\n                            '/c_fill,w_500,h_500,f_auto/' +\r\n                            'mcs-logo'}}\"\r\n                           alt=\"Майстеркласи\">\r\n                        </a>\r\n                        \r\n                      </div>\r\n                      <a mat-stroked-button class=\"hover-button\" color=\"primary\" alt=\"Майстеркласи\" \r\n                      [routerLink]=\"['/mcs', 'ch']\">Майстеркласи</a>\r\n  \r\n                    </div>\r\n                </div>\r\n              </section>\r\n  \r\n            <section *ngIf=\"products\" class=\"row\">\r\n                <div class=\"cell\" fxFlex=\"100\">\r\n                  <h2 class=\"mat-h2\">Нові роботи</h2>\r\n                </div>\r\n\r\n  \r\n              <div *ngFor=\"let product of products; let i = index\" class=\"cell pr\" [attr.id]=\"'product' + i\"\r\n                  [ngClass]=\"{'landing-product': i < productsPoint && i >= productsPoint - portionOfProducts,\r\n                   'opacity0': i >= productsPoint}\"  appScrolling\r\n                  fxFlex.xs=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n                  {{isElementScrolled('#product' + i)}}\r\n                <app-product-item-brief [product]=\"product\"></app-product-item-brief>\r\n              </div>\r\n            </section>\r\n        </div>\r\n           \r\n      </div>\r\n    </div>\r\n  \r\n  </div>\r\n  \r\n\r\n<!-- <div id=\"landing\" fxLayoutAlign=\"center center\">\r\n  <div class=\"container\">\r\n        <div class=\"app-container-h app-container-v\">\r\n      <div class=\"container\">\r\n          <section class=\"row padding-bottom landing-block\" fxLayout=\"row\">\r\n\r\n              <div id=\"landing-left\" class=\"container\" fxFlexOrder.lt-md=\"2\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                  <div class=\"row\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"cell\">\r\n                      <a [routerLink]=\"['/products', 'ch']\">  \r\n                        <img class=\"responsive-image-stretch\" src=\"{{\r\n                          config.imgPath +\r\n                          config.cloudinary.cloud_name +\r\n                          '/c_fill,w_500,h_500,f_auto/' +\r\n                          'products-logo'}}\"\r\n                          alt=\"Вироби\">\r\n                        </a>\r\n                    </div>\r\n                    <a mat-stroked-button color=\"primary\" alt=\"Вироби\" class=\"hover-button\"\r\n                    [routerLink]=\"['/products', 'ch']\">Мої роботи</a>\r\n                  </div>\r\n              </div>\r\n          \r\n                <div class=\"container\" fxFlexOrder.lt-md=\"1\" fxFlex.lt-md=\"100\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n                  <div class=\"row\" >\r\n                    <div class=\"cell\">\r\n                  \r\n                        <h2 class=\"mat-h2 text-align-center\">Вітаю в творчій майстерні!</h2>\r\n                        <div class=\"avatar-big-block\">\r\n                            <img class=\"avatar-big\" src=\"./assets/images/my-photo180x180.png\" alt=\"my photo\">\r\n                        </div>\r\n                        <p class=\"mat-body-1 muted text-align-center\">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.\r\n                        Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,\r\n                        шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..\r\n                        Ще багато можна писати про себе та мої захоплення, але згодом..\r\n                          Завітайте у мою майстерню.</p>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n          \r\n              <div id=\"landing-right\" class=\"container\" fxFlexOrder.lt-md=\"3\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                  <div class=\"row\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"cell\">\r\n                      <a [routerLink]=\"['/mcs', 'ch']\">  \r\n                        <img class=\"responsive-image-stretch\" src=\"{{\r\n                          config.imgPath +\r\n                          config.cloudinary.cloud_name +\r\n                          '/c_fill,w_500,h_500,f_auto/' +\r\n                          'mcs-logo'}}\"\r\n                         alt=\"Майстеркласи\">\r\n                      </a>\r\n                      \r\n                    </div>\r\n                    <a mat-stroked-button class=\"hover-button\" color=\"primary\" alt=\"Майстеркласи\" \r\n                    [routerLink]=\"['/mcs', 'ch']\">Майстеркласи</a>\r\n\r\n                  </div>\r\n              </div>\r\n            </section>\r\n\r\n          <section *ngIf=\"products\" class=\"row\">\r\n              <div class=\"cell\" fxFlex=\"100\">\r\n                <h2 class=\"mat-h2\">Нові роботи</h2>\r\n              </div>\r\n\r\n            <div *ngFor=\"let product of products\" class=\"cell\"\r\n                fxFlex.xs=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n              <app-product-item-brief [product]=\"product\"></app-product-item-brief>\r\n            </div>\r\n          </section>\r\n      </div>\r\n         \r\n    </div>\r\n  </div>\r\n\r\n</div> -->\r\n"
 
 /***/ }),
 
@@ -2680,12 +2678,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./mcs-item-detail/mcs-item-detail.component */ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.ts");
 /* harmony import */ var _product_item_feed_product_item_feed_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./product-item-feed/product-item-feed.component */ "./src/app/components/shared/product-item-feed/product-item-feed.component.ts");
 /* harmony import */ var _image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./image-popup/image-popup.component */ "./src/app/components/shared/image-popup/image-popup.component.ts");
+/* harmony import */ var src_app_directives_scrolling_directive__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! src/app/directives/scrolling.directive */ "./src/app/directives/scrolling.directive.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -2760,6 +2760,7 @@ var SharedModule = /** @class */ (function () {
                 _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_23__["McsItemDetailComponent"],
                 _product_item_feed_product_item_feed_component__WEBPACK_IMPORTED_MODULE_24__["ProductItemFeedComponent"],
                 _image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_25__["ImagePopupComponent"],
+                src_app_directives_scrolling_directive__WEBPACK_IMPORTED_MODULE_26__["ScrollingDirective"],
             ],
         })
     ], SharedModule);
@@ -2792,19 +2793,48 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 var ScrollingDirective = /** @class */ (function () {
-    function ScrollingDirective(el, renderer) {
+    function ScrollingDirective(el) {
         this.el = el;
-        this.renderer = renderer;
-        this.ChangeBgColor('red');
     }
-    ScrollingDirective.prototype.ChangeBgColor = function (color) {
-        this.renderer.setElementStyle(this.el.nativeElement, 'color', color);
+    //   ChangeBgColor(color: string) {
+    //       this.renderer.setElementStyle(this.el.nativeElement, 'color', color);
+    //   }
+    //   @HostBinding('style.color') color: string;
+    ScrollingDirective.prototype.onWindowScroll = function (event) {
+        // this.color = 'red';
+        // // do tracking
+        var componentPosition = this.el.nativeElement.offsetTop;
+        console.log('directive', componentPosition);
+        // const tracker = event.target;
+        // if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight) {
+        //   console.log('youre at the bottom of the page');
+        // }
+        // const limit = tracker.scrollHeight - tracker.clientHeight;
+        // console.log(event.target.scrollTop, limit);
+        // if (event.target.scrollTop === limit) {
+        //   console.log('end reached');
+        // }
     };
+    ScrollingDirective.prototype.onHover = function () {
+        console.log('directiveOver');
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('window:scroll', ['$event']),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], ScrollingDirective.prototype, "onWindowScroll", null);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('mouseover'),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", []),
+        __metadata("design:returntype", void 0)
+    ], ScrollingDirective.prototype, "onHover", null);
     ScrollingDirective = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Directive"])({
             selector: '[appScrolling]'
         }),
-        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"], _angular_core__WEBPACK_IMPORTED_MODULE_0__["Renderer"]])
+        __metadata("design:paramtypes", [_angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]])
     ], ScrollingDirective);
     return ScrollingDirective;
 }());
