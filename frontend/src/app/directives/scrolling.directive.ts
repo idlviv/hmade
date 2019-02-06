@@ -20,9 +20,18 @@ export class ScrollingDirective {
   @HostListener('window:scroll', ['$event']) onWindowScroll(event) {
     // this.color = 'red';
     // // do tracking
-    const componentPosition = this.el.nativeElement.offsetTop;
-    console.log('directive', componentPosition);
+    const elementPosition = this.el.nativeElement.offsetTop;
+    const elementHeight = this.el.nativeElement.offsetHeight;
 
+    const scrollPosition = window.pageYOffset;
+    // && scrollPosition + window.innerHeight <= elementPosition + elementHeight
+    if (scrollPosition + window.innerHeight >= elementPosition) {
+      console.log('directive', scrollPosition + window.innerHeight);
+      console.log('elementPosition', elementPosition);
+      console.log('elementPosition + elementHeight', elementPosition + elementHeight);
+
+
+    }
     // const tracker = event.target;
     // if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight) {
     //   console.log('youre at the bottom of the page');
@@ -34,9 +43,9 @@ export class ScrollingDirective {
     // }
   }
 
-  @HostListener('mouseover') onHover() {
-    console.log('directiveOver');
-  }
+  // @HostListener('mouseover') onHover() {
+  //   console.log('directiveOver');
+  // }
 
 //   constructor(private elementRef: ElementRef) {
 //     this.elementRef.nativeElement.style.color = 'red';
