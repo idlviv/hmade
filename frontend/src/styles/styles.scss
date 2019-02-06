@@ -1384,7 +1384,7 @@ a.hover-button:hover {
 }
 
 .landing-product {
-  @include animation(fadeIn 1s);
+  @include animation(fadeIn 2s forwards);
 }
 
 .landing-product-out {
