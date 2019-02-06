@@ -1366,8 +1366,29 @@ a.hover-button:hover {
 	}
 }
 
+@include keyframes(fadeOut) {
+	from {
+    opacity : 1;
+		transform: scale(1);
+
+	}
+	// 50% {
+	// 	transform: scale(1.5);
+	// 	background-color: blue;
+	// 	animation-timing-function: linear; /* can use here too */
+	// }
+	to {
+    opacity: 0;
+		transform: scale(0.5);
+	}
+}
+
 .landing-product {
   @include animation(fadeIn 5s);
+}
+
+.landing-product-out {
+  @include animation(fadeOut 5s);
 }
 
 .opacity0 {

@@ -2806,11 +2806,17 @@ var ScrollingDirective = /** @class */ (function () {
         var elementPosition = this.el.nativeElement.offsetTop;
         var elementHeight = this.el.nativeElement.offsetHeight;
         var scrollPosition = window.pageYOffset;
-        // && scrollPosition + window.innerHeight <= elementPosition + elementHeight
-        if (scrollPosition + window.innerHeight >= elementPosition) {
+        var pointer = 0;
+        if (scrollPosition + window.innerHeight >= elementPosition && scrollPosition + window.innerHeight <= elementPosition + 400) {
             console.log('directive', scrollPosition + window.innerHeight);
             console.log('elementPosition', elementPosition);
             console.log('elementPosition + elementHeight', elementPosition + elementHeight);
+            console.log('classlist', this.el.nativeElement.classList.add('landing-product'));
+            pointer = 1;
+        }
+        if (scrollPosition + window.innerHeight < elementPosition && pointer === 1) {
+            console.log('classlist', this.el.nativeElement.classList.add('landing-product-out'));
+            pointer = 0;
         }
         // const tracker = event.target;
         // if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight) {
