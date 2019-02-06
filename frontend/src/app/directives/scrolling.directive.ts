@@ -24,8 +24,8 @@ export class ScrollingDirective {
     const elementHeight = this.el.nativeElement.offsetHeight;
 
     const scrollPosition = window.pageYOffset;
-    let pointer = 0; 
-    if (scrollPosition + window.innerHeight >= elementPosition  && scrollPosition + window.innerHeight <= elementPosition + 400) {
+    let pointer = 0;
+    if (scrollPosition + window.innerHeight >= elementPosition  && scrollPosition + window.innerHeight <= elementPosition + elementHeight) {
       console.log('directive', scrollPosition + window.innerHeight);
       console.log('elementPosition', elementPosition);
       console.log('elementPosition + elementHeight', elementPosition + elementHeight);
@@ -33,10 +33,10 @@ export class ScrollingDirective {
       pointer = 1;
       
     }
-    if (scrollPosition + window.innerHeight < elementPosition && pointer === 1) {
-      console.log('classlist', this.el.nativeElement.classList.add('landing-product-out'));
-      pointer = 0;
-    }
+    // if (scrollPosition + window.innerHeight < elementPosition && pointer === 1) {
+    //   console.log('classlist', this.el.nativeElement.classList.add('landing-product-out'));
+    //   pointer = 0;
+    // }
     // const tracker = event.target;
     // if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight) {
     //   console.log('youre at the bottom of the page');

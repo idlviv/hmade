@@ -63,47 +63,47 @@ export class LandingComponent implements OnInit {
       // );
   }
 
-  isElementScrolled(id) {
-    const elementPosition = this.el.nativeElement.querySelector(id).offsetTop;
-    return elementPosition;
-  }
+  // isElementScrolled(id) {
+  //   const elementPosition = this.el.nativeElement.querySelector(id).offsetTop;
+  //   return elementPosition;
+  // }
 
-  _getElementPosition(id) {
-    const elementPosition = this.el.nativeElement.querySelector(id).offsetTop;
-    return elementPosition;
-  }
+  // _getElementPosition(id) {
+  //   const elementPosition = this.el.nativeElement.querySelector(id).offsetTop;
+  //   return elementPosition;
+  // }
 
 
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event): void {
-    // if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 2) {
-    //   this.productsPoint = this.products.length;
-    //   console.log('positon', window.pageYOffset)
-    //   // if (this.limit > this.products.length) {
-    //   //   this.productService.getNewProducts(this.products.length + this.portionOfProducts)
-    //   //     .subscribe(
-    //   //       result => this.products = result,
-    //   //       err => console.log('newProducts load error', err)
-    //   //     );
-    //   // }
-    // }
-    const elementPosition = this._getElementPosition('#product' + this.productsPoint);
-    const componentPosition = this.el.nativeElement.querySelector('#product' + this.productsPoint).offsetTop;
+  // @HostListener('window:scroll', ['$event'])
+  // onScroll(event): void {
+  //   // if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 2) {
+  //   //   this.productsPoint = this.products.length;
+  //   //   console.log('positon', window.pageYOffset)
+  //   //   // if (this.limit > this.products.length) {
+  //   //   //   this.productService.getNewProducts(this.products.length + this.portionOfProducts)
+  //   //   //     .subscribe(
+  //   //   //       result => this.products = result,
+  //   //   //       err => console.log('newProducts load error', err)
+  //   //   //     );
+  //   //   // }
+  //   // }
+  //   const elementPosition = this._getElementPosition('#product' + this.productsPoint);
+  //   const componentPosition = this.el.nativeElement.querySelector('#product' + this.productsPoint).offsetTop;
 
-    const scrollPosition = window.pageYOffset;
+  //   const scrollPosition = window.pageYOffset;
 
-    if (scrollPosition + window.innerHeight >= componentPosition) {
-      if (this.limit > this.productsPoint) {
-        this.productsPoint >= this.limit - this.portionOfProducts ?
-           this.productsPoint += this.portionOfProducts :
-           this.productsPoint += this.portionOfProducts - 1 ;
-          }
-    } else {
-      this.state = false;
-    }
+  //   if (scrollPosition + window.innerHeight >= componentPosition) {
+  //     if (this.limit > this.productsPoint) {
+  //       this.productsPoint >= this.limit - this.portionOfProducts ?
+  //          this.productsPoint += this.portionOfProducts :
+  //          this.productsPoint += this.portionOfProducts - 1 ;
+  //         }
+  //   } else {
+  //     this.state = false;
+  //   }
 
-  }
+  // }
 
   // onScroll() {
     // this.scrollPoint.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
