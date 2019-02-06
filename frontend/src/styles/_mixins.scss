@@ -102,6 +102,20 @@ $screen-xl-min: 1920px;
   -webkit-border-radius: $amount;
 }
 
+@mixin animation($value) {
+  animation: $value;
+  -webkit-animation: $value;
+}
+
+@mixin keyframes($name) {
+  @-webkit-keyframes #{$name} {
+    @content; 
+  }
+  @keyframes #{$name} {
+    @content;
+  } 
+}
+
 @mixin after-child-element($num) {
   &:nth-child(n+#{$num+1}) {
     @content

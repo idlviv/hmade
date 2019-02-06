@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, HostListener } from '@angular/core';
 import { CatalogService } from '../../../services/catalog.service';
 import { config } from '../../../app.config';
 import { ObservableMedia, FlexLayoutModule } from '@angular/flex-layout';
@@ -15,26 +15,34 @@ import { McService } from 'src/app/services/mc.service';
 export class LandingComponent implements OnInit {
   @ViewChild('scrollPoint') scrollPoint: ElementRef;
   config = config;
-  products: IProduct[];
+  products = <IProduct[]>[];
   mcs: IMc[];
   limit = 6;
+  portionOfProducts = 3;
+  productsPoint = 0;
+  state = false;
 
   constructor(
     private catalogService: CatalogService,
     public media: ObservableMedia,
     private productService: ProductService,
     private mcService: McService,
+    public el: ElementRef,
   ) { }
 
   ngOnInit() {
     if (this.media.isActive('xs')) {
-      this.limit = 6;
+      this.limit = 9;
+      this.portionOfProducts = 3;
     } else if (this.media.isActive('sm')) {
-      this.limit = 6;
+      this.limit = 9;
+      this.portionOfProducts = 3;
     } else if (this.media.isActive('md')) {
-      this.limit = 6;
+      this.limit = 9;
+      this.portionOfProducts = 3;
     } else if (this.media.isActive('gt-md')) {
-      this.limit = 8;
+      this.limit = 12;
+      this.portionOfProducts = 4;
     }
 
     this.productService.getNewProducts(this.limit)
@@ -55,8 +63,54 @@ export class LandingComponent implements OnInit {
       // );
   }
 
-  onScroll() {
-    // this.scrollPoint.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event): void {
+    // if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 2) {
+    //   this.productsPoint = this.products.length;
+    //   console.log('positon', window.pageYOffset)
+    //   // if (this.limit > this.products.length) {
+    //   //   this.productService.getNewProducts(this.products.length + this.portionOfProducts)
+    //   //     .subscribe(
+    //   //       result => this.products = result,
+    //   //       err => console.log('newProducts load error', err)
+    //   //     );
+    //   // }
+    // }
+    const componentPosition = this.el.nativeElement.querySelector('#product' + this.productsPoint).offsetTop;
+    console.log('componentPosition0', componentPosition);
+    console.log('componentPosition-product22', this.el.nativeElement.querySelector('#product2').offsetTop);
+
+    console.log('productsPoint0', this.productsPoint);
+
+    const scrollPosition = window.pageYOffset;
+
+    if (scrollPosition + window.innerHeight >= componentPosition) {
+      if (this.limit > this.productsPoint) {
+        this.productsPoint >= this.limit - this.portionOfProducts ?
+           this.productsPoint += this.portionOfProducts :
+           this.productsPoint += this.portionOfProducts - 1 ;
+        console.log('-productsPoint', this.productsPoint);
+        console.log('-scrollPosition + window.innerHeight', scrollPosition + window.innerHeight);
+        console.log('-componentPosition1', componentPosition);
+
+
+
+            // this.productService.getNewProducts(this.products.length + this.portionOfProducts)
+            //   .subscribe(
+            //     result => this.products = result,
+            //     err => console.log('newProducts load error', err)
+            //   );
+          }
+    } else {
+      this.state = false;
+    }
+
+  // console.log('componentPosition', componentPosition);
+  // console.log('scrollPosition', scrollPosition);
   }
+
+  // onScroll() {
+    // this.scrollPoint.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
+  // }
 
 }

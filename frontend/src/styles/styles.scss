@@ -1287,6 +1287,7 @@ td.mat-cell {
 
 }
 
+// styling a on hover event
 a.hover-button:hover {
 @include mat-elevation-transition;
 @include mat-elevation(4);
@@ -1308,7 +1309,6 @@ a.hover-button:hover {
   img {
     &:hover {
       cursor: pointer;
-
     }
   }
 }
@@ -1326,6 +1326,7 @@ a.hover-button:hover {
   }
 }
 
+// mc steps arrange order
 @include gt-xs {
   .mcs-steps {
     &:nth-child(odd) {
@@ -1344,4 +1345,31 @@ a.hover-button:hover {
       }
     }
   }
+}
+// end mc steps arrange order
+
+// effects for landing page products
+
+@include keyframes(fadeIn) {
+	from {
+    opacity: 0;
+		transform: scale(0.5);
+	}
+	// 50% {
+	// 	transform: scale(1.5);
+	// 	background-color: blue;
+	// 	animation-timing-function: linear; /* can use here too */
+	// }
+	to {
+    opacity : 1;
+		transform: scale(1);
+	}
+}
+
+.landing-product {
+  @include animation(fadeIn 5s);
+}
+
+.opacity0 {
+  opacity: 0;
 }
