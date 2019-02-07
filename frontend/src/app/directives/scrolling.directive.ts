@@ -16,7 +16,14 @@ export class ScrollingDirective {
   //   }
 
 //   @HostBinding('style.color') color: string;
+  getCoords(elem) { // кроме IE8-
+    const box = elem.getBoundingClientRect();
 
+    return {
+      top: box.top + pageYOffset,
+      left: box.left + pageXOffset
+    };
+  }
   @HostListener('window:scroll', ['$event']) onWindowScroll(event) {
     // this.color = 'red';
     // // do tracking

@@ -22,6 +22,11 @@ export class LandingComponent implements OnInit {
   productsPoint = 0;
   state = false;
 
+  _pageXOffset: any;
+  _pageYOffset: any;
+  _top: any;
+  _left: any;
+
   constructor(
     private catalogService: CatalogService,
     public media: ObservableMedia,
@@ -73,6 +78,14 @@ export class LandingComponent implements OnInit {
   //   return elementPosition;
   // }
 
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event): void {
+    const elem = this.el.nativeElement.querySelector('#flowElement'); // relative to browser window
+    const box = elem.getBoundingClientRect();
+    this._pageYOffset = pageYOffset; // scrolled relative to top left of browser window
+    this._pageXOffset = pageXOffset;
+    this._top = box.top + pageYOffset; // relative to document
+    this._left = box.left + pageXOffset;
 
 
   // @HostListener('window:scroll', ['$event'])
