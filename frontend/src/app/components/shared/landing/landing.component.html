@@ -1,13 +1,14 @@
 <div id="landing">
   <div class="fix">
-    <p>_pageYOffset: {{_pageYOffset}}</p>
-    <p>_pageXOffset: {{_pageXOffset}}</p>
-    <p>_top: {{_top}}</p>
-    <p>_left: {{_left}}</p>
+    <p>screenTop: {{screenTop}}</p>
+    <p>screenBottom: {{screenBottom}}</p>
+    <p>elementTop: {{elementTop}}</p>
+    <p>elementBottom: {{elementBottom}}</p>
+    <p>checkElemOnscreen: {{checkElemOnscreen}}</p>
+    <p>elemClassList: {{elemClassList}}</p>
+    
   </div>
-  <div id="flowElement">
 
-  </div>
     <div class="container">
           <div class="app-container-h app-container-v">
         <div class="container">
@@ -70,11 +71,14 @@
             <section *ngIf="products" class="row">
                 <div class="cell" fxFlex="100">
                   <h2 class="mat-h2">Нові роботи</h2>
+                  <!-- <div id="flowElement" class="opacity0"></div> -->
+
                 </div>
                 <!-- [ngClass]="{'landing-product': i < productsPoint && i >= productsPoint - portionOfProducts,
                 'opacity0': i >= productsPoint}"   -->
   
-              <div *ngFor="let product of products; let i = index" class="cell opacity0" [attr.id]="'product' + i"  appScrolling
+              <div *ngFor="let product of products; let i = index" class="cell opacity0" 
+                [attr.id]="'product' + i" appScrolling
        
                   fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
                   <!-- {{isElementScrolled('#product' + i)}} -->

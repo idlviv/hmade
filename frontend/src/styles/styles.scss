@@ -1352,17 +1352,16 @@ a.hover-button:hover {
 
 @include keyframes(fadeIn) {
 	from {
-    opacity: 0;
-		transform: scale(0.5);
+    opacity: 0.1;
+    // transform: scale(0.5);
+    // margin-left: 100%;
+    // width: 300%; 
 	}
-	// 50% {
-	// 	transform: scale(1.5);
-	// 	background-color: blue;
-	// 	animation-timing-function: linear; /* can use here too */
-	// }
 	to {
     opacity : 1;
-		transform: scale(1);
+    // transform: scale(1);
+    // margin-left: 0%;
+    // width: 100%;
 	}
 }
 
@@ -1383,6 +1382,10 @@ a.hover-button:hover {
 	}
 }
 
+.appear {
+  @include animation(fadeIn 0.5s forwards);
+}
+
 .landing-product {
   @include animation(fadeIn 2s forwards);
 }
@@ -1392,7 +1395,7 @@ a.hover-button:hover {
 }
 
 .opacity0 {
-  opacity: 0;
+  opacity: 0.1;
 }
 
 .fix {
@@ -1400,7 +1403,7 @@ a.hover-button:hover {
   line-height: 15px;
   font-size: 10px;
   width: 250px;
-  height: 100px;
+  height: 200px;
   background-color: rgba(0, 0, 0, .3);
   z-index: 100;
 }

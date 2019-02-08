@@ -22,10 +22,14 @@ export class LandingComponent implements OnInit {
   productsPoint = 0;
   state = false;
 
-  _pageXOffset: any;
-  _pageYOffset: any;
-  _top: any;
-  _left: any;
+  screenTop: any;
+  screenBottom: any;
+
+  elementTop: any;
+  elementBottom: any;
+
+  checkElemOnscreen: any;
+  elemClassList: any;
 
   constructor(
     private catalogService: CatalogService,
@@ -78,15 +82,39 @@ export class LandingComponent implements OnInit {
   //   return elementPosition;
   // }
 
+  isElementOnScreen(elem) {
+    const box = elem.getBoundingClientRect();
+    // console.log('elem', elem);
+    // console.log('box.top', box.top);
+    const screenTop = pageYOffset;
+    const screenBottom = pageYOffset + innerHeight;
+    const elementTop = box.top + pageYOffset;
+    const elementBottom = box.bottom + pageYOffset;
+    if ((elementTop > screenTop && elementTop < screenBottom) ||
+        (elementBottom > screenTop && elementBottom < screenBottom)) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   @HostListener('window:scroll', ['$event'])
   onScroll(event): void {
     const elem = this.el.nativeElement.querySelector('#flowElement'); // relative to browser window
     const box = elem.getBoundingClientRect();
-    this._pageYOffset = pageYOffset; // scrolled relative to top left of browser window
-    this._pageXOffset = pageXOffset;
-    this._top = box.top + pageYOffset; // relative to document
-    this._left = box.left + pageXOffset;
+    this.elemClassList = elem.classList;
 
+    if (this.checkElemOnscreen = this.isElementOnScreen(elem)) {
+      this.elemClassList.add('appear');
+    }
+
+    this.screenTop = pageYOffset;
+    this.screenBottom = pageYOffset + innerHeight;
+
+    this.elementTop = box.top;
+    this.elementBottom = box.bottom;
+
+  }
 
   // @HostListener('window:scroll', ['$event'])
   // onScroll(event): void {

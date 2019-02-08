@@ -7,61 +7,35 @@ import { Directive, HostListener, HostBinding, ElementRef, Renderer} from '@angu
 export class ScrollingDirective {
   constructor(
       private el: ElementRef,
-      // private renderer: Renderer
     ) {
     }
-    
-  //   ChangeBgColor(color: string) {
-  //       this.renderer.setElementStyle(this.el.nativeElement, 'color', color);
-  //   }
 
-//   @HostBinding('style.color') color: string;
-  getCoords(elem) { // кроме IE8-
+  isElementOnScreen(elem) {
+    // elem.getBoundingClientRect(); видима обасть екрану до елемента
+    // pageYOffset верх сторінки до верху видимой обасті
+    // innerHeight висота видимої області
     const box = elem.getBoundingClientRect();
 
-    return {
-      top: box.top + pageYOffset,
-      left: box.left + pageXOffset
-    };
-  }
-  @HostListener('window:scroll', ['$event']) onWindowScroll(event) {
-    // this.color = 'red';
-    // // do tracking
-    const elementPosition = this.el.nativeElement.offsetTop;
-    const elementHeight = this.el.nativeElement.offsetHeight;
-
-    const scrollPosition = window.pageYOffset;
-    let pointer = 0;
-    if (scrollPosition + window.innerHeight >= elementPosition  && scrollPosition + window.innerHeight <= elementPosition + elementHeight) {
-      console.log('directive', scrollPosition + window.innerHeight);
-      console.log('elementPosition', elementPosition);
-      console.log('elementPosition + elementHeight', elementPosition + elementHeight);
-      console.log('classlist', this.el.nativeElement.classList.add('landing-product'));
-      pointer = 1;
-      
+    const screenTop = pageYOffset;
+    const screenBottom = pageYOffset + innerHeight;
+    const elementTop = box.top + pageYOffset;
+    const elementBottom = box.bottom + pageYOffset;
+    
+    if ((elementTop > screenTop && elementTop < screenBottom) ||
+        (elementBottom > screenTop && elementBottom < screenBottom)) {
+      return true;
+    } else {
+      return false;
     }
-    // if (scrollPosition + window.innerHeight < elementPosition && pointer === 1) {
-    //   console.log('classlist', this.el.nativeElement.classList.add('landing-product-out'));
-    //   pointer = 0;
-    // }
-    // const tracker = event.target;
-    // if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight) {
-    //   console.log('youre at the bottom of the page');
-    // }
-    // const limit = tracker.scrollHeight - tracker.clientHeight;
-    // console.log(event.target.scrollTop, limit);
-    // if (event.target.scrollTop === limit) {
-    //   console.log('end reached');
-    // }
   }
 
-  // @HostListener('mouseover') onHover() {
-  //   console.log('directiveOver');
-  // }
 
-//   constructor(private elementRef: ElementRef) {
-//     this.elementRef.nativeElement.style.color = 'red';
-// }
+  @HostListener('window:scroll', ['$event']) onWindowScroll(event): void {
+    const elem = this.el.nativeElement;
 
+    if (this.isElementOnScreen(elem)) {
+      elem.classList.add('appear');
+    }
+  }
 
 }
