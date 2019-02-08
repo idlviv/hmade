@@ -1349,53 +1349,23 @@ a.hover-button:hover {
 // end mc steps arrange order
 
 // effects for landing page products
-
 @include keyframes(fadeIn) {
 	from {
-    opacity: 0.1;
-    // transform: scale(0.5);
-    // margin-left: 100%;
-    // width: 300%; 
-	}
-	to {
-    opacity : 1;
-    // transform: scale(1);
-    // margin-left: 0%;
-    // width: 100%;
-	}
-}
-
-@include keyframes(fadeOut) {
-	from {
-    opacity : 1;
-		transform: scale(1);
-
-	}
-	// 50% {
-	// 	transform: scale(1.5);
-	// 	background-color: blue;
-	// 	animation-timing-function: linear; /* can use here too */
-	// }
-	to {
     opacity: 0;
-		transform: scale(0.5);
+    transform: translateY(60px);
+	}
+	to {
+    opacity : 1;
+    transform: translateY(0);
 	}
 }
 
 .appear {
-  @include animation(fadeIn 0.5s forwards);
-}
-
-.landing-product {
-  @include animation(fadeIn 2s forwards);
-}
-
-.landing-product-out {
-  @include animation(fadeOut 5s);
+  @include animation(fadeIn 1s forwards);
 }
 
 .opacity0 {
-  opacity: 0.1;
+  opacity: 0;
 }
 
 .fix {
