@@ -1302,10 +1302,10 @@ a.hover-button:hover {
 }
 
 #product-item-brief {
-  &:hover {
-    @include mat-elevation-transition;
-    @include mat-elevation(8);
-  }
+  // &:hover {
+  //   @include mat-elevation-transition;
+  //   @include mat-elevation(8);
+  // }
   img {
     &:hover {
       cursor: pointer;
