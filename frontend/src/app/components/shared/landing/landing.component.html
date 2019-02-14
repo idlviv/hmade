@@ -72,13 +72,15 @@
             <section *ngIf="products" class="row">
                 <div class="cell" fxFlex="100">
                   <h2 class="mat-h2">Нові роботи</h2>
+                  <!-- <h2  [@scrollAnimation]="state" class="mat-h2">Нові роботи</h2> -->
 
                 </div>
                 <!-- [ngClass]="{'landing-product': i < productsPoint && i >= productsPoint - portionOfProducts,
                 'opacity0': i >= productsPoint}"   -->
   
-              <div *ngFor="let product of products; let i = index" class="cell opacity20" 
-                [attr.id]="'product' + i" appScrolling
+                <!-- appScrolling -->
+              <div *ngFor="let product of products; let i = index" class="cell" 
+                [attr.id]="'product' + i" 
        
                   fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
                   <!-- {{isElementScrolled('#product' + i)}} -->

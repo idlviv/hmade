@@ -15,15 +15,12 @@ export class ScrollingDirective {
     // pageYOffset верх сторінки до верху видимой обасті
     // innerHeight висота видимої області
     const box = elem.getBoundingClientRect();
-
     const screenTop = pageYOffset;
     const screenBottom = pageYOffset + innerHeight;
     const elementTop = box.top + pageYOffset;
     const elementBottom = box.bottom + pageYOffset;
     if ((elementTop > screenTop && elementTop < screenBottom) ||
         (elementBottom > screenTop && elementBottom < screenBottom)) {
-      console.log('dir33333');
-
       return true;
     } else {
       return false;
@@ -35,7 +32,7 @@ export class ScrollingDirective {
     const elem = this.el.nativeElement;
 
     if (this.isElementOnScreen(elem)) {
-      elem.classList.add('appear');
+      // elem.classList.add('appear');
     }
   }
 
