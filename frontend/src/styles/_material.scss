@@ -10,6 +10,7 @@ $alternative-background-color: rgb(255, 255, 255);
 $alternative-background-gradient: linear-gradient(to bottom, rgba(96, 125, 139, 0.4),  rgba(255, 255, 255, 0.5) 20%),
                                   linear-gradient(to right, rgba(96, 125, 139, 0.4),  rgba(255, 255, 255, 1) 30%);
 $alternative-background-pattern: url('/assets/other/pattern-vyshyvanka.png');
+$alternative-background-gradient2: linear-gradient(-45deg, #EEF0F3 0%, #F6F5F3 100%);
 
 $custom-typography: mat-typography-config(
         $font-family: $mainFontFamily
@@ -416,6 +417,7 @@ $mainTheme: $light-custom-color-theme;
   $foreground: map-get($theme, foreground);
   $background: map-get($theme, background);
     #landing {
+
         .left-side-container {
           color: mat-color($foreground, text);
           background-color: mat-color($accent);
@@ -432,6 +434,9 @@ $mainTheme: $light-custom-color-theme;
   $warn: map-get($theme, accent);
   $foreground: map-get($theme, foreground);
   $background: map-get($theme, background);
+    h1, h2, h3, h4, h5, h6 {
+      color: mat-color($foreground, text);
+    }
     .mcs-item {
       .mc-social {
         // &.cell {

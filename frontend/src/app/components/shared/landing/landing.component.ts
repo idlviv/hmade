@@ -82,39 +82,39 @@ export class LandingComponent implements OnInit {
   //   return elementPosition;
   // }
 
-  isElementOnScreen(elem) {
-    const box = elem.getBoundingClientRect();
-    // console.log('elem', elem);
-    // console.log('box.top', box.top);
-    const screenTop = pageYOffset;
-    const screenBottom = pageYOffset + innerHeight;
-    const elementTop = box.top + pageYOffset;
-    const elementBottom = box.bottom + pageYOffset;
-    if ((elementTop > screenTop && elementTop < screenBottom) ||
-        (elementBottom > screenTop && elementBottom < screenBottom)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  // isElementOnScreen(elem) {
+  //   const box = elem.getBoundingClientRect();
+  //   // console.log('elem', elem);
+  //   // console.log('box.top', box.top);
+  //   const screenTop = pageYOffset;
+  //   const screenBottom = pageYOffset + innerHeight;
+  //   const elementTop = box.top + pageYOffset;
+  //   const elementBottom = box.bottom + pageYOffset;
+  //   if ((elementTop > screenTop && elementTop < screenBottom) ||
+  //       (elementBottom > screenTop && elementBottom < screenBottom)) {
+  //     return true;
+  //   } else {
+  //     return false;
+  //   }
+  // }
 
-  @HostListener('window:scroll', ['$event'])
-  onScroll(event): void {
-    const elem = this.el.nativeElement.querySelector('#flowElement'); // relative to browser window
-    const box = elem.getBoundingClientRect();
-    this.elemClassList = elem.classList;
+  // @HostListener('window:scroll', ['$event'])
+  // onScroll(event): void {
+  //   const elem = this.el.nativeElement.querySelector('#flowElement'); // relative to browser window
+  //   const box = elem.getBoundingClientRect();
+  //   this.elemClassList = elem.classList;
 
-    if (this.checkElemOnscreen = this.isElementOnScreen(elem)) {
-      this.elemClassList.add('appear');
-    }
+  //   if (this.checkElemOnscreen = this.isElementOnScreen(elem)) {
+  //     this.elemClassList.add('appear');
+  //   }
 
-    this.screenTop = pageYOffset;
-    this.screenBottom = pageYOffset + innerHeight;
+  //   this.screenTop = pageYOffset;
+  //   this.screenBottom = pageYOffset + innerHeight;
 
-    this.elementTop = box.top;
-    this.elementBottom = box.bottom;
+  //   this.elementTop = box.top;
+  //   this.elementBottom = box.bottom;
 
-  }
+  // }
 
   // @HostListener('window:scroll', ['$event'])
   // onScroll(event): void {

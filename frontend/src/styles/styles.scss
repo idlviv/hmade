@@ -13,7 +13,10 @@ $background: map-get($mainTheme, background);
 html {
   font-size: 16px;
   box-sizing: border-box;
+  font-family: $mainFontFamily;
 }
+
+
 
 body {
   padding: 0;
@@ -1222,7 +1225,6 @@ td.mat-cell {
 
 // home page
 #landing {
-  // background: url(/assets/other/pattern.svg) center top repeat-x; 
   @include gt-md {
     min-height: calc(100vh - 194px); // footer 64px + toolbar 130px
   }
@@ -1301,15 +1303,49 @@ a.hover-button:hover {
   }
 }
 
-#product-item-brief {
-  // &:hover {
-  //   @include mat-elevation-transition;
-  //   @include mat-elevation(8);
-  // }
-  img {
+// #product-item-brief {
+//   // &:hover {
+//   //   @include mat-elevation-transition;
+//   //   @include mat-elevation(8);
+//   // }
+//   img {
+//     &:hover {
+//       cursor: pointer;
+//     }
+//   }
+// }
+
+.product-item-brief {
+  @include mat-elevation(2);
+  background: $alternative-background-gradient2; 
+  height: 100%;
+  img { 
+    display: block; 
     &:hover {
       cursor: pointer;
     }
+  }
+  .product-item-brief-img {
+    position: relative;
+    h2 {
+      padding: 0;
+      margin: 0;
+      position: absolute;
+      padding-left: 5px;
+      top: 5%;
+      left: 0;
+      line-height: 1.8rem;
+      font-size: 1.5rem;
+      display: block;
+      width: 100%;
+      background-color: rgba(102, 19, 19, 0.3);
+      z-index: 100;
+      letter-spacing: 1px;
+      // margin: 2vh 4vw;
+    }
+  }
+  .product-item-brief-content {
+    padding: 10px;
   }
 }
 
