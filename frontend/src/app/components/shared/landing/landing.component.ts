@@ -7,6 +7,7 @@ import { IProduct } from 'src/app/interfaces/product-interface';
 import { IMc } from 'src/app/interfaces/interface';
 import { McService } from 'src/app/services/mc.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
+import * as aos from 'aos';
 
 @Component({
   selector: 'app-landing',
@@ -56,6 +57,8 @@ export class LandingComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    aos.init();
+
     if (this.media.isActive('xs')) {
       this.limit = 9;
       this.portionOfProducts = 3;
