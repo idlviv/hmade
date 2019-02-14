@@ -131,8 +131,8 @@
 
   </section>
   <section class="product-item-brief-content">
-    <h2 *ngIf="!child && product">{{product.name}}</h2>
-    <p *ngIf="!child && product">{{product.description}}</p>
+    <h2 cmass="mat-h2" *ngIf="!child && product">{{product.name}}</h2>
+    <p class="mat-body-1" *ngIf="!child && product">{{product.description}}</p>
     <div>
       <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Edit"
         [routerLink]="['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]"
@@ -143,7 +143,7 @@
         (click)="deleteProductItem(product._id, product.name)">
         Видалити
       </a>
-      <a *ngIf="child" mat-button [attr.aria-label]="child.name"
+      <a *ngIf="child" mat-raised-button color="primary"
         [routerLink]="['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]"
         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
         {{child.name}}

@@ -20,9 +20,10 @@ export class ScrollingDirective {
     const screenBottom = pageYOffset + innerHeight;
     const elementTop = box.top + pageYOffset;
     const elementBottom = box.bottom + pageYOffset;
-    
     if ((elementTop > screenTop && elementTop < screenBottom) ||
         (elementBottom > screenTop && elementBottom < screenBottom)) {
+      console.log('dir33333');
+
       return true;
     } else {
       return false;

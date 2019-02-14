@@ -8,7 +8,16 @@ $accent: map-get($mainTheme, accent);
 $warn: map-get($mainTheme, warn);
 $foreground: map-get($mainTheme, foreground);
 $background: map-get($mainTheme, background);
+$muted: mat-color($foreground, secondary-text);
+$muted-strong: mat-color($foreground, disabled-text);
 
+.muted {
+  color: $muted;
+}
+
+.muted-strong {
+  color: $muted-strong
+}
 
 html {
   font-size: 16px;
@@ -1320,32 +1329,38 @@ a.hover-button:hover {
   background: $alternative-background-gradient2; 
   height: 100%;
   img { 
-    display: block; 
     &:hover {
       cursor: pointer;
     }
   }
   .product-item-brief-img {
-    position: relative;
-    h2 {
-      padding: 0;
-      margin: 0;
-      position: absolute;
-      padding-left: 5px;
-      top: 5%;
-      left: 0;
-      line-height: 1.8rem;
-      font-size: 1.5rem;
-      display: block;
-      width: 100%;
-      background-color: rgba(102, 19, 19, 0.3);
-      z-index: 100;
-      letter-spacing: 1px;
-      // margin: 2vh 4vw;
-    }
   }
   .product-item-brief-content {
     padding: 10px;
+    padding-bottom: 30px;
+    text-align: center;
+    h2 {
+      //   padding: 0;
+      //   margin: 0;
+      //   position: absolute;
+      //   padding-left: 5px;
+      //   top: 5%;
+      //   left: 0;
+      //   line-height: 1.8rem;
+      //   font-size: 1.5rem;
+      //   display: block;
+      //   width: 100%;
+      //   background-color: rgba(102, 19, 19, 0.3);
+      //   z-index: 100;
+        letter-spacing: 1px;
+        color: mat-color($primary, 600);
+      }
+    p {
+      color: $muted;
+    }
+    a {
+      width: 100%;
+    }
   }
 }
 
@@ -1387,21 +1402,25 @@ a.hover-button:hover {
 // effects for landing page products
 @include keyframes(fadeIn) {
 	from {
-    opacity: 0;
-    transform: translateY(60px);
+    opacity: 20;
+    // transform: translateY(60px);
 	}
 	to {
     opacity : 1;
-    transform: translateY(0);
+    // transform: translateY(0);
 	}
 }
 
 .appear {
-  @include animation(fadeIn 1s forwards);
+  @include animation(fadeIn 2s forwards);
 }
 
 .opacity0 {
   opacity: 0;
+}
+
+.opacity20 {
+  opacity: .2;
 }
 
 .fix {

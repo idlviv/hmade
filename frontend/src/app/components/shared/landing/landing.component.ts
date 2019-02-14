@@ -6,12 +6,28 @@ import { ProductService } from 'src/app/services/product.service';
 import { IProduct } from 'src/app/interfaces/product-interface';
 import { IMc } from 'src/app/interfaces/interface';
 import { McService } from 'src/app/services/mc.service';
+import { trigger, state, style, animate, transition } from '@angular/animations';
 
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
   styleUrls: ['./landing.component.scss'],
+  animations: [
+    trigger('scrollAnimation', [
+      state('show', style({
+        opacity: 1,
+        transform: 'translateX(0)'
+      })),
+      state('hide', style({
+        opacity: 0,
+        transform: 'translateX(-100%)'
+      })),
+      transition('show => hide', animate('700ms ease-out')),
+      transition('hide => show', animate('700ms ease-in'))
+    ])
+  ]
 })
+
 export class LandingComponent implements OnInit {
   @ViewChild('scrollPoint') scrollPoint: ElementRef;
   config = config;
@@ -20,7 +36,7 @@ export class LandingComponent implements OnInit {
   limit = 6;
   portionOfProducts = 3;
   productsPoint = 0;
-  state = false;
+  state = 'hide';
 
   screenTop: any;
   screenBottom: any;
@@ -65,89 +81,18 @@ export class LandingComponent implements OnInit {
         result => this.mcs = result,
         err => console.log('mainPageMcs load error', err)
       );
-    // this.catalogService.getChildren('products')
-      // .subscribe(
-      //   result => this.descendants = result.data,
-      //   err => console.log('mainPageProducts load error', err)
-      // );
   }
 
-  // isElementScrolled(id) {
-  //   const elementPosition = this.el.nativeElement.querySelector(id).offsetTop;
-  //   return elementPosition;
-  // }
+  @HostListener('window:scroll', ['$event'])
+  checkScroll() {
+    const componentPosition = this.el.nativeElement.offsetTop;
+    const scrollPosition = window.pageYOffset;
 
-  // _getElementPosition(id) {
-  //   const elementPosition = this.el.nativeElement.querySelector(id).offsetTop;
-  //   return elementPosition;
-  // }
+    if (scrollPosition >= componentPosition) {
+      this.state = 'show';
+    } else {
+      this.state = 'hide';
+    }
 
-  // isElementOnScreen(elem) {
-  //   const box = elem.getBoundingClientRect();
-  //   // console.log('elem', elem);
-  //   // console.log('box.top', box.top);
-  //   const screenTop = pageYOffset;
-  //   const screenBottom = pageYOffset + innerHeight;
-  //   const elementTop = box.top + pageYOffset;
-  //   const elementBottom = box.bottom + pageYOffset;
-  //   if ((elementTop > screenTop && elementTop < screenBottom) ||
-  //       (elementBottom > screenTop && elementBottom < screenBottom)) {
-  //     return true;
-  //   } else {
-  //     return false;
-  //   }
-  // }
-
-  // @HostListener('window:scroll', ['$event'])
-  // onScroll(event): void {
-  //   const elem = this.el.nativeElement.querySelector('#flowElement'); // relative to browser window
-  //   const box = elem.getBoundingClientRect();
-  //   this.elemClassList = elem.classList;
-
-  //   if (this.checkElemOnscreen = this.isElementOnScreen(elem)) {
-  //     this.elemClassList.add('appear');
-  //   }
-
-  //   this.screenTop = pageYOffset;
-  //   this.screenBottom = pageYOffset + innerHeight;
-
-  //   this.elementTop = box.top;
-  //   this.elementBottom = box.bottom;
-
-  // }
-
-  // @HostListener('window:scroll', ['$event'])
-  // onScroll(event): void {
-  //   // if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 2) {
-  //   //   this.productsPoint = this.products.length;
-  //   //   console.log('positon', window.pageYOffset)
-  //   //   // if (this.limit > this.products.length) {
-  //   //   //   this.productService.getNewProducts(this.products.length + this.portionOfProducts)
-  //   //   //     .subscribe(
-  //   //   //       result => this.products = result,
-  //   //   //       err => console.log('newProducts load error', err)
-  //   //   //     );
-  //   //   // }
-  //   // }
-  //   const elementPosition = this._getElementPosition('#product' + this.productsPoint);
-  //   const componentPosition = this.el.nativeElement.querySelector('#product' + this.productsPoint).offsetTop;
-
-  //   const scrollPosition = window.pageYOffset;
-
-  //   if (scrollPosition + window.innerHeight >= componentPosition) {
-  //     if (this.limit > this.productsPoint) {
-  //       this.productsPoint >= this.limit - this.portionOfProducts ?
-  //          this.productsPoint += this.portionOfProducts :
-  //          this.productsPoint += this.portionOfProducts - 1 ;
-  //         }
-  //   } else {
-  //     this.state = false;
-  //   }
-
-  // }
-
-  // onScroll() {
-    // this.scrollPoint.nativeElement.scrollIntoView({behavior: 'smooth', block: 'start'});
-  // }
-
+  }
 }
