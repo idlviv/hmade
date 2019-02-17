@@ -1324,9 +1324,36 @@ a.hover-button:hover {
 //   }
 // }
 
+.mcs-item-brief { 
+  @include mat-elevation(2);
+  background: white; 
+  img {
+    display: block;
+    background: $alternative-background-gradient1;
+  }
+  .mc-social {
+    background: rgba(0, 0, 0, .1);
+    line-height: 1rem;
+    font-size: .75rem;
+    color: mat-color($foreground, secondary-text);
+    padding-top: 3px;
+    height: calc(2rem + 8px);
+    mat-icon {
+      height: 1rem;
+      width: 1rem;
+      line-height: 1rem;
+      font-size: 1rem;
+    }
+  }
+  .mcs-item-brief-main {
+
+  }
+}
+
 .product-item-brief {
   @include mat-elevation(2);
-  background: $alternative-background-gradient2; 
+  background: white; 
+  // background: $alternative-background-gradient2; 
   height: 100%;
   img { 
     &:hover {
