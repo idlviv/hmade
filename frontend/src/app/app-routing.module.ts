@@ -5,6 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { FeedbackComponent } from './components/shared/feedback/feedback.component';
 import { LandingComponent } from './components/shared/landing/landing.component';
 import { AboutComponent } from './components/shared/about/about.component';
+import { PrivacyComponent } from './components/shared/privacy/privacy.component';
 
 const appRoutes: Routes = [
   {
@@ -32,6 +33,10 @@ const appRoutes: Routes = [
   {
     path: 'feedback',
     component: FeedbackComponent
+  },
+  {
+    path: 'privacy',
+    component: PrivacyComponent
   },
   { path: 'page-404', component: Page404Component },
   { path: '', component: LandingComponent, pathMatch: 'full' },

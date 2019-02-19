@@ -74,7 +74,6 @@ export class CommentsComponent implements OnInit {
     this.processing = true;
     this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter)
       .subscribe(result => {
-        console.log('res', result);
         this.comments.push(...result.comments);
         this.commentsTotalLength = result.commentsTotalLength;
         this.processing = false;

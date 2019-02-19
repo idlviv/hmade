@@ -47,7 +47,6 @@ export class ProductsListComponent implements OnInit {
         } else {
           this.category = category.data;
           // get children of selected category
-          console.log('this.category_id', this.category_id);
           return this.catalogService.getChildren(this.category_id);
         }
       }),

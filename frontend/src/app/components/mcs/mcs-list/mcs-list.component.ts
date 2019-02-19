@@ -27,7 +27,6 @@ export class McsListComponent implements OnInit {
   }
 
   refreshMcs() {
-    console.log('refresh');
     this.route.queryParams
     .pipe(
       mergeMap(

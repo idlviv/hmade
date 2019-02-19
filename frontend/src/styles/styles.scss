@@ -1217,7 +1217,7 @@ td.mat-cell {
   }
 }
 
-#mcs, #dashboard, #user, #about, #feedback {
+#mcs, #dashboard, #user, #about, #feedback, #privacy {
   @include gt-md {
     min-height: calc(100vh - 194px); // footer 64px + toolbar 130px
   }

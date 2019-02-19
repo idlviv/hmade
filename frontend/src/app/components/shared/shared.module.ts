@@ -25,6 +25,7 @@ import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.compon
 import { ProductItemFeedComponent } from './product-item-feed/product-item-feed.component';
 import { ImagePopupComponent } from './image-popup/image-popup.component';
 import { ScrollingDirective } from 'src/app/directives/scrolling.directive';
+import { PrivacyComponent } from './privacy/privacy.component';
 
 @NgModule({
   imports: [
@@ -71,6 +72,7 @@ import { ScrollingDirective } from 'src/app/directives/scrolling.directive';
     ProductItemFeedComponent,
     ImagePopupComponent,
     ScrollingDirective,
+    PrivacyComponent,
 
   ],
 })
