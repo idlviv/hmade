@@ -1,6 +1,6 @@
 <div class="container">
   <article class="mcs-item-brief row">
-    <section fxFlex="360px" fxFlex.lt-md="100">
+    <section fxFlex="400px" fxFlex.lt-md="100">
       <img *ngIf="media.isActive('xs')" class="responsive-image" src="{{
                   config.imgPath +
                   config.cloudinary.cloud_name +
@@ -10,12 +10,12 @@
       <img *ngIf="media.isActive('gt-xs')" class="responsive-image" src="{{
                 config.imgPath +
                 config.cloudinary.cloud_name +
-                '/c_fill,w_360,h_270,f_auto/' +
+                '/c_fill,w_400,h_300,f_auto/' +
                 'w_265,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
                 mc.mainImage}}" alt="master class image">
     </section>
 
-    <section class="mcs-item-brief-main wrap" fxFlex="calc(100%-360px)" fxFlex.lt-md="100">
+    <section class="mcs-item-brief-main wrap" fxFlex="calc(100%-400px)" fxFlex.lt-md="100">
       <div class="mc-social" fxFlex="100">
         <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
           <mat-icon>thumb_up_alt</mat-icon>
@@ -39,9 +39,9 @@
         </div>
       </div>
       <div class="cell" fxFlex="100">
-        <h1 class="mat-h1">
+        <h2 class="mat-display-1 title">
           {{mc.name}}
-        </h1>
+        </h2>
         <p class="mat-body-1 text-align-justify muted">
           {{mc.description}}
         </p>

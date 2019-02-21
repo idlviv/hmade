@@ -255,10 +255,6 @@ body {
   width: 100%;
 }
 
-.bold {
-  font-weight: 500;
-}
-
 .padding-bottom {
   padding-bottom: 1.5rem;
 }
@@ -1081,6 +1077,8 @@ td.mat-cell {
 
 .mcs-item {
   background: $alternative-background-pattern;
+  background-size: 250px auto;
+  background-repeat: repeat;
   .mc-social {
     margin-bottom: 16px;
     padding: 4px 0;
@@ -1312,18 +1310,6 @@ a.hover-button:hover {
   }
 }
 
-// #product-item-brief {
-//   // &:hover {
-//   //   @include mat-elevation-transition;
-//   //   @include mat-elevation(8);
-//   // }
-//   img {
-//     &:hover {
-//       cursor: pointer;
-//     }
-//   }
-// }
-
 .mcs-item-brief { 
   @include mat-elevation(2);
   background: white; 
@@ -1345,15 +1331,12 @@ a.hover-button:hover {
       font-size: 1rem;
     }
   }
-  .mcs-item-brief-main {
-
-  }
 }
 
 .product-item-brief {
   @include mat-elevation(2);
-  background: white; 
-  // background: $alternative-background-gradient2; 
+  // background: white; 
+  background: $alternative-background-gradient2; 
   height: 100%;
   img { 
     &:hover {
@@ -1379,8 +1362,6 @@ a.hover-button:hover {
       //   width: 100%;
       //   background-color: rgba(102, 19, 19, 0.3);
       //   z-index: 100;
-        letter-spacing: 1px;
-        color: mat-color($primary, 600);
       }
     p {
       color: $muted;
@@ -1388,6 +1369,23 @@ a.hover-button:hover {
     a {
       width: 100%;
     }
+  }
+}
+
+.title {
+  letter-spacing: 1px;
+  color: mat-color($primary, 600);
+}
+
+.comments {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.comment  {
+  border-bottom: 1px solid mat-color($primary, 100);
+  @include last {
+    border-bottom: 0;
   }
 }
 

@@ -38,9 +38,13 @@
                     <div class="row" >
                       <div class="cell">
                     
-                          <h2 class="mat-h2 text-align-center">Вітаю в творчій майстерні!</h2>
+                          <h2 class="mat-h1 title text-align-center">Вітаю в творчій майстерні!</h2>
                           <div class="avatar-big-block">
-                              <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo">
+                              <img class="avatar-big" src="{{
+                                config.imgPath +
+                                config.cloudinary.cloud_name +
+                                '/c_fill,w_180,h_180,f_auto/' +
+                                'my-photo180x180'}}" alt="my photo">
                           </div>
                           <p class="body-3 muted text-align-center">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.
                           Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,

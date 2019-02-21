@@ -67,7 +67,8 @@
         </span>коментарів з<span class="mat-body-2"> {{commentsTotalLength || 0}}</span></p>
       </div>
     </div>
-    <div class="row padding-bottom" [ngClass]="{'muted-strong': !comment.display}"
+    <mat-card class="comments">
+          <div class="row comment" [ngClass]="{'muted-strong': !comment.display}"
      *ngFor="let comment of comments" fxLayout="row">
       <div  class="cell" fxFlex="10" fxLayoutAlign="center center">
                 <img *ngIf="comment.user && comment.user.avatar" class="responsive-image"
@@ -86,7 +87,7 @@
       </div>
       <div class="cell" fxFlex="80">
         <p>
-          <span class="mat-body-2">
+          <span class="mat-body-2 bold">
             {{comment.user && comment.user.login ? comment.user.name + ' ' + comment.user.surname : 'Гість'}}
           </span>
           <span fxFlex></span>
@@ -108,6 +109,8 @@
 
       </div>
     </div>
+  </mat-card>
+
     <div *ngIf="processing" class="row" fxLayout="row" fxLayoutAlign="center center">
       <div class="cell" fxFlex="100">
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
