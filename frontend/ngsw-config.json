@@ -9,6 +9,8 @@
         "/index.html",
         "/assets/images/hmade_logo_dark.svg",
         "/assets/images/hmade_logo_light.svg",
+        "/assets/images/my-photo180x180.png",
+        "/assets/other/*.*",
         "/*.css",
         "/*.js"
       ]
