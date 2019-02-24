@@ -198,6 +198,7 @@ module.exports.getMainPageProducts = function(req, res, next) {
       .catch((err) => next(new DbError()));
 };
 
+
 module.exports.getNewProducts = function(req, res, next) {
   const limit = +req.query.limit;
   ProductModel.find({}).sort({updatedAt: -1}).limit(limit)

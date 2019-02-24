@@ -1,0 +1,99 @@
+{
+  "configVersion": 1,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/0.0ef22d966c478dbd4f49.js",
+        "/1.867e223b0d5681527594.js",
+        "/2.01b5ea34298d283cb460.js",
+        "/3.6f12ef2e4b21de841701.js",
+        "/4.54d0cacd7bc7a9bee592.js",
+        "/5.70898ada8d01843b36e5.js",
+        "/assets/images/hmade_logo_dark.svg",
+        "/assets/images/hmade_logo_light.svg",
+        "/assets/images/my-photo180x180.png",
+        "/assets/other/btn_google_signin_light_normal_web.png",
+        "/assets/other/btn_google_signin_light_normal_web@2x.png",
+        "/assets/other/pattern.svg",
+        "/favicon.ico",
+        "/index.html",
+        "/main.e127431d2a74ad43326e.js",
+        "/polyfills.1cfab2328d8b821c04f2.js",
+        "/runtime.9a01f25c59d999143686.js",
+        "/scripts.d1a4a51347c220973e96.js",
+        "/styles.6d5e1293e5a255b5cda8.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/images/loading.svg"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/0.0ef22d966c478dbd4f49.js": "9bec13b473ddbce2b626ef1a764851d2ac1e1d97",
+    "/1.867e223b0d5681527594.js": "088597d30bc98cd9f938fe391f8e79587df5b6bd",
+    "/2.01b5ea34298d283cb460.js": "66f110302364a5e6f5a2c5f4da8293c426a58592",
+    "/3.6f12ef2e4b21de841701.js": "ed161d5f4e9bb286e2345e6ebeaa1cf62bce14c4",
+    "/4.54d0cacd7bc7a9bee592.js": "2daf35aec861d833799de41288c4a3a48fb8e220",
+    "/5.70898ada8d01843b36e5.js": "b90c31e3cd428371139dba151ed326e0c3b698fe",
+    "/assets/icons/icon-128x128.png": "f4add257111f856b15292518b01b1a7a3e491f9e",
+    "/assets/icons/icon-144x144.png": "1652aa9c18fc3967d2d82c438240405e8eb6a5b1",
+    "/assets/icons/icon-152x152.png": "920a38cd367caa60a2e5cf08feb153c79ef97591",
+    "/assets/icons/icon-192x192.png": "eb83a864bd30e4a692f75131db4321eddbc96f9d",
+    "/assets/icons/icon-384x384.png": "bf49d65d85724c5deef712803339b72bfc3ece63",
+    "/assets/icons/icon-512x512.png": "f83a9c2c59cd9aaf84512a432bf9d0bc121e66a5",
+    "/assets/icons/icon-72x72.png": "9baf4ca7f1de30e6f06f779c79b08835d0634fe2",
+    "/assets/icons/icon-96x96.png": "f5513f8cec37c41204b0e52fe7558de9fbac7d46",
+    "/assets/images/hmade_logo_dark.svg": "3d8cdad6d5a2a9461055c5ca618d2e8b8b197b2c",
+    "/assets/images/hmade_logo_light.svg": "41855ebb46f02b658a3ff27e919f57973d4928a4",
+    "/assets/images/loading.svg": "e515b13cc79c383c3fe0594e593cc24b669ca81c",
+    "/assets/images/my-photo180x180.png": "8dece4bc5ac4dbd9d8a4e50e425245d7791b4a06",
+    "/assets/other/btn_google_signin_light_normal_web.png": "67d90cdf681b4c211582d5a6e27ea47debaa4782",
+    "/assets/other/btn_google_signin_light_normal_web@2x.png": "bbf56c48cbc340ba0c67e094f0bd6d2af8043e0d",
+    "/assets/other/pattern.svg": "f1ec5e596593b5b2c7c5ed7af895c64a57bdf71b",
+    "/favicon.ico": "3581640704ffb32dca6a10acca86bcca2471514a",
+    "/index.html": "8da15b39bf0f5144a02c3fb484bedfd8217482d1",
+    "/main.e127431d2a74ad43326e.js": "5f517b22d6276d10084dd4012ad6192ce08b6938",
+    "/polyfills.1cfab2328d8b821c04f2.js": "4c20ad2c60cfb17c16f4b1bd6180ddd8265c5bf6",
+    "/runtime.9a01f25c59d999143686.js": "9d812125f8b35b8fb79532857ec7799847d0a129",
+    "/scripts.d1a4a51347c220973e96.js": "4932f744a454bcf073a7f1ce2af9e21dd5169b9b",
+    "/styles.6d5e1293e5a255b5cda8.css": "fb7c3ba94bfff05784af0289ea9ea81d6377a80c"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}
