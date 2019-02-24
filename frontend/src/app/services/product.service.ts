@@ -238,7 +238,7 @@ export class ProductService {
       httpOptions
     );
   }
-  
+
   /**
    *
    *
@@ -271,7 +271,7 @@ export class ProductService {
         'Content-Type': 'application/json',
       }),
       params: new HttpParams()
-      .set('limit', limit + '')
+        .set('limit', limit + '')
     };
     return this.http.get<[IProduct]>(
       'api/product/get-new-products',
@@ -316,7 +316,7 @@ export class ProductService {
         'Content-Type': 'application/json',
       }),
       params: new HttpParams()
-      .set('_id', _id)
+        .set('_id', _id)
     };
 
     return this.http.get<IResponse>(
@@ -404,7 +404,7 @@ export class ProductService {
    * @returns {Observable<{_id: string}[]>}
    * @memberof ProductService
    */
-  getSkuList():  Observable<{_id: string}[]> {
+  getSkuList(): Observable<{ _id: string }[]> {
     const token = this.userService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
@@ -412,7 +412,7 @@ export class ProductService {
         'Authorization': token
       })
     };
-    return this.http.get<{_id: string}[]>(
+    return this.http.get<{ _id: string }[]>(
       'api/product/get-sku-list',
       httpOptions
     );
@@ -427,7 +427,7 @@ export class ProductService {
    * @returns {Observable<IResponse>}
    * @memberof ProductService
    */
-  getProductById(_id: string, collection: string, displayFilter?: boolean): Observable<IResponse>  {
+  getProductById(_id: string, collection: string, displayFilter?: boolean): Observable<IResponse> {
     if (!displayFilter) {
       displayFilter = false;
     }
@@ -453,10 +453,17 @@ export class ProductService {
    * @param {string} parent
    * @param {string} collection
    * @param {boolean} [displayFilter]
-   * @returns {Observable<IResponse>}
+   * @returns {Observable<{any}>}
    * @memberof ProductService
    */
-  getProductsByParent(parent: string, collection: string, displayFilter?: boolean): Observable<IResponse> {
+  getProductsByParent(
+    parent: string,
+    collection: string,
+    displayFilter?: boolean,
+    sort?: number,
+    skip?: number,
+    limit?: number
+  ): Observable<[{total: {totalProductsLength: number}, products: IProduct[]}]> {
     if (!displayFilter) {
       displayFilter = false;
     }
@@ -468,8 +475,11 @@ export class ProductService {
         .set('parent', parent)
         .set('displayFilter', displayFilter + '')
         .set('collection', collection)
+        .set('sort', sort + '')
+        .set('skip', skip + '')
+        .set('limit', limit + '')
     };
-    return this.http.get<IResponse>(
+    return this.http.get<[{total: {totalProductsLength: number}, products: IProduct[]}]>(
       'api/product/get-products-by-parent',
       httpOptions
     );

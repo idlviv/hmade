@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, HostListener, OnChanges } from '@angular/core';
 import { mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
@@ -7,29 +7,71 @@ import { IProduct } from '../../../interfaces/product-interface';
 import { CatalogService } from '../../../services/catalog.service';
 import { ICatalog } from '../../../interfaces/catalog-interface';
 import { SharedService } from '../../../services/shared.service';
+import { ObservableMedia } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss']
 })
-export class ProductsListComponent implements OnInit {
-  products: IProduct[];
+export class ProductsListComponent implements OnInit, OnChanges {
+  products = <IProduct[]>[];
   category_id: string;
   children: string;
   category: any;
+  processing = false;
+  totalProductsLength = 0;
+  portionOfProducts: number;
 
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private catalogService: CatalogService,
+    public media: ObservableMedia,
   ) { }
 
+  ngOnChanges() {
+    this.products = [];
+  }
+  
   ngOnInit() {
-   this.refreshProducts();
+    if (this.media.isActive('xs')) {
+      this.portionOfProducts = 6;
+      this.refreshProducts(-1, this.products.length, this.portionOfProducts);
+    } else if (this.media.isActive('sm')) {
+      this.portionOfProducts = 6;
+      this.refreshProducts(-1, this.products.length, this.portionOfProducts);
+    } else if (this.media.isActive('md')) {
+      this.portionOfProducts = 6;
+      this.refreshProducts(-1, this.products.length, this.portionOfProducts);
+    } else if (this.media.isActive('gt-md')) {
+      this.portionOfProducts = 8;
+      this.refreshProducts(-1, this.products.length, this.portionOfProducts);
+    }
   }
 
-  refreshProducts() {
+  // Listening of page bottom reached
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event): void {
+    if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 300) {
+      console.log('this.totalProductsLength', this.totalProductsLength);
+
+      if (
+        !this.processing &&
+        this.totalProductsLength > this.products.length &&
+        this.totalProductsLength
+      ) {
+        this.refreshProducts(-1, this.products.length, this.portionOfProducts);
+      }
+    }
+  }
+
+  refreshProducts(sort: number, skip: number, limit: number) {
+    console.log('sort', sort);
+    console.log('skip', skip);
+    console.log('limit', limit);
+    this.processing = true;
+
     this.route.paramMap.pipe(
       mergeMap(param => {
         this.category_id = param.get('category_id');
@@ -54,14 +96,19 @@ export class ProductsListComponent implements OnInit {
         this.children = children.data;
         if (!this.children.length) {
           // if no children - show products
-          return this.productService.getProductsByParent(this.category_id, 'products', true);
+          return this.productService.getProductsByParent(this.category_id, 'products', true, sort, skip, limit);
         } else {
-          return this.productService.getProductsByParent(null, 'products', true);
+          return this.productService.getProductsByParent(null, 'products', true, sort, skip, limit);
         }
       }))
-      .subscribe(
-        products => this.products = products.data,
-        err => console.log('error', err)
+      .subscribe(result => {
+        console.log('result', result);
+        this.totalProductsLength = result[0].total ? result[0].total.totalProductsLength : 0;
+        this.products.push(...result[0].products);
+        this.processing = false;
+
+      },
+        err => console.log('error', err.e)
       );
   }
 }

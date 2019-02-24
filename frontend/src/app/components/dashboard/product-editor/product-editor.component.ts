@@ -61,7 +61,7 @@ export class ProductEditorComponent implements OnInit {
       })
     )
     .subscribe(res => {
-      this.products = res.data;
+      this.products = res;
     },
       err => console.log('помилка завантаження категорій', err)
     );

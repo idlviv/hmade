@@ -1,27 +1,9 @@
 <div id="products">
   <div class="container">
     <div class="app-container-h app-container-v">
-      <!-- <div class="container">
-        <div class="row" fxLayout="row"> -->
-
           <div class="container">
-            <!-- <div *ngIf="category?.description" class="row" fxLayout="row" fxFlex="100">
-              <div class="cell" fxFlex="100">
-                <mat-card>
-                  <mat-card-content>
-                    <div class="text-justify">
-                      <div class="category-description-body">
-                        <p [innerHTML]="category?.description"></p>
-                      </div>
-
-
-                    </div>
-                  </mat-card-content>
-                </mat-card>
-              </div>
-            </div> -->
             <div class="row" fxLayout="row">
-              <div *ngFor="let product of products" class="cell"
+              <div *ngFor="let product of products; let i = index" class="cell" [ngClass]="{opacity0: !processing, appear: !processing}"
                   fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
                 <app-product-item-brief [product]="product" [category_id]="category_id" (refreshProducts)="refreshProducts()"></app-product-item-brief>
               </div>
@@ -30,9 +12,12 @@
                 <app-product-item-brief  [child]="child"></app-product-item-brief>
               </div>
             </div>
+            <div *ngIf="processing && products && products.length" class="row" fxLayout="row" fxLayoutAlign="center center">
+              <div class="cell" fxFlex="100">
+                <mat-progress-bar mode="buffer"></mat-progress-bar>
+              </div>
+            </div>
           </div>
-        <!-- </div>
-      </div> -->
     </div>
   </div>
 

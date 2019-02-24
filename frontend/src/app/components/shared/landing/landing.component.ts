@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild, HostListener } from '@angular/core';
 import { CatalogService } from '../../../services/catalog.service';
 import { config } from '../../../app.config';
-import { ObservableMedia, FlexLayoutModule } from '@angular/flex-layout';
+import { ObservableMedia } from '@angular/flex-layout';
 import { ProductService } from 'src/app/services/product.service';
 import { IProduct } from 'src/app/interfaces/product-interface';
 import { IMc } from 'src/app/interfaces/interface';

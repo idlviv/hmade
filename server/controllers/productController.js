@@ -80,11 +80,11 @@ module.exports.productAddImage = function(req, res, next) {
         {
           public_id: 'product_' + fields.sku + '_' +
           Date.now(), // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
-          // eager: [
-          //   {width: 535, height: 350, crop: 'fill', fetch_format: 'auto'},
-          //   {width: 260, height: 170, crop: 'fill', fetch_format: 'auto'},
-          //   {width: 180, height: 180, crop: 'fill', fetch_format: 'auto'},
-          // ],
+        // eager: [
+        //   {width: 535, height: 350, crop: 'fill', fetch_format: 'auto'},
+        //   {width: 260, height: 170, crop: 'fill', fetch_format: 'auto'},
+        //   {width: 180, height: 180, crop: 'fill', fetch_format: 'auto'},
+        // ],
         },
         function(err, result) {
           if (err) {
@@ -200,7 +200,7 @@ module.exports.getMainPageProducts = function(req, res, next) {
 
 module.exports.getNewProducts = function(req, res, next) {
   const limit = +req.query.limit;
-  ProductModel.find({}).sort({createdAt: -1}).limit(limit)
+  ProductModel.find({}).sort({updatedAt: -1}).limit(limit)
       .then((result) =>
         res.status(200).json(result)
       )
@@ -238,9 +238,9 @@ module.exports.productAddMenuImage = function(req, res, next) {
         files.file.path,
         {
           public_id:
-              'menu_image_' +
-              fields._id + '_' +
-              Date.now(),
+          'menu_image_' +
+          fields._id + '_' +
+          Date.now(),
           // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
           eager: [
             {width: 1100, height: 825, crop: 'fill', fetch_format: 'auto'},
@@ -282,9 +282,9 @@ module.exports.productAddMainImage = function(req, res, next) {
         files.file.path,
         {
           public_id:
-              'main_image_' +
-              fields._id + '_' +
-              Date.now(),
+          'main_image_' +
+          fields._id + '_' +
+          Date.now(),
           // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
           eager: [
             {width: 535, height: 350, crop: 'fill', fetch_format: 'auto'},
@@ -315,6 +315,7 @@ module.exports.productUpsert = function(req, res, next) {
           product.updatedAt = Date.now();
         } else {
           product.createdAt = Date.now();
+          product.updatedAt = Date.now();
         }
         return ProductModel.updateOne(
             {_id: product._id},
@@ -372,21 +373,42 @@ module.exports.getProductsByParent = function(req, res, next) {
   const parent = req.query.parent;
   const displayFilter = req.query.display;
   const collection = req.query.collection;
+  const sort = +req.query.sort || -1;
+  const skip = +req.query.skip || 0;
+  const limit = +req.query.limit || 12;
 
   let query;
   displayFilter === 'true' ?
-      query = {parents: parent, display: true} : query = {parents: parent};
+    query = {parents: parent, display: true} : query = {parents: parent};
 
   switch (collection) {
     case 'products':
-      ProductModel.find(query)
-          .sort({order: 1})
-          .then((result) =>
-            res.status(200).json(new ResObj(
-                true, 'Продукти категорії' + parent, result)
-            ))
-          .catch((err) => next(new DbError())
-          );
+      ProductModel.aggregate([
+        {
+          $facet: {
+            totalLength: [
+              {$match: query},
+              {$count: 'totalProductsLength'},
+            ],
+            products: [
+              {$match: query},
+              {$sort: {updatedAt: sort}},
+              {$skip: skip},
+              {$limit: limit},
+            ],
+          },
+        },
+        {
+          $project: {
+            total: {
+              $arrayElemAt: ['$totalLength', 0],
+            },
+            products: 1,
+          },
+        },
+      ])
+          .then((result) => res.status(200).json(result))
+          .catch((err) => next(new DbError()));
       break;
     case 'mc':
       res.status(200).json(new ResObj(

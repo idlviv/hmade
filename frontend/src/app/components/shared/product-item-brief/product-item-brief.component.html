@@ -133,13 +133,14 @@
   <section class="product-item-brief-content">
     <h2 class="mat-h1 title" *ngIf="!child && product">{{product.name}}</h2>
     <p class="mat-body-1" *ngIf="!child && product">{{product.description}}</p>
-    <div>
-      <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Edit"
+    <p *ngIf="product?.updatedAt" class="mat-caption">{{product.updatedAt | date:'dd MM yyyy'}}</p>
+    <div fxLayout="row">
+      <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Edit" fxFlex="50"
         [routerLink]="['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]"
         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
         Редагувати
       </a>
-      <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Delete"
+      <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Delete" fxFlex="50"
         (click)="deleteProductItem(product._id, product.name)">
         Видалити
       </a>

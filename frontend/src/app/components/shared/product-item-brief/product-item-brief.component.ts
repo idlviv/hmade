@@ -40,6 +40,8 @@ export class ProductItemBriefComponent implements OnInit {
   ngOnInit() {
   }
 
+
+
   allowTo(permitedRole: string): boolean {
     return this.userService.allowTo(permitedRole);
   }
