@@ -6,7 +6,14 @@
             <div class="cell" fxFlex="100">
                 <section>
                   <h1 class="mat-display-2 title">Вітаю в творчій майстерні!</h1>
-                  <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo">
+                  <!-- <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo"> -->
+                  <div class="avatar-big-block">
+                    <img class="avatar-big" src="{{
+                      config.imgPath +
+                      config.cloudinary.cloud_name +
+                      '/c_fill,w_180,h_180,f_auto/' +
+                      'my-photo180x180'}}" alt="my photo">
+                </div>
                   <p class="text-justify muted mat-body-1">
                     Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.
                       Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка -
