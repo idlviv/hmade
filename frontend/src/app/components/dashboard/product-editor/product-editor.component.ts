@@ -51,17 +51,17 @@ export class ProductEditorComponent implements OnInit {
           this.parentCategoryName = event.source.triggerValue;
           this.noMoreChildren = true;
           this.children[level + 1] = children.data;
-          return this.productService.getProductsByParent(event.value, 'products', false);
+          return this.productService.getProductsByParent(event.value, 'products', false, -1, 0, 99999);
        } else {
           this.children[level + 1] = children.data;
           this.noMoreChildren = false;
           this.addParents();
-          return this.productService.getProductsByParent(null, 'products', true);
+          return this.productService.getProductsByParent(null, 'products', true, -1, 0, 99999);
         }
       })
     )
-    .subscribe(res => {
-      this.products = res;
+    .subscribe(result => {
+      this.products = result[0].products;
     },
       err => console.log('помилка завантаження категорій', err)
     );
