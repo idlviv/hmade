@@ -28,7 +28,7 @@ db.getCollection('catalogs')
             assets: ['category-sweetBouquets'],  prefix: 'bus',
             name: 'Букети з цукерок', description: ''},
           { _id: 'flowerBouquets', ancestors: ['home', 'common', 'products', 'bouquets'], parent: 'bouquets', order: 3,
-            assets: ['category-flowerBouquets'],  prefix: 'buf',
+            assets: ['category-flowerBouquets'],  prefix: 'bfl',
             name: 'Букети з квітів', description: ''},
           { _id: 'otherBouquets', ancestors: ['home', 'common', 'products', 'bouquets'], parent: 'bouquets', order: 4,
             assets: ['category-otherBouquets'],  prefix: 'buo',
