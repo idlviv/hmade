@@ -1419,7 +1419,7 @@ a.hover-button:hover {
 // effects for landing page products
 @include keyframes(fadeIn) {
 	from {
-    opacity: 20;
+    opacity: 0;
     // transform: translateY(60px);
 	}
 	to {
@@ -1428,16 +1428,16 @@ a.hover-button:hover {
 	}
 }
 
-.appear {
-  @include animation(fadeIn 2s forwards);
+.opacity0.opacity100 {
+  @include animation(fadeIn 1s forwards);
 }
 
 .opacity0 {
   opacity: 0;
 }
 
-.opacity20 {
-  opacity: .2;
+.opacity100 {
+  opacity: 1;
 }
 
 .fix {

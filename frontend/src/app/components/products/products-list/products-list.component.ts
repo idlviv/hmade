@@ -22,6 +22,7 @@ export class ProductsListComponent implements OnInit, OnChanges {
   processing = false;
   totalProductsLength = 0;
   portionOfProducts: number;
+  skip: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,12 +32,12 @@ export class ProductsListComponent implements OnInit, OnChanges {
   ) { }
 
   ngOnChanges() {
-    this.products = [];
   }
   
   ngOnInit() {
+
     if (this.media.isActive('xs')) {
-      this.portionOfProducts = 6;
+      this.portionOfProducts = 3;
       this.refreshProducts(-1, this.products.length, this.portionOfProducts);
     } else if (this.media.isActive('sm')) {
       this.portionOfProducts = 6;
@@ -67,9 +68,6 @@ export class ProductsListComponent implements OnInit, OnChanges {
   }
 
   refreshProducts(sort: number, skip: number, limit: number) {
-    console.log('sort', sort);
-    console.log('skip', skip);
-    console.log('limit', limit);
     this.processing = true;
 
     this.route.paramMap.pipe(
@@ -96,13 +94,14 @@ export class ProductsListComponent implements OnInit, OnChanges {
         this.children = children.data;
         if (!this.children.length) {
           // if no children - show products
+          this.skip = skip;
           return this.productService.getProductsByParent(this.category_id, 'products', true, sort, skip, limit);
         } else {
+          this.products = [];
           return this.productService.getProductsByParent(null, 'products', true, sort, skip, limit);
         }
       }))
       .subscribe(result => {
-        console.log('result', result);
         this.totalProductsLength = result[0].total ? result[0].total.totalProductsLength : 0;
         this.products.push(...result[0].products);
         this.processing = false;
