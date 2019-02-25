@@ -16,14 +16,9 @@
   <script src="https://apis.google.com/js/platform.js" async defer></script>
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#607d8b">
- <!--[if IE]>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" 
-      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
-  <![endif]-->
 
-  <!-- <script type="text/javascript">
-    /* First CSS File */
+
+  <script type="text/javascript">
     var fontawesome = document.createElement('link');
     fontawesome.rel = 'stylesheet';
     fontawesome.href = 'https://use.fontawesome.com/releases/v5.5.0/css/all.css';
@@ -31,15 +26,17 @@
     fontawesome.crossorigin='anonymous';
     var makeDefer = document.getElementsByTagName('link')[0];
     makeDefer.parentNode.insertBefore(fontawesome, makeDefer);
-  </script> -->
+
+    var materialIcons = document.createElement('link');
+    materialIcons.rel = 'stylesheet';
+    materialIcons.href = 'https://fonts.googleapis.com/icon?family=Material+Icons';
+    var makeDefer2 = document.getElementsByTagName('link')[0];
+    makeDefer2.parentNode.insertBefore(materialIcons, makeDefer2);
+  </script>
 
 </head>
 <body>
-   <!--[if !IE]>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" 
-      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" lazyload>
-  <![endif]-->
+
   <app-root>
       <div style="width: 100vw; text-align: center">
       <div style="display: inline-block; padding-top: 25px">
@@ -49,7 +46,9 @@
   </app-root>
   <noscript>
     Please enable JavaScript to continue using this application.
-
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css" 
+      integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous" lazyload>
   </noscript>
 </body>
 </html>
