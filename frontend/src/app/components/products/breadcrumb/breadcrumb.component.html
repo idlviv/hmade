@@ -6,21 +6,21 @@
         <div class="row" fxLayout>
           <div class="cell wrap" fxFlex fxLayout="row">
             <div>
-              <a class="link opacity0 opacity100"
+              <a class="link animationAppear1s"
                  [routerLink]="['/products', 'ch']"
                  [routerLinkActive]="['primary-light']" [routerLinkActiveOptions]="{exact: true}">
-                 <span class="type2"><mat-icon class="mat-icon-aligner">room</mat-icon></span> 
+                 <span class="type2"><mat-icon class="mat-icon-aligner">label_important</mat-icon></span> 
               </a>
             </div>
 
             <div *ngFor="let hierarchyCategoryItem of hierarchyCategory">
-              <a class="link opacity0 opacity100" *ngIf="!processing"
+              <a class="link animationAppear1s" *ngIf="!processing"
                  [routerLink]="['/products', 'ch', {outlets: {primary: [hierarchyCategoryItem._id], breadcrumb: [hierarchyCategoryItem._id]}}]"
                  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
                  <span class="type2">{{hierarchyCategoryItem.name}}<mat-icon class="mat-icon-aligner">keyboard_arrow_right</mat-icon></span></a>
             </div>
             <div *ngIf="!processing" fxHide.lt-md>
-              <a *ngIf="productName" disabled class="link opacity0 opacity100">
+              <a *ngIf="productName" disabled class="link animationAppear1s">
                  <span class="type2">{{productName}}</span></a>
             </div>
           </div>

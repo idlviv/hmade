@@ -1127,7 +1127,7 @@ td.mat-cell {
 //main blocks - app-header + app-content + app-footer
 
 // elements
-#toolbar, #footer, #breadcrumb {
+#toolbar, #footer {
   position: relative;
   z-index: 4;
   display: flex;
@@ -1147,9 +1147,56 @@ td.mat-cell {
       }
       &.type2 {
         padding-bottom: 5px;
+        vertical-align: middle;
+
         cursor: pointer;
         mat-icon {
           padding-right: 8px;
+          display: inline-block;
+          vertical-align: middle;
+        }
+      }
+    }
+  }
+}
+
+#breadcrumb {
+    @include gt-xs {
+      height: 64px;
+      padding: 8px 16px;
+    }
+    @include xs {
+      height: 56px;
+      padding: 8px 0;
+    }
+  position: relative;
+  z-index: 4;
+  display: flex;
+  box-sizing: border-box;
+  align-items: flex-start;
+  width: 100%;
+  .logo {
+    padding: 0 16px;
+  }
+  a.link {
+    padding: 0 16px;
+    @include xs {
+      padding: 0 2px;
+    }
+    span {
+      // padding-bottom: 5px;
+      cursor: pointer;
+      &.type1 {
+        text-transform: uppercase;
+      }
+      &.type2 {
+        cursor: pointer;
+        vertical-align: middle;
+        mat-icon {
+          padding-right: 8px;
+          @include xs {
+            padding-right: 0;
+          }
           display: inline-block;
           vertical-align: middle;
         }
@@ -1177,16 +1224,7 @@ td.mat-cell {
   }
 }
 
-#breadcrumb {
-  @include gt-xs {
-    height: 64px;
-    padding: 8px 16px;
-  }
-  @include xs {
-    height: 56px;
-    padding: 8px 16px;
-  }
-}
+
 
 #footer {
   @include gt-xs {
@@ -1428,7 +1466,7 @@ a.hover-button:hover {
 	}
 }
 
-.opacity0.opacity100 {
+.animationAppear1s {
   @include animation(fadeIn 1s forwards);
 }
 

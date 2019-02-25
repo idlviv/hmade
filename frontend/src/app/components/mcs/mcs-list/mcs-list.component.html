@@ -1,6 +1,6 @@
   <div class="comtainer">
     <div class="row" fxLayout="row">
-      <div *ngFor="let mc of mcs" class="cell" fxFlex="100">
+      <div *ngFor="let mc of mcs" class="cell animationAppear1s" fxFlex="100">
             <app-mcs-item-brief [mc]="mc" (refreshMcs)="refreshMcs()"></app-mcs-item-brief>
       </div>
     </div>
