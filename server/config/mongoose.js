@@ -7,10 +7,12 @@ const options = {
   autoIndex: process.env.NODE_ENV !== 'production',
   reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
   reconnectInterval: 500, // Reconnect every 500ms
-  poolSize: 10, // Maintain up to 10 socket connections
+  // poolSize: 10,
   // If not connected, return errors immediately rather than waiting for reconnect
   bufferMaxEntries: 0,
   useNewUrlParser: true,
+  poolSize: 50, // Maintain up to 50 socket connections
+  wtimeout: 2500,
 };
 
 const url = config.get('DB_URL');
