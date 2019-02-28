@@ -362,7 +362,7 @@ $mat-custom-orange: (
 $dark-theme: mat-dark-theme(mat-palette($mat-blue-grey), mat-palette($mat-custom-orange), mat-palette($mat-red));
 $light-theme: mat-light-theme(mat-palette($mat-blue-grey), mat-palette($mat-custom-orange), mat-palette($mat-red));
 
-$main-theme: $dark-theme;
+$main-theme: $light-theme;
 @include angular-material-theme($main-theme);
 
 // get variables from current theme (dark or light)
