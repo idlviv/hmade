@@ -402,6 +402,7 @@ $mainTheme: $light-custom-color-theme;
         }
       }
       span.type1 {
+        vertical-align: center;
         border-bottom: 1px solid mat-color($foreground, text);
         &:hover {
           border-bottom: 1px solid mat-color($primary, 300);
@@ -417,16 +418,41 @@ $mainTheme: $light-custom-color-theme;
   $warn: map-get($theme, accent);
   $foreground: map-get($theme, foreground);
   $background: map-get($theme, background);
-    #landing {
 
-        .left-side-container {
-          color: mat-color($foreground, text);
-          background-color: mat-color($accent);
+.sidenav {
+  width: 250px;
+
+    .sidenav-menu-item {
+      color: mat-color($foreground, text);
+      background: mat-color($primary, 700);
+      // display: flex;
+      // align-items : center;
+      // width: 250px;
+      height: 100px;
+      // padding: 8px;
+      margin-bottom: 2px;
+
+
+  
+      a {
+        &.active {
+          span.type2 {
+            color: mat-color($foreground, secondary-text);
+          }
         }
-        .main-container {
-
+        line-height: 2rem;
+        .type2 span,
+        .type2 mat-icon {
+          vertical-align: middle;
+        }
+        .type2 mat-icon {
+          padding-right: 5px;
         }
       }
+    }
+  
+  }
+   
 }
 
 @mixin mcs-item-brief-theme($theme) {
@@ -435,6 +461,8 @@ $mainTheme: $light-custom-color-theme;
   $warn: map-get($theme, accent);
   $foreground: map-get($theme, foreground);
   $background: map-get($theme, background);
+
+
 
     .mcs-item {
       .mc-social {

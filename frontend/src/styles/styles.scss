@@ -203,9 +203,7 @@ body {
 
 // --end default grid
 
-.sidenav {
-  width: 250px;
-}
+
 
 .toolbar-color {
   @include gt-sm {
@@ -1495,3 +1493,4 @@ a.hover-button:hover {
   height: 100px;
   background-color: rgba(45, 95, 130, 0.3);
 }
+
