@@ -1,0 +1,85 @@
+@import './lightThemeStyles';
+
+// reassign components to always dark theme
+@mixin dark-theme-styles($theme) {
+    $primary: map-get($theme, primary);
+    $accent: map-get($theme, accent);
+    $warn: map-get($theme, accent);
+    $foreground: map-get($theme, foreground);
+    $background: map-get($theme, background);
+  
+    #toolbar, #footer, #breadcrumb {
+        color: mat-color($foreground, text);
+        background-color: mat-color($primary);
+        a.link {
+          &.active {
+            span.type1 {
+              border-bottom-color: mat-color($primary, 400);
+            }
+          }
+          span.type1 {
+            vertical-align: center;
+            border-bottom: 1px solid mat-color($foreground, text);
+            &:hover {
+              border-bottom: 1px solid mat-color($primary, 300);
+            }
+          }
+        }
+      }
+  
+      .mcs-item {
+        .mc-social {
+          // &.cell {
+            color: mat-color($foreground, text);
+            background: mat-color($primary);
+          // }
+            .disabled {
+              color: mat-color($primary, 300);
+              // color: mat-color($foreground, disabled-button);
+            }
+            .enabled {
+              // color: mat-color($primary);
+            }
+        }
+      
+      }
+
+  .sidenav {
+    width: 250px;
+  
+      .sidenav-menu-item {
+        color: mat-color($foreground, text);
+        background: mat-color($primary, 700);
+        // display: flex;
+        // align-items : center;
+        // width: 250px;
+        height: 100px;
+        // padding: 8px;
+        margin-bottom: 2px;
+  
+  
+    
+        a {
+          &.active {
+            span.type2 {
+              color: mat-color($foreground, secondary-text);
+            }
+          }
+          line-height: 2rem;
+          .type2 span,
+          .type2 mat-icon {
+            vertical-align: middle;
+          }
+          .type2 mat-icon {
+            padding-right: 5px;
+          }
+        }
+      }
+    }
+  }
+  
+@mixin dark-theme-components($theme) {
+    @include dark-theme-styles($theme);
+  }
+  
+@include dark-theme-components($dark-theme);

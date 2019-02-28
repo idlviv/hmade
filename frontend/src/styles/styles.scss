@@ -1,15 +1,18 @@
-@import './mixins';
-@import './variables';
-@import './material';  // ~@angular/material/theming -> ./material -> ./materialTypography
+
+
+// mixins -> variables -> material -> lightThemeStyles -> darkThemeStyles -> styles
+
+@import './darkThemeStyles';
+// @import './lightThemeStyles';
 // get color theme variables
 
-$primary: map-get($mainTheme, primary);
-$accent: map-get($mainTheme, accent);
-$warn: map-get($mainTheme, warn);
-$foreground: map-get($mainTheme, foreground);
-$background: map-get($mainTheme, background);
-$muted: mat-color($foreground, secondary-text);
-$muted-strong: mat-color($foreground, disabled-text);
+// $primary: map-get($main-theme, primary);
+// $accent: map-get($main-theme, accent);
+// $warn: map-get($main-theme, warn);
+// $foreground: map-get($main-theme, foreground);
+// $background: map-get($main-theme, background);
+// $muted: mat-color($foreground, secondary-text);
+// $muted-strong: mat-color($foreground, disabled-text);
 
 .muted {
   color: $muted;
@@ -205,14 +208,14 @@ body {
 
 
 
-.toolbar-color {
-  @include gt-sm {
-    background-color: $_primary;
-  }
-  @include lt-md {
-    background-color: $primary-light;
-  }
-}
+// .toolbar-color {
+//   @include gt-sm {
+//     background-color: $_primary;
+//   }
+//   @include lt-md {
+//     background-color: $primary-light;
+//   }
+// }
 
 .header {
   margin-bottom: 8px;
@@ -358,10 +361,10 @@ re-captcha > div{
   float: right;
 }
 
-.remove-field {
-  cursor: pointer;
-  color: $_accent;
-}
+// .remove-field {
+//   cursor: pointer;
+//   color: $_accent;
+// }
 
 .centered-container {
   margin: auto;
@@ -415,7 +418,7 @@ div.info-block {
         height: 180px;
         width: 180px;
         //opacity: .5;
-        background: $border;
+        background: $muted;
         position: absolute;
         top: 0;
         @include radius(90px 90px 90px 90px);
@@ -437,7 +440,7 @@ div.info-block {
         height: 90px;
         width: 180px;
         //opacity: .5;
-        background: $border;
+        background: $muted;
         position: absolute;
         top: 0;
         @include radius(90px 90px 0 0);
@@ -523,7 +526,7 @@ div.info-block {
 
   .info-block-row-wrapper {
     @include after-child-element(2) {
-      border-top: 1px solid $border;
+      border-top: 1px solid $muted;
     }
     .info-block-row {
       padding: 24px;
@@ -556,7 +559,7 @@ div.info-block {
 
 .mail-verification {
   padding-top: 0 !important;
-  color: $_warn;
+  color: mat-color($warn);
 }
 
 mat-card.form-block,
@@ -641,7 +644,7 @@ div.form-block {
     height: 100%;
     width: 100%;
     //opacity: .5;
-    background: $border;
+    background: $muted;
     position: absolute;
     top: 0;
     .spinner-wrapper {
@@ -840,7 +843,7 @@ mat-card {
 }
 
 .mat-horizontal-content-container {
-  background: $primary-light !important;
+  background: mat-color($primary, 200) !important;
   padding: 0 !important;
 }
 
@@ -1104,7 +1107,7 @@ td.mat-cell {
 
 
 .mc-side {
-  background-color: $background-color;
+  background-color: $alternative-background-color;
 }
 
 .product-brief-section {

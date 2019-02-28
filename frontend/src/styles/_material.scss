@@ -1,6 +1,7 @@
 @import '~@angular/material/theming';
-
 @import url('https://fonts.googleapis.com/css?family=Fira+Sans:200,300,400|Montserrat:300,400|Roboto:300,400&subset=cyrillic');
+@import './mixins';
+
 // @import './material';
 
 // custom typography
@@ -358,311 +359,102 @@ $mat-custom-orange: (
   )
 );
 
-// @include mat-core();
-// mat-palette accepts $palette-name, main, lighter and darker variants ($default: 500, $lighter: 100, $darker: 700)
-$light-primary: mat-palette($mat-custom-blue);
-$light-accent: mat-palette($mat-light-blue);
-$light-warn: mat-palette($mat-custom-warn);
+$dark-theme: mat-dark-theme(mat-palette($mat-blue-grey), mat-palette($mat-custom-orange), mat-palette($mat-red));
+$light-theme: mat-light-theme(mat-palette($mat-blue-grey), mat-palette($mat-custom-orange), mat-palette($mat-red));
 
-$light-theme: mat-light-theme($light-primary, $light-accent, $light-warn);
+$main-theme: $dark-theme;
+@include angular-material-theme($main-theme);
 
-$dark-primary: mat-palette($mat-custom-blue);
-$dark-accent: mat-palette($mat-light-blue);
-$dark-warn: mat-palette($mat-custom-warn);
-
-
-$dark-theme: mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
-
-$custom-color-primary: mat-palette($mat-custom-color1);
-$custom-color-accent: mat-palette($mat-custom-color2, 500, 200, 700);
-$custom-color-warn: mat-palette($mat-custom-warn);
-
-$dark-custom-color-theme: mat-dark-theme(mat-palette($mat-blue-grey), mat-palette($mat-custom-orange), mat-palette($mat-red));
-$light-custom-color-theme: mat-light-theme(mat-palette($mat-blue-grey), mat-palette($mat-custom-orange), mat-palette($mat-red));
-
-
-$mainTheme: $light-custom-color-theme;
-
-@include angular-material-theme($mainTheme);
-
-@mixin toolbar-theme($theme) {
-  $primary: map-get($theme, primary);
-  $accent: map-get($theme, accent);
-  $warn: map-get($theme, warn);
-  $foreground: map-get($theme, foreground);
-  $background: map-get($theme, background);
-  
-  #toolbar, #footer, #breadcrumb {
-    color: mat-color($foreground, text);
-    background-color: mat-color($primary);
-    a.link {
-      &.active {
-        span.type1 {
-          border-bottom-color: mat-color($primary, 400);
-        }
-      }
-      span.type1 {
-        vertical-align: center;
-        border-bottom: 1px solid mat-color($foreground, text);
-        &:hover {
-          border-bottom: 1px solid mat-color($primary, 300);
-        }
-      }
-    }
-  }
-}
-
-@mixin type1-custom-theme($theme) {
-  $primary: map-get($theme, primary);
-  $accent: map-get($theme, accent);
-  $warn: map-get($theme, accent);
-  $foreground: map-get($theme, foreground);
-  $background: map-get($theme, background);
-
-.sidenav {
-  width: 250px;
-
-    .sidenav-menu-item {
-      color: mat-color($foreground, text);
-      background: mat-color($primary, 700);
-      // display: flex;
-      // align-items : center;
-      // width: 250px;
-      height: 100px;
-      // padding: 8px;
-      margin-bottom: 2px;
-
-
-  
-      a {
-        &.active {
-          span.type2 {
-            color: mat-color($foreground, secondary-text);
-          }
-        }
-        line-height: 2rem;
-        .type2 span,
-        .type2 mat-icon {
-          vertical-align: middle;
-        }
-        .type2 mat-icon {
-          padding-right: 5px;
-        }
-      }
-    }
-  
-  }
-   
-}
-
-@mixin mcs-item-brief-theme($theme) {
-  $primary: map-get($theme, primary);
-  $accent: map-get($theme, accent);
-  $warn: map-get($theme, accent);
-  $foreground: map-get($theme, foreground);
-  $background: map-get($theme, background);
-
-
-
-    .mcs-item {
-      .mc-social {
-        // &.cell {
-          color: mat-color($foreground, text);
-          background: mat-color($primary);
-        // }
-          .disabled {
-            color: mat-color($primary, 300);
-            // color: mat-color($foreground, disabled-button);
-          }
-          .enabled {
-            // color: mat-color($primary);
-          }
-      }
-    
-    }
-  }
-
-
-@mixin type2-custom-theme($theme) {
-  $primary: map-get($theme, primary);
-  $accent: map-get($theme, accent);
-  $warn: map-get($theme, accent);
-  $foreground: map-get($theme, foreground);
-  $background: map-get($theme, background);
-
-  .caption {
-    font: {
-      family: mat-font-family($config, caption);
-      size: mat-font-size($config, caption);
-      weight: mat-font-weight($config, caption);
-    }
-  }
-
-  .body-3 {
-    line-height: 1.75rem;
-    font: {
-      family: mat-font-family($config, body-1);
-      size: 1rem;
-      weight: 400;
-    }
-  }
-
-  .bold {
-    font-weight: 600;
-  }
-
-  h1, h2, h3, h4, h5, h6 {
-    color: mat-color($foreground, text);
-  }
-
-  .muted {
-    color: mat-color($foreground, secondary-text);
-  }
-
-  .muted-strong {
-    color: mat-color($foreground, disabled-text);
-  }
-
-
-  #product-item-brief {
-    color: mat-color($foreground, text);
-    // background-color: mat-color($accent);
-  }
-
-  .alternative-background {
-    background: $alternative-background-gradient;
-  }
-
-  .card,
-  body,
-  table.mat-table {
-    background-color:  mat-color($background, background);
-  }
-
-
-}
-
-@mixin dark-components-theme($theme) {
-  // @include toolbar-theme($theme);
-}
-@mixin light-components-theme($theme) {
-  // @include mat-sidenav-theme($theme);
-}
-
-@mixin dark-components-custom-theme($theme) {
-  @include toolbar-theme($theme);
-  @include type1-custom-theme($theme);
-  @include mcs-item-brief-theme($theme);
-
-}
-
-@mixin light-components-custom-theme($theme) {
-  @include type2-custom-theme($theme);
-
-}
-
-
-@include dark-components-theme($dark-theme);
-@include light-components-theme($light-theme);
-@include dark-components-custom-theme($dark-custom-color-theme);
-@include light-components-custom-theme($light-custom-color-theme);
+// get variables from current theme (dark or light)
+$primary: map-get($main-theme, primary);
+$accent: map-get($main-theme, accent);
+$warn: map-get($main-theme, warn);
+$foreground: map-get($main-theme, foreground);
+$background: map-get($main-theme, background);
+$muted: mat-color($foreground, secondary-text);
+$muted-strong: mat-color($foreground, disabled-text);
 
 
 
 // coloring 
-$background-color: map_get($mat-grey, 50);
-$_primary: mat-color($light-primary);
-$_accent: mat-color($light-accent);
-$_warn: mat-color($light-warn);
+// $background-color: map_get($mat-grey, 50);
+// $_primary: mat-color($light-primary);
+// $_accent: mat-color($light-accent);
+// $_warn: mat-color($light-warn);
 
-$primary-light50: mat-color($light-primary, 50);
-$primary-light: mat-color($light-primary, 100);
-$primary-dark: mat-color($light-primary, 900);
+// $primary-light50: mat-color($light-primary, 50);
+// $primary-light: mat-color($light-primary, 100);
+// $primary-dark: mat-color($light-primary, 900);
 
-$accent-light50: mat-color($light-accent, 50);
-$accent-light: mat-color($light-accent, 100);
-$accent-dark: mat-color($light-accent, 900);
+// $accent-light50: mat-color($light-accent, 50);
+// $accent-light: mat-color($light-accent, 100);
+// $accent-dark: mat-color($light-accent, 900);
 
-$warn-light50: mat-color($light-warn, 50);
-$warn-light: mat-color($light-warn, 100);
-$warn-dark: mat-color($light-warn, 900);
+// $warn-light50: mat-color($light-warn, 50);
+// $warn-light: mat-color($light-warn, 100);
+// $warn-dark: mat-color($light-warn, 900);
 
-.primary {
-  color: $_primary;
-}
-
-.primary-light {
-  color: $primary-light !important;
-}
-
-.primary-dark {
-  color: $primary-dark;
-}
-
-.primary-background {
-  background-color: $_primary;
-}
-
-.primary-background-light {
-  background-color: $primary-light;
-}
-
-.primary-background-dark {
-  background-color: $primary-dark;
-}
-
-.accent{
-  color: $_accent;
-}
-
-.accent-background{
-  background-color: $_accent;
-}
-
-.warn {
-  color: $_warn;
-}
-
-.warn-background {
-  background-color: $_warn;
-}
-
-// $muted-light: rgba(0, 0, 0, 0.4);
-// $muted: rgba(0, 0, 0, 0.5);
-// $muted-strong: rgba(0, 0, 0, 0.3);
-$red: #cc0000;
-$green: #009900;
-$white: #ffffff;
-
-.red {
-  color: $red;
-}
-
-.green {
-  color: $green;
-}
-
-// .muted-light {
-//   color: $muted-light;
+// .primary {
+//   color: $_primary;
 // }
 
-// .muted {
-//   color: $muted;
+// .primary-light {
+//   color: $primary-light !important;
 // }
 
-// .muted-strong {
-//   color: $muted-strong;
+// .primary-dark {
+//   color: $primary-dark;
 // }
 
-//old
-$border: rgba(0, 0, 0, 0.12);
-$light-gray: #D6E7F7;
+// .primary-background {
+//   background-color: $_primary;
+// }
 
-.light-gray-background {
-  background-color: $light-gray;
-}
+// .primary-background-light {
+//   background-color: $primary-light;
+// }
 
-.danger {
-  color: $_warn;
-}
+// .primary-background-dark {
+//   background-color: $primary-dark;
+// }
+
+// .accent{
+//   color: $_accent;
+// }
+
+// .accent-background{
+//   background-color: $_accent;
+// }
+
+// .warn {
+//   color: $_warn;
+// }
+
+// .warn-background {
+//   background-color: $_warn;
+// }
+
+// $red: #cc0000;
+// $green: #009900;
+// $white: #ffffff;
+
+// .red {
+//   color: $red;
+// }
+
+// .green {
+//   color: $green;
+// }
+
+// //old
+// $border: rgba(0, 0, 0, 0.12);
+// $light-gray: #D6E7F7;
+
+// .light-gray-background {
+//   background-color: $light-gray;
+// }
+
+// .danger {
+//   color: $_warn;
+// }
 
