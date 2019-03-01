@@ -1,65 +1,18 @@
-@import './material'; 
+@import './themeStyles'; 
 
-// reassign components to always light theme
+// redefine styles for light theme components
 @mixin light-theme-styles($theme) {
-    $primary: map-get($theme, primary);
-    $accent: map-get($theme, accent);
-    $warn: map-get($theme, accent);
-    $foreground: map-get($theme, foreground);
-    $background: map-get($theme, background);
-  
-    .caption {
-      font: {
-        family: mat-font-family($config, caption);
-        size: mat-font-size($config, caption);
-        weight: mat-font-weight($config, caption);
-      }
-    }
-  
-    .body-3 {
-      line-height: 1.75rem;
-      font: {
-        family: mat-font-family($config, body-1);
-        size: 1rem;
-        weight: 400;
-      }
-    }
-  
-    .bold {
-      font-weight: 600;
-    }
-  
-    h1, h2, h3, h4, h5, h6 {
-      color: mat-color($foreground, text);
-    }
-  
-    .muted {
-      color: mat-color($foreground, secondary-text);
-    }
-  
-    .muted-strong {
-      color: mat-color($foreground, disabled-text);
-    }
-  
-  
-    #product-item-brief {
-      color: mat-color($foreground, text);
-      // background-color: mat-color($accent);
-    }
-  
-    .alternative-background {
-      background: $alternative-background-gradient;
-    }
-  
-    .card,
-    body,
-    table.mat-table {
-      background-color:  mat-color($background, background);
-    }
-  }
+  $primary: map-get($theme, primary);
+  $accent: map-get($theme, accent);
+  $warn: map-get($theme, accent);
+  $foreground: map-get($theme, foreground);
+  $background: map-get($theme, background);
+   
+  // styles ..
+}
 
-  @mixin light-theme-components($theme) {
-    @include light-theme-styles($theme);
-  }
+@mixin light-theme-components($theme) {
+  @include light-theme-styles($theme);
+}
 
 @include light-theme-components($light-theme);

@@ -4244,7 +4244,7 @@ var DashboardRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "    <!--<mat-toolbar class=\"mat-elevation-z2\">-->\r\n      <div class=\"container\">\r\n              <div class=\"row\" fxLayout=\"row\">\r\n        <div *ngFor=\"let dashboardSidenavItem of dashboardSidenavItems\" \r\n          class=\"cell sidenav-menu-item\" fxFlex=\"100\" fxLayoutAlign=\"start center\">\r\n          <a  class=\"link\"\r\n              [routerLinkActive]=\"['primary-light']\" [routerLinkActiveOptions]=\"{exact: true}\" \r\n              [attr.aria-label]=\"dashboardSidenavItem.name\"\r\n              [routerLink]=\"['/dashboard', dashboardSidenavItem._id]\">\r\n              <span class=\"type2\">\r\n                <mat-icon>edit</mat-icon>\r\n                <span>{{dashboardSidenavItem.name}}</span>\r\n                </span>\r\n            </a>\r\n        </div>\r\n      </div>\r\n      </div>\r\n\r\n     \r\n    <!--</mat-toolbar>-->\r\n\r\n"
+module.exports = "      <div class=\"container\">\r\n              <div class=\"row\" fxLayout=\"row\">\r\n        <div *ngFor=\"let dashboardSidenavItem of dashboardSidenavItems\" [ngClass]=\"{'active': isActiveTemplateVariable.isActive}\"\r\n          class=\"cell sidenav-menu-item\" fxFlex=\"100\" fxLayoutAlign=\"start center\" (click)=\"onRouting(dashboardSidenavItem._id)\">\r\n          <a  class=\"link\"\r\n            [routerLinkActive]=\"['']\" [routerLinkActiveOptions]=\"{exact: true}\" \r\n            #isActiveTemplateVariable=\"routerLinkActive\"\r\n            [attr.aria-label]=\"dashboardSidenavItem.name\"\r\n            [routerLink]=\"['/dashboard', dashboardSidenavItem._id]\">\r\n            <span class=\"type2\">\r\n              <!-- <mat-icon>edit</mat-icon> -->\r\n              <span>{{dashboardSidenavItem.name}}</span>\r\n            </span>\r\n          </a>\r\n        </div>\r\n      </div>\r\n      </div>"
 
 /***/ }),
 
@@ -4296,6 +4296,9 @@ var DashboardSidenavComponent = /** @class */ (function () {
             _this.dashboardSidenavItems = menuItems.data;
             // console.log('dashboardSidenavItems', this.dashboardSidenavItems);
         });
+    };
+    DashboardSidenavComponent.prototype.onRouting = function (link) {
+        this.router.navigate(['/dashboard', link]);
     };
     DashboardSidenavComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({

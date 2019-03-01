@@ -9,7 +9,9 @@
               <a class="link animationAppear1s"
                  [routerLink]="['/products', 'ch']"
                  [routerLinkActive]="['primary-light']" [routerLinkActiveOptions]="{exact: true}">
-                 <span class="type2"><mat-icon class="mat-icon-aligner">label_important</mat-icon></span> 
+                 <span class="type2">
+                   <mat-icon>label_important</mat-icon>
+                  </span> 
               </a>
             </div>
 
@@ -17,12 +19,19 @@
               <a class="link animationAppear1s" *ngIf="!processing"
                  [routerLink]="['/products', 'ch', {outlets: {primary: [hierarchyCategoryItem._id], breadcrumb: [hierarchyCategoryItem._id]}}]"
                  [routerLinkActive]="['active']" [routerLinkActiveOptions]="{exact: true}">
-                 <span class="type2">{{hierarchyCategoryItem.name}}<mat-icon class="mat-icon-aligner">keyboard_arrow_right</mat-icon></span></a>
+                 <span class="type2"> 
+                   <span>
+                      {{hierarchyCategoryItem.name}}
+                   </span>
+                   <mat-icon class="mat-icon-aligner">keyboard_arrow_right</mat-icon>
+                  </span>
+                </a>
             </div>
-            <div *ngIf="!processing" fxHide.lt-md>
+            <!-- <div *ngIf="!processing" fxHide.lt-md>
               <a *ngIf="productName" disabled class="link animationAppear1s">
-                 <span class="type2">{{productName}}</span></a>
-            </div>
+                 <span class="type2">{{productName}}</span>
+                </a>
+            </div> -->
           </div>
         </div>
       </div>

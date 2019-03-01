@@ -1,6 +1,6 @@
 @import './lightThemeStyles';
 
-// reassign components to always dark theme
+// redefine styles - always dark theme components
 @mixin dark-theme-styles($theme) {
     $primary: map-get($theme, primary);
     $accent: map-get($theme, accent);
@@ -45,35 +45,29 @@
       }
 
   .sidenav {
-    width: 250px;
-  
+    width: 200px;
       .sidenav-menu-item {
+        position: relative;
         color: mat-color($foreground, text);
-        background: mat-color($primary, 700);
-        // display: flex;
-        // align-items : center;
-        // width: 250px;
+        background: mat-color($primary, 600);
         height: 100px;
-        // padding: 8px;
         margin-bottom: 2px;
-  
-  
-    
-        a {
-          &.active {
-            span.type2 {
-              color: mat-color($foreground, secondary-text);
-            }
-          }
-          line-height: 2rem;
-          .type2 span,
-          .type2 mat-icon {
-            vertical-align: middle;
-          }
-          .type2 mat-icon {
-            padding-right: 5px;
-          }
+        &.active {
+           background: mat-color($primary, 800);
         }
+        &:hover {
+            background: mat-color($primary, 700);
+            cursor: pointer;
+          }
+        mat-icon {
+            position: absolute;
+            top: 2px;
+            left: 2px;
+        }
+        a {
+            // padding-left: 10px;
+        }
+       
       }
     }
   }

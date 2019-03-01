@@ -24,4 +24,8 @@ dashboardSidenavItems: ICatalog;
       });
   }
 
+  onRouting(link) {
+    this.router.navigate(['/dashboard', link]);
+  }
+
 }
