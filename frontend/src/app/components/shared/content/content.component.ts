@@ -8,6 +8,7 @@ import { MatDrawerContainer, MatMenuTrigger } from '@angular/material';
 import { config } from '../../../app.config';
 import { SharedService } from '../../../services/shared.service';
 import { Observable } from 'rxjs';
+import { SocialService } from 'src/app/services/social.service';
 
 @Component({
   selector: 'app-content',
@@ -34,6 +35,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
     private router: Router,
     private catalogService: CatalogService,
     private cd: ChangeDetectorRef,
+    private socialService: SocialService,
   ) { }
 
 
@@ -73,6 +75,17 @@ export class ContentComponent implements OnInit, AfterViewInit {
         });
   }
 
+  getUnreadedCommentsLength() {
+    if (this.user) {
+      this.socialService.getUnreadedCommentsLength(this.user.commentsReadedTill)
+        .subscribe(
+          res => console.log('res', res),
+          err => console.log('err', err)
+        );
+    }
+
+  }
+
   userLogout() {
     this.userService.userLogout()
       .subscribe(message => {
@@ -87,8 +100,8 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
   markCommentsAsReaded() {
     const date = Date.now();
-    console.log('set markCommentsAsReadedTill', date);
-    this.userService.userEditUnsecure({name: 'markCommentsAsReadedTill', value: date + ''})
+    console.log('set commentsReadedTill', date);
+    this.userService.userEditUnsecure({name: 'commentsReadedTill', value: date + ''})
     .subscribe(
       res => console.log('res', res),
       err => console.log('err', err)

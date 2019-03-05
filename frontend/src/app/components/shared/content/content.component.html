@@ -23,7 +23,7 @@
     <a *ngIf="allowTo('manager')" class="link" [matMenuTriggerFor]="settingsMenu" #settingsMenuTrigger="matMenuTrigger"
     (mouseover)="onSettingsMenuMouseover()">
     <span class="type2">
-      <mat-icon class="mat-icon-aligner">date</mat-icon>{{user.markCommentsAsReadedTill | date}} -
+      <mat-icon class="mat-icon-aligner">date</mat-icon>{{user.commentsReadedTill | date}} -
     </span>
   </a>
 

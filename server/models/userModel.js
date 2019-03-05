@@ -42,7 +42,7 @@ const UserSchema = new Schema({
   createdAt: {
     type: Number,
   },
-  markCommentsAsReadedTill: {
+  commentsReadedTill: {
     type: Number,
   },
 

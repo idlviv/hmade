@@ -72,6 +72,27 @@ export class SocialService {
     );
   }
 
+  /**
+   * get current user unreaded commnets length
+   *
+   * @param {number} commentsReadedTill
+   * @returns {Observable<number>}
+   * @memberof SocialService
+   */
+  getUnreadedCommentsLength(commentsReadedTill: number): Observable<number>  {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+      params: new HttpParams()
+        .set('commentsReadedTill', commentsReadedTill + '')
+    };
+    return this.http.get<number>(
+      'api/social/get-unreaded-comments-length',
+      httpOptions
+    );
+  }
+
   displayComment(parent_id: string, parentCategory: string, display: boolean, comment_id: string): Observable<boolean> {
     const token = this.userService.userLocalGetToken('token');
     const httpOptions = {

@@ -10,7 +10,7 @@ export interface IUser {
   ban?: string;
   createdAt?: number;
   password?: string;
-  markCommentsAsReadedTill?: number;
+  commentsReadedTill?: number;
 }
 
 // export class User implements IUser {

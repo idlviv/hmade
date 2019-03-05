@@ -52,6 +52,12 @@ router.get('/social/get-comments',
     socialController.getComments
 );
 
+router.get('/social/get-unreaded-comments-length',
+    authentication,
+    authorization('manager'),
+    socialController.getUnreadedCommentsLength
+);
+
 /**
  * mc routes
  */

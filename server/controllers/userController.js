@@ -211,7 +211,7 @@ const userEditUnsecure = function(req, res, next) {
 
   Object.assign(user, req.user._doc);
   Object.assign(modificationRequest, req.body);
-  if (modificationRequest.name === 'markCommentsAsReadedTill') {
+  if (modificationRequest.name === 'commentsReadedTill') {
     userHelper.updateDocument(
         {_id: user._id},
         {$set: {

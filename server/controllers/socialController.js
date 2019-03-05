@@ -4,6 +4,18 @@ const ApplicationError = require('../errors/applicationError');
 const ObjectId = require('../config/mongoose').Types.ObjectId;
 const log = require('../config/winston')(module);
 
+module.exports.getUnreadedCommentsLength = function(req, res, next) {
+  
+  const commentsReadedTill = req.query.commentsReadedTill;
+
+  McModel.find(
+      {_id: parent_id},
+      {$pull: {comments: {_id: comment_id}}}
+  )
+      .then((result) =>res.status(200).json(result.n))
+      .catch((err) => next(new DbError()));
+
+};
 
 module.exports.deleteComment = function(req, res, next) {
   const parent_id = req.query.parent_id;
