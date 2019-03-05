@@ -309,7 +309,27 @@ export class UserService {
     );
   }
 
-  /**
+   /** Edit user fields without password confirmation
+   *
+   *
+   * @param {{name: string, value: string, password: string}} data
+   * @returns {Observable<string>}
+   * @memberof UserService
+   */
+  userEditUnsecure(data: {name: string, value: string}): Observable<string> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+      })
+    };
+    return this.http.put<string>(
+      'api/user/editUnsecure',
+      data,
+      httpOptions
+    );
+  }
+
+  /** Edit user fields with password confirmation
    *
    *
    * @param {{name: string, value: string, password: string}} data

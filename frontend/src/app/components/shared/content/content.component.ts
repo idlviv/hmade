@@ -79,11 +79,20 @@ export class ContentComponent implements OnInit, AfterViewInit {
         this.userService.logging();
         console.log(message);
         this.router.navigate(['/user', 'login']);
-
       },
     err => {
       console.log(err.error);
     });
+  }
+
+  markCommentsAsReaded() {
+    const date = Date.now();
+    console.log('set markCommentsAsReadedTill', date);
+    this.userService.userEditUnsecure({name: 'markCommentsAsReadedTill', value: date + ''})
+    .subscribe(
+      res => console.log('res', res),
+      err => console.log('err', err)
+    );
   }
 
   onSettingsMenuMouseover() {

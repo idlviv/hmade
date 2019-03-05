@@ -288,6 +288,12 @@ router.put('/user/edit',
     userController.userEdit
 );
 
+router.put('/user/editUnsecure',
+    authentication,
+    authorization('manager'),
+    userController.userEditUnsecure
+);
+
 router.put('/user/edit-avatar',
     authentication,
     uploadController.userEditAvatar

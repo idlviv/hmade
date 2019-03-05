@@ -146,6 +146,7 @@ const userEmailVerificationReceive = function(req, res, next) {
                       surname: req.user._doc.surname,
                       avatar: req.user._doc.avatar,
                       provider: req.user._doc.provider,
+                      markCommentsAsReadedTill: req.user._doc.markCommentsAsReadedTill,
                       role: 'user',
                     };
                     const token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET');
@@ -196,6 +197,40 @@ const userEmailVerificationSend = function(req, res, next) {
   });
 };
 
+/** Edit user fields without password confirmation
+ *
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @return {*}
+ */
+const userEditUnsecure = function(req, res, next) {
+  let user = {};
+  let modificationRequest = {};
+
+  Object.assign(user, req.user._doc);
+  Object.assign(modificationRequest, req.body);
+  if (modificationRequest.name === 'markCommentsAsReadedTill') {
+    userHelper.updateDocument(
+        {_id: user._id},
+        {$set: {
+          [modificationRequest.name]: modificationRequest.value,
+        }})
+        .then((result) => res.status(200).json('Зміни внесено'))
+        .catch((err) => next(err));
+  } else {
+    return next(new ClientError({message: 'Помилка авторизації', status: 401}));
+  }
+};
+
+/** Edit user fields with password confirmation
+ *
+ *
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 const userEdit = function(req, res, next) {
   let user = {};
   let modificationRequest = {};
@@ -244,6 +279,7 @@ const userProfile = function(req, res, next) {
     surname: req.user._doc.surname,
     role: req.user._doc.role,
     email: req.user._doc.email,
+    markCommentsAsReadedTill: req.user._doc.markCommentsAsReadedTill,
   };
   return res.status(200).json(user);
 };
@@ -284,6 +320,7 @@ const userLogin = function(req, res, next) {
       avatar: req.user._doc.avatar,
       provider: req.user._doc.provider,
       role: req.user._doc.role,
+      markCommentsAsReadedTill: req.user._doc.markCommentsAsReadedTill,
     };
     console.log('login');
     setUserCookie(user)(req, res, next)
@@ -306,6 +343,7 @@ const syncTokenToSession = function(req, res, next) {
       avatar: req.user._doc.avatar,
       provider: req.user._doc.provider,
       role: req.user._doc.role,
+      markCommentsAsReadedTill: req.user._doc.markCommentsAsReadedTill,
     };
     const token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET'); // 604800
     return res.status(200).json(token);
@@ -359,6 +397,7 @@ const userCheckAuthorization = function(req, res, next) {
       avatar: req.user._doc.avatar,
       provider: req.user._doc.provider,
       role: req.user._doc.role,
+      markCommentsAsReadedTill: req.user._doc.markCommentsAsReadedTill,
     };
     token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET'); // 604800
   } else {
@@ -419,4 +458,5 @@ module.exports = {
   passwordReset,
   passwordResetCheckCode,
   passwordResetCheckEmail,
+  userEditUnsecure,
 };

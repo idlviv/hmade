@@ -18,8 +18,14 @@
       <span class="type2">
         <mat-icon class="mat-icon-aligner">settings</mat-icon>{{user.name}} {{user.surname}}
       </span>
-
     </a>
+
+    <a *ngIf="allowTo('manager')" class="link" [matMenuTriggerFor]="settingsMenu" #settingsMenuTrigger="matMenuTrigger"
+    (mouseover)="onSettingsMenuMouseover()">
+    <span class="type2">
+      <mat-icon class="mat-icon-aligner">date</mat-icon>{{user.markCommentsAsReadedTill | date}} -
+    </span>
+  </a>
 
     <mat-menu #settingsMenu="matMenu" xPosition="after" yPosition="above" [overlapTrigger]="false">
       <span (mouseleave)="onSettingsMenuMouseleave()">
@@ -31,6 +37,9 @@
           [routerLinkActiveOptions]="{exact: true}">
           <mat-icon>settings</mat-icon><span>Dashboard</span>
         </a>
+        <a *ngIf="allowTo('manager')" mat-menu-item (click)="markCommentsAsReaded()">
+        <mat-icon>settings</mat-icon><span>Позначити всі коментарі як прочитані</span>
+      </a>
       </span>
     </mat-menu>
 
@@ -98,14 +107,21 @@
           <a matLine [routerLinkActive]="['muted']" [routerLinkActiveOptions]="{exact: true}"
             [routerLink]="['/user/login']" (click)="sidenav.toggle()">Вхід</a>
         </mat-list-item>
-        <mat-list-item *ngIf="allowTo('guest')">
 
+        <!-- <mat-list-item *ngIf="allowTo('manager')">
+          <a matLine (click)="sidenav.toggle()">
+            user - {{user}}
+          </a>
+          <mat-icon matListIcon>exit_to_app</mat-icon>
+        </mat-list-item> -->
+
+        <mat-list-item *ngIf="allowTo('guest')">
           <a matLine (click)="userLogout()" (click)="sidenav.toggle()">
             Вихід
           </a>
-
           <mat-icon matListIcon>exit_to_app</mat-icon>
         </mat-list-item>
+
       </mat-nav-list>
     </div>
   </mat-sidenav>

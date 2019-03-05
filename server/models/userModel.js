@@ -42,10 +42,14 @@ const UserSchema = new Schema({
   createdAt: {
     type: Number,
   },
+  markCommentsAsReadedTill: {
+    type: Number,
+  },
 
   // only for native
   password: {
     type: String,
+    default: 0,
   },
   passwordTries: {
     type: Number,

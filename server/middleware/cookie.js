@@ -19,6 +19,7 @@ function setUserCookie(req, res, next) {
       avatar: req.user._doc.avatar,
       provider: req.user._doc.provider,
       role: req.user._doc.role,
+      markCommentsAsReadedTill: req.user._doc.markCommentsAsReadedTill,
     };
     token = createJWT('', user, null, 'JWT_SECRET');
   } else {
