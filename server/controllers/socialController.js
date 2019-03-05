@@ -5,16 +5,20 @@ const ObjectId = require('../config/mongoose').Types.ObjectId;
 const log = require('../config/winston')(module);
 
 module.exports.getUnreadedCommentsLength = function(req, res, next) {
-  
-  const commentsReadedTill = req.query.commentsReadedTill;
 
-  McModel.find(
-      {_id: parent_id},
-      {$pull: {comments: {_id: comment_id}}}
-  )
-      .then((result) =>res.status(200).json(result.n))
+  const commentsReadedTill = req.user._doc.commentsReadedTill;
+  log.debug('commentsReadedTill', commentsReadedTill);
+
+  McModel.aggregate([
+    {$unwind: '$comments'},
+    {$match: {'comments.commentedAt': {$gt: commentsReadedTill}}},
+    {$count: 'length'},
+  ])
+      .then((result) => {
+        log.debug('result', result);
+        return res.status(200).json(result && result[0] && result[0].length ? result[0].length : 0);
+      })
       .catch((err) => next(new DbError()));
-
 };
 
 module.exports.deleteComment = function(req, res, next) {

@@ -257,7 +257,7 @@ var UserCreateComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<h1 mat-dialog-title>Внести зміни</h1>\r\n<div class=\"form-block\">\r\n    <form [formGroup]=\"userEditForm\" (submit)=\"onSubmit()\">\r\n\r\n      <div fxLayout=\"row\" *ngFor=\"let dataPayload of data.payload\">\r\n        <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n          <mat-icon color=\"primary\">{{dataPayload.icon}}</mat-icon>\r\n        </div>\r\n        <mat-form-field>\r\n            <input matInput placeholder=\"{{dataPayload.label}}\" formControlName=\"{{dataPayload.name}}\"\r\n                   autocomplete=\"false\" type=\"{{dataPayload.type}}\" required>\r\n            <mat-error *ngFor=\"let validator of dataPayload.validators\">\r\n              <div\r\n                *ngIf=\"(validator.name === 'length' &&\r\n                (userEditForm.get(dataPayload.name).errors?.minlength ||\r\n                userEditForm.get(dataPayload.name).errors?.maxlength ||\r\n                userEditForm.get(dataPayload.name).errors?.required) &&\r\n                userEditForm.get(dataPayload.name).touched)\">\r\n                {{validator.message}}\r\n              </div>\r\n              <div\r\n                *ngIf=\"(validator.name === 'pattern' &&\r\n                userEditForm.get(dataPayload.name).errors?.pattern &&\r\n                userEditForm.get(dataPayload.name).touched)\">\r\n                {{validator.message}}\r\n              </div>\r\n              <div\r\n                *ngIf=\"(validator.name === 'require' &&\r\n                userEditForm.get(dataPayload.name).errors?.required &&\r\n                userEditForm.get(dataPayload.name).touched)\">\r\n                {{validator.message}}\r\n              </div>\r\n              <div\r\n                *ngIf=\"(validator.name === 'match' &&\r\n                userEditForm.get(dataPayload.name).errors?.mismatch &&\r\n                userEditForm.get(dataPayload.name).touched)\">\r\n                {{validator.message}}\r\n              </div>\r\n            </mat-error>\r\n          </mat-form-field>\r\n\r\n      </div>\r\n      <div class=\"submit-button-wrapper\">\r\n        <button type=\"reset\" mat-button color=\"primary\" (click)=\"onNoClick()\" aria-label=\"Back\">Повернутись</button>\r\n        <span fxFlex></span>\r\n        <button mat-raised-button color=\"primary\" [disabled]=\"!userEditForm.valid\" aria-label=\"Ok\">Ok</button>\r\n      </div>\r\n\r\n    </form>\r\n<p *ngIf=\"data.oldValue\" class=\"mat-body-1\">поточне значення: <span class=\"mat-body-2\">{{data.oldValue}}</span></p>\r\n\r\n</div>\r\n"
+module.exports = "<h1 mat-dialog-title>Внести зміни</h1>\n<div class=\"form-block\">\n    <form [formGroup]=\"userEditForm\" (submit)=\"onSubmit()\">\n\n      <div fxLayout=\"row\" *ngFor=\"let dataPayload of data.payload\">\n        <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n          <mat-icon color=\"primary\">{{dataPayload.icon}}</mat-icon>\n        </div>\n        <mat-form-field>\n            <input matInput placeholder=\"{{dataPayload.label}}\" formControlName=\"{{dataPayload.name}}\"\n                   autocomplete=\"false\" type=\"{{dataPayload.type}}\" required>\n            <mat-error *ngFor=\"let validator of dataPayload.validators\">\n              <div\n                *ngIf=\"(validator.name === 'length' &&\n                (userEditForm.get(dataPayload.name).errors?.minlength ||\n                userEditForm.get(dataPayload.name).errors?.maxlength ||\n                userEditForm.get(dataPayload.name).errors?.required) &&\n                userEditForm.get(dataPayload.name).touched)\">\n                {{validator.message}}\n              </div>\n              <div\n                *ngIf=\"(validator.name === 'pattern' &&\n                userEditForm.get(dataPayload.name).errors?.pattern &&\n                userEditForm.get(dataPayload.name).touched)\">\n                {{validator.message}}\n              </div>\n              <div\n                *ngIf=\"(validator.name === 'require' &&\n                userEditForm.get(dataPayload.name).errors?.required &&\n                userEditForm.get(dataPayload.name).touched)\">\n                {{validator.message}}\n              </div>\n              <div\n                *ngIf=\"(validator.name === 'match' &&\n                userEditForm.get(dataPayload.name).errors?.mismatch &&\n                userEditForm.get(dataPayload.name).touched)\">\n                {{validator.message}}\n              </div>\n            </mat-error>\n          </mat-form-field>\n\n      </div>\n      <div class=\"submit-button-wrapper\">\n        <button type=\"reset\" mat-button color=\"primary\" (click)=\"onNoClick()\" aria-label=\"Back\">Повернутись</button>\n        <span fxFlex></span>\n        <button mat-raised-button color=\"primary\" [disabled]=\"!userEditForm.valid\" aria-label=\"Ok\">Ok</button>\n      </div>\n\n    </form>\n<p *ngIf=\"data.oldValue\" class=\"mat-body-1\">поточне значення: <span class=\"mat-body-2\">{{data.oldValue}}</span></p>\n\n</div>\n"
 
 /***/ }),
 
@@ -377,6 +377,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/shared.service */ "./src/app/services/shared.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -392,9 +393,11 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var UserLoginComponent = /** @class */ (function () {
-    function UserLoginComponent(userService, matSnackBar, router) {
+    function UserLoginComponent(userService, sharedService, matSnackBar, router) {
         this.userService = userService;
+        this.sharedService = sharedService;
         this.matSnackBar = matSnackBar;
         this.router = router;
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
@@ -417,11 +420,11 @@ var UserLoginComponent = /** @class */ (function () {
             password: this.userLoginForm.get('password').value,
         };
         this.userService.userLogin(this.user)
-            .subscribe(function (token) {
-            if (token) {
+            .subscribe(function (result) {
+            if (result === 'logged in') {
                 _this.resetForm();
                 _this.userService.logging();
-                // const login = this.userService.userLocalGetCredentials().login;
+                _this.sharedService.sharingEvent(['userChangeStatusEmitter']);
                 _this.matSnackBar.open(_this.user.login + ", \u0432\u0438 \u0443\u0432\u0456\u0439\u0448\u043B\u0438 \u043D\u0430 \u0441\u0430\u0439\u0442", '', { duration: 5000 });
                 _this.router.navigate(['/user', 'profile']);
             }
@@ -445,6 +448,7 @@ var UserLoginComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./user-login.component.scss */ "./src/app/components/user/user-login/user-login.component.scss")]
         }),
         __metadata("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
+            src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_6__["SharedService"],
             _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"],
             _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"]])
     ], UserLoginComponent);

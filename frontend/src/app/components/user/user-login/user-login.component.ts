@@ -5,6 +5,7 @@ import { UserService } from '../../../services/user.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { config } from '../../../app.config';
+import { SharedService } from 'src/app/services/shared.service';
 declare const gapi: any;
 
 @Component({
@@ -25,6 +26,7 @@ export class UserLoginComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private sharedService: SharedService,
     private matSnackBar: MatSnackBar,
     private router: Router,
   ) { }
@@ -49,11 +51,11 @@ export class UserLoginComponent implements OnInit {
 
     this.userService.userLogin(this.user)
       .subscribe(
-        token => {
-          if (token) {
+        result => {
+          if (result === 'logged in') {
             this.resetForm();
             this.userService.logging();
-            // const login = this.userService.userLocalGetCredentials().login;
+            this.sharedService.sharingEvent(['userChangeStatusEmitter']);
             this.matSnackBar.open(`${this.user.login}, ви увійшли на сайт`, '', {duration: 5000});
             this.router.navigate(['/user', 'profile']);
           }

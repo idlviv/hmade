@@ -27,6 +27,9 @@ export class SharedService {
   }
   // ['updateDesigns'] design-item-component => design-editor-component
   // ['closeSidenav'] design-popup-component => app-component
+  // ['userChangeStatusEmitter'] user login (login comp) or logout (content-component) or
+  //     markCommentsAsReaded (content-component) emitter =>
+  //     content-component (update unreaded comments length)
 
   // sending feedback message
   sendFeedbackMessage(feedback, recaptcha): Observable<IResponse> {

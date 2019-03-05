@@ -79,13 +79,13 @@ export class SocialService {
    * @returns {Observable<number>}
    * @memberof SocialService
    */
-  getUnreadedCommentsLength(commentsReadedTill: number): Observable<number>  {
+  getUnreadedCommentsLength(): Observable<number>  {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
-      params: new HttpParams()
-        .set('commentsReadedTill', commentsReadedTill + '')
+      // params: new HttpParams()
+      //   .set('commentsReadedTill', commentsReadedTill + '')
     };
     return this.http.get<number>(
       'api/social/get-unreaded-comments-length',

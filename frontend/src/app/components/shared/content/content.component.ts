@@ -28,6 +28,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
   category: any;
   category_id: string;
   hierarchyCategory = [];
+  unreadedCommentsLength: number;
 
   constructor(
     private sharedService: SharedService,
@@ -47,22 +48,16 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit() {
-
     this.sharedService.getSharingEvent()
       .subscribe(event => {
         if (event[0] === 'closeSidenav') {
           this.sidenav.close();
+        } else if (event[0] === 'userChangeStatusEmitter') {
+          this.getUnreadedCommentsLength();
         }
       });
 
-    // this.userService.getUserLocal()
-    //   .subscribe((user) => {
-    //     this.user = user;
-    //     console.log('user');
-    //   });
-
-    // initial login user, token will be taken from localStorage
-    // this.userService.userLocalLogin(null);
+    this.getUnreadedCommentsLength();
 
     // get main menu items
     this.catalogService.getMainMenu()
@@ -76,10 +71,12 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   getUnreadedCommentsLength() {
-    if (this.user) {
-      this.socialService.getUnreadedCommentsLength(this.user.commentsReadedTill)
+    const user = this.userService.userCookieExtractor();
+    console.log('this.getUnreadedCommentsLength()');
+    if (user) {
+      this.socialService.getUnreadedCommentsLength()
         .subscribe(
-          res => console.log('res', res),
+          result => this.unreadedCommentsLength = result,
           err => console.log('err', err)
         );
     }
@@ -90,7 +87,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
     this.userService.userLogout()
       .subscribe(message => {
         this.userService.logging();
-        console.log(message);
+        this.sharedService.sharingEvent(['userChangeStatusEmitter']);
         this.router.navigate(['/user', 'login']);
       },
     err => {
@@ -103,7 +100,9 @@ export class ContentComponent implements OnInit, AfterViewInit {
     console.log('set commentsReadedTill', date);
     this.userService.userEditUnsecure({name: 'commentsReadedTill', value: date + ''})
     .subscribe(
-      res => console.log('res', res),
+      res => {
+        this.sharedService.sharingEvent(['userChangeStatusEmitter']);
+      },
       err => console.log('err', err)
     );
   }

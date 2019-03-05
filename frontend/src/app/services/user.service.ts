@@ -51,7 +51,7 @@ export class UserService {
    * @returns {Observable<IUser>}
    * @memberof UserService
    */
-  userLogin(user: IUser): Observable<IUser> {
+  userLogin(user: IUser): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -61,7 +61,7 @@ export class UserService {
         password: user.password
       }})
     };
-    return this.http.get<IUser>(
+    return this.http.get<string>(
       'api/user/Login',
       httpOptions
     );
@@ -120,6 +120,8 @@ export class UserService {
       httpOptions
     );
   }
+
+
 
   /** Session
    * Used for router guard (canActivate)
@@ -386,7 +388,7 @@ export class UserService {
 
   logging() {
         const user = this.userCookieExtractor();
-          this._logging.next(user);
+        this._logging.next(user);
   }
 
   // create Observable for user login watch
@@ -442,38 +444,6 @@ export class UserService {
     }
     return token;
   }
-
-  // userLocalGetCredentials() {
-  //   return this.userCookieExtractor();
-  //   const tokenFromStorage = localStorage.getItem('token');
-  //   // if (!tokenFromStorage) {
-  //   //   return null;
-  //   // }
-  //   if ((this.userLocalCheckExpiration('token') && !this.tokenSyncronizatonProgress) || !tokenFromStorage) {
-  //     // if tokenSyncronizaton in Progress then wait for result
-  //     // to prevent multi requests to server
-  //     this.tokenSyncronizatonProgress = true;
-  //     // this.syncTokenToSession()
-  //     //   .subscribe((token) => {
-  //     //     if (token) {
-  //     //       this.userLocalSetToken('token', token);
-  //     //       this.tokenSyncronizatonProgress = false;
-  //     //       const helper = new JwtHelperService();
-  //     //       this._logging.next(<IUser>helper.decodeToken(token).sub);
-  //     //     } else {
-  //     //       this.userLocalRemoveToken('token');
-  //     //       this.tokenSyncronizatonProgress = false;
-  //     //       this._logging.next(null);
-  //     //     }
-  //     //   },
-  //     //   (err) => {
-  //     //     this.userLocalRemoveToken('token');
-  //     //     this.tokenSyncronizatonProgress = false;
-  //     //     this._logging.next(null);
-  //     //   }
-  //     // );
-  //   }
-  // }
 
   userLocalGetExpirationDate(tokenKey): Date {
     const token = localStorage.getItem(tokenKey);

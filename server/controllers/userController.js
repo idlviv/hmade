@@ -325,8 +325,8 @@ const userLogin = function(req, res, next) {
     console.log('login');
     setUserCookie(user)(req, res, next)
         .then(() => {
-          const token = sharedHelper.createJWT('', user, 60, 'JWT_SECRET');
-          return res.status(200).json(token);
+          // const token = sharedHelper.createJWT('', user, 60, 'JWT_SECRET');
+          return res.status(200).json('logged in');
         });
   } else {
     return next(new ClientError({message: 'Помилка авторизації', status: 401}));
