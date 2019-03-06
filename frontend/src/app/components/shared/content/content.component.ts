@@ -52,10 +52,13 @@ export class ContentComponent implements OnInit, AfterViewInit {
       .subscribe(event => {
         if (event[0] === 'closeSidenav') {
           this.sidenav.close();
-        } else if (event[0] === 'userChangeStatusEmitter') {
-          this.getUnreadedCommentsLength();
+        // } else if (event[0] === 'userChangeStatusEmitter') {
+        //   this.getUnreadedCommentsLength();
         }
       });
+
+    this.sharedService.getEventToReloadComments()
+      .subscribe(event => this.getUnreadedCommentsLength());
 
     this.getUnreadedCommentsLength();
 
@@ -86,7 +89,8 @@ export class ContentComponent implements OnInit, AfterViewInit {
     this.userService.userLogout()
       .subscribe(message => {
         this.userService.logging();
-        this.sharedService.sharingEvent(['userChangeStatusEmitter']);
+        this.sharedService.sharingEventToReloadComments();
+        // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
         this.router.navigate(['/user', 'login']);
       },
     err => {
@@ -102,7 +106,8 @@ export class ContentComponent implements OnInit, AfterViewInit {
     this.userService.userEditUnsecure({name: 'commentsReadedTill', value: date + ''})
     .subscribe(
       res => {
-        this.sharedService.sharingEvent(['userChangeStatusEmitter']);
+        this.sharedService.sharingEventToReloadComments();
+        // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
       },
       err => console.log('err', err)
     );

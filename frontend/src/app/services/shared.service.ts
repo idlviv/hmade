@@ -13,6 +13,9 @@ export class SharedService {
   private _shareEvent: ReplaySubject<any> = new ReplaySubject(1);
   shareEvent$ = this._shareEvent.asObservable();
 
+  private _eventToReloadComments: ReplaySubject<any> = new ReplaySubject(1);
+  eventToReloadComments$ = this._eventToReloadComments.asObservable();
+
   constructor(
     private http: HttpClient
   ) { }
@@ -25,11 +28,21 @@ export class SharedService {
   getSharingEvent() {
     return this.shareEvent$;
   }
+
   // ['updateDesigns'] design-item-component => design-editor-component
   // ['closeSidenav'] design-popup-component => app-component
   // ['userChangeStatusEmitter'] user login (login comp) or logout (content-component) or
   //     markCommentsAsReaded (content-component) emitter =>
   //     content-component (update unreaded comments length)
+
+  // events to reload comments
+  sharingEventToReloadComments() {
+    this._eventToReloadComments.next();
+  }
+
+  getEventToReloadComments() {
+    return this.eventToReloadComments$;
+  }
 
   // sending feedback message
   sendFeedbackMessage(feedback, recaptcha): Observable<IResponse> {

@@ -88,11 +88,9 @@ export class McService {
    * @memberof McService
    */
   getMcById(_id: string): Observable<IMc> {
-    const token = this.userService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': token
       }),
     };
     return this.http.get<IMc>(

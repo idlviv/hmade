@@ -7,10 +7,10 @@
       "installMode": "prefetch",
       "updateMode": "prefetch",
       "urls": [
-        "/0.167e2033507637268e92.js",
-        "/1.f62a92014a628285f511.js",
+        "/0.6d794bb26774a374db8d.js",
+        "/1.c02d998553c18a4e91a0.js",
         "/2.8fa62104a4cce19a6d87.js",
-        "/3.3df10d4902c633090c24.js",
+        "/3.0c6a7cfa888ea5cfb7ba.js",
         "/4.fcc51ae9958666cf5c01.js",
         "/5.98c76ebec4ec941793ff.js",
         "/assets/images/hmade_logo_dark.svg",
@@ -18,11 +18,11 @@
         "/assets/other/pattern.svg",
         "/favicon.ico",
         "/index.html",
-        "/main.d553d383329bfc321be6.js",
+        "/main.747042eb8fe3a8805c99.js",
         "/polyfills.1cfab2328d8b821c04f2.js",
-        "/runtime.38375ece7632ac0a5108.js",
+        "/runtime.aa076de1ce9bbe88a607.js",
         "/scripts.d1a4a51347c220973e96.js",
-        "/styles.eaa741dba8e11ec17485.css"
+        "/styles.309001b8101bb7c6e531.css"
       ],
       "patterns": []
     },
@@ -49,10 +49,10 @@
   ],
   "dataGroups": [],
   "hashTable": {
-    "/0.167e2033507637268e92.js": "d2c1ffb760c34febf5dba65436e5ca7ab0672965",
-    "/1.f62a92014a628285f511.js": "bd46698f06372bf8b2f9a253a5316834447e307b",
+    "/0.6d794bb26774a374db8d.js": "5e1ffc832fa6aa5e2be05128df8a2e224b9c3843",
+    "/1.c02d998553c18a4e91a0.js": "7fc2c9539f69b4647517fbccba00ef25b777db46",
     "/2.8fa62104a4cce19a6d87.js": "a971d16e2788c2f3aec91c06920aca512a8fb38b",
-    "/3.3df10d4902c633090c24.js": "7363d67ee4487c6347d01f869279dff0e1540119",
+    "/3.0c6a7cfa888ea5cfb7ba.js": "7a392b164899ba6a16d805f3ea714c47d0a873e6",
     "/4.fcc51ae9958666cf5c01.js": "c22bf3924fbd3e1ae149b7ef73299ad6a6b6a345",
     "/5.98c76ebec4ec941793ff.js": "63f0bf0debcf7a77bcce168691f50ddd961d767c",
     "/assets/icons/icon-128x128.png": "f4add257111f856b15292518b01b1a7a3e491f9e",
@@ -71,12 +71,12 @@
     "/assets/other/btn_google_signin_light_normal_web@2x.png": "bbf56c48cbc340ba0c67e094f0bd6d2af8043e0d",
     "/assets/other/pattern.svg": "f1ec5e596593b5b2c7c5ed7af895c64a57bdf71b",
     "/favicon.ico": "3581640704ffb32dca6a10acca86bcca2471514a",
-    "/index.html": "7602b8db86698268f135c936071d8711cb1d95dc",
-    "/main.d553d383329bfc321be6.js": "1915725d8c558bf04c109782a51a5236922a67e2",
+    "/index.html": "26c81bbca805a3e64193b099551118567f8320a2",
+    "/main.747042eb8fe3a8805c99.js": "f41706e70e47ed27eaca8435ceccec01a21a385a",
     "/polyfills.1cfab2328d8b821c04f2.js": "4c20ad2c60cfb17c16f4b1bd6180ddd8265c5bf6",
-    "/runtime.38375ece7632ac0a5108.js": "7f9b85a04e49dc65a377a8e182aac4f769bdec76",
+    "/runtime.aa076de1ce9bbe88a607.js": "9e2a6a161d71ff49d47ddf772225d48b473990a8",
     "/scripts.d1a4a51347c220973e96.js": "4932f744a454bcf073a7f1ce2af9e21dd5169b9b",
-    "/styles.eaa741dba8e11ec17485.css": "e131cd45b7f08b966ef28c005a1d6faddb119126"
+    "/styles.309001b8101bb7c6e531.css": "e4404d144a2258aa3122f5acb3047b71a34bf6a2"
   },
   "navigationUrls": [
     {

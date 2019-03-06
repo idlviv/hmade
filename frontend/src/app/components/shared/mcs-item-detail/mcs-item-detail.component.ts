@@ -8,6 +8,7 @@ import { config } from 'src/app/app.config';
 import { UserService } from 'src/app/services/user.service';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { SocialService } from 'src/app/services/social.service';
+import { SharedService } from 'src/app/services/shared.service';
 
 @Component({
   selector: 'app-mcs-item-detail',
@@ -18,13 +19,15 @@ export class McsItemDetailComponent implements OnInit {
   config = config;
   mc: IMc;
   user: IUser;
-
+  mc_id: string;
+  
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private mcService: McService,
     private userService: UserService,
     private socialService: SocialService,
+    private sharedService: SharedService,
   ) { }
 
   ngOnInit() {
@@ -32,9 +35,22 @@ export class McsItemDetailComponent implements OnInit {
     this.route.params.pipe(
       mergeMap(
         (params) => {
+          this.mc_id = params._id;
           return this.mcService.getMcByIdAndIncViews(params._id);
         })
       )
+      .subscribe((result) => {
+        this.mc = result;
+      },
+      (err) => console.log('err', err)
+      );
+
+      this.sharedService.getEventToReloadComments()
+        .subscribe(event => this.getMcById());
+  }
+
+  getMcById() {
+    this.mcService.getMcById(this.mc_id)
       .subscribe((result) => {
         this.mc = result;
       },

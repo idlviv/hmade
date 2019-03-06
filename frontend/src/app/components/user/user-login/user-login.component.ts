@@ -55,7 +55,9 @@ export class UserLoginComponent implements OnInit {
           if (result === 'logged in') {
             this.resetForm();
             this.userService.logging();
-            this.sharedService.sharingEvent(['userChangeStatusEmitter']);
+            this.sharedService.sharingEventToReloadComments();
+
+            // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
             this.matSnackBar.open(`${this.user.login}, ви увійшли на сайт`, '', {duration: 5000});
             this.router.navigate(['/user', 'profile']);
           }
