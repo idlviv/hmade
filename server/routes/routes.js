@@ -54,7 +54,7 @@ router.get('/social/get-comments',
 
 router.get('/social/get-unreaded-comments-length',
     authentication,
-    authorization('manager'),
+    authorization('user'),
     socialController.getUnreadedCommentsLength
 );
 
@@ -296,7 +296,7 @@ router.put('/user/edit',
 
 router.put('/user/editUnsecure',
     authentication,
-    authorization('manager'),
+    authorization('user'),
     userController.userEditUnsecure
 );
 

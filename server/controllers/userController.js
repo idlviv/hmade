@@ -146,7 +146,6 @@ const userEmailVerificationReceive = function(req, res, next) {
                       surname: req.user._doc.surname,
                       avatar: req.user._doc.avatar,
                       provider: req.user._doc.provider,
-                      markCommentsAsReadedTill: req.user._doc.markCommentsAsReadedTill,
                       role: 'user',
                     };
                     const token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET');
@@ -279,7 +278,6 @@ const userProfile = function(req, res, next) {
     surname: req.user._doc.surname,
     role: req.user._doc.role,
     email: req.user._doc.email,
-    markCommentsAsReadedTill: req.user._doc.markCommentsAsReadedTill,
   };
   return res.status(200).json(user);
 };
@@ -320,7 +318,7 @@ const userLogin = function(req, res, next) {
       avatar: req.user._doc.avatar,
       provider: req.user._doc.provider,
       role: req.user._doc.role,
-      markCommentsAsReadedTill: req.user._doc.markCommentsAsReadedTill,
+
     };
     console.log('login');
     setUserCookie(user)(req, res, next)
@@ -343,7 +341,6 @@ const syncTokenToSession = function(req, res, next) {
       avatar: req.user._doc.avatar,
       provider: req.user._doc.provider,
       role: req.user._doc.role,
-      markCommentsAsReadedTill: req.user._doc.markCommentsAsReadedTill,
     };
     const token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET'); // 604800
     return res.status(200).json(token);
@@ -397,7 +394,6 @@ const userCheckAuthorization = function(req, res, next) {
       avatar: req.user._doc.avatar,
       provider: req.user._doc.provider,
       role: req.user._doc.role,
-      markCommentsAsReadedTill: req.user._doc.markCommentsAsReadedTill,
     };
     token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET'); // 604800
   } else {
@@ -435,6 +431,7 @@ const userCreate = function(req, res, next) {
         user.password = hash;
         user.role = 'guest';
         user.createdAt = Date.now();
+        user.commentsReadedTill = Date.now();
         const userModel = new UserModel(user);
         // create new user
         return userModel.save();

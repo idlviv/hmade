@@ -71,16 +71,15 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   getUnreadedCommentsLength() {
-    const user = this.userService.userCookieExtractor();
-    console.log('this.getUnreadedCommentsLength()');
-    if (user) {
+    // const user = this.userService.userCookieExtractor();
+    // console.log('this.getUnreadedCommentsLength()', user);
+    if (this.allowTo('user')) {
       this.socialService.getUnreadedCommentsLength()
         .subscribe(
           result => this.unreadedCommentsLength = result,
           err => console.log('err', err)
         );
     }
-
   }
 
   userLogout() {
@@ -96,8 +95,10 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   markCommentsAsReaded() {
+    if (!this.unreadedCommentsLength) {
+      return;
+    }
     const date = Date.now();
-    console.log('set commentsReadedTill', date);
     this.userService.userEditUnsecure({name: 'commentsReadedTill', value: date + ''})
     .subscribe(
       res => {
@@ -105,6 +106,10 @@ export class ContentComponent implements OnInit, AfterViewInit {
       },
       err => console.log('err', err)
     );
+  }
+
+  showUnreadededComments() {
+    console.log('showUnreadededComments');
   }
 
   onSettingsMenuMouseover() {

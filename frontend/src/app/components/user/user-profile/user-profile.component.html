@@ -93,7 +93,7 @@
             <div class="info-block-row-title mat-subheading-1" fxFlex="40%">Ім'я</div>
             <!--<div fxFlex></div>-->
             <div class="mat-subheading-2 muted" fxFlex="60%">{{user.name}}</div>
-            <mat-icon *ngIf="processing !== 'name' && restrictTo(['google'])" fxFlex="30px"
+            <mat-icon *ngIf="processing !== 'name' && restrictTo(['google', 'facebook'])" fxFlex="30px"
                       (click)="openDialog(makeNameObject())" class="muted">edit</mat-icon>
             <mat-spinner *ngIf="processing === 'name'" fxFlex="30px" [diameter]="24"></mat-spinner>
 
@@ -104,13 +104,13 @@
             <div class="info-block-row-title mat-subheading-1" fxFlex="40%">Прізвище</div>
             <!--<div fxFlex></div>-->
             <div class="mat-subheading-2 muted" fxFlex="60%">{{user.surname}}</div>
-            <mat-icon *ngIf="processing !== 'surname' && restrictTo(['google'])" fxFlex="30px"
+            <mat-icon *ngIf="processing !== 'surname' && restrictTo(['google', 'facebook'])" fxFlex="30px"
                       (click)="openDialog(makeSurnameObject())" class="muted">edit</mat-icon>
             <mat-spinner *ngIf="processing === 'surname'" fxFlex="30px" [diameter]="24"></mat-spinner>
 
           </div>
         </div>
-        <div *ngIf="restrictTo(['google'])" class="info-block-row-wrapper">
+        <div *ngIf="restrictTo(['google', 'facebook'])" class="info-block-row-wrapper">
           <div fxLayout="row" fxLayoutAlign="center" class="info-block-row">
             <div fxFlex="60%"></div>
             <div fxFlex="40%">

@@ -13,20 +13,14 @@
   </div>
 
   <div fxShow="true" fxHide.lt-md="true" fxFlex="25" fxLayoutAlign="end center">
-    <a *ngIf="allowTo('guest')" class="link" [matMenuTriggerFor]="settingsMenu" #settingsMenuTrigger="matMenuTrigger"
+    <a *ngIf="allowTo('guest')" [matBadgeHidden]="!restrictTo(['guest']) || !unreadedCommentsLength" class="link" 
+        matBadge="{{unreadedCommentsLength}}" matBadgeColor="accent" matBadgePosition="above before" 
+        (click)="showUnreadededComments()">
+      <span class="type2" [matMenuTriggerFor]="settingsMenu" #settingsMenuTrigger="matMenuTrigger"
       (mouseover)="onSettingsMenuMouseover()">
-      <span class="type2">
         <mat-icon class="mat-icon-aligner">settings</mat-icon>{{user.name}} {{user.surname}}
       </span>
     </a>
-
-    <a *ngIf="allowTo('manager')" class="link" [matMenuTriggerFor]="settingsMenu" #settingsMenuTrigger="matMenuTrigger"
-    (mouseover)="onSettingsMenuMouseover()">
-    <span class="type2">
-      <mat-icon class="mat-icon-aligner">date</mat-icon>{{unreadedCommentsLength}}
-    </span>
-  </a>
-
     <mat-menu #settingsMenu="matMenu" xPosition="after" yPosition="above" [overlapTrigger]="false">
       <span (mouseleave)="onSettingsMenuMouseleave()">
         <a *ngIf="allowTo('guest')" mat-menu-item [routerLink]="['/user/profile']" [routerLinkActive]="['accent']"
@@ -37,9 +31,13 @@
           [routerLinkActiveOptions]="{exact: true}">
           <mat-icon>settings</mat-icon><span>Dashboard</span>
         </a>
-        <a *ngIf="allowTo('manager')" mat-menu-item (click)="markCommentsAsReaded()">
-        <mat-icon>settings</mat-icon><span>Позначити всі коментарі як прочитані</span>
-      </a>
+        <a *ngIf="allowTo('user') && unreadedCommentsLength" mat-menu-item (click)="showUnreadededComments()">
+          <mat-icon color="accent">comments</mat-icon><span>Нові коментарі</span>
+        </a>
+
+        <a *ngIf="allowTo('user') && unreadedCommentsLength" mat-menu-item (click)="markCommentsAsReaded()">
+          <mat-icon>done_all</mat-icon><span>Коментарі прочитані</span>
+        </a>
       </span>
     </mat-menu>
 
@@ -52,6 +50,8 @@
 
   <div class="menu-button" fxShow="true" fxHide.gt-sm="true" fxFlex="20" fxLayoutAlign="end center">
     <button mat-button (click)="sidenav.toggle()" aria-label="Menu">
+      <span *ngIf="allowTo('user')" matBadge="{{unreadedCommentsLength}}" matBadgeColor="accent" matBadgePosition="above before" 
+      matBadgeOverlap="false" [matBadgeHidden]="!unreadedCommentsLength"></span>
       <mat-icon *ngIf="sidenav.opened">format_indent_increase</mat-icon>
       <mat-icon *ngIf="!sidenav.opened">menu</mat-icon>
     </button>
@@ -74,10 +74,13 @@
           <mat-expansion-panel-header class="sidenav-expansion-panel">
             <!-- <mat-panel-title> -->
             <!-- <mat-list-item> -->
-
-            <span matLine><span>
-                <mat-icon class="mat-icon-aligner">settings</mat-icon>{{user.name}} {{user.surname}}
-              </span></span>
+              
+            <span matLine>
+                <mat-icon class="mat-icon-aligner">settings</mat-icon>
+                <span>{{user.name}} {{user.surname}}</span>
+            </span>
+                <!-- <mat-icon class="mat-icon-aligner">settings</mat-icon>{{user.name}} {{user.surname}} -->
+              <!-- </span> -->
             <!-- </mat-list-item> -->
             <!-- </mat-panel-title> -->
 
@@ -94,15 +97,23 @@
               [routerLinkActiveOptions]="{exact: true}" (click)="sidenav.toggle()">
               Dashboard</a>
           </mat-list-item>
-        </mat-expansion-panel>
+          <mat-list-item *ngIf="allowTo('user') && unreadedCommentsLength">
+              <mat-icon matListIcon matBadge="{{unreadedCommentsLength}}" matBadgeColor="accent" 
+              matBadgePosition="above before">comment</mat-icon>
+              <a mat-menu-item (click)="showUnreadededComments(); sidenav.toggle()">Нові коментарі</a>
+          </mat-list-item>
+          <mat-list-item *ngIf="allowTo('user') && unreadedCommentsLength">
+              <mat-icon matListIcon>done_all</mat-icon>
+              <a mat-menu-item (click)="markCommentsAsReaded(); sidenav.toggle()">Коментарі прочитані</a>
+          </mat-list-item>
+          </mat-expansion-panel>
 
         <mat-list-item>
           <a matLine [routerLink]="['/privacy']" aria-label="privacy conditions" [routerLinkActive]="['accent']"
-            [routerLinkActiveOptions]="{exact: true}">
+            [routerLinkActiveOptions]="{exact: true}" (click)="sidenav.toggle()">
             Політика конфіденційності
           </a>
         </mat-list-item>
-
         <mat-list-item *ngIf="allowTo('notUser')">
           <a matLine [routerLinkActive]="['muted']" [routerLinkActiveOptions]="{exact: true}"
             [routerLink]="['/user/login']" (click)="sidenav.toggle()">Вхід</a>

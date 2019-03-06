@@ -257,6 +257,18 @@ color: $muted-strong
 .header {
   margin-bottom: 8px;
 }
+.sidenav {
+  width: 250px !important;
+}
+
+.sidenav-badge {
+  position: relative;
+  span {
+    position: absolute;
+    top: 0;
+  }
+
+}
 
 .sidenav-mat-toolbar-row {
   padding: 0 !important;
@@ -1042,7 +1054,11 @@ h1, h2, h3, h4, h5, h6 {
   }
   a.link {
     padding: 0 16px;
-    span {
+    span.mat-badge-content {
+      cursor: pointer;
+      pointer-events: auto;
+    }
+    span:not(.mat-badge-content) {
       padding-bottom: 5px;
       cursor: pointer;
       &.type1 {

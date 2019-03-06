@@ -108,6 +108,7 @@ module.exports = function(passport) {
                       role: 'google',
                       ban: 0,
                       createdAt: Date.now(),
+                      commentsReadedTill: Date.now(),
                       providersId: profile._json.id,
                       accessToken,
                       refreshToken,

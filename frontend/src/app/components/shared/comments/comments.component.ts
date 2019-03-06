@@ -9,6 +9,7 @@ import { SocialService } from 'src/app/services/social.service';
 import { mergeMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { ConfirmPopupComponent } from '../confirm-popup/confirm-popup.component';
+import { SharedService } from '../../../services/shared.service';
 
 @Component({
   selector: 'app-comments',
@@ -32,6 +33,7 @@ export class CommentsComponent implements OnInit {
     private userService: UserService,
     private socialService: SocialService,
     public dialog: MatDialog,
+    private sharedService: SharedService,
   ) { }
 
   ngOnInit() {
@@ -90,6 +92,7 @@ export class CommentsComponent implements OnInit {
           if (result) {
             // successfuly added
             this.mcFormDirective.resetForm();
+            this.sharedService.sharingEvent(['userChangeStatusEmitter']);
             return this.socialService.getComments(this.parent_id, this.parentCategory, -1, 0, 5, !this.allowTo('manager'));
           } else {
             // not added, do nothing
@@ -129,6 +132,7 @@ export class CommentsComponent implements OnInit {
                   console.log('result', result);
                   if (result) {
                     // successfuly delete
+                    this.sharedService.sharingEvent(['userChangeStatusEmitter']);
                     return this.socialService.getComments(
                       this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
                       );
@@ -161,6 +165,7 @@ export class CommentsComponent implements OnInit {
         mergeMap(result => {
           if (result) {
             // successfuly updated
+            this.sharedService.sharingEvent(['userChangeStatusEmitter']);
             return this.socialService.getComments(
               this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
               );

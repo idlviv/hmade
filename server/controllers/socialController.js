@@ -5,17 +5,13 @@ const ObjectId = require('../config/mongoose').Types.ObjectId;
 const log = require('../config/winston')(module);
 
 module.exports.getUnreadedCommentsLength = function(req, res, next) {
-
   const commentsReadedTill = req.user._doc.commentsReadedTill;
-  log.debug('commentsReadedTill', commentsReadedTill);
-
   McModel.aggregate([
     {$unwind: '$comments'},
-    {$match: {'comments.commentedAt': {$gt: commentsReadedTill}}},
+    {$match: {'comments.display': true, 'comments.commentedAt': {$gt: commentsReadedTill}}},
     {$count: 'length'},
   ])
       .then((result) => {
-        log.debug('result', result);
         return res.status(200).json(result && result[0] && result[0].length ? result[0].length : 0);
       })
       .catch((err) => next(new DbError()));
