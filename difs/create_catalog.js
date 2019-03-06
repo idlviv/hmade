@@ -35,12 +35,16 @@ db.getCollection('catalogs')
             name: 'Інші букети', description: ''},
 
         { _id: 'decorative', ancestors: ['home', 'common', 'products'], parent: 'products', order: 4,
-          assets: ['category-decorative'],  prefix: 'dcr',
+          assets: ['category-decorative'], prefix: 'dcr',
           name: 'Декор', description: ''},
-          { _id: 'weddingDecor', ancestors: ['home', 'common', 'products', 'decorative'], parent: 'decorative', order: 1,
+          { _id: 'easterDecor', ancestors: ['home', 'common', 'products', 'decorative'], parent: 'decorative', order: 1,
+            assets: ['category-easterDecor'], prefix: 'dce', name: 'Великодній декор', description: ''},
+            { _id: 'weddingDecor', ancestors: ['home', 'common', 'products', 'decorative'], parent: 'decorative', order: 2,
             assets: ['category-weddingDecor'], prefix: 'dcw',name: 'Весільний декор', description: ''},
-          { _id: 'fotoZones', ancestors: ['home', 'common', 'products', 'decorative'], parent: 'decorative', order: 2,
+          { _id: 'fotoZones', ancestors: ['home', 'common', 'products', 'decorative'], parent: 'decorative', order: 3,
             assets: ['category-fotoZones'], prefix: 'dcf', name: 'Фотозони', description: ''},
+            { _id: 'presents', ancestors: ['home', 'common', 'products', 'decorative'], parent: 'decorative', order: 4,
+            assets: ['category-presents'], prefix: 'dcp', name: 'Оформлення подарунків', description: ''},
 
         // { _id: 'knitting', ancestors: ['home', 'common', 'products'], parent: 'products', order: 5,
         //   assets: ['knitting'], prefix: 'kni',
@@ -67,7 +71,7 @@ db.getCollection('catalogs')
           { _id: 'cards', ancestors: ['home', 'common', 'products', 'scrapbooking'], parent: 'scrapbooking', order: 2,
             assets: ['category-cards'], prefix: 'scc', name: 'Листівки', description: ''},
 
-  { _id: 'mcs', name: 'Майстеркласи', ancestors: ['home', 'common'], parent: 'common', prefix: 'mcs',
+  { _id: 'mcs', name: 'Майстер-класи', ancestors: ['home', 'common'], parent: 'common', prefix: 'mcs',
         auth: 'casual', order: 3, prefix: 'to', assets: [''], description: ''},
       // { _id: 'contacts', name: 'Контакти', ancestors: ['home', 'common'], parent: 'common',
       //   auth: 'casual', order: 4, assets: [''],description: ''},
