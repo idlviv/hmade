@@ -15,6 +15,9 @@ export class UserService {
   private _logging: ReplaySubject<IUser> = new ReplaySubject(1);
   tokenSyncronizatonProgress = false;
 
+  private _eventToReloadUser: ReplaySubject<IUser> = new ReplaySubject(1);
+  eventToReloadUser$ = this._eventToReloadUser.asObservable();
+
   constructor(
     private http: HttpClient,
     private cookieService: CookieService,
@@ -177,7 +180,6 @@ export class UserService {
     if (!user) {
       return false;
     }
-
     const roleFromCookie = user.role;
     if (permissions[roleFromCookie].indexOf(permitedRole) >= 0) {
       return true;

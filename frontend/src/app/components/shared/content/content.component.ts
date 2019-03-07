@@ -30,6 +30,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
   hierarchyCategory = [];
   unreadedCommentsLength: number;
 
+
   constructor(
     private sharedService: SharedService,
     private userService: UserService,
@@ -134,6 +135,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   allowTo(permitedRole: string): boolean {
+    console.log('allowTo', permitedRole);
     this.user = this.userService.userCookieExtractor();
     return this.userService.allowTo(permitedRole);
   }
