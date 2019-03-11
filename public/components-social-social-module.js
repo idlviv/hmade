@@ -72,7 +72,7 @@ var SocialRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  comments works!\n</p>\n"
+module.exports = "<div id=\"mcs\">\n    <div class=\"container\">\n      <div class=\"app-container-h app-container-v\">\n        <div class=\"container\">\n  \n          <div class=\"row\" FxLayout=\"row\">\n            <div class=\"cell\" fxFlex=\"100\">\n             comments\n            </div>\n\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>"
 
 /***/ }),
 
@@ -183,7 +183,7 @@ var SocialModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  unreaded-comments works!\n</p>\n"
+module.exports = "  <p>\n\n    unreaded-comments works!\n  </p>\n\n\n"
 
 /***/ }),
 
