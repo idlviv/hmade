@@ -1080,7 +1080,7 @@ var ContentComponent = /** @class */ (function () {
     };
     ContentComponent.prototype.showUnreadededComments = function () {
         console.log('showUnreadededComments');
-        this.router.navigate(['/comments', 'ch']);
+        this.router.navigate(['/comments']);
     };
     ContentComponent.prototype.onSettingsMenuMouseover = function () {
         this.settingsMenuTrigger.openMenu();

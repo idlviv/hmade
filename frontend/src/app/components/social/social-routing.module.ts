@@ -6,7 +6,7 @@ import { UnreadedCommentsComponent } from './unreaded-comments/unreaded-comments
 
 const socialRoutes: Routes = [
   {
-    path: 'ch',
+    path: '',
     component: SocialComponent,
     children: [
     //    {
