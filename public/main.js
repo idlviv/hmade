@@ -22,6 +22,10 @@ var map = {
 		"./src/app/components/products/products.module.ts",
 		"components-products-products-module"
 	],
+	"./components/social/social.module": [
+		"./src/app/components/social/social.module.ts",
+		"components-social-social-module"
+	],
 	"./components/user/user.module": [
 		"./src/app/components/user/user.module.ts",
 		"components-dashboard-dashboard-module~components-user-user-module"
@@ -89,6 +93,10 @@ var appRoutes = [
     {
         path: 'mcs',
         loadChildren: './components/mcs/mcs.module#McsModule',
+    },
+    {
+        path: 'comments',
+        loadChildren: './components/social/social.module#SocialModule',
     },
     {
         path: 'about/ch',
@@ -1072,6 +1080,7 @@ var ContentComponent = /** @class */ (function () {
     };
     ContentComponent.prototype.showUnreadededComments = function () {
         console.log('showUnreadededComments');
+        this.router.navigate(['/comments', 'ch']);
     };
     ContentComponent.prototype.onSettingsMenuMouseover = function () {
         this.settingsMenuTrigger.openMenu();
@@ -1086,7 +1095,6 @@ var ContentComponent = /** @class */ (function () {
         this.settingsSideMenuTrigger.closeMenu();
     };
     ContentComponent.prototype.allowTo = function (permitedRole) {
-        console.log('allowTo', permitedRole);
         this.user = this.userService.userCookieExtractor();
         return this.userService.allowTo(permitedRole);
     };

@@ -116,6 +116,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
   showUnreadededComments() {
     console.log('showUnreadededComments');
+    this.router.navigate(['/comments', 'ch']);
   }
 
   onSettingsMenuMouseover() {
@@ -135,7 +136,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   allowTo(permitedRole: string): boolean {
-    console.log('allowTo', permitedRole);
     this.user = this.userService.userCookieExtractor();
     return this.userService.allowTo(permitedRole);
   }

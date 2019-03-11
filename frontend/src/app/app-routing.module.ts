@@ -17,6 +17,10 @@ const appRoutes: Routes = [
     loadChildren: './components/mcs/mcs.module#McsModule',
   },
   {
+    path: 'comments',
+    loadChildren: './components/social/social.module#SocialModule',
+  },
+  {
     path: 'about/ch',
     component: AboutComponent
   },
