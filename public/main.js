@@ -1047,8 +1047,6 @@ var ContentComponent = /** @class */ (function () {
     };
     ContentComponent.prototype.getUnreadedCommentsLength = function () {
         var _this = this;
-        // const user = this.userService.userCookieExtractor();
-        // console.log('this.getUnreadedCommentsLength()', user);
         if (this.allowTo('user')) {
             this.socialService.getUnreadedCommentsLength()
                 .subscribe(function (result) { return _this.unreadedCommentsLength = result; }, function (err) { return console.log('err', err); });
@@ -4122,9 +4120,24 @@ var SocialService = /** @class */ (function () {
         return this.http.get('api/social/get-comments', httpOptions);
     };
     /**
+   * get current user unreaded commnets
+   *
+   * @param {}
+   * @returns {Observable<[]>}
+   * @memberof SocialService
+   */
+    SocialService.prototype.getUnreadedComments = function () {
+        var httpOptions = {
+            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
+                'Content-Type': 'application/json',
+            }),
+        };
+        return this.http.get('api/social/get-unreaded-comments', httpOptions);
+    };
+    /**
      * get current user unreaded commnets length
      *
-     * @param {number} commentsReadedTill
+     * @param {}
      * @returns {Observable<number>}
      * @memberof SocialService
      */

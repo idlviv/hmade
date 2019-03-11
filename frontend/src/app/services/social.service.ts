@@ -72,10 +72,29 @@ export class SocialService {
     );
   }
 
+    /**
+   * get current user unreaded commnets
+   *
+   * @param {}
+   * @returns {Observable<[]>}
+   * @memberof SocialService
+   */
+  getUnreadedComments(): Observable<any[]>  {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http.get<any[]>(
+      'api/social/get-unreaded-comments',
+      httpOptions
+    );
+  }
+
   /**
    * get current user unreaded commnets length
    *
-   * @param {number} commentsReadedTill
+   * @param {}
    * @returns {Observable<number>}
    * @memberof SocialService
    */

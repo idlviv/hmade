@@ -75,8 +75,6 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   getUnreadedCommentsLength() {
-    // const user = this.userService.userCookieExtractor();
-    // console.log('this.getUnreadedCommentsLength()', user);
     if (this.allowTo('user')) {
       this.socialService.getUnreadedCommentsLength()
         .subscribe(

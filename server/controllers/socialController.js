@@ -4,6 +4,18 @@ const ApplicationError = require('../errors/applicationError');
 const ObjectId = require('../config/mongoose').Types.ObjectId;
 const log = require('../config/winston')(module);
 
+module.exports.getUnreadedComments = function(req, res, next) {
+  const commentsReadedTill = req.user._doc.commentsReadedTill;
+  McModel.aggregate([
+    {$unwind: '$comments'},
+    {$match: {'comments.display': true, 'comments.commentedAt': {$gt: commentsReadedTill}}},
+  ])
+      .then((result) => {
+        return res.status(200).json(result);
+      })
+      .catch((err) => next(new DbError()));
+};
+
 module.exports.getUnreadedCommentsLength = function(req, res, next) {
   const commentsReadedTill = req.user._doc.commentsReadedTill;
   McModel.aggregate([

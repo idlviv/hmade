@@ -4,10 +4,9 @@
         <div class="container">
   
           <div class="row" FxLayout="row">
-            <div class="cell" fxFlex="100">
-             comments
+            <div *ngFor="let unreadedComment of unreadedComments" class="cell" fxFlex="100">
+             {{unreadedComment | json}}
             </div>
-
           </div>
         </div>
       </div>

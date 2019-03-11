@@ -72,7 +72,7 @@ var SocialRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"mcs\">\n    <div class=\"container\">\n      <div class=\"app-container-h app-container-v\">\n        <div class=\"container\">\n  \n          <div class=\"row\" FxLayout=\"row\">\n            <div class=\"cell\" fxFlex=\"100\">\n             comments\n            </div>\n\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>"
+module.exports = "<div id=\"mcs\">\n    <div class=\"container\">\n      <div class=\"app-container-h app-container-v\">\n        <div class=\"container\">\n  \n          <div class=\"row\" FxLayout=\"row\">\n            <div *ngFor=\"let unreadedComment of unreadedComments\" class=\"cell\" fxFlex=\"100\">\n             {{unreadedComment | json}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>"
 
 /***/ }),
 
@@ -98,6 +98,8 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SocialComponent", function() { return SocialComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -108,10 +110,23 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var SocialComponent = /** @class */ (function () {
-    function SocialComponent() {
+    function SocialComponent(userService, socialService) {
+        this.userService = userService;
+        this.socialService = socialService;
     }
     SocialComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        if (this.allowTo('user')) {
+            this.socialService.getUnreadedComments()
+                .subscribe(function (result) { return _this.unreadedComments = result; }, function (err) { return console.log('err', err); });
+        }
+    };
+    SocialComponent.prototype.allowTo = function (permitedRole) {
+        this.user = this.userService.userCookieExtractor();
+        return this.userService.allowTo(permitedRole);
     };
     SocialComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -119,7 +134,8 @@ var SocialComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./social.component.html */ "./src/app/components/social/social.component.html"),
             styles: [__webpack_require__(/*! ./social.component.scss */ "./src/app/components/social/social.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"],
+            src_app_services_social_service__WEBPACK_IMPORTED_MODULE_2__["SocialService"]])
     ], SocialComponent);
     return SocialComponent;
 }());
