@@ -9,6 +9,10 @@ module.exports.getUnreadedComments = function(req, res, next) {
   McModel.aggregate([
     {$unwind: '$comments'},
     {$match: {'comments.display': true, 'comments.commentedAt': {$gt: commentsReadedTill}}},
+    {$group: {_id: '$_id',
+      name: {$addToSet: '$name'},
+      comments: {$push: '$comments'}},
+    }
   ])
       .then((result) => {
         return res.status(200).json(result);

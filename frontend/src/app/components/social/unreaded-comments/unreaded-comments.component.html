@@ -1,6 +1,6 @@
-  <p>
-
-    unreaded-comments works!
-  </p>
-
-
+<div class="row" FxLayout="row">
+  <div *ngFor="let unreadedComment of unreadedComments" class="cell" fxFlex="100">
+    {{unreadedComment | json}}
+  </div>
+</div>
+     

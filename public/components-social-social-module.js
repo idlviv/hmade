@@ -31,15 +31,8 @@ var socialRoutes = [
         path: '',
         component: _social_component__WEBPACK_IMPORTED_MODULE_2__["SocialComponent"],
         children: [
-            //    {
-            //     path: '',
-            //     component: DashboardSidenavComponent,
-            //     outlet: 'dashboardSidenav',
-            //     canActivate: [AuthGuard],
-            //     data: { auth: 'manager' },
-            //   },
             {
-                path: '',
+                path: 'unreaded-comments',
                 component: _unreaded_comments_unreaded_comments_component__WEBPACK_IMPORTED_MODULE_4__["UnreadedCommentsComponent"],
                 canActivate: [src_app_guards_auth_guard__WEBPACK_IMPORTED_MODULE_3__["AuthGuard"]],
                 data: { auth: 'user' },
@@ -52,9 +45,7 @@ var SocialRoutingModule = /** @class */ (function () {
     }
     SocialRoutingModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            imports: [
-                _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forChild(socialRoutes)
-            ],
+            imports: [_angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forChild(socialRoutes)],
             exports: [_angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"]]
         })
     ], SocialRoutingModule);
@@ -72,7 +63,7 @@ var SocialRoutingModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"mcs\">\n    <div class=\"container\">\n      <div class=\"app-container-h app-container-v\">\n        <div class=\"container\">\n  \n          <div class=\"row\" FxLayout=\"row\">\n            <div *ngFor=\"let unreadedComment of unreadedComments\" class=\"cell\" fxFlex=\"100\">\n             {{unreadedComment | json}}\n            </div>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>"
+module.exports = "<div id=\"mcs\">\r\n  <div class=\"container\">\r\n    <div class=\"app-container-h app-container-v\">\r\n      <div class=\"container\">\r\n        <router-outlet></router-outlet>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -98,8 +89,6 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SocialComponent", function() { return SocialComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
-/* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -110,23 +99,10 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
-
-
 var SocialComponent = /** @class */ (function () {
-    function SocialComponent(userService, socialService) {
-        this.userService = userService;
-        this.socialService = socialService;
+    function SocialComponent() {
     }
     SocialComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        if (this.allowTo('user')) {
-            this.socialService.getUnreadedComments()
-                .subscribe(function (result) { return _this.unreadedComments = result; }, function (err) { return console.log('err', err); });
-        }
-    };
-    SocialComponent.prototype.allowTo = function (permitedRole) {
-        this.user = this.userService.userCookieExtractor();
-        return this.userService.allowTo(permitedRole);
     };
     SocialComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -134,8 +110,7 @@ var SocialComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./social.component.html */ "./src/app/components/social/social.component.html"),
             styles: [__webpack_require__(/*! ./social.component.scss */ "./src/app/components/social/social.component.scss")]
         }),
-        __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"],
-            src_app_services_social_service__WEBPACK_IMPORTED_MODULE_2__["SocialService"]])
+        __metadata("design:paramtypes", [])
     ], SocialComponent);
     return SocialComponent;
 }());
@@ -199,7 +174,7 @@ var SocialModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "  <p>\n\n    unreaded-comments works!\n  </p>\n\n\n"
+module.exports = "<div class=\"row\" FxLayout=\"row\">\r\n  <div *ngFor=\"let unreadedComment of unreadedComments\" class=\"cell\" fxFlex=\"100\">\r\n    {{unreadedComment | json}}\r\n  </div>\r\n</div>\r\n     "
 
 /***/ }),
 
@@ -225,6 +200,8 @@ module.exports = ""
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UnreadedCommentsComponent", function() { return UnreadedCommentsComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -235,10 +212,23 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 
+
+
 var UnreadedCommentsComponent = /** @class */ (function () {
-    function UnreadedCommentsComponent() {
+    function UnreadedCommentsComponent(userService, socialService) {
+        this.userService = userService;
+        this.socialService = socialService;
     }
     UnreadedCommentsComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        if (this.allowTo('user')) {
+            this.socialService.getUnreadedComments()
+                .subscribe(function (result) { return _this.unreadedComments = result; }, function (err) { return console.log('err', err); });
+        }
+    };
+    UnreadedCommentsComponent.prototype.allowTo = function (permitedRole) {
+        this.user = this.userService.userCookieExtractor();
+        return this.userService.allowTo(permitedRole);
     };
     UnreadedCommentsComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -246,7 +236,8 @@ var UnreadedCommentsComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./unreaded-comments.component.html */ "./src/app/components/social/unreaded-comments/unreaded-comments.component.html"),
             styles: [__webpack_require__(/*! ./unreaded-comments.component.scss */ "./src/app/components/social/unreaded-comments/unreaded-comments.component.scss")]
         }),
-        __metadata("design:paramtypes", [])
+        __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"],
+            src_app_services_social_service__WEBPACK_IMPORTED_MODULE_2__["SocialService"]])
     ], UnreadedCommentsComponent);
     return UnreadedCommentsComponent;
 }());

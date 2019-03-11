@@ -114,7 +114,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
   showUnreadededComments() {
     console.log('showUnreadededComments');
-    this.router.navigate(['/comments']);
+    this.router.navigate(['/comments', 'unreaded-comments']);
   }
 
   onSettingsMenuMouseover() {
