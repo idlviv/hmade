@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { UserService } from 'src/app/services/user.service';
 import { SocialService } from 'src/app/services/social.service';
+import { SharedService } from 'src/app/services/shared.service';
+import { mergeMap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-unreaded-comments',
@@ -16,20 +18,35 @@ export class UnreadedCommentsComponent implements OnInit {
   constructor(
     private userService: UserService,
     private socialService: SocialService,
+    private sharedService: SharedService,
   ) { }
 
   ngOnInit() {
-      if (this.allowTo('user')) {
-        this.socialService.getUnreadedCommentsCategories()
-          .subscribe(
-            result => {
-              this.unreadedCommentsCategories = result;
-              this.downloadedUnreadedCommentsCategories.push(result[0]);
-            },
-            err => console.log('err', err)
-          );
-      }
+    if (this.allowTo('user')) {
+      this.socialService.getUnreadedCommentsCategories()
+        .subscribe(
+          result => {
+            this.unreadedCommentsCategories = result;
+            this.downloadedUnreadedCommentsCategories.push(result[0]);
+          },
+          err => console.log('err', err)
+        );
+
+      this.sharedService.getEventToReloadComments()
+        .pipe(
+          mergeMap((result) => this.socialService.getUnreadedCommentsCategories()
+          )
+        )
+        .subscribe(
+          result => {
+            this.downloadedUnreadedCommentsCategories = [];
+            this.unreadedCommentsCategories = result;
+            this.downloadedUnreadedCommentsCategories.push(result[0]);
+          },
+          err => console.log('err', err)
+        );
     }
+  }
 
   onUnreadedCommentsOfCategorieDownloaded(event) {
     this.unreadedCommentsCategories.map((el, index) => {

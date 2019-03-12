@@ -812,6 +812,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
 /* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
+/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/shared.service */ "./src/app/services/shared.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -824,10 +826,13 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
+
 var UnreadedCommentsComponent = /** @class */ (function () {
-    function UnreadedCommentsComponent(userService, socialService) {
+    function UnreadedCommentsComponent(userService, socialService, sharedService) {
         this.userService = userService;
         this.socialService = socialService;
+        this.sharedService = sharedService;
         this.downloadedUnreadedCommentsCategories = [];
     }
     UnreadedCommentsComponent.prototype.ngOnInit = function () {
@@ -835,6 +840,13 @@ var UnreadedCommentsComponent = /** @class */ (function () {
         if (this.allowTo('user')) {
             this.socialService.getUnreadedCommentsCategories()
                 .subscribe(function (result) {
+                _this.unreadedCommentsCategories = result;
+                _this.downloadedUnreadedCommentsCategories.push(result[0]);
+            }, function (err) { return console.log('err', err); });
+            this.sharedService.getEventToReloadComments()
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function (result) { return _this.socialService.getUnreadedCommentsCategories(); }))
+                .subscribe(function (result) {
+                _this.downloadedUnreadedCommentsCategories = [];
                 _this.unreadedCommentsCategories = result;
                 _this.downloadedUnreadedCommentsCategories.push(result[0]);
             }, function (err) { return console.log('err', err); });
@@ -860,7 +872,8 @@ var UnreadedCommentsComponent = /** @class */ (function () {
             styles: [__webpack_require__(/*! ./unreaded-comments.component.scss */ "./src/app/components/social/unreaded-comments/unreaded-comments.component.scss")]
         }),
         __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"],
-            src_app_services_social_service__WEBPACK_IMPORTED_MODULE_2__["SocialService"]])
+            src_app_services_social_service__WEBPACK_IMPORTED_MODULE_2__["SocialService"],
+            src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_3__["SharedService"]])
     ], UnreadedCommentsComponent);
     return UnreadedCommentsComponent;
 }());
