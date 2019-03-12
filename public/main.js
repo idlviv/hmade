@@ -3574,7 +3574,8 @@ var SocialService = /** @class */ (function () {
         };
         return this.http.post('api/social/add-comment', { parent_id: parent_id, parentCategory: parentCategory, comment: comment }, httpOptions);
     };
-    SocialService.prototype.getComments = function (parent_id, parentCategory, sort, skip, limit, displayFilter) {
+    SocialService.prototype.getComments = function (parent_id, parentCategory, sort, skip, limit, displayFilter, commentsReadedTillFilter) {
+        if (commentsReadedTillFilter === void 0) { commentsReadedTillFilter = false; }
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -3586,6 +3587,7 @@ var SocialService = /** @class */ (function () {
                 .set('skip', skip + '')
                 .set('limit', limit + '')
                 .set('displayFilter', displayFilter + '')
+                .set('commentsReadedTillFilter', commentsReadedTillFilter + '')
         };
         return this.http.get('api/social/get-comments', httpOptions);
     };
@@ -3596,13 +3598,13 @@ var SocialService = /** @class */ (function () {
    * @returns {Observable<[]>}
    * @memberof SocialService
    */
-    SocialService.prototype.getUnreadedComments = function () {
+    SocialService.prototype.getUnreadedCommentsCategories = function () {
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                 'Content-Type': 'application/json',
             }),
         };
-        return this.http.get('api/social/get-unreaded-comments', httpOptions);
+        return this.http.get('api/social/get-unreaded-comments-categories', httpOptions);
     };
     /**
      * get current user unreaded commnets length

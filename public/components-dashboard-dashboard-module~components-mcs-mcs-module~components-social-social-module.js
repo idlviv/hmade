@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <mat-card class=\"comments\"> -->\n  <div class=\"row\" [ngClass]=\"{'muted-strong': !comment.display}\"\n    fxLayout=\"row\">\n    <div class=\"cell\" fxFlex=\"10\" fxLayoutAlign=\"center center\">\n      <img *ngIf=\"comment.user && comment.user.avatar\" class=\"responsive-image\" src=\"{{comment.user.role === 'google' ? \n            comment.user.avatar :\n            config.imgPath +\n            config.cloudinary.cloud_name +\n            '/c_fill,w_50,h_50,f_auto/' +\n            comment.user.avatar}}\" alt=\"avatar\">\n      <img *ngIf=\"!comment.user\" class=\"responsive-image\" src=\"{{\n            config.imgPath +\n            config.cloudinary.cloud_name +\n            '/c_fill,w_50,h_50,f_auto/' +\n            config.defaultAvatar}}\" alt=\"avatar\">\n    </div>\n    <div class=\"cell\" fxFlex=\"80\">\n      <p>\n        <span class=\"mat-body-2 bold\">\n          {{comment.user && comment.user.login ? comment.user.name + ' ' + comment.user.surname : 'Гість'}}\n        </span>\n        <span fxFlex></span>\n        <span class=\"mat-body-1\">{{comment.commentedAt | date: 'dd.MM.yyyy HH:mm'}}</span>\n      </p>\n      <p class=\"text-align-justify\">{{comment.comment}}</p>\n    </div>\n    <div class=\"cell\" fxFlex=\"10\">\n      <p *ngIf=\"allowTo('manager')\"><button class=\"mat-icon-button\" (click)=\"deleteComment(comment)\"\n          aria-label=\"Delete comment\">\n          <mat-icon class=\"mat-18\">delete_outline</mat-icon>\n        </button></p>\n      <p *ngIf=\"allowTo('manager') && !comment.display\">\n        <button class=\"mat-icon-button\" (click)=\"displayComment(true, comment._id)\" aria-label=\"Display comment\">\n          <mat-icon class=\"mat-18\">play_circle_outline</mat-icon>\n        </button>\n      </p>\n      <p *ngIf=\"allowTo('manager') && comment.display\">\n        <button class=\"mat-icon-button\" (click)=\"displayComment(false, comment._id)\" aria-label=\"Hide comment\">\n          <mat-icon class=\"mat-18\">pause_circle_outline</mat-icon>\n        </button>\n      </p>\n\n    </div>\n  </div>\n<!-- </mat-card> -->"
+module.exports = "<!-- <mat-card class=\"comments\"> -->\n  <div class=\"row comment\" [ngClass]=\"{'muted-strong': !comment.display}\"\n    fxLayout=\"row\">\n    <div class=\"cell\" fxFlex=\"10\" fxLayoutAlign=\"center center\">\n      <img *ngIf=\"comment.user && comment.user.avatar\" class=\"responsive-image\" src=\"{{comment.user.role === 'google' ? \n            comment.user.avatar :\n            config.imgPath +\n            config.cloudinary.cloud_name +\n            '/c_fill,w_50,h_50,f_auto/' +\n            comment.user.avatar}}\" alt=\"avatar\">\n      <img *ngIf=\"!comment.user\" class=\"responsive-image\" src=\"{{\n            config.imgPath +\n            config.cloudinary.cloud_name +\n            '/c_fill,w_50,h_50,f_auto/' +\n            config.defaultAvatar}}\" alt=\"avatar\">\n    </div>\n    <div class=\"cell\" fxFlex=\"80\">\n      <p>\n        <span class=\"mat-body-2 bold\">\n          {{comment.user && comment.user.login ? comment.user.name + ' ' + comment.user.surname : 'Гість'}}\n        </span>\n        <span fxFlex></span>\n        <span class=\"mat-body-1\">{{comment.commentedAt | date: 'dd.MM.yyyy HH:mm'}}</span>\n      </p>\n      <p class=\"text-align-justify\">{{comment.comment}}</p>\n    </div>\n    <div class=\"cell\" fxFlex=\"10\">\n      <p *ngIf=\"allowTo('manager')\"><button class=\"mat-icon-button\" (click)=\"deleteComment(comment)\"\n          aria-label=\"Delete comment\">\n          <mat-icon class=\"mat-18\">delete_outline</mat-icon>\n        </button></p>\n      <p *ngIf=\"allowTo('manager') && !comment.display\">\n        <button class=\"mat-icon-button\" (click)=\"displayComment(true, comment._id)\" aria-label=\"Display comment\">\n          <mat-icon class=\"mat-18\">play_circle_outline</mat-icon>\n        </button>\n      </p>\n      <p *ngIf=\"allowTo('manager') && comment.display\">\n        <button class=\"mat-icon-button\" (click)=\"displayComment(false, comment._id)\" aria-label=\"Hide comment\">\n          <mat-icon class=\"mat-18\">pause_circle_outline</mat-icon>\n        </button>\n      </p>\n\n    </div>\n  </div>\n<!-- </mat-card> -->"
 
 /***/ }),
 
@@ -104,7 +104,7 @@ var CommentComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"app-container-h\">\n    <div class=\"row\" fxLayout=\"row\">\n      <div *ngIf=\"comments\" class=\"cell\">\n        <p class=\"mat-body-1\">Показано<span class=\"mat-body-2\"> {{comments.length}}\n          </span>коментарів з<span class=\"mat-body-2\"> {{commentsTotalLength || 0}}</span></p>\n      </div>\n    </div>\n    <mat-card class=\"comments\">\n      <app-comment class=\"comment\" [comment]=\"comment\" (deleteCommentEmitter)=\"deleteComment($event)\"\n        (displayCommentEmitter)=\"displayComment($event)\" *ngFor=\"let comment of comments\"></app-comment>\n    </mat-card>\n    <div *ngIf=\"processing\" class=\"row\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\n      <div class=\"cell\" fxFlex=\"100\">\n        <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"container\">\n  <div class=\"app-container-h\">\n    <div class=\"row\" fxLayout=\"row\">\n      <div *ngIf=\"comments\" class=\"cell\">\n        <p class=\"mat-body-1\">Показано<span class=\"mat-body-2\"> {{comments.length}}\n          </span>коментарів з<span class=\"mat-body-2\"> {{commentsTotalLength || 0}}</span></p>\n      </div>\n    </div>\n    <mat-card class=\"comments\">\n      <app-comment class=\"comment-wrapper\" [comment]=\"comment\" (deleteCommentEmitter)=\"deleteComment($event)\"\n        (displayCommentEmitter)=\"displayComment($event)\" *ngFor=\"let comment of comments\"></app-comment>\n    </mat-card>\n    <div *ngIf=\"processing\" class=\"row\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\n      <div class=\"cell\" fxFlex=\"100\">\n        <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -161,20 +161,20 @@ var CommentsListComponent = /** @class */ (function () {
         this.dialog = dialog;
         this.sharedService = sharedService;
         this.comments = [];
+        this.unreadedCommentsOfCategorieDownloaded = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.processing = false;
     }
     CommentsListComponent.prototype.ngOnInit = function () {
         var _this = this;
         this.sharedService.getEventToReloadComments()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (result) {
-            console.log('result', result);
             if (result) {
                 var sort = result.sort, skip = result.skip, limit = result.limit, displayFilter = result.displayFilter;
-                _this.loadComments(sort, skip, limit, displayFilter);
-                return _this.socialService.getComments(_this.parent_id, _this.parentCategory, sort, skip, limit, displayFilter);
+                // this.loadComments(sort, skip, limit, displayFilter);
+                return _this.socialService.getComments(_this.parent_id, _this.parentCategory, sort, skip, limit, displayFilter, _this.commentsReadedTillFilter);
             }
             else {
-                // not neded to reload, do nothing
+                // not needed to reload, do nothing
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_1__["of"])({ comments: [], commentsTotalLength: 0 });
             }
         }))
@@ -198,14 +198,22 @@ var CommentsListComponent = /** @class */ (function () {
     };
     CommentsListComponent.prototype.loadComments = function (sort, skip, limit, displayFilter) {
         var _this = this;
+        console.log('this.commentsReadedTillFilter', this.commentsReadedTillFilter);
         this.processing = true;
-        this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter)
+        this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter, this.commentsReadedTillFilter)
             .subscribe(function (result) {
             var _a;
             (_a = _this.comments).push.apply(_a, result.comments);
             _this.commentsTotalLength = result.commentsTotalLength;
             _this.processing = false;
+            _this.checkAllCommentsLoaded();
         });
+    };
+    CommentsListComponent.prototype.checkAllCommentsLoaded = function () {
+        if (this.commentsTotalLength === this.comments.length) {
+            this.unreadedCommentsOfCategorieDownloaded.emit(this.parent_id);
+            console.log('emit');
+        }
     };
     CommentsListComponent.prototype.deleteComment = function (event) {
         var _this = this;
@@ -226,7 +234,7 @@ var CommentsListComponent = /** @class */ (function () {
                         // successfuly delete
                         _this.sharedService.sharingEventToReloadComments();
                         // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
-                        return _this.socialService.getComments(_this.parent_id, _this.parentCategory, -1, 0, _this.comments.length, !_this.allowTo('manager'));
+                        return _this.socialService.getComments(_this.parent_id, _this.parentCategory, -1, 0, _this.comments.length, !_this.allowTo('manager'), _this.commentsReadedTillFilter);
                     }
                     else {
                         // not delete, do nothing
@@ -237,6 +245,7 @@ var CommentsListComponent = /** @class */ (function () {
                     if (result) {
                         _this.comments = result.comments;
                         _this.commentsTotalLength = result.commentsTotalLength;
+                        _this.checkAllCommentsLoaded();
                     }
                 }, function (err) { return console.log('add comment err', err); });
             }
@@ -252,7 +261,7 @@ var CommentsListComponent = /** @class */ (function () {
                 // successfuly updated
                 _this.sharedService.sharingEventToReloadComments();
                 // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
-                return _this.socialService.getComments(_this.parent_id, _this.parentCategory, -1, 0, _this.comments.length, !_this.allowTo('manager'));
+                return _this.socialService.getComments(_this.parent_id, _this.parentCategory, -1, 0, _this.comments.length, !_this.allowTo('manager'), _this.commentsReadedTillFilter);
             }
             else {
                 // not added, do nothing
@@ -263,6 +272,7 @@ var CommentsListComponent = /** @class */ (function () {
             if (result.comments.length) {
                 _this.comments = result.comments;
                 _this.commentsTotalLength = result.commentsTotalLength;
+                _this.checkAllCommentsLoaded();
             }
         }, function (err) { return console.log('add comment err', err); });
     };
@@ -282,6 +292,14 @@ var CommentsListComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", String)
     ], CommentsListComponent.prototype, "parentCategory", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", Boolean)
+    ], CommentsListComponent.prototype, "commentsReadedTillFilter", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], CommentsListComponent.prototype, "unreadedCommentsOfCategorieDownloaded", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('window:scroll', ['$event']),
         __metadata("design:type", Function),
@@ -766,7 +784,7 @@ var SocialModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" FxLayout=\"row\">\r\n  <div *ngFor=\"let unreadedComment of unreadedComments\" class=\"cell\" fxFlex=\"100\">\r\n    {{unreadedComment | json}}\r\n  </div>\r\n</div>\r\n     "
+module.exports = "<div class=\"row\" FxLayout=\"row\">\r\n  <div *ngFor=\"let downloadedUnreadedCommentsCategorie of downloadedUnreadedCommentsCategories; let i= index;\" class=\"cell\" fxFlex=\"100\">\r\n    <h2 class=\"mat-h2\">{{downloadedUnreadedCommentsCategorie.name[0]}}</h2>\r\n    <app-comments-list [parent_id]=\"downloadedUnreadedCommentsCategorie._id\" [parentCategory]=\"'mc'\" [commentsReadedTillFilter]=\"true\"\r\n    (unreadedCommentsOfCategorieDownloaded)=\"onUnreadedCommentsOfCategorieDownloaded($event)\"></app-comments-list>\r\n  </div>\r\n</div>\r\n     "
 
 /***/ }),
 
@@ -810,13 +828,26 @@ var UnreadedCommentsComponent = /** @class */ (function () {
     function UnreadedCommentsComponent(userService, socialService) {
         this.userService = userService;
         this.socialService = socialService;
+        this.downloadedUnreadedCommentsCategories = [];
     }
     UnreadedCommentsComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (this.allowTo('user')) {
-            this.socialService.getUnreadedComments()
-                .subscribe(function (result) { return _this.unreadedComments = result; }, function (err) { return console.log('err', err); });
+            this.socialService.getUnreadedCommentsCategories()
+                .subscribe(function (result) {
+                _this.unreadedCommentsCategories = result;
+                _this.downloadedUnreadedCommentsCategories.push(result[0]);
+            }, function (err) { return console.log('err', err); });
         }
+    };
+    UnreadedCommentsComponent.prototype.onUnreadedCommentsOfCategorieDownloaded = function (event) {
+        var _this = this;
+        this.unreadedCommentsCategories.map(function (el, index) {
+            if (el._id === event) {
+                _this.downloadedUnreadedCommentsCategories.push(_this.unreadedCommentsCategories[index + 1]);
+            }
+        });
+        console.log('onUnreadedCommentsOfCategorieDownloaded-event', event);
     };
     UnreadedCommentsComponent.prototype.allowTo = function (permitedRole) {
         this.user = this.userService.userCookieExtractor();

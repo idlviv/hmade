@@ -1,5 +1,5 @@
 <!-- <mat-card class="comments"> -->
-  <div class="row" [ngClass]="{'muted-strong': !comment.display}"
+  <div class="row comment" [ngClass]="{'muted-strong': !comment.display}"
     fxLayout="row">
     <div class="cell" fxFlex="10" fxLayoutAlign="center center">
       <img *ngIf="comment.user && comment.user.avatar" class="responsive-image" src="{{comment.user.role === 'google' ? 

@@ -1331,12 +1331,12 @@ a.hover-button:hover {
   padding-bottom: 0 !important;
 }
 
-.comment  {
-  div {
+.comment-wrapper {
+  div.comment {
     border-bottom: 1px solid mat-color($primary, 100);
   }
   @include last {
-    div {
+    div.comment {
       border-bottom: 0;
 
     }

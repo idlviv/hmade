@@ -4,15 +4,12 @@ const ApplicationError = require('../errors/applicationError');
 const ObjectId = require('../config/mongoose').Types.ObjectId;
 const log = require('../config/winston')(module);
 
-module.exports.getUnreadedComments = function(req, res, next) {
+module.exports.getUnreadedCommentsCategories = function(req, res, next) {
   const commentsReadedTill = req.user._doc.commentsReadedTill;
   McModel.aggregate([
     {$unwind: '$comments'},
     {$match: {'comments.display': true, 'comments.commentedAt': {$gt: commentsReadedTill}}},
-    {$group: {_id: '$_id',
-      name: {$addToSet: '$name'},
-      comments: {$push: '$comments'}},
-    },
+    {$group: {_id: '$_id', name: {$addToSet: '$name'}}},
   ])
       .then((result) => {
         return res.status(200).json(result);
@@ -133,8 +130,19 @@ module.exports.getComments = function(req, res, next) {
   const skip = +req.query.skip;
   const limit = +req.query.limit;
   const displayFilter = req.query.displayFilter;
+  const commentsReadedTillFilter = req.query.commentsReadedTillFilter;
+
   let query;
   displayFilter === 'true' ? query = {display: true} : query = {};
+  log.debug('displayFilter', displayFilter);
+  log.debug('query0', query);
+
+
+  if (commentsReadedTillFilter === 'true' && req.user && req.user._doc.commentsReadedTill) {
+    query.commentedAt = {$gt: req.user._doc.commentsReadedTill};
+  }
+
+  log.debug('query', query);
 
   let model;
   if (parentCategory === 'mc') {
@@ -171,7 +179,7 @@ module.exports.getComments = function(req, res, next) {
           'comment': 1,
           'commentator': 1,
           'user.avatar': 1,
-          'user.role': 1,          
+          'user.role': 1,
           'user.name': 1,
           'user.surname': 1,
           'user.login': 1,

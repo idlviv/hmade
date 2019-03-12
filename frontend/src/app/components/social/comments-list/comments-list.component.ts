@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { Component, OnInit, Input, HostListener, Output, EventEmitter } from '@angular/core';
 import { of } from 'rxjs';
 import { SocialService } from 'src/app/services/social.service';
 import { mergeMap } from 'rxjs/operators';
@@ -19,6 +19,9 @@ export class CommentsListComponent implements OnInit {
   commentsTotalLength: number;
   @Input() parent_id: string;
   @Input() parentCategory: string;
+  @Input() commentsReadedTillFilter: boolean;
+  @Output() unreadedCommentsOfCategorieDownloaded = new EventEmitter<any>();
+
   processing = false;
   user: IUser;
 
@@ -33,13 +36,12 @@ export class CommentsListComponent implements OnInit {
     this.sharedService.getEventToReloadComments()
       .pipe(
         mergeMap(result => {
-          console.log('result', result);
           if (result) {
             const { sort, skip, limit, displayFilter } = result;
-            this.loadComments(sort, skip, limit, displayFilter);
-            return this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter);
+            // this.loadComments(sort, skip, limit, displayFilter);
+            return this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter, this.commentsReadedTillFilter);
           } else {
-            // not neded to reload, do nothing
+            // not needed to reload, do nothing
             return of({ comments: [], commentsTotalLength: 0 });
           }
         }
@@ -72,16 +74,23 @@ export class CommentsListComponent implements OnInit {
   }
 
   loadComments(sort: number, skip: number, limit: number, displayFilter: boolean) {
+    console.log('this.commentsReadedTillFilter', this.commentsReadedTillFilter);
     this.processing = true;
-    this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter)
+    this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter, this.commentsReadedTillFilter)
       .subscribe(result => {
         this.comments.push(...result.comments);
         this.commentsTotalLength = result.commentsTotalLength;
         this.processing = false;
-
+        this.checkAllCommentsLoaded();
       });
   }
 
+  checkAllCommentsLoaded() {
+    if (this.commentsTotalLength === this.comments.length) {
+      this.unreadedCommentsOfCategorieDownloaded.emit(this.parent_id);
+      console.log('emit');
+    }
+  }
 
   deleteComment(event): void {
     const comment = event.comment;
@@ -106,7 +115,7 @@ export class CommentsListComponent implements OnInit {
                   this.sharedService.sharingEventToReloadComments();
                   // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
                   return this.socialService.getComments(
-                    this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
+                    this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager'), this.commentsReadedTillFilter
                   );
                 } else {
                   // not delete, do nothing
@@ -119,6 +128,7 @@ export class CommentsListComponent implements OnInit {
               if (result) {
                 this.comments = result.comments;
                 this.commentsTotalLength = result.commentsTotalLength;
+                this.checkAllCommentsLoaded();
               }
             },
               err => console.log('add comment err', err)
@@ -140,7 +150,7 @@ export class CommentsListComponent implements OnInit {
             this.sharedService.sharingEventToReloadComments();
             // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
             return this.socialService.getComments(
-              this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
+              this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager'), this.commentsReadedTillFilter
             );
           } else {
             // not added, do nothing
@@ -153,6 +163,7 @@ export class CommentsListComponent implements OnInit {
         if (result.comments.length) {
           this.comments = result.comments;
           this.commentsTotalLength = result.commentsTotalLength;
+          this.checkAllCommentsLoaded();
         }
       },
         err => console.log('add comment err', err)

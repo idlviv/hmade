@@ -7,7 +7,7 @@
       </div>
     </div>
     <mat-card class="comments">
-      <app-comment class="comment" [comment]="comment" (deleteCommentEmitter)="deleteComment($event)"
+      <app-comment class="comment-wrapper" [comment]="comment" (deleteCommentEmitter)="deleteComment($event)"
         (displayCommentEmitter)="displayComment($event)" *ngFor="let comment of comments"></app-comment>
     </mat-card>
     <div *ngIf="processing" class="row" fxLayout="row" fxLayoutAlign="center center">

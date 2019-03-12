@@ -1,6 +1,8 @@
 <div class="row" FxLayout="row">
-  <div *ngFor="let unreadedComment of unreadedComments" class="cell" fxFlex="100">
-    {{unreadedComment | json}}
+  <div *ngFor="let downloadedUnreadedCommentsCategorie of downloadedUnreadedCommentsCategories; let i= index;" class="cell" fxFlex="100">
+    <h2 class="mat-h2">{{downloadedUnreadedCommentsCategorie.name[0]}}</h2>
+    <app-comments-list [parent_id]="downloadedUnreadedCommentsCategorie._id" [parentCategory]="'mc'" [commentsReadedTillFilter]="true"
+    (unreadedCommentsOfCategorieDownloaded)="onUnreadedCommentsOfCategorieDownloaded($event)"></app-comments-list>
   </div>
 </div>
      
