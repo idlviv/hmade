@@ -18,10 +18,10 @@ import { LandingComponent } from './landing/landing.component';
 import { FooterComponent } from './footer/footer.component';
 import { ContentComponent } from './content/content.component';
 import { AboutComponent } from './about/about.component';
-import { CommentsComponent } from './comments/comments.component';
+// import { CommentsComponent } from './comments/comments.component';
 import { ScreenTestComponent } from './screen-test/screen-test.component';
-import { McsItemBriefComponent } from './mcs-item-brief/mcs-item-brief.component';
-import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.component';
+// import { McsItemBriefComponent } from './mcs-item-brief/mcs-item-brief.component';
+// import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.component';
 import { ProductItemFeedComponent } from './product-item-feed/product-item-feed.component';
 import { ImagePopupComponent } from './image-popup/image-popup.component';
 import { ScrollingDirective } from 'src/app/directives/scrolling.directive';
@@ -35,21 +35,6 @@ import { PrivacyComponent } from './privacy/privacy.component';
     ReactiveFormsModule,
     RecaptchaModule,
     RecaptchaFormsModule,
-  ],
-  exports: [
-    Page404Component,
-    ProductItemBriefComponent,
-    ProductItemDetailComponent,
-    ProductItemFeedComponent,
-    CrslComponent,
-    FeedbackComponent,
-    HeaderComponent,
-    LandingComponent,
-    FooterComponent,
-    ContentComponent,
-    CommentsComponent,
-    McsItemBriefComponent,
-    McsItemDetailComponent
   ],
   declarations: [
     Page404Component,
@@ -65,15 +50,30 @@ import { PrivacyComponent } from './privacy/privacy.component';
     FooterComponent,
     ContentComponent,
     AboutComponent,
-    CommentsComponent,
+    // CommentsComponent,
     ScreenTestComponent,
-    McsItemBriefComponent,
-    McsItemDetailComponent,
+    // McsItemBriefComponent,
+    // McsItemDetailComponent,
     ProductItemFeedComponent,
     ImagePopupComponent,
     ScrollingDirective,
     PrivacyComponent,
-
+  ],
+  exports: [
+    Page404Component,
+    ProductItemBriefComponent,
+    ProductItemDetailComponent,
+    ProductItemFeedComponent,
+    CrslComponent,
+    FeedbackComponent,
+    HeaderComponent,
+    LandingComponent,
+    FooterComponent,
+    ContentComponent,
+    AboutComponent,
+    // CommentsComponent,
+    // McsItemBriefComponent,
+    // McsItemDetailComponent
   ],
 })
 export class SharedModule { }

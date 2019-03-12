@@ -117,6 +117,7 @@
 
               <div class="cell" fxFlex="100">
                 <app-comments *ngIf="config.social.showComments" [parent_id]="mc._id" [parentCategory]="'mc'"></app-comments>
+                <app-comments-list *ngIf="config.social.showComments" [parent_id]="mc._id" [parentCategory]="'mc'"></app-comments-list>
               </div>  
             </div>
           </div>

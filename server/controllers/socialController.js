@@ -12,7 +12,7 @@ module.exports.getUnreadedComments = function(req, res, next) {
     {$group: {_id: '$_id',
       name: {$addToSet: '$name'},
       comments: {$push: '$comments'}},
-    }
+    },
   ])
       .then((result) => {
         return res.status(200).json(result);

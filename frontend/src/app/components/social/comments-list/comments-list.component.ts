@@ -1,0 +1,171 @@
+import { Component, OnInit, Input, HostListener } from '@angular/core';
+import { of } from 'rxjs';
+import { SocialService } from 'src/app/services/social.service';
+import { mergeMap } from 'rxjs/operators';
+import { IConfirmPopupData, IComment } from 'src/app/interfaces/interface';
+import { MatDialog } from '@angular/material';
+import { ConfirmPopupComponent } from '../../shared/confirm-popup/confirm-popup.component';
+import { SharedService } from 'src/app/services/shared.service';
+import { UserService } from 'src/app/services/user.service';
+import { IUser } from 'src/app/interfaces/user-interface';
+
+@Component({
+  selector: 'app-comments-list',
+  templateUrl: './comments-list.component.html',
+  styleUrls: ['./comments-list.component.scss']
+})
+export class CommentsListComponent implements OnInit {
+  comments = <IComment[]>[];
+  commentsTotalLength: number;
+  @Input() parent_id: string;
+  @Input() parentCategory: string;
+  processing = false;
+  user: IUser;
+
+  constructor(
+    private userService: UserService,
+    private socialService: SocialService,
+    public dialog: MatDialog,
+    private sharedService: SharedService,
+  ) { }
+
+  ngOnInit() {
+    this.sharedService.getEventToReloadComments()
+      .pipe(
+        mergeMap(result => {
+          console.log('result', result);
+          if (result) {
+            const { sort, skip, limit, displayFilter } = result;
+            this.loadComments(sort, skip, limit, displayFilter);
+            return this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter);
+          } else {
+            // not neded to reload, do nothing
+            return of({ comments: [], commentsTotalLength: 0 });
+          }
+        }
+        )
+      )
+      .subscribe(result => {
+        if (result.comments.length) {
+          this.comments = result.comments;
+          this.commentsTotalLength = result.commentsTotalLength;
+        }
+      },
+        err => console.log('add comment err', err)
+      );
+
+    this.loadComments(-1, 0, 5, !this.allowTo('manager'));
+  }
+
+  // Listening of page bottom reached
+  @HostListener('window:scroll', ['$event'])
+  onScroll(event): void {
+    if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 2) {
+      if (
+        !this.processing &&
+        this.commentsTotalLength !== this.comments.length &&
+        this.commentsTotalLength
+      ) {
+        this.loadComments(-1, this.comments.length, 5, !this.allowTo('manager'));
+      }
+    }
+  }
+
+  loadComments(sort: number, skip: number, limit: number, displayFilter: boolean) {
+    this.processing = true;
+    this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter)
+      .subscribe(result => {
+        this.comments.push(...result.comments);
+        this.commentsTotalLength = result.commentsTotalLength;
+        this.processing = false;
+
+      });
+  }
+
+
+  deleteComment(event): void {
+    const comment = event.comment;
+    const confirmObject = <IConfirmPopupData>{
+      message: `Дійсно видалити коментар: ${comment.comment} ?`,
+      payload: { _id: comment._id }
+    };
+
+    const dialogRef = this.dialog.open(ConfirmPopupComponent, {
+      data: confirmObject,
+      // panelClass: 'custom-dialog-container'
+    });
+
+    dialogRef.afterClosed()
+      .subscribe(res => {
+        if (res && res.choise) {
+          this.socialService.deleteComment(this.parent_id, this.parentCategory, res.payload._id)
+            .pipe(
+              mergeMap(result => {
+                if (result) {
+                  // successfuly delete
+                  this.sharedService.sharingEventToReloadComments();
+                  // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
+                  return this.socialService.getComments(
+                    this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
+                  );
+                } else {
+                  // not delete, do nothing
+                  return of(null);
+                }
+              }
+              )
+            )
+            .subscribe(result => {
+              if (result) {
+                this.comments = result.comments;
+                this.commentsTotalLength = result.commentsTotalLength;
+              }
+            },
+              err => console.log('add comment err', err)
+            );
+        }
+      },
+        err => console.log('err delete', err)
+      );
+  }
+
+  displayComment(event) {
+    const display = event.display;
+    const comment_id = event.comment_id;
+    this.socialService.displayComment(this.parent_id, this.parentCategory, display, comment_id)
+      .pipe(
+        mergeMap(result => {
+          if (result) {
+            // successfuly updated
+            this.sharedService.sharingEventToReloadComments();
+            // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
+            return this.socialService.getComments(
+              this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
+            );
+          } else {
+            // not added, do nothing
+            return of({ comments: [], commentsTotalLength: 0 });
+          }
+        }
+        )
+      )
+      .subscribe(result => {
+        if (result.comments.length) {
+          this.comments = result.comments;
+          this.commentsTotalLength = result.commentsTotalLength;
+        }
+      },
+        err => console.log('add comment err', err)
+      );
+  }
+
+  allowTo(permitedRole: string): boolean {
+    this.user = this.userService.userCookieExtractor();
+    return this.userService.allowTo(permitedRole);
+  }
+
+  restrictTo(restrictedRoles: string[]): boolean {
+    this.user = this.userService.userCookieExtractor();
+    return this.userService.restrictTo(restrictedRoles);
+  }
+}

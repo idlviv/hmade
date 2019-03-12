@@ -35,10 +35,13 @@ export class SharedService {
   //     markCommentsAsReaded (content-component) emitter =>
   //     content-component (update unreaded comments length)
 
-  // events to reload comments
-  sharingEventToReloadComments() {
-    this._eventToReloadComments.next();
+  // events on any changes in comments
+  sharingEventToReloadComments(event?: any) {
+    this._eventToReloadComments.next(event);
   }
+
+  // if event === null - reload comment based variables (like unreaded comments length)
+  // if event === {sort, skip, limit, displayFilter} - should reload comments in comments-list component
 
   getEventToReloadComments() {
     return this.eventToReloadComments$;

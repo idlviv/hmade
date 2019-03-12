@@ -5,7 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { IConfirmPopupData } from 'src/app/interfaces/interface';
-import { ConfirmPopupComponent } from '../confirm-popup/confirm-popup.component';
+import { ConfirmPopupComponent } from '../../shared/confirm-popup/confirm-popup.component';
 import { McService } from 'src/app/services/mc.service';
 import { mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';

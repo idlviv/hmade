@@ -7,6 +7,9 @@ import { McsListComponent } from './mcs-list/mcs-list.component';
 import { McsFiltersComponent } from './mcs-filters/mcs-filters.component';
 import { McsRoutingModule } from './mcs-routing.module';
 import { SharedModule } from '../shared/shared.module';
+import { SocialModule } from '../social/social.module';
+import { McsItemBriefComponent } from './mcs-item-brief/mcs-item-brief.component';
+import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.component';
 
 @NgModule({
   imports: [
@@ -15,13 +18,16 @@ import { SharedModule } from '../shared/shared.module';
     MaterialModule,
     ReactiveFormsModule,
     SharedModule,
-  ],
-  exports: [
+    SocialModule
   ],
   declarations: [
     McsComponent,
     McsListComponent,
     McsFiltersComponent,
-  ]
+    McsItemBriefComponent,
+    McsItemDetailComponent,
+  ],
+  exports: [
+  ],
 })
 export class McsModule { }
