@@ -20,7 +20,7 @@ export class CommentsListComponent implements OnInit {
   @Input() parent_id: string;
   @Input() parentCategory: string;
   @Input() commentsReadedTillFilter: boolean;
-  @Output() unreadedCommentsOfCategorieDownloaded = new EventEmitter<any>();
+  @Output() processedUnreadedComments = new EventEmitter<any>();
 
   processing = false;
   user: IUser;
@@ -37,9 +37,11 @@ export class CommentsListComponent implements OnInit {
       .pipe(
         mergeMap(result => {
           if (result) {
+            console.log('reload-list', result);
             const { sort, skip, limit, displayFilter } = result;
             // this.loadComments(sort, skip, limit, displayFilter);
-            return this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter, this.commentsReadedTillFilter);
+            return this.socialService.getComments(this.parent_id, this.parentCategory,
+              sort, skip, limit, displayFilter, this.commentsReadedTillFilter);
           } else {
             // not needed to reload, do nothing
             return of({ comments: [], commentsTotalLength: 0 });
@@ -74,9 +76,9 @@ export class CommentsListComponent implements OnInit {
   }
 
   loadComments(sort: number, skip: number, limit: number, displayFilter: boolean) {
-    console.log('this.commentsReadedTillFilter', this.commentsReadedTillFilter);
     this.processing = true;
-    this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter, this.commentsReadedTillFilter)
+    this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, 
+      limit, displayFilter, this.commentsReadedTillFilter)
       .subscribe(result => {
         this.comments.push(...result.comments);
         this.commentsTotalLength = result.commentsTotalLength;
@@ -87,7 +89,7 @@ export class CommentsListComponent implements OnInit {
 
   checkAllCommentsLoaded() {
     if (this.commentsTotalLength === this.comments.length) {
-      this.unreadedCommentsOfCategorieDownloaded.emit(this.parent_id);
+      this.processedUnreadedComments.emit(this.parent_id);
       console.log('emit');
     }
   }
@@ -115,7 +117,8 @@ export class CommentsListComponent implements OnInit {
                   this.sharedService.sharingEventToReloadComments();
                   // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
                   return this.socialService.getComments(
-                    this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager'), this.commentsReadedTillFilter
+                    this.parent_id, this.parentCategory, -1, 0, this.comments.length,
+                    !this.allowTo('manager'), this.commentsReadedTillFilter
                   );
                 } else {
                   // not delete, do nothing

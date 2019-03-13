@@ -104,7 +104,7 @@ var CommentComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\n  <div class=\"app-container-h\">\n    <div class=\"row\" fxLayout=\"row\">\n      <div *ngIf=\"comments\" class=\"cell\">\n        <p class=\"mat-body-1\">Показано<span class=\"mat-body-2\"> {{comments.length}}\n          </span>коментарів з<span class=\"mat-body-2\"> {{commentsTotalLength || 0}}</span></p>\n      </div>\n    </div>\n    <mat-card class=\"comments\">\n      <app-comment class=\"comment-wrapper\" [comment]=\"comment\" (deleteCommentEmitter)=\"deleteComment($event)\"\n        (displayCommentEmitter)=\"displayComment($event)\" *ngFor=\"let comment of comments\"></app-comment>\n    </mat-card>\n    <div *ngIf=\"processing\" class=\"row\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\n      <div class=\"cell\" fxFlex=\"100\">\n        <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\n      </div>\n    </div>\n  </div>\n</div>"
+module.exports = "<div class=\"container\">\n  <div class=\"app-container-h\">\n    <div class=\"row\" fxLayout=\"row\">\n      <div *ngIf=\"comments\" class=\"cell\">\n        <p></p>\n        <p class=\"mat-body-1\">Показано<span class=\"mat-body-2\"> {{comments.length}}\n          </span>коментарів з<span class=\"mat-body-2\"> {{commentsTotalLength || 0}}</span></p>\n      </div>\n    </div>\n    <mat-card class=\"comments\">\n      <app-comment class=\"comment-wrapper\" [comment]=\"comment\" (deleteCommentEmitter)=\"deleteComment($event)\"\n        (displayCommentEmitter)=\"displayComment($event)\" *ngFor=\"let comment of comments\"></app-comment>\n    </mat-card>\n    <div *ngIf=\"processing\" class=\"row\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\n      <div class=\"cell\" fxFlex=\"100\">\n        <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\n      </div>\n    </div>\n  </div>\n</div>"
 
 /***/ }),
 
@@ -161,7 +161,7 @@ var CommentsListComponent = /** @class */ (function () {
         this.dialog = dialog;
         this.sharedService = sharedService;
         this.comments = [];
-        this.unreadedCommentsOfCategorieDownloaded = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
+        this.processedUnreadedComments = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.processing = false;
     }
     CommentsListComponent.prototype.ngOnInit = function () {
@@ -169,6 +169,7 @@ var CommentsListComponent = /** @class */ (function () {
         this.sharedService.getEventToReloadComments()
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(function (result) {
             if (result) {
+                console.log('reload-list', result);
                 var sort = result.sort, skip = result.skip, limit = result.limit, displayFilter = result.displayFilter;
                 // this.loadComments(sort, skip, limit, displayFilter);
                 return _this.socialService.getComments(_this.parent_id, _this.parentCategory, sort, skip, limit, displayFilter, _this.commentsReadedTillFilter);
@@ -198,7 +199,6 @@ var CommentsListComponent = /** @class */ (function () {
     };
     CommentsListComponent.prototype.loadComments = function (sort, skip, limit, displayFilter) {
         var _this = this;
-        console.log('this.commentsReadedTillFilter', this.commentsReadedTillFilter);
         this.processing = true;
         this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter, this.commentsReadedTillFilter)
             .subscribe(function (result) {
@@ -211,7 +211,7 @@ var CommentsListComponent = /** @class */ (function () {
     };
     CommentsListComponent.prototype.checkAllCommentsLoaded = function () {
         if (this.commentsTotalLength === this.comments.length) {
-            this.unreadedCommentsOfCategorieDownloaded.emit(this.parent_id);
+            this.processedUnreadedComments.emit(this.parent_id);
             console.log('emit');
         }
     };
@@ -299,7 +299,7 @@ var CommentsListComponent = /** @class */ (function () {
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
         __metadata("design:type", Object)
-    ], CommentsListComponent.prototype, "unreadedCommentsOfCategorieDownloaded", void 0);
+    ], CommentsListComponent.prototype, "processedUnreadedComments", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('window:scroll', ['$event']),
         __metadata("design:type", Function),
@@ -331,7 +331,7 @@ var CommentsListComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n  <div class=\"app-container-h\">\r\n        <mat-card>\r\n            <form [formGroup]=\"commentForm\" #f=\"ngForm\" novalidate>\r\n                <div class=\"row\" fxLayout=\"row\">\r\n                  <div class=\"cell\" fxFlex=\"10\" fxLayoutAlign=\"center center\">\r\n\r\n                    <img *ngIf=\"allowTo('guest')\" class=\"responsive-image\"\r\n                      src=\"{{user.role === 'google' ? \r\n                        user.avatar :\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_50,h_50,f_auto/' +\r\n                        user.avatar}}\" alt=\"avatar\">\r\n                    <img *ngIf=\"!user\" class=\"responsive-image\"\r\n                      src=\"{{\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_50,h_50,f_auto/' +\r\n                        config.defaultAvatar}}\" alt=\"avatar\">\r\n\r\n                  </div>\r\n                    <mat-form-field class=\"cell\" fxFlex=\"80\">\r\n                      <textarea matInput\r\n                        [placeholder]=\"allowTo('user') ?\r\n                          'Коментар' :\r\n                          allowTo('guest') ?\r\n                            'Для відправки коментарів верифікуйте пошту' :\r\n                            'Коментарі можуть залишати лише зареєстровані користувачі'\"\r\n                        formControlName=\"comment\" required>\r\n                      </textarea>\r\n                      <mat-error\r\n                        *ngIf=\"(commentForm.get('comment').errors?.minlength ||\r\n                        commentForm.get('comment').errors?.maxlength ||\r\n                        commentForm.get('comment').errors?.required) &&\r\n                        commentForm.get('comment').touched\">\r\n                        Довжина повинна бути від 3 до 200 символів\r\n                      </mat-error>\r\n                      <mat-error\r\n                        *ngIf=\"commentForm.get('comment').errors?.pattern &&\r\n                        commentForm.get('comment').touched\">\r\n                        Не використовуйте спеціальні символи\r\n                      </mat-error>\r\n                    </mat-form-field>\r\n                  <div class=\"cell\" fxFlex=\"10\">\r\n                    <button mat-icon-button (click)=\"sendComment()\" aria-label=\"Send\"\r\n                     [disabled]=\"!commentForm.valid || !allowTo('user')\">\r\n                      <mat-icon>send</mat-icon>\r\n                    </button>\r\n           \r\n                  </div>\r\n                </div>\r\n                <div class=\"row\" fxLayout=\"row\" fxLayoutAlign=\"end\">\r\n                  <re-captcha [ngClass]=\"{'display-none': !commentForm.get('comment').valid}\"\r\n                    [formControlName]=\"'recaptcha'\" #recaptchaRef\r\n                    siteKey=\"{{config.recaptchaSiteKey}}\">\r\n                  </re-captcha> \r\n                </div>\r\n              </form>\r\n        </mat-card>\r\n    <!-- </div> -->\r\n\r\n    \r\n    <!-- <div class=\"row\" fxLayout=\"row\">\r\n      <div *ngIf=\"comments\" class=\"cell\">\r\n        <p class=\"mat-body-1\">Показано<span class=\"mat-body-2\"> {{comments.length}} \r\n        </span>коментарів з<span class=\"mat-body-2\"> {{commentsTotalLength || 0}}</span></p>\r\n      </div>\r\n    </div>\r\n    <mat-card class=\"comments\">\r\n      <app-comment class=\"comment\" [comment]=\"comment\" \r\n      (deleteCommentEmitter)=\"deleteComment($event)\" (displayCommentEmitter)=\"displayComment($event)\"\r\n      *ngFor=\"let comment of comments\"></app-comment>\r\n    </mat-card> -->\r\n\r\n    <!-- <mat-card class=\"comments\">\r\n          <div class=\"row comment\" [ngClass]=\"{'muted-strong': !comment.display}\"\r\n     *ngFor=\"let comment of comments\" fxLayout=\"row\">\r\n      <div  class=\"cell\" fxFlex=\"10\" fxLayoutAlign=\"center center\">\r\n                <img *ngIf=\"comment.user && comment.user.avatar\" class=\"responsive-image\"\r\n                  src=\"{{comment.user.role === 'google' ? \r\n                    comment.user.avatar :\r\n                    config.imgPath +\r\n                    config.cloudinary.cloud_name +\r\n                    '/c_fill,w_50,h_50,f_auto/' +\r\n                    comment.user.avatar}}\" alt=\"avatar\">\r\n                <img *ngIf=\"!comment.user\" class=\"responsive-image\"\r\n                  src=\"{{\r\n                    config.imgPath +\r\n                    config.cloudinary.cloud_name +\r\n                    '/c_fill,w_50,h_50,f_auto/' +\r\n                    config.defaultAvatar}}\" alt=\"avatar\">\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"80\">\r\n        <p>\r\n          <span class=\"mat-body-2 bold\">\r\n            {{comment.user && comment.user.login ? comment.user.name + ' ' + comment.user.surname : 'Гість'}}\r\n          </span>\r\n          <span fxFlex></span>\r\n          <span class=\"mat-body-1\">{{comment.commentedAt | date: 'dd.MM.yyyy HH:mm'}}</span>\r\n        </p>\r\n        <p class=\"text-align-justify\">{{comment.comment}}</p>\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"10\">\r\n        <p *ngIf=\"allowTo('manager')\"><button class=\"mat-icon-button\" (click)=\"deleteComment(comment)\" aria-label=\"Delete comment\">\r\n          <mat-icon class=\"mat-18\">delete_outline</mat-icon></button></p>\r\n        <p *ngIf=\"allowTo('manager') && !comment.display\">\r\n          <button class=\"mat-icon-button\" (click)=\"displayComment(true, comment._id)\" aria-label=\"Display comment\">\r\n            <mat-icon class=\"mat-18\">play_circle_outline</mat-icon></button>\r\n        </p>\r\n        <p *ngIf=\"allowTo('manager') && comment.display\">\r\n          <button class=\"mat-icon-button\" (click)=\"displayComment(false, comment._id)\" aria-label=\"Hide comment\">\r\n            <mat-icon class=\"mat-18\">pause_circle_outline</mat-icon></button>\r\n        </p>\r\n\r\n      </div>\r\n    </div>\r\n  </mat-card> -->\r\n\r\n    <!-- <div *ngIf=\"processing\" class=\"row\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\r\n      </div>\r\n    </div> -->\r\n  </div>\r\n</div>\r\n"
+module.exports = "<div class=\"container\">\r\n  <div class=\"app-container-h\">\r\n        <mat-card>\r\n            <form [formGroup]=\"commentForm\" #f=\"ngForm\" novalidate>\r\n                <div class=\"row\" fxLayout=\"row\">\r\n                  <div class=\"cell\" fxFlex=\"10\" fxLayoutAlign=\"center center\">\r\n\r\n                    <img *ngIf=\"allowTo('guest')\" class=\"responsive-image\"\r\n                      src=\"{{user.role === 'google' ? \r\n                        user.avatar :\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_50,h_50,f_auto/' +\r\n                        user.avatar}}\" alt=\"avatar\">\r\n                    <img *ngIf=\"!user\" class=\"responsive-image\"\r\n                      src=\"{{\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_50,h_50,f_auto/' +\r\n                        config.defaultAvatar}}\" alt=\"avatar\">\r\n\r\n                  </div>\r\n                    <mat-form-field class=\"cell\" fxFlex=\"80\">\r\n                      <textarea matInput\r\n                        [placeholder]=\"allowTo('user') ?\r\n                          'Коментар' :\r\n                          allowTo('guest') ?\r\n                            'Для відправки коментарів верифікуйте пошту' :\r\n                            'Коментарі можуть залишати лише зареєстровані користувачі'\"\r\n                        formControlName=\"comment\" required>\r\n                      </textarea>\r\n                      <mat-error\r\n                        *ngIf=\"(commentForm.get('comment').errors?.minlength ||\r\n                        commentForm.get('comment').errors?.maxlength ||\r\n                        commentForm.get('comment').errors?.required) &&\r\n                        commentForm.get('comment').touched\">\r\n                        Довжина повинна бути від 3 до 200 символів\r\n                      </mat-error>\r\n                      <mat-error\r\n                        *ngIf=\"commentForm.get('comment').errors?.pattern &&\r\n                        commentForm.get('comment').touched\">\r\n                        Не використовуйте спеціальні символи\r\n                      </mat-error>\r\n                    </mat-form-field>\r\n                  <div class=\"cell\" fxFlex=\"10\">\r\n                    <button mat-icon-button (click)=\"sendComment()\" aria-label=\"Send\"\r\n                     [disabled]=\"!commentForm.valid || !allowTo('user')\">\r\n                      <mat-icon>send</mat-icon>\r\n                    </button>\r\n           \r\n                  </div>\r\n                </div>\r\n                <!-- <div class=\"row\" fxLayout=\"row\" fxLayoutAlign=\"end\">\r\n                  <re-captcha [ngClass]=\"{'display-none': !commentForm.get('comment').valid}\"\r\n                    [formControlName]=\"'recaptcha'\" #recaptchaRef\r\n                    siteKey=\"{{config.recaptchaSiteKey}}\">\r\n                  </re-captcha> \r\n                </div> -->\r\n              </form>\r\n        </mat-card>\r\n    <!-- </div> -->\r\n\r\n    \r\n    <!-- <div class=\"row\" fxLayout=\"row\">\r\n      <div *ngIf=\"comments\" class=\"cell\">\r\n        <p class=\"mat-body-1\">Показано<span class=\"mat-body-2\"> {{comments.length}} \r\n        </span>коментарів з<span class=\"mat-body-2\"> {{commentsTotalLength || 0}}</span></p>\r\n      </div>\r\n    </div>\r\n    <mat-card class=\"comments\">\r\n      <app-comment class=\"comment\" [comment]=\"comment\" \r\n      (deleteCommentEmitter)=\"deleteComment($event)\" (displayCommentEmitter)=\"displayComment($event)\"\r\n      *ngFor=\"let comment of comments\"></app-comment>\r\n    </mat-card> -->\r\n\r\n    <!-- <mat-card class=\"comments\">\r\n          <div class=\"row comment\" [ngClass]=\"{'muted-strong': !comment.display}\"\r\n     *ngFor=\"let comment of comments\" fxLayout=\"row\">\r\n      <div  class=\"cell\" fxFlex=\"10\" fxLayoutAlign=\"center center\">\r\n                <img *ngIf=\"comment.user && comment.user.avatar\" class=\"responsive-image\"\r\n                  src=\"{{comment.user.role === 'google' ? \r\n                    comment.user.avatar :\r\n                    config.imgPath +\r\n                    config.cloudinary.cloud_name +\r\n                    '/c_fill,w_50,h_50,f_auto/' +\r\n                    comment.user.avatar}}\" alt=\"avatar\">\r\n                <img *ngIf=\"!comment.user\" class=\"responsive-image\"\r\n                  src=\"{{\r\n                    config.imgPath +\r\n                    config.cloudinary.cloud_name +\r\n                    '/c_fill,w_50,h_50,f_auto/' +\r\n                    config.defaultAvatar}}\" alt=\"avatar\">\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"80\">\r\n        <p>\r\n          <span class=\"mat-body-2 bold\">\r\n            {{comment.user && comment.user.login ? comment.user.name + ' ' + comment.user.surname : 'Гість'}}\r\n          </span>\r\n          <span fxFlex></span>\r\n          <span class=\"mat-body-1\">{{comment.commentedAt | date: 'dd.MM.yyyy HH:mm'}}</span>\r\n        </p>\r\n        <p class=\"text-align-justify\">{{comment.comment}}</p>\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"10\">\r\n        <p *ngIf=\"allowTo('manager')\"><button class=\"mat-icon-button\" (click)=\"deleteComment(comment)\" aria-label=\"Delete comment\">\r\n          <mat-icon class=\"mat-18\">delete_outline</mat-icon></button></p>\r\n        <p *ngIf=\"allowTo('manager') && !comment.display\">\r\n          <button class=\"mat-icon-button\" (click)=\"displayComment(true, comment._id)\" aria-label=\"Display comment\">\r\n            <mat-icon class=\"mat-18\">play_circle_outline</mat-icon></button>\r\n        </p>\r\n        <p *ngIf=\"allowTo('manager') && comment.display\">\r\n          <button class=\"mat-icon-button\" (click)=\"displayComment(false, comment._id)\" aria-label=\"Hide comment\">\r\n            <mat-icon class=\"mat-18\">pause_circle_outline</mat-icon></button>\r\n        </p>\r\n\r\n      </div>\r\n    </div>\r\n  </mat-card> -->\r\n\r\n    <!-- <div *ngIf=\"processing\" class=\"row\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\r\n      </div>\r\n    </div> -->\r\n  </div>\r\n</div>\r\n"
 
 /***/ }),
 
@@ -380,7 +380,6 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 // import { ConfirmPopupComponent } from '../../shared/confirm-popup/confirm-popup.component';
 
 var CommentsComponent = /** @class */ (function () {
-    // processing = false;
     function CommentsComponent(userService, socialService, 
     // public dialog: MatDialog,
     sharedService) {
@@ -401,144 +400,24 @@ var CommentsComponent = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].minLength(3),
                 _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].maxLength(150),
             ]),
-            recaptcha: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required
-            ])
         });
-        // this.loadComments(-1, 0, 5, !this.allowTo('manager'));
     };
-    // // Listening of page bottom reached
-    // @HostListener('window:scroll', ['$event'])
-    // onScroll(event): void {
-    //   if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 2) {
-    //     if (
-    //       !this.processing &&
-    //       this.commentsTotalLength !== this.comments.length &&
-    //       this.commentsTotalLength
-    //       ) {
-    //       this.loadComments(-1, this.comments.length, 5, !this.allowTo('manager'));
-    //     }
-    //   }
-    // }
-    // loadComments(sort: number, skip: number, limit: number, displayFilter: boolean) {
-    //   this.processing = true;
-    //   this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter)
-    //     .subscribe(result => {
-    //       this.comments.push(...result.comments);
-    //       this.commentsTotalLength = result.commentsTotalLength;
-    //       this.processing = false;
-    //     });
-    // }
     CommentsComponent.prototype.sendComment = function () {
         var _this = this;
         var comment = this.commentForm.get('comment').value;
-        var recaptcha = this.commentForm.get('recaptcha').value;
+        // const recaptcha = this.commentForm.get('recaptcha').value;
+        var recaptcha = 'sdfsd';
         this.socialService.addComment(this.parent_id, this.parentCategory, comment, recaptcha)
             .subscribe(function (result) {
             _this.mcFormDirective.resetForm();
             _this.sharedService.sharingEventToReloadComments({
                 sort: -1,
                 skip: 0,
-                limit: 5,
+                limit: 6,
                 displayFilter: !_this.allowTo('manager'),
             });
         }, function (err) { return console.log('add comment err', err); });
-        // this.socialService.addComment(this.parent_id, this.parentCategory, comment, recaptcha)
-        //   .pipe(
-        //     mergeMap(result => {
-        //       if (result) {
-        //         // successfuly added
-        //         this.mcFormDirective.resetForm();
-        //         this.sharedService.sharingEventToReloadComments();
-        //         return this.socialService.getComments(this.parent_id, this.parentCategory, -1, 0, 5, !this.allowTo('manager'));
-        //       } else {
-        //         // not added, do nothing
-        //         return of({comments: [], commentsTotalLength: 0});
-        //       }
-        //     }
-        //     )
-        //   )
-        //   .subscribe(result => {
-        //     if (result.comments.length) {
-        //       this.comments = result.comments;
-        //       this.commentsTotalLength = result.commentsTotalLength;
-        //     }
-        //   },
-        //     err => console.log('add comment err', err)
-        //   );
     };
-    // deleteComment(event): void {
-    //   const comment = event.comment;
-    //   const confirmObject = <IConfirmPopupData>{
-    //     message: `Дійсно видалити коментар: ${comment.comment} ?`,
-    //     payload: {_id: comment._id}
-    //   };
-    //   const dialogRef = this.dialog.open(ConfirmPopupComponent, {
-    //     data: confirmObject,
-    //     // panelClass: 'custom-dialog-container'
-    //   });
-    //   dialogRef.afterClosed()
-    //     .subscribe(res => {
-    //         if (res && res.choise) {
-    //           this.socialService.deleteComment(this.parent_id, this.parentCategory, res.payload._id)
-    //             .pipe(
-    //               mergeMap(result => {
-    //                 if (result) {
-    //                   // successfuly delete
-    //                   this.sharedService.sharingEventToReloadComments();
-    //                   // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
-    //                   return this.socialService.getComments(
-    //                     this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
-    //                     );
-    //                 } else {
-    //                   // not delete, do nothing
-    //                   return of(null);
-    //                 }
-    //               }
-    //               )
-    //             )
-    //             .subscribe(result => {
-    //               if (result) {
-    //                 this.comments = result.comments;
-    //                 this.commentsTotalLength = result.commentsTotalLength;
-    //               }
-    //             },
-    //               err => console.log('add comment err', err)
-    //             );
-    //         }
-    //       },
-    //       err => console.log('err delete', err)
-    //     );
-    // }
-    // displayComment(event) {
-    //   const display = event.display;
-    //   const comment_id = event.comment_id;
-    //   this.socialService.displayComment(this.parent_id, this.parentCategory, display, comment_id)
-    //     .pipe(
-    //       mergeMap(result => {
-    //         if (result) {
-    //           // successfuly updated
-    //           this.sharedService.sharingEventToReloadComments();
-    //           // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
-    //           return this.socialService.getComments(
-    //             this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
-    //             );
-    //         } else {
-    //           // not added, do nothing
-    //           return of({comments: [], commentsTotalLength: 0});
-    //         }
-    //       }
-    //       )
-    //     )
-    //     .subscribe(result => {
-    //       if (result.comments.length) {
-    //         this.comments = result.comments;
-    //         this.commentsTotalLength = result.commentsTotalLength;
-    //       }
-    //     },
-    //       err => console.log('add comment err', err)
-    //     );
-    // }
     CommentsComponent.prototype.allowTo = function (permitedRole) {
         this.user = this.userService.userCookieExtractor();
         return this.userService.allowTo(permitedRole);
@@ -784,7 +663,7 @@ var SocialModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" FxLayout=\"row\">\r\n  <div *ngFor=\"let downloadedUnreadedCommentsCategorie of downloadedUnreadedCommentsCategories; let i= index;\" class=\"cell\" fxFlex=\"100\">\r\n    <h2 class=\"mat-h2\">{{downloadedUnreadedCommentsCategorie.name[0]}}</h2>\r\n    <app-comments-list [parent_id]=\"downloadedUnreadedCommentsCategorie._id\" [parentCategory]=\"'mc'\" [commentsReadedTillFilter]=\"true\"\r\n    (unreadedCommentsOfCategorieDownloaded)=\"onUnreadedCommentsOfCategorieDownloaded($event)\"></app-comments-list>\r\n  </div>\r\n</div>\r\n     "
+module.exports = "<div class=\"row\" FxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n    <h2 class=\"mat-h2\">Нові коментарі</h2>\r\n    <p>{{unreadedCommentsParents | json}}</p>\r\n  </div>\r\n</div>\r\n     \r\n<div class=\"row\" FxLayout=\"row\">\r\n  <div *ngFor=\"let processedUnreadedCommentsParent of processedUnreadedCommentsParents; let i= index;\" class=\"cell\" fxFlex=\"100\">\r\n    <h3 class=\"mat-h3\">{{processedUnreadedCommentsParent.name[0]}}</h3>\r\n    {{processedUnreadedCommentsParent | json}}\r\n    <app-comments-list [parent_id]=\"processedUnreadedCommentsParent._id\" [parentCategory]=\"'mc'\" [commentsReadedTillFilter]=\"true\"\r\n    (processedUnreadedComments)=\"onProcessedUnreadedComments($event)\"></app-comments-list>\r\n  </div>\r\n</div>\r\n     "
 
 /***/ }),
 
@@ -833,33 +712,50 @@ var UnreadedCommentsComponent = /** @class */ (function () {
         this.userService = userService;
         this.socialService = socialService;
         this.sharedService = sharedService;
-        this.downloadedUnreadedCommentsCategories = [];
+        this.processedUnreadedCommentsParents = [];
     }
+    UnreadedCommentsComponent.prototype.ngOnChanges = function () {
+        console.log('changes', this.processedUnreadedCommentsParents);
+    };
     UnreadedCommentsComponent.prototype.ngOnInit = function () {
         var _this = this;
         if (this.allowTo('user')) {
             this.socialService.getUnreadedCommentsCategories()
                 .subscribe(function (result) {
-                _this.unreadedCommentsCategories = result;
-                _this.downloadedUnreadedCommentsCategories.push(result[0]);
+                _this.processedUnreadedCommentsParents = [];
+                _this.unreadedCommentsParents = result;
+                // this.processedUnreadedCommentsParents[0] = result[0];
+                _this.processedUnreadedCommentsParents.push(result[0]);
+                console.log('event on init', _this.processedUnreadedCommentsParents);
             }, function (err) { return console.log('err', err); });
             this.sharedService.getEventToReloadComments()
-                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function (result) { return _this.socialService.getUnreadedCommentsCategories(); }))
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function () { return _this.socialService.getUnreadedCommentsCategories(); }))
                 .subscribe(function (result) {
-                _this.downloadedUnreadedCommentsCategories = [];
-                _this.unreadedCommentsCategories = result;
-                _this.downloadedUnreadedCommentsCategories.push(result[0]);
+                _this.processedUnreadedCommentsParents = [];
+                _this.unreadedCommentsParents = result;
+                _this.processedUnreadedCommentsParents.push(result[0]);
+                console.log('event to reload', _this.processedUnreadedCommentsParents);
+                // this.processedUnreadedCommentsParents[0] = result[0];
             }, function (err) { return console.log('err', err); });
         }
     };
-    UnreadedCommentsComponent.prototype.onUnreadedCommentsOfCategorieDownloaded = function (event) {
-        var _this = this;
-        this.unreadedCommentsCategories.map(function (el, index) {
-            if (el._id === event) {
-                _this.downloadedUnreadedCommentsCategories.push(_this.unreadedCommentsCategories[index + 1]);
+    UnreadedCommentsComponent.prototype.onProcessedUnreadedComments = function (event) {
+        console.log('index', this.processedUnreadedCommentsParents.map(function (value) { return value._id; }).indexOf(event));
+        console.log('arr', this.processedUnreadedCommentsParents);
+        if (this.processedUnreadedCommentsParents.map(function (value) { return value._id; }).indexOf(event) > -1) {
+            // event value (parent_id) is already in processed array
+            for (var i = 0; i < this.unreadedCommentsParents.length; i++) {
+                if (this.processedUnreadedCommentsParents.map(function (val) { return val._id; }).indexOf(this.unreadedCommentsParents[i]._id) === -1) {
+                    // mapping array of all unproceed _ids and add next unproceed _id to proceed array
+                    console.log('in', this.processedUnreadedCommentsParents.map(function (value) { return value._id; }).indexOf(this.unreadedCommentsParents[i]._id));
+                    this.processedUnreadedCommentsParents.push(this.unreadedCommentsParents[i]);
+                    break;
+                }
             }
-        });
-        console.log('onUnreadedCommentsOfCategorieDownloaded-event', event);
+        }
+        else {
+            // this.processedUnreadedCommentsParents.push(event);
+        }
     };
     UnreadedCommentsComponent.prototype.allowTo = function (permitedRole) {
         this.user = this.userService.userCookieExtractor();

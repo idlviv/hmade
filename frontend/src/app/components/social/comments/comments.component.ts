@@ -29,8 +29,6 @@ export class CommentsComponent implements OnInit {
   @ViewChild('f') mcFormDirective: FormGroupDirective;
   @ViewChild('recaptchaRef') recaptchaRef;
 
-  // processing = false;
-
   constructor(
     private userService: UserService,
     private socialService: SocialService,
@@ -52,156 +50,30 @@ export class CommentsComponent implements OnInit {
           Validators.minLength(3),
           Validators.maxLength(150),
         ]),
-        recaptcha: new FormControl('', [
-          Validators.required
-        ])
+        // recaptcha: new FormControl('', [
+        //   Validators.required
+        // ])
     });
-
-    // this.loadComments(-1, 0, 5, !this.allowTo('manager'));
   }
-
-  // // Listening of page bottom reached
-  // @HostListener('window:scroll', ['$event'])
-  // onScroll(event): void {
-  //   if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 2) {
-  //     if (
-  //       !this.processing &&
-  //       this.commentsTotalLength !== this.comments.length &&
-  //       this.commentsTotalLength
-  //       ) {
-  //       this.loadComments(-1, this.comments.length, 5, !this.allowTo('manager'));
-  //     }
-  //   }
-  // }
-
-  // loadComments(sort: number, skip: number, limit: number, displayFilter: boolean) {
-  //   this.processing = true;
-  //   this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter)
-  //     .subscribe(result => {
-  //       this.comments.push(...result.comments);
-  //       this.commentsTotalLength = result.commentsTotalLength;
-  //       this.processing = false;
-
-  //     });
-  // }
 
   sendComment() {
     const comment = this.commentForm.get('comment').value;
-    const recaptcha = this.commentForm.get('recaptcha').value;
-
+    // const recaptcha = this.commentForm.get('recaptcha').value;
+    const recaptcha = 'sdfsd';
+    
     this.socialService.addComment(this.parent_id, this.parentCategory, comment, recaptcha)
       .subscribe(result => {
           this.mcFormDirective.resetForm();
           this.sharedService.sharingEventToReloadComments({
             sort: -1,
             skip: 0,
-            limit: 5,
+            limit: 6,
             displayFilter: !this.allowTo('manager'),
           });
       },
       err => console.log('add comment err', err)
     );
-
-    // this.socialService.addComment(this.parent_id, this.parentCategory, comment, recaptcha)
-    //   .pipe(
-    //     mergeMap(result => {
-    //       if (result) {
-    //         // successfuly added
-    //         this.mcFormDirective.resetForm();
-    //         this.sharedService.sharingEventToReloadComments();
-    //         return this.socialService.getComments(this.parent_id, this.parentCategory, -1, 0, 5, !this.allowTo('manager'));
-    //       } else {
-    //         // not added, do nothing
-    //         return of({comments: [], commentsTotalLength: 0});
-    //       }
-    //     }
-    //     )
-    //   )
-    //   .subscribe(result => {
-    //     if (result.comments.length) {
-    //       this.comments = result.comments;
-    //       this.commentsTotalLength = result.commentsTotalLength;
-    //     }
-    //   },
-    //     err => console.log('add comment err', err)
-    //   );
   }
-
-  // deleteComment(event): void {
-  //   const comment = event.comment;
-  //   const confirmObject = <IConfirmPopupData>{
-  //     message: `Дійсно видалити коментар: ${comment.comment} ?`,
-  //     payload: {_id: comment._id}
-  //   };
-
-  //   const dialogRef = this.dialog.open(ConfirmPopupComponent, {
-  //     data: confirmObject,
-  //     // panelClass: 'custom-dialog-container'
-  //   });
-
-  //   dialogRef.afterClosed()
-  //     .subscribe(res => {
-  //         if (res && res.choise) {
-  //           this.socialService.deleteComment(this.parent_id, this.parentCategory, res.payload._id)
-  //             .pipe(
-  //               mergeMap(result => {
-  //                 if (result) {
-  //                   // successfuly delete
-  //                   this.sharedService.sharingEventToReloadComments();
-  //                   // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
-  //                   return this.socialService.getComments(
-  //                     this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
-  //                     );
-  //                 } else {
-  //                   // not delete, do nothing
-  //                   return of(null);
-  //                 }
-  //               }
-  //               )
-  //             )
-  //             .subscribe(result => {
-  //               if (result) {
-  //                 this.comments = result.comments;
-  //                 this.commentsTotalLength = result.commentsTotalLength;
-  //               }
-  //             },
-  //               err => console.log('add comment err', err)
-  //             );
-  //         }
-  //       },
-  //       err => console.log('err delete', err)
-  //     );
-  // }
-
-  // displayComment(event) {
-  //   const display = event.display;
-  //   const comment_id = event.comment_id;
-  //   this.socialService.displayComment(this.parent_id, this.parentCategory, display, comment_id)
-  //     .pipe(
-  //       mergeMap(result => {
-  //         if (result) {
-  //           // successfuly updated
-  //           this.sharedService.sharingEventToReloadComments();
-  //           // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
-  //           return this.socialService.getComments(
-  //             this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager')
-  //             );
-  //         } else {
-  //           // not added, do nothing
-  //           return of({comments: [], commentsTotalLength: 0});
-  //         }
-  //       }
-  //       )
-  //     )
-  //     .subscribe(result => {
-  //       if (result.comments.length) {
-  //         this.comments = result.comments;
-  //         this.commentsTotalLength = result.commentsTotalLength;
-  //       }
-  //     },
-  //       err => console.log('add comment err', err)
-  //     );
-  // }
 
   allowTo(permitedRole: string): boolean {
     this.user = this.userService.userCookieExtractor();

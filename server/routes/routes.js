@@ -30,7 +30,7 @@ router.delete('/social/delete-comment',
 );
 
 router.post('/social/add-comment',
-    recaptcha,
+    // recaptcha,
     authentication,
     authorization('user'),
     socialController.addComment

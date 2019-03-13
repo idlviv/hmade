@@ -3447,7 +3447,7 @@ var SharedService = /** @class */ (function () {
         this.http = http;
         this._shareEvent = new rxjs__WEBPACK_IMPORTED_MODULE_1__["ReplaySubject"](1);
         this.shareEvent$ = this._shareEvent.asObservable();
-        this._eventToReloadComments = new rxjs__WEBPACK_IMPORTED_MODULE_1__["ReplaySubject"](1);
+        this._eventToReloadComments = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
         this.eventToReloadComments$ = this._eventToReloadComments.asObservable();
     }
     // sharing data between components
@@ -3464,6 +3464,7 @@ var SharedService = /** @class */ (function () {
     //     content-component (update unreaded comments length)
     // events on any changes in comments
     SharedService.prototype.sharingEventToReloadComments = function (event) {
+        console.log('sharing service event', event);
         this._eventToReloadComments.next(event);
     };
     // if event === null - reload comment based variables (like unreaded comments length)
