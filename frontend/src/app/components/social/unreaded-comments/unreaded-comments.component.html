@@ -7,7 +7,7 @@
      
 <div *ngIf="processedUnreadedCommentsParents?.length" class="row" FxLayout="row">
   <div *ngFor="let processedUnreadedCommentsParent of processedUnreadedCommentsParents; let i= index;" class="cell" fxFlex="100">
-    <h3 class="mat-h3"><a aria-label="Open" [routerLink]="['/mcs','show', processedUnreadedCommentsParent._id]"
+    <h3 class="mat-h3 no-margin"><a aria-label="Open" [routerLink]="['/mcs','show', processedUnreadedCommentsParent._id]"
       [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
       Майстер-клас {{processedUnreadedCommentsParent.name[0]}}</a></h3>
     <!-- {{processedUnreadedCommentsParent | json}} -->

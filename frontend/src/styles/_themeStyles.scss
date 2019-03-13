@@ -1333,12 +1333,11 @@ a.hover-button:hover {
 
 .comment-wrapper {
   div.comment {
-    border-bottom: 1px solid mat-color($primary, 100);
+    border-top: 1px solid mat-color($primary, 100);
   }
-  @include last {
+  @include first {
     div.comment {
-      border-bottom: 0;
-
+      border-top: 0;
     }
   }
 }
@@ -1376,7 +1375,16 @@ a.hover-button:hover {
     }
   }
 }
-// end mc steps arrange order
+
+// arrange backgrounds
+.arrange-background {
+  &:nth-child(odd) {
+    background-color: mat-color($background, background) !important;
+  }
+  &:nth-child(even) {
+    background-color: mat-color($background, app-bar) !important;
+  }
+}
 
 // effects for landing page products
 @include keyframes(fadeIn) {
