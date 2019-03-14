@@ -22,7 +22,7 @@
         <span fxFlex></span>
         <span class="mat-body-1">{{comment.commentedAt | date: 'dd.MM.yyyy HH:mm'}}</span>
       </p>
-      <p class="text-align-justify">{{comment.comment}}</p>
+      <p class="mat-body-1 text-align-justify">{{comment.comment}}</p>
     </div>
     <div class="cell wrap" fxFlex="64px" fxLayoutAlign="center center">
       <p *ngIf="allowTo('manager')" class="no-margin">

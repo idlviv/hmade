@@ -50,24 +50,23 @@ export class CommentsComponent implements OnInit {
           Validators.minLength(3),
           Validators.maxLength(150),
         ]),
-        // recaptcha: new FormControl('', [
-        //   Validators.required
-        // ])
+        recaptcha: new FormControl('', [
+          Validators.required
+        ])
     });
   }
 
   sendComment() {
     const comment = this.commentForm.get('comment').value;
-    // const recaptcha = this.commentForm.get('recaptcha').value;
-    const recaptcha = 'sdfsd';
-    
+    const recaptcha = this.commentForm.get('recaptcha').value;
+
     this.socialService.addComment(this.parent_id, this.parentCategory, comment, recaptcha)
       .subscribe(result => {
           this.mcFormDirective.resetForm();
           this.sharedService.sharingEventToReloadComments({
             sort: -1,
             skip: 0,
-            limit: 6,
+            limit: 5,
             displayFilter: !this.allowTo('manager'),
           });
       },

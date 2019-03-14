@@ -9,7 +9,7 @@ import { config } from '../../../app.config';
   styleUrls: ['./comment.component.scss']
 })
 export class CommentComponent implements OnInit {
-  @Input() comment: IComment;
+  @Input() comment: any;
   @Output() deleteCommentEmitter = new EventEmitter<IComment>();
   @Output() displayCommentEmitter = new EventEmitter<any>();
 

@@ -101,12 +101,10 @@ export class ContentComponent implements OnInit, AfterViewInit {
     if (!this.unreadedCommentsLength) {
       return;
     }
-    const date = Date.now();
-    this.userService.userEditUnsecure({name: 'commentsReadedTill', value: date + ''})
+    this.userService.userEditUnsecure({name: 'commentsReadedTill'})
     .subscribe(
       res => {
         this.sharedService.sharingEventToReloadComments();
-        // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
       },
       err => console.log('err', err)
     );

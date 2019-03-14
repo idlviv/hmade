@@ -137,6 +137,7 @@
     <div fxLayout="row">
       <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Edit" fxFlex="50"
         [routerLink]="['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]"
+        [queryParams]="{seoTitle: product.seoTitle, seoMeta: product.seoMeta}"
         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
         Редагувати
       </a>
@@ -146,6 +147,7 @@
       </a>
       <a *ngIf="child" mat-raised-button color="primary"
         [routerLink]="['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]"
+        [queryParams]="{seoTitle: child.seoTitle, seoMeta: child.seoMeta}"
         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
         {{child.name}}
       </a>

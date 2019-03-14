@@ -341,10 +341,6 @@ $light-theme: mat-light-theme(mat-palette($mat-blue-grey), mat-palette($mat-cust
 $main-theme: $light-theme;
 @include angular-material-theme($main-theme);
 
-
-
-
-
 // coloring 
 // $background-color: map_get($mat-grey, 50);
 // $_primary: mat-color($light-primary);

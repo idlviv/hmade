@@ -28,6 +28,7 @@ import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.compon
     McsItemDetailComponent,
   ],
   exports: [
+    McsItemBriefComponent,
   ],
 })
 export class McsModule { }

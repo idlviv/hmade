@@ -44,19 +44,13 @@ export class McsItemBriefComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     const productChange: SimpleChange = changes.mc;
-    // console.log('prev value: ', productChange.previousValue);
-    // console.log('got name: ', productChange.currentValue);
-    // console.log('productChange: ', productChange);
     if (productChange) {
-      // console.log('simple changes product');
-      // this.getRecommendations();
     }
   }
 
   goToMcsItemDetail(_id) {
     console.log(`goToMcsItemDetail ${_id}`);
     this.router.navigate(['/mcs', 'show', _id]);
-
   }
 
   editMcsItem(_id) {

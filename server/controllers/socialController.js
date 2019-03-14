@@ -122,7 +122,6 @@ module.exports.likesSet = function(req, res, next) {
       .catch((err) => next(new DbError(err.message)));
 };
 
-
 module.exports.getComments = function(req, res, next) {
   const parent_id = req.query.parent_id;
   const parentCategory = req.query.parentCategory;
@@ -134,15 +133,14 @@ module.exports.getComments = function(req, res, next) {
 
   let query;
   displayFilter === 'true' ? query = {display: true} : query = {};
-  log.debug('displayFilter', displayFilter);
-  log.debug('query0', query);
 
-
-  if (commentsReadedTillFilter === 'true' && req.user && req.user._doc.commentsReadedTill) {
+  if (
+    commentsReadedTillFilter === 'true' &&
+    req.user &&
+    req.user._doc.commentsReadedTill
+  ) {
     query.commentedAt = {$gt: req.user._doc.commentsReadedTill};
   }
-
-  log.debug('query', query);
 
   let model;
   if (parentCategory === 'mc') {

@@ -374,7 +374,11 @@ color: $muted-strong
   display: block;
 }
 
-re-captcha > div{
+.display-inline-block {
+  display: inline-block;
+}
+
+re-captcha > div {
   width: 302px;
   margin: 0 auto;
 }
@@ -1400,6 +1404,10 @@ a.hover-button:hover {
 
 .animationAppear1s {
   @include animation(fadeIn 1s forwards);
+}
+
+.animationAppear2s {
+  @include animation(fadeIn 2s forwards);
 }
 
 .opacity0 {

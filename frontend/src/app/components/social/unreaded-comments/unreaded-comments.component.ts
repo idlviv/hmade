@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges } from '@angular/core';
+import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { UserService } from 'src/app/services/user.service';
 import { SocialService } from 'src/app/services/social.service';
@@ -10,10 +10,11 @@ import { mergeMap } from 'rxjs/operators';
   templateUrl: './unreaded-comments.component.html',
   styleUrls: ['./unreaded-comments.component.scss']
 })
-export class UnreadedCommentsComponent implements OnInit, OnChanges {
+export class UnreadedCommentsComponent implements OnInit, AfterViewInit {
   user: IUser;
   unreadedCommentsParents: any[];
   processedUnreadedCommentsParents = [];
+  pageLoaded = false;
 
   constructor(
     private userService: UserService,
@@ -21,8 +22,7 @@ export class UnreadedCommentsComponent implements OnInit, OnChanges {
     private sharedService: SharedService,
   ) { }
 
-  ngOnChanges() {
-    console.log('changes', this.processedUnreadedCommentsParents);
+  ngAfterViewInit() {
   }
 
   ngOnInit() {
@@ -31,10 +31,12 @@ export class UnreadedCommentsComponent implements OnInit, OnChanges {
         .subscribe(
           result => {
             this.processedUnreadedCommentsParents = [];
-            this.unreadedCommentsParents = result;
-            // this.processedUnreadedCommentsParents[0] = result[0];
-            this.processedUnreadedCommentsParents.push(result[0]);
-            console.log('event on init', this.processedUnreadedCommentsParents);
+            this.unreadedCommentsParents = [];
+            if (result.length) {
+              this.unreadedCommentsParents = result;
+              this.processedUnreadedCommentsParents.push(result[0]);
+            }
+            this.pageLoaded = true;
           },
           err => console.log('err', err)
         );
@@ -44,20 +46,29 @@ export class UnreadedCommentsComponent implements OnInit, OnChanges {
         .subscribe(
           result => {
             this.processedUnreadedCommentsParents = [];
-            this.unreadedCommentsParents = result;
-            this.processedUnreadedCommentsParents.push(result[0]);
-            console.log('event to reload', this.processedUnreadedCommentsParents);
-
-            // this.processedUnreadedCommentsParents[0] = result[0];
+            this.unreadedCommentsParents = [];
+            if (result.length) {
+              this.unreadedCommentsParents = result;
+              this.processedUnreadedCommentsParents.push(result[0]);
+            }
+            this.pageLoaded = true;
           },
           err => console.log('err', err)
         );
     }
   }
 
+  markCommentsAsReaded() {
+    this.userService.userEditUnsecure({name: 'commentsReadedTill'})
+    .subscribe(
+      res => {
+        this.sharedService.sharingEventToReloadComments();
+      },
+      err => console.log('err', err)
+    );
+  }
+
   onProcessedUnreadedComments(event) {
-    console.log('index', this.processedUnreadedCommentsParents.map((value) => value._id).indexOf(event));
-    console.log('arr', this.processedUnreadedCommentsParents);
 
     if (this.processedUnreadedCommentsParents.map((value) => value._id).indexOf(event) > -1) {
       // event value (parent_id) is already in processed array

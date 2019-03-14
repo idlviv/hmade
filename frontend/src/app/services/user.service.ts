@@ -320,7 +320,7 @@ export class UserService {
    * @returns {Observable<string>}
    * @memberof UserService
    */
-  userEditUnsecure(data: {name: string, value: string}): Observable<string> {
+  userEditUnsecure(data: {name: string, value?: string}): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
