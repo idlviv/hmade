@@ -210,11 +210,13 @@ const userEditUnsecure = function(req, res, next) {
 
   Object.assign(user, req.user._doc);
   Object.assign(modificationRequest, req.body);
+  const date = Date.now();
+
   if (modificationRequest.name === 'commentsReadedTill') {
     userHelper.updateDocument(
         {_id: user._id},
         {$set: {
-          [modificationRequest.name]: modificationRequest.value,
+          [modificationRequest.name]: date,
         }})
         .then((result) => res.status(200).json('Зміни внесено'))
         .catch((err) => next(err));

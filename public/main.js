@@ -10,12 +10,14 @@
 var map = {
 	"./components/dashboard/dashboard.module": [
 		"./src/app/components/dashboard/dashboard.module.ts",
+		"components-dashboard-dashboard-module~components-mcs-mcs-module~components-social-social-module",
 		"components-dashboard-dashboard-module~components-user-user-module",
 		"components-dashboard-dashboard-module~components-mcs-mcs-module",
 		"components-dashboard-dashboard-module"
 	],
 	"./components/mcs/mcs.module": [
 		"./src/app/components/mcs/mcs.module.ts",
+		"components-dashboard-dashboard-module~components-mcs-mcs-module~components-social-social-module",
 		"components-dashboard-dashboard-module~components-mcs-mcs-module"
 	],
 	"./components/products/products.module": [
@@ -24,7 +26,7 @@ var map = {
 	],
 	"./components/social/social.module": [
 		"./src/app/components/social/social.module.ts",
-		"components-social-social-module"
+		"components-dashboard-dashboard-module~components-mcs-mcs-module~components-social-social-module"
 	],
 	"./components/user/user.module": [
 		"./src/app/components/user/user.module.ts",
@@ -177,8 +179,15 @@ module.exports = ""
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
+/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm5/platform-browser.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app.config */ "./src/app/app.config.ts");
+// import 'rxjs/add/operator/filter';
+// import 'rxjs/add/operator/map';
+// import 'rxjs/add/operator/mergeMap';
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -190,21 +199,52 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
+
+
+
 var AppComponent = /** @class */ (function () {
-    function AppComponent(userService) {
+    function AppComponent(userService, router, route, titleService, metaService) {
         this.userService = userService;
+        this.router = router;
+        this.route = route;
+        this.titleService = titleService;
+        this.metaService = metaService;
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
         this.showHeader = false;
     }
     AppComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.userService.logging();
+        this.router.events.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["filter"])(function (event) { return event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_2__["NavigationEnd"]; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])(function () { return _this.route; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["map"])(function (route) {
+            while (route.firstChild) {
+                route = route.firstChild;
+            }
+            return route;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["filter"])(function (route) { return route.outlet === 'primary'; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_0__["mergeMap"])(function (route) { return route.queryParamMap; }))
+            .subscribe(function (paramMap) {
+            var seoTitle = paramMap.get('seoTitle') || _app_config__WEBPACK_IMPORTED_MODULE_5__["config"].seoTitle;
+            var seoMeta = paramMap.get('seoMeta') || _app_config__WEBPACK_IMPORTED_MODULE_5__["config"].seoMeta;
+            console.log('title', seoTitle);
+            console.log('metaDescription', seoMeta);
+            _this.titleService.setTitle(seoTitle);
+            var tag = { name: 'description', content: seoMeta };
+            var attributeSelector = 'name="description"';
+            _this.metaService.removeTag(attributeSelector);
+            _this.metaService.addTag(tag, false);
+        });
     };
     AppComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
             selector: 'app-root',
             template: __webpack_require__(/*! ./app.component.html */ "./src/app/app.component.html"),
             styles: [__webpack_require__(/*! ./app.component.scss */ "./src/app/app.component.scss")]
         }),
-        __metadata("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"]])
+        __metadata("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"],
+            _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["Title"],
+            _angular_platform_browser__WEBPACK_IMPORTED_MODULE_4__["Meta"]])
     ], AppComponent);
     return AppComponent;
 }());
@@ -234,6 +274,8 @@ var config = {
     logoDark: 'hmade_logo_dark',
     icon: 'hmade_icon',
     recaptchaSiteKey: '6Le5XoUUAAAAACCWkV0muQG0SFc75G_7udZzbqs1',
+    seoTitle: 'HMADE - Майстерня творчості HandMADE. Ручна робота. Букети, іграшки, декор, оформлення',
+    seoMeta: 'Цікаві ідеї для творчості. Солодкі букети з цекерок, букети з квітів, композиції з овочів та фруктів. Дизайн, декор, оформлення. Іграшки ручної роботи, в\'язання.',
     social: {
         showLikes: true,
         showViews: true,
@@ -636,244 +678,6 @@ var AboutComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/components/shared/comments/comments.component.html":
-/*!********************************************************************!*\
-  !*** ./src/app/components/shared/comments/comments.component.html ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"container\">\r\n  <div class=\"app-container-h\">\r\n    <!-- <div class=\"padding-bottom-3\"> -->\r\n        <mat-card>\r\n            <form [formGroup]=\"commentForm\" #f=\"ngForm\" novalidate>\r\n                <div class=\"row\" fxLayout=\"row\">\r\n                  <div class=\"cell\" fxFlex=\"10\" fxLayoutAlign=\"center center\">\r\n\r\n                    <img *ngIf=\"allowTo('guest')\" class=\"responsive-image\"\r\n                      src=\"{{user.role === 'google' ? \r\n                        user.avatar :\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_50,h_50,f_auto/' +\r\n                        user.avatar}}\" alt=\"avatar\">\r\n                    <img *ngIf=\"!user\" class=\"responsive-image\"\r\n                      src=\"{{\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_50,h_50,f_auto/' +\r\n                        config.defaultAvatar}}\" alt=\"avatar\">\r\n\r\n                  </div>\r\n                    <mat-form-field class=\"cell\" fxFlex=\"80\">\r\n                      <textarea matInput\r\n                        [placeholder]=\"allowTo('user') ?\r\n                          'Коментар' :\r\n                          allowTo('guest') ?\r\n                            'Для відправки коментарів верифікуйте пошту' :\r\n                            'Коментарі можуть залишати лише зареєстровані користувачі'\"\r\n                        formControlName=\"comment\" required>\r\n                      </textarea>\r\n                      <mat-error\r\n                        *ngIf=\"(commentForm.get('comment').errors?.minlength ||\r\n                        commentForm.get('comment').errors?.maxlength ||\r\n                        commentForm.get('comment').errors?.required) &&\r\n                        commentForm.get('comment').touched\">\r\n                        Довжина повинна бути від 3 до 200 символів\r\n                      </mat-error>\r\n                      <mat-error\r\n                        *ngIf=\"commentForm.get('comment').errors?.pattern &&\r\n                        commentForm.get('comment').touched\">\r\n                        Не використовуйте спеціальні символи\r\n                      </mat-error>\r\n                    </mat-form-field>\r\n                  <div class=\"cell\" fxFlex=\"10\">\r\n                    <button mat-icon-button (click)=\"sendComment()\" aria-label=\"Send\"\r\n                     [disabled]=\"!commentForm.valid || !allowTo('user')\">\r\n                      <mat-icon>send</mat-icon>\r\n                    </button>\r\n           \r\n                  </div>\r\n                </div>\r\n                <div class=\"row\" fxLayout=\"row\" fxLayoutAlign=\"end\">\r\n                  <re-captcha [ngClass]=\"{'display-none': !commentForm.get('comment').valid}\"\r\n                    [formControlName]=\"'recaptcha'\" #recaptchaRef\r\n                    siteKey=\"{{config.recaptchaSiteKey}}\">\r\n                  </re-captcha> \r\n                </div>\r\n              </form>\r\n        </mat-card>\r\n    <!-- </div> -->\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div *ngIf=\"comments\" class=\"cell\">\r\n        <p class=\"mat-body-1\">Показано<span class=\"mat-body-2\"> {{comments.length}} \r\n        </span>коментарів з<span class=\"mat-body-2\"> {{commentsTotalLength || 0}}</span></p>\r\n      </div>\r\n    </div>\r\n    <mat-card class=\"comments\">\r\n          <div class=\"row comment\" [ngClass]=\"{'muted-strong': !comment.display}\"\r\n     *ngFor=\"let comment of comments\" fxLayout=\"row\">\r\n      <div  class=\"cell\" fxFlex=\"10\" fxLayoutAlign=\"center center\">\r\n                <img *ngIf=\"comment.user && comment.user.avatar\" class=\"responsive-image\"\r\n                  src=\"{{comment.user.role === 'google' ? \r\n                    comment.user.avatar :\r\n                    config.imgPath +\r\n                    config.cloudinary.cloud_name +\r\n                    '/c_fill,w_50,h_50,f_auto/' +\r\n                    comment.user.avatar}}\" alt=\"avatar\">\r\n                <img *ngIf=\"!comment.user\" class=\"responsive-image\"\r\n                  src=\"{{\r\n                    config.imgPath +\r\n                    config.cloudinary.cloud_name +\r\n                    '/c_fill,w_50,h_50,f_auto/' +\r\n                    config.defaultAvatar}}\" alt=\"avatar\">\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"80\">\r\n        <p>\r\n          <span class=\"mat-body-2 bold\">\r\n            {{comment.user && comment.user.login ? comment.user.name + ' ' + comment.user.surname : 'Гість'}}\r\n          </span>\r\n          <span fxFlex></span>\r\n          <span class=\"mat-body-1\">{{comment.commentedAt | date: 'dd.MM.yyyy HH:mm'}}</span>\r\n        </p>\r\n        <p class=\"text-align-justify\">{{comment.comment}}</p>\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"10\">\r\n        <p *ngIf=\"allowTo('manager')\"><button class=\"mat-icon-button\" (click)=\"deleteComment(comment)\" aria-label=\"Delete comment\">\r\n          <mat-icon class=\"mat-18\">delete_outline</mat-icon></button></p>\r\n        <p *ngIf=\"allowTo('manager') && !comment.display\">\r\n          <button class=\"mat-icon-button\" (click)=\"displayComment(true, comment._id)\" aria-label=\"Display comment\">\r\n            <mat-icon class=\"mat-18\">play_circle_outline</mat-icon></button>\r\n        </p>\r\n        <p *ngIf=\"allowTo('manager') && comment.display\">\r\n          <button class=\"mat-icon-button\" (click)=\"displayComment(false, comment._id)\" aria-label=\"Hide comment\">\r\n            <mat-icon class=\"mat-18\">pause_circle_outline</mat-icon></button>\r\n        </p>\r\n\r\n      </div>\r\n    </div>\r\n  </mat-card>\r\n\r\n    <div *ngIf=\"processing\" class=\"row\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n"
-
-/***/ }),
-
-/***/ "./src/app/components/shared/comments/comments.component.scss":
-/*!********************************************************************!*\
-  !*** ./src/app/components/shared/comments/comments.component.scss ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/components/shared/comments/comments.component.ts":
-/*!******************************************************************!*\
-  !*** ./src/app/components/shared/comments/comments.component.ts ***!
-  \******************************************************************/
-/*! exports provided: CommentsComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CommentsComponent", function() { return CommentsComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../confirm-popup/confirm-popup.component */ "./src/app/components/shared/confirm-popup/confirm-popup.component.ts");
-/* harmony import */ var _services_shared_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../../../services/shared.service */ "./src/app/services/shared.service.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-
-
-var CommentsComponent = /** @class */ (function () {
-    function CommentsComponent(userService, socialService, dialog, sharedService) {
-        this.userService = userService;
-        this.socialService = socialService;
-        this.dialog = dialog;
-        this.sharedService = sharedService;
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"];
-        this.comments = [];
-        this.processing = false;
-    }
-    CommentsComponent.prototype.ngOnInit = function () {
-        this.commentForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]({
-            comment: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]({
-                value: '',
-                disabled: !this.allowTo('user')
-            }, [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].minLength(3),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].maxLength(150),
-            ]),
-            recaptcha: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required
-            ])
-        });
-        this.loadComments(-1, 0, 5, !this.allowTo('manager'));
-    };
-    // Listening of page bottom reached
-    CommentsComponent.prototype.onScroll = function (event) {
-        if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 2) {
-            if (!this.processing &&
-                this.commentsTotalLength !== this.comments.length &&
-                this.commentsTotalLength) {
-                this.loadComments(-1, this.comments.length, 5, !this.allowTo('manager'));
-            }
-        }
-    };
-    CommentsComponent.prototype.loadComments = function (sort, skip, limit, displayFilter) {
-        var _this = this;
-        this.processing = true;
-        this.socialService.getComments(this.parent_id, this.parentCategory, sort, skip, limit, displayFilter)
-            .subscribe(function (result) {
-            var _a;
-            (_a = _this.comments).push.apply(_a, result.comments);
-            _this.commentsTotalLength = result.commentsTotalLength;
-            _this.processing = false;
-        });
-    };
-    CommentsComponent.prototype.sendComment = function () {
-        var _this = this;
-        var comment = this.commentForm.get('comment').value;
-        var recaptcha = this.commentForm.get('recaptcha').value;
-        this.socialService.addComment(this.parent_id, this.parentCategory, comment, recaptcha)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["mergeMap"])(function (result) {
-            if (result) {
-                // successfuly added
-                _this.mcFormDirective.resetForm();
-                _this.sharedService.sharingEventToReloadComments();
-                // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
-                return _this.socialService.getComments(_this.parent_id, _this.parentCategory, -1, 0, 5, !_this.allowTo('manager'));
-            }
-            else {
-                // not added, do nothing
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])({ comments: [], commentsTotalLength: 0 });
-            }
-        }))
-            .subscribe(function (result) {
-            if (result.comments.length) {
-                _this.comments = result.comments;
-                _this.commentsTotalLength = result.commentsTotalLength;
-            }
-        }, function (err) { return console.log('add comment err', err); });
-    };
-    CommentsComponent.prototype.deleteComment = function (comment) {
-        var _this = this;
-        var confirmObject = {
-            message: "\u0414\u0456\u0439\u0441\u043D\u043E \u0432\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u043A\u043E\u043C\u0435\u043D\u0442\u0430\u0440: " + comment.comment + " ?",
-            payload: { _id: comment._id }
-        };
-        var dialogRef = this.dialog.open(_confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_8__["ConfirmPopupComponent"], {
-            data: confirmObject,
-        });
-        dialogRef.afterClosed()
-            .subscribe(function (res) {
-            if (res && res.choise) {
-                _this.socialService.deleteComment(_this.parent_id, _this.parentCategory, res.payload._id)
-                    .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["mergeMap"])(function (result) {
-                    if (result) {
-                        // successfuly delete
-                        _this.sharedService.sharingEventToReloadComments();
-                        // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
-                        return _this.socialService.getComments(_this.parent_id, _this.parentCategory, -1, 0, _this.comments.length, !_this.allowTo('manager'));
-                    }
-                    else {
-                        // not delete, do nothing
-                        return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(null);
-                    }
-                }))
-                    .subscribe(function (result) {
-                    if (result) {
-                        _this.comments = result.comments;
-                        _this.commentsTotalLength = result.commentsTotalLength;
-                    }
-                }, function (err) { return console.log('add comment err', err); });
-            }
-        }, function (err) { return console.log('err delete', err); });
-    };
-    CommentsComponent.prototype.displayComment = function (display, comment_id) {
-        var _this = this;
-        this.socialService.displayComment(this.parent_id, this.parentCategory, display, comment_id)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_6__["mergeMap"])(function (result) {
-            if (result) {
-                // successfuly updated
-                _this.sharedService.sharingEventToReloadComments();
-                // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
-                return _this.socialService.getComments(_this.parent_id, _this.parentCategory, -1, 0, _this.comments.length, !_this.allowTo('manager'));
-            }
-            else {
-                // not added, do nothing
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])({ comments: [], commentsTotalLength: 0 });
-            }
-        }))
-            .subscribe(function (result) {
-            if (result.comments.length) {
-                _this.comments = result.comments;
-                _this.commentsTotalLength = result.commentsTotalLength;
-            }
-        }, function (err) { return console.log('add comment err', err); });
-    };
-    CommentsComponent.prototype.allowTo = function (permitedRole) {
-        this.user = this.userService.userCookieExtractor();
-        return this.userService.allowTo(permitedRole);
-    };
-    CommentsComponent.prototype.restrictTo = function (restrictedRoles) {
-        this.user = this.userService.userCookieExtractor();
-        return this.userService.restrictTo(restrictedRoles);
-    };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
-    ], CommentsComponent.prototype, "parent_id", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
-    ], CommentsComponent.prototype, "parentCategory", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('f'),
-        __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroupDirective"])
-    ], CommentsComponent.prototype, "mcFormDirective", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('recaptchaRef'),
-        __metadata("design:type", Object)
-    ], CommentsComponent.prototype, "recaptchaRef", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["HostListener"])('window:scroll', ['$event']),
-        __metadata("design:type", Function),
-        __metadata("design:paramtypes", [Object]),
-        __metadata("design:returntype", void 0)
-    ], CommentsComponent.prototype, "onScroll", null);
-    CommentsComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-comments',
-            template: __webpack_require__(/*! ./comments.component.html */ "./src/app/components/shared/comments/comments.component.html"),
-            styles: [__webpack_require__(/*! ./comments.component.scss */ "./src/app/components/shared/comments/comments.component.scss")]
-        }),
-        __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_1__["UserService"],
-            src_app_services_social_service__WEBPACK_IMPORTED_MODULE_5__["SocialService"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatDialog"],
-            _services_shared_service__WEBPACK_IMPORTED_MODULE_9__["SharedService"]])
-    ], CommentsComponent);
-    return CommentsComponent;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/components/shared/confirm-popup/confirm-popup.component.html":
 /*!******************************************************************************!*\
   !*** ./src/app/components/shared/confirm-popup/confirm-popup.component.html ***!
@@ -1069,16 +873,14 @@ var ContentComponent = /** @class */ (function () {
         if (!this.unreadedCommentsLength) {
             return;
         }
-        var date = Date.now();
-        this.userService.userEditUnsecure({ name: 'commentsReadedTill', value: date + '' })
+        this.userService.userEditUnsecure({ name: 'commentsReadedTill' })
             .subscribe(function (res) {
             _this.sharedService.sharingEventToReloadComments();
-            // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
         }, function (err) { return console.log('err', err); });
     };
     ContentComponent.prototype.showUnreadededComments = function () {
         console.log('showUnreadededComments');
-        this.router.navigate(['/comments']);
+        this.router.navigate(['/comments', 'unreaded-comments']);
     };
     ContentComponent.prototype.onSettingsMenuMouseover = function () {
         this.settingsMenuTrigger.openMenu();
@@ -1528,7 +1330,7 @@ var FooterComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container-h\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n      <h1 class=\"mat-display-1\">Галерея</h1>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\r\n        <mat-card>\r\n          <mat-card-subtitle>\r\n            <a mat-button [attr.aria-label]=\"product.name\"\r\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\r\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\r\n               [queryParams]=\"{name: product.name}\"\r\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n              {{product.name}}\r\n            </a>\r\n          </mat-card-subtitle>\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\r\n\r\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\r\n                 fxLayout fxLayoutAlign=\"center center\"\r\n                 *ngFor=\"let productAsset of product.assets\">\r\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_590,h_295,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n\r\n\r\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_350,h_175,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n            </div>\r\n          </div>\r\n        </mat-card>\r\n      </div>\r\n    </div>\r\n\r\n\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"app-container-h\">\n  <div class=\"container\">\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\">\n      <h1 class=\"mat-display-1\">Галерея</h1>\n      </div>\n    </div>\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\n        <mat-card>\n          <mat-card-subtitle>\n            <a mat-button [attr.aria-label]=\"product.name\"\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\n               [queryParams]=\"{name: product.name}\"\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\n              {{product.name}}\n            </a>\n          </mat-card-subtitle>\n          <div class=\"row\" fxLayout=\"row\">\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\n\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\n                 fxLayout fxLayoutAlign=\"center center\"\n                 *ngFor=\"let productAsset of product.assets\">\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_590,h_295,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n\n\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_350,h_175,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n            </div>\n          </div>\n        </mat-card>\n      </div>\n    </div>\n\n\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1626,7 +1428,7 @@ var GalleryComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<header class=\"app-container-h primary-background\" id=\"header\">\r\n\r\n  <div class=\"container\" fxHide.lt-md=\"true\">\r\n    <div class=\"row primary-background\">\r\n      <div class=\"cell\">\r\n        <a href=\"\">\r\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\r\n        </a>\r\n      </div>\r\n      <div fxFlex></div>\r\n    <div class=\"cell\">\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\" aria-label=\"Ask\"\r\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n            <mat-icon>mail</mat-icon> Задати питання\r\n          </a>\r\n        </div>\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button class=\"muted\" aria-label=\"Call\"\r\n             href=\"tel:+380985443968\">\r\n            <mat-icon>phone</mat-icon> 098 544 39 68\r\n          </a>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    </div>\r\n  </div>\r\n</header>\r\n"
+module.exports = "<header class=\"app-container-h primary-background\" id=\"header\">\n\n  <div class=\"container\" fxHide.lt-md=\"true\">\n    <div class=\"row primary-background\">\n      <div class=\"cell\">\n        <a href=\"\">\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\n        </a>\n      </div>\n      <div fxFlex></div>\n    <div class=\"cell\">\n      <div class=\"row\" fxLayout=\"row\">\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\" aria-label=\"Ask\"\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n            <mat-icon>mail</mat-icon> Задати питання\n          </a>\n        </div>\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button class=\"muted\" aria-label=\"Call\"\n             href=\"tel:+380985443968\">\n            <mat-icon>phone</mat-icon> 098 544 39 68\n          </a>\n        </div>\n      </div>\n    </div>\n\n    </div>\n  </div>\n</header>\n"
 
 /***/ }),
 
@@ -1771,7 +1573,7 @@ var ImagePopupComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"landing\">\r\n    <div class=\"container\">\r\n          <div class=\"app-container-h app-container-v\">\r\n        <div class=\"container\">\r\n            <section class=\"row padding-bottom landing-block\" fxLayout=\"row\">\r\n  \r\n                <div id=\"landing-left\" class=\"container\" fxFlexOrder.lt-md=\"2\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"row\" fxLayoutAlign=\"center center\">\r\n\r\n                <div class=\"cell\" \r\n                data-aos=\"fade-right\" data-aos-offset=\"200\" data-aos-easing=\"ease-in-sine\" data-aos-duration=\"1500\">\r\n                        <a [routerLink]=\"['/products', 'ch']\">  \r\n                          <img class=\"responsive-image-stretch\" src=\"{{\r\n                            config.imgPath +\r\n                            config.cloudinary.cloud_name +\r\n                            '/c_fill,w_500,h_500,f_auto/' +\r\n                            'products-logo'}}\"\r\n                            alt=\"Вироби\">\r\n                          </a>\r\n                      </div>\r\n                      <a mat-stroked-button color=\"primary\" alt=\"Вироби\" class=\"hover-button\"\r\n                      [routerLink]=\"['/products', 'ch']\">Мої роботи</a>\r\n                    </div>\r\n                </div>\r\n            \r\n                  <div class=\"container\" fxFlexOrder.lt-md=\"1\" fxFlex.lt-md=\"100\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"row\" >\r\n                      <div class=\"cell\">\r\n                    \r\n                          <h2 class=\"mat-h1 title text-align-center\">Вітаю в творчій майстерні!</h2>\r\n                          <div class=\"avatar-big-block\">\r\n                              <img class=\"avatar-big\" src=\"{{\r\n                                config.imgPath +\r\n                                config.cloudinary.cloud_name +\r\n                                '/c_fill,w_180,h_180,f_auto/' +\r\n                                'my-photo180x180'}}\" alt=\"my photo\">\r\n                          </div>\r\n                          <!-- <div class=\"avatar-big-block\">\r\n                            <img class=\"avatar-big\" src=\"./assets/images/my-photo180x180.png\" alt=\"my photo\">\r\n                        </div> -->\r\n                          <p class=\"body-3 muted text-align-center\">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.\r\n                          Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,\r\n                          шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..\r\n                          Ще багато можна писати про себе та мої захоплення, але згодом..\r\n                            Завітайте у мою майстерню.</p>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n            \r\n                <div id=\"landing-right\" class=\"container\" fxFlexOrder.lt-md=\"3\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"row\" fxLayoutAlign=\"center center\">\r\n                <div class=\"cell\"\r\n                data-aos=\"fade-left\" data-aos-offset=\"200\" data-aos-easing=\"ease-in-sine\" data-aos-duration=\"1500\">\r\n                        <a [routerLink]=\"['/mcs', 'ch']\">  \r\n                          <img class=\"responsive-image-stretch\" src=\"{{\r\n                            config.imgPath +\r\n                            config.cloudinary.cloud_name +\r\n                            '/c_fill,w_500,h_500,f_auto/' +\r\n                            'mcs-logo'}}\"\r\n                           alt=\"Майстеркласи\">\r\n                        </a>\r\n                        \r\n                      </div>\r\n                      <a mat-stroked-button class=\"hover-button\" color=\"primary\" alt=\"Майстер-класи\" \r\n                      [routerLink]=\"['/mcs', 'ch']\">Майстер-класи</a>\r\n  \r\n                    </div>\r\n                </div>\r\n              </section>\r\n  \r\n            <section *ngIf=\"products\" class=\"row\">\r\n                <div class=\"cell\" fxFlex=\"100\">\r\n                  <h2 class=\"mat-h2\">Нові роботи</h2>\r\n                  <!-- <h2  [@scrollAnimation]=\"state\" class=\"mat-h2\">Нові роботи</h2> -->\r\n\r\n                </div>\r\n                <!-- [ngClass]=\"{'landing-product': i < productsPoint && i >= productsPoint - portionOfProducts,\r\n                'opacity0': i >= productsPoint}\"   -->\r\n  \r\n                <!-- appScrolling -->\r\n              <div *ngFor=\"let product of products; let i = index\" class=\"cell\" \r\n                [attr.id]=\"'product' + i\" \r\n                data-aos=\"fade-down\" data-aos-offset=\"100\" data-aos-easing=\"ease-in-sine\" data-aos-duration=\"1000\"\r\n                  fxFlex.xs=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n                  <!-- {{isElementScrolled('#product' + i)}} -->\r\n                <app-product-item-brief [product]=\"product\"></app-product-item-brief>\r\n              </div>\r\n            </section>\r\n        </div>\r\n           \r\n      </div>\r\n    </div>\r\n  \r\n  </div>\r\n  \r\n\r\n<!-- <div id=\"landing\" fxLayoutAlign=\"center center\">\r\n  <div class=\"container\">\r\n        <div class=\"app-container-h app-container-v\">\r\n      <div class=\"container\">\r\n          <section class=\"row padding-bottom landing-block\" fxLayout=\"row\">\r\n\r\n              <div id=\"landing-left\" class=\"container\" fxFlexOrder.lt-md=\"2\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                  <div class=\"row\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"cell\">\r\n                      <a [routerLink]=\"['/products', 'ch']\">  \r\n                        <img class=\"responsive-image-stretch\" src=\"{{\r\n                          config.imgPath +\r\n                          config.cloudinary.cloud_name +\r\n                          '/c_fill,w_500,h_500,f_auto/' +\r\n                          'products-logo'}}\"\r\n                          alt=\"Вироби\">\r\n                        </a>\r\n                    </div>\r\n                    <a mat-stroked-button color=\"primary\" alt=\"Вироби\" class=\"hover-button\"\r\n                    [routerLink]=\"['/products', 'ch']\">Мої роботи</a>\r\n                  </div>\r\n              </div>\r\n          \r\n                <div class=\"container\" fxFlexOrder.lt-md=\"1\" fxFlex.lt-md=\"100\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n                  <div class=\"row\" >\r\n                    <div class=\"cell\">\r\n                  \r\n                        <h2 class=\"mat-h2 text-align-center\">Вітаю в творчій майстерні!</h2>\r\n                        <div class=\"avatar-big-block\">\r\n                            <img class=\"avatar-big\" src=\"./assets/images/my-photo180x180.png\" alt=\"my photo\">\r\n                        </div>\r\n                        <p class=\"mat-body-1 muted text-align-center\">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.\r\n                        Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,\r\n                        шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..\r\n                        Ще багато можна писати про себе та мої захоплення, але згодом..\r\n                          Завітайте у мою майстерню.</p>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n          \r\n              <div id=\"landing-right\" class=\"container\" fxFlexOrder.lt-md=\"3\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                  <div class=\"row\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"cell\">\r\n                      <a [routerLink]=\"['/mcs', 'ch']\">  \r\n                        <img class=\"responsive-image-stretch\" src=\"{{\r\n                          config.imgPath +\r\n                          config.cloudinary.cloud_name +\r\n                          '/c_fill,w_500,h_500,f_auto/' +\r\n                          'mcs-logo'}}\"\r\n                         alt=\"Майстеркласи\">\r\n                      </a>\r\n                      \r\n                    </div>\r\n                    <a mat-stroked-button class=\"hover-button\" color=\"primary\" alt=\"Майстеркласи\" \r\n                    [routerLink]=\"['/mcs', 'ch']\">Майстеркласи</a>\r\n\r\n                  </div>\r\n              </div>\r\n            </section>\r\n\r\n          <section *ngIf=\"products\" class=\"row\">\r\n              <div class=\"cell\" fxFlex=\"100\">\r\n                <h2 class=\"mat-h2\">Нові роботи</h2>\r\n              </div>\r\n\r\n            <div *ngFor=\"let product of products\" class=\"cell\"\r\n                fxFlex.xs=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n              <app-product-item-brief [product]=\"product\"></app-product-item-brief>\r\n            </div>\r\n          </section>\r\n      </div>\r\n         \r\n    </div>\r\n  </div>\r\n\r\n</div> -->\r\n"
+module.exports = "<div id=\"landing\">\r\n  <div class=\"container arrange-background\">\r\n    <div class=\"app-container-h app-container-v\">\r\n\r\n      <section class=\"row landing-block\" fxLayout=\"row\">\r\n\r\n        <div id=\"landing-left\" class=\"container\" fxFlexOrder.lt-md=\"2\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\"\r\n          fxLayoutAlign=\"center center\">\r\n          <div class=\"row\" fxLayoutAlign=\"center center\">\r\n\r\n            <div class=\"cell\" data-aos=\"fade-right\" data-aos-offset=\"200\" data-aos-easing=\"ease-in-sine\"\r\n              data-aos-duration=\"1500\">\r\n              <a [routerLink]=\"['/products', 'ch']\">\r\n                <img class=\"responsive-image-stretch\" src=\"{{\r\n                            config.imgPath +\r\n                            config.cloudinary.cloud_name +\r\n                            '/c_fill,w_500,h_500,f_auto/' +\r\n                            'products-logo'}}\" alt=\"Вироби\">\r\n              </a>\r\n            </div>\r\n            <a mat-stroked-button color=\"primary\" alt=\"Вироби\" class=\"hover-button\"\r\n              [routerLink]=\"['/products', 'ch']\">Мої роботи</a>\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"container\" fxFlexOrder.lt-md=\"1\" fxFlex.lt-md=\"100\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n          <div class=\"row\">\r\n            <div class=\"cell\">\r\n\r\n              <h1 class=\"mat-h1 title text-align-center\">Вітаю в творчій майстерні HMADE!</h1>\r\n              <div class=\"avatar-big-block\">\r\n                <img class=\"avatar-big\" src=\"{{\r\n                                config.imgPath +\r\n                                config.cloudinary.cloud_name +\r\n                                '/c_fill,w_180,h_180,f_auto/' +\r\n                                'my-photo180x180'}}\" alt=\"my photo\">\r\n              </div>\r\n              <!-- <div class=\"avatar-big-block\">\r\n                            <img class=\"avatar-big\" src=\"./assets/images/my-photo180x180.png\" alt=\"my photo\">\r\n                        </div> -->\r\n              <p class=\"body-3 muted text-align-center\">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене\r\n                на нові цікаві витвори.\r\n                Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,\r\n                шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..\r\n                Ще багато можна писати про себе та мої захоплення, але згодом..\r\n                Завітайте у мою майстерню.</p>\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n        <div id=\"landing-right\" class=\"container\" fxFlexOrder.lt-md=\"3\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\"\r\n          fxLayoutAlign=\"center center\">\r\n          <div class=\"row\" fxLayoutAlign=\"center center\">\r\n            <div class=\"cell\" data-aos=\"fade-left\" data-aos-offset=\"200\" data-aos-easing=\"ease-in-sine\"\r\n              data-aos-duration=\"1500\">\r\n              <a [routerLink]=\"['/mcs', 'ch']\">\r\n                <img class=\"responsive-image-stretch\" src=\"{{\r\n                            config.imgPath +\r\n                            config.cloudinary.cloud_name +\r\n                            '/c_fill,w_500,h_500,f_auto/' +\r\n                            'mcs-logo'}}\" alt=\"Майстеркласи\">\r\n              </a>\r\n\r\n            </div>\r\n            <a mat-stroked-button class=\"hover-button\" color=\"primary\" alt=\"Майстер-класи\"\r\n              [routerLink]=\"['/mcs', 'ch']\">Майстер-класи</a>\r\n\r\n          </div>\r\n        </div>\r\n      </section>\r\n    </div>\r\n  </div>\r\n    <div class=\"container arrange-background\">\r\n      <div class=\"app-container-h app-container-v\">\r\n        <section *ngIf=\"products\" class=\"row\">\r\n          <div class=\"cell\" fxFlex=\"100\">\r\n            <h2 class=\"mat-h2\">Нові роботи</h2>\r\n            <!-- <h2  [@scrollAnimation]=\"state\" class=\"mat-h2\">Нові роботи</h2> -->\r\n\r\n          </div>\r\n          <!-- [ngClass]=\"{'landing-product': i < productsPoint && i >= productsPoint - portionOfProducts,\r\n            'opacity0': i >= productsPoint}\"   -->\r\n\r\n          <!-- appScrolling -->\r\n          <div *ngFor=\"let product of products; let i = index\" class=\"cell\" [attr.id]=\"'product' + i\"\r\n            data-aos=\"fade-down\" data-aos-offset=\"100\" data-aos-easing=\"ease-in-sine\" data-aos-duration=\"1000\"\r\n            fxFlex.xs=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n            <!-- {{isElementScrolled('#product' + i)}} -->\r\n            <app-product-item-brief [product]=\"product\"></app-product-item-brief>\r\n          </div>\r\n        </section>\r\n      </div>\r\n\r\n    </div>\r\n\r\n  <!-- </div> -->\r\n\r\n</div>\r\n\r\n\r\n<!-- <div id=\"landing\" fxLayoutAlign=\"center center\">\r\n  <div class=\"container\">\r\n        <div class=\"app-container-h app-container-v\">\r\n      <div class=\"container\">\r\n          <section class=\"row padding-bottom landing-block\" fxLayout=\"row\">\r\n\r\n              <div id=\"landing-left\" class=\"container\" fxFlexOrder.lt-md=\"2\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                  <div class=\"row\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"cell\">\r\n                      <a [routerLink]=\"['/products', 'ch']\">  \r\n                        <img class=\"responsive-image-stretch\" src=\"{{\r\n                          config.imgPath +\r\n                          config.cloudinary.cloud_name +\r\n                          '/c_fill,w_500,h_500,f_auto/' +\r\n                          'products-logo'}}\"\r\n                          alt=\"Вироби\">\r\n                        </a>\r\n                    </div>\r\n                    <a mat-stroked-button color=\"primary\" alt=\"Вироби\" class=\"hover-button\"\r\n                    [routerLink]=\"['/products', 'ch']\">Мої роботи</a>\r\n                  </div>\r\n              </div>\r\n          \r\n                <div class=\"container\" fxFlexOrder.lt-md=\"1\" fxFlex.lt-md=\"100\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n                  <div class=\"row\" >\r\n                    <div class=\"cell\">\r\n                  \r\n                        <h2 class=\"mat-h2 text-align-center\">Вітаю в творчій майстерні!</h2>\r\n                        <div class=\"avatar-big-block\">\r\n                            <img class=\"avatar-big\" src=\"./assets/images/my-photo180x180.png\" alt=\"my photo\">\r\n                        </div>\r\n                        <p class=\"mat-body-1 muted text-align-center\">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.\r\n                        Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,\r\n                        шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..\r\n                        Ще багато можна писати про себе та мої захоплення, але згодом..\r\n                          Завітайте у мою майстерню.</p>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n          \r\n              <div id=\"landing-right\" class=\"container\" fxFlexOrder.lt-md=\"3\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\" fxLayoutAlign=\"center center\">\r\n                  <div class=\"row\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"cell\">\r\n                      <a [routerLink]=\"['/mcs', 'ch']\">  \r\n                        <img class=\"responsive-image-stretch\" src=\"{{\r\n                          config.imgPath +\r\n                          config.cloudinary.cloud_name +\r\n                          '/c_fill,w_500,h_500,f_auto/' +\r\n                          'mcs-logo'}}\"\r\n                         alt=\"Майстеркласи\">\r\n                      </a>\r\n                      \r\n                    </div>\r\n                    <a mat-stroked-button class=\"hover-button\" color=\"primary\" alt=\"Майстеркласи\" \r\n                    [routerLink]=\"['/mcs', 'ch']\">Майстеркласи</a>\r\n\r\n                  </div>\r\n              </div>\r\n            </section>\r\n\r\n          <section *ngIf=\"products\" class=\"row\">\r\n              <div class=\"cell\" fxFlex=\"100\">\r\n                <h2 class=\"mat-h2\">Нові роботи</h2>\r\n              </div>\r\n\r\n            <div *ngFor=\"let product of products\" class=\"cell\"\r\n                fxFlex.xs=\"100\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n              <app-product-item-brief [product]=\"product\"></app-product-item-brief>\r\n            </div>\r\n          </section>\r\n      </div>\r\n         \r\n    </div>\r\n  </div>\r\n\r\n</div> -->"
 
 /***/ }),
 
@@ -1913,297 +1715,6 @@ var LandingComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.html":
-/*!********************************************************************************!*\
-  !*** ./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.html ***!
-  \********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"container\">\r\n  <article class=\"mcs-item-brief row\">\r\n    <section fxFlex=\"400px\" fxFlex.lt-md=\"100\">\r\n      <img *ngIf=\"media.isActive('xs')\" class=\"responsive-image\" src=\"{{\r\n                  config.imgPath +\r\n                  config.cloudinary.cloud_name +\r\n                  '/c_fill,w_535,h_350,f_auto/' +\r\n                  'w_265,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n                  mc.mainImage}}\" alt=\"master class image\">\r\n      <img *ngIf=\"media.isActive('gt-xs')\" class=\"responsive-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_400,h_300,f_auto/' +\r\n                'w_265,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n                mc.mainImage}}\" alt=\"master class image\">\r\n    </section>\r\n\r\n    <section class=\"mcs-item-brief-main wrap\" fxFlex=\"calc(100%-400px)\" fxFlex.lt-md=\"100\">\r\n      <div class=\"mc-social\" fxFlex=\"100\">\r\n        <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n          <mat-icon>thumb_up_alt</mat-icon>\r\n          <div>{{mc.likes.likedByLength || 0}}</div>\r\n        </div>\r\n        <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n          <mat-icon>thumb_down_alt</mat-icon>\r\n          <div>{{mc.likes.dislikedByLength || 0}}</div>\r\n        </div>\r\n        <div *ngIf=\"config.social.showViews\" class=\"item text-align-center\" fxFlex>\r\n          <mat-icon>remove_red_eye</mat-icon>\r\n          <div>{{mc.views || 0}}</div>\r\n        </div>\r\n        <div *ngIf=\"config.social.showComments\" class=\"item text-align-center\" fxFlex>\r\n          <mat-icon>comment</mat-icon>\r\n          <div>{{mc.comments?.length || 0}}</div>\r\n        </div>\r\n        <div class=\"item text-align-center\" fxFlex>\r\n          <mat-icon>calendar_today</mat-icon>\r\n          <div>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</div>\r\n        </div>\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n        <h2 class=\"mat-display-1 title\">\r\n          {{mc.name}}\r\n        </h2>\r\n        <p class=\"mat-body-1 text-align-justify muted\">\r\n          {{mc.description}}\r\n        </p>\r\n      </div>\r\n      <!-- <div fxFlex></div> -->\r\n      <div class=\"cell mc-buttons\" fxFlex=\"100\" fxLayoutAlign=\"space-around end\">\r\n        <a mat-raised-button color=\"primary\" aria-label=\"Open\" [routerLink]=\"['/mcs','show', mc._id]\"\r\n          [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n          Докладно\r\n        </a>\r\n        <a *ngIf=\"allowTo('manager')\" mat-raised-button color=\"primary\" (click)=\"editMcsItem(mc._id)\" aria-label=\"Edit\">\r\n          <mat-icon>edit</mat-icon>\r\n        </a>\r\n        <a *ngIf=\"allowTo('manager')\" mat-raised-button color=\"primary\" (click)=\"deleteMcsItem(mc._id, mc.name)\"\r\n          aria-label=\"Delete\">\r\n          <mat-icon>delete</mat-icon>\r\n        </a>\r\n      </div>\r\n\r\n    </section>\r\n\r\n    <!-- <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n     \r\n      <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"65\" fxFlex.md=\"70\" fxFlex.gt-md=\"70\" fxLayoutAlign=\"center center\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <div class=\"cell\" fxFlex=\"100\">\r\n   \r\n          </div>\r\n          <section class=\"cell-px0\" fxFlex=\"100\" fxLayout=\"row\" fxLayoutAlign=\"space-around center\">\r\n            <div class=\"item text-align-center muted\" fxFlex>\r\n              <a mat-raised-button color=\"accent\" aria-label=\"Open\" [routerLink]=\"['/mcs','show', mc._id]\"\r\n                [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n                Докладно\r\n              </a>\r\n            </div>\r\n            <div *ngIf=\"allowTo('manager')\" class=\"item text-align-center muted\" fxFlex aria-label=\"Edit\">\r\n              <a mat-button (click)=\"editMcsItem(mc._id)\">\r\n                <mat-icon>edit</mat-icon>\r\n              </a>\r\n            </div>\r\n            <div *ngIf=\"allowTo('manager')\" class=\"item text-align-center muted\" fxFlex aria-label=\"Delete\">\r\n              <a mat-button (click)=\"deleteMcsItem(mc._id, mc.name)\">\r\n                <mat-icon>delete</mat-icon>\r\n              </a>\r\n            </div>\r\n\r\n          </section>\r\n        </div>\r\n\r\n      </div>\r\n    </div> -->\r\n\r\n  </article>\r\n</div>\r\n\r\n\r\n<!-- <article class=\"mcs-item mat-elevation-z2\">\r\n  <div class=\"container\">\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"mc-social\" fxFlex=\"100\">\r\n        <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n          <mat-icon>thumb_up_alt</mat-icon>\r\n          <div class=\"mat-body-1 caption\">{{mc.likes.likedByLength || 0}}</div>\r\n        </div>\r\n        <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n          <mat-icon>thumb_down_alt</mat-icon>\r\n          <div class=\"mat-body-1 caption\">{{mc.likes.dislikedByLength || 0}}</div>\r\n        </div>\r\n        <div *ngIf=\"config.social.showViews\" class=\"item text-align-center\" fxFlex>\r\n          <mat-icon>remove_red_eye</mat-icon>\r\n          <div class=\"mat-body-1 caption\">{{mc.views || 0}}</div>\r\n        </div>\r\n        <div *ngIf=\"config.social.showComments\" class=\"item text-align-center\" fxFlex>\r\n          <mat-icon>comment</mat-icon>\r\n          <div class=\"mat-body-1 caption\">{{mc.comments?.length || 0}}</div>\r\n        </div>\r\n        <div class=\"item text-align-center\" fxFlex>\r\n          <mat-icon>calendar_today</mat-icon>\r\n          <div class=\"mat-body-1 caption\">{{mc.updatedAt | date: 'dd-MM-yyyy'}}</div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n    <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"35\" fxFlex.md=\"30\" fxFlex.gt-md=\"30\" fxLayoutAlign=\"center center\">\r\n        <img *ngIf=\"media.isActive('xs')\" class=\"responsive-image radius-5\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_535,h_350,f_auto/' +\r\n                'w_265,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n                mc.mainImage}}\" alt=\"master class image\">\r\n        <img *ngIf=\"media.isActive('gt-xs')\" class=\"responsive-image radius-5\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_360,h_270,f_auto/' +\r\n              'w_265,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n              mc.mainImage}}\" alt=\"master class image\">\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"65\" fxFlex.md=\"70\" fxFlex.gt-md=\"70\" fxLayoutAlign=\"center center\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <div class=\"cell\" fxFlex=\"100\">\r\n            <h1 class=\"mat-h1\">\r\n              {{mc.name}}\r\n            </h1>\r\n            <p class=\"mat-body-1 text-align-justify\">\r\n              {{mc.description}}\r\n            </p>\r\n          </div>\r\n          <section class=\"cell-px0\" fxFlex=\"100\" fxLayout=\"row\" fxLayoutAlign=\"space-around center\">\r\n            <div class=\"item text-align-center muted\" fxFlex>\r\n              <a mat-raised-button color=\"accent\" aria-label=\"Open\" [routerLink]=\"['/mcs','show', mc._id]\"\r\n                [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n                Докладно\r\n              </a>\r\n            </div>\r\n            <div *ngIf=\"allowTo('manager')\" class=\"item text-align-center muted\" fxFlex aria-label=\"Edit\">\r\n              <a mat-button (click)=\"editMcsItem(mc._id)\">\r\n                <mat-icon>edit</mat-icon>\r\n              </a>\r\n            </div>\r\n            <div *ngIf=\"allowTo('manager')\" class=\"item text-align-center muted\" fxFlex aria-label=\"Delete\">\r\n              <a mat-button (click)=\"deleteMcsItem(mc._id, mc.name)\">\r\n                <mat-icon>delete</mat-icon>\r\n              </a>\r\n            </div>\r\n\r\n          </section>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</article> -->"
-
-/***/ }),
-
-/***/ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.scss":
-/*!********************************************************************************!*\
-  !*** ./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.scss ***!
-  \********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.ts":
-/*!******************************************************************************!*\
-  !*** ./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.ts ***!
-  \******************************************************************************/
-/*! exports provided: McsItemBriefComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McsItemBriefComponent", function() { return McsItemBriefComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../confirm-popup/confirm-popup.component */ "./src/app/components/shared/confirm-popup/confirm-popup.component.ts");
-/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _angular_flex_layout__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/flex-layout */ "./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-
-
-
-var McsItemBriefComponent = /** @class */ (function () {
-    function McsItemBriefComponent(userService, mcService, router, dialog, matSnackBar, media) {
-        this.userService = userService;
-        this.mcService = mcService;
-        this.router = router;
-        this.dialog = dialog;
-        this.matSnackBar = matSnackBar;
-        this.media = media;
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"];
-        this.refreshMcs = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
-    }
-    McsItemBriefComponent.prototype.ngOnInit = function () {
-    };
-    McsItemBriefComponent.prototype.allowTo = function (permitedRole) {
-        return this.userService.allowTo(permitedRole);
-    };
-    McsItemBriefComponent.prototype.ngOnChanges = function (changes) {
-        var productChange = changes.mc;
-        // console.log('prev value: ', productChange.previousValue);
-        // console.log('got name: ', productChange.currentValue);
-        // console.log('productChange: ', productChange);
-        if (productChange) {
-            // console.log('simple changes product');
-            // this.getRecommendations();
-        }
-    };
-    McsItemBriefComponent.prototype.goToMcsItemDetail = function (_id) {
-        console.log("goToMcsItemDetail " + _id);
-        this.router.navigate(['/mcs', 'show', _id]);
-    };
-    McsItemBriefComponent.prototype.editMcsItem = function (_id) {
-        console.log("editMcsItem " + _id);
-        this.router.navigate(['/dashboard', 'mc', 'edit', _id]);
-    };
-    McsItemBriefComponent.prototype.deleteMcsItem = function (_id, nmae) {
-        var _this = this;
-        console.log("deleteMcsItem " + _id);
-        var confirmObject = {
-            message: "\u0414\u0456\u0439\u0441\u043D\u043E \u0432\u0438\u0434\u0430\u043B\u0438\u0442\u0438 \u043C\u0430\u0439\u0441\u0442\u0435\u0440\u043A\u043B\u0430\u0441: " + name + " ?",
-            payload: { _id: _id }
-        };
-        var dialogRef = this.dialog.open(_confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_5__["ConfirmPopupComponent"], {
-            data: confirmObject,
-        });
-        dialogRef.afterClosed()
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_7__["mergeMap"])(function (result) {
-            if (result && result.choise) {
-                return _this.mcService.deleteMc(result.payload._id);
-            }
-            return Object(rxjs__WEBPACK_IMPORTED_MODULE_8__["of"])(null);
-        }))
-            .subscribe(function (result) {
-            if (result) {
-                _this.refreshMcs.emit();
-                _this.matSnackBar.open(result, '', { duration: 3000, panelClass: 'snack-bar-danger' });
-            }
-        }, function (err) { return _this.matSnackBar.open(err.error.message || 'Сталася помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' }); });
-    };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Object)
-    ], McsItemBriefComponent.prototype, "mc", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", Object)
-    ], McsItemBriefComponent.prototype, "parentCategory_id", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
-        __metadata("design:type", Object)
-    ], McsItemBriefComponent.prototype, "refreshMcs", void 0);
-    McsItemBriefComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-mcs-item-brief',
-            template: __webpack_require__(/*! ./mcs-item-brief.component.html */ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.html"),
-            styles: [__webpack_require__(/*! ./mcs-item-brief.component.scss */ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.scss")]
-        }),
-        __metadata("design:paramtypes", [src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
-            src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_6__["McService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatDialog"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSnackBar"],
-            _angular_flex_layout__WEBPACK_IMPORTED_MODULE_9__["ObservableMedia"]])
-    ], McsItemBriefComponent);
-    return McsItemBriefComponent;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.html":
-/*!**********************************************************************************!*\
-  !*** ./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.html ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<article *ngIf=\"mc\" class=\"mcs-item\">\r\n  <div class=\"app-container-v app-container-h\">\r\n    <div class=\"container\">\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <div class=\"container\">\r\n\r\n            <div class=\"row\" fxLayout=\"row\">\r\n              <div class=\"cell\" fxFlex=\"100\">\r\n                <div class=\"row\" fxLayout=\"row\">\r\n                  <div class=\"mc-social mat-elevation-z2 radius-5\" fxFlex=\"100\">\r\n                    <div class=\"item\" fxFlex=\"50px\" fxLayoutAlign=\"end center\">\r\n                      <mat-icon class=\"hover-cursor\" (click)=\"goToMcs()\">reply_all</mat-icon>\r\n                    </div>\r\n                    <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                      <mat-icon [ngClass]=\"{\r\n                        'disabled': !(mc.likes.canLike && allowTo('user')), \r\n                        'enabled': mc.likes.canLike && allowTo('user'), \r\n                        'hover-cursor': mc.likes.canLike && allowTo('user')}\"\r\n                        (click)=\"onLike(true, mc.likes.canLike && allowTo('user'))\">thumb_up_alt</mat-icon>\r\n                      <div class=\"mat-body-1 caption\">{{mc.likes.likedByLength || 0}}</div>\r\n                    </div>\r\n                    <div *ngIf=\"config.social.showLikes\" class=\"item text-align-center\" fxFlex>\r\n                      <mat-icon [ngClass]=\"{\r\n                        'disabled': !(mc.likes.canDislike && allowTo('user')), \r\n                        'enabled': mc.likes.canDislike && allowTo('user'), \r\n                        'hover-cursor': mc.likes.canDislike && allowTo('user')}\"\r\n                        (click)=\"onLike(false, mc.likes.canDislike && allowTo('user'))\">thumb_down_alt</mat-icon>\r\n                      <div class=\"mat-body-1 caption\">{{mc.likes.dislikedByLength || 0}}</div>\r\n                    </div>\r\n                    <div *ngIf=\"config.social.showViews\" class=\"item text-align-center\" fxFlex>\r\n                      <mat-icon>remove_red_eye</mat-icon>\r\n                      <div class=\"mat-body-1 caption\">{{mc.views || 0}}</div>\r\n                    </div>\r\n                    <div *ngIf=\"config.social.showComments\" class=\"item text-align-center\" fxFlex>\r\n                      <mat-icon>comment</mat-icon>\r\n                      <div class=\"mat-body-1 caption\">{{mc.comments?.length || 0}}</div>\r\n                    </div>\r\n                    <div class=\"item text-align-center\" fxFlex>\r\n                      <mat-icon>calendar_today</mat-icon>\r\n                      <div class=\"mat-body-1 caption\">{{mc.updatedAt | date: 'dd-MM-yyyy'}}</div>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n<!-- \r\n              <div class=\"cell\" fxFlex=\"100\">\r\n              </div>   -->\r\n\r\n              <div class=\"cell\" fxFlex=\"100\">\r\n                <div class=\"row padding-bottom-3\" fxLayout=\"row\">\r\n                  <div class=\"cell\" fxFlex.xs=\"100\" fxFlex=\"50\" fxLayoutAlign=\"center center\">\r\n                    <div class=\"row\" fxLayout=\"row\">\r\n                      <div class=\"cell\" fxFlex=\"100\">\r\n                        \r\n                        <h1 class=\"mat-display-3 title\">{{mc.name}}</h1>\r\n\r\n                        <p class=\"body-3 text-align-center\">{{mc.description}}</p>\r\n                      </div>\r\n\r\n                      <div *ngIf=\"mc.materials?.length\" class=\"cell wrap\" fxFlex=\"100\">\r\n                        <div fxFlex=\"100\">\r\n                            <h2 class=\"mat-h2\">Необхідні матеріали</h2>\r\n                        </div>\r\n                        <table mat-table [dataSource]=\"mc.materials\" class=\"mat-elevation-z1 app-container-h radius-5\" fxFlex=\"100\">\r\n                          <ng-container matColumnDef=\"name\">\r\n                            <td mat-cell *matCellDef=\"let element\"> {{element.name}} </td>\r\n                          </ng-container>\r\n                          <ng-container matColumnDef=\"value\">\r\n                            <td mat-cell *matCellDef=\"let element\"> {{element.value}} </td>\r\n                          </ng-container>\r\n                          <ng-container matColumnDef=\"units\">\r\n                            <td mat-cell *matCellDef=\"let element\"> {{element.units}} </td>\r\n                          </ng-container>\r\n                          <tr mat-row *matRowDef=\"let row; columns: ['name', 'value', 'units'];\"></tr>\r\n                        </table>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                  <div class=\"cell\" fxFlex.xs=\"100\" fxFlex=\"50\" fxLayoutAlign=\"center center\">\r\n                    <img class=\"responsive-image mat-elevation-z2 alternative-background\" src=\"{{\r\n                            config.imgPath +\r\n                            config.cloudinary.cloud_name +\r\n                            '/c_fill,w_400,h_300,f_auto/' +\r\n                            'w_270,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n                            mc.mainImage}}\"\r\n                      alt=\"master class image\">\r\n                  </div>\r\n      \r\n                </div>\r\n              </div>  \r\n              <mat-divider></mat-divider>\r\n\r\n              <div class=\"cell\" fxFlex=\"100\">\r\n                <div class=\"app-container-h\">\r\n                  <div class=\"row mcs-steps padding-bottom\" fxLayout=\"row\" *ngFor=\"let step of mc.steps\">\r\n                  <!-- <div class=\"cell\" fxFlex=\"5\"></div> -->\r\n                  <div class=\"cell mcs-steps-description\" fxFlex=\"100\" fxFlex.gt-xs=\"50\" fxLayoutAlign=\"center center\">\r\n                    <p class=\"body-3 text-align-center muted\">\r\n                      {{step.description}}\r\n                    </p>\r\n                  </div>\r\n                  <div class=\"cell\" fxFlex=\"100\" fxFlex.gt-xs=\"50\" fxLayoutAlign=\"center center\">\r\n                    <img class=\"responsive-image mat-elevation-z2 radius alternative-background\" src=\"{{\r\n                          config.imgPath +\r\n                          config.cloudinary.cloud_name +\r\n                          '/c_fill,w_400,h_300,f_auto/' +\r\n                          'w_270,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n                          step.pic}}\"\r\n                          alt=\"master class image\">\r\n                  </div>\r\n                  <!-- <div class=\"cell\" fxFlex=\"5\"></div>    -->\r\n                </div>\r\n                </div>\r\n\r\n              </div>  \r\n\r\n              <div class=\"cell\" fxFlex=\"100\">\r\n                <app-comments *ngIf=\"config.social.showComments\" [parent_id]=\"mc._id\" [parentCategory]=\"'mc'\"></app-comments>\r\n              </div>  \r\n            </div>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</article>"
-
-/***/ }),
-
-/***/ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.scss":
-/*!**********************************************************************************!*\
-  !*** ./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.scss ***!
-  \**********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = ""
-
-/***/ }),
-
-/***/ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.ts":
-/*!********************************************************************************!*\
-  !*** ./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.ts ***!
-  \********************************************************************************/
-/*! exports provided: McsItemDetailComponent */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McsItemDetailComponent", function() { return McsItemDetailComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
-/* harmony import */ var src_app_app_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/app.config */ "./src/app/app.config.ts");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
-/* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
-/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/services/shared.service */ "./src/app/services/shared.service.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-
-var McsItemDetailComponent = /** @class */ (function () {
-    function McsItemDetailComponent(route, router, mcService, userService, socialService, sharedService) {
-        this.route = route;
-        this.router = router;
-        this.mcService = mcService;
-        this.userService = userService;
-        this.socialService = socialService;
-        this.sharedService = sharedService;
-        this.config = src_app_app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
-    }
-    McsItemDetailComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.route.params.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])(function (params) {
-            _this.mc_id = params._id;
-            return _this.mcService.getMcByIdAndIncViews(params._id);
-        }))
-            .subscribe(function (result) {
-            _this.mc = result;
-        }, function (err) { return console.log('err', err); });
-        this.sharedService.getEventToReloadComments()
-            .subscribe(function (event) { return _this.getMcById(); });
-    };
-    McsItemDetailComponent.prototype.getMcById = function () {
-        var _this = this;
-        this.mcService.getMcById(this.mc_id)
-            .subscribe(function (result) {
-            _this.mc = result;
-        }, function (err) { return console.log('err', err); });
-    };
-    McsItemDetailComponent.prototype.allowTo = function (permitedRole) {
-        return this.userService.allowTo(permitedRole);
-    };
-    McsItemDetailComponent.prototype.goToMcs = function () {
-        this.router.navigate(['/mcs', 'ch']);
-    };
-    McsItemDetailComponent.prototype.onLike = function (action, permission) {
-        var _this = this;
-        if (!permission) {
-            return;
-        }
-        else {
-            // action is true for like, is false for dislike
-            var parent_id_1 = this.mc._id;
-            var parentCategory = 'mc';
-            this.socialService.likesSet(parent_id_1, parentCategory, action)
-                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])(function (result) {
-                if (result) {
-                    return _this.mcService.getMcById(parent_id_1);
-                }
-                else {
-                    return Object(rxjs__WEBPACK_IMPORTED_MODULE_3__["of"])(null);
-                }
-            }))
-                .subscribe(function (result) {
-                if (result) {
-                    _this.mc = result;
-                }
-            }, function (err) { return console.log('err', err); });
-        }
-    };
-    McsItemDetailComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-mcs-item-detail',
-            template: __webpack_require__(/*! ./mcs-item-detail.component.html */ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.html"),
-            styles: [__webpack_require__(/*! ./mcs-item-detail.component.scss */ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.scss")]
-        }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
-            src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_4__["McService"],
-            src_app_services_user_service__WEBPACK_IMPORTED_MODULE_6__["UserService"],
-            src_app_services_social_service__WEBPACK_IMPORTED_MODULE_7__["SocialService"],
-            src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_8__["SharedService"]])
-    ], McsItemDetailComponent);
-    return McsItemDetailComponent;
-}());
-
-
-
-/***/ }),
-
 /***/ "./src/app/components/shared/page-404/page-404.component.html":
 /*!********************************************************************!*\
   !*** ./src/app/components/shared/page-404/page-404.component.html ***!
@@ -2211,7 +1722,7 @@ var McsItemDetailComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\r\n  page-404 works!\r\n</p>\r\n"
+module.exports = "<div id=\"page-404\">\r\n  <div class=\"container\">\r\n    <div class=\"app-container-h app-container-v\">\r\n      <div class=\"container\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <div class=\"cell\" fxFlex=\"100\">\r\n            <h1 class=\"mat-h1\">Сторінки не знайдено</h1>\r\n            <a [routerLink]=\"['/']\">Перейти на головну</a>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -2274,7 +1785,7 @@ var Page404Component = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<article id=\"privacy\">\n  <div class=\"container\">\n    <div class=\"app-container-h app-container-v\">\n      <div class=\"container\">\n        <div class=\"row\" fxLayout=\"row\">\n          <div class=\"cell\" fxFlex=\"100\">\n            <section>\n              <h2 class=\"mat-h2 title\">Політика конфіденційності</h2>\n              <p class=\"text-justify muted mat-body-1\">Цей документ описує політику конфіденційності сайту hmade.work\n                'Майстерня творчості'.</p>\n              <p class=\"text-justify muted mat-body-1\">Наш сайт може містити посилання на інші веб-ресурси. Ми не несемо\n                відповідальності за політику конфіденційності або зміст цих ресурсів. Стосовно будь-яких питаннь або\n                сумнів з приводу цієї політики, просимо зв’язатися з нами за адресою електронної пошти\n                <a class=\"bold\" href=\"mailto:privacy@hmade.work\">privacy@hmade.work</a>. Ця політика поширюється тільки на інформацію, зібрану на нашому сайті.</p>\n              <h3 class=\"mat-h3\">Інформація від користувачів (огляди, рейтинги, коментарі та інше)</h3>\n              <p class=\"text-justify muted mat-body-1\">Наш сайт надає можливість користувачам залишати коментарі,\n                приймати участь у обговореннях, впливати на рейтинги певного контенту сайту. Повідомляємо, що інформація\n                опублікована користувачем, а також логін, ім’я, прізвище або будь-яке зображення чи фотографія справжні\n                чи вигадані стають надбаннями громадськості та можуть бути використані в будь-яких засобах інформації.\n              </p>\n              <p class=\"text-justify muted mat-body-1\">Приймаючи участь у дискусії, користувач повинен усвідомлювати, що\n                його дії будуть публічними і будь-яка особиста інформація, надана ним, може бути прочитана, збережена чи\n                використана іншими користувачами або ресурсами, наприклад, для розсилки небажаних повідомлень. Ми не\n                несемо відповідальність за особисту інформацію, яку користувач публікує на сайті в тому числі у\n                коментарях, і користувач погоджується, що ця інформація буде вважатися такою, що була надана\n                користувачем.</p>\n              <p class=\"text-justify muted mat-body-1\">Ми залишаємо за собою право на видалення коментарів та\n                повідомлень користувача, а також на блокування облікового запису користувача без пояснення причин.</p>\n              <h3 class=\"mat-h3\">Обмеження відповідальності за достовірність отриманої інформації.</h3>\n              <p class=\"text-justify muted mat-body-1\">Ми не перевіряємо достовірність інформації отриманої від\n                користувачів.</p>\n              <p class=\"text-justify muted mat-body-1\">\n                Інформація, яка може бути оброблена в процесі взаємодії з користувачем:\n              </p>\n              <ul>\n                <li class=\"text-justify muted mat-body-1\">Основна інформація профілю користувача, отримана під час його\n                  реєстрації на\n                  сайті або передана під час автентифікації сервісами Google чи Facebook, зокрема ім’я, прізвище,\n                  електронна адреса та зображення профілю.</li>\n                <li class=\"text-justify muted mat-body-1\">Певна інформація з облікового запису Google або Facebook після\n                  отримання\n                  згоди на її перегляд від користувача.</li>\n                <li class=\"text-justify muted mat-body-1\">Інформація про відвідування, що зберігається у файлах cookie,\n                  та дозволяє\n                  ідентифікувати користувача. Також деяка не приватна інформація, на зразок IP-адреси, типу браузера\n                  тощо\n                </li>\n                <li class=\"text-justify muted mat-body-1\">Користувацькі повідомлення, такі як коментарі або повідомлення\n                  в формі\n                  зворотнього зв’язку, що можуть бути збережені та оброблені. Для зв'язку з користувачем може\n                  використовуватися адреса електронної пошти надана ним.</li>\n              </ul>\n              <p class=\"text-justify muted mat-body-1\">Більшість браузерів спочатку налаштовані на отримання файлів\n                cookie, однак ви можете вимкнути ці налаштування і вказати, щоб браузер блокував всі файли cookie або\n                сповіщав про відправку цих файлів. Просимо врахувати, що деякі функції сайту не зможуть працювати\n                належним чином, якщо відключити файли cookie. </p>\n              <h3 class=\"mat-h3\">Надання доступу до інформації</h3>\n              <p class=\"text-justify muted mat-body-1\">Ми надаємо доступ до особистої інформації іншим компаніям і\n                приватним особам, лише за таких обмежених обставин:</p>\n              <ul>\n                <li class=\"text-justify muted mat-body-1\">Має місце наявність дозволу Користувача. Для передачі\n                  будь-якої конфіденційної інформації потрібна явна згода Користувача.</li>\n                <li class=\"text-justify muted mat-body-1\">\n                  У нас є підстави вважати, що доступ, використання, збереження або розкриття такої інформації необхідне\n                  для:\n                  <ul>\n                    <li class=\"text-justify muted mat-body-1\">Дотримання будь-яких чинних законів, постанов, або\n                      дійсного запиту з державних органів</li>\n                    <li class=\"text-justify muted mat-body-1\">Розслідування потенційних порушень</li>\n                    <li class=\"text-justify muted mat-body-1\">При виявленні і запобіганні шахрайським діям, а також\n                      вирішенні проблем безпеки та усунення технічних неполадок</li>\n                  </ul>\n                </li>\n              </ul>\n              <h3 class=\"mat-h3\">Захист інформації</h3>\n              <p class=\"text-justify muted mat-body-1\">Ми вживаємо всіх необхідних заходів для захисту даних від\n                несанкціонованого доступу, зміни, розкриття чи знищення. До цих заходів належать, зокрема, внутрішня\n                перевірка процесів збору, зберігання та обробки даних і заходів безпеки, включаючи відповідне шифрування\n                і заходи щодо забезпечення фізичної безпеки даних для запобігання неавторизованого доступу до систем, в\n                яких ми зберігаємо особисті дані.</p>\n              <h3 class=\"mat-h3\">Зміна даної політики конфіденційності</h3>\n              <p class=\"text-justify muted mat-body-1\">Користувач, використовуючи цей сайт, прийняв умови цієї політики\n                конфіденційності і приймає, що дана політика конфіденційності може час від часу змінюватися. Зміни, що\n                вносяться до політики конфіденційності, публікуються на цій сторінці.</p>\n            </section>\n\n            <section>\n              <h2 class=\"mat-h2 title\">Умови використання</h2>\n              <p class=\"text-justify muted mat-body-1\">Уважно прочитайте ці умови, використання сайту означає згоду з\n                цими умовами.</p>\n\n              <h3 class=\"mat-h3\">Використання сайту</h3>\n              <p class=\"text-justify muted mat-body-1\">Ми дозволяємо Вам переглядати матеріали цього сайту та\n                використовувати їх тільки для особистого некомерційного використання. Будь-яке копіювання чи відтворення\n                матеріалів можливе лише за згодою автора, з вказанням посилання на цей сайт та за умови збереження Вами\n                всієї інформації про авторське право.</p>\n\n              <h3 class=\"mat-h3\">Відмова від відповідальності</h3>\n              <p class=\"text-justify muted mat-body-1\">Матеріали та послуги цього сайту надаються без жодних гарантій.\n                Ми не гарантуємо точності та повноти матеріалів, що надаються на цьому cайті. Ми в будь-який час без\n                повідомлення можемо вносити зміни в матеріали та послуги, що надаються на цьому cайті. Ми за жодних\n                обставин не несемо відповідальності за будь-які збитки (включно з, але не обмежуючись збитком від втрати\n                прибутку, даних або від переривання ділової активності), що виникли внаслідок використання, неможливості\n                використання або результатів використання цього сайту.</p>\n\n              <h3 class=\"mat-h3\">Реєстрація на сайті</h3>\n              <p class=\"text-justify muted mat-body-1\">Реєструючись на cайті, ви погоджуєтеся надати достовірну та точну\n                інформацію про себе і свої контактні дані.</p>\n              <p class=\"text-justify muted mat-body-1\">У результаті реєстрації ви отримуєте логін і пароль, за безпеку\n                яких ви несете відповідальність. Ви також несете відповідальність за всі дії під вашим логіном і паролем\n                на cайті. У разі втрати реєстраційних даних ви зобов'язуєтеся повідомити нас про це.</p>\n\n              <h3 class=\"mat-h3\">Зворотний зв'язок і коментарі</h3>\n              <p class=\"text-justify muted mat-body-1\">Звертаючись до нас або залишаючи коментарі на сайті, Ви несете\n                відповідальність, що це повідомлення не є незаконним, шкідливим, загрозливим, наклепницьким, суперечить\n                моральним нормам, порушує авторські права, пропагує ненависть і/або дискримінацію людей за расовою,\n                етнічною, статевою, релігійною, соціальною ознаками, містить образи на адресу конкретних осіб або\n                організацій, а також будь-яким іншим чином порушує чинне законодавство України. Ми залишаємо за собою\n                право на видалення Ваших коментарів та повідомлень, а також на блокування Вашого облікового запису без\n                пояснення причин.</p>\n            </section>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n</article>"
+module.exports = "<article id=\"privacy\">\r\n  <div class=\"container\">\r\n    <div class=\"app-container-h app-container-v\">\r\n      <div class=\"container\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <div class=\"cell\" fxFlex=\"100\">\r\n            <section>\r\n              <h2 class=\"mat-h2 title\">Політика конфіденційності</h2>\r\n              <p class=\"text-justify muted mat-body-1\">Цей документ описує політику конфіденційності сайту hmade.work\r\n                'Майстерня творчості'.</p>\r\n              <p class=\"text-justify muted mat-body-1\">Наш сайт може містити посилання на інші веб-ресурси. Ми не несемо\r\n                відповідальності за політику конфіденційності або зміст цих ресурсів. Стосовно будь-яких питаннь або\r\n                сумнів з приводу цієї політики, просимо зв’язатися з нами за адресою електронної пошти\r\n                <a class=\"bold\" href=\"mailto:privacy@hmade.work\">privacy@hmade.work</a>. Ця політика поширюється тільки на інформацію, зібрану на нашому сайті.</p>\r\n              <h3 class=\"mat-h3\">Інформація від користувачів (огляди, рейтинги, коментарі та інше)</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Наш сайт надає можливість користувачам залишати коментарі,\r\n                приймати участь у обговореннях, впливати на рейтинги певного контенту сайту. Повідомляємо, що інформація\r\n                опублікована користувачем, а також логін, ім’я, прізвище або будь-яке зображення чи фотографія справжні\r\n                чи вигадані стають надбаннями громадськості та можуть бути використані в будь-яких засобах інформації.\r\n              </p>\r\n              <p class=\"text-justify muted mat-body-1\">Приймаючи участь у дискусії, користувач повинен усвідомлювати, що\r\n                його дії будуть публічними і будь-яка особиста інформація, надана ним, може бути прочитана, збережена чи\r\n                використана іншими користувачами або ресурсами, наприклад, для розсилки небажаних повідомлень. Ми не\r\n                несемо відповідальність за особисту інформацію, яку користувач публікує на сайті в тому числі у\r\n                коментарях, і користувач погоджується, що ця інформація буде вважатися такою, що була надана\r\n                користувачем.</p>\r\n              <p class=\"text-justify muted mat-body-1\">Ми залишаємо за собою право на видалення коментарів та\r\n                повідомлень користувача, а також на блокування облікового запису користувача без пояснення причин.</p>\r\n              <h3 class=\"mat-h3\">Обмеження відповідальності за достовірність отриманої інформації.</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Ми не перевіряємо достовірність інформації отриманої від\r\n                користувачів.</p>\r\n              <p class=\"text-justify muted mat-body-1\">\r\n                Інформація, яка може бути оброблена в процесі взаємодії з користувачем:\r\n              </p>\r\n              <ul>\r\n                <li class=\"text-justify muted mat-body-1\">Основна інформація профілю користувача, отримана під час його\r\n                  реєстрації на\r\n                  сайті або передана під час автентифікації сервісами Google чи Facebook, зокрема ім’я, прізвище,\r\n                  електронна адреса та зображення профілю.</li>\r\n                <li class=\"text-justify muted mat-body-1\">Певна інформація з облікового запису Google або Facebook після\r\n                  отримання\r\n                  згоди на її перегляд від користувача.</li>\r\n                <li class=\"text-justify muted mat-body-1\">Інформація про відвідування, що зберігається у файлах cookie,\r\n                  та дозволяє\r\n                  ідентифікувати користувача. Також деяка не приватна інформація, на зразок IP-адреси, типу браузера\r\n                  тощо\r\n                </li>\r\n                <li class=\"text-justify muted mat-body-1\">Користувацькі повідомлення, такі як коментарі або повідомлення\r\n                  в формі\r\n                  зворотнього зв’язку, що можуть бути збережені та оброблені. Для зв'язку з користувачем може\r\n                  використовуватися адреса електронної пошти надана ним.</li>\r\n              </ul>\r\n              <p class=\"text-justify muted mat-body-1\">Більшість браузерів спочатку налаштовані на отримання файлів\r\n                cookie, однак ви можете вимкнути ці налаштування і вказати, щоб браузер блокував всі файли cookie або\r\n                сповіщав про відправку цих файлів. Просимо врахувати, що деякі функції сайту не зможуть працювати\r\n                належним чином, якщо відключити файли cookie. </p>\r\n              <h3 class=\"mat-h3\">Надання доступу до інформації</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Ми надаємо доступ до особистої інформації іншим компаніям і\r\n                приватним особам, лише за таких обмежених обставин:</p>\r\n              <ul>\r\n                <li class=\"text-justify muted mat-body-1\">Має місце наявність дозволу Користувача. Для передачі\r\n                  будь-якої конфіденційної інформації потрібна явна згода Користувача.</li>\r\n                <li class=\"text-justify muted mat-body-1\">\r\n                  У нас є підстави вважати, що доступ, використання, збереження або розкриття такої інформації необхідне\r\n                  для:\r\n                  <ul>\r\n                    <li class=\"text-justify muted mat-body-1\">Дотримання будь-яких чинних законів, постанов, або\r\n                      дійсного запиту з державних органів</li>\r\n                    <li class=\"text-justify muted mat-body-1\">Розслідування потенційних порушень</li>\r\n                    <li class=\"text-justify muted mat-body-1\">При виявленні і запобіганні шахрайським діям, а також\r\n                      вирішенні проблем безпеки та усунення технічних неполадок</li>\r\n                  </ul>\r\n                </li>\r\n              </ul>\r\n              <h3 class=\"mat-h3\">Захист інформації</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Ми вживаємо всіх необхідних заходів для захисту даних від\r\n                несанкціонованого доступу, зміни, розкриття чи знищення. До цих заходів належать, зокрема, внутрішня\r\n                перевірка процесів збору, зберігання та обробки даних і заходів безпеки, включаючи відповідне шифрування\r\n                і заходи щодо забезпечення фізичної безпеки даних для запобігання неавторизованого доступу до систем, в\r\n                яких ми зберігаємо особисті дані.</p>\r\n              <h3 class=\"mat-h3\">Зміна даної політики конфіденційності</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Користувач, використовуючи цей сайт, прийняв умови цієї політики\r\n                конфіденційності і приймає, що дана політика конфіденційності може час від часу змінюватися. Зміни, що\r\n                вносяться до політики конфіденційності, публікуються на цій сторінці.</p>\r\n            </section>\r\n\r\n            <section>\r\n              <h2 class=\"mat-h2 title\">Умови використання</h2>\r\n              <p class=\"text-justify muted mat-body-1\">Уважно прочитайте ці умови, використання сайту означає згоду з\r\n                цими умовами.</p>\r\n\r\n              <h3 class=\"mat-h3\">Використання сайту</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Ми дозволяємо Вам переглядати матеріали цього сайту та\r\n                використовувати їх тільки для особистого некомерційного використання. Будь-яке копіювання чи відтворення\r\n                матеріалів можливе лише за згодою автора, з вказанням посилання на цей сайт та за умови збереження Вами\r\n                всієї інформації про авторське право.</p>\r\n\r\n              <h3 class=\"mat-h3\">Відмова від відповідальності</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Матеріали та послуги цього сайту надаються без жодних гарантій.\r\n                Ми не гарантуємо точності та повноти матеріалів, що надаються на цьому cайті. Ми в будь-який час без\r\n                повідомлення можемо вносити зміни в матеріали та послуги, що надаються на цьому cайті. Ми за жодних\r\n                обставин не несемо відповідальності за будь-які збитки (включно з, але не обмежуючись збитком від втрати\r\n                прибутку, даних або від переривання ділової активності), що виникли внаслідок використання, неможливості\r\n                використання або результатів використання цього сайту.</p>\r\n\r\n              <h3 class=\"mat-h3\">Реєстрація на сайті</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Реєструючись на cайті, ви погоджуєтеся надати достовірну та точну\r\n                інформацію про себе і свої контактні дані.</p>\r\n              <p class=\"text-justify muted mat-body-1\">У результаті реєстрації ви отримуєте логін і пароль, за безпеку\r\n                яких ви несете відповідальність. Ви також несете відповідальність за всі дії під вашим логіном і паролем\r\n                на cайті. У разі втрати реєстраційних даних ви зобов'язуєтеся повідомити нас про це.</p>\r\n\r\n              <h3 class=\"mat-h3\">Зворотний зв'язок і коментарі</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Звертаючись до нас або залишаючи коментарі на сайті, Ви несете\r\n                відповідальність, що це повідомлення не є незаконним, шкідливим, загрозливим, наклепницьким, суперечить\r\n                моральним нормам, порушує авторські права, пропагує ненависть і/або дискримінацію людей за расовою,\r\n                етнічною, статевою, релігійною, соціальною ознаками, містить образи на адресу конкретних осіб або\r\n                організацій, а також будь-яким іншим чином порушує чинне законодавство України. Ми залишаємо за собою\r\n                право на видалення Ваших коментарів та повідомлень, а також на блокування Вашого облікового запису без\r\n                пояснення причин.</p>\r\n            </section>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n</article>"
 
 /***/ }),
 
@@ -2337,7 +1848,7 @@ var PrivacyComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <mat-card id=\"product-item-brief\" (click)=\"onCatalogRouting(child)\">\r\n  <mat-card-content class=\"wrap\">\r\n    <div class=\"mat-card-wide-image\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\r\n      <div *ngIf=\"product\" fxFlex=\"100\">\r\n        <img *ngIf=\"media.isActive('gt-sm')\" class=\"responsive-image-stretch \" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_400,h_300,f_auto/' +\r\n              'w_200,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n              product.menuImage}}\"\r\n             alt=\"Image\" (click)=\"openDialog(product.menuImage, \r\n             '/c_fill,w_1100,h_825,f_auto/w_550,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)\">\r\n        <img *ngIf=\"media.isActive('sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_460,h_345,f_auto/' +\r\n              'w_230,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n              product.menuImage}}\"\r\n              alt=\"Image\" (click)=\"openDialog(product.menuImage,\r\n              '/c_fill,w_900,h_675,f_auto/w_450,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)\">\r\n        <img *ngIf=\"media.isActive('xs')\" class=\"responsive-image-stretch\" src=\"{{\r\n            config.imgPath +\r\n            config.cloudinary.cloud_name +\r\n            '/c_fill,w_590,h_443,f_auto/' +\r\n            'w_295,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n            product.menuImage}}\"\r\n            alt=\"Image\" (click)=\"openDialog(product.menuImage, \r\n            '/c_fill,w_590,h_443,f_auto/w_295,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)\">\r\n      </div>\r\n      <div *ngIf=\"child\" fxFlex=\"100\" class=\"card\">\r\n        <img *ngIf=\"media.isActive('gt-sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_400,h_300,f_auto/' +\r\n              child.assets[0]}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('sm')\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_460,h_345,f_auto/' +\r\n              child.assets[0]}}\"\r\n             alt=\"Image\">\r\n        <img *ngIf=\"media.isActive('xs')\" class=\"responsive-image-stretch\" src=\"{{\r\n            config.imgPath +\r\n            config.cloudinary.cloud_name +\r\n            '/c_fill,w_590,h_443,f_auto/' +\r\n            child.assets[0]}}\"\r\n             alt=\"Image\">\r\n      </div>\r\n    </div>\r\n    <section *ngIf=\"!child && product\" class=\"row product-brief-section\" fxFlex=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\" fxLayoutAlign=\"start center\">\r\n        <h3 class=\"mat-h3\">{{product.name}}</h3>\r\n       </div>\r\n      <div class=\"cell product-brief-description\" fxFlex=\"100\" fxLayoutAlign=\"center center\">\r\n        <p class=\"mat-body-1\">{{product.description}}</p>\r\n      </div>\r\n    </section>\r\n    <section *ngIf=\"!child && product && (product.dimensions.width || product.dimensions.height)\" \r\n     class=\"cell-px0 social-feed-section\" fxFlex=\"100\" fxLayout=\"row\">\r\n      <div class=\"item text-align-center\" fxFlex>\r\n        <mat-icon>swap_horiz</mat-icon>\r\n        <span> {{product?.dimensions?.width}}</span>\r\n        <span> см</span>\r\n      </div>\r\n      <div class=\"item text-align-center\" fxFlex>\r\n        <mat-icon>swap_vert</mat-icon>\r\n        <span> {{product?.dimensions?.height}}</span>\r\n        <span> см</span>\r\n      </div>\r\n      </section>\r\n  </mat-card-content>\r\n  <mat-card-actions fxLayout=\"row\">\r\n    <div fxFlex>\r\n      <a *ngIf=\"!child && allowTo('manager')\" mat-button aria-label=\"Edit\"\r\n         [routerLink]=\"['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        Редагувати\r\n      </a>\r\n      <a *ngIf=\"!child && allowTo('manager')\" mat-button aria-label=\"Delete\"\r\n        (click)=\"deleteProductItem(product._id, product.name)\">\r\n        Видалити\r\n      </a>\r\n      <a *ngIf=\"child\" mat-button [attr.aria-label]=\"child.name\"\r\n         [routerLink]=\"['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]\"\r\n         [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n         {{child.name}}\r\n      </a>\r\n    </div>\r\n  </mat-card-actions>\r\n</mat-card> -->\r\n\r\n<article class=\"product-item-brief\" (click)=\"onCatalogRouting(child)\">\r\n  <section class=\"product-item-brief-img\">\r\n      <img *ngIf=\"media.isActive('gt-sm') && child\" class=\"responsive-image-stretch\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_400,h_300,f_auto/' +\r\n                child.assets[0]}}\" alt=\"Image\">\r\n      <img *ngIf=\"media.isActive('sm') && child\" class=\"responsive-image-stretch\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_460,h_345,f_auto/' +\r\n                child.assets[0]}}\" alt=\"Image\">\r\n      <img *ngIf=\"media.isActive('xs') && child\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_590,h_443,f_auto/' +\r\n              child.assets[0]}}\" alt=\"Image\">\r\n      <img *ngIf=\"media.isActive('gt-sm') && product\" class=\"responsive-image-stretch \" src=\"{{\r\n      config.imgPath +\r\n      config.cloudinary.cloud_name +\r\n      '/c_fill,w_400,h_300,f_auto/' +\r\n      'w_200,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n      product.menuImage}}\" alt=\"Image\" (click)=\"openDialog(product.menuImage, \r\n      '/c_fill,w_1100,h_825,f_auto/w_550,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)\">\r\n      <img *ngIf=\"media.isActive('sm') && product\" class=\"responsive-image-stretch\" src=\"{{\r\n      config.imgPath +\r\n      config.cloudinary.cloud_name +\r\n      '/c_fill,w_460,h_345,f_auto/' +\r\n      'w_230,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n      product.menuImage}}\" alt=\"Image\" (click)=\"openDialog(product.menuImage,\r\n      '/c_fill,w_900,h_675,f_auto/w_450,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)\">\r\n      <img *ngIf=\"media.isActive('xs') && product\" class=\"responsive-image-stretch\" src=\"{{\r\n      config.imgPath +\r\n      config.cloudinary.cloud_name +\r\n      '/c_fill,w_590,h_443,f_auto/' +\r\n      'w_295,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n      product.menuImage}}\" alt=\"Image\" (click)=\"openDialog(product.menuImage, \r\n      '/c_fill,w_590,h_443,f_auto/w_295,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)\">\r\n\r\n  </section>\r\n  <section class=\"product-item-brief-content\">\r\n    <h2 class=\"mat-h1 title\" *ngIf=\"!child && product\">{{product.name}}</h2>\r\n    <p class=\"mat-body-1\" *ngIf=\"!child && product\">{{product.description}}</p>\r\n    <p *ngIf=\"product?.updatedAt\" class=\"mat-caption\">{{product.updatedAt | date:'dd MM yyyy'}}</p>\r\n    <div fxLayout=\"row\">\r\n      <a *ngIf=\"!child && allowTo('manager')\" mat-button aria-label=\"Edit\" fxFlex=\"50\"\r\n        [routerLink]=\"['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]\"\r\n        [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        Редагувати\r\n      </a>\r\n      <a *ngIf=\"!child && allowTo('manager')\" mat-button aria-label=\"Delete\" fxFlex=\"50\"\r\n        (click)=\"deleteProductItem(product._id, product.name)\">\r\n        Видалити\r\n      </a>\r\n      <a *ngIf=\"child\" mat-raised-button color=\"primary\"\r\n        [routerLink]=\"['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]\"\r\n        [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{child.name}}\r\n      </a>\r\n    </div>\r\n\r\n\r\n  </section>\r\n</article>"
+module.exports = "<article class=\"product-item-brief\" (click)=\"onCatalogRouting(child)\">\r\n  <section class=\"product-item-brief-img\">\r\n      <img *ngIf=\"media.isActive('gt-sm') && child\" class=\"responsive-image-stretch\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_400,h_300,f_auto/' +\r\n                child.assets[0]}}\" alt=\"Image\">\r\n      <img *ngIf=\"media.isActive('sm') && child\" class=\"responsive-image-stretch\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_460,h_345,f_auto/' +\r\n                child.assets[0]}}\" alt=\"Image\">\r\n      <img *ngIf=\"media.isActive('xs') && child\" class=\"responsive-image-stretch\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_590,h_443,f_auto/' +\r\n              child.assets[0]}}\" alt=\"Image\">\r\n      <img *ngIf=\"media.isActive('gt-sm') && product\" class=\"responsive-image-stretch \" src=\"{{\r\n      config.imgPath +\r\n      config.cloudinary.cloud_name +\r\n      '/c_fill,w_400,h_300,f_auto/' +\r\n      'w_200,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n      product.menuImage}}\" alt=\"Image\" (click)=\"openDialog(product.menuImage, \r\n      '/c_fill,w_1100,h_825,f_auto/w_550,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)\">\r\n      <img *ngIf=\"media.isActive('sm') && product\" class=\"responsive-image-stretch\" src=\"{{\r\n      config.imgPath +\r\n      config.cloudinary.cloud_name +\r\n      '/c_fill,w_460,h_345,f_auto/' +\r\n      'w_230,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n      product.menuImage}}\" alt=\"Image\" (click)=\"openDialog(product.menuImage,\r\n      '/c_fill,w_900,h_675,f_auto/w_450,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)\">\r\n      <img *ngIf=\"media.isActive('xs') && product\" class=\"responsive-image-stretch\" src=\"{{\r\n      config.imgPath +\r\n      config.cloudinary.cloud_name +\r\n      '/c_fill,w_590,h_443,f_auto/' +\r\n      'w_295,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +\r\n      product.menuImage}}\" alt=\"Image\" (click)=\"openDialog(product.menuImage, \r\n      '/c_fill,w_590,h_443,f_auto/w_295,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)\">\r\n\r\n  </section>\r\n  <section class=\"product-item-brief-content\">\r\n    <h2 class=\"mat-h1 title\" *ngIf=\"!child && product\">{{product.name}}</h2>\r\n    <p class=\"mat-body-1\" *ngIf=\"!child && product\">{{product.description}}</p>\r\n    <p *ngIf=\"product?.updatedAt\" class=\"mat-caption\">{{product.updatedAt | date:'dd MM yyyy'}}</p>\r\n    <div fxLayout=\"row\">\r\n      <a *ngIf=\"!child && allowTo('manager')\" mat-button aria-label=\"Edit\" fxFlex=\"50\"\r\n        [routerLink]=\"['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]\"\r\n        [queryParams]=\"{seoTitle: product.seoTitle, seoMeta: product.seoMeta}\"\r\n        [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        Редагувати\r\n      </a>\r\n      <a *ngIf=\"!child && allowTo('manager')\" mat-button aria-label=\"Delete\" fxFlex=\"50\"\r\n        (click)=\"deleteProductItem(product._id, product.name)\">\r\n        Видалити\r\n      </a>\r\n      <a *ngIf=\"child\" mat-raised-button color=\"primary\"\r\n        [routerLink]=\"['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]\"\r\n        [queryParams]=\"{seoTitle: child.seoTitle, seoMeta: child.seoMeta}\"\r\n        [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n        {{child.name}}\r\n      </a>\r\n    </div>\r\n\r\n\r\n  </section>\r\n</article>"
 
 /***/ }),
 
@@ -2427,7 +1938,14 @@ var ProductItemBriefComponent = /** @class */ (function () {
     };
     ProductItemBriefComponent.prototype.onCatalogRouting = function (child) {
         if (child) {
-            this.router.navigate(['/products', 'ch', { outlets: { primary: [child._id], breadcrumb: [child._id] } }]);
+            console.log('child', child);
+            this.router.navigate(['/products', 'ch',
+                { outlets: { primary: [child._id], breadcrumb: [child._id] } }], {
+                queryParams: {
+                    seoTitle: child.seoTitle,
+                    seoMeta: child.seoMeta
+                }
+            });
         }
     };
     ProductItemBriefComponent.prototype.deleteProductItem = function (_id, name) {
@@ -2627,7 +2145,7 @@ var ProductItemDetailComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n    <div class=\"item\" fxFlex=\"92px\" fxLayoutAlign=\"center center\">\n      <img class=\"responsive-image-stretch\" src=\"{{\n          config.imgPath +\n          config.cloudinary.cloud_name +\n          '/c_fill,w_80,h_60,f_auto/' +\n          product.menuImage}}\"\n         alt=\"Image\">\n    </div>\n    <div class=\"item\" fxFlex=\"100%-92px\">\n      <p class=\"body-1 muted\">{{product.name}}</p>\n      <p class=\"caption text-justify\">{{product.description}}</p>\n    </div>\n  </div>\n</div>\n       "
+module.exports = "<div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n    <div class=\"item\" fxFlex=\"92px\" fxLayoutAlign=\"center center\">\r\n      <img class=\"responsive-image-stretch\" src=\"{{\r\n          config.imgPath +\r\n          config.cloudinary.cloud_name +\r\n          '/c_fill,w_80,h_60,f_auto/' +\r\n          product.menuImage}}\"\r\n         alt=\"Image\">\r\n    </div>\r\n    <div class=\"item\" fxFlex=\"100%-92px\">\r\n      <p class=\"body-1 muted\">{{product.name}}</p>\r\n      <p class=\"caption text-justify\">{{product.description}}</p>\r\n    </div>\r\n  </div>\r\n</div>\r\n       "
 
 /***/ }),
 
@@ -2697,7 +2215,7 @@ var ProductItemFeedComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n    <div class=\"cell\">\r\n      <p class=\"muted\">height {{height}}</p>\r\n      <p class=\"muted\"> width {{width}}</p>\r\n  \r\n    </div>\r\n  <div class=\"w393\">393</div>\r\n  <div class=\"w360\">360</div>\r\n  <div class=\"w350\">350</div>\r\n  <div class=\"w100\">100</div>\r\n  <div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\r\n  <div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\r\n"
+module.exports = "<div>\n    <div class=\"cell\">\n      <p class=\"muted\">height {{height}}</p>\n      <p class=\"muted\"> width {{width}}</p>\n  \n    </div>\n  <div class=\"w393\">393</div>\n  <div class=\"w360\">360</div>\n  <div class=\"w350\">350</div>\n  <div class=\"w100\">100</div>\n  <div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\n  <div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\n"
 
 /***/ }),
 
@@ -2789,14 +2307,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _footer_footer_component__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./footer/footer.component */ "./src/app/components/shared/footer/footer.component.ts");
 /* harmony import */ var _content_content_component__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./content/content.component */ "./src/app/components/shared/content/content.component.ts");
 /* harmony import */ var _about_about_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./about/about.component */ "./src/app/components/shared/about/about.component.ts");
-/* harmony import */ var _comments_comments_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./comments/comments.component */ "./src/app/components/shared/comments/comments.component.ts");
-/* harmony import */ var _screen_test_screen_test_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./screen-test/screen-test.component */ "./src/app/components/shared/screen-test/screen-test.component.ts");
-/* harmony import */ var _mcs_item_brief_mcs_item_brief_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./mcs-item-brief/mcs-item-brief.component */ "./src/app/components/shared/mcs-item-brief/mcs-item-brief.component.ts");
-/* harmony import */ var _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./mcs-item-detail/mcs-item-detail.component */ "./src/app/components/shared/mcs-item-detail/mcs-item-detail.component.ts");
-/* harmony import */ var _product_item_feed_product_item_feed_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./product-item-feed/product-item-feed.component */ "./src/app/components/shared/product-item-feed/product-item-feed.component.ts");
-/* harmony import */ var _image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./image-popup/image-popup.component */ "./src/app/components/shared/image-popup/image-popup.component.ts");
-/* harmony import */ var src_app_directives_scrolling_directive__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! src/app/directives/scrolling.directive */ "./src/app/directives/scrolling.directive.ts");
-/* harmony import */ var _privacy_privacy_component__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./privacy/privacy.component */ "./src/app/components/shared/privacy/privacy.component.ts");
+/* harmony import */ var _screen_test_screen_test_component__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./screen-test/screen-test.component */ "./src/app/components/shared/screen-test/screen-test.component.ts");
+/* harmony import */ var _product_item_feed_product_item_feed_component__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./product-item-feed/product-item-feed.component */ "./src/app/components/shared/product-item-feed/product-item-feed.component.ts");
+/* harmony import */ var _image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./image-popup/image-popup.component */ "./src/app/components/shared/image-popup/image-popup.component.ts");
+/* harmony import */ var src_app_directives_scrolling_directive__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! src/app/directives/scrolling.directive */ "./src/app/directives/scrolling.directive.ts");
+/* harmony import */ var _privacy_privacy_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./privacy/privacy.component */ "./src/app/components/shared/privacy/privacy.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -2823,10 +2338,10 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
+// import { CommentsComponent } from './comments/comments.component';
 
-
-
-
+// import { McsItemBriefComponent } from './mcs-item-brief/mcs-item-brief.component';
+// import { McsItemDetailComponent } from './mcs-item-detail/mcs-item-detail.component';
 
 
 
@@ -2844,21 +2359,6 @@ var SharedModule = /** @class */ (function () {
                 ng_recaptcha__WEBPACK_IMPORTED_MODULE_12__["RecaptchaModule"],
                 ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_13__["RecaptchaFormsModule"],
             ],
-            exports: [
-                _page_404_page_404_component__WEBPACK_IMPORTED_MODULE_2__["Page404Component"],
-                _product_item_brief_product_item_brief_component__WEBPACK_IMPORTED_MODULE_6__["ProductItemBriefComponent"],
-                _product_item_detail_product_item_detail_component__WEBPACK_IMPORTED_MODULE_7__["ProductItemDetailComponent"],
-                _product_item_feed_product_item_feed_component__WEBPACK_IMPORTED_MODULE_24__["ProductItemFeedComponent"],
-                _crsl_crsl_component__WEBPACK_IMPORTED_MODULE_9__["CrslComponent"],
-                _feedback_feedback_component__WEBPACK_IMPORTED_MODULE_10__["FeedbackComponent"],
-                _header_header_component__WEBPACK_IMPORTED_MODULE_15__["HeaderComponent"],
-                _landing_landing_component__WEBPACK_IMPORTED_MODULE_16__["LandingComponent"],
-                _footer_footer_component__WEBPACK_IMPORTED_MODULE_17__["FooterComponent"],
-                _content_content_component__WEBPACK_IMPORTED_MODULE_18__["ContentComponent"],
-                _comments_comments_component__WEBPACK_IMPORTED_MODULE_20__["CommentsComponent"],
-                _mcs_item_brief_mcs_item_brief_component__WEBPACK_IMPORTED_MODULE_22__["McsItemBriefComponent"],
-                _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_23__["McsItemDetailComponent"]
-            ],
             declarations: [
                 _page_404_page_404_component__WEBPACK_IMPORTED_MODULE_2__["Page404Component"],
                 _confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_5__["ConfirmPopupComponent"],
@@ -2873,14 +2373,27 @@ var SharedModule = /** @class */ (function () {
                 _footer_footer_component__WEBPACK_IMPORTED_MODULE_17__["FooterComponent"],
                 _content_content_component__WEBPACK_IMPORTED_MODULE_18__["ContentComponent"],
                 _about_about_component__WEBPACK_IMPORTED_MODULE_19__["AboutComponent"],
-                _comments_comments_component__WEBPACK_IMPORTED_MODULE_20__["CommentsComponent"],
-                _screen_test_screen_test_component__WEBPACK_IMPORTED_MODULE_21__["ScreenTestComponent"],
-                _mcs_item_brief_mcs_item_brief_component__WEBPACK_IMPORTED_MODULE_22__["McsItemBriefComponent"],
-                _mcs_item_detail_mcs_item_detail_component__WEBPACK_IMPORTED_MODULE_23__["McsItemDetailComponent"],
-                _product_item_feed_product_item_feed_component__WEBPACK_IMPORTED_MODULE_24__["ProductItemFeedComponent"],
-                _image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_25__["ImagePopupComponent"],
-                src_app_directives_scrolling_directive__WEBPACK_IMPORTED_MODULE_26__["ScrollingDirective"],
-                _privacy_privacy_component__WEBPACK_IMPORTED_MODULE_27__["PrivacyComponent"],
+                // CommentsComponent,
+                _screen_test_screen_test_component__WEBPACK_IMPORTED_MODULE_20__["ScreenTestComponent"],
+                // McsItemBriefComponent,
+                // McsItemDetailComponent,
+                _product_item_feed_product_item_feed_component__WEBPACK_IMPORTED_MODULE_21__["ProductItemFeedComponent"],
+                _image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_22__["ImagePopupComponent"],
+                src_app_directives_scrolling_directive__WEBPACK_IMPORTED_MODULE_23__["ScrollingDirective"],
+                _privacy_privacy_component__WEBPACK_IMPORTED_MODULE_24__["PrivacyComponent"],
+            ],
+            exports: [
+                _page_404_page_404_component__WEBPACK_IMPORTED_MODULE_2__["Page404Component"],
+                _product_item_brief_product_item_brief_component__WEBPACK_IMPORTED_MODULE_6__["ProductItemBriefComponent"],
+                _product_item_detail_product_item_detail_component__WEBPACK_IMPORTED_MODULE_7__["ProductItemDetailComponent"],
+                _product_item_feed_product_item_feed_component__WEBPACK_IMPORTED_MODULE_21__["ProductItemFeedComponent"],
+                _crsl_crsl_component__WEBPACK_IMPORTED_MODULE_9__["CrslComponent"],
+                _feedback_feedback_component__WEBPACK_IMPORTED_MODULE_10__["FeedbackComponent"],
+                _header_header_component__WEBPACK_IMPORTED_MODULE_15__["HeaderComponent"],
+                _landing_landing_component__WEBPACK_IMPORTED_MODULE_16__["LandingComponent"],
+                _footer_footer_component__WEBPACK_IMPORTED_MODULE_17__["FooterComponent"],
+                _content_content_component__WEBPACK_IMPORTED_MODULE_18__["ContentComponent"],
+                _about_about_component__WEBPACK_IMPORTED_MODULE_19__["AboutComponent"],
             ],
         })
     ], SharedModule);
@@ -3979,7 +3492,7 @@ var SharedService = /** @class */ (function () {
         this.http = http;
         this._shareEvent = new rxjs__WEBPACK_IMPORTED_MODULE_1__["ReplaySubject"](1);
         this.shareEvent$ = this._shareEvent.asObservable();
-        this._eventToReloadComments = new rxjs__WEBPACK_IMPORTED_MODULE_1__["ReplaySubject"](1);
+        this._eventToReloadComments = new rxjs__WEBPACK_IMPORTED_MODULE_1__["Subject"]();
         this.eventToReloadComments$ = this._eventToReloadComments.asObservable();
     }
     // sharing data between components
@@ -3994,10 +3507,13 @@ var SharedService = /** @class */ (function () {
     // ['userChangeStatusEmitter'] user login (login comp) or logout (content-component) or
     //     markCommentsAsReaded (content-component) emitter =>
     //     content-component (update unreaded comments length)
-    // events to reload comments
-    SharedService.prototype.sharingEventToReloadComments = function () {
-        this._eventToReloadComments.next();
+    // events on any changes in comments
+    SharedService.prototype.sharingEventToReloadComments = function (event) {
+        console.log('sharing service event', event);
+        this._eventToReloadComments.next(event);
     };
+    // if event === null - reload comment based variables (like unreaded comments length)
+    // if event === {sort, skip, limit, displayFilter} - should reload comments in comments-list component
     SharedService.prototype.getEventToReloadComments = function () {
         return this.eventToReloadComments$;
     };
@@ -4104,7 +3620,8 @@ var SocialService = /** @class */ (function () {
         };
         return this.http.post('api/social/add-comment', { parent_id: parent_id, parentCategory: parentCategory, comment: comment }, httpOptions);
     };
-    SocialService.prototype.getComments = function (parent_id, parentCategory, sort, skip, limit, displayFilter) {
+    SocialService.prototype.getComments = function (parent_id, parentCategory, sort, skip, limit, displayFilter, commentsReadedTillFilter) {
+        if (commentsReadedTillFilter === void 0) { commentsReadedTillFilter = false; }
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -4116,6 +3633,7 @@ var SocialService = /** @class */ (function () {
                 .set('skip', skip + '')
                 .set('limit', limit + '')
                 .set('displayFilter', displayFilter + '')
+                .set('commentsReadedTillFilter', commentsReadedTillFilter + '')
         };
         return this.http.get('api/social/get-comments', httpOptions);
     };
@@ -4126,13 +3644,13 @@ var SocialService = /** @class */ (function () {
    * @returns {Observable<[]>}
    * @memberof SocialService
    */
-    SocialService.prototype.getUnreadedComments = function () {
+    SocialService.prototype.getUnreadedCommentsCategories = function () {
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                 'Content-Type': 'application/json',
             }),
         };
-        return this.http.get('api/social/get-unreaded-comments', httpOptions);
+        return this.http.get('api/social/get-unreaded-comments-categories', httpOptions);
     };
     /**
      * get current user unreaded commnets length

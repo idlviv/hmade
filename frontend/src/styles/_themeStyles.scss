@@ -374,7 +374,11 @@ color: $muted-strong
   display: block;
 }
 
-re-captcha > div{
+.display-inline-block {
+  display: inline-block;
+}
+
+re-captcha > div {
   width: 302px;
   margin: 0 auto;
 }
@@ -1172,7 +1176,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-#mcs, #dashboard, #user, #about, #feedback, #privacy, #social {
+#mcs, #dashboard, #user, #about, #feedback, #privacy, #social, #page-404 {
   @include gt-md {
     min-height: calc(100vh - 194px); // footer 64px + toolbar 130px
   }
@@ -1331,10 +1335,14 @@ a.hover-button:hover {
   padding-bottom: 0 !important;
 }
 
-.comment  {
-  border-bottom: 1px solid mat-color($primary, 100);
-  @include last {
-    border-bottom: 0;
+.comment-wrapper {
+  div.comment {
+    border-top: 1px solid mat-color($primary, 100);
+  }
+  @include first {
+    div.comment {
+      border-top: 0;
+    }
   }
 }
 
@@ -1371,7 +1379,16 @@ a.hover-button:hover {
     }
   }
 }
-// end mc steps arrange order
+
+// arrange backgrounds
+.arrange-background {
+  &:nth-child(odd) {
+    background-color: mat-color($background, background) !important;
+  }
+  &:nth-child(even) {
+    background-color: mat-color($background, app-bar) !important;
+  }
+}
 
 // effects for landing page products
 @include keyframes(fadeIn) {
@@ -1387,6 +1404,10 @@ a.hover-button:hover {
 
 .animationAppear1s {
   @include animation(fadeIn 1s forwards);
+}
+
+.animationAppear2s {
+  @include animation(fadeIn 2s forwards);
 }
 
 .opacity0 {

@@ -1,0 +1,63 @@
+<div class="container">
+  <article class="mcs-item-brief row">
+    <section fxFlex="400px" fxFlex.lt-md="100">
+      <img *ngIf="media.isActive('xs')" class="responsive-image" src="{{
+                  config.imgPath +
+                  config.cloudinary.cloud_name +
+                  '/c_fill,w_535,h_350,f_auto/' +
+                  'w_265,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
+                  mc.mainImage}}" alt="master class image">
+      <img *ngIf="media.isActive('gt-xs')" class="responsive-image" src="{{
+                config.imgPath +
+                config.cloudinary.cloud_name +
+                '/c_fill,w_400,h_300,f_auto/' +
+                'w_265,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
+                mc.mainImage}}" alt="master class image">
+    </section>
+    <section class="mcs-item-brief-main wrap" fxFlex="calc(100%-400px)" fxFlex.lt-md="100">
+      <div class="mc-social" fxFlex="100">
+        <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
+          <mat-icon>thumb_up_alt</mat-icon>
+          <div>{{mc.likes.likedByLength || 0}}</div>
+        </div>
+        <div *ngIf="config.social.showLikes" class="item text-align-center" fxFlex>
+          <mat-icon>thumb_down_alt</mat-icon>
+          <div>{{mc.likes.dislikedByLength || 0}}</div>
+        </div>
+        <div *ngIf="config.social.showViews" class="item text-align-center" fxFlex>
+          <mat-icon>remove_red_eye</mat-icon>
+          <div>{{mc.views || 0}}</div>
+        </div>
+        <div *ngIf="config.social.showComments" class="item text-align-center" fxFlex>
+          <mat-icon>comment</mat-icon>
+          <div>{{mc.comments?.length || 0}}</div>
+        </div>
+        <div class="item text-align-center" fxFlex>
+          <mat-icon>calendar_today</mat-icon>
+          <div>{{mc.updatedAt | date: 'dd-MM-yyyy'}}</div>
+        </div>
+      </div>
+      <div class="cell" fxFlex="100">
+        <h2 class="mat-display-1 title">
+          {{mc.name}}
+        </h2>
+        <p class="mat-body-1 text-align-justify muted">
+          {{mc.description}}
+        </p>
+      </div>
+      <div class="cell mc-buttons" fxFlex="100" fxLayoutAlign="space-around end">
+        <a mat-raised-button color="primary" aria-label="Open" [routerLink]="['/mcs','show', mc._id]"
+          [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
+          Докладно
+        </a>
+        <a *ngIf="allowTo('manager')" mat-raised-button color="primary" (click)="editMcsItem(mc._id)" aria-label="Edit">
+          <mat-icon>edit</mat-icon>
+        </a>
+        <a *ngIf="allowTo('manager')" mat-raised-button color="primary" (click)="deleteMcsItem(mc._id, mc.name)"
+          aria-label="Delete">
+          <mat-icon>delete</mat-icon>
+        </a>
+      </div>
+    </section>
+  </article>
+</div>

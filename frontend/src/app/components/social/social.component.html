@@ -1,14 +1,9 @@
 <div id="mcs">
-    <div class="container">
-      <div class="app-container-h app-container-v">
-        <div class="container">
-  
-          <div class="row" FxLayout="row">
-            <div *ngFor="let unreadedComment of unreadedComments" class="cell" fxFlex="100">
-             {{unreadedComment | json}}
-            </div>
-          </div>
-        </div>
+  <div class="container">
+    <div class="app-container-h app-container-v">
+      <div class="container">
+        <router-outlet></router-outlet>
       </div>
     </div>
   </div>
+</div>

@@ -52,10 +52,10 @@ router.get('/social/get-comments',
     socialController.getComments
 );
 
-router.get('/social/get-unreaded-comments',
+router.get('/social/get-unreaded-comments-categories',
     authentication,
     authorization('user'),
-    socialController.getUnreadedComments
+    socialController.getUnreadedCommentsCategories
 );
 
 router.get('/social/get-unreaded-comments-length',

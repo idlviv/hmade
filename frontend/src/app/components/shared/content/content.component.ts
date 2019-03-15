@@ -101,12 +101,10 @@ export class ContentComponent implements OnInit, AfterViewInit {
     if (!this.unreadedCommentsLength) {
       return;
     }
-    const date = Date.now();
-    this.userService.userEditUnsecure({name: 'commentsReadedTill', value: date + ''})
+    this.userService.userEditUnsecure({name: 'commentsReadedTill'})
     .subscribe(
       res => {
         this.sharedService.sharingEventToReloadComments();
-        // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
       },
       err => console.log('err', err)
     );
@@ -114,7 +112,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
   showUnreadededComments() {
     console.log('showUnreadededComments');
-    this.router.navigate(['/comments']);
+    this.router.navigate(['/comments', 'unreaded-comments']);
   }
 
   onSettingsMenuMouseover() {

@@ -1,95 +1,3 @@
-<!-- <mat-card id="product-item-brief" (click)="onCatalogRouting(child)">
-  <mat-card-content class="wrap">
-    <div class="mat-card-wide-image" fxLayout="row" fxLayoutAlign="center center">
-      <div *ngIf="product" fxFlex="100">
-        <img *ngIf="media.isActive('gt-sm')" class="responsive-image-stretch " src="{{
-              config.imgPath +
-              config.cloudinary.cloud_name +
-              '/c_fill,w_400,h_300,f_auto/' +
-              'w_200,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
-              product.menuImage}}"
-             alt="Image" (click)="openDialog(product.menuImage, 
-             '/c_fill,w_1100,h_825,f_auto/w_550,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)">
-        <img *ngIf="media.isActive('sm')" class="responsive-image-stretch" src="{{
-              config.imgPath +
-              config.cloudinary.cloud_name +
-              '/c_fill,w_460,h_345,f_auto/' +
-              'w_230,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
-              product.menuImage}}"
-              alt="Image" (click)="openDialog(product.menuImage,
-              '/c_fill,w_900,h_675,f_auto/w_450,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)">
-        <img *ngIf="media.isActive('xs')" class="responsive-image-stretch" src="{{
-            config.imgPath +
-            config.cloudinary.cloud_name +
-            '/c_fill,w_590,h_443,f_auto/' +
-            'w_295,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
-            product.menuImage}}"
-            alt="Image" (click)="openDialog(product.menuImage, 
-            '/c_fill,w_590,h_443,f_auto/w_295,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)">
-      </div>
-      <div *ngIf="child" fxFlex="100" class="card">
-        <img *ngIf="media.isActive('gt-sm')" class="responsive-image-stretch" src="{{
-              config.imgPath +
-              config.cloudinary.cloud_name +
-              '/c_fill,w_400,h_300,f_auto/' +
-              child.assets[0]}}"
-             alt="Image">
-        <img *ngIf="media.isActive('sm')" class="responsive-image-stretch" src="{{
-              config.imgPath +
-              config.cloudinary.cloud_name +
-              '/c_fill,w_460,h_345,f_auto/' +
-              child.assets[0]}}"
-             alt="Image">
-        <img *ngIf="media.isActive('xs')" class="responsive-image-stretch" src="{{
-            config.imgPath +
-            config.cloudinary.cloud_name +
-            '/c_fill,w_590,h_443,f_auto/' +
-            child.assets[0]}}"
-             alt="Image">
-      </div>
-    </div>
-    <section *ngIf="!child && product" class="row product-brief-section" fxFlex="row">
-      <div class="cell" fxFlex="100" fxLayoutAlign="start center">
-        <h3 class="mat-h3">{{product.name}}</h3>
-       </div>
-      <div class="cell product-brief-description" fxFlex="100" fxLayoutAlign="center center">
-        <p class="mat-body-1">{{product.description}}</p>
-      </div>
-    </section>
-    <section *ngIf="!child && product && (product.dimensions.width || product.dimensions.height)" 
-     class="cell-px0 social-feed-section" fxFlex="100" fxLayout="row">
-      <div class="item text-align-center" fxFlex>
-        <mat-icon>swap_horiz</mat-icon>
-        <span> {{product?.dimensions?.width}}</span>
-        <span> см</span>
-      </div>
-      <div class="item text-align-center" fxFlex>
-        <mat-icon>swap_vert</mat-icon>
-        <span> {{product?.dimensions?.height}}</span>
-        <span> см</span>
-      </div>
-      </section>
-  </mat-card-content>
-  <mat-card-actions fxLayout="row">
-    <div fxFlex>
-      <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Edit"
-         [routerLink]="['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]"
-         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
-        Редагувати
-      </a>
-      <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Delete"
-        (click)="deleteProductItem(product._id, product.name)">
-        Видалити
-      </a>
-      <a *ngIf="child" mat-button [attr.aria-label]="child.name"
-         [routerLink]="['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]"
-         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
-         {{child.name}}
-      </a>
-    </div>
-  </mat-card-actions>
-</mat-card> -->
-
 <article class="product-item-brief" (click)="onCatalogRouting(child)">
   <section class="product-item-brief-img">
       <img *ngIf="media.isActive('gt-sm') && child" class="responsive-image-stretch" src="{{
@@ -137,6 +45,7 @@
     <div fxLayout="row">
       <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Edit" fxFlex="50"
         [routerLink]="['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]"
+        [queryParams]="{seoTitle: product.seoTitle, seoMeta: product.seoMeta}"
         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
         Редагувати
       </a>
@@ -146,6 +55,7 @@
       </a>
       <a *ngIf="child" mat-raised-button color="primary"
         [routerLink]="['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]"
+        [queryParams]="{seoTitle: child.seoTitle, seoMeta: child.seoMeta}"
         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
         {{child.name}}
       </a>

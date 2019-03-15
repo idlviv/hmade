@@ -20,7 +20,7 @@ export class McsItemDetailComponent implements OnInit {
   mc: IMc;
   user: IUser;
   mc_id: string;
-  
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,

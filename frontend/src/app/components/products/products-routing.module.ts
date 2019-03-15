@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsComponent } from './products.component';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
+import { Page404Component } from '../shared/page-404/page-404.component';
 
 const productsRoutes: Routes = [
   {
@@ -12,6 +13,10 @@ const productsRoutes: Routes = [
       {
         path: '',
         component: ProductsListComponent,
+        // data: {
+        //   title: this.title,
+        //   metaDescription: this.metaDescription
+        // }
       },
       {
         path: '',
@@ -27,13 +32,31 @@ const productsRoutes: Routes = [
         component: BreadcrumbComponent,
         outlet: 'breadcrumb',
       },
+      // {
+      //   path: ':category_id',
+      //   children: [
+      //     {
+      //       path: '',
+      //       component: ProductsListComponent,
+      //     },
+      //     {
+      //       path: '',
+      //       component: BreadcrumbComponent,
+      //       outlet: 'breadcrumb',
+      //     },
+      //   ]
+      // },
       {
         path: ':category_id/details/:product_id',
         component: BreadcrumbComponent,
         outlet: 'breadcrumb',
       },
     ],
-  }
+  },
+  // {
+  //   path: '**',
+  //   redirectTo: '',
+  // }
 ];
 
 @NgModule({
@@ -44,4 +67,4 @@ const productsRoutes: Routes = [
   exports: [RouterModule]
 })
 
-export class ProductsRoutingModule {}
+export class ProductsRoutingModule { }

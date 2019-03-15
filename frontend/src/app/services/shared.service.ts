@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ReplaySubject } from 'rxjs';
+import { ReplaySubject, AsyncSubject, Subject } from 'rxjs';
 import { IResponse } from '../interfaces/server-response-interface';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable } from 'rxjs/index';
@@ -13,7 +13,7 @@ export class SharedService {
   private _shareEvent: ReplaySubject<any> = new ReplaySubject(1);
   shareEvent$ = this._shareEvent.asObservable();
 
-  private _eventToReloadComments: ReplaySubject<any> = new ReplaySubject(1);
+  private _eventToReloadComments: Subject<any> = new Subject();
   eventToReloadComments$ = this._eventToReloadComments.asObservable();
 
   constructor(
@@ -35,10 +35,14 @@ export class SharedService {
   //     markCommentsAsReaded (content-component) emitter =>
   //     content-component (update unreaded comments length)
 
-  // events to reload comments
-  sharingEventToReloadComments() {
-    this._eventToReloadComments.next();
+  // events on any changes in comments
+  sharingEventToReloadComments(event?: any) {
+    console.log('sharing service event', event);
+    this._eventToReloadComments.next(event);
   }
+
+  // if event === null - reload comment based variables (like unreaded comments length)
+  // if event === {sort, skip, limit, displayFilter} - should reload comments in comments-list component
 
   getEventToReloadComments() {
     return this.eventToReloadComments$;

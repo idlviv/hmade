@@ -51,7 +51,8 @@ export class SocialService {
     );
   }
 
-  getComments(parent_id: string, parentCategory: string, sort: number, skip: number, limit: number, displayFilter: boolean):
+  getComments(parent_id: string, parentCategory: string, sort: number, skip: number,
+    limit: number, displayFilter: boolean, commentsReadedTillFilter: any = false ):
     Observable<{comments: IComment[], commentsTotalLength: number}> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -64,8 +65,8 @@ export class SocialService {
       .set('skip', skip + '')
       .set('limit', limit + '')
       .set('displayFilter', displayFilter + '')
+      .set('commentsReadedTillFilter', commentsReadedTillFilter + '')
     };
-
     return this.http.get<{comments: IComment[], commentsTotalLength: number}>(
       'api/social/get-comments',
       httpOptions
@@ -79,14 +80,14 @@ export class SocialService {
    * @returns {Observable<[]>}
    * @memberof SocialService
    */
-  getUnreadedComments(): Observable<any[]>  {
+  getUnreadedCommentsCategories(): Observable<any[]>  {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     };
     return this.http.get<any[]>(
-      'api/social/get-unreaded-comments',
+      'api/social/get-unreaded-comments-categories',
       httpOptions
     );
   }

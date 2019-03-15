@@ -1,6 +1,21 @@
-  <p>
-
-    unreaded-comments works!
-  </p>
-
-
+<div class="row" fxLayout="row">
+  <div class="cell" fxFlex="100" fxLayout="row">
+    <h2 *ngIf="processedUnreadedCommentsParents?.length" class="mat-h2" fxflex>Нові коментарі</h2>
+    <h2 *ngIf="!processedUnreadedCommentsParents?.length && pageLoaded" class="mat-h2 animationAppear2s" fxflex>Нових коментарів немає</h2>
+    <div fxFlex></div>
+    <div>
+      <a *ngIf="processedUnreadedCommentsParents?.length" color="accent"
+        mat-flat-button (click)="markCommentsAsReaded()" fxflex>Позначити всі прочитаними</a>
+    </div> 
+  </div>
+</div>
+<div *ngIf="processedUnreadedCommentsParents?.length" class="row" fxLayout="row">
+  <div *ngFor="let processedUnreadedCommentsParent of processedUnreadedCommentsParents; let i= index;" class="cell" fxFlex="100">
+    <h3 class="mat-h3 no-margin"><a aria-label="Open" [routerLink]="['/mcs','show', processedUnreadedCommentsParent._id]"
+      [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
+      Майстер-клас {{processedUnreadedCommentsParent.name[0]}}</a></h3>
+    <app-comments-list [parent_id]="processedUnreadedCommentsParent._id" [parentCategory]="'mc'" [commentsReadedTillFilter]="true"
+    (processedUnreadedComments)="onProcessedUnreadedComments($event)"></app-comments-list>
+  </div>
+</div>
+     

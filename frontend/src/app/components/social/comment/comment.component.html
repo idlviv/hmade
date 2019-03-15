@@ -1,0 +1,46 @@
+<!-- <mat-card class="comments"> -->
+  <div class="row comment animationAppear1s" [ngClass]="{'muted-strong': !comment.display}"
+    fxLayout="row">
+    <div class="cell" fxFlex="64px" fxLayoutAlign="center center">
+      <img *ngIf="comment.user && comment.user.avatar" class="responsive-image" src="{{comment.user.role === 'google' ? 
+            comment.user.avatar :
+            config.imgPath +
+            config.cloudinary.cloud_name +
+            '/c_fill,w_50,h_50,f_auto/' +
+            comment.user.avatar}}" alt="avatar">
+      <img *ngIf="!comment.user" class="responsive-image" src="{{
+            config.imgPath +
+            config.cloudinary.cloud_name +
+            '/c_fill,w_50,h_50,f_auto/' +
+            config.defaultAvatar}}" alt="avatar">
+    </div>
+    <div class="cell" fxFlex="calc(90%-128px)">
+      <p>
+        <span class="mat-body-2 bold">
+          {{comment.user && comment.user.login ? comment.user.name + ' ' + comment.user.surname : 'Гість'}}
+        </span>
+        <span fxFlex></span>
+        <span class="mat-body-1">{{comment.commentedAt | date: 'dd.MM.yyyy HH:mm'}}</span>
+      </p>
+      <p class="mat-body-1 text-align-justify">{{comment.comment}}</p>
+    </div>
+    <div class="cell wrap" fxFlex="64px" fxLayoutAlign="center center">
+      <p *ngIf="allowTo('manager')" class="no-margin">
+        <button class="mat-icon-button" (click)="deleteComment(comment)"
+          aria-label="Delete comment">
+          <mat-icon class="mat-18">delete_outline</mat-icon>
+        </button></p>
+      <p *ngIf="allowTo('manager') && !comment.display" class="no-margin">
+        <button class="mat-icon-button" (click)="displayComment(true, comment._id)" aria-label="Display comment">
+          <mat-icon class="mat-18">play_circle_outline</mat-icon>
+        </button>
+      </p>
+      <p *ngIf="allowTo('manager') && comment.display" class="no-margin">
+        <button class="mat-icon-button" (click)="displayComment(false, comment._id)" aria-label="Hide comment">
+          <mat-icon class="mat-18">pause_circle_outline</mat-icon>
+        </button>
+      </p>
+
+    </div>
+  </div>
+<!-- </mat-card> -->

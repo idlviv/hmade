@@ -1,20 +1,19 @@
-import { Component, OnInit, HostListener, OnChanges } from '@angular/core';
+import { Component, OnInit, HostListener } from '@angular/core';
 import { mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { IProduct } from '../../../interfaces/product-interface';
 import { CatalogService } from '../../../services/catalog.service';
-import { ICatalog } from '../../../interfaces/catalog-interface';
-import { SharedService } from '../../../services/shared.service';
 import { ObservableMedia } from '@angular/flex-layout';
+// import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-products-list',
   templateUrl: './products-list.component.html',
   styleUrls: ['./products-list.component.scss']
 })
-export class ProductsListComponent implements OnInit, OnChanges {
+export class ProductsListComponent implements OnInit {
   products = <IProduct[]>[];
   category_id: string;
   children: string;
@@ -29,11 +28,10 @@ export class ProductsListComponent implements OnInit, OnChanges {
     private productService: ProductService,
     private catalogService: CatalogService,
     public media: ObservableMedia,
+    // private titleService: Title,
+    // private metaService: Meta
   ) { }
 
-  ngOnChanges() {
-  }
-  
   ngOnInit() {
 
     if (this.media.isActive('xs')) {
@@ -55,8 +53,6 @@ export class ProductsListComponent implements OnInit, OnChanges {
   @HostListener('window:scroll', ['$event'])
   onScroll(event): void {
     if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 300) {
-      console.log('this.totalProductsLength', this.totalProductsLength);
-
       if (
         !this.processing &&
         this.totalProductsLength > this.products.length &&
@@ -69,10 +65,13 @@ export class ProductsListComponent implements OnInit, OnChanges {
 
   refreshProducts(sort: number, skip: number, limit: number) {
     this.processing = true;
+    // const $queryParamMap = this.route.queryParamMap;
+    // const $paramMap = this.route.paramMap;
 
     this.route.paramMap.pipe(
       mergeMap(param => {
         this.category_id = param.get('category_id');
+        console.log('this.category_id', this.category_id);
         if (!this.category_id) {
           // starting from root
           return of(null);
@@ -105,7 +104,6 @@ export class ProductsListComponent implements OnInit, OnChanges {
         this.totalProductsLength = result[0].total ? result[0].total.totalProductsLength : 0;
         this.products.push(...result[0].products);
         this.processing = false;
-
       },
         err => console.log('error', err.e)
       );

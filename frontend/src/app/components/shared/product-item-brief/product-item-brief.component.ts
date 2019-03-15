@@ -40,8 +40,6 @@ export class ProductItemBriefComponent implements OnInit {
   ngOnInit() {
   }
 
-
-
   allowTo(permitedRole: string): boolean {
     return this.userService.allowTo(permitedRole);
   }
@@ -61,14 +59,23 @@ export class ProductItemBriefComponent implements OnInit {
 
     dialogRef.afterClosed()
       .subscribe(result => {
-        },
+      },
         err => console.log('err delete', err)
       );
   }
 
   onCatalogRouting(child) {
     if (child) {
-      this.router.navigate(['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]);
+      console.log('child', child);
+      this.router.navigate(['/products', 'ch',
+        { outlets: { primary: [child._id], breadcrumb: [child._id] } }],
+        {
+          queryParams: {
+            seoTitle: child.seoTitle,
+            seoMeta: child.seoMeta
+          }
+        }
+       );
     }
   }
 
@@ -76,7 +83,7 @@ export class ProductItemBriefComponent implements OnInit {
     console.log('_id, name', _id, name);
     const confirmObject = <IConfirmPopupData>{
       message: `Дійсно видалити: ${name} ?`,
-      payload: {_id}
+      payload: { _id }
     };
 
     const dialogRef = this.dialog.open(ConfirmPopupComponent, {
@@ -97,11 +104,11 @@ export class ProductItemBriefComponent implements OnInit {
         if (result) {
           this.refreshProducts.emit();
           this.matSnackBar.open(result, '',
-            {duration: 3000, panelClass: 'snack-bar-danger'})
+            { duration: 3000, panelClass: 'snack-bar-danger' })
         }
       },
         err => this.matSnackBar.open(err.error.message || 'Сталася помилка', '',
-          {duration: 3000, panelClass: 'snack-bar-danger'})
+          { duration: 3000, panelClass: 'snack-bar-danger' })
       );
   }
 

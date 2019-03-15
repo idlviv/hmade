@@ -1,98 +1,102 @@
 <div id="landing">
-    <div class="container">
-          <div class="app-container-h app-container-v">
-        <div class="container">
-            <section class="row padding-bottom landing-block" fxLayout="row">
-  
-                <div id="landing-left" class="container" fxFlexOrder.lt-md="2" fxFlex.xs="50" fxFlex.sm="50" fxFlex="35" fxLayoutAlign="center center">
-                    <div class="row" fxLayoutAlign="center center">
+  <div class="container arrange-background">
+    <div class="app-container-h app-container-v">
 
-                <div class="cell" 
-                data-aos="fade-right" data-aos-offset="200" data-aos-easing="ease-in-sine" data-aos-duration="1500">
-                        <a [routerLink]="['/products', 'ch']">  
-                          <img class="responsive-image-stretch" src="{{
+      <section class="row landing-block" fxLayout="row">
+
+        <div id="landing-left" class="container" fxFlexOrder.lt-md="2" fxFlex.xs="50" fxFlex.sm="50" fxFlex="35"
+          fxLayoutAlign="center center">
+          <div class="row" fxLayoutAlign="center center">
+
+            <div class="cell" data-aos="fade-right" data-aos-offset="200" data-aos-easing="ease-in-sine"
+              data-aos-duration="1500">
+              <a [routerLink]="['/products', 'ch']">
+                <img class="responsive-image-stretch" src="{{
                             config.imgPath +
                             config.cloudinary.cloud_name +
                             '/c_fill,w_500,h_500,f_auto/' +
-                            'products-logo'}}"
-                            alt="Вироби">
-                          </a>
-                      </div>
-                      <a mat-stroked-button color="primary" alt="Вироби" class="hover-button"
-                      [routerLink]="['/products', 'ch']">Мої роботи</a>
-                    </div>
-                </div>
-            
-                  <div class="container" fxFlexOrder.lt-md="1" fxFlex.lt-md="100" fxFlex="30" fxLayoutAlign="center center">
-                    <div class="row" >
-                      <div class="cell">
-                    
-                          <h2 class="mat-h1 title text-align-center">Вітаю в творчій майстерні!</h2>
-                          <div class="avatar-big-block">
-                              <img class="avatar-big" src="{{
+                            'products-logo'}}" alt="Вироби">
+              </a>
+            </div>
+            <a mat-stroked-button color="primary" alt="Вироби" class="hover-button"
+              [routerLink]="['/products', 'ch']">Мої роботи</a>
+          </div>
+        </div>
+
+        <div class="container" fxFlexOrder.lt-md="1" fxFlex.lt-md="100" fxFlex="30" fxLayoutAlign="center center">
+          <div class="row">
+            <div class="cell">
+
+              <h1 class="mat-h1 title text-align-center">Вітаю в творчій майстерні HMADE!</h1>
+              <div class="avatar-big-block">
+                <img class="avatar-big" src="{{
                                 config.imgPath +
                                 config.cloudinary.cloud_name +
                                 '/c_fill,w_180,h_180,f_auto/' +
                                 'my-photo180x180'}}" alt="my photo">
-                          </div>
-                          <!-- <div class="avatar-big-block">
+              </div>
+              <!-- <div class="avatar-big-block">
                             <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo">
                         </div> -->
-                          <p class="body-3 muted text-align-center">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.
-                          Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,
-                          шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..
-                          Ще багато можна писати про себе та мої захоплення, але згодом..
-                            Завітайте у мою майстерню.</p>
-                      </div>
-                    </div>
-                  </div>
-            
-                <div id="landing-right" class="container" fxFlexOrder.lt-md="3" fxFlex.xs="50" fxFlex.sm="50" fxFlex="35" fxLayoutAlign="center center">
-                    <div class="row" fxLayoutAlign="center center">
-                <div class="cell"
-                data-aos="fade-left" data-aos-offset="200" data-aos-easing="ease-in-sine" data-aos-duration="1500">
-                        <a [routerLink]="['/mcs', 'ch']">  
-                          <img class="responsive-image-stretch" src="{{
+              <p class="body-3 muted text-align-center">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене
+                на нові цікаві витвори.
+                Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,
+                шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..
+                Ще багато можна писати про себе та мої захоплення, але згодом..
+                Завітайте у мою майстерню.</p>
+            </div>
+          </div>
+        </div>
+
+        <div id="landing-right" class="container" fxFlexOrder.lt-md="3" fxFlex.xs="50" fxFlex.sm="50" fxFlex="35"
+          fxLayoutAlign="center center">
+          <div class="row" fxLayoutAlign="center center">
+            <div class="cell" data-aos="fade-left" data-aos-offset="200" data-aos-easing="ease-in-sine"
+              data-aos-duration="1500">
+              <a [routerLink]="['/mcs', 'ch']">
+                <img class="responsive-image-stretch" src="{{
                             config.imgPath +
                             config.cloudinary.cloud_name +
                             '/c_fill,w_500,h_500,f_auto/' +
-                            'mcs-logo'}}"
-                           alt="Майстеркласи">
-                        </a>
-                        
-                      </div>
-                      <a mat-stroked-button class="hover-button" color="primary" alt="Майстер-класи" 
-                      [routerLink]="['/mcs', 'ch']">Майстер-класи</a>
-  
-                    </div>
-                </div>
-              </section>
-  
-            <section *ngIf="products" class="row">
-                <div class="cell" fxFlex="100">
-                  <h2 class="mat-h2">Нові роботи</h2>
-                  <!-- <h2  [@scrollAnimation]="state" class="mat-h2">Нові роботи</h2> -->
+                            'mcs-logo'}}" alt="Майстеркласи">
+              </a>
 
-                </div>
-                <!-- [ngClass]="{'landing-product': i < productsPoint && i >= productsPoint - portionOfProducts,
-                'opacity0': i >= productsPoint}"   -->
-  
-                <!-- appScrolling -->
-              <div *ngFor="let product of products; let i = index" class="cell" 
-                [attr.id]="'product' + i" 
-                data-aos="fade-down" data-aos-offset="100" data-aos-easing="ease-in-sine" data-aos-duration="1000"
-                  fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
-                  <!-- {{isElementScrolled('#product' + i)}} -->
-                <app-product-item-brief [product]="product"></app-product-item-brief>
-              </div>
-            </section>
+            </div>
+            <a mat-stroked-button class="hover-button" color="primary" alt="Майстер-класи"
+              [routerLink]="['/mcs', 'ch']">Майстер-класи</a>
+
+          </div>
         </div>
-           
-      </div>
+      </section>
     </div>
-  
   </div>
-  
+    <div class="container arrange-background">
+      <div class="app-container-h app-container-v">
+        <section *ngIf="products" class="row">
+          <div class="cell" fxFlex="100">
+            <h2 class="mat-h2">Нові роботи</h2>
+            <!-- <h2  [@scrollAnimation]="state" class="mat-h2">Нові роботи</h2> -->
+
+          </div>
+          <!-- [ngClass]="{'landing-product': i < productsPoint && i >= productsPoint - portionOfProducts,
+            'opacity0': i >= productsPoint}"   -->
+
+          <!-- appScrolling -->
+          <div *ngFor="let product of products; let i = index" class="cell" [attr.id]="'product' + i"
+            data-aos="fade-down" data-aos-offset="100" data-aos-easing="ease-in-sine" data-aos-duration="1000"
+            fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
+            <!-- {{isElementScrolled('#product' + i)}} -->
+            <app-product-item-brief [product]="product"></app-product-item-brief>
+          </div>
+        </section>
+      </div>
+
+    </div>
+
+  <!-- </div> -->
+
+</div>
+
 
 <!-- <div id="landing" fxLayoutAlign="center center">
   <div class="container">

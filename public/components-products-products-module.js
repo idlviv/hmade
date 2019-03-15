@@ -7,7 +7,7 @@
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\r\n<div class=\"mat-elevation-z4\" id=\"breadcrumb\">\r\n  <!-- <mat-toolbar-row> -->\r\n    <div class=\"app-container-h\">\r\n      <div class=\"container\">\r\n        <div class=\"row\" fxLayout>\r\n          <div class=\"cell wrap\" fxFlex fxLayout=\"row\">\r\n            <div>\r\n              <a class=\"link animationAppear1s\"\r\n                 [routerLink]=\"['/products', 'ch']\"\r\n                 [routerLinkActive]=\"['primary-light']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n                 <span class=\"type2\">\r\n                   <mat-icon>label_important</mat-icon>\r\n                  </span> \r\n              </a>\r\n            </div>\r\n\r\n            <div *ngFor=\"let hierarchyCategoryItem of hierarchyCategory\">\r\n              <a class=\"link animationAppear1s\" *ngIf=\"!processing\"\r\n                 [routerLink]=\"['/products', 'ch', {outlets: {primary: [hierarchyCategoryItem._id], breadcrumb: [hierarchyCategoryItem._id]}}]\"\r\n                 [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n                 <span class=\"type2\"> \r\n                   <span>\r\n                      {{hierarchyCategoryItem.name}}\r\n                   </span>\r\n                   <mat-icon class=\"mat-icon-aligner\">keyboard_arrow_right</mat-icon>\r\n                  </span>\r\n                </a>\r\n            </div>\r\n            <!-- <div *ngIf=\"!processing\" fxHide.lt-md>\r\n              <a *ngIf=\"productName\" disabled class=\"link animationAppear1s\">\r\n                 <span class=\"type2\">{{productName}}</span>\r\n                </a>\r\n            </div> -->\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  <!-- </mat-toolbar-row> -->\r\n  </div>\r\n"
+module.exports = "<div class=\"mat-elevation-z4\" id=\"breadcrumb\">\r\n  <!-- <mat-toolbar-row> -->\r\n  <div class=\"app-container-h\">\r\n    <div class=\"container\">\r\n      <div class=\"row\" fxLayout>\r\n        <div class=\"cell wrap\" fxFlex fxLayout=\"row\">\r\n          <div>\r\n            <a class=\"link animationAppear1s\" [routerLink]=\"['/products', 'ch']\" [routerLinkActive]=\"['primary-light']\"\r\n              [routerLinkActiveOptions]=\"{exact: true}\">\r\n              <span class=\"type2\">\r\n                <mat-icon>label_important</mat-icon>\r\n              </span>\r\n            </a>\r\n          </div>\r\n\r\n          <div *ngFor=\"let hierarchyCategoryItem of hierarchyCategory\">\r\n            <a class=\"link animationAppear1s\" *ngIf=\"!processing\" [routerLink]=\"['/products', 'ch', \r\n                 {outlets: {primary: [hierarchyCategoryItem._id], breadcrumb: [hierarchyCategoryItem._id]}}]\" \r\n                 [queryParams]=\"{seoTitle: hierarchyCategoryItem.seoTitle, seoMeta: hierarchyCategoryItem.seoMeta}\"\r\n                 [routerLinkActive]=\"['active']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n              <span class=\"type2\">\r\n                <span>\r\n                  {{hierarchyCategoryItem.name}}\r\n                </span>\r\n                <mat-icon class=\"mat-icon-aligner\">keyboard_arrow_right</mat-icon>\r\n              </span>\r\n            </a>\r\n          </div>\r\n          <!-- <div *ngIf=\"!processing\" fxHide.lt-md>\r\n              <a *ngIf=\"productName\" disabled class=\"link animationAppear1s\">\r\n                 <span class=\"type2\">{{productName}}</span>\r\n                </a>\r\n            </div> -->\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n  <!-- </mat-toolbar-row> -->\r\n</div>"
 
 /***/ }),
 
@@ -148,6 +148,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+// import { Title, Meta } from '@angular/platform-browser';
 var ProductsListComponent = /** @class */ (function () {
     function ProductsListComponent(route, productService, catalogService, media) {
         this.route = route;
@@ -158,8 +159,6 @@ var ProductsListComponent = /** @class */ (function () {
         this.processing = false;
         this.totalProductsLength = 0;
     }
-    ProductsListComponent.prototype.ngOnChanges = function () {
-    };
     ProductsListComponent.prototype.ngOnInit = function () {
         if (this.media.isActive('xs')) {
             this.portionOfProducts = 3;
@@ -181,7 +180,6 @@ var ProductsListComponent = /** @class */ (function () {
     // Listening of page bottom reached
     ProductsListComponent.prototype.onScroll = function (event) {
         if ((window.innerHeight + pageYOffset) >= document.body.offsetHeight - 300) {
-            console.log('this.totalProductsLength', this.totalProductsLength);
             if (!this.processing &&
                 this.totalProductsLength > this.products.length &&
                 this.totalProductsLength) {
@@ -192,8 +190,11 @@ var ProductsListComponent = /** @class */ (function () {
     ProductsListComponent.prototype.refreshProducts = function (sort, skip, limit) {
         var _this = this;
         this.processing = true;
+        // const $queryParamMap = this.route.queryParamMap;
+        // const $paramMap = this.route.paramMap;
         this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (param) {
             _this.category_id = param.get('category_id');
+            console.log('this.category_id', _this.category_id);
             if (!_this.category_id) {
                 // starting from root
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
@@ -302,13 +303,27 @@ var productsRoutes = [
                 component: _breadcrumb_breadcrumb_component__WEBPACK_IMPORTED_MODULE_4__["BreadcrumbComponent"],
                 outlet: 'breadcrumb',
             },
+            // {
+            //   path: ':category_id',
+            //   children: [
+            //     {
+            //       path: '',
+            //       component: ProductsListComponent,
+            //     },
+            //     {
+            //       path: '',
+            //       component: BreadcrumbComponent,
+            //       outlet: 'breadcrumb',
+            //     },
+            //   ]
+            // },
             {
                 path: ':category_id/details/:product_id',
                 component: _breadcrumb_breadcrumb_component__WEBPACK_IMPORTED_MODULE_4__["BreadcrumbComponent"],
                 outlet: 'breadcrumb',
             },
         ],
-    }
+    },
 ];
 var ProductsRoutingModule = /** @class */ (function () {
     function ProductsRoutingModule() {

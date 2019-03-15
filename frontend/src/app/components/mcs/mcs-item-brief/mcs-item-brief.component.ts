@@ -5,7 +5,7 @@ import { UserService } from 'src/app/services/user.service';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { IConfirmPopupData } from 'src/app/interfaces/interface';
-import { ConfirmPopupComponent } from '../confirm-popup/confirm-popup.component';
+import { ConfirmPopupComponent } from '../../shared/confirm-popup/confirm-popup.component';
 import { McService } from 'src/app/services/mc.service';
 import { mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
@@ -44,19 +44,13 @@ export class McsItemBriefComponent implements OnInit, OnChanges {
 
   ngOnChanges(changes: SimpleChanges) {
     const productChange: SimpleChange = changes.mc;
-    // console.log('prev value: ', productChange.previousValue);
-    // console.log('got name: ', productChange.currentValue);
-    // console.log('productChange: ', productChange);
     if (productChange) {
-      // console.log('simple changes product');
-      // this.getRecommendations();
     }
   }
 
   goToMcsItemDetail(_id) {
     console.log(`goToMcsItemDetail ${_id}`);
     this.router.navigate(['/mcs', 'show', _id]);
-
   }
 
   editMcsItem(_id) {
