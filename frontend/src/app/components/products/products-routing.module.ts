@@ -32,6 +32,20 @@ const productsRoutes: Routes = [
         component: BreadcrumbComponent,
         outlet: 'breadcrumb',
       },
+      // {
+      //   path: ':category_id',
+      //   children: [
+      //     {
+      //       path: '',
+      //       component: ProductsListComponent,
+      //     },
+      //     {
+      //       path: '',
+      //       component: BreadcrumbComponent,
+      //       outlet: 'breadcrumb',
+      //     },
+      //   ]
+      // },
       {
         path: ':category_id/details/:product_id',
         component: BreadcrumbComponent,
@@ -53,4 +67,4 @@ const productsRoutes: Routes = [
   exports: [RouterModule]
 })
 
-export class ProductsRoutingModule {}
+export class ProductsRoutingModule { }
