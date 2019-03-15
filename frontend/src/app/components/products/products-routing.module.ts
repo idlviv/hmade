@@ -14,8 +14,8 @@ const productsRoutes: Routes = [
         path: '',
         component: ProductsListComponent,
         // data: {
-        //   title: this.title,
-        //   metaDescription: this.metaDescription
+        //   dataTitle: 'title',
+        //   dataMeta: 'descr'
         // }
       },
       {

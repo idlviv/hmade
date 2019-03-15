@@ -194,7 +194,6 @@ var ProductsListComponent = /** @class */ (function () {
         // const $paramMap = this.route.paramMap;
         this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (param) {
             _this.category_id = param.get('category_id');
-            console.log('this.category_id', _this.category_id);
             if (!_this.category_id) {
                 // starting from root
                 return Object(rxjs__WEBPACK_IMPORTED_MODULE_2__["of"])(null);

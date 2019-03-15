@@ -66,7 +66,6 @@ export class ProductItemBriefComponent implements OnInit {
 
   onCatalogRouting(child) {
     if (child) {
-      console.log('child', child);
       this.router.navigate(['/products', 'ch',
         { outlets: { primary: [child._id], breadcrumb: [child._id] } }],
         {
