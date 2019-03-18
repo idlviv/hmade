@@ -1176,7 +1176,7 @@ h1, h2, h3, h4, h5, h6 {
   }
 }
 
-#mcs, #dashboard, #user, #about, #feedback, #privacy, #social, #page-404 {
+#mcs, #dashboard, #user, #about, #feedback, #privacy, #social, #page-404, #literature {
   @include gt-md {
     min-height: calc(100vh - 194px); // footer 64px + toolbar 130px
   }

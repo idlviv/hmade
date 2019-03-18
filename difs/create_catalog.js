@@ -15,20 +15,24 @@ db.getCollection('catalogs')
         _id: 'about', name: 'Про себе', ancestors: ['home', 'common'], parent: 'common',
         auth: 'casual', order: 1, assets: [''], description: '',
       },
+
       {
-        _id: 'products', name: 'Мої роботи', ancestors: ['home', 'common'], parent: 'common',
+        _id: 'products', name: 'Роботи', ancestors: ['home', 'common'], parent: 'common',
         auth: 'casual', order: 2, assets: [''], description: '',
+        seoTitle: 'HandMADE - мої роботи', seoMeta: 'Ручна робота',
       },
 
       {
         _id: 'toys', ancestors: ['home', 'common', 'products'], parent: 'products', order: 1,
         assets: ['category-toys'], prefix: 'toy',
         name: 'Іграшки', description: '',
+        seoTitle: 'HandMADE - Іграшки', seoMeta: 'Іграшки ручної роботи, тильди, м\'які іграшки, подарунки для дітей',
       },
       {
         _id: 'wreaths', ancestors: ['home', 'common', 'products'], parent: 'products', order: 2,
         assets: ['category-wreaths'], prefix: 'wrh',
         name: 'Віночки', description: '',
+        seoTitle: 'HandMADE - Віночки', seoMeta: 'Віночки ручної роботи, прикраси',
       },
       {
         _id: 'bouquets', ancestors: ['home', 'common', 'products'], parent: 'products', order: 3,
@@ -60,27 +64,31 @@ db.getCollection('catalogs')
         name: 'Інші букети', description: '',
         seoTitle: 'HandMADE - Екзотичні букети', seoMeta: 'Екзотичні букети та композиції на весілля, на ювілей, на день народження, подарунок',
       },
-
       {
         _id: 'decorative', ancestors: ['home', 'common', 'products'], parent: 'products', order: 4,
         assets: ['category-decorative'], prefix: 'dcr',
         name: 'Декор', description: '',
+        seoTitle: 'HandMADE - Декор', seoMeta: 'Декорації, прикраси, оформлення залів, весіль, декорування подарунків',
       },
       {
         _id: 'easterDecor', ancestors: ['home', 'common', 'products', 'decorative'], parent: 'decorative', order: 1,
         assets: ['category-easterDecor'], prefix: 'dce', name: 'Великодній декор', description: '',
+        seoTitle: 'HandMADE - Великодній декор', seoMeta: 'Великодні кошики, писанки, прикраси',
       },
       {
         _id: 'weddingDecor', ancestors: ['home', 'common', 'products', 'decorative'], parent: 'decorative', order: 2,
         assets: ['category-weddingDecor'], prefix: 'dcw', name: 'Весільний декор', description: '',
+        seoTitle: 'HandMADE - Весільний декор', seoMeta: 'Весільні атрибути, прикрашання, оформлення залів, подушечка для обручок, коробка для грошей, келихи, піньята, кошичок для цукерок',
       },
       {
         _id: 'fotoZones', ancestors: ['home', 'common', 'products', 'decorative'], parent: 'decorative', order: 3,
         assets: ['category-fotoZones'], prefix: 'dcf', name: 'Фотозони', description: '',
+        seoTitle: 'HandMADE - Фотозони', seoMeta: 'Оформлення фотозон, тематичні декорації, виставки, презентації, roadshow, покази',
       },
       {
         _id: 'presents', ancestors: ['home', 'common', 'products', 'decorative'], parent: 'decorative', order: 4,
         assets: ['category-presents'], prefix: 'dcp', name: 'Оформлення подарунків', description: '',
+        seoTitle: 'HandMADE - Оформлення подарунків', seoMeta: 'Оформлення, пакування подарунків',
       },
 
       // { _id: 'knitting', ancestors: ['home', 'common', 'products'], parent: 'products', order: 5,
@@ -104,23 +112,30 @@ db.getCollection('catalogs')
         _id: 'scrapbooking', ancestors: ['home', 'common', 'products'], parent: 'products', order: 6,
         assets: ['category-scrapbooking'], prefix: 'scr',
         name: 'Скрапбукінг', description: '',
+        seoTitle: 'HandMADE - Скрапбукінг', seoMeta: 'Скрапбукінг',
       },
       {
         _id: 'albums', ancestors: ['home', 'common', 'products', 'scrapbooking'], parent: 'scrapbooking', order: 1,
         assets: ['category-albums'], prefix: 'sca', name: 'Альбоми', description: '',
+        seoTitle: 'HandMADE - Альбоми', seoMeta: 'Ручна робота, фотоальбоми, весільні, шкільні альбоми, обкладинки, аьбоми для дитячих садків, для немовлят, для ювілеїв',
       },
       {
         _id: 'cards', ancestors: ['home', 'common', 'products', 'scrapbooking'], parent: 'scrapbooking', order: 2,
         assets: ['category-cards'], prefix: 'scc', name: 'Листівки', description: '',
+        seoTitle: 'HandMADE - Листівки', seoMeta: 'Ручна робота, весільні, листівки для немовлят, для ювілеїв',
       },
-
       {
         _id: 'mcs', name: 'Майстер-класи', ancestors: ['home', 'common'], parent: 'common', prefix: 'mcs',
         auth: 'casual', order: 3, prefix: 'to', assets: [''], description: '',
+        seoTitle: 'HandMADE - Майстер-класи', seoMeta: 'Ручна робота, майстер-класи, покроковий опис, як зробити, зробити своїми руками, зробити самому',
+      },
+      {
+        _id: 'literature', name: 'Вірші', ancestors: ['home', 'common'], parent: 'common', prefix: 'lit',
+        auth: 'casual', order: 4, prefix: 'li', assets: [''], description: '',
+        seoTitle: 'HandMADE - Літературна сторінка', seoMeta: 'Вірші',
       },
       // { _id: 'contacts', name: 'Контакти', ancestors: ['home', 'common'], parent: 'common',
       //   auth: 'casual', order: 4, assets: [''],description: ''},
-
       {
         _id: 'system', name: 'Система', ancestors: ['home'], parent: 'home',
         auth: 'guest', order: 2, assets: ['catalog'], description: '',

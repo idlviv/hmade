@@ -6,6 +6,7 @@ import { FeedbackComponent } from './components/shared/feedback/feedback.compone
 import { LandingComponent } from './components/shared/landing/landing.component';
 import { AboutComponent } from './components/shared/about/about.component';
 import { PrivacyComponent } from './components/shared/privacy/privacy.component';
+import { LiteratureComponent } from './components/shared/literature/literature.component';
 
 const appRoutes: Routes = [
   {
@@ -23,6 +24,10 @@ const appRoutes: Routes = [
   {
     path: 'about/ch',
     component: AboutComponent
+  },
+  {
+    path: 'literature/ch',
+    component: LiteratureComponent
   },
   {
     path: 'dashboard',

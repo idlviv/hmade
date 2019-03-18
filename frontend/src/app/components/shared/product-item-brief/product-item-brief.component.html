@@ -43,17 +43,17 @@
     <p class="mat-body-1" *ngIf="!child && product">{{product.description}}</p>
     <p *ngIf="product?.updatedAt" class="mat-caption">{{product.updatedAt | date:'dd MM yyyy'}}</p>
     <div fxLayout="row">
-      <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Edit" fxFlex="50"
+      <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Edit" fxFlex="50" color="accent"
         [routerLink]="['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]"
         [queryParams]="{seoTitle: product.seoTitle, seoMeta: product.seoMeta}"
         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
         Редагувати
       </a>
-      <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Delete" fxFlex="50"
+      <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Delete" fxFlex="50" color="accent"
         (click)="deleteProductItem(product._id, product.name)">
         Видалити
       </a>
-      <a *ngIf="child" mat-raised-button color="primary"
+      <a *ngIf="child" mat-raised-button color="accent"
         [routerLink]="['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]"
         [queryParams]="{seoTitle: child.seoTitle, seoMeta: child.seoMeta}"
         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">

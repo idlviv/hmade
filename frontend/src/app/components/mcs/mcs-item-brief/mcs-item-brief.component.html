@@ -46,14 +46,14 @@
         </p>
       </div>
       <div class="cell mc-buttons" fxFlex="100" fxLayoutAlign="space-around end">
-        <a mat-raised-button color="primary" aria-label="Open" [routerLink]="['/mcs','show', mc._id]"
+        <a mat-raised-button color="accent" aria-label="Open" [routerLink]="['/mcs','show', mc._id]"
           [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
-          Докладно
+          Відкрити
         </a>
-        <a *ngIf="allowTo('manager')" mat-raised-button color="primary" (click)="editMcsItem(mc._id)" aria-label="Edit">
+        <a *ngIf="allowTo('manager')" mat-raised-button color="accent" (click)="editMcsItem(mc._id)" aria-label="Edit">
           <mat-icon>edit</mat-icon>
         </a>
-        <a *ngIf="allowTo('manager')" mat-raised-button color="primary" (click)="deleteMcsItem(mc._id, mc.name)"
+        <a *ngIf="allowTo('manager')" mat-raised-button color="accent" (click)="deleteMcsItem(mc._id, mc.name)"
           aria-label="Delete">
           <mat-icon>delete</mat-icon>
         </a>
