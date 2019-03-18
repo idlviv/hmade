@@ -9,6 +9,7 @@ import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
 import { UserService } from './services/user.service';
 import { Title, Meta } from '@angular/platform-browser';
 import { config } from './app.config';
+import { forkJoin, combineLatest } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -29,9 +30,11 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
 
+    // login user
     this.userService.logging();
 
-    this.router.events.pipe(
+    // add seo (title and meta description)
+    const $routerEvents = this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),
       map(() => this.route),
       map((route) => {
@@ -40,16 +43,22 @@ export class AppComponent implements OnInit {
         }
         return route;
       }),
-      filter(route => route.outlet === 'primary'),
-      mergeMap(route => route.queryParamMap)
+      filter(route => route.outlet === 'primary'));
 
+      combineLatest(
+        $routerEvents.pipe(mergeMap((route) => route.queryParamMap)), // query params
+        $routerEvents.pipe(mergeMap((route) => route.data)) // routing.module data
       )
-      .subscribe((paramMap) => {
-        const seoTitle = paramMap.get('seoTitle') || config.seoTitle;
-        const seoMeta = paramMap.get('seoMeta') || config.seoMeta;
+      .subscribe((result) => {
+        const paramMap = result[0];
+        const data = result[1];
+
+        // prioryty: 1. embeded to router 2. passed as queryParams 3.default values
+        const seoTitle = data.dataTitle || paramMap.get('seoTitle') || config.seoTitle;
+        const seoMeta = data.dataMeta || paramMap.get('seoMeta') || config.seoMeta;
 
         console.log('title', seoTitle);
-        console.log('metaDescription', seoMeta);
+        console.log('seoTitle', seoMeta);
 
         this.titleService.setTitle(seoTitle);
         const tag = { name: 'description', content: seoMeta };

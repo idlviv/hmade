@@ -71,7 +71,6 @@ export class ProductsListComponent implements OnInit {
     this.route.paramMap.pipe(
       mergeMap(param => {
         this.category_id = param.get('category_id');
-        console.log('this.category_id', this.category_id);
         if (!this.category_id) {
           // starting from root
           return of(null);
