@@ -57,9 +57,6 @@ export class AppComponent implements OnInit {
         const seoTitle = data.dataTitle || paramMap.get('seoTitle') || config.seoTitle;
         const seoMeta = data.dataMeta || paramMap.get('seoMeta') || config.seoMeta;
 
-        console.log('title', seoTitle);
-        console.log('seoTitle', seoMeta);
-
         this.titleService.setTitle(seoTitle);
         const tag = { name: 'description', content: seoMeta };
         const attributeSelector = 'name="description"';

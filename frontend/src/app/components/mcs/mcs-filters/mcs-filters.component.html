@@ -3,18 +3,18 @@
   <div class="container mat-elevation-z2 animationAppear1s">
   <!-- <div class="mat-elevation-z4"> -->
    <div class="row" fxLayout="row">
-      <div class="cell" fxFlex.xs="56px" fxFlex="64px" fxLayoutAlign="center center">
+      <!-- <div class="cell-closeup" fxFlex.xs="56px" fxFlex="64px" fxLayoutAlign="center center">
 
           <button mat-icon-button (click)=resetFilters() aria-label="Clear filters">
             <mat-icon>clear</mat-icon>
           </button>
 
-      </div>
+      </div> -->
 
       <div class="cell" fxFlex="calc(100%-64px)">
       <div class="row" fxLayout="row">
         
-        <div class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25" fxLayoutAlign="center center">
+        <div class="cell-closeup" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25" fxLayoutAlign="center center">
           <mat-form-field>
             <mat-select formControlName="mcSort" placeholder="Відсортувати" (selectionChange)="onSelectMcSort($event.value)">
               <mat-option *ngFor="let mcSortOption of config.mcSortOptions" [value]="mcSortOption.value">
@@ -23,7 +23,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div formArrayName="parents" class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25"
+        <div formArrayName="parents" class="cell-closeup" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25"
             *ngFor="let categoryBlock of filterForm.get('parents')['controls']; let i = index" fxLayoutAlign="center center">
           <mat-form-field>
             <mat-select placeholder="Фільтр" formControlName="{{i}}"
@@ -34,7 +34,7 @@
             </mat-select>
           </mat-form-field>
         </div>
-        <div *ngIf="noMoreChildren === 'true' && allowTo('manager')" class="cell" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
+        <div *ngIf="noMoreChildren === 'true' && allowTo('manager')" class="cell-closeup" fxFlex.sm="50" fxFlex.md="33.3" fxFlex.gt-md="25">
           <div class="item text-align-center muted" fxFlex fxLayoutAlign="center center">
             <a mat-button (click)=addMcsItem(parent_id) aria-label="Add">
               <mat-icon>add</mat-icon> Додати майстерклас

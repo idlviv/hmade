@@ -142,7 +142,7 @@ color: $muted-strong
     margin: -8px;
   }
 }
-//gt-sm
+
 .cell {
   @include gt-md {
     padding: 12px;
@@ -156,6 +156,21 @@ color: $muted-strong
   @include xs {
     // padding: 8px 0;
     padding: 8px;
+  }
+}
+
+.cell-closeup {
+  @include gt-md {
+    padding: 3px;
+  }
+  @include md {
+    padding: 3px;
+  }
+  @include sm {
+    padding: 2px;
+  }
+  @include xs {
+    padding: 2px 0;
   }
 }
 
