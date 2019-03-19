@@ -90,12 +90,11 @@ export class CommentsListComponent implements OnInit {
   checkAllCommentsLoaded() {
     if (this.commentsTotalLength === this.comments.length) {
       this.processedUnreadedComments.emit(this.parent_id);
-      console.log('emit');
     }
   }
 
   deleteComment(event): void {
-    const comment = event.comment;
+    const comment = event;
     const confirmObject = <IConfirmPopupData>{
       message: `Дійсно видалити коментар: ${comment.comment} ?`,
       payload: { _id: comment._id }
