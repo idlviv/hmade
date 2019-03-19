@@ -98,6 +98,15 @@ app.use('*', function(req, res) {
   res.redirect('/');
 });
 
+// redirect www to non www
+app.use((req, res, next) => {
+  let host = req.get('Host');
+  if (host === 'www.hmade.work') {
+    return res.redirect(301, 'https://hmade.work/' + req.originalUrl);
+  }
+  return next();
+});
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   const err = new ApplicationError(404, 'Помилковий запит');
