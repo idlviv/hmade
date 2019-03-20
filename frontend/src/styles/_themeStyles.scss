@@ -1273,10 +1273,24 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 // styling a on hover event
-a.hover-button:hover {
-@include mat-elevation-transition;
-@include mat-elevation(4);
+a.hover-button {
+  margin: auto;
+  width: 75%;
+  &:hover {
+    @include mat-elevation-transition;
+    @include mat-elevation(8);
   }
+}
+
+.hover-transition {
+    @include transition (0.3s ease);
+  &:hover {
+    @include transform(translateX(1px) translateY(1px));
+    opacity: .9;
+  }
+} 
+
+
 
 #landing-right, #landing-left  {
   img {
@@ -1401,11 +1415,10 @@ a.hover-button:hover {
     background-color: mat-color($background, background) !important;
   }
   &:nth-child(even) {
-    background-color: mat-color($background, app-bar) !important;
+    background-color: mat-color($background, status-bar) !important;
   }
 }
 
-// effects for landing page products
 @include keyframes(fadeIn) {
 	from {
     opacity: 0;
@@ -1416,6 +1429,8 @@ a.hover-button:hover {
     // transform: translateY(0);
 	}
 }
+
+
 
 .animationAppear1s {
   @include animation(fadeIn 1s forwards);

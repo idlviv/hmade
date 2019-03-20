@@ -11,14 +11,14 @@
             <div class="cell" data-aos="fade-right" data-aos-offset="200" data-aos-easing="ease-in-sine"
               data-aos-duration="1500">
               <a [routerLink]="['/products', 'ch']">
-                <img class="responsive-image-stretch" src="{{
+                <img class="responsive-image-stretch hover-transition" src="{{
                             config.imgPath +
                             config.cloudinary.cloud_name +
                             '/c_fill,w_500,h_500,f_auto/' +
                             'products-logo'}}" alt="Вироби">
               </a>
             </div>
-            <a mat-raised-button color="accent" alt="Вироби" class="hover-button width-100"
+            <a mat-raised-button color="accent" alt="Вироби" class="hover-button"
               [routerLink]="['/products', 'ch']">Мої роботи</a>
           </div>
         </div>
@@ -54,7 +54,7 @@
             <div class="cell" data-aos="fade-left" data-aos-offset="200" data-aos-easing="ease-in-sine"
               data-aos-duration="1500">
               <a [routerLink]="['/mcs', 'ch']">
-                <img class="responsive-image-stretch" src="{{
+                <img class="responsive-image-stretch hover-transition" src="{{
                             config.imgPath +
                             config.cloudinary.cloud_name +
                             '/c_fill,w_500,h_500,f_auto/' +
@@ -74,7 +74,7 @@
       <div class="app-container-h app-container-v">
         <section *ngIf="products" class="row">
           <div class="cell" fxFlex="100">
-            <h2 class="mat-h2">Нові роботи</h2>
+            <h2 class="mat-h2 title">Нові роботи</h2>
             <!-- <h2  [@scrollAnimation]="state" class="mat-h2">Нові роботи</h2> -->
 
           </div>
