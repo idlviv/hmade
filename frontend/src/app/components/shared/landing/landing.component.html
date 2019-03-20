@@ -8,8 +8,8 @@
           fxLayoutAlign="center center">
           <div class="row" fxLayoutAlign="center center">
 
-            <div class="cell" data-aos="fade-right" data-aos-offset="50" data-aos-easing="ease-in-out"
-              data-aos-duration="1500">
+            <div class="cell" data-aos="fade-right" data-aos-offset="100" data-aos-easing="ease-in-out"
+              data-aos-duration="1000">
               <a [routerLink]="['/products', 'ch']">
                 <img class="responsive-image-stretch hover-transition" src="{{
                             config.imgPath +
@@ -47,8 +47,8 @@
         <div id="landing-right" class="container" fxFlexOrder.lt-md="3" fxFlex.xs="50" fxFlex.sm="50" fxFlex="35"
           fxLayoutAlign="center center">
           <div class="row" fxLayoutAlign="center center">
-            <div class="cell" data-aos="fade-left" data-aos-offset="50" data-aos-easing="ease-in-out"
-              data-aos-duration="1500">
+            <div class="cell" data-aos="fade-left" data-aos-offset="100" data-aos-easing="ease-in-out"
+              data-aos-duration="1000">
               <a [routerLink]="['/mcs', 'ch']">
                 <img class="responsive-image-stretch hover-transition" src="{{
                             config.imgPath +
@@ -71,7 +71,7 @@
           <h2 class="mat-h2 title">Нові роботи</h2>
         </div>
         <div *ngFor="let product of products; let i = index" class="cell" [attr.id]="'product' + i" data-aos="fade-down"
-          data-aos-offset="200" data-aos-easing="ease-in-out" data-aos-duration="800" fxFlex.xs="100" fxFlex.sm="50"
+          data-aos-offset="100" data-aos-easing="ease-in-out" data-aos-duration="800" fxFlex.xs="100" fxFlex.sm="50"
           fxFlex.md="33.3" fxFlex.gt-md="25">
           <app-product-item-brief [product]="product"></app-product-item-brief>
         </div>
