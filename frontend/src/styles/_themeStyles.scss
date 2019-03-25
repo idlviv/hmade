@@ -35,13 +35,6 @@ body {
 a, a:visited, a:hover, a:active {
   text-decoration: none;
   color: inherit;
-  // line-height: 1,5rem;
-//   font-size: mat-font-size($config, subheading-2);
-//   font-family: mat-font-family($config);
-//   font-weight: mat-font-weight($config, subheading-2);
-//   line-height: mat-line-height($config, subheading-2);
-//   color: mat-color($foreground, text);
-
   &.link span {
           &.type1 {
                   @include mat-typography-level-to-styles($config, subheading-2);
