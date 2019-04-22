@@ -119,16 +119,25 @@ $screen-xl-min: 1920px;
 @mixin animation($value) {
   animation: $value;
   -webkit-animation: $value;
+  -moz-animation: $value;
+  -ms-animation: $value;
 }
 
 @mixin keyframes($name) {
   @-webkit-keyframes #{$name} {
-    @content; 
+    @content;
+  }
+  @-moz-keyframes #{$name} {
+    @content;
+  }
+  @-ms-keyframes #{$name} {
+    @content;
   }
   @keyframes #{$name} {
     @content;
-  } 
+  }
 }
+
 
 @mixin after-child-element($num) {
   &:nth-child(n+#{$num+1}) {
@@ -162,17 +171,3 @@ $screen-xl-min: 1920px;
   }
 }
 
-@mixin keyframes($name) {
-  @-webkit-keyframes #{$name} {
-    @content;
-  }
-  @-moz-keyframes #{$name} {
-    @content;
-  }
-  @-ms-keyframes #{$name} {
-    @content;
-  }
-  @keyframes #{$name} {
-    @content;
-  }
-}
