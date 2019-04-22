@@ -27,8 +27,9 @@
             <div class="cell">
 
               <h1 class="mat-h1 title text-align-center">Вітаю в творчій майстерні HMADE!</h1>
-              <div class="avatar-big-block">
-                <img class="avatar-big" src="{{
+              <div class="avatar-big-block, opacity0" [ngClass]="{animationAppear05s: !avatarLoading}">
+                <img (load)="onAvatarLoaded()"
+                  class="avatar-big" src="{{
                                 config.imgPath +
                                 config.cloudinary.cloud_name +
                                 '/c_fill,w_180,h_180,f_auto/' +

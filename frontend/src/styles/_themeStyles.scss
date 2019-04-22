@@ -1425,6 +1425,9 @@ a.hover-button {
 }
 
 
+.animationAppear05s {
+  @include animation(fadeIn .5s forwards);
+}
 
 .animationAppear1s {
   @include animation(fadeIn 1s forwards);

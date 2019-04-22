@@ -48,6 +48,8 @@ export class LandingComponent implements OnInit {
   checkElemOnscreen: any;
   elemClassList: any;
 
+  avatarLoading = true;
+
   constructor(
     private catalogService: CatalogService,
     public media: ObservableMedia,
@@ -97,5 +99,9 @@ export class LandingComponent implements OnInit {
       this.state = 'hide';
     }
 
+  }
+
+  onAvatarLoaded() {
+    this.avatarLoading = false;
   }
 }

@@ -45,10 +45,10 @@
           {{mc.description}}
         </p>
       </div>
-      <div class="cell mc-buttons" fxFlex="100" fxLayoutAlign="space-around end">
-        <a mat-raised-button color="accent" aria-label="Open" [routerLink]="['/mcs','show', mc._id]"
+      <div class="cell mc-buttons" fxFlex="100" fxLayoutAlign="space-around center">
+        <a aria-label="Open" [routerLink]="['/mcs','show', mc._id]"
           [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
-          Відкрити
+          <span class="mat-h1 title">Докладно</span>
         </a>
         <a *ngIf="allowTo('manager')" mat-raised-button color="accent" (click)="editMcsItem(mc._id)" aria-label="Edit">
           <mat-icon>edit</mat-icon>
