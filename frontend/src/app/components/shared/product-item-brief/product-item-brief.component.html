@@ -53,11 +53,11 @@
         (click)="deleteProductItem(product._id, product.name)">
         Видалити
       </a>
-      <a *ngIf="child" mat-raised-button color="accent"
+      <a *ngIf="child" 
         [routerLink]="['/products', 'ch', {outlets: {primary: [child._id], breadcrumb: [child._id]}}]"
         [queryParams]="{seoTitle: child.seoTitle, seoMeta: child.seoMeta}"
         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
-        {{child.name}}
+        <span class="mat-h1 title">{{child.name}}</span>
       </a>
     </div>
 
