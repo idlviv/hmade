@@ -31,6 +31,7 @@ const setUserCookie = require('./server/middleware/cookie').setUserCookie;
 const ApplicationError = require('./server/errors/applicationError');
 const errorHandler = require('./server/errors/errorHandler');
 
+
 const app = express();
 
 app.use(compression());
@@ -69,7 +70,6 @@ app.use(csrfCookie);
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 
 app.use(setUserCookie);
 
