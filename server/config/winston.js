@@ -1,22 +1,60 @@
-const Winston = require('winston');
+const { createLogger, format, transports } = require('winston');
+const { combine, timestamp, label, printf, json, colorize, simple } = format;
+const { Console, File } = transports;
+util = require('util');
 
-let level = 'debug';
+function log(module) {
+  const path = module.filename;
 
-if (process.env.NODE_ENV !== 'development') {
-  level = 'error';
+  // custom format for console
+  const consoleFormat = printf(({ level, message, label }) => {
+    return `${level}: [${label}] ${util.format(message)}`;
+  });
+
+  // custom format for file output
+  const fileFormat = printf(({ level, message, label, timestamp }) => {
+    return `${level}: [${timestamp} - ${label}] ${util.format(message)}`;
+  });
+
+  const logger = createLogger({
+    level: 'debug',
+  });
+
+  const consoleLogger = new Console({
+    format: combine(
+      colorize(),
+      label({ label: path }),
+      json(),
+      consoleFormat,
+    ),
+  });
+  const fileLogger = new File({
+    filename: 'logger.log',
+    format: combine(
+      timestamp(),
+      json(),
+      label({ label: path }),
+      fileFormat
+    ),
+  });
+  const errorLogger = new File({
+    filename: 'error.log',
+    level: 'error',
+    format: combine(
+      timestamp(),
+      json(),
+      label({ label: path }),
+      fileFormat
+    ),
+  });
+
+  if (process.env.NODE_ENV !== 'production') {
+    logger.add(consoleLogger);
+  } else {
+    logger.add(errorLogger);
+    logger.add(fileLogger);
+  }
+  return logger;
 }
-
-let log = function(module) {
-  let transports = [
-    new Winston.transports.Console({
-      timestamp: false, // function() { return new Date().toString() }
-      colorize: true,
-      level: level,
-      label: module.filename,
-      prettyPrint: true,
-    }),
-  ];
-  return new Winston.Logger({transports});
-};
 
 module.exports = log;

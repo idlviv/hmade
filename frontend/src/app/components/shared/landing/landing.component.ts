@@ -6,6 +6,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { IProduct } from 'src/app/interfaces/product-interface';
 import { IMc } from 'src/app/interfaces/interface';
 import { McService } from 'src/app/services/mc.service';
+import { ChatService } from 'src/app/services/chat.service';
 import { trigger, state, style, animate, transition } from '@angular/animations';
 import * as aos from 'aos';
 
@@ -56,6 +57,7 @@ export class LandingComponent implements OnInit {
     private productService: ProductService,
     private mcService: McService,
     public el: ElementRef,
+    private chatService: ChatService,
   ) { }
 
   ngOnInit() {

@@ -30,6 +30,11 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ImagePopupComponent } from './components/shared/image-popup/image-popup.component';
 
 import { CookieService } from 'ngx-cookie-service';
+
+import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+
+const config: SocketIoConfig = { url: 'localhost:8081', options: {} };
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -46,6 +51,7 @@ import { CookieService } from 'ngx-cookie-service';
     RecaptchaFormsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     ReactiveFormsModule,
+    SocketIoModule.forRoot(config),
     // HttpClientXsrfModule.withOptions({
       // cookieName: '_csrf',
       // headerName: 'x-xsrf-token',

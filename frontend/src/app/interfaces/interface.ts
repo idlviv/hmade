@@ -1,3 +1,9 @@
+export interface IChatMessage {
+  message: string;
+  payload?: object;
+}
+
+
 export interface IConfirmPopupData {
   message?: string;
   payload?: object;

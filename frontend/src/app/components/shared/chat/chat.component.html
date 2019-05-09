@@ -1,0 +1,11 @@
+<p>
+  chat works!
+</p>
+<input type="text" [(ngModel)]="message">
+<ul>
+  <li *ngFor="let msg of msgs">
+    {{msg.message}}
+  </li>
+
+  <button (click)="onSendMessage()">Send</button>
+</ul>

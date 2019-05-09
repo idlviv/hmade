@@ -24,6 +24,8 @@ import { ImagePopupComponent } from './image-popup/image-popup.component';
 import { ScrollingDirective } from 'src/app/directives/scrolling.directive';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { LiteratureComponent } from './literature/literature.component';
+import { ChatComponent } from './chat/chat.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -33,6 +35,7 @@ import { LiteratureComponent } from './literature/literature.component';
     ReactiveFormsModule,
     RecaptchaModule,
     RecaptchaFormsModule,
+    FormsModule,
   ],
   declarations: [
     Page404Component,
@@ -54,6 +57,7 @@ import { LiteratureComponent } from './literature/literature.component';
     ScrollingDirective,
     PrivacyComponent,
     LiteratureComponent,
+    ChatComponent,
   ],
   exports: [
     Page404Component,

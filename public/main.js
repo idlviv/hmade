@@ -271,13 +271,27 @@ var AppComponent = /** @class */ (function () {
 /*!*******************************!*\
   !*** ./src/app/app.config.ts ***!
   \*******************************/
-/*! exports provided: config */
+/*! exports provided: Config, config */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Config", function() { return Config; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "config", function() { return config; });
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
+
+var Config = /** @class */ (function () {
+    function Config() {
+    }
+    Object.defineProperty(Config.prototype, "conf", {
+        get: function () {
+            return config;
+        },
+        enumerable: true,
+        configurable: true
+    });
+    return Config;
+}());
 
 var config = {
     host: _environments_environment__WEBPACK_IMPORTED_MODULE_0__["environment"].host,
@@ -547,6 +561,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
 /* harmony import */ var _components_shared_image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./components/shared/image-popup/image-popup.component */ "./src/app/components/shared/image-popup/image-popup.component.ts");
 /* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
+/* harmony import */ var ngx_socket_io__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-socket-io */ "./node_modules/ngx-socket-io/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -578,6 +593,8 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 // import { ScrollingDirective } from './directives/scrolling.directive';
 
 
+
+var config = { url: 'localhost:8081', options: {} };
 var AppModule = /** @class */ (function () {
     function AppModule() {
     }
@@ -597,6 +614,7 @@ var AppModule = /** @class */ (function () {
                 ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_6__["RecaptchaFormsModule"],
                 _angular_service_worker__WEBPACK_IMPORTED_MODULE_17__["ServiceWorkerModule"].register('/ngsw-worker.js', { enabled: _environments_environment__WEBPACK_IMPORTED_MODULE_18__["environment"].production }),
                 _angular_forms__WEBPACK_IMPORTED_MODULE_21__["ReactiveFormsModule"],
+                ngx_socket_io__WEBPACK_IMPORTED_MODULE_24__["SocketIoModule"].forRoot(config),
             ],
             providers: [
                 _services_validate_service__WEBPACK_IMPORTED_MODULE_10__["ValidateService"],
@@ -686,6 +704,86 @@ var AboutComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [])
     ], AboutComponent);
     return AboutComponent;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/shared/chat/chat.component.html":
+/*!************************************************************!*\
+  !*** ./src/app/components/shared/chat/chat.component.html ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = "<p>\n  chat works!\n</p>\n<input type=\"text\" [(ngModel)]=\"message\">\n<ul>\n  <li *ngFor=\"let msg of msgs\">\n    {{msg.message}}\n  </li>\n\n  <button (click)=\"onSendMessage()\">Send</button>\n</ul>\n"
+
+/***/ }),
+
+/***/ "./src/app/components/shared/chat/chat.component.scss":
+/*!************************************************************!*\
+  !*** ./src/app/components/shared/chat/chat.component.scss ***!
+  \************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+module.exports = ""
+
+/***/ }),
+
+/***/ "./src/app/components/shared/chat/chat.component.ts":
+/*!**********************************************************!*\
+  !*** ./src/app/components/shared/chat/chat.component.ts ***!
+  \**********************************************************/
+/*! exports provided: ChatComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChatComponent", function() { return ChatComponent; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var _services_chat_service__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../services/chat.service */ "./src/app/services/chat.service.ts");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ChatComponent = /** @class */ (function () {
+    function ChatComponent(chatService) {
+        this.chatService = chatService;
+        this.msgs = [];
+    }
+    ChatComponent.prototype.ngOnInit = function () {
+        var _this = this;
+        this.chatService.getMessage()
+            .subscribe(function (msg) {
+            _this.msgs.push(msg);
+        });
+    };
+    ChatComponent.prototype.onSendMessage = function () {
+        this.chatService.sendMessage({ message: this.message });
+        this.message = '';
+    };
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], ChatComponent.prototype, "message", void 0);
+    ChatComponent = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
+            selector: 'app-chat',
+            template: __webpack_require__(/*! ./chat.component.html */ "./src/app/components/shared/chat/chat.component.html"),
+            styles: [__webpack_require__(/*! ./chat.component.scss */ "./src/app/components/shared/chat/chat.component.scss")]
+        }),
+        __metadata("design:paramtypes", [_services_chat_service__WEBPACK_IMPORTED_MODULE_1__["ChatService"]])
+    ], ChatComponent);
+    return ChatComponent;
 }());
 
 
@@ -1344,7 +1442,7 @@ var FooterComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"app-container-h\">\r\n  <div class=\"container\">\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\">\r\n      <h1 class=\"mat-display-1\">Галерея</h1>\r\n      </div>\r\n    </div>\r\n\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\r\n        <mat-card>\r\n          <mat-card-subtitle>\r\n            <a mat-button [attr.aria-label]=\"product.name\"\r\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\r\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\r\n               [queryParams]=\"{name: product.name}\"\r\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n              {{product.name}}\r\n            </a>\r\n          </mat-card-subtitle>\r\n          <div class=\"row\" fxLayout=\"row\">\r\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\r\n\r\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\r\n                 fxLayout fxLayoutAlign=\"center center\"\r\n                 *ngFor=\"let productAsset of product.assets\">\r\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_590,h_295,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n\r\n\r\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\r\n                <mat-card-header fxLayoutAlign=\"center center\">\r\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\r\n                </mat-card-header>\r\n                <mat-card-content fxLayoutAlign=\"center center\">\r\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\r\n                       (click)=\"openDialog(productAsset, product.name)\"\r\n                       src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_350,h_175,f_auto/' +\r\n                      productAsset}}\"\r\n                       alt=\"design\">\r\n                </mat-card-content>\r\n              </mat-card>\r\n            </div>\r\n          </div>\r\n        </mat-card>\r\n      </div>\r\n    </div>\r\n\r\n\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"app-container-h\">\n  <div class=\"container\">\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\">\n      <h1 class=\"mat-display-1\">Галерея</h1>\n      </div>\n    </div>\n\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"100\" *ngFor=\"let product of productsWithGallery\">\n        <mat-card>\n          <mat-card-subtitle>\n            <a mat-button [attr.aria-label]=\"product.name\"\n               [routerLink]=\"['/products', 'ch', {outlets: {primary: [product.parent[0], 'details', product._id],\n                    breadcrumb: [product.parent[0], 'details', product._id]}}]\"\n               [queryParams]=\"{name: product.name}\"\n               [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\n              {{product.name}}\n            </a>\n          </mat-card-subtitle>\n          <div class=\"row\" fxLayout=\"row\">\n            <div fxFlex=\"100\" class=\"cell text-justify\" [innerHTML]=\"product.description\"></div>\n\n            <div fxFlex.xs=\"100\" fxFlex.sm=\"33\" fxFlex.gt-sm=\"25\" class=\"cell\"\n                 fxLayout fxLayoutAlign=\"center center\"\n                 *ngFor=\"let productAsset of product.assets\">\n              <mat-card *ngIf=\"media.isActive('xs')\" class=\"no-padding\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n\n                  <img *ngIf=\"productAsset\" class=\"responsive-image hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_590,h_295,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n\n\n              <mat-card *ngIf=\"media.isActive('gt-xs')\" class=\"no-padding\" fxFlex.gt-xs=\"100\">\n                <mat-card-header fxLayoutAlign=\"center center\">\n                  <!--<mat-card-subtitle class=\"design-image-title\">{{galleryItem}}</mat-card-subtitle>-->\n                </mat-card-header>\n                <mat-card-content fxLayoutAlign=\"center center\">\n                  <img *ngIf=\"productAsset\" class=\"responsive-image-stretch hover-cursor\"\n                       (click)=\"openDialog(productAsset, product.name)\"\n                       src=\"{{\n                      config.imgPath +\n                      config.cloudinary.cloud_name +\n                      '/c_fill,w_350,h_175,f_auto/' +\n                      productAsset}}\"\n                       alt=\"design\">\n                </mat-card-content>\n              </mat-card>\n            </div>\n          </div>\n        </mat-card>\n      </div>\n    </div>\n\n\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1442,7 +1540,7 @@ var GalleryComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<header class=\"app-container-h primary-background\" id=\"header\">\r\n\r\n  <div class=\"container\" fxHide.lt-md=\"true\">\r\n    <div class=\"row primary-background\">\r\n      <div class=\"cell\">\r\n        <a href=\"\">\r\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\r\n        </a>\r\n      </div>\r\n      <div fxFlex></div>\r\n    <div class=\"cell\">\r\n      <div class=\"row\" fxLayout=\"row\">\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\" aria-label=\"Ask\"\r\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n            <mat-icon>mail</mat-icon> Задати питання\r\n          </a>\r\n        </div>\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <a mat-button class=\"muted\" aria-label=\"Call\"\r\n             href=\"tel:+380985443968\">\r\n            <mat-icon>phone</mat-icon> 098 544 39 68\r\n          </a>\r\n        </div>\r\n      </div>\r\n    </div>\r\n\r\n    </div>\r\n  </div>\r\n</header>\r\n"
+module.exports = "<header class=\"app-container-h primary-background\" id=\"header\">\n\n  <div class=\"container\" fxHide.lt-md=\"true\">\n    <div class=\"row primary-background\">\n      <div class=\"cell\">\n        <a href=\"\">\n          <img src=\"./assets/images/hmade_logo_light.svg\" height=\"60px\">\n        </a>\n      </div>\n      <div fxFlex></div>\n    <div class=\"cell\">\n      <div class=\"row\" fxLayout=\"row\">\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button [routerLink]=\"['/feedback']\" class=\"muted\" aria-label=\"Ask\"\n             [routerLinkActive]=\"['accent']\" [routerLinkActiveOptions]=\"{exact: true}\">\n            <mat-icon>mail</mat-icon> Задати питання\n          </a>\n        </div>\n        <div class=\"cell\" fxFlex=\"100\">\n          <a mat-button class=\"muted\" aria-label=\"Call\"\n             href=\"tel:+380985443968\">\n            <mat-icon>phone</mat-icon> 098 544 39 68\n          </a>\n        </div>\n      </div>\n    </div>\n\n    </div>\n  </div>\n</header>\n"
 
 /***/ }),
 
@@ -1587,7 +1685,7 @@ var ImagePopupComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"landing\">\r\n  <div class=\"container arrange-background\">\r\n    <div class=\"app-container-h app-container-v\">\r\n\r\n      <section class=\"row landing-block\" fxLayout=\"row\">\r\n\r\n        <div id=\"landing-left\" class=\"container\" fxFlexOrder.lt-md=\"2\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\"\r\n          fxLayoutAlign=\"center center\">\r\n          <div class=\"row\" fxLayoutAlign=\"center center\">\r\n\r\n            <div class=\"cell\" data-aos=\"fade-right\" data-aos-offset=\"100\" data-aos-easing=\"ease-in-out\"\r\n              data-aos-duration=\"1000\">\r\n              <a [routerLink]=\"['/products', 'ch']\">\r\n                <img class=\"responsive-image-stretch hover-transition\" src=\"{{\r\n                            config.imgPath +\r\n                            config.cloudinary.cloud_name +\r\n                            '/c_fill,w_500,h_500,f_auto/' +\r\n                            'products-logo'}}\" alt=\"Вироби\">\r\n              </a>\r\n            </div>\r\n            <a mat-raised-button color=\"accent\" alt=\"Вироби\" class=\"hover-button\" fxHide=\"xs\"\r\n              [routerLink]=\"['/products', 'ch']\">Мої роботи</a>\r\n          </div>\r\n        </div>\r\n        <div class=\"container\" fxFlexOrder.lt-md=\"1\" fxFlex.lt-md=\"100\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n          <div class=\"row\">\r\n            <div class=\"cell\">\r\n\r\n              <h1 class=\"mat-h1 title text-align-center\">Вітаю в творчій майстерні HMADE!</h1>\r\n              <div class=\"avatar-big-block, opacity0\" [ngClass]=\"{animationAppear05s: !avatarLoading}\">\r\n                <img (load)=\"onAvatarLoaded()\"\r\n                  class=\"avatar-big\" src=\"{{\r\n                                config.imgPath +\r\n                                config.cloudinary.cloud_name +\r\n                                '/c_fill,w_180,h_180,f_auto/' +\r\n                                'my-photo180x180'}}\" alt=\"my photo\">\r\n              </div>\r\n              <p class=\"body-3 muted text-align-center\">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене\r\n                на нові цікаві витвори.\r\n                Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,\r\n                шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..\r\n                Ще багато можна писати про себе та мої захоплення, але згодом..\r\n                Завітайте у мою майстерню.</p>\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n        <div id=\"landing-right\" class=\"container\" fxFlexOrder.lt-md=\"3\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\"\r\n          fxLayoutAlign=\"center center\">\r\n          <div class=\"row\" fxLayoutAlign=\"center center\">\r\n            <div class=\"cell\" data-aos=\"fade-left\" data-aos-offset=\"100\" data-aos-easing=\"ease-in-out\"\r\n              data-aos-duration=\"1000\">\r\n              <a [routerLink]=\"['/mcs', 'ch']\">\r\n                <img class=\"responsive-image-stretch hover-transition\" src=\"{{\r\n                            config.imgPath +\r\n                            config.cloudinary.cloud_name +\r\n                            '/c_fill,w_500,h_500,f_auto/' +\r\n                            'mcs-logo'}}\" alt=\"Майстеркласи\">\r\n              </a>\r\n            </div>\r\n            <a mat-raised-button class=\"hover-button\" color=\"accent\" alt=\"Майстер-класи\" fxHide=\"xs\"\r\n              [routerLink]=\"['/mcs', 'ch']\">Майстер-класи</a>\r\n          </div>\r\n        </div>\r\n      </section>\r\n    </div>\r\n  </div>\r\n  <div class=\"container arrange-background\">\r\n    <div class=\"app-container-h app-container-v\">\r\n      <section *ngIf=\"products\" class=\"row\">\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <h2 class=\"mat-h2 title\">Нові роботи</h2>\r\n        </div>\r\n        <div *ngFor=\"let product of products; let i = index\" class=\"cell\" [attr.id]=\"'product' + i\" data-aos=\"fade-down\"\r\n          data-aos-offset=\"100\" data-aos-easing=\"ease-in-out\" data-aos-duration=\"800\" fxFlex.xs=\"100\" fxFlex.sm=\"50\"\r\n          fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n          <app-product-item-brief [product]=\"product\"></app-product-item-brief>\r\n        </div>\r\n      </section>\r\n    </div>\r\n  </div>\r\n</div>"
+module.exports = "<div id=\"landing\">\r\n  <div class=\"container arrange-background\">\r\n    <div class=\"app-container-h app-container-v\">\r\n      <app-chat></app-chat>\r\n      <section class=\"row landing-block\" fxLayout=\"row\">\r\n\r\n        <div id=\"landing-left\" class=\"container\" fxFlexOrder.lt-md=\"2\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\"\r\n          fxLayoutAlign=\"center center\">\r\n          <div class=\"row\" fxLayoutAlign=\"center center\">\r\n\r\n            <div class=\"cell\" data-aos=\"fade-right\" data-aos-offset=\"100\" data-aos-easing=\"ease-in-out\"\r\n              data-aos-duration=\"1000\">\r\n              <a [routerLink]=\"['/products', 'ch']\">\r\n                <img class=\"responsive-image-stretch hover-transition\" src=\"{{\r\n                            config.imgPath +\r\n                            config.cloudinary.cloud_name +\r\n                            '/c_fill,w_500,h_500,f_auto/' +\r\n                            'products-logo'}}\" alt=\"Вироби\">\r\n              </a>\r\n            </div>\r\n            <a mat-raised-button color=\"accent\" alt=\"Вироби\" class=\"hover-button\" fxHide=\"xs\"\r\n              [routerLink]=\"['/products', 'ch']\">Мої роботи</a>\r\n          </div>\r\n        </div>\r\n        <div class=\"container\" fxFlexOrder.lt-md=\"1\" fxFlex.lt-md=\"100\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n          <div class=\"row\">\r\n            <div class=\"cell\">\r\n\r\n              <h1 class=\"mat-h1 title text-align-center\">Вітаю в творчій майстерні HMADE!</h1>\r\n              <div class=\"avatar-big-block, opacity0\" [ngClass]=\"{animationAppear05s: !avatarLoading}\">\r\n                <img (load)=\"onAvatarLoaded()\"\r\n                  class=\"avatar-big\" src=\"{{\r\n                                config.imgPath +\r\n                                config.cloudinary.cloud_name +\r\n                                '/c_fill,w_180,h_180,f_auto/' +\r\n                                'my-photo180x180'}}\" alt=\"my photo\">\r\n              </div>\r\n              <p class=\"body-3 muted text-align-center\">Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене\r\n                на нові цікаві витвори.\r\n                Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка - в'яжемо теплі шарфики для іграшок,\r\n                шиємо та розмальовуємо кавові іграшки. Свято у школі - новий віночок..\r\n                Ще багато можна писати про себе та мої захоплення, але згодом..\r\n                Завітайте у мою майстерню.</p>\r\n            </div>\r\n          </div>\r\n        </div>\r\n\r\n        <div id=\"landing-right\" class=\"container\" fxFlexOrder.lt-md=\"3\" fxFlex.xs=\"50\" fxFlex.sm=\"50\" fxFlex=\"35\"\r\n          fxLayoutAlign=\"center center\">\r\n          <div class=\"row\" fxLayoutAlign=\"center center\">\r\n            <div class=\"cell\" data-aos=\"fade-left\" data-aos-offset=\"100\" data-aos-easing=\"ease-in-out\"\r\n              data-aos-duration=\"1000\">\r\n              <a [routerLink]=\"['/mcs', 'ch']\">\r\n                <img class=\"responsive-image-stretch hover-transition\" src=\"{{\r\n                            config.imgPath +\r\n                            config.cloudinary.cloud_name +\r\n                            '/c_fill,w_500,h_500,f_auto/' +\r\n                            'mcs-logo'}}\" alt=\"Майстеркласи\">\r\n              </a>\r\n            </div>\r\n            <a mat-raised-button class=\"hover-button\" color=\"accent\" alt=\"Майстер-класи\" fxHide=\"xs\"\r\n              [routerLink]=\"['/mcs', 'ch']\">Майстер-класи</a>\r\n          </div>\r\n        </div>\r\n      </section>\r\n    </div>\r\n  </div>\r\n  <div class=\"container arrange-background\">\r\n    <div class=\"app-container-h app-container-v\">\r\n      <section *ngIf=\"products\" class=\"row\">\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <h2 class=\"mat-h2 title\">Нові роботи</h2>\r\n        </div>\r\n        <div *ngFor=\"let product of products; let i = index\" class=\"cell\" [attr.id]=\"'product' + i\" data-aos=\"fade-down\"\r\n          data-aos-offset=\"100\" data-aos-easing=\"ease-in-out\" data-aos-duration=\"800\" fxFlex.xs=\"100\" fxFlex.sm=\"50\"\r\n          fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n          <app-product-item-brief [product]=\"product\"></app-product-item-brief>\r\n        </div>\r\n      </section>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -1618,9 +1716,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_flex_layout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/flex-layout */ "./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
 /* harmony import */ var src_app_services_product_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/product.service */ "./src/app/services/product.service.ts");
 /* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
-/* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/fesm5/animations.js");
-/* harmony import */ var aos__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! aos */ "./node_modules/aos/dist/aos.js");
-/* harmony import */ var aos__WEBPACK_IMPORTED_MODULE_7___default = /*#__PURE__*/__webpack_require__.n(aos__WEBPACK_IMPORTED_MODULE_7__);
+/* harmony import */ var src_app_services_chat_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/chat.service */ "./src/app/services/chat.service.ts");
+/* harmony import */ var _angular_animations__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/animations */ "./node_modules/@angular/animations/fesm5/animations.js");
+/* harmony import */ var aos__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! aos */ "./node_modules/aos/dist/aos.js");
+/* harmony import */ var aos__WEBPACK_IMPORTED_MODULE_8___default = /*#__PURE__*/__webpack_require__.n(aos__WEBPACK_IMPORTED_MODULE_8__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1638,13 +1737,15 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var LandingComponent = /** @class */ (function () {
-    function LandingComponent(catalogService, media, productService, mcService, el) {
+    function LandingComponent(catalogService, media, productService, mcService, el, chatService) {
         this.catalogService = catalogService;
         this.media = media;
         this.productService = productService;
         this.mcService = mcService;
         this.el = el;
+        this.chatService = chatService;
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"];
         this.products = [];
         this.limit = 6;
@@ -1655,7 +1756,7 @@ var LandingComponent = /** @class */ (function () {
     }
     LandingComponent.prototype.ngOnInit = function () {
         var _this = this;
-        aos__WEBPACK_IMPORTED_MODULE_7__["init"]();
+        aos__WEBPACK_IMPORTED_MODULE_8__["init"]();
         if (this.media.isActive('xs')) {
             this.limit = 9;
             this.portionOfProducts = 3;
@@ -1706,17 +1807,17 @@ var LandingComponent = /** @class */ (function () {
             template: __webpack_require__(/*! ./landing.component.html */ "./src/app/components/shared/landing/landing.component.html"),
             styles: [__webpack_require__(/*! ./landing.component.scss */ "./src/app/components/shared/landing/landing.component.scss")],
             animations: [
-                Object(_angular_animations__WEBPACK_IMPORTED_MODULE_6__["trigger"])('scrollAnimation', [
-                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_6__["state"])('show', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_6__["style"])({
+                Object(_angular_animations__WEBPACK_IMPORTED_MODULE_7__["trigger"])('scrollAnimation', [
+                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_7__["state"])('show', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_7__["style"])({
                         opacity: 1,
                         transform: 'translateX(0)'
                     })),
-                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_6__["state"])('hide', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_6__["style"])({
+                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_7__["state"])('hide', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_7__["style"])({
                         opacity: 0,
                         transform: 'translateX(-100%)'
                     })),
-                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_6__["transition"])('show => hide', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_6__["animate"])('700ms ease-out')),
-                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_6__["transition"])('hide => show', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_6__["animate"])('700ms ease-in'))
+                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_7__["transition"])('show => hide', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_7__["animate"])('700ms ease-out')),
+                    Object(_angular_animations__WEBPACK_IMPORTED_MODULE_7__["transition"])('hide => show', Object(_angular_animations__WEBPACK_IMPORTED_MODULE_7__["animate"])('700ms ease-in'))
                 ])
             ]
         }),
@@ -1724,7 +1825,8 @@ var LandingComponent = /** @class */ (function () {
             _angular_flex_layout__WEBPACK_IMPORTED_MODULE_3__["ObservableMedia"],
             src_app_services_product_service__WEBPACK_IMPORTED_MODULE_4__["ProductService"],
             src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_5__["McService"],
-            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"]])
+            _angular_core__WEBPACK_IMPORTED_MODULE_0__["ElementRef"],
+            src_app_services_chat_service__WEBPACK_IMPORTED_MODULE_6__["ChatService"]])
     ], LandingComponent);
     return LandingComponent;
 }());
@@ -1740,7 +1842,7 @@ var LandingComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div id=\"literature\">\r\n  <div class=\"container\">\r\n    <div class=\"app-container-h app-container-v\">\r\n      <div class=\"container\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <div class=\"cell\" fxFlex=\"100\">\r\n            <h1 class=\"mat-display-2 title\">Літературна сторінка</h1>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n"
+module.exports = "<div id=\"literature\">\n  <div class=\"container\">\n    <div class=\"app-container-h app-container-v\">\n      <div class=\"container\">\n        <div class=\"row\" fxLayout=\"row\">\n          <div class=\"cell\" fxFlex=\"100\">\n            <h1 class=\"mat-display-2 title\">Літературна сторінка</h1>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -1866,7 +1968,7 @@ var Page404Component = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<article id=\"privacy\">\n  <div class=\"container\">\n    <div class=\"app-container-h app-container-v\">\n      <div class=\"container\">\n        <div class=\"row\" fxLayout=\"row\">\n          <div class=\"cell\" fxFlex=\"100\">\n            <section>\n              <h2 class=\"mat-h2 title\">Політика конфіденційності</h2>\n              <p class=\"text-justify muted mat-body-1\">Цей документ описує політику конфіденційності сайту hmade.work\n                'Майстерня творчості'.</p>\n              <p class=\"text-justify muted mat-body-1\">Наш сайт може містити посилання на інші веб-ресурси. Ми не несемо\n                відповідальності за політику конфіденційності або зміст цих ресурсів. Стосовно будь-яких питаннь або\n                сумнів з приводу цієї політики, просимо зв’язатися з нами за адресою електронної пошти\n                <a class=\"bold\" href=\"mailto:privacy@hmade.work\">privacy@hmade.work</a>. Ця політика поширюється тільки на інформацію, зібрану на нашому сайті.</p>\n              <h3 class=\"mat-h3\">Інформація від користувачів (огляди, рейтинги, коментарі та інше)</h3>\n              <p class=\"text-justify muted mat-body-1\">Наш сайт надає можливість користувачам залишати коментарі,\n                приймати участь у обговореннях, впливати на рейтинги певного контенту сайту. Повідомляємо, що інформація\n                опублікована користувачем, а також логін, ім’я, прізвище або будь-яке зображення чи фотографія справжні\n                чи вигадані стають надбаннями громадськості та можуть бути використані в будь-яких засобах інформації.\n              </p>\n              <p class=\"text-justify muted mat-body-1\">Приймаючи участь у дискусії, користувач повинен усвідомлювати, що\n                його дії будуть публічними і будь-яка особиста інформація, надана ним, може бути прочитана, збережена чи\n                використана іншими користувачами або ресурсами, наприклад, для розсилки небажаних повідомлень. Ми не\n                несемо відповідальність за особисту інформацію, яку користувач публікує на сайті в тому числі у\n                коментарях, і користувач погоджується, що ця інформація буде вважатися такою, що була надана\n                користувачем.</p>\n              <p class=\"text-justify muted mat-body-1\">Ми залишаємо за собою право на видалення коментарів та\n                повідомлень користувача, а також на блокування облікового запису користувача без пояснення причин.</p>\n              <h3 class=\"mat-h3\">Обмеження відповідальності за достовірність отриманої інформації.</h3>\n              <p class=\"text-justify muted mat-body-1\">Ми не перевіряємо достовірність інформації отриманої від\n                користувачів.</p>\n              <p class=\"text-justify muted mat-body-1\">\n                Інформація, яка може бути оброблена в процесі взаємодії з користувачем:\n              </p>\n              <ul>\n                <li class=\"text-justify muted mat-body-1\">Основна інформація профілю користувача, отримана під час його\n                  реєстрації на\n                  сайті або передана під час автентифікації сервісами Google чи Facebook, зокрема ім’я, прізвище,\n                  електронна адреса та зображення профілю.</li>\n                <li class=\"text-justify muted mat-body-1\">Певна інформація з облікового запису Google або Facebook після\n                  отримання\n                  згоди на її перегляд від користувача.</li>\n                <li class=\"text-justify muted mat-body-1\">Інформація про відвідування, що зберігається у файлах cookie,\n                  та дозволяє\n                  ідентифікувати користувача. Також деяка не приватна інформація, на зразок IP-адреси, типу браузера\n                  тощо\n                </li>\n                <li class=\"text-justify muted mat-body-1\">Користувацькі повідомлення, такі як коментарі або повідомлення\n                  в формі\n                  зворотнього зв’язку, що можуть бути збережені та оброблені. Для зв'язку з користувачем може\n                  використовуватися адреса електронної пошти надана ним.</li>\n              </ul>\n              <p class=\"text-justify muted mat-body-1\">Більшість браузерів спочатку налаштовані на отримання файлів\n                cookie, однак ви можете вимкнути ці налаштування і вказати, щоб браузер блокував всі файли cookie або\n                сповіщав про відправку цих файлів. Просимо врахувати, що деякі функції сайту не зможуть працювати\n                належним чином, якщо відключити файли cookie. </p>\n              <h3 class=\"mat-h3\">Надання доступу до інформації</h3>\n              <p class=\"text-justify muted mat-body-1\">Ми надаємо доступ до особистої інформації іншим компаніям і\n                приватним особам, лише за таких обмежених обставин:</p>\n              <ul>\n                <li class=\"text-justify muted mat-body-1\">Має місце наявність дозволу Користувача. Для передачі\n                  будь-якої конфіденційної інформації потрібна явна згода Користувача.</li>\n                <li class=\"text-justify muted mat-body-1\">\n                  У нас є підстави вважати, що доступ, використання, збереження або розкриття такої інформації необхідне\n                  для:\n                  <ul>\n                    <li class=\"text-justify muted mat-body-1\">Дотримання будь-яких чинних законів, постанов, або\n                      дійсного запиту з державних органів</li>\n                    <li class=\"text-justify muted mat-body-1\">Розслідування потенційних порушень</li>\n                    <li class=\"text-justify muted mat-body-1\">При виявленні і запобіганні шахрайським діям, а також\n                      вирішенні проблем безпеки та усунення технічних неполадок</li>\n                  </ul>\n                </li>\n              </ul>\n              <h3 class=\"mat-h3\">Захист інформації</h3>\n              <p class=\"text-justify muted mat-body-1\">Ми вживаємо всіх необхідних заходів для захисту даних від\n                несанкціонованого доступу, зміни, розкриття чи знищення. До цих заходів належать, зокрема, внутрішня\n                перевірка процесів збору, зберігання та обробки даних і заходів безпеки, включаючи відповідне шифрування\n                і заходи щодо забезпечення фізичної безпеки даних для запобігання неавторизованого доступу до систем, в\n                яких ми зберігаємо особисті дані.</p>\n              <h3 class=\"mat-h3\">Зміна даної політики конфіденційності</h3>\n              <p class=\"text-justify muted mat-body-1\">Користувач, використовуючи цей сайт, прийняв умови цієї політики\n                конфіденційності і приймає, що дана політика конфіденційності може час від часу змінюватися. Зміни, що\n                вносяться до політики конфіденційності, публікуються на цій сторінці.</p>\n            </section>\n\n            <section>\n              <h2 class=\"mat-h2 title\">Умови використання</h2>\n              <p class=\"text-justify muted mat-body-1\">Уважно прочитайте ці умови, використання сайту означає згоду з\n                цими умовами.</p>\n\n              <h3 class=\"mat-h3\">Використання сайту</h3>\n              <p class=\"text-justify muted mat-body-1\">Ми дозволяємо Вам переглядати матеріали цього сайту та\n                використовувати їх тільки для особистого некомерційного використання. Будь-яке копіювання чи відтворення\n                матеріалів можливе лише за згодою автора, з вказанням посилання на цей сайт та за умови збереження Вами\n                всієї інформації про авторське право.</p>\n\n              <h3 class=\"mat-h3\">Відмова від відповідальності</h3>\n              <p class=\"text-justify muted mat-body-1\">Матеріали та послуги цього сайту надаються без жодних гарантій.\n                Ми не гарантуємо точності та повноти матеріалів, що надаються на цьому cайті. Ми в будь-який час без\n                повідомлення можемо вносити зміни в матеріали та послуги, що надаються на цьому cайті. Ми за жодних\n                обставин не несемо відповідальності за будь-які збитки (включно з, але не обмежуючись збитком від втрати\n                прибутку, даних або від переривання ділової активності), що виникли внаслідок використання, неможливості\n                використання або результатів використання цього сайту.</p>\n\n              <h3 class=\"mat-h3\">Реєстрація на сайті</h3>\n              <p class=\"text-justify muted mat-body-1\">Реєструючись на cайті, ви погоджуєтеся надати достовірну та точну\n                інформацію про себе і свої контактні дані.</p>\n              <p class=\"text-justify muted mat-body-1\">У результаті реєстрації ви отримуєте логін і пароль, за безпеку\n                яких ви несете відповідальність. Ви також несете відповідальність за всі дії під вашим логіном і паролем\n                на cайті. У разі втрати реєстраційних даних ви зобов'язуєтеся повідомити нас про це.</p>\n\n              <h3 class=\"mat-h3\">Зворотний зв'язок і коментарі</h3>\n              <p class=\"text-justify muted mat-body-1\">Звертаючись до нас або залишаючи коментарі на сайті, Ви несете\n                відповідальність, що це повідомлення не є незаконним, шкідливим, загрозливим, наклепницьким, суперечить\n                моральним нормам, порушує авторські права, пропагує ненависть і/або дискримінацію людей за расовою,\n                етнічною, статевою, релігійною, соціальною ознаками, містить образи на адресу конкретних осіб або\n                організацій, а також будь-яким іншим чином порушує чинне законодавство України. Ми залишаємо за собою\n                право на видалення Ваших коментарів та повідомлень, а також на блокування Вашого облікового запису без\n                пояснення причин.</p>\n            </section>\n          </div>\n        </div>\n      </div>\n    </div>\n  </div>\n\n</article>"
+module.exports = "<article id=\"privacy\">\r\n  <div class=\"container\">\r\n    <div class=\"app-container-h app-container-v\">\r\n      <div class=\"container\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <div class=\"cell\" fxFlex=\"100\">\r\n            <section>\r\n              <h2 class=\"mat-h2 title\">Політика конфіденційності</h2>\r\n              <p class=\"text-justify muted mat-body-1\">Цей документ описує політику конфіденційності сайту hmade.work\r\n                'Майстерня творчості'.</p>\r\n              <p class=\"text-justify muted mat-body-1\">Наш сайт може містити посилання на інші веб-ресурси. Ми не несемо\r\n                відповідальності за політику конфіденційності або зміст цих ресурсів. Стосовно будь-яких питаннь або\r\n                сумнів з приводу цієї політики, просимо зв’язатися з нами за адресою електронної пошти\r\n                <a class=\"bold\" href=\"mailto:privacy@hmade.work\">privacy@hmade.work</a>. Ця політика поширюється тільки на інформацію, зібрану на нашому сайті.</p>\r\n              <h3 class=\"mat-h3\">Інформація від користувачів (огляди, рейтинги, коментарі та інше)</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Наш сайт надає можливість користувачам залишати коментарі,\r\n                приймати участь у обговореннях, впливати на рейтинги певного контенту сайту. Повідомляємо, що інформація\r\n                опублікована користувачем, а також логін, ім’я, прізвище або будь-яке зображення чи фотографія справжні\r\n                чи вигадані стають надбаннями громадськості та можуть бути використані в будь-яких засобах інформації.\r\n              </p>\r\n              <p class=\"text-justify muted mat-body-1\">Приймаючи участь у дискусії, користувач повинен усвідомлювати, що\r\n                його дії будуть публічними і будь-яка особиста інформація, надана ним, може бути прочитана, збережена чи\r\n                використана іншими користувачами або ресурсами, наприклад, для розсилки небажаних повідомлень. Ми не\r\n                несемо відповідальність за особисту інформацію, яку користувач публікує на сайті в тому числі у\r\n                коментарях, і користувач погоджується, що ця інформація буде вважатися такою, що була надана\r\n                користувачем.</p>\r\n              <p class=\"text-justify muted mat-body-1\">Ми залишаємо за собою право на видалення коментарів та\r\n                повідомлень користувача, а також на блокування облікового запису користувача без пояснення причин.</p>\r\n              <h3 class=\"mat-h3\">Обмеження відповідальності за достовірність отриманої інформації.</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Ми не перевіряємо достовірність інформації отриманої від\r\n                користувачів.</p>\r\n              <p class=\"text-justify muted mat-body-1\">\r\n                Інформація, яка може бути оброблена в процесі взаємодії з користувачем:\r\n              </p>\r\n              <ul>\r\n                <li class=\"text-justify muted mat-body-1\">Основна інформація профілю користувача, отримана під час його\r\n                  реєстрації на\r\n                  сайті або передана під час автентифікації сервісами Google чи Facebook, зокрема ім’я, прізвище,\r\n                  електронна адреса та зображення профілю.</li>\r\n                <li class=\"text-justify muted mat-body-1\">Певна інформація з облікового запису Google або Facebook після\r\n                  отримання\r\n                  згоди на її перегляд від користувача.</li>\r\n                <li class=\"text-justify muted mat-body-1\">Інформація про відвідування, що зберігається у файлах cookie,\r\n                  та дозволяє\r\n                  ідентифікувати користувача. Також деяка не приватна інформація, на зразок IP-адреси, типу браузера\r\n                  тощо\r\n                </li>\r\n                <li class=\"text-justify muted mat-body-1\">Користувацькі повідомлення, такі як коментарі або повідомлення\r\n                  в формі\r\n                  зворотнього зв’язку, що можуть бути збережені та оброблені. Для зв'язку з користувачем може\r\n                  використовуватися адреса електронної пошти надана ним.</li>\r\n              </ul>\r\n              <p class=\"text-justify muted mat-body-1\">Більшість браузерів спочатку налаштовані на отримання файлів\r\n                cookie, однак ви можете вимкнути ці налаштування і вказати, щоб браузер блокував всі файли cookie або\r\n                сповіщав про відправку цих файлів. Просимо врахувати, що деякі функції сайту не зможуть працювати\r\n                належним чином, якщо відключити файли cookie. </p>\r\n              <h3 class=\"mat-h3\">Надання доступу до інформації</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Ми надаємо доступ до особистої інформації іншим компаніям і\r\n                приватним особам, лише за таких обмежених обставин:</p>\r\n              <ul>\r\n                <li class=\"text-justify muted mat-body-1\">Має місце наявність дозволу Користувача. Для передачі\r\n                  будь-якої конфіденційної інформації потрібна явна згода Користувача.</li>\r\n                <li class=\"text-justify muted mat-body-1\">\r\n                  У нас є підстави вважати, що доступ, використання, збереження або розкриття такої інформації необхідне\r\n                  для:\r\n                  <ul>\r\n                    <li class=\"text-justify muted mat-body-1\">Дотримання будь-яких чинних законів, постанов, або\r\n                      дійсного запиту з державних органів</li>\r\n                    <li class=\"text-justify muted mat-body-1\">Розслідування потенційних порушень</li>\r\n                    <li class=\"text-justify muted mat-body-1\">При виявленні і запобіганні шахрайським діям, а також\r\n                      вирішенні проблем безпеки та усунення технічних неполадок</li>\r\n                  </ul>\r\n                </li>\r\n              </ul>\r\n              <h3 class=\"mat-h3\">Захист інформації</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Ми вживаємо всіх необхідних заходів для захисту даних від\r\n                несанкціонованого доступу, зміни, розкриття чи знищення. До цих заходів належать, зокрема, внутрішня\r\n                перевірка процесів збору, зберігання та обробки даних і заходів безпеки, включаючи відповідне шифрування\r\n                і заходи щодо забезпечення фізичної безпеки даних для запобігання неавторизованого доступу до систем, в\r\n                яких ми зберігаємо особисті дані.</p>\r\n              <h3 class=\"mat-h3\">Зміна даної політики конфіденційності</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Користувач, використовуючи цей сайт, прийняв умови цієї політики\r\n                конфіденційності і приймає, що дана політика конфіденційності може час від часу змінюватися. Зміни, що\r\n                вносяться до політики конфіденційності, публікуються на цій сторінці.</p>\r\n            </section>\r\n\r\n            <section>\r\n              <h2 class=\"mat-h2 title\">Умови використання</h2>\r\n              <p class=\"text-justify muted mat-body-1\">Уважно прочитайте ці умови, використання сайту означає згоду з\r\n                цими умовами.</p>\r\n\r\n              <h3 class=\"mat-h3\">Використання сайту</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Ми дозволяємо Вам переглядати матеріали цього сайту та\r\n                використовувати їх тільки для особистого некомерційного використання. Будь-яке копіювання чи відтворення\r\n                матеріалів можливе лише за згодою автора, з вказанням посилання на цей сайт та за умови збереження Вами\r\n                всієї інформації про авторське право.</p>\r\n\r\n              <h3 class=\"mat-h3\">Відмова від відповідальності</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Матеріали та послуги цього сайту надаються без жодних гарантій.\r\n                Ми не гарантуємо точності та повноти матеріалів, що надаються на цьому cайті. Ми в будь-який час без\r\n                повідомлення можемо вносити зміни в матеріали та послуги, що надаються на цьому cайті. Ми за жодних\r\n                обставин не несемо відповідальності за будь-які збитки (включно з, але не обмежуючись збитком від втрати\r\n                прибутку, даних або від переривання ділової активності), що виникли внаслідок використання, неможливості\r\n                використання або результатів використання цього сайту.</p>\r\n\r\n              <h3 class=\"mat-h3\">Реєстрація на сайті</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Реєструючись на cайті, ви погоджуєтеся надати достовірну та точну\r\n                інформацію про себе і свої контактні дані.</p>\r\n              <p class=\"text-justify muted mat-body-1\">У результаті реєстрації ви отримуєте логін і пароль, за безпеку\r\n                яких ви несете відповідальність. Ви також несете відповідальність за всі дії під вашим логіном і паролем\r\n                на cайті. У разі втрати реєстраційних даних ви зобов'язуєтеся повідомити нас про це.</p>\r\n\r\n              <h3 class=\"mat-h3\">Зворотний зв'язок і коментарі</h3>\r\n              <p class=\"text-justify muted mat-body-1\">Звертаючись до нас або залишаючи коментарі на сайті, Ви несете\r\n                відповідальність, що це повідомлення не є незаконним, шкідливим, загрозливим, наклепницьким, суперечить\r\n                моральним нормам, порушує авторські права, пропагує ненависть і/або дискримінацію людей за расовою,\r\n                етнічною, статевою, релігійною, соціальною ознаками, містить образи на адресу конкретних осіб або\r\n                організацій, а також будь-яким іншим чином порушує чинне законодавство України. Ми залишаємо за собою\r\n                право на видалення Ваших коментарів та повідомлень, а також на блокування Вашого облікового запису без\r\n                пояснення причин.</p>\r\n            </section>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </div>\r\n\r\n</article>"
 
 /***/ }),
 
@@ -2225,7 +2327,7 @@ var ProductItemDetailComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n    <div class=\"item\" fxFlex=\"92px\" fxLayoutAlign=\"center center\">\n      <img class=\"responsive-image-stretch\" src=\"{{\n          config.imgPath +\n          config.cloudinary.cloud_name +\n          '/c_fill,w_80,h_60,f_auto/' +\n          product.menuImage}}\"\n         alt=\"Image\">\n    </div>\n    <div class=\"item\" fxFlex=\"100%-92px\">\n      <p class=\"body-1 muted\">{{product.name}}</p>\n      <p class=\"caption text-justify\">{{product.description}}</p>\n    </div>\n  </div>\n</div>\n       "
+module.exports = "<div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n    <div class=\"item\" fxFlex=\"92px\" fxLayoutAlign=\"center center\">\r\n      <img class=\"responsive-image-stretch\" src=\"{{\r\n          config.imgPath +\r\n          config.cloudinary.cloud_name +\r\n          '/c_fill,w_80,h_60,f_auto/' +\r\n          product.menuImage}}\"\r\n         alt=\"Image\">\r\n    </div>\r\n    <div class=\"item\" fxFlex=\"100%-92px\">\r\n      <p class=\"body-1 muted\">{{product.name}}</p>\r\n      <p class=\"caption text-justify\">{{product.description}}</p>\r\n    </div>\r\n  </div>\r\n</div>\r\n       "
 
 /***/ }),
 
@@ -2295,7 +2397,7 @@ var ProductItemFeedComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div>\r\n    <div class=\"cell\">\r\n      <p class=\"muted\">height {{height}}</p>\r\n      <p class=\"muted\"> width {{width}}</p>\r\n  \r\n    </div>\r\n  <div class=\"w393\">393</div>\r\n  <div class=\"w360\">360</div>\r\n  <div class=\"w350\">350</div>\r\n  <div class=\"w100\">100</div>\r\n  <div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\r\n  <div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\r\n"
+module.exports = "<div>\n    <div class=\"cell\">\n      <p class=\"muted\">height {{height}}</p>\n      <p class=\"muted\"> width {{width}}</p>\n  \n    </div>\n  <div class=\"w393\">393</div>\n  <div class=\"w360\">360</div>\n  <div class=\"w350\">350</div>\n  <div class=\"w100\">100</div>\n  <div><img src=\"./assets/images/sample300x300.jpg\" alt=\"300\"></div>\n  <div><img src=\"./assets/images/sample350x350.jpg\" alt=\"300\"></div>\n"
 
 /***/ }),
 
@@ -2393,12 +2495,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_directives_scrolling_directive__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! src/app/directives/scrolling.directive */ "./src/app/directives/scrolling.directive.ts");
 /* harmony import */ var _privacy_privacy_component__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./privacy/privacy.component */ "./src/app/components/shared/privacy/privacy.component.ts");
 /* harmony import */ var _literature_literature_component__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./literature/literature.component */ "./src/app/components/shared/literature/literature.component.ts");
+/* harmony import */ var _chat_chat_component__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./chat/chat.component */ "./src/app/components/shared/chat/chat.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
+
 
 
 
@@ -2437,6 +2542,7 @@ var SharedModule = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ReactiveFormsModule"],
                 ng_recaptcha__WEBPACK_IMPORTED_MODULE_12__["RecaptchaModule"],
                 ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_13__["RecaptchaFormsModule"],
+                _angular_forms__WEBPACK_IMPORTED_MODULE_11__["FormsModule"],
             ],
             declarations: [
                 _page_404_page_404_component__WEBPACK_IMPORTED_MODULE_2__["Page404Component"],
@@ -2458,6 +2564,7 @@ var SharedModule = /** @class */ (function () {
                 src_app_directives_scrolling_directive__WEBPACK_IMPORTED_MODULE_23__["ScrollingDirective"],
                 _privacy_privacy_component__WEBPACK_IMPORTED_MODULE_24__["PrivacyComponent"],
                 _literature_literature_component__WEBPACK_IMPORTED_MODULE_25__["LiteratureComponent"],
+                _chat_chat_component__WEBPACK_IMPORTED_MODULE_26__["ChatComponent"],
             ],
             exports: [
                 _page_404_page_404_component__WEBPACK_IMPORTED_MODULE_2__["Page404Component"],
@@ -2889,6 +2996,60 @@ var CatalogService = /** @class */ (function () {
         __metadata("design:paramtypes", [_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]])
     ], CatalogService);
     return CatalogService;
+}());
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/chat.service.ts":
+/*!******************************************!*\
+  !*** ./src/app/services/chat.service.ts ***!
+  \******************************************/
+/*! exports provided: ChatService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChatService", function() { return ChatService; });
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
+/* harmony import */ var ngx_socket_io__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-socket-io */ "./node_modules/ngx-socket-io/index.js");
+var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (undefined && undefined.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+var ChatService = /** @class */ (function () {
+    function ChatService(socket) {
+        this.socket = socket;
+    }
+    ChatService.prototype.sendMessage = function (msg) {
+        console.log('msg', msg);
+        this.socket.emit('messageToServer', msg);
+    };
+    ChatService.prototype.getMessage = function () {
+        return this.socket
+            .fromEvent('messageFromServer');
+        // .pipe(
+        //   map(data => {
+        //     console.log(data);
+        //     return data;
+        //   })
+        // );
+    };
+    ChatService = __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
+            providedIn: 'root'
+        }),
+        __metadata("design:paramtypes", [ngx_socket_io__WEBPACK_IMPORTED_MODULE_1__["Socket"]])
+    ], ChatService);
+    return ChatService;
 }());
 
 
@@ -4267,7 +4428,7 @@ __webpack_require__.r(__webpack_exports__);
 var environment = {
     production: false,
     cloud_name: 'hd1oejweg',
-    host: 'http://localhost:8081'
+    host: 'http://localhost:8081',
 };
 /*
  * In development mode, to ignore zone related error stack frames such as
@@ -4316,6 +4477,17 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformB
 
 module.exports = __webpack_require__(/*! C:\it\vs\hmade\frontend\src\main.ts */"./src/main.ts");
 
+
+/***/ }),
+
+/***/ 3:
+/*!********************!*\
+  !*** ws (ignored) ***!
+  \********************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+/* (ignored) */
 
 /***/ })
 

@@ -18,10 +18,7 @@ const log = require('./server/config/winston')(module);
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const mongoose = require('./server/config/mongoose');
-
 const session = require('express-session');
-const MongoStore = require('connect-mongo')(session);
 
 const index = require('./server/routes');
 const routes = require('./server/routes/routes');
@@ -47,20 +44,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
-app.use(session({
-  key: 'hmade.sid',
-  secret: config.get('SESSION_SECRET'),
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
-    path: '/',
-    httpOnly: true, // not reachable for js (XSS)
-    // secure: config.get('NODE_ENV') === 'production',
-    sameSite: 'Strict',
-    maxAge: null, // never expires, but will be deleted after closing browser
-  },
-  store: new MongoStore({mongooseConnection: mongoose.connection}),
-}));
+app.use(require('./server/controllers/chatController'));
 
 
 // check cookie, add req.csrfToken(),
