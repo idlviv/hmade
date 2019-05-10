@@ -11,19 +11,19 @@ export class ChatService {
   constructor(private socket: Socket) { }
 
   sendMessage(msg: IChatMessage) {
-    console.log('msg', msg);
+    console.log('msg to server', msg);
     this.socket.emit('messageToServer', msg);
   }
 
   getMessage(): Observable<IChatMessage> {
     return this.socket
-      .fromEvent<IChatMessage>('messageFromServer');
+      .fromEvent<IChatMessage>('messageFromServer')
 
-      // .pipe(
-      //   map(data => {
-      //     console.log(data);
-      //     return data;
-      //   })
-      // );
+      .pipe(
+        map(data => {
+          console.log('msg from server', data);
+          return data;
+        })
+      );
   }
 }

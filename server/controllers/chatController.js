@@ -5,6 +5,6 @@ module.exports = function(socket) {
   // socket.emit('messageFromServer', {message: 'world'});
   socket.on('messageToServer', (data) => {
     data.message = 'server response: ' + data.message;
-    socket.broadcast.emit('messageFromServer', data);
+    socket.emit('messageFromServer', data);
   });
 };

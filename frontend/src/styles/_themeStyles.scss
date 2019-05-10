@@ -1462,3 +1462,20 @@ a.hover-button {
   background-color: rgba(45, 95, 130, 0.3);
 }
 
+.chat {
+  background-color: rgba(mat-color($background, background), 0.8);
+  z-index: 5;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+  width: 200px;
+  height: 40%;
+  border-radius: 16px 8px 8px 16px;
+  border: 2px solid mat-color($background, status-bar) !important;
+  padding: 8px;
+
+  &__send-control {
+    position: absolute;
+    bottom: 8px;
+  }
+}

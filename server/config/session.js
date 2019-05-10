@@ -1,7 +1,8 @@
 const log = require('../config/winston')(module);
+const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const config = require('./server/config');
-const mongoose = require('./server/config/mongoose');
+const config = require('./');
+const mongoose = require('./mongoose');
 
 module.exports = session({
   key: 'hmade.sid',

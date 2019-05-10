@@ -18,16 +18,12 @@ const log = require('./server/config/winston')(module);
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const session = require('express-session');
-
 const index = require('./server/routes');
 const routes = require('./server/routes/routes');
-const config = require('./server/config');
 const setUserCookie = require('./server/middleware/cookie').setUserCookie;
 
 const ApplicationError = require('./server/errors/applicationError');
 const errorHandler = require('./server/errors/errorHandler');
-
 
 const app = express();
 
@@ -44,8 +40,8 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
-app.use(require('./server/controllers/chatController'));
-
+// config session
+app.use(require('./server/config/session'));
 
 // check cookie, add req.csrfToken(),
 app.use(csrf({cookie: true}));
@@ -56,6 +52,9 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(setUserCookie);
+
+// chat controller
+// app.use(require('./server/controllers/chatController'));
 
 // app.use((req, res, next) => {
 //   log.debug('cookie', req.session);
@@ -90,8 +89,6 @@ app.use('/', index);
 app.use('*', function(req, res) {
   res.redirect('/');
 });
-
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

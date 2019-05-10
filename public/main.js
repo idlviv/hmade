@@ -717,7 +717,7 @@ var AboutComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  chat works!\n</p>\n<input type=\"text\" [(ngModel)]=\"message\">\n<ul>\n  <li *ngFor=\"let msg of msgs\">\n    {{msg.message}}\n  </li>\n\n  <button (click)=\"onSendMessage()\">Send</button>\n</ul>\n"
+module.exports = "<div class=\"container chat\">\n  <h2 class=\"mat-h2 chat__header\">chat works!</h2>\n\n  <div class=\"row chat__messages\" fxLayout=\"row\">\n    <div class=\"cell\" fxFlex>\n      <ul class=\"row messages\">\n        <li *ngFor=\"let msg of msgs\" class=\"cell messages__item\">\n          {{msg.message}}\n        </li>\n      </ul>\n    </div>\n  </div>\n  <div class=\"chat__send-control row\" fxLayout=\"row\">\n    <div class=\"cell chat__input-message\" fxFlex=\"130px\">\n      <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"message\">\n    </div>\n    <div class=\"cell chat__send-button\" fxFlex=\"70px\">\n      <button (click)=\"onSendMessage()\">Send</button>\n    </div>\n  </div>\n</div>\n\n"
 
 /***/ }),
 
@@ -764,6 +764,7 @@ var ChatComponent = /** @class */ (function () {
         var _this = this;
         this.chatService.getMessage()
             .subscribe(function (msg) {
+            console.log(msg);
             _this.msgs.push(msg);
         });
     };
@@ -3014,6 +3015,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ChatService", function() { return ChatService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var ngx_socket_io__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ngx-socket-io */ "./node_modules/ngx-socket-io/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -3025,23 +3027,22 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var ChatService = /** @class */ (function () {
     function ChatService(socket) {
         this.socket = socket;
     }
     ChatService.prototype.sendMessage = function (msg) {
-        console.log('msg', msg);
+        console.log('msg to server', msg);
         this.socket.emit('messageToServer', msg);
     };
     ChatService.prototype.getMessage = function () {
         return this.socket
-            .fromEvent('messageFromServer');
-        // .pipe(
-        //   map(data => {
-        //     console.log(data);
-        //     return data;
-        //   })
-        // );
+            .fromEvent('messageFromServer')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
+            console.log('msg from server', data);
+            return data;
+        }));
     };
     ChatService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
@@ -4480,7 +4481,7 @@ module.exports = __webpack_require__(/*! C:\it\vs\hmade\frontend\src\main.ts */"
 
 /***/ }),
 
-/***/ 3:
+/***/ 1:
 /*!********************!*\
   !*** ws (ignored) ***!
   \********************/
