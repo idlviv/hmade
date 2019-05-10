@@ -26,11 +26,13 @@ const server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 server.listen(port);
-io = require('socket.io').listen(server);
+
 
 server.on('error', onError);
 server.on('listening', onListening);
-io.sockets.on('connection', onSocketConnection);
+
+require('../controllers/chatController')(server);
+
 
 /**
  * Normalize a port into a number, string, or false.
@@ -86,11 +88,4 @@ function onListening() {
   log.verbose(`Server listening on ${util.format(bind)}`);
 }
 
-/**
- *
- *
- * @param {*} socket
- */
-function onSocketConnection(socket) {
-  require('../controllers/chatController')(socket);
-}
+
