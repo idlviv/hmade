@@ -1,5 +1,5 @@
 const { createLogger, format, transports } = require('winston');
-const { combine, timestamp, label, printf, json, colorize, simple } = format;
+const { combine, timestamp, label, printf, json, colorize, simple, splat } = format;
 const { Console, File } = transports;
 util = require('util');
 
@@ -24,7 +24,8 @@ function log(module) {
     format: combine(
       colorize(),
       label({ label: path }),
-      json(),
+      // json(),
+      splat(),
       consoleFormat,
     ),
   });
