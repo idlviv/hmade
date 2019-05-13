@@ -38,7 +38,6 @@ module.exports = (server) => {
 
   io.sockets.on('connection', (socket) => {
     log.debug('socket connected %o', socket.request.session.user._doc);
-
     // socket.emit('messageFromServer', {message: 'world'});
     socket.on('messageToServer', (data) => {
       data.message = 'server response: ' + data.message;
