@@ -25,9 +25,9 @@ module.exports = (server) => {
         return next(new ClientError({message: 'Помилка авторизації', status: 401}));
       } else {
         socket.request.session = session;
-        UserModel.findById(socket.request.session.id).then(
+        UserModel.findById(socket.request.session.passport.user).then(
             (user) => {
-              socket.request.session.user._doc = user;
+              socket.request.session.user = user;
               return next();
             },
             (err) => next(new ClientError({message: 'Помилка авторизації', status: 401}))
