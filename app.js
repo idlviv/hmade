@@ -41,15 +41,30 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
 // config session
-app.use(require('./server/config/session'));
+
+app.use(require('./server/config/session').sessionCookie);
 
 // check cookie, add req.csrfToken(),
 app.use(csrf({cookie: true}));
 // set custom cookie for angular XSRF-TOKEN
 app.use(csrfCookie);
 
+app.use(function(req, res, next) {
+  if (req.user && req.user._doc) {
+    log.debug('before %o', req.user._doc);
+  }
+  next();
+});
+
 app.use(passport.initialize());
 app.use(passport.session());
+
+app.use(function(req, res, next) {
+  // if (req.user && req.user._doc) {
+    log.debug('after req.session.id %o', req.session.id);
+  // }
+  next();
+});
 
 app.use(setUserCookie);
 
