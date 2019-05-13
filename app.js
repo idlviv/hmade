@@ -41,8 +41,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 
 // config session
-
-app.use(require('./server/config/session').sessionCookie);
+app.use(require('./server/config/session').sessionCookie());
 
 // check cookie, add req.csrfToken(),
 app.use(csrf({cookie: true}));

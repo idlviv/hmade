@@ -4018,7 +4018,7 @@ var UserService = /** @class */ (function () {
                     password: user.password
                 } })
         };
-        return this.http.get('api/user/Login', httpOptions);
+        return this.http.get('api/user/login', httpOptions);
     };
     /**
      * Login with google social sin in

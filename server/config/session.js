@@ -6,8 +6,8 @@ const mongoose = require('./mongoose');
 
 const sessionStorage = new MongoStore({mongooseConnection: mongoose.connection});
 
-const sessionCookie = () =>
-  session({
+const sessionCookie = function() {
+  return session({
     key: config.get('sessionSid'),
     secret: config.get('SESSION_SECRET'),
     resave: false,
@@ -21,6 +21,7 @@ const sessionCookie = () =>
     },
     store: sessionStorage,
   });
+};
 
 module.exports = {
   sessionStorage,

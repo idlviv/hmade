@@ -65,7 +65,7 @@ export class UserService {
       }})
     };
     return this.http.get<string>(
-      'api/user/Login',
+      'api/user/login',
       httpOptions
     );
   }
