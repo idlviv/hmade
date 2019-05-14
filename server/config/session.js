@@ -4,26 +4,24 @@ const MongoStore = require('connect-mongo')(session);
 const config = require('./');
 const mongoose = require('./mongoose');
 
-const sessionStorage = new MongoStore({mongooseConnection: mongoose.connection});
+const sessionStore = new MongoStore({mongooseConnection: mongoose.connection});
 
-const sessionCookie = function() {
-  return session({
-    key: config.get('sessionSid'),
-    secret: config.get('SESSION_SECRET'),
-    resave: false,
-    saveUninitialized: true,
-    cookie: {
-      path: '/',
-      httpOnly: true, // not reachable for js (XSS)
-      // secure: config.get('NODE_ENV') === 'production',
-      sameSite: 'Strict',
-      maxAge: null, // never expires, but will be deleted after closing browser
-    },
-    store: sessionStorage,
-  });
-};
+const sessionCookie = session({
+  key: config.get('sessionSid'),
+  secret: config.get('SESSION_SECRET'),
+  resave: true,
+  saveUninitialized: true,
+  cookie: {
+    path: '/',
+    httpOnly: true, // not reachable for js (XSS)
+    // secure: config.get('NODE_ENV') === 'production',
+    sameSite: 'Strict',
+    maxAge: null, // never expires, but will be deleted after closing browser
+  },
+  store: sessionStore,
+});
 
 module.exports = {
-  sessionStorage,
+  sessionStore,
   sessionCookie,
 };

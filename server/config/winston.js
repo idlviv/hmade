@@ -24,7 +24,7 @@ function log(module) {
     format: combine(
       colorize(),
       label({ label: path }),
-      // json(),
+      json(),
       splat(),
       consoleFormat,
     ),
