@@ -2,6 +2,9 @@ const jwt = require('jsonwebtoken');
 const config = require('../config');
 const transporter = require('../config/mailgun');
 const ServerError = require('../errors/serverError');
+const cookie = require('cookie');
+const cookieParser = require('cookie-parser');
+const sessionStore = require('../config/session').sessionStore;
 
 /**
  *  Create JWT token
@@ -43,8 +46,30 @@ const sendMail = function(mailOptions) {
   });
 };
 
+const getSessionBySocket = function(socket) {
+  return new Promise((resolve, reject) => {
+    const handshakeData = socket.request;
+    handshakeData.cookies = cookie.parse(handshakeData.headers.cookie || '');
+    const sidCookie = handshakeData.cookies[config.get('sessionSid')];
+    const sid = cookieParser.signedCookie(sidCookie, config.get('SESSION_SECRET'));
+
+    sessionStore.load(sid, function(err, session) {
+      if (err) {
+        reject(new ClientError({ message: 'Помилка авторизації', status: 401 }));
+      }
+      if (arguments.length == 0) {
+        // no arguments => no session
+        reject(new ClientError({ message: 'Помилка авторизації', status: 401 }));
+      } else {
+        resolve(session)
+      }
+    });
+  });
+}
+
 
 module.exports = {
   createJWT,
   sendMail,
+  getSessionBySocket
 };

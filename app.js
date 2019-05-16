@@ -48,20 +48,19 @@ app.use(csrf({cookie: true}));
 // set custom cookie for angular XSRF-TOKEN
 app.use(csrfCookie);
 
-app.use(function(req, res, next) {
-  if (req.user && req.user._doc) {
-    log.debug('before %o', req.user._doc);
-  }
-  next();
-});
+// app.use(function(req, res, next) {
+//     log.debug('before %o', req.session.id);
+
+//   next();
+// });
 
 app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(function(req, res, next) {
-  // if (req.user && req.user._doc) {
-    log.debug('after req.session.id %o', req.session.id);
-  // }
+  if (req.session.data) {
+    log.debug('after req.session.id %o', req.session.data.message);
+  }
   next();
 });
 
