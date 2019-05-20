@@ -580,8 +580,8 @@ if(false) {}
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\it\vs\hmade\frontend\src\styles\styles.scss */"./src/styles/styles.scss");
-module.exports = __webpack_require__(/*! D:\it\vs\hmade\frontend\node_modules\aos\dist\aos.css */"./node_modules/aos/dist/aos.css");
+__webpack_require__(/*! C:\it\vs\hmade\frontend\src\styles\styles.scss */"./src/styles/styles.scss");
+module.exports = __webpack_require__(/*! C:\it\vs\hmade\frontend\node_modules\aos\dist\aos.css */"./node_modules/aos/dist/aos.css");
 
 
 /***/ })
