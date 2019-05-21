@@ -9,53 +9,64 @@ const UserModel = require('../models/userModel');
 
 const ChatHelper = require('../helpers/chatHelper');
 
-chatHelper = new ChatHelper();
-
 module.exports = (server) => {
   io = require('socket.io').listen(server);
+  let chatHelper = new ChatHelper();
 
-  io.use(function(socket, next) {
-    chatHelper.getSessionBySocket(socket)
-        .then(
-            (session) => {
-              session.userData = `user: ${session.id}`;
-              session.save(function(err) {
-                if (err) {
-                  return next(new ClientError({ message: 'Помилка авторизації', status: 401 }));
-                }
-                if (session.passport) {
-                  log.debug('user', session.passport.user);
-                } else {
-                  log.debug('not user');
-                }
-                log.debug('midleware socket');
-                socket.request.session = session;
-                next();
-              });
-            },
-            (err) => next(err)
-        );
+  io.use(async (socket, next) => {
+    let session;
+    try {
+      session = await chatHelper.getSessionBySocket(socket);
+    } catch (err) {
+      return next(err);
+    }
+    // write express session to socket
+    socket.request.socketSession = session;
+    return next();
+
+    // session.userData = `user: ${session.id}`;
+    // session.save(function(err) {
+    //   if (err) {
+    //     return next(new ClientError({ message: 'Помилка авторизації', status: 401 }));
+    //   }
+    //   if (session.passport) {
+    //     log.debug('user', session.passport.user);
+    //   } else {
+    //     log.debug('not user');
+    //   }
+    //   log.debug('midleware socket');
+    // });
   });
 
   io.sockets.on('connection', (socket) => {
-    log.debug('socket connected %o', socket.request.session.id);
+    log.debug('socket connected %o', socket.request.socketSession.id);
     // socket.emit('messageFromServer', {message: 'world'});
     socket.on('messageToServer', (data) => {
-      chatHelper.getSessionBySocket(socket)
-          .then(
-              (session) => {
-                session.data = data;
-                session.save(function(err) {
-                  if (err) {
-                    return next(new ClientError({ message: 'Помилка авторизації', status: 401 }));
-                  }
-                  socket.request.session = session;
-                  data.message = 'server response: ' + data.message;
-                  socket.emit('messageFromServer', data);
-                });
-              },
-              (err) => next(err)
-          );
+      // let session;
+      // try {
+      //   session = await chatHelper.getSessionBySocket(socket);
+      // } catch (err) {
+      //   return next(err);
+      // }
+      // session.data = data;
+      // session.save(function(err) {
+      //   if (err) {
+      //     return next(new ClientError({ message: 'Помилка авторизації', status: 401 }));
+      //   }
+      //   socket.request.session = session;
+      //   data.message = 'server response: ' + data.message;
+      //   socket.emit('messageFromServer', data);
+      // });
+      const socketSession = socket.request.socketSession;
+      if (socketSession.passport) {
+        log.debug(`user ${socketSession.passport.user}, messageFromServer: ${data.message}`);
+        data.message = `user: ${socketSession.passport.user}, messageFromServer: ${data.message}`;
+        socket.emit('messageFromServer', data);
+      } else {
+        log.debug(`not user, messageFromServer: ${data.message}`);
+        data.message = `not user, messageFromServer: ${data.message}`;
+        socket.emit('messageFromServer', data);
+      }
     });
   }
   );

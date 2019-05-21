@@ -43,9 +43,6 @@ const sendMail = function(mailOptions) {
   });
 };
 
-
-
-
 module.exports = {
   createJWT,
   sendMail,

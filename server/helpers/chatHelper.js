@@ -8,7 +8,7 @@ const sessionStore = require('../config/session').sessionStore;
 class ChatHelper {
   constructor() {}
 
-  getSessionBySocket(socket) {
+  async getSessionBySocket(socket) {
     return new Promise((resolve, reject) => {
       const handshakeData = socket.request;
       handshakeData.cookies = cookie.parse(handshakeData.headers.cookie || '');
