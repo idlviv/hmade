@@ -10,6 +10,14 @@
       </ul>
     </div>
   </div>
+    <div class="row" fxLayout="row">
+      <div class="cell" fxFlex="130px">
+        <input class="mat-input" type="text" [(ngModel)]="room">
+      </div>
+      <div class="cell" fxFlex="70px">
+        <button (click)="onJoin()">Join</button>
+      </div>
+    </div>
   <div class="chat__send-control row" fxLayout="row">
     <div class="cell chat__input-message" fxFlex="130px">
       <input class="mat-input" type="text" [(ngModel)]="message">
@@ -18,5 +26,6 @@
       <button (click)="onSendMessage()">Send</button>
     </div>
   </div>
+
 </div>
 

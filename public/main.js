@@ -717,7 +717,7 @@ var AboutComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container chat\">\n  <h2 class=\"mat-h2 chat__header\">chat works!</h2>\n\n  <div class=\"row chat__messages\" fxLayout=\"row\">\n    <div class=\"cell\" fxFlex>\n      <ul class=\"row messages\">\n        <li *ngFor=\"let msg of msgs\" class=\"cell messages__item\">\n          {{msg.message}}\n        </li>\n      </ul>\n    </div>\n  </div>\n  <div class=\"chat__send-control row\" fxLayout=\"row\">\n    <div class=\"cell chat__input-message\" fxFlex=\"130px\">\n      <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"message\">\n    </div>\n    <div class=\"cell chat__send-button\" fxFlex=\"70px\">\n      <button (click)=\"onSendMessage()\">Send</button>\n    </div>\n  </div>\n</div>\n\n"
+module.exports = "<div class=\"container chat\">\n  <h2 class=\"mat-h2 chat__header\">chat works!</h2>\n\n  <div class=\"row chat__messages\" fxLayout=\"row\">\n    <div class=\"cell\" fxFlex>\n      <ul class=\"row messages\">\n        <li *ngFor=\"let msg of msgs\" class=\"cell messages__item\">\n          {{msg.message}}\n        </li>\n      </ul>\n    </div>\n  </div>\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"130px\">\n        <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"room\">\n      </div>\n      <div class=\"cell\" fxFlex=\"70px\">\n        <button (click)=\"onJoin()\">Join</button>\n      </div>\n    </div>\n  <div class=\"chat__send-control row\" fxLayout=\"row\">\n    <div class=\"cell chat__input-message\" fxFlex=\"130px\">\n      <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"message\">\n    </div>\n    <div class=\"cell chat__send-button\" fxFlex=\"70px\">\n      <button (click)=\"onSendMessage()\">Send</button>\n    </div>\n  </div>\n\n</div>\n\n"
 
 /***/ }),
 
@@ -768,6 +768,10 @@ var ChatComponent = /** @class */ (function () {
             _this.msgs.push(msg);
         });
     };
+    ChatComponent.prototype.onJoin = function () {
+        this.chatService.join({ room: this.room });
+        this.message = '';
+    };
     ChatComponent.prototype.onSendMessage = function () {
         this.chatService.sendMessage({ message: this.message });
         this.message = '';
@@ -776,6 +780,10 @@ var ChatComponent = /** @class */ (function () {
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
         __metadata("design:type", String)
     ], ChatComponent.prototype, "message", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
+        __metadata("design:type", String)
+    ], ChatComponent.prototype, "room", void 0);
     ChatComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-chat',
@@ -3035,6 +3043,10 @@ var ChatService = /** @class */ (function () {
     ChatService.prototype.sendMessage = function (msg) {
         console.log('msg to server', msg);
         this.socket.emit('messageToServer', msg);
+    };
+    ChatService.prototype.join = function (data) {
+        console.log('join to room', data.room);
+        this.socket.emit('join', data);
     };
     ChatService.prototype.getMessage = function () {
         return this.socket

@@ -15,6 +15,11 @@ export class ChatService {
     this.socket.emit('messageToServer', msg);
   }
 
+  join(data: {room: string}) {
+    console.log('join to room', data.room);
+    this.socket.emit('join', data);
+  }
+
   getMessage(): Observable<IChatMessage> {
     return this.socket
       .fromEvent<IChatMessage>('messageFromServer')

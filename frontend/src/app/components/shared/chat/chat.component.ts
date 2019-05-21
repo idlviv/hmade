@@ -10,6 +10,7 @@ import { IChatMessage } from '../../../interfaces/interface';
 export class ChatComponent implements OnInit {
   msgs: IChatMessage[] = [];
   @Input() message: string;
+  @Input() room: string;
 
   constructor(
     private chatService: ChatService,
@@ -23,6 +24,11 @@ export class ChatComponent implements OnInit {
         this.msgs.push(msg);
       }
     );
+  }
+
+  onJoin() {
+    this.chatService.join({ room: this.room });
+    this.message = '';
   }
 
   onSendMessage() {
