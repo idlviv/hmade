@@ -773,7 +773,7 @@ var ChatComponent = /** @class */ (function () {
         this.message = '';
     };
     ChatComponent.prototype.onSendMessage = function () {
-        this.chatService.sendMessage({ message: this.message });
+        this.chatService.sendMessage({ message: this.message, room: this.room });
         this.message = '';
     };
     __decorate([

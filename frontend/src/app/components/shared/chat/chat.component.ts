@@ -32,7 +32,7 @@ export class ChatComponent implements OnInit {
   }
 
   onSendMessage() {
-    this.chatService.sendMessage({message: this.message});
+    this.chatService.sendMessage({message: this.message, room: this.room});
     this.message = '';
   }
 

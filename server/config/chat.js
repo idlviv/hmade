@@ -33,7 +33,6 @@ module.exports = (server) => {
       socket.join(params.room);
       socket.emit('messageFromServer', {message: `wellcome to ${params.room}`});
       socket.broadcast.to(params.room).emit('messageFromServer', { message: `new user joined to ${params.room}` });
-
     });
     log.debug('socket connected %o');
     socket.on('messageToServer', (msg) => {
@@ -42,11 +41,11 @@ module.exports = (server) => {
       if (socketSession.passport) {
         log.debug(`user ${socketSession.passport.user}, messageFromServer: ${msg.message}`);
         msg.message = `user: ${socketSession.passport.user}, messageFromServer: ${msg.message}`;
-        socket.emit('messageFromServer', msg);
+        socket.broadcast.to(msg.room).emit('messageFromServer', msg);
       } else {
         log.debug(`not user, messageFromServer: ${msg.message}`);
         msg.message = `not user, messageFromServer: ${msg.message}`;
-        socket.emit('messageFromServer', msg);
+        socket.broadcast.to(msg.room).emit('messageFromServer', msg);
       }
     });
   }
