@@ -36,7 +36,7 @@ module.exports = (server) => {
     });
     log.debug('socket connected %o');
     socket.on('messageToServer', (msg) => {
-      log.debug('msg %o', msg);
+      log.debug('msg %o', msg); 
       const socketSession = socket.request.socketSession;
       if (socketSession.passport) {
         log.debug(`user ${socketSession.passport.user}, messageFromServer: ${msg.message}`);
