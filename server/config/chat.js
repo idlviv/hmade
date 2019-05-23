@@ -18,25 +18,36 @@ module.exports = (server) => {
   });
 
   function getConnectedUsers() {
-    const clients = io.sockets.clients().connected;
-    const sockets = Object.values(clients);
-    const users = sockets.map((val) => val.user);
-    return users;
+    return new Promise((resolve, reject) => {
+      io.sockets.clients((err, client) => {
+        if (err) {
+          reject(new ApplicationError({ message: 'Помилка отримання активних коритстувачів чату', status: 500 }));
+        }
+        resolve(client);
+      });
+    });
   }
-
   // io.emit - to all connected users -> io.to('room).emit - to all users connected to 'room'
   // socket.broadcast.emit - to all users exept current -> socket.broadcast.to('room').emit
   // socket.emit - to specific user?
 
-  io.on('connection', (socket) => {
+
+  io.on('connection', async (socket) => {
+    log.debug('socket connected %o', await getConnectedUsers());
+    socket.on('disconnect', async function onDisconnect(reason) {
+      log.debug('socket connected %o', await getConnectedUsers());
+      console.log('This socket lost connection %o', reason);
+    });
+
     socket.on('join', (params) => {
       socket.join(params.room);
       socket.emit('messageFromServer', {message: `wellcome to ${params.room}`});
       socket.broadcast.to(params.room).emit('messageFromServer', { message: `new user joined to ${params.room}` });
     });
-    log.debug('socket connected %o');
+
     socket.on('messageToServer', (msg) => {
-      log.debug('msg %o', msg); 
+      msg.room = msg.room || 'common';
+      log.debug('msg %o', msg);
       const socketSession = socket.request.socketSession;
       if (socketSession.passport) {
         log.debug(`user ${socketSession.passport.user}, messageFromServer: ${msg.message}`);
@@ -48,6 +59,5 @@ module.exports = (server) => {
         socket.broadcast.to(msg.room).emit('messageFromServer', msg);
       }
     });
-  }
-  );
+  });
 };

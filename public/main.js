@@ -3039,13 +3039,21 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var ChatService = /** @class */ (function () {
     function ChatService(socket) {
         this.socket = socket;
+        this.joined = false;
     }
     ChatService.prototype.sendMessage = function (msg) {
         console.log('msg to server', msg);
+        if (!this.joined) {
+            this.join();
+        }
         this.socket.emit('messageToServer', msg);
     };
     ChatService.prototype.join = function (data) {
+        if (data === void 0) { data = { room: 'common' }; }
         console.log('join to room', data.room);
+        data.room = data.room || 'common';
+        this.room = data.room;
+        this.joined = true;
         this.socket.emit('join', data);
     };
     ChatService.prototype.getMessage = function () {
