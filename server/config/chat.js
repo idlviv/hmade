@@ -48,12 +48,13 @@ module.exports = (server) => {
 
   io.on('connection', async (socket) => {
  
-    // class Emitter extends require('events') {
-    //   emit(...args) {
-    //     log.debug('emitted %o', args[0]);
-    //     super.emit(args);
-    //   }
-    // }
+    log.debug('sok %o', Object.getPrototypeOf(socket));
+    class Emitter extends Object.getPrototypeOf(socket).constructor {
+      emit(...args) {
+        log.debug('emitted %o', args[0]);
+        super.emit(args);
+      }
+    }
 
     function logEvents(emitter) {
       _emitter = emitter.emit;
@@ -62,7 +63,7 @@ module.exports = (server) => {
         _emitter.apply(emitter, args);
       };
     }
-
+    new Emitter();
     logEvents(socket);
     // emitLogger(socket);
 
