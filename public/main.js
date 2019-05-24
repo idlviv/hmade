@@ -770,10 +770,10 @@ var ChatComponent = /** @class */ (function () {
     };
     ChatComponent.prototype.onJoin = function () {
         this.chatService.join({ room: this.room });
-        this.message = '';
+        this.room = '';
     };
     ChatComponent.prototype.onSendMessage = function () {
-        this.chatService.sendMessage({ message: this.message, room: this.room });
+        this.chatService.sendMessage({ message: this.message });
         this.message = '';
     };
     __decorate([
@@ -3043,9 +3043,9 @@ var ChatService = /** @class */ (function () {
     }
     ChatService.prototype.sendMessage = function (msg) {
         console.log('msg to server', msg);
-        if (!this.joined) {
-            this.join();
-        }
+        // if (!this.joined) {
+        //   this.join();
+        // }
         this.socket.emit('messageToServer', msg);
     };
     ChatService.prototype.join = function (data) {

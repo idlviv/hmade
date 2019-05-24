@@ -1,6 +1,6 @@
 export interface IChatMessage {
   message: string;
-  room: string;
+  room?: string;
   payload?: object;
 }
 

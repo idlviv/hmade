@@ -4,6 +4,7 @@ const cookie = require('cookie');
 // Parse Cookie header and populate req.cookies with an object keyed by the cookie names
 const cookieParser = require('cookie-parser');
 const sessionStore = require('../config/session').sessionStore;
+const ClientError = require('../errors/clientError');
 
 class ChatHelper {
   constructor() {}

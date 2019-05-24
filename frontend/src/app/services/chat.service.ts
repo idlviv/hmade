@@ -15,9 +15,9 @@ export class ChatService {
 
   sendMessage(msg: IChatMessage) {
     console.log('msg to server', msg);
-    if (!this.joined) {
-      this.join();
-    }
+    // if (!this.joined) {
+    //   this.join();
+    // }
     this.socket.emit('messageToServer', msg);
   }
 

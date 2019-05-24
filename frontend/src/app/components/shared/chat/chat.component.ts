@@ -28,11 +28,11 @@ export class ChatComponent implements OnInit {
 
   onJoin() {
     this.chatService.join({ room: this.room });
-    this.message = '';
+    this.room = '';
   }
 
   onSendMessage() {
-    this.chatService.sendMessage({message: this.message, room: this.room});
+    this.chatService.sendMessage({message: this.message});
     this.message = '';
   }
 
