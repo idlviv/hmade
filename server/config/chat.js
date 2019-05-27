@@ -14,12 +14,29 @@ module.exports = (server) => {
     } catch (err) {
       return next(err);
     }
+    try {
+      await chatHelper.storeUserInSocketSession(session);
+    } catch (err) {
+      return next(err);
+    }
+
     // write express session to socket
     socket.request.socketSession = session;
+
+    const session_id = session.id;
+    const socket_id = socket.id;
+    const user = socket.request.socketSession.userData;
+
+    try {
+      await chatHelper.storeActiveUsersToDb(session_id, socket_id, user);
+    } catch (err) {
+      return next(err);
+    }
+
     return next();
   });
 
-  function getConnectedUsers() {
+  async function getConnectedUsers() {
     return new Promise((resolve, reject) => {
       io.sockets.clients((err, client) => {
         if (err) {
@@ -29,48 +46,36 @@ module.exports = (server) => {
       });
     });
   }
+
+  async function buildUsers() {
+    const connectedUsers = await getConnectedUsers();
+    return connectedUsers.map((user) => {
+      log.debug('io.sockets.user %o', io.sockets.connected[user].request.socketSession.userData);
+      return user;
+    });
+  }
+
+  function logEvents(emitter) {
+    _emitter = emitter.emit;
+    emitter.emit = function(...args) {
+      log.debug('emitted %o', args[0]);
+      _emitter.apply(emitter, args);
+    };
+  }
   // io.emit - to all connected users -> io.to('room).emit - to all users connected to 'room'
   // socket.broadcast.emit - to all users exept current -> socket.broadcast.to('room').emit
   // socket.emit - to specific user?
 
-
-  // function logAllEmitterEvents(eventEmitter) {
-  //   let emitToLog = eventEmitter.emit;
-  //   console.log('ev');
-  //   eventEmitter.emit = function() {
-  //     let event = arguments[0];
-  //     console.log('event emitted: ' + event);
-  //     emitToLog.apply(eventEmitter, arguments);
-  //   };
-  // }
-  // emitLogger = new Emitter();
-  // emitLogger.emit(io);
-
   io.on('connection', async (socket) => {
- 
-    log.debug('sok %o', Object.getPrototypeOf(socket));
-    class Emitter extends Object.getPrototypeOf(socket).constructor {
-      emit(...args) {
-        log.debug('emitted %o', args[0]);
-        super.emit(args);
-      }
-    }
 
-    function logEvents(emitter) {
-      _emitter = emitter.emit;
-      emitter.emit = function(...args) {
-        log.debug('emitted %o', args[0]);
-        _emitter.apply(emitter, args);
-      };
-    }
-    new Emitter();
+    // const em = new Emitter();
     logEvents(socket);
     // emitLogger(socket);
 
     // logAllEmitterEvents(socket);
     // logAllEmitterEvents(io);
 
-    log.debug('socket connected %o', await getConnectedUsers());
+    log.debug('socket connected %o', await buildUsers());
     socket.on('disconnect', async function onDisconnect(reason) {
       log.debug('socket connected %o', await getConnectedUsers());
       console.log('This socket lost connection %o', reason);

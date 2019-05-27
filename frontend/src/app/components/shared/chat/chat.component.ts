@@ -18,12 +18,12 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
 
-    this.chatService.getMessage()
-      .subscribe(msg => {
-        console.log(msg);
-        this.msgs.push(msg);
-      }
-    );
+    // this.chatService.getMessage()
+    //   .subscribe(msg => {
+    //     console.log(msg);
+    //     this.msgs.push(msg);
+    //   }
+    // );
   }
 
   onJoin() {

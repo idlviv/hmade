@@ -25,10 +25,14 @@ const UserSchema = new Schema({
   name: {
     type: String,
     required: true,
+    default: function() {
+      return this.login;
+    },
   },
   surname: {
     type: String,
     required: true,
+    default: '',
   },
   role: {
     type: String,

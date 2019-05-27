@@ -761,12 +761,12 @@ var ChatComponent = /** @class */ (function () {
         this.msgs = [];
     }
     ChatComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.chatService.getMessage()
-            .subscribe(function (msg) {
-            console.log(msg);
-            _this.msgs.push(msg);
-        });
+        // this.chatService.getMessage()
+        //   .subscribe(msg => {
+        //     console.log(msg);
+        //     this.msgs.push(msg);
+        //   }
+        // );
     };
     ChatComponent.prototype.onJoin = function () {
         this.chatService.join({ room: this.room });
