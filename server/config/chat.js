@@ -3,8 +3,7 @@ const ChatHelper = require('../helpers/chatHelper');
 const ApplicationError = require('../errors/applicationError');
 const ClientError = require('../errors/clientError');
 
-module.exports = (server) => {
-  const io = require('socket.io').listen(server);
+module.exports = (io) => {
   let chatHelper = new ChatHelper();
 
   io.use(async (socket, next) => {
@@ -84,7 +83,7 @@ module.exports = (server) => {
       } catch (err) {
         return next(err);
       }
-      
+
       io.emit('changeStatus', connectedManagers);
       log.debug('socket connected %o', await chatHelper.getUniqueConnectedSessionsPayload(io));
       console.log('This socket lost connection %o', reason);

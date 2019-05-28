@@ -58,11 +58,12 @@ class ChatHelper {
         socket_id: socket.id,
         user,
       };
-      // try {
-      //   await this.saveSession(session);
-      // } catch (err) {
-      //   return reject(err);
-      // }
+      session.socket_id = socket.id;
+      try {
+        await this.saveSession(session);
+      } catch (err) {
+        return reject(err);
+      }
       resolve();
     });
   }

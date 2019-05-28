@@ -12,6 +12,7 @@ const transporter = require('../config/mailgun');
 const userHelper = require('../helpers/userHelper');
 const sharedHelper = require('../helpers/sharedHelper');
 const setUserCookie = require('../helpers/cookieHelper').setUserCookie;
+const ChatHelper = require('../helpers/chatHelper');
 
 /**
  * First step to reset password
@@ -292,8 +293,23 @@ const userProfile = function(req, res, next) {
  * @param {*} next
  * @return {*}
  */
-const userLogout = function(req, res, next) {
+const userLogout = async function(req, res, next) {
   req.logout();
+
+  // const chatHelper = new ChatHelper();
+  // chat logout - reload io active users
+  const io = req.app.get('io');
+  console.log('req.session %o', req.session.socket_id);
+  io.sockets.connected[req.session.socket_id].disconnect(true);
+
+  // let connectedManagers;
+  // try {
+  //   connectedManagers = await chatHelper.getConnectedManagers(io);
+  // } catch (err) {
+  //   return next(err);
+  // }
+  // io.emit('changeStatus', connectedManagers);
+
   setUserCookie(null)(req, res, next)
       .then(() => {
         return res.status(200).json('Logged out');
