@@ -66,32 +66,56 @@ class ChatHelper {
     });
   }
 
-  async storeUserInSocketSession(session) {
-    return new Promise(async (resolve, reject) => {
-      let user;
-      if (session.passport && session.passport.user) {
-        try {
-          user = await this.dbHelper.findById('UserModel', session.passport.user);
-        } catch (err) {
-          return reject(err);
+  async getConnectedUsers(io) {
+    return new Promise((resolve, reject) => {
+      io.sockets.clients((err, clients) => {
+        if (err) {
+          reject(new ApplicationError({ message: 'Помилка отримання активних коритстувачів чату', status: 500 }));
         }
-        const { _id, avatar, role, login, provider, name, surname } = user;
-        session.userData = { _id, avatar, role, login, provider, name, surname };
-      } else {
-        const { login, provider } = {
-          login: 'guest',
-          provider: 'chat',
-        };
-        session.userData = { login, provider };
-      }
-      try {
-        await this.saveSession(session);
-      } catch (err) {
-        return reject(err);
-      }
-      resolve();
+        resolve(clients);
+      });
     });
   }
+
+  async getConnectedUsersCredentials(io) {
+    return new Promise(async (resolve, reject) => {
+      let connectedUsers;
+      try {
+        connectedUsers = await this.getConnectedUsers(io);
+      } catch (err) {
+        reject(err);
+      }
+      resolve(connectedUsers.map((user) => io.sockets.connected[user].request.payload)
+      );
+    });
+  }
+
+  // async storeUserInSocketSession(session) {
+  //   return new Promise(async (resolve, reject) => {
+  //     let user;
+  //     if (session.passport && session.passport.user) {
+  //       try {
+  //         user = await this.dbHelper.findById('UserModel', session.passport.user);
+  //       } catch (err) {
+  //         return reject(err);
+  //       }
+  //       const { _id, avatar, role, login, provider, name, surname } = user;
+  //       session.userData = { _id, avatar, role, login, provider, name, surname };
+  //     } else {
+  //       const { login, provider } = {
+  //         login: 'guest',
+  //         provider: 'chat',
+  //       };
+  //       session.userData = { login, provider };
+  //     }
+  //     try {
+  //       await this.saveSession(session);
+  //     } catch (err) {
+  //       return reject(err);
+  //     }
+  //     resolve();
+  //   });
+  // }
 
   async saveSession(session) {
     return new Promise(async (resolve, reject) => {

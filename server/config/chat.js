@@ -48,29 +48,6 @@ module.exports = (server) => {
     return next();
   });
 
-  async function getConnectedUsers() {
-    return new Promise((resolve, reject) => {
-      io.sockets.clients((err, client) => {
-        if (err) {
-          reject(new ApplicationError({ message: 'Помилка отримання активних коритстувачів чату', status: 500 }));
-        }
-        resolve(client);
-      });
-    });
-  }
-
-  async function getConnectedUsersCredentials() {
-    let connectedUsers;
-    try {
-      connectedUsers = await getConnectedUsers();
-    } catch (err) {
-      return next(err);
-    }
-    return connectedUsers.map((user) => {
-      return io.sockets.connected[user].request.payload;
-    });
-  }
-
   function logEvents(emitter) {
     _emitter = emitter.emit;
     emitter.emit = function(...args) {
@@ -91,10 +68,10 @@ module.exports = (server) => {
     // logAllEmitterEvents(socket);
     // logAllEmitterEvents(io);
 
-    log.debug('socket connected %o', await getConnectedUsersCredentials());
+    log.debug('socket connected %o', await chatHelper.getConnectedUsersCredentials(io));
 
     socket.on('disconnect', async function onDisconnect(reason) {
-      log.debug('socket connected %o', await getConnectedUsersCredentials());
+      log.debug('socket connected %o', await chatHelper.getConnectedUsersCredentials(io));
       console.log('This socket lost connection %o', reason);
     });
 
