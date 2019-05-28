@@ -10,18 +10,14 @@ class DBHelper {
   constructor() { }
 
   static chooseModel(model) {
-    let choise;
     switch (model) {
       case 'UserModel':
         return require('../models/userModel');
-        break;
     }
     switch (model) {
       case 'ChatActiveUserModel':
         return require('../models/chatActiveUserModel');
-        break;
     }
-    return choise;
   }
 
   async findById(model, _id) {

@@ -303,7 +303,7 @@ color: $muted-strong
 
 .flex-left-container {
   display: flex;
-  justify-content: start  !important; // horizontal
+  justify-content: flex-start  !important; // horizontal
   height: 100%;
   .flex-left-item {
     align-self: center !important; // vertical

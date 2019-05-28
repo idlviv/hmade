@@ -47,7 +47,7 @@ class ChatHelper {
         user = { _id, avatar, role, login, provider, name, surname };
       } else {
         const { login, provider } = {
-          login: 'guest',
+          login: 'guest ' + socket.id,
           provider: 'chat',
         };
         user = { login, provider };
@@ -66,7 +66,7 @@ class ChatHelper {
     });
   }
 
-  async getConnectedUsers(io) {
+  async getConnectedSockets(io) {
     return new Promise((resolve, reject) => {
       io.sockets.clients((err, clients) => {
         if (err) {
@@ -77,19 +77,61 @@ class ChatHelper {
     });
   }
 
-  async getConnectedUsersCredentials(io) {
+  // payloads of all unique express sessions that has active(connected) sockets
+  async getUniqueConnectedSessionsPayload(io) {
     return new Promise(async (resolve, reject) => {
-      let connectedUsers;
+      let connectedSockets;
       try {
-        connectedUsers = await this.getConnectedUsers(io);
+        connectedSockets = await this.getConnectedSockets(io);
       } catch (err) {
         reject(err);
       }
-      resolve(connectedUsers.map((user) => io.sockets.connected[user].request.payload)
-      );
+      const allconnectedSocketsPayload = connectedSockets.map((socket) => io.sockets.connected[socket].request.payload);
+      const uniqueConnectedSessionsPayload = allconnectedSocketsPayload
+          .map((value) => value.session_id)
+          .map((client, index, self) => self.indexOf(client) === index ? allconnectedSocketsPayload[index] : false)
+          .filter((value) => value);
+      resolve(uniqueConnectedSessionsPayload);
     });
   }
 
+  async getUniqueConnectedSessionsUsers(io) {
+    return new Promise(async (resolve, reject) => {
+      let connectedSockets;
+      try {
+        connectedSockets = await this.getConnectedSockets(io);
+      } catch (err) {
+        reject(err);
+      }
+      const allconnectedSocketsPayload = connectedSockets.map((socket) => io.sockets.connected[socket].request.payload);
+      const uniqueConnectedSessionsUsers = allconnectedSocketsPayload
+          .map((value) => value.user.login)
+          .map((client, index, self) => self.indexOf(client) === index ? allconnectedSocketsPayload[index] : false)
+          .filter((value) => value.user);
+      resolve(uniqueConnectedSessionsUsers);
+    });
+  }
+
+  async getConnectedUsersCredentials(io) {
+    return new Promise(async (resolve, reject) => {
+      let connectedSockets;
+      try {
+        connectedSockets = await this.getConnectedSockets(io);
+      } catch (err) {
+        reject(err);
+      }
+      const allconnectedSocketsPayload = connectedSockets.map((socket) => io.sockets.connected[socket].request.payload);
+      resolve(allconnectedSocketsPayload);
+    });
+  }
+
+  logEvents(emitter) {
+    const _emitter = emitter.emit;
+    emitter.emit = function(...args) {
+      log.debug('emitted %o', args[0]);
+      _emitter.apply(emitter, args);
+    };
+  }
   // async storeUserInSocketSession(session) {
   //   return new Promise(async (resolve, reject) => {
   //     let user;

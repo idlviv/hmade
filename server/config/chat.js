@@ -48,30 +48,35 @@ module.exports = (server) => {
     return next();
   });
 
-  function logEvents(emitter) {
-    _emitter = emitter.emit;
-    emitter.emit = function(...args) {
-      log.debug('emitted %o', args[0]);
-      _emitter.apply(emitter, args);
-    };
-  }
+
   // io.emit - to all connected users -> io.to('room).emit - to all users connected to 'room'
   // socket.broadcast.emit - to all users exept current -> socket.broadcast.to('room').emit
   // socket.emit - to specific user?
 
   io.on('connection', async (socket) => {
+    log.debug('socket connected %o');
+    chatHelper.logEvents(socket);
 
-    // const em = new Emitter();
-    logEvents(socket);
-    // emitLogger(socket);
+    let uniqueConnectedSessionsUsers;
+    try {
+      uniqueConnectedSessionsUsers = await chatHelper.getUniqueConnectedSessionsUsers(io);
+    } catch (err) {
+      return next(err);
+    }
 
-    // logAllEmitterEvents(socket);
-    // logAllEmitterEvents(io);
+    socket.broadcast.emit('messageFromServer', {
+      message: `new user connected: ${socket.request.payload.user.login}`,
+      payload: uniqueConnectedSessionsUsers,
+    });
 
-    log.debug('socket connected %o', await chatHelper.getConnectedUsersCredentials(io));
+    socket.emit('messageFromServer', {
+      message: `welcome ${socket.request.payload.user.login}`,
+      payload: uniqueConnectedSessionsUsers,
+    });
+
 
     socket.on('disconnect', async function onDisconnect(reason) {
-      log.debug('socket connected %o', await chatHelper.getConnectedUsersCredentials(io));
+      log.debug('socket connected %o', await chatHelper.getUniqueConnectedSessionsPayload(io));
       console.log('This socket lost connection %o', reason);
     });
 
