@@ -14,24 +14,36 @@ module.exports = (server) => {
     } catch (err) {
       return next(err);
     }
+
     try {
-      await chatHelper.storeUserInSocketSession(session);
+      await chatHelper.storePayloadInSocketSession(session, socket);
     } catch (err) {
       return next(err);
     }
+
+    // try {
+    //   await chatHelper.storeUserInSocketSession(session);
+    // } catch (err) {
+    //   return next(err);
+    // }
 
     // write express session to socket
-    socket.request.socketSession = session;
+    // socket.request.socketSession = session;
 
-    const session_id = session.id;
-    const socket_id = socket.id;
-    const user = socket.request.socketSession.userData;
+    // socket.request.payload = {
+    //   session_id: session.id,
+    //   socket_id: socket.id,
+    //   user: socket.request.socketSession.userData,
+    // };
+    // const session_id = session.id;
+    // const socket_id = socket.id;
+    // const user = socket.request.socketSession.userData;
 
-    try {
-      await chatHelper.storeActiveUsersToDb(session_id, socket_id, user);
-    } catch (err) {
-      return next(err);
-    }
+    // try {
+    //   await chatHelper.storeActiveUsersToDb(session_id, socket_id, user);
+    // } catch (err) {
+    //   return next(err);
+    // }
 
     return next();
   });
@@ -47,11 +59,15 @@ module.exports = (server) => {
     });
   }
 
-  async function buildUsers() {
-    const connectedUsers = await getConnectedUsers();
+  async function getConnectedUsersCredentials() {
+    let connectedUsers;
+    try {
+      connectedUsers = await getConnectedUsers();
+    } catch (err) {
+      return next(err);
+    }
     return connectedUsers.map((user) => {
-      log.debug('io.sockets.user %o', io.sockets.connected[user].request.socketSession.userData);
-      return user;
+      return io.sockets.connected[user].request.payload;
     });
   }
 
@@ -75,9 +91,10 @@ module.exports = (server) => {
     // logAllEmitterEvents(socket);
     // logAllEmitterEvents(io);
 
-    log.debug('socket connected %o', await buildUsers());
+    log.debug('socket connected %o', await getConnectedUsersCredentials());
+
     socket.on('disconnect', async function onDisconnect(reason) {
-      log.debug('socket connected %o', await getConnectedUsers());
+      log.debug('socket connected %o', await getConnectedUsersCredentials());
       console.log('This socket lost connection %o', reason);
     });
 

@@ -34,6 +34,38 @@ class ChatHelper {
     });
   }
 
+  async storePayloadInSocketSession(session, socket) {
+    return new Promise(async (resolve, reject) => {
+      let user;
+      if (session.passport && session.passport.user) {
+        try {
+          user = await this.dbHelper.findById('UserModel', session.passport.user);
+        } catch (err) {
+          return reject(err);
+        }
+        const { _id, avatar, role, login, provider, name, surname } = user;
+        user = { _id, avatar, role, login, provider, name, surname };
+      } else {
+        const { login, provider } = {
+          login: 'guest',
+          provider: 'chat',
+        };
+        user = { login, provider };
+      }
+      socket.request.payload = {
+        session_id: session.id,
+        socket_id: socket.id,
+        user,
+      };
+      // try {
+      //   await this.saveSession(session);
+      // } catch (err) {
+      //   return reject(err);
+      // }
+      resolve();
+    });
+  }
+
   async storeUserInSocketSession(session) {
     return new Promise(async (resolve, reject) => {
       let user;
