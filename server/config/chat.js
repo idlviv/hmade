@@ -57,25 +57,35 @@ module.exports = (server) => {
     log.debug('socket connected %o');
     chatHelper.logEvents(socket);
 
-    let uniqueConnectedSessionsUsers;
+
+    let connectedManagers;
     try {
-      uniqueConnectedSessionsUsers = await chatHelper.getUniqueConnectedSessionsUsers(io);
+      connectedManagers = await chatHelper.getConnectedManagers(io);
     } catch (err) {
       return next(err);
     }
 
+    io.emit('changeStatus', connectedManagers);
+
     socket.broadcast.emit('messageFromServer', {
       message: `new user connected: ${socket.request.payload.user.login}`,
-      payload: uniqueConnectedSessionsUsers,
+      payload: connectedManagers,
     });
 
     socket.emit('messageFromServer', {
       message: `welcome ${socket.request.payload.user.login}`,
-      payload: uniqueConnectedSessionsUsers,
+      payload: connectedManagers,
     });
 
 
     socket.on('disconnect', async function onDisconnect(reason) {
+      try {
+        connectedManagers = await chatHelper.getConnectedManagers(io);
+      } catch (err) {
+        return next(err);
+      }
+      
+      io.emit('changeStatus', connectedManagers);
       log.debug('socket connected %o', await chatHelper.getUniqueConnectedSessionsPayload(io));
       console.log('This socket lost connection %o', reason);
     });

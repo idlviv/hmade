@@ -11,6 +11,7 @@ export class ChatComponent implements OnInit {
   msgs: IChatMessage[] = [];
   @Input() message: string;
   @Input() room: string;
+  activeManagers = [];
 
   constructor(
     private chatService: ChatService,
@@ -24,6 +25,12 @@ export class ChatComponent implements OnInit {
         this.msgs.push(msg);
       }
     );
+
+    this.chatService.changeStatus()
+      .subscribe(activeManagers => {
+        this.activeManagers = activeManagers;
+      }
+      );
   }
 
   onJoin() {

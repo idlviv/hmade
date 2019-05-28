@@ -32,10 +32,20 @@ export class ChatService {
   getMessage(): Observable<IChatMessage> {
     return this.socket
       .fromEvent<IChatMessage>('messageFromServer')
-
       .pipe(
         map(data => {
           console.log('msg from server', data);
+          return data;
+        })
+      );
+  }
+
+  changeStatus(): Observable<[object]> {
+    return this.socket
+      .fromEvent<[object]>('changeStatus')
+      .pipe(
+        map(data => {
+          console.log('changeStatus', data);
           return data;
         })
       );

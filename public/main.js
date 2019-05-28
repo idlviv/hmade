@@ -717,7 +717,7 @@ var AboutComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container chat\">\n  <h2 class=\"mat-h2 chat__header\">chat works!</h2>\n\n  <div class=\"row chat__messages\" fxLayout=\"row\">\n    <div class=\"cell\" fxFlex>\n      <ul class=\"row messages\">\n        <li *ngFor=\"let msg of msgs\" class=\"cell messages__item\">\n          {{msg.message}}\n        </li>\n      </ul>\n    </div>\n  </div>\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"130px\">\n        <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"room\">\n      </div>\n      <div class=\"cell\" fxFlex=\"70px\">\n        <button (click)=\"onJoin()\">Join</button>\n      </div>\n    </div>\n  <div class=\"chat__send-control row\" fxLayout=\"row\">\n    <div class=\"cell chat__input-message\" fxFlex=\"130px\">\n      <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"message\">\n    </div>\n    <div class=\"cell chat__send-button\" fxFlex=\"70px\">\n      <button (click)=\"onSendMessage()\">Send</button>\n    </div>\n  </div>\n\n</div>\n\n"
+module.exports = "<div class=\"container chat\">\n  <h2 class=\"mat-h2 chat__header\">chat works!</h2>\n  <div class=\"mat-h4\" *ngFor=\"let activeManager of activeManagers\">\n    {{activeManager.login}}\n\n\n  </div>\n  <div class=\"row chat__messages\" fxLayout=\"row\">\n    <div class=\"cell\" fxFlex>\n      <ul class=\"row messages\">\n        <li *ngFor=\"let msg of msgs\" class=\"cell messages__item\">\n          {{msg.message}}\n        </li>\n      </ul>\n    </div>\n  </div>\n    <div class=\"row\" fxLayout=\"row\">\n      <div class=\"cell\" fxFlex=\"130px\">\n        <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"room\">\n      </div>\n      <div class=\"cell\" fxFlex=\"70px\">\n        <button (click)=\"onJoin()\">Join</button>\n      </div>\n    </div>\n  <div class=\"chat__send-control row\" fxLayout=\"row\">\n    <div class=\"cell chat__input-message\" fxFlex=\"130px\">\n      <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"message\">\n    </div>\n    <div class=\"cell chat__send-button\" fxFlex=\"70px\">\n      <button (click)=\"onSendMessage()\">Send</button>\n    </div>\n  </div>\n\n</div>\n\n"
 
 /***/ }),
 
@@ -759,6 +759,7 @@ var ChatComponent = /** @class */ (function () {
     function ChatComponent(chatService) {
         this.chatService = chatService;
         this.msgs = [];
+        this.activeManagers = [];
     }
     ChatComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -766,6 +767,10 @@ var ChatComponent = /** @class */ (function () {
             .subscribe(function (msg) {
             console.log(msg);
             _this.msgs.push(msg);
+        });
+        this.chatService.changeStatus()
+            .subscribe(function (activeManagers) {
+            _this.activeManagers = activeManagers;
         });
     };
     ChatComponent.prototype.onJoin = function () {
@@ -3061,6 +3066,14 @@ var ChatService = /** @class */ (function () {
             .fromEvent('messageFromServer')
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
             console.log('msg from server', data);
+            return data;
+        }));
+    };
+    ChatService.prototype.changeStatus = function () {
+        return this.socket
+            .fromEvent('changeStatus')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
+            console.log('changeStatus', data);
             return data;
         }));
     };

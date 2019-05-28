@@ -46,11 +46,12 @@ class ChatHelper {
         const { _id, avatar, role, login, provider, name, surname } = user;
         user = { _id, avatar, role, login, provider, name, surname };
       } else {
-        const { login, provider } = {
+        const { login, provider, role } = {
           login: 'guest ' + socket.id,
           provider: 'chat',
+          role: 'casual',
         };
-        user = { login, provider };
+        user = { login, provider, role };
       }
       socket.request.payload = {
         session_id: session.id,
@@ -107,8 +108,31 @@ class ChatHelper {
       const uniqueConnectedSessionsUsers = allconnectedSocketsPayload
           .map((value) => value.user.login)
           .map((client, index, self) => self.indexOf(client) === index ? allconnectedSocketsPayload[index] : false)
-          .filter((value) => value.user);
+          .filter((value) => value)
+          .map((value) => value.user);
       resolve(uniqueConnectedSessionsUsers);
+    });
+  }
+
+  async getConnectedManagers(io) {
+    return new Promise(async (resolve, reject) => {
+      let connectedSockets;
+      try {
+        connectedSockets = await this.getConnectedSockets(io);
+      } catch (err) {
+        reject(err);
+      }
+      const connectedManagers = connectedSockets
+          .map((socket) => io.sockets.connected[socket].request.payload)
+          .filter((value) => value.user.role === 'admin');
+
+      log.debug('connectedManagers %o', connectedManagers);
+      const connectedUniqueManagers = connectedManagers
+          .map((value) => value.user.login)
+          .map((client, index, self) => self.indexOf(client) === index ? connectedManagers[index] : false)
+          .filter((value) => value)
+          .map((value) => value.user);
+      resolve(connectedUniqueManagers);
     });
   }
 
