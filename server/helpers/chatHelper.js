@@ -77,10 +77,11 @@ class ChatHelper {
       if (user._id) {
       // registred user in db
         try {
-          const res = await this.dbHelper.upsert(
+          const res = await this.dbHelper.updateOne(
               'ChatActiveUserModel',
               {_id: user._id},
-              { _id: user._id, session_id, socket_id}
+              { _id: user._id, session_id, socket_id, updatedAt: Date.now()},
+              true
           );
           log.debug('res', res);
           return resolve();
@@ -93,7 +94,6 @@ class ChatHelper {
         return resolve();
 
         // find by session_id in active chat users db and upsert
-
       }
     });
   }

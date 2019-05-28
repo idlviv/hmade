@@ -13,12 +13,12 @@ class DBHelper {
     let choise;
     switch (model) {
       case 'UserModel':
-        choise = require('../models/userModel');
+        return require('../models/userModel');
         break;
     }
     switch (model) {
       case 'ChatActiveUserModel':
-        choise = require('../models/chatActiveUserModel');
+        return require('../models/chatActiveUserModel');
         break;
     }
     return choise;
@@ -34,14 +34,12 @@ class DBHelper {
     });
   }
 
-  async upsert(model, query, modificationRequest) {
+  async updateOne(model, query, modificationRequest, upsert) {
     return new Promise((resolve, reject) => {
-      log.debug('modificationRequest %o', modificationRequest);
-      DBHelper.chooseModel(model).update(query,
-          { $set: modificationRequest }, { upsert: true })
+      DBHelper.chooseModel(model).updateOne(query,
+          { $set: modificationRequest }, { upsert })
           .then(
               (result) => {
-                log.debug('ok');
                 if (result.ok !== 1) {
                   reject(new ApplicationError('Не вдалося внести зміни', 400));
                 }

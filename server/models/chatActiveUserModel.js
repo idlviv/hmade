@@ -51,5 +51,10 @@ const ChatActiveUserSchema = new Schema({
   },
 });
 
+ChatActiveUserSchema.pre('save', function(next) {
+  this.updatedAt = Date.now();
+  next();
+});
+
 let chatActiveUserModel = mongoose.model('chatActiveUsers', ChatActiveUserSchema);
 module.exports = chatActiveUserModel;
