@@ -18,6 +18,7 @@ export class ChatComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.chatService.connect();
 
     this.chatService.getMessage()
       .subscribe(msg => {
@@ -31,6 +32,7 @@ export class ChatComponent implements OnInit {
         this.activeManagers = activeManagers;
       }
       );
+
   }
 
   onJoin() {

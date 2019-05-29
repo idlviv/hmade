@@ -13,6 +13,14 @@ export class ChatService {
 
   constructor(private socket: Socket) { }
 
+  connect() {
+    this.socket.connect();
+  }
+
+  disconnect() {
+    this.socket.disconnect();
+  }
+
   sendMessage(msg: IChatMessage) {
     console.log('msg to server', msg);
     // if (!this.joined) {

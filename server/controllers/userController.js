@@ -293,27 +293,21 @@ const userProfile = function(req, res, next) {
  * @param {*} next
  * @return {*}
  */
-const userLogout = async function(req, res, next) {
+const userLogout = function(req, res, next) {
+
   req.logout();
 
-  // const chatHelper = new ChatHelper();
-  // chat logout - reload io active users
-  const io = req.app.get('io');
-  console.log('req.session %o', req.session.socket_id);
-  io.sockets.connected[req.session.socket_id].disconnect(true);
+  // req.session.destroy((err) => {
+    // chat logout - reload io active users
+    // const io = req.app.get('io');
+    // log.debug('destroy');
+    // io.emit('reloadSession', session_id);
 
-  // let connectedManagers;
-  // try {
-  //   connectedManagers = await chatHelper.getConnectedManagers(io);
-  // } catch (err) {
-  //   return next(err);
-  // }
-  // io.emit('changeStatus', connectedManagers);
-
-  setUserCookie(null)(req, res, next)
-      .then(() => {
-        return res.status(200).json('Logged out');
-      });
+    setUserCookie(null)(req, res, next)
+        .then(() => {
+          return res.status(200).json('Logged out');
+        });
+  // });
 };
 
 /**
@@ -336,9 +330,11 @@ const userLogin = function(req, res, next) {
       avatar: req.user._doc.avatar,
       provider: req.user._doc.provider,
       role: req.user._doc.role,
-
     };
-    console.log('login');
+    const session_id = req.session.id;
+
+    io.emit('reloadSession', session_id);
+
     setUserCookie(user)(req, res, next)
         .then(() => {
           // const token = sharedHelper.createJWT('', user, 60, 'JWT_SECRET');

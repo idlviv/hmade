@@ -71,7 +71,8 @@ import { FormsModule } from '@angular/forms';
     FooterComponent,
     ContentComponent,
     AboutComponent,
-    LiteratureComponent
+    LiteratureComponent,
+    ChatComponent,
   ],
 })
 export class SharedModule { }

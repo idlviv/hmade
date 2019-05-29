@@ -58,12 +58,12 @@ class ChatHelper {
         socket_id: socket.id,
         user,
       };
-      session.socket_id = socket.id;
-      try {
-        await this.saveSession(session);
-      } catch (err) {
-        return reject(err);
-      }
+      // session.socket_id = socket.id;
+      // try {
+      //   await this.saveSession(session);
+      // } catch (err) {
+      //   return reject(err);
+      // }
       resolve();
     });
   }
@@ -127,7 +127,7 @@ class ChatHelper {
           .map((socket) => io.sockets.connected[socket].request.payload)
           .filter((value) => value.user.role === 'admin');
 
-      log.debug('connectedManagers %o', connectedManagers);
+      log.debug('connectedManagers %o', connectedManagers.socket_id);
       const connectedUniqueManagers = connectedManagers
           .map((value) => value.user.login)
           .map((client, index, self) => self.indexOf(client) === index ? connectedManagers[index] : false)
@@ -153,7 +153,7 @@ class ChatHelper {
   logEvents(emitter) {
     const _emitter = emitter.emit;
     emitter.emit = function(...args) {
-      log.debug('emitted %o', args[0]);
+      // log.debug('emitted %o', args[0]);
       _emitter.apply(emitter, args);
     };
   }
