@@ -15,10 +15,30 @@ export class ChatService {
 
   connect() {
     this.socket.connect();
+    console.log('connected from front');
   }
 
-  disconnect() {
-    this.socket.disconnect();
+  onConnect() {
+    return this.socket
+      .fromEvent<IChatMessage>('connect')
+      .pipe(
+        map(data => {
+          console.log('connect', data);
+          return data;
+        })
+      );
+  }
+
+  onDisconnect() {
+    return this.socket
+      .fromEvent<IChatMessage>('disconnect')
+      .pipe(
+        map(data => {
+          console.log('disconnect', data);
+          return data;
+        })
+      );
+    // this.socket.disconnect();
   }
 
   sendMessage(msg: IChatMessage) {

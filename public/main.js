@@ -763,7 +763,15 @@ var ChatComponent = /** @class */ (function () {
     }
     ChatComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.chatService.connect();
+        this.chatService.onDisconnect()
+            .subscribe(function (msg) {
+            _this.msgs = [];
+            _this.chatService.connect();
+        });
+        this.chatService.onConnect()
+            .subscribe(function (msg) {
+            _this.msgs = [];
+        });
         this.chatService.getMessage()
             .subscribe(function (msg) {
             console.log(msg);
@@ -773,6 +781,9 @@ var ChatComponent = /** @class */ (function () {
             .subscribe(function (activeManagers) {
             _this.activeManagers = activeManagers;
         });
+    };
+    ChatComponent.prototype.connect = function () {
+        this.chatService.connect();
     };
     ChatComponent.prototype.onJoin = function () {
         this.chatService.join({ room: this.room });
@@ -3050,9 +3061,24 @@ var ChatService = /** @class */ (function () {
     }
     ChatService.prototype.connect = function () {
         this.socket.connect();
+        console.log('connected from front');
     };
-    ChatService.prototype.disconnect = function () {
-        this.socket.disconnect();
+    ChatService.prototype.onConnect = function () {
+        return this.socket
+            .fromEvent('connect')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
+            console.log('connect', data);
+            return data;
+        }));
+    };
+    ChatService.prototype.onDisconnect = function () {
+        return this.socket
+            .fromEvent('disconnect')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
+            console.log('disconnect', data);
+            return data;
+        }));
+        // this.socket.disconnect();
     };
     ChatService.prototype.sendMessage = function (msg) {
         console.log('msg to server', msg);

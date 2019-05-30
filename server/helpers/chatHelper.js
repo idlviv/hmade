@@ -20,7 +20,7 @@ class ChatHelper {
     await this.storePayloadInSocketSession(session, socket);
   }
 
-  async findSocketsBindedToSession(session_id, io) {
+  async updateSocketsBindedToSession(session_id, io) {
     return new Promise(async (resolve, reject) => {
       let activeSockets_id;
       try {
@@ -28,7 +28,6 @@ class ChatHelper {
       } catch (err) {
         return reject(err);
       }
-
       const activeSockets = activeSockets_id.map((socket_id) => io.sockets.connected[socket_id]);
       activeSockets.forEach(async (socket) => {
         const session_idFromSocket = socket.request.payload.session_id;
@@ -45,6 +44,35 @@ class ChatHelper {
           }
         }
       });
+      resolve();
+    });
+  }
+
+  async killSocketsBindedToSession(session_id, io) {
+    return new Promise(async (resolve, reject) => {
+      let activeSockets_id;
+      try {
+        activeSockets_id = await this.getConnectedSockets(io);
+      } catch (err) {
+        return reject(err);
+      }
+      const activeSockets = activeSockets_id.map((socket_id) => io.sockets.connected[socket_id]);
+      activeSockets.forEach(async (socket) => {
+        const session_idFromSocket = socket.request.payload.session_id;
+        console.log('session_idFromSocket ', session_idFromSocket, 'for session ', session_id);
+        if (session_idFromSocket !== session_id) {
+          log.debug('skip destroye socket %o', socket.id);
+          return;
+        } else {
+          try {
+            socket.disconnect(true);
+            log.debug('destroyed socket', socket.id);
+          } catch (err) {
+            return reject(err);
+          }
+        }
+      });
+      resolve();
     });
   }
 

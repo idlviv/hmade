@@ -20,30 +20,6 @@ module.exports = (io) => {
       return next(err);
     }
 
-    // try {
-    //   await chatHelper.storeUserInSocketSession(session);
-    // } catch (err) {
-    //   return next(err);
-    // }
-
-    // write express session to socket
-    // socket.request.socketSession = session;
-
-    // socket.request.payload = {
-    //   session_id: session.id,
-    //   socket_id: socket.id,
-    //   user: socket.request.socketSession.userData,
-    // };
-    // const session_id = session.id;
-    // const socket_id = socket.id;
-    // const user = socket.request.socketSession.userData;
-
-    // try {
-    //   await chatHelper.storeActiveUsersToDb(session_id, socket_id, user);
-    // } catch (err) {
-    //   return next(err);
-    // }
-
     return next();
   });
 
@@ -67,30 +43,8 @@ module.exports = (io) => {
   // io.sockets.emit(); //send to all connected clients (same as socket.emit)
   // io.sockets.on(); //initial connection from a client.
 
-  io.on('reloadSession', (session_id) => {
-    log.debug('reload');
-    io.clients.forEach(async (socket) => {
-      if (socket.request.payload.session_id !== session_id) {
-        return;
-      } else {
-        let session;
-        try {
-          session = await chatHelper.getSessionBySocket(socket);
-        } catch (err) {
-          return next(err);
-        }
-        try {
-          await chatHelper.storePayloadInSocketSession(session, socket);
-        } catch (err) {
-          return next(err);
-        }
-      }
-    });
-  });
-
   io.on('connection', async (socket) => {
     chatHelper.logEvents(socket);
-
 
     log.debug('socket connected %o', await chatHelper.getConnectedSockets(io));
 
@@ -121,7 +75,7 @@ module.exports = (io) => {
       } catch (err) {
         return next(err);
       }
-
+      
       io.emit('changeStatus', connectedManagers);
       console.log('This socket lost connection %o', reason);
     });

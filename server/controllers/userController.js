@@ -299,7 +299,8 @@ const userLogout = async function(req, res, next) {
   const session_id = req.session.id;
   const io = req.app.get('io');
   const chatHelper = new ChatHelper();
-  await chatHelper.findSocketsBindedToSession(session_id, io);
+
+  await chatHelper.killSocketsBindedToSession(session_id, io);
 
   setUserCookie(null)(req, res, next)
       .then(() => {
@@ -333,7 +334,8 @@ const userLogin = async function(req, res, next) {
     const session_id = req.session.id;
     const io = req.app.get('io');
     const chatHelper = new ChatHelper();
-    await chatHelper.findSocketsBindedToSession(session_id, io);
+
+    await chatHelper.killSocketsBindedToSession(session_id, io);
 
     setUserCookie(user)(req, res, next)
         .then(() => {

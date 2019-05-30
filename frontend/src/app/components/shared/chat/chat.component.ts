@@ -18,7 +18,19 @@ export class ChatComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.chatService.connect();
+
+    this.chatService.onDisconnect()
+      .subscribe(msg => {
+        this.msgs = [];
+        this.chatService.connect();
+      });
+
+    
+
+    this.chatService.onConnect()
+      .subscribe(msg => {
+        this.msgs = [];
+      });
 
     this.chatService.getMessage()
       .subscribe(msg => {
@@ -33,6 +45,10 @@ export class ChatComponent implements OnInit {
       }
       );
 
+  }
+
+  connect() {
+    this.chatService.connect();
   }
 
   onJoin() {
