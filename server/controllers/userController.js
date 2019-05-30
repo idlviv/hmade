@@ -293,8 +293,13 @@ const userProfile = function(req, res, next) {
  * @param {*} next
  * @return {*}
  */
-const userLogout = function(req, res, next) {
+const userLogout = async function(req, res, next) {
   req.logout();
+
+  const session_id = req.session.id;
+  const io = req.app.get('io');
+  const chatHelper = new ChatHelper();
+  await chatHelper.findSocketsBindedToSession(session_id, io);
 
   setUserCookie(null)(req, res, next)
       .then(() => {
@@ -324,13 +329,11 @@ const userLogin = async function(req, res, next) {
       provider: req.user._doc.provider,
       role: req.user._doc.role,
     };
+
     const session_id = req.session.id;
     const io = req.app.get('io');
     const chatHelper = new ChatHelper();
-
     await chatHelper.findSocketsBindedToSession(session_id, io);
-
-    io.emit('reloadSession', session_id);
 
     setUserCookie(user)(req, res, next)
         .then(() => {

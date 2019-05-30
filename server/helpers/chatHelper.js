@@ -17,32 +17,34 @@ class ChatHelper {
   async refreshSocketPayload(socket_id, io) {
     const socket = io.sockets.connected[socket_id];
     const session = await this.getSessionBySocket(socket);
-    await storePayloadInSocketSession(session, socket);
+    await this.storePayloadInSocketSession(session, socket);
   }
 
   async findSocketsBindedToSession(session_id, io) {
-    // const session_id = session.id;
-    let activeSockets_id;
-    try {
-      activeSockets_id = await this.getConnectedSockets(io);
-    } catch (err) {
-      return reject(err);
-    }
-
-    const activeSockets = activeSockets_id.map((socket_id) => io.sockets.connected[socket_id]);
-    activeSockets.forEach(async (socket) => {
-      const socket_id = socket.request.payload.socket_id;
-      log.debug('socket_id %o', socket.request.payload.socket_id);
-      log.debug('session_id %o', session_id);
-      if (socket_id !== session_id) {
-        return;
-      } else {
-        try {
-          await this.refreshSocketPayload(socket_id, io);
-        } catch (err) {
-          return reject(err);
-        }
+    return new Promise(async (resolve, reject) => {
+      let activeSockets_id;
+      try {
+        activeSockets_id = await this.getConnectedSockets(io);
+      } catch (err) {
+        return reject(err);
       }
+
+      const activeSockets = activeSockets_id.map((socket_id) => io.sockets.connected[socket_id]);
+      activeSockets.forEach(async (socket) => {
+        const session_idFromSocket = socket.request.payload.session_id;
+        console.log('session_idFromSocket ', session_idFromSocket, 'for session ', session_id);
+        if (session_idFromSocket !== session_id) {
+          log.debug('skip socket %o', socket.id);
+          return;
+        } else {
+          try {
+            await this.refreshSocketPayload(socket.id, io);
+            log.debug('refresh socket %o', socket.id);
+          } catch (err) {
+            return reject(err);
+          }
+        }
+      });
     });
   }
 

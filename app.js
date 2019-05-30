@@ -51,14 +51,14 @@ app.use(csrfCookie);
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(function(req, res, next) {
-  if (req.session && req.session.passport && req.session.passport.user) {
-    log.debug('session user %o', req.session.passport);
-  } else {
-    log.debug('session - not user %o', req.session.id);
-  }
-  next();
-});
+// app.use(function(req, res, next) {
+//   if (req.session && req.session.passport && req.session.passport.user) {
+//     log.debug('session user %o', req.session.passport);
+//   } else {
+//     log.debug('session - not user %o', req.session.id);
+//   }
+//   next();
+// });
 
 app.use(setUserCookie);
 
