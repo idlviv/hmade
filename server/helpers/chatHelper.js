@@ -14,6 +14,38 @@ class ChatHelper {
     this.dbHelper = new DBHelper();
   }
 
+  async refreshSocketPayload(socket_id, io) {
+    const socket = io.sockets.connected[socket_id];
+    const session = await this.getSessionBySocket(socket);
+    await storePayloadInSocketSession(session, socket);
+  }
+
+  async findSocketsBindedToSession(session_id, io) {
+    // const session_id = session.id;
+    let activeSockets_id;
+    try {
+      activeSockets_id = await this.getConnectedSockets(io);
+    } catch (err) {
+      return reject(err);
+    }
+
+    const activeSockets = activeSockets_id.map((socket_id) => io.sockets.connected[socket_id]);
+    activeSockets.forEach(async (socket) => {
+      const socket_id = socket.request.payload.socket_id;
+      log.debug('socket_id %o', socket.request.payload.socket_id);
+      log.debug('session_id %o', session_id);
+      if (socket_id !== session_id) {
+        return;
+      } else {
+        try {
+          await this.refreshSocketPayload(socket_id, io);
+        } catch (err) {
+          return reject(err);
+        }
+      }
+    });
+  }
+
   async getSessionBySocket(socket) {
     return new Promise((resolve, reject) => {
       const handshakeData = socket.request;
@@ -127,7 +159,6 @@ class ChatHelper {
           .map((socket) => io.sockets.connected[socket].request.payload)
           .filter((value) => value.user.role === 'admin');
 
-      log.debug('connectedManagers %o', connectedManagers.socket_id);
       const connectedUniqueManagers = connectedManagers
           .map((value) => value.user.login)
           .map((client, index, self) => self.indexOf(client) === index ? connectedManagers[index] : false)

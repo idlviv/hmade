@@ -294,19 +294,12 @@ const userProfile = function(req, res, next) {
  * @return {*}
  */
 const userLogout = function(req, res, next) {
-
   req.logout();
 
-  // req.session.destroy((err) => {
-    // chat logout - reload io active users
-    // const io = req.app.get('io');
-    // log.debug('destroy');
-    // io.emit('reloadSession', session_id);
-
-    setUserCookie(null)(req, res, next)
-        .then(() => {
-          return res.status(200).json('Logged out');
-        });
+  setUserCookie(null)(req, res, next)
+      .then(() => {
+        return res.status(200).json('Logged out');
+      });
   // });
 };
 
@@ -320,7 +313,7 @@ const userLogout = function(req, res, next) {
  * @param {*} next
  * @return {*}
  */
-const userLogin = function(req, res, next) {
+const userLogin = async function(req, res, next) {
   if (req.user) {
     const user = {
       _id: req.user._doc._id,
@@ -332,6 +325,10 @@ const userLogin = function(req, res, next) {
       role: req.user._doc.role,
     };
     const session_id = req.session.id;
+    const io = req.app.get('io');
+    const chatHelper = new ChatHelper();
+
+    await chatHelper.findSocketsBindedToSession(session_id, io);
 
     io.emit('reloadSession', session_id);
 

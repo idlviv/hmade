@@ -66,7 +66,7 @@ module.exports = (io) => {
   // io.sockets.socket(); //for emiting to specific clients
   // io.sockets.emit(); //send to all connected clients (same as socket.emit)
   // io.sockets.on(); //initial connection from a client.
-  
+
   io.on('reloadSession', (session_id) => {
     log.debug('reload');
     io.clients.forEach(async (socket) => {
@@ -90,7 +90,7 @@ module.exports = (io) => {
 
   io.on('connection', async (socket) => {
     chatHelper.logEvents(socket);
-    
+
 
     log.debug('socket connected %o', await chatHelper.getConnectedSockets(io));
 
