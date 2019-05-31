@@ -32,6 +32,7 @@ import { ImagePopupComponent } from './components/shared/image-popup/image-popup
 import { CookieService } from 'ngx-cookie-service';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+import { SocketModule } from './components/socket/socket.module';
 
 const config: SocketIoConfig = { url: 'localhost:8081', options: {} };
 
@@ -47,6 +48,7 @@ const config: SocketIoConfig = { url: 'localhost:8081', options: {} };
     MaterialModule,
     AppRoutingModule,
     SharedModule,
+    SocketModule,
     RecaptchaModule.forRoot(),
     RecaptchaFormsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),

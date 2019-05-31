@@ -24,7 +24,6 @@ import { ImagePopupComponent } from './image-popup/image-popup.component';
 import { ScrollingDirective } from 'src/app/directives/scrolling.directive';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { LiteratureComponent } from './literature/literature.component';
-import { ChatComponent } from './chat/chat.component';
 import { FormsModule } from '@angular/forms';
 
 @NgModule({
@@ -57,7 +56,6 @@ import { FormsModule } from '@angular/forms';
     ScrollingDirective,
     PrivacyComponent,
     LiteratureComponent,
-    ChatComponent,
   ],
   exports: [
     Page404Component,
@@ -72,7 +70,6 @@ import { FormsModule } from '@angular/forms';
     ContentComponent,
     AboutComponent,
     LiteratureComponent,
-    ChatComponent,
   ],
 })
 export class SharedModule { }
