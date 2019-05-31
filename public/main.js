@@ -2622,7 +2622,7 @@ var ChatComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<p>\n  socket works!\n</p>\n<app-chat></app-chat>cd"
+module.exports = "<app-chat></app-chat>"
 
 /***/ }),
 
