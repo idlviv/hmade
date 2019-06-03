@@ -73,17 +73,24 @@ module.exports = (io) => {
       try {
         connectedManagers = await chatHelper.getConnectedManagers(io);
       } catch (err) {
-        return next(err);
+        return new ApplicationError(err);
       }
-      
       io.emit('changeStatus', connectedManagers);
       console.log('This socket lost connection %o', reason);
     });
 
-    socket.on('join', (params) => {
-      socket.join(params.room);
-      socket.emit('messageFromServer', {message: `wellcome to ${params.room}`});
-      socket.broadcast.to(params.room).emit('messageFromServer', { message: `new user joined to ${params.room}` });
+    socket.on('joinToManager', async (manager_id) => {
+      let getSocketsByUser_id;
+      try {
+        getSocketsByUser_id = await chatHelper.getSocketsByUser_id(manager_id);
+      } catch (err) {
+        return new ApplicationError(err);
+      }
+      io.to(getSocketsByUser_id[0]).emit('joinToManager', socket.id);
+      log.debug('joinToManager %o', getSocketsByUser_id);
+      // socket.emit('joinToManager', manager_id);
+      // socket.emit('messageFromServer', {message: `wellcome to ${params.room}`});
+      // socket.broadcast.to(params.room).emit('messageFromServer', { message: `new user joined to ${params.room}` });
     });
 
     socket.on('messageToServer', (msg) => {

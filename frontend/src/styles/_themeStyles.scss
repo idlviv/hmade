@@ -1479,3 +1479,10 @@ a.hover-button {
     bottom: 8px;
   }
 }
+
+.showChatBtn {
+  z-index: 5;
+  position: fixed;
+  bottom: 16px;
+  right: 16px;
+}

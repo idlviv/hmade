@@ -20,6 +20,32 @@ class ChatHelper {
     await this.storePayloadInSocketSession(session, socket);
   }
 
+  async getSocketsByUser_id(user_id) {
+    return new Promise(async (resolve, reject) => {
+      let socketsByUser_id = [];
+      let activeSockets_id;
+      try {
+        activeSockets_id = await this.getConnectedSockets(io);
+      } catch (err) {
+        reject(err);
+      }
+      const activeSockets = activeSockets_id.map((socket_id) => io.sockets.connected[socket_id]);
+      activeSockets.forEach(async (socket) => {
+        log.debug('user_id %o', typeof user_id);
+        log.debug('user_id %o', socket.request.payload.user._id + '');
+        const user_idFromSocket = socket.request.payload.user._id + '';
+        if (user_idFromSocket !== user_id) {
+          log.debug('skip socket %o', socket.id);
+          return;
+        } else {
+          socketsByUser_id.push(socket.id);
+          log.debug('push socket %o', socketsByUser_id);
+        }
+      });
+      resolve(socketsByUser_id);
+    });
+  }
+
   async updateSocketsBindedToSession(session_id, io) {
     return new Promise(async (resolve, reject) => {
       let activeSockets_id;

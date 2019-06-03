@@ -24,9 +24,12 @@ export class ChatComponent implements OnInit {
         this.msgs = [];
         this.chatService.connect();
       });
-
     
-
+    this.chatService.onJoinToManager()
+      .subscribe(requestFromUser => {
+        console.log('requestFromUser', requestFromUser);
+      });
+    
     this.chatService.onConnect()
       .subscribe(msg => {
         this.msgs = [];
@@ -43,17 +46,15 @@ export class ChatComponent implements OnInit {
       .subscribe(activeManagers => {
         this.activeManagers = activeManagers;
       }
-      );
-
+    ) ;
   }
 
   connect() {
     this.chatService.connect();
   }
 
-  onJoin() {
-    this.chatService.join({ room: this.room });
-    this.room = '';
+  joinToManager(manager_id) {
+    this.chatService.joinToManager(manager_id);
   }
 
   onSendMessage() {

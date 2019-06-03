@@ -49,14 +49,21 @@ export class ChatService {
     this.socket.emit('messageToServer', msg);
   }
 
-  join(data = {room: 'common'}) {
-    console.log('join to room', data.room);
-    data.room = data.room || 'common';
-    this.room = data.room;
-    this.joined = true;
-    this.socket.emit('join', data);
+  joinToManager(manager_id) {
+    this.socket.emit('joinToManager', manager_id);
   }
 
+  onJoinToManager() {
+    return this.socket
+      .fromEvent<IChatMessage>('joinToManager')
+      .pipe(
+        map(requestFromUser => {
+          console.log('requestFromUser', requestFromUser);
+          return requestFromUser;
+        })
+      );
+  }
+  
   getMessage(): Observable<IChatMessage> {
     return this.socket
       .fromEvent<IChatMessage>('messageFromServer')
