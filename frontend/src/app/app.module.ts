@@ -33,6 +33,7 @@ import { CookieService } from 'ngx-cookie-service';
 
 import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { SocketModule } from './components/socket/socket.module';
+import { ChatService } from './services/chat.service';
 
 const config: SocketIoConfig = { url: 'localhost:8081', options: {} };
 
@@ -69,7 +70,8 @@ const config: SocketIoConfig = { url: 'localhost:8081', options: {} };
     SharedService,
     AuthGuard,
     NoAuthGuard,
-    CookieService
+    CookieService,
+    ChatService
   ],
   exports: [
   ],
