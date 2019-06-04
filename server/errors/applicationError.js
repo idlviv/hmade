@@ -31,3 +31,6 @@ module.exports = ApplicationError;
 // recaptchaErr () => clientError - 403 Forbidden
 // bc (Bestcrypt errors) - 500 Internal Server Error
 // notAuthorized (don't have permission) => clientError - 401 Unauthorized
+
+// 403 - обмежений доступ
+// 401 - не авторизовано
