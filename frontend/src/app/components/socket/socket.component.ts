@@ -6,14 +6,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./socket.component.scss']
 })
 export class SocketComponent implements OnInit {
-  showChat = false;
 
   constructor() { }
 
   ngOnInit() {
-  }
-
-  onShowChat() {
-    this.showChat = !this.showChat
   }
 }

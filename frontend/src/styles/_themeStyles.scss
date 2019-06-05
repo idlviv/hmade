@@ -33,6 +33,11 @@ body {
   margin: 0;
 }
 
+ul {
+  list-style: none;
+  padding-inline-start: 0;
+}
+
 a, a:visited, a:hover, a:active {
   text-decoration: none;
   color: inherit;
@@ -1472,17 +1477,19 @@ a.hover-button {
   height: 50%;
   border-radius: 16px 8px 8px 16px;
   border: 2px solid mat-color($background, status-bar) !important;
-  padding: 8px;
 
-  &__send-control {
-    position: absolute;
-    bottom: 8px;
+}
+
+.chControl {
+  &__input {
+    input {
+      width: 100%;
+    }
   }
 }
-
-.showChatBtn {
-  z-index: 5;
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-}
+// .showChatBtn {
+//   z-index: 5;
+//   position: fixed;
+//   bottom: 16px;
+//   right: 16px;
+// }

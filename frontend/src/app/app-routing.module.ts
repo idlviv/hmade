@@ -1,4 +1,4 @@
-import { Routes, RouterModule } from '@angular/router';
+import { Routes, RouterModule, PreloadAllModules } from '@angular/router';
 import { NgModule } from '@angular/core';
 import { Page404Component } from './components/shared/page-404/page-404.component';
 import { AuthGuard } from './guards/auth.guard';
@@ -57,6 +57,7 @@ const appRoutes: Routes = [
   imports: [
     RouterModule.forRoot(
       appRoutes,
+      {preloadingStrategy: PreloadAllModules}
     )
   ],
   exports: [

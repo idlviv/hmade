@@ -139,7 +139,7 @@ var AppRoutingModule = /** @class */ (function () {
     AppRoutingModule = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
             imports: [
-                _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forRoot(appRoutes)
+                _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forRoot(appRoutes, { preloadingStrategy: _angular_router__WEBPACK_IMPORTED_MODULE_0__["PreloadAllModules"] })
             ],
             exports: [
                 _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"]
@@ -563,6 +563,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/index.js");
 /* harmony import */ var ngx_socket_io__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ngx-socket-io */ "./node_modules/ngx-socket-io/index.js");
 /* harmony import */ var _components_socket_socket_module__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./components/socket/socket.module */ "./src/app/components/socket/socket.module.ts");
+/* harmony import */ var _services_chat_service__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./services/chat.service */ "./src/app/services/chat.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -592,6 +593,7 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 // import { ScrollingDirective } from './directives/scrolling.directive';
+
 
 
 
@@ -629,7 +631,8 @@ var AppModule = /** @class */ (function () {
                 _services_shared_service__WEBPACK_IMPORTED_MODULE_14__["SharedService"],
                 _guards_auth_guard__WEBPACK_IMPORTED_MODULE_15__["AuthGuard"],
                 _guards_no_auth_guard__WEBPACK_IMPORTED_MODULE_16__["NoAuthGuard"],
-                ngx_cookie_service__WEBPACK_IMPORTED_MODULE_23__["CookieService"]
+                ngx_cookie_service__WEBPACK_IMPORTED_MODULE_23__["CookieService"],
+                _services_chat_service__WEBPACK_IMPORTED_MODULE_26__["ChatService"]
             ],
             exports: [],
             entryComponents: [
@@ -2516,7 +2519,7 @@ var SharedModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container chat\">\r\n  <h2 class=\"mat-h2 chat__header\">chat works!</h2>\r\n  <div class=\"mat-h4\" *ngFor=\"let activeManager of activeManagers\">\r\n    \r\n    <button class=\"mat-raised-button\" (click)=\"joinToManager(activeManager._id)\">{{activeManager.login}}</button>\r\n\r\n\r\n  </div>\r\n  <div class=\"row chat__messages\" fxLayout=\"row\">\r\n    <div class=\"cell\" fxFlex>\r\n      <ul class=\"row messages\">\r\n        <li *ngFor=\"let msg of msgs\" class=\"cell messages__item\">\r\n          {{msg.message}}\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"130px\">\r\n        <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"room\">\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"70px\">\r\n        <button (click)=\"onJoin()\">Join</button>\r\n      </div>\r\n    </div>\r\n  <div class=\"chat__send-control row\" fxLayout=\"row\">\r\n    <div class=\"cell chat__input-message\" fxFlex=\"130px\">\r\n      <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"message\">\r\n    </div>\r\n    <div class=\"cell chat__send-button\" fxFlex=\"70px\">\r\n      <button (click)=\"onSendMessage()\">Send</button>\r\n    </div>\r\n  </div>\r\n\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"container chat\">\r\n\r\n  <!-- <section class=\"row chat__switch\" fxLayout=\"row\">\r\n    <div class=\"cell chat__switch_type_on\" fxFlex=\"100\">\r\n      <button mat-fab (click)=\"chatVisibleSwitch()\">\r\n        <mat-icon>chat_bubble</mat-icon>\r\n      </button>\r\n    </div>\r\n    <div class=\"cell chat__switch_type_off\" fxFlex=\"100\">\r\n      <button mat-fab (click)=\"chatVisibleSwitch()\">\r\n        <mat-icon>speaker_notes_off</mat-icon>\r\n      </button>\r\n    </div>\r\n  </section> -->\r\n\r\n  <section *ngIf=\"chatVisible\" class=\"row chat__activeManagers\" fxLayout=\"row\">\r\n    <div class=\"cell\" *ngFor=\"let activeManager of activeManagers\" fxFlex>\r\n      <button class=\"mat-raised-button\" (click)=\"joinToManager(activeManager._id)\">{{activeManager.login}}</button>\r\n    </div>\r\n  </section>\r\n\r\n  <section *ngIf=\"chatVisible\" class=\"row chat__dialog chDialog\" fxLayout=\"row\">\r\n    <div class=\"cell chDialog__wrapper\" fxFlex=\"100\">\r\n      <ul class=\"row chMessages\" fxLayout=\"row\">\r\n        <li *ngFor=\"let msg of msgs\" class=\"cell chMessages__item\" fxFlex=\"100\">\r\n          <div class=\"chMessages__item_fromUser\">{{msg.message}}</div>\r\n          <div class=\"chMessages__item_fromServer\">{{msg.message}}</div>\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </section>\r\n\r\n  <section *ngIf=\"chatVisible\" class=\"row chat__footer chControl\" fxLayout=\"row\">\r\n    <div class=\"cell chControl__input\" fxFlex=\"calc(100%-70px)\" fxLayoutAlign=\"start center\">\r\n      <input matInput [(ngModel)]=\"message\">\r\n    </div>\r\n    <div class=\"cell chControl__send\" fxFlex=\"70px\" fxLayoutAlign=\"center center\">\r\n      <button mat-mini-fab (click)=\"onSendMessage()\">\r\n        <mat-icon>send</mat-icon>\r\n      </button>\r\n    </div>\r\n  </section>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n<!-- <div class=\"container chat\">\r\n  <h2 class=\"mat-h2 chat__header\">chat works!</h2>\r\n\r\n  <div class=\"row chat__messages\" fxLayout=\"row\">\r\n    <div class=\"cell\" fxFlex>\r\n      <ul class=\"row messages\">\r\n        <li *ngFor=\"let msg of msgs\" class=\"cell messages__item\">\r\n          {{msg.message}}\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"130px\">\r\n        <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"room\">\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"70px\">\r\n        <button (click)=\"onJoin()\">Join</button>\r\n      </div>\r\n    </div>\r\n  <div class=\"chat__send-control row\" fxLayout=\"row\">\r\n    <div class=\"cell chat__input-message\" fxFlex=\"130px\">\r\n      <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"message\">\r\n    </div>\r\n    <div class=\"cell chat__send-button\" fxFlex=\"70px\">\r\n      <button (click)=\"onSendMessage()\">Send</button>\r\n    </div>\r\n  </div>\r\n\r\n</div> -->"
 
 /***/ }),
 
@@ -2559,6 +2562,7 @@ var ChatComponent = /** @class */ (function () {
         this.chatService = chatService;
         this.msgs = [];
         this.activeManagers = [];
+        this.chatVisible = true;
     }
     ChatComponent.prototype.ngOnInit = function () {
         var _this = this;
@@ -2584,6 +2588,9 @@ var ChatComponent = /** @class */ (function () {
             .subscribe(function (activeManagers) {
             _this.activeManagers = activeManagers;
         });
+    };
+    ChatComponent.prototype.chatVisibleSwitch = function () {
+        this.chatVisible = !this.chatVisible;
     };
     ChatComponent.prototype.connect = function () {
         this.chatService.connect();
@@ -2625,7 +2632,7 @@ var ChatComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<!-- <div class=\"showChatBtn\">\r\n    <button class=\"mat-button\" (click)=\"onShowChat()\">Chat</button>\r\n</div> -->\r\n<app-chat></app-chat>"
+module.exports = "<app-chat></app-chat>\r\n\r\n"
 
 /***/ }),
 
@@ -2663,12 +2670,8 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 var SocketComponent = /** @class */ (function () {
     function SocketComponent() {
-        this.showChat = false;
     }
     SocketComponent.prototype.ngOnInit = function () {
-    };
-    SocketComponent.prototype.onShowChat = function () {
-        this.showChat = !this.showChat;
     };
     SocketComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -2700,12 +2703,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _socket_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./socket.component */ "./src/app/components/socket/socket.component.ts");
 /* harmony import */ var _chat_chat_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./chat/chat.component */ "./src/app/components/socket/chat/chat.component.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
+/* harmony import */ var src_app_material_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/material.module */ "./src/app/material.module.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
+
 
 
 
@@ -2722,7 +2727,8 @@ var SocketModule = /** @class */ (function () {
             ],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormsModule"]
+                _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormsModule"],
+                src_app_material_module__WEBPACK_IMPORTED_MODULE_5__["MaterialModule"],
             ],
             exports: [
                 _socket_component__WEBPACK_IMPORTED_MODULE_2__["SocketComponent"]

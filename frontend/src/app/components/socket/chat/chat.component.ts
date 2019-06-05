@@ -13,6 +13,9 @@ export class ChatComponent implements OnInit {
   @Input() room: string;
   activeManagers = [];
 
+  chatVisible = true;
+
+
   constructor(
     private chatService: ChatService,
   ) { }
@@ -49,6 +52,11 @@ export class ChatComponent implements OnInit {
     ) ;
   }
 
+
+
+  chatVisibleSwitch() {
+    this.chatVisible = !this.chatVisible;
+  }
   connect() {
     this.chatService.connect();
   }

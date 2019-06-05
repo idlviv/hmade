@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { SocketComponent } from './socket.component';
 import { ChatComponent } from './chat/chat.component';
 import { FormsModule } from '@angular/forms';
+import { MaterialModule } from 'src/app/material.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { FormsModule } from '@angular/forms';
   ],
   imports: [
     CommonModule,
-    FormsModule
+    FormsModule,
+    MaterialModule,
   ],
   exports: [
     SocketComponent
