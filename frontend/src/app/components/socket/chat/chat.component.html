@@ -15,6 +15,7 @@
 
   <section *ngIf="chatVisible" class="row chat__activeManagers" fxLayout="row">
     <div class="cell" *ngFor="let activeManager of activeManagers" fxFlex>
+      <div>Active manager {{activeManager | json}}</div>
       <button class="mat-raised-button" (click)="joinToManager(activeManager._id)">{{activeManager.login}}</button>
     </div>
   </section>
@@ -23,8 +24,8 @@
     <div class="cell chDialog__wrapper" fxFlex="100">
       <ul class="row chMessages" fxLayout="row">
         <li *ngFor="let msg of msgs" class="cell chMessages__item" fxFlex="100">
-          <div class="chMessages__item_fromUser">{{msg.message}}</div>
-          <div class="chMessages__item_fromServer">{{msg.message}}</div>
+          <div>{{msg | json}}</div>
+          <!-- <div class="chMessages__item_fromServer">{{msg.message}}</div> -->
         </li>
       </ul>
     </div>
