@@ -14,9 +14,19 @@ export class ChatService {
 
   constructor(private socket: Socket) { }
 
+
+  connect() {
+    this.socket.connect();
+    console.log('connected from front');
+  }
+  
   // emitters
   guestName(guestName) {
     this.socket.emit('guestName', guestName);
+  }
+
+  joinToManager(manager_id) {
+    this.socket.emit('joinToManager', manager_id);
   }
 
   // listeners
@@ -66,10 +76,6 @@ export class ChatService {
   }
 
 
-  connect() {
-    this.socket.connect();
-    console.log('connected from front');
-  }
 
   // onConnect() {
   //   return this.socket
@@ -92,9 +98,7 @@ export class ChatService {
   //   this.socket.emit('messageToServer', msg);
   // }
 
-  // joinToManager(manager_id) {
-  //   this.socket.emit('joinToManager', manager_id);
-  // }
+
 
   // onJoinToManager() {
   //   return this.socket

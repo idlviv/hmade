@@ -2600,6 +2600,9 @@ var ChatComponent = /** @class */ (function () {
     ChatComponent.prototype.guestName = function (name) {
         this.chatService.guestName(name);
     };
+    ChatComponent.prototype.joinToManager = function (manager_id) {
+        this.chatService.joinToManager(manager_id);
+    };
     ChatComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-chat',
@@ -3176,9 +3179,16 @@ var ChatService = /** @class */ (function () {
         this.socket = socket;
         this.joined = false;
     }
+    ChatService.prototype.connect = function () {
+        this.socket.connect();
+        console.log('connected from front');
+    };
     // emitters
     ChatService.prototype.guestName = function (guestName) {
         this.socket.emit('guestName', guestName);
+    };
+    ChatService.prototype.joinToManager = function (manager_id) {
+        this.socket.emit('joinToManager', manager_id);
     };
     // listeners
     ChatService.prototype.onMessage = function () {
@@ -3214,10 +3224,6 @@ var ChatService = /** @class */ (function () {
             _this.socket.disconnect();
             return data;
         }));
-    };
-    ChatService.prototype.connect = function () {
-        this.socket.connect();
-        console.log('connected from front');
     };
     ChatService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({

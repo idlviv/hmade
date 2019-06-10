@@ -58,6 +58,10 @@ export class ChatComponent implements OnInit {
     this.chatService.guestName(name);
   }
 
+  joinToManager(manager_id) {
+    this.chatService.joinToManager(manager_id);
+  }
+
   // connect() {
   //   this.chatService.connect();
   // }
@@ -98,9 +102,7 @@ export class ChatComponent implements OnInit {
   //   this.chatService.connect();
   // }
 
-  // joinToManager(manager_id) {
-  //   this.chatService.joinToManager(manager_id);
-  // }
+
 
   // onSendMessage() {
   //   this.chatService.sendMessage({ message: this.message });
