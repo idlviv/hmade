@@ -134,12 +134,12 @@ class ChatHelper {
         const { _id, avatar, role, login, provider, name, surname } = user;
         user = { _id, avatar, role, login, provider, name, surname };
       } else {
-        const { login, provider, role } = {
-          login: 'guest ' + socket.id,
+        const { name, provider, role } = {
+          name: 'guest ' + socket.id,
           provider: 'chat',
           role: 'casual',
         };
-        user = { login, provider, role };
+        user = { name, provider, role };
       }
       socket.request.payload = {
         session_id: session.id,

@@ -13,6 +13,20 @@
     </div>
   </section> -->
 
+  <section class="row chat__whatIsYourName">
+    <form [formGroup]="getGuestNameForm">
+      <mat-form-field>
+        <input matInput placeholder="Як Вас звати" formControlName="getGuestName" required>
+        <mat-error *ngIf="getGuestNameForm.get('getGuestName').errors?.required &&
+                            getGuestNameForm.get('getGuestName').touched">
+          Введіть ім'я
+        </mat-error>
+      </mat-form-field>
+      <button [disabled]="!getGuestNameForm.get('getGuestName').valid" (click)="guestName(getGuestNameForm.get('getGuestName').value)">ok</button>
+    </form>
+
+  </section>
+
   <section *ngIf="chatVisible" class="row chat__activeManagers" fxLayout="row">
     <div class="cell" *ngFor="let activeManager of activeManagers" fxFlex>
       <div>Active manager {{activeManager | json}}</div>

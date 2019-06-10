@@ -14,60 +14,15 @@ export class ChatService {
 
   constructor(private socket: Socket) { }
 
-  connect() {
-    this.socket.connect();
-    console.log('connected from front');
+  // emitters
+  guestName(guestName) {
+    this.socket.emit('guestName', guestName);
   }
 
-  onConnect() {
+  // listeners
+  onMessage(): Observable<any> {
     return this.socket
-      .fromEvent<IChatMessage>('connect')
-      .pipe(
-        map(data => {
-          console.log('connect', data);
-          return data;
-        })
-      );
-  }
-
-  onDisconnect() {
-    return this.socket
-      .fromEvent<IChatMessage>('disconnect')
-      .pipe(
-        map(data => {
-          console.log('disconnect', data);
-          return data;
-        })
-      );
-    // this.socket.disconnect();
-  }
-
-  sendMessage(msg: IChatMessage) {
-    console.log('msg to server', msg);
-    // if (!this.joined) {
-    //   this.join();
-    // }
-    this.socket.emit('messageToServer', msg);
-  }
-
-  joinToManager(manager_id) {
-    this.socket.emit('joinToManager', manager_id);
-  }
-
-  onJoinToManager() {
-    return this.socket
-      .fromEvent<IChatMessage>('joinToManager')
-      .pipe(
-        map(requestFromUser => {
-          console.log('requestFromUser', requestFromUser);
-          return requestFromUser;
-        })
-      );
-  }
-  
-  getMessage(): Observable<IChatMessage> {
-    return this.socket
-      .fromEvent<IChatMessage>('messageFromServer')
+      .fromEvent<any>('message')
       .pipe(
         map(data => {
           console.log('msg from server', data);
@@ -76,14 +31,89 @@ export class ChatService {
       );
   }
 
-  changeStatus(): Observable<[object]> {
+  onGetGuestName(): Observable<any> {
     return this.socket
-      .fromEvent<[object]>('changeStatus')
+      .fromEvent<any>('getGuestName')
       .pipe(
         map(data => {
-          console.log('changeStatus', data);
+          console.log('getGuestName', data);
           return data;
         })
       );
   }
+
+
+
+  // connect() {
+  //   this.socket.connect();
+  //   console.log('connected from front');
+  // }
+
+  // onConnect() {
+  //   return this.socket
+  //     .fromEvent<IChatMessage>('connect')
+  //     .pipe(
+  //       map(data => {
+  //         console.log('connect', data);
+  //         return data;
+  //       })
+  //     );
+  // }
+
+  // onDisconnect() {
+  //   return this.socket
+  //     .fromEvent<IChatMessage>('disconnect')
+  //     .pipe(
+  //       map(data => {
+  //         console.log('disconnect', data);
+  //         return data;
+  //       })
+  //     );
+  //   // this.socket.disconnect();
+  // }
+
+  // sendMessage(msg: IChatMessage) {
+  //   console.log('msg to server', msg);
+  //   // if (!this.joined) {
+  //   //   this.join();
+  //   // }
+  //   this.socket.emit('messageToServer', msg);
+  // }
+
+  // joinToManager(manager_id) {
+  //   this.socket.emit('joinToManager', manager_id);
+  // }
+
+  // onJoinToManager() {
+  //   return this.socket
+  //     .fromEvent<IChatMessage>('joinToManager')
+  //     .pipe(
+  //       map(requestFromUser => {
+  //         console.log('requestFromUser', requestFromUser);
+  //         return requestFromUser;
+  //       })
+  //     );
+  // }
+  
+  // getMessage(): Observable<IChatMessage> {
+  //   return this.socket
+  //     .fromEvent<IChatMessage>('messageFromServer')
+  //     .pipe(
+  //       map(data => {
+  //         console.log('msg from server', data);
+  //         return data;
+  //       })
+  //     );
+  // }
+
+  // changeStatus(): Observable<[object]> {
+  //   return this.socket
+  //     .fromEvent<[object]>('changeStatus')
+  //     .pipe(
+  //       map(data => {
+  //         console.log('changeStatus', data);
+  //         return data;
+  //       })
+  //     );
+  // }
 }

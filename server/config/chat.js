@@ -26,77 +26,86 @@ module.exports = (io) => {
   io.on('connection', async (socket) => {
     chatHelper.logEvents(socket);
     log.debug('socket connected %o', await chatHelper.getConnectedSockets(io));
-
-    if (socket.request.payload.user && socket.request.payload.user.name) {
+    const regitredUsersRoles = ['guest', 'user', 'manager', 'admin', 'google', 'facebook'];
+    if (socket.request.payload.user && regitredUsersRoles.indexOf(socket.request.payload.user.role) !== -1) {
       socket.emit('message', 'Hello ' + socket.request.payload.user.name);
-    }
-    socket.emit('message', 'hello');
-
-    let connectedManagers;
-    try {
-      connectedManagers = await chatHelper.getConnectedManagers(io);
-    } catch (err) {
-      return next(err);
+    } else {
+      socket.emit('getGuestName', null);
     }
 
-    io.emit('changeStatus', connectedManagers);
-
-    socket.broadcast.emit('messageFromServer', {
-      message: `new user connected: ${socket.request.payload.user.login}`,
-      payload: connectedManagers,
-    });
-
-    socket.emit('messageFromServer', {
-      message: `welcome ${socket.request.payload.user.login}`,
-      payload: connectedManagers,
-    });
-
-    socket.on('disconnect', async function onDisconnect(reason) {
-      log.debug('socket disconnected %o', await chatHelper.getConnectedSockets(io));
-
-      try {
-        connectedManagers = await chatHelper.getConnectedManagers(io);
-      } catch (err) {
-        return new ApplicationError(err);
-      }
-      io.emit('changeStatus', connectedManagers);
-      console.log('This socket lost connection %o', reason);
-    });
-
-    socket.on('joinToManager', async (manager_id) => {
-      let getSocketsByUser_id;
-      try {
-        getSocketsByUser_id = await chatHelper.getSocketsByUser_id(manager_id);
-      } catch (err) {
-        return new ApplicationError(err);
-      }
-      io.to(getSocketsByUser_id[0]).emit('joinToManager', socket.id);
-      log.debug('joinToManager %o', getSocketsByUser_id);
-      // socket.emit('joinToManager', manager_id);
-      // socket.emit('messageFromServer', {message: `wellcome to ${params.room}`});
-      // socket.broadcast.to(params.room).emit('messageFromServer', { message: `new user joined to ${params.room}` });
-    });
-
-    socket.on('messageToServer', (msg) => {
-      // msg.room = msg.room || 'common';
-      // log.debug('msg %o', msg);
-      msg.message = `you: ${msg.message}`;
-      socket.emit('messageFromServer', msg);
-      msg.message = `${socket.id}: ${msg.message}`;
-      socket.broadcast.emit('messageFromServer', msg);
-      // const socketSession = socket.request.socketSession;
-      // if (socketSession.passport) {
-      //   log.debug(`user ${socketSession.passport.user}, messageFromServer: ${msg.message}`);
-      //   msg.message = `user: ${socketSession.passport.user}, messageFromServer: ${msg.message}`;
-      //   socket.broadcast.to(msg.room).emit('messageFromServer', msg);
-      // } else {
-      //   log.debug(`not user, messageFromServer: ${msg.message}`);
-      //   msg.message = `not user, messageFromServer: ${msg.message}`;
-      //   socket.broadcast.to(msg.room).emit('messageFromServer', msg);
-      // }
+    // listeners
+    socket.on('guestName', (data) => {
+      log.debug('guestName', data);
+      socket.request.payload.user.name = data;
+      socket.emit('message', 'Hello ' + socket.request.payload.user.name);
     });
   });
 };
+//   let connectedManagers;
+//   try {
+//     connectedManagers = await chatHelper.getConnectedManagers(io);
+//   } catch (err) {
+//     return next(err);
+//   }
+
+//   io.emit('changeStatus', connectedManagers);
+
+//   socket.broadcast.emit('messageFromServer', {
+//     message: `new user connected: ${socket.request.payload.user.login}`,
+//     payload: connectedManagers,
+//   });
+
+//   socket.emit('messageFromServer', {
+//     message: `welcome ${socket.request.payload.user.login}`,
+//     payload: connectedManagers,
+//   });
+
+//   socket.on('disconnect', async function onDisconnect(reason) {
+//     log.debug('socket disconnected %o', await chatHelper.getConnectedSockets(io));
+
+//     try {
+//       connectedManagers = await chatHelper.getConnectedManagers(io);
+//     } catch (err) {
+//       return new ApplicationError(err);
+//     }
+//     io.emit('changeStatus', connectedManagers);
+//     console.log('This socket lost connection %o', reason);
+//   });
+
+//   socket.on('joinToManager', async (manager_id) => {
+//     let getSocketsByUser_id;
+//     try {
+//       getSocketsByUser_id = await chatHelper.getSocketsByUser_id(manager_id);
+//     } catch (err) {
+//       return new ApplicationError(err);
+//     }
+//     io.to(getSocketsByUser_id[0]).emit('joinToManager', socket.id);
+//     log.debug('joinToManager %o', getSocketsByUser_id);
+//     // socket.emit('joinToManager', manager_id);
+//     // socket.emit('messageFromServer', {message: `wellcome to ${params.room}`});
+//     // socket.broadcast.to(params.room).emit('messageFromServer', { message: `new user joined to ${params.room}` });
+//   });
+
+//   socket.on('messageToServer', (msg) => {
+//     // msg.room = msg.room || 'common';
+//     // log.debug('msg %o', msg);
+//     msg.message = `you: ${msg.message}`;
+//     socket.emit('messageFromServer', msg);
+//     msg.message = `${socket.id}: ${msg.message}`;
+//     socket.broadcast.emit('messageFromServer', msg);
+//     // const socketSession = socket.request.socketSession;
+//     // if (socketSession.passport) {
+//     //   log.debug(`user ${socketSession.passport.user}, messageFromServer: ${msg.message}`);
+//     //   msg.message = `user: ${socketSession.passport.user}, messageFromServer: ${msg.message}`;
+//     //   socket.broadcast.to(msg.room).emit('messageFromServer', msg);
+//     // } else {
+//     //   log.debug(`not user, messageFromServer: ${msg.message}`);
+//     //   msg.message = `not user, messageFromServer: ${msg.message}`;
+//     //   socket.broadcast.to(msg.room).emit('messageFromServer', msg);
+//     // }
+//   });
+// });
+// };
 
 // io.$emit - to server (for io.on())
 // io.emit - to all connected users -> io.to('room).emit - to all users connected to 'room'
