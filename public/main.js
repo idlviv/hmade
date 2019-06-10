@@ -2562,38 +2562,44 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var ChatComponent = /** @class */ (function () {
     function ChatComponent(chatService) {
         this.chatService = chatService;
-        this.msgs = [];
+        // msgs: IChatMessage[] = [];
+        // @Input() message: string;
+        // @Input() room: string;
         this.activeManagers = [];
+        this.msgs = [];
         this.chatVisible = true;
     }
     ChatComponent.prototype.ngOnInit = function () {
+        var _this = this;
         this.getGuestNameForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
             getGuestName: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
                 _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
             ]),
         });
         this.chatService.onMessage()
-            .subscribe(function (msg) {
-            console.log(msg);
-            // this.msgs.push(msg);
+            .subscribe(function (data) {
+            console.log(data);
+            _this.msgs.push(data);
         });
         this.chatService.onGetGuestName()
-            .subscribe(function (msg) {
-            console.log(msg);
+            .subscribe(function (data) {
+            console.log(data);
             // this.msgs.push(msg);
+        });
+        this.chatService.onActiveManagers()
+            .subscribe(function (data) {
+            console.log(data);
+            _this.activeManagers = data;
+        });
+        this.chatService.onDisconnect()
+            .subscribe(function (msg) {
+            _this.msgs = [];
+            _this.chatService.connect();
         });
     };
     ChatComponent.prototype.guestName = function (name) {
         this.chatService.guestName(name);
     };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
-    ], ChatComponent.prototype, "message", void 0);
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Input"])(),
-        __metadata("design:type", String)
-    ], ChatComponent.prototype, "room", void 0);
     ChatComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
             selector: 'app-chat',
@@ -3190,6 +3196,28 @@ var ChatService = /** @class */ (function () {
             console.log('getGuestName', data);
             return data;
         }));
+    };
+    ChatService.prototype.onActiveManagers = function () {
+        return this.socket
+            .fromEvent('activeManagers')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
+            console.log('activeManagers', data);
+            return data;
+        }));
+    };
+    ChatService.prototype.onDisconnect = function () {
+        var _this = this;
+        return this.socket
+            .fromEvent('disconnect')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
+            console.log('disconnect', data);
+            _this.socket.disconnect();
+            return data;
+        }));
+    };
+    ChatService.prototype.connect = function () {
+        this.socket.connect();
+        console.log('connected from front');
     };
     ChatService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({

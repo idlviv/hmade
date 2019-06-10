@@ -25,9 +25,22 @@ module.exports = (io) => {
 
   io.on('connection', async (socket) => {
     chatHelper.logEvents(socket);
+
     log.debug('socket connected %o', await chatHelper.getConnectedSockets(io));
-    const regitredUsersRoles = ['guest', 'user', 'manager', 'admin', 'google', 'facebook'];
-    if (socket.request.payload.user && regitredUsersRoles.indexOf(socket.request.payload.user.role) !== -1) {
+    const regitredUsersRoles = ['guest', 'user', 'google', 'facebook'];
+    const previleggedRoles = ['manager', 'admin']; // TODO: remove admin
+
+    if (socket.request.payload.user && previleggedRoles.indexOf(socket.request.payload.user.role) !== -1) {
+      socket.emit('message', 'Hello manager ' + socket.request.payload.user.name);
+      let connectedManagers;
+      try {
+        connectedManagers = await chatHelper.getConnectedManagers(io);
+      } catch (err) {
+        // TODO: error
+        return next(err);
+      }
+      io.emit('activeManagers', connectedManagers);
+    } else if (socket.request.payload.user && regitredUsersRoles.indexOf(socket.request.payload.user.role) !== -1) {
       socket.emit('message', 'Hello ' + socket.request.payload.user.name);
     } else {
       socket.emit('getGuestName', null);

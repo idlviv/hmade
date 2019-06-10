@@ -9,11 +9,11 @@ import { FormControl, Validators, FormGroup } from '@angular/forms';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  msgs: IChatMessage[] = [];
-  @Input() message: string;
-  @Input() room: string;
+  // msgs: IChatMessage[] = [];
+  // @Input() message: string;
+  // @Input() room: string;
   activeManagers = [];
-
+  msgs = [];
   chatVisible = true;
 
   getGuestNameForm: FormGroup;
@@ -30,26 +30,37 @@ export class ChatComponent implements OnInit {
     });
 
     this.chatService.onMessage()
-      .subscribe(msg => {
-        console.log(msg);
-        // this.msgs.push(msg);
+      .subscribe(data => {
+        console.log(data);
+        this.msgs.push(data);
       });
 
     this.chatService.onGetGuestName()
-      .subscribe(msg => {
-        console.log(msg);
+      .subscribe(data => {
+        console.log(data);
         // this.msgs.push(msg);
+      });
+
+    this.chatService.onActiveManagers()
+      .subscribe(data => {
+        console.log(data);
+        this.activeManagers = data;
+      });
+
+    this.chatService.onDisconnect()
+      .subscribe(msg => {
+        this.msgs = [];
+        this.chatService.connect();
       });
   }
 
   guestName(name) {
     this.chatService.guestName(name);
   }
-  //   this.chatService.onDisconnect()
-  //     .subscribe(msg => {
-  //       this.msgs = [];
-  //       this.chatService.connect();
-  //     });
+
+  // connect() {
+  //   this.chatService.connect();
+  // }
 
   //   this.chatService.onJoinToManager()
   //     .subscribe(requestFromUser => {

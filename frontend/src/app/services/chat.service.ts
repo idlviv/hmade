@@ -42,12 +42,34 @@ export class ChatService {
       );
   }
 
+  onActiveManagers(): Observable<any> {
+    return this.socket
+      .fromEvent<any>('activeManagers')
+      .pipe(
+        map(data => {
+          console.log('activeManagers', data);
+          return data;
+        })
+      );
+  }
+
+  onDisconnect() {
+    return this.socket
+      .fromEvent<any>('disconnect')
+      .pipe(
+        map(data => {
+          console.log('disconnect', data);
+          this.socket.disconnect();
+          return data;
+        })
+      );
+  }
 
 
-  // connect() {
-  //   this.socket.connect();
-  //   console.log('connected from front');
-  // }
+  connect() {
+    this.socket.connect();
+    console.log('connected from front');
+  }
 
   // onConnect() {
   //   return this.socket
@@ -60,17 +82,7 @@ export class ChatService {
   //     );
   // }
 
-  // onDisconnect() {
-  //   return this.socket
-  //     .fromEvent<IChatMessage>('disconnect')
-  //     .pipe(
-  //       map(data => {
-  //         console.log('disconnect', data);
-  //         return data;
-  //       })
-  //     );
-  //   // this.socket.disconnect();
-  // }
+
 
   // sendMessage(msg: IChatMessage) {
   //   console.log('msg to server', msg);
@@ -94,7 +106,7 @@ export class ChatService {
   //       })
   //     );
   // }
-  
+
   // getMessage(): Observable<IChatMessage> {
   //   return this.socket
   //     .fromEvent<IChatMessage>('messageFromServer')

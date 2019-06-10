@@ -92,7 +92,7 @@ class ChatHelper {
         } else {
           try {
             socket.disconnect(true);
-            log.debug('destroyed socket', socket.id);
+            log.debug('destroyed socket %o', socket.id);
           } catch (err) {
             return reject(err);
           }
