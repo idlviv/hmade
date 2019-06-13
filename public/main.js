@@ -2596,6 +2596,11 @@ var ChatComponent = /** @class */ (function () {
             _this.msgs = [];
             _this.chatService.connect();
         });
+        this.chatService.onJoinToManager()
+            .subscribe(function (data) {
+            console.log(data);
+            _this.joinToManagerRoom = data;
+        });
     };
     ChatComponent.prototype.guestName = function (name) {
         this.chatService.guestName(name);
@@ -3222,6 +3227,14 @@ var ChatService = /** @class */ (function () {
             .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
             console.log('disconnect', data);
             _this.socket.disconnect();
+            return data;
+        }));
+    };
+    ChatService.prototype.onJoinToManager = function () {
+        return this.socket
+            .fromEvent('joinToManager')
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["map"])(function (data) {
+            console.log('joinToManager', data);
             return data;
         }));
     };

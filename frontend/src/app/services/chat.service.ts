@@ -75,6 +75,17 @@ export class ChatService {
       );
   }
 
+    onJoinToManager() {
+    return this.socket
+      .fromEvent<any>('joinToManager')
+      .pipe(
+        map(data => {
+          console.log('joinToManager', data);
+          return data;
+        })
+      );
+  }
+
 
 
   // onConnect() {

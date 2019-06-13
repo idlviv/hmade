@@ -2,6 +2,7 @@ const log = require('../config/winston')(module);
 const ChatHelper = require('../helpers/chatHelper');
 const ApplicationError = require('../errors/applicationError');
 const ClientError = require('../errors/clientError');
+const uuidv4 = require('uuid/v4');
 
 module.exports = (io) => {
   let chatHelper = new ChatHelper();
@@ -65,14 +66,22 @@ module.exports = (io) => {
     });
 
     socket.on('joinToManager', async (manager_id) => {
-      let getSocketsByUser_id;
+      let socketsByUser_id;
       try {
-        getSocketsByUser_id = await chatHelper.getSocketsByUser_id(manager_id);
+        socketsByUser_id = await chatHelper.getSocketsByUser_id(manager_id);
       } catch (err) {
         return new ApplicationError(err);
       }
-      io.to(getSocketsByUser_id[0]).emit('joinToManager', socket.id);
-      log.debug('joinToManager %o', getSocketsByUser_id);
+      log.debug('socket rooms prev %o', socket.rooms);
+
+      const room = uuidv4();
+      io.sockets.connected[socketsByUser_id[0]].join(room);
+      socket.join(room);
+
+      socket.emit('joinToManager', room);
+      io.to(socketsByUser_id[0]).emit('joinToManager', room);
+      // log.debug('joinToManager %o', getSocketsByUser_id);
+      log.debug('socket rooms %o', socket.rooms);
     // socket.emit('joinToManager', manager_id);
     // socket.emit('messageFromServer', {message: `wellcome to ${params.room}`});
     // socket.broadcast.to(params.room).emit('messageFromServer', { message: `new user joined to ${params.room}` });

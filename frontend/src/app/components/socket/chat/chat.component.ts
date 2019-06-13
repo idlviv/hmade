@@ -15,7 +15,8 @@ export class ChatComponent implements OnInit {
   activeManagers = [];
   msgs = [];
   chatVisible = true;
-
+  joinToManagerRoom: any;
+  
   getGuestNameForm: FormGroup;
 
   constructor(
@@ -51,6 +52,12 @@ export class ChatComponent implements OnInit {
       .subscribe(msg => {
         this.msgs = [];
         this.chatService.connect();
+      });
+
+    this.chatService.onJoinToManager()
+      .subscribe(data => {
+        console.log(data);
+        this.joinToManagerRoom = data;
       });
   }
 
