@@ -32,7 +32,7 @@ export class SocketService {
   }
 
   disconnected() {
-    console.log('connected');
+    console.log('disconnected');
   }
 
 }
