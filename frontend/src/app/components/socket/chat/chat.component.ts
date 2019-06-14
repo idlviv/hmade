@@ -30,45 +30,45 @@ export class ChatComponent implements OnInit {
       ]),
     });
 
-    this.chatService.onMessage()
-      .subscribe(data => {
-        console.log(data);
-        this.msgs.push(data);
-      });
+    // this.chatService.onMessage()
+    //   .subscribe(data => {
+    //     console.log(data);
+    //     this.msgs.push(data);
+    //   });
 
-    this.chatService.onGetGuestName()
-      .subscribe(data => {
-        console.log(data);
-        // this.msgs.push(msg);
-      });
+    // this.chatService.onGetGuestName()
+    //   .subscribe(data => {
+    //     console.log(data);
+    //     // this.msgs.push(msg);
+    //   });
 
-    this.chatService.onActiveManagers()
-      .subscribe(data => {
-        console.log(data);
-        this.activeManagers = data;
-      });
+    // this.chatService.onActiveManagers()
+    //   .subscribe(data => {
+    //     console.log(data);
+    //     this.activeManagers = data;
+    //   });
 
-    this.chatService.onDisconnect()
-      .subscribe(msg => {
-        this.msgs = [];
-        this.chatService.connect();
-      });
+    // this.chatService.onDisconnect()
+    //   .subscribe(msg => {
+    //     this.msgs = [];
+    //     this.chatService.connect();
+    //   });
 
-    this.chatService.onJoinToManager()
-      .subscribe(data => {
-        console.log(data);
-        this.joinToManagerRoom = data;
-      });
+    // this.chatService.onJoinToManager()
+    //   .subscribe(data => {
+    //     console.log(data);
+    //     this.joinToManagerRoom = data;
+    //   });
   }
 
   
-  guestName(name) {
-    this.chatService.guestName(name);
-  }
+  // guestName(name) {
+  //   this.chatService.guestName(name);
+  // }
 
-  joinToManager(manager_id) {
-    this.chatService.joinToManager(manager_id);
-  }
+  // joinToManager(manager_id) {
+  //   this.chatService.joinToManager(manager_id);
+  // }
 
   // connect() {
   //   this.chatService.connect();

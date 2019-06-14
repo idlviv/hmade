@@ -29,9 +29,10 @@
     "aos": "^2.3.3",
     "classlist.js": "^1.1.20150312",
     "core-js": "^2.5.4",
-    "ng-recaptcha": "^3.0.5",
+    "ng-recaptcha": "^4.3.0",
     "ngx-cookie-service": "^2.1.0",
     "rxjs": "^6.3.3",
+    "socket.io-client": "^2.2.0",
     "zone.js": "^0.8.26"
   },
   "devDependencies": {
