@@ -14,92 +14,12 @@ class ChatHelper {
     this.dbHelper = new DBHelper();
   }
 
-  async refreshSocketPayload(socket_id, io) {
-    const socket = io.sockets.connected[socket_id];
-    const session = await this.getSessionBySocket(socket);
-    await this.storePayloadInSocketSession(session, socket);
-  }
-
-  async getSocketsByUser_id(user_id) {
-    return new Promise(async (resolve, reject) => {
-      let socketsByUser_id = [];
-      let activeSockets_id;
-      try {
-        activeSockets_id = await this.getConnectedSockets(io);
-      } catch (err) {
-        reject(err);
-      }
-      const activeSockets = activeSockets_id.map((socket_id) => io.sockets.connected[socket_id]);
-      activeSockets.forEach(async (socket) => {
-        log.debug('user_id %o', typeof user_id);
-        log.debug('user_id %o', socket.request.payload.user._id + '');
-        const user_idFromSocket = socket.request.payload.user._id + '';
-        if (user_idFromSocket !== user_id) {
-          log.debug('skip socket %o', socket.id);
-          return;
-        } else {
-          socketsByUser_id.push(socket.id);
-          log.debug('push socket %o', socketsByUser_id);
-        }
-      });
-      resolve(socketsByUser_id);
-    });
-  }
-
-  async updateSocketsBindedToSession(session_id, io) {
-    return new Promise(async (resolve, reject) => {
-      let activeSockets_id;
-      try {
-        activeSockets_id = await this.getConnectedSockets(io);
-      } catch (err) {
-        return reject(err);
-      }
-      const activeSockets = activeSockets_id.map((socket_id) => io.sockets.connected[socket_id]);
-      activeSockets.forEach(async (socket) => {
-        const session_idFromSocket = socket.request.payload.session_id;
-        console.log('session_idFromSocket ', session_idFromSocket, 'for session ', session_id);
-        if (session_idFromSocket !== session_id) {
-          log.debug('skip socket %o', socket.id);
-          return;
-        } else {
-          try {
-            await this.refreshSocketPayload(socket.id, io);
-            log.debug('refresh socket %o', socket.id);
-          } catch (err) {
-            return reject(err);
-          }
-        }
-      });
-      resolve();
-    });
-  }
-
-  async killSocketsBindedToSession(session_id, io) {
-    return new Promise(async (resolve, reject) => {
-      let activeSockets_id;
-      try {
-        activeSockets_id = await this.getConnectedSockets(io);
-      } catch (err) {
-        return reject(err);
-      }
-      const activeSockets = activeSockets_id.map((socket_id) => io.sockets.connected[socket_id]);
-      activeSockets.forEach(async (socket) => {
-        const session_idFromSocket = socket.request.payload.session_id;
-        console.log('session_idFromSocket ', session_idFromSocket, 'for session ', session_id);
-        if (session_idFromSocket !== session_id) {
-          log.debug('skip destroye socket %o', socket.id);
-          return;
-        } else {
-          try {
-            socket.disconnect(true);
-            log.debug('destroyed socket %o', socket.id);
-          } catch (err) {
-            return reject(err);
-          }
-        }
-      });
-      resolve();
-    });
+  logEvents(emitter) {
+    const _emitter = emitter.emit;
+    emitter.emit = function(...args) {
+      log.debug('emitted %o', args[0]);
+      _emitter.apply(emitter, args);
+    };
   }
 
   async getSessionBySocket(socket) {
@@ -167,6 +87,116 @@ class ChatHelper {
     });
   }
 
+  async getConnectedManagers(io) {
+    return new Promise(async (resolve, reject) => {
+      let connectedSockets;
+      try {
+        connectedSockets = await this.getConnectedSockets(io);
+      } catch (err) {
+        reject(err);
+      }
+      const connectedManagers = connectedSockets
+          .map((socket) => io.sockets.connected[socket].request.payload)
+          .filter((value) => value.user.role === 'admin');
+
+      const connectedUniqueManagers = connectedManagers
+          .map((value) => value.user.login)
+          .map((client, index, self) => self.indexOf(client) === index ? connectedManagers[index] : false)
+          .filter((value) => value)
+          .map((value) => value.user);
+      resolve(connectedUniqueManagers);
+    });
+  }
+
+  async getSocketsByUser_id(user_id) {
+    return new Promise(async (resolve, reject) => {
+      let socketsByUser_id = [];
+      let activeSockets_id;
+      try {
+        activeSockets_id = await this.getConnectedSockets(io);
+      } catch (err) {
+        reject(err);
+      }
+      const activeSockets = activeSockets_id.map((socket_id) => io.sockets.connected[socket_id]);
+      activeSockets.forEach(async (socket) => {
+        log.debug('user_id %o', typeof user_id);
+        log.debug('user_id %o', socket.request.payload.user._id + '');
+        const user_idFromSocket = socket.request.payload.user._id + '';
+        if (user_idFromSocket !== user_id) {
+          log.debug('skip socket %o', socket.id);
+          return;
+        } else {
+          socketsByUser_id.push(socket.id);
+          log.debug('push socket %o', socketsByUser_id);
+        }
+      });
+      resolve(socketsByUser_id);
+    });
+  }
+
+  async killSocketsBindedToSession(session_id, io) {
+    return new Promise(async (resolve, reject) => {
+      let activeSockets_id;
+      try {
+        activeSockets_id = await this.getConnectedSockets(io);
+      } catch (err) {
+        return reject(err);
+      }
+      const activeSockets = activeSockets_id.map((socket_id) => io.sockets.connected[socket_id]);
+      activeSockets.forEach(async (socket) => {
+        const session_idFromSocket = socket.request.payload.session_id;
+        console.log('session_idFromSocket ', session_idFromSocket, 'for session ', session_id);
+        if (session_idFromSocket !== session_id) {
+          log.debug('skip destroy socket %o', socket.id);
+          return;
+        } else {
+          try {
+            socket.disconnect(true);
+            log.debug('destroyed socket %o', socket.id);
+          } catch (err) {
+            return reject(err);
+          }
+        }
+      });
+      resolve();
+    });
+  }
+
+  // old
+  async refreshSocketPayload(socket_id, io) {
+    const socket = io.sockets.connected[socket_id];
+    const session = await this.getSessionBySocket(socket);
+    await this.storePayloadInSocketSession(session, socket);
+  }
+
+  async updateSocketsBindedToSession(session_id, io) {
+    return new Promise(async (resolve, reject) => {
+      let activeSockets_id;
+      try {
+        activeSockets_id = await this.getConnectedSockets(io);
+      } catch (err) {
+        return reject(err);
+      }
+      const activeSockets = activeSockets_id.map((socket_id) => io.sockets.connected[socket_id]);
+      activeSockets.forEach(async (socket) => {
+        const session_idFromSocket = socket.request.payload.session_id;
+        console.log('session_idFromSocket ', session_idFromSocket, 'for session ', session_id);
+        if (session_idFromSocket !== session_id) {
+          log.debug('skip socket %o', socket.id);
+          return;
+        } else {
+          try {
+            await this.refreshSocketPayload(socket.id, io);
+            log.debug('refresh socket %o', socket.id);
+          } catch (err) {
+            return reject(err);
+          }
+        }
+      });
+      resolve();
+    });
+  }
+
   // payloads of all unique express sessions that has active(connected) sockets
   async getUniqueConnectedSessionsPayload(io) {
     return new Promise(async (resolve, reject) => {
@@ -203,27 +233,6 @@ class ChatHelper {
     });
   }
 
-  async getConnectedManagers(io) {
-    return new Promise(async (resolve, reject) => {
-      let connectedSockets;
-      try {
-        connectedSockets = await this.getConnectedSockets(io);
-      } catch (err) {
-        reject(err);
-      }
-      const connectedManagers = connectedSockets
-          .map((socket) => io.sockets.connected[socket].request.payload)
-          .filter((value) => value.user.role === 'admin');
-
-      const connectedUniqueManagers = connectedManagers
-          .map((value) => value.user.login)
-          .map((client, index, self) => self.indexOf(client) === index ? connectedManagers[index] : false)
-          .filter((value) => value)
-          .map((value) => value.user);
-      resolve(connectedUniqueManagers);
-    });
-  }
-
   async getConnectedUsersCredentials(io) {
     return new Promise(async (resolve, reject) => {
       let connectedSockets;
@@ -237,13 +246,7 @@ class ChatHelper {
     });
   }
 
-  logEvents(emitter) {
-    const _emitter = emitter.emit;
-    emitter.emit = function(...args) {
-      // log.debug('emitted %o', args[0]);
-      _emitter.apply(emitter, args);
-    };
-  }
+
   // async storeUserInSocketSession(session) {
   //   return new Promise(async (resolve, reject) => {
   //     let user;

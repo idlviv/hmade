@@ -61,6 +61,7 @@ export class ChatComponent implements OnInit {
       });
   }
 
+  
   guestName(name) {
     this.chatService.guestName(name);
   }

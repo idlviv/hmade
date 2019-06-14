@@ -31,11 +31,11 @@ import { ImagePopupComponent } from './components/shared/image-popup/image-popup
 
 import { CookieService } from 'ngx-cookie-service';
 
-import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
+// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
 import { SocketModule } from './components/socket/socket.module';
 import { ChatService } from './services/chat.service';
 
-const config: SocketIoConfig = { url: 'localhost:8081', options: {} };
+// const config: SocketIoConfig = { url: 'localhost:8081', options: {} };
 
 @NgModule({
   declarations: [
@@ -54,7 +54,7 @@ const config: SocketIoConfig = { url: 'localhost:8081', options: {} };
     RecaptchaFormsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     ReactiveFormsModule,
-    SocketIoModule.forRoot(config),
+    // SocketIoModule.forRoot(config),
     // HttpClientXsrfModule.withOptions({
       // cookieName: '_csrf',
       // headerName: 'x-xsrf-token',

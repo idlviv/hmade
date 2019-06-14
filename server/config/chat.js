@@ -32,6 +32,8 @@ module.exports = (io) => {
     const previleggedRoles = ['manager', 'admin']; // TODO: remove admin
 
     if (socket.request.payload.user && previleggedRoles.indexOf(socket.request.payload.user.role) !== -1) {
+
+      // manager connected
       socket.emit('message', 'Hello manager ' + socket.request.payload.user.name);
       let connectedManagers;
       try {
@@ -39,30 +41,51 @@ module.exports = (io) => {
       } catch (err) {
         return new ApplicationError(err);
       }
+      // emit to all - updated managers list
       io.emit('activeManagers', connectedManagers);
     } else if (socket.request.payload.user && regitredUsersRoles.indexOf(socket.request.payload.user.role) !== -1) {
+
+      // registred user connected
       socket.emit('message', 'Hello ' + socket.request.payload.user.name);
-    } else {
-      socket.emit('getGuestName', null);
-    }
-
-    // listeners
-    socket.on('guestName', (data) => {
-      log.debug('guestName', data);
-      socket.request.payload.user.name = data;
-      socket.emit('message', 'Hello ' + socket.request.payload.user.name);
-    });
-
-    socket.on('disconnect', async function onDisconnect(reason) {
-      // log.debug('socket disconnected %o', await chatHelper.getConnectedSockets(io));
-
+      let connectedManagers;
       try {
         connectedManagers = await chatHelper.getConnectedManagers(io);
       } catch (err) {
         return new ApplicationError(err);
       }
+      // emit to user - updated managers list
+      socket.emit('activeManagers', connectedManagers);
+    } else {
+      // casual (guest) user connected
+      // ask for name
+      socket.emit('getGuestName', null);
+    }
+
+    // listeners
+    socket.on('guestName', async (data) => {
+      // casual (guest) user connected and called his name
+      socket.request.payload.user.name = data;
+      socket.emit('message', 'Hello ' + socket.request.payload.user.name);
+      let connectedManagers;
+      try {
+        connectedManagers = await chatHelper.getConnectedManagers(io);
+      } catch (err) {
+        return new ApplicationError(err);
+      }
+      // emit to casual (guest) user - updated managers list
+      socket.emit('activeManagers', connectedManagers);
+    });
+
+    socket.on('disconnect', async function onDisconnect(reason) {
+      try {
+        connectedManagers = await chatHelper.getConnectedManagers(io);
+      } catch (err) {
+        return new ApplicationError(err);
+      }
+      // emit to all - updated managers list
       io.emit('activeManagers', connectedManagers);
-      // console.log('This socket lost connection %o', reason);
+
+      log.debug('This socket ' + socket.id + ' lost connection - reason: ' + reason);
     });
 
     socket.on('joinToManager', async (manager_id) => {
