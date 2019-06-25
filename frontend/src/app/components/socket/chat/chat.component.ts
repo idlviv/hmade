@@ -1,7 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { ChatService } from '../../../services/chat.service';
 import { IChatMessage } from '../../../interfaces/interface';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { SocketService } from 'src/app/services/socket.service';
 
 @Component({
   selector: 'app-chat',
@@ -16,11 +16,11 @@ export class ChatComponent implements OnInit {
   msgs = [];
   chatVisible = true;
   joinToManagerRoom: any;
-  
+
   getGuestNameForm: FormGroup;
 
   constructor(
-    private chatService: ChatService,
+    private socketService: SocketService,
   ) { }
 
   ngOnInit() {
@@ -29,6 +29,8 @@ export class ChatComponent implements OnInit {
         Validators.required,
       ]),
     });
+
+    this.socketService.initialConnection();
 
     // this.chatService.onMessage()
     //   .subscribe(data => {
