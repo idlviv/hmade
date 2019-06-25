@@ -12,6 +12,17 @@
       </button>
     </div>
   </section> -->
+  <section class="row">
+    <div class="cell">
+      <p>Socket connected {{socketConnected}}</p>
+      <button class="mat-raised-button" (click)="connect()" [disabled]="socketConnected">Connect</button>
+      <button class="mat-raised-button" (click)="disconnect()" [disabled]="!socketConnected">Disconnect</button>
+      <button class="mat-raised-button" (click)="em(true)" [disabled]="!socketConnected">Emitter true</button>
+      <button class="mat-raised-button" (click)="em(false)" [disabled]="!socketConnected">Emitter false</button>
+
+    </div>
+  </section>
+
 
   <section class="row chat__whatIsYourName">
     <form [formGroup]="getGuestNameForm">

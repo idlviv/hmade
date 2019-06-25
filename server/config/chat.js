@@ -32,7 +32,6 @@ module.exports = (io) => {
     const previleggedRoles = ['manager', 'admin']; // TODO: remove admin
 
     if (socket.request.payload.user && previleggedRoles.indexOf(socket.request.payload.user.role) !== -1) {
-
       // manager connected
       socket.emit('message', 'Hello manager ' + socket.request.payload.user.name);
       let connectedManagers;
@@ -44,7 +43,6 @@ module.exports = (io) => {
       // emit to all - updated managers list
       io.emit('activeManagers', connectedManagers);
     } else if (socket.request.payload.user && regitredUsersRoles.indexOf(socket.request.payload.user.role) !== -1) {
-
       // registred user connected
       socket.emit('message', 'Hello ' + socket.request.payload.user.name);
       let connectedManagers;
@@ -62,6 +60,18 @@ module.exports = (io) => {
     }
 
     // listeners
+    socket.on('tmpEvent', function(data, callback) {
+      const success = data;
+      if (success) {
+        socket.emit('tmpEvent', success);
+        callback(success);
+      } else {
+        socket.emit('tmpEvent', success);
+        callback(success);
+      }
+    });
+
+
     socket.on('guestName', async (data) => {
       // casual (guest) user connected and called his name
       socket.request.payload.user.name = data;

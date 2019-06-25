@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as io from 'socket.io-client';
+import { loadDirective } from '@angular/core/src/render3/instructions';
 
 @Injectable({
   providedIn: 'root'
@@ -11,12 +12,13 @@ export class SocketService {
 
   constructor() { }
 
-  initialConnection() {
+  initialConnection(): Observable<any> {
     this.socket = io(this.host);
-    this.socket.on('connect', () => this.connected());
-    this.socket.on('disconnect', () => this.disconnected());
-    this.socket.on('error', (error: string) => {
-      console.log(`ERROR: "${error}" (${this.host})`);
+    return new Observable<any>((observer) => {
+      this.socket.on('connect', () => observer.next(true));
+      this.socket.on('disconnect', () => observer.next(false));
+      this.socket.on('error', (err: string) => observer.error(err));
+      this.socket.on('connect_error', (err: any) => observer.error(err.message));
     });
   }
 
@@ -25,6 +27,10 @@ export class SocketService {
   }
   disconnect() {
     this.socket.disconnect();
+  }
+
+  reconnect() {
+    this.connect();
   }
 
   connected() {
@@ -36,13 +42,36 @@ export class SocketService {
   }
 
   // emitters
-  guestName(guestName) {
-    this.socket.emit('guestName', guestName);
+  emit(eventName: string, message: any) {
+    return new Observable<any>(observer => {
+      this.socket.emit(eventName, message, function (success: boolean) {
+        if (success) {
+          // Успех
+          observer.next(success);
+        } else {
+          // Что-то пошло не так
+          observer.error(success);
+        }
+        observer.complete();
+      });
+    });
   }
 
-  joinToManager(manager_id) {
-    this.socket.emit('joinToManager', manager_id);
+  on(eventName) {
+    return new Observable<any>(observer => {
+      this.socket.off(eventName); // Если такое событие уже существует
+      this.socket.on(eventName, (data) => {
+        observer.next(data);
+      });
+    });
   }
+  // guestName(guestName) {
+  //   this.socket.emit('guestName', guestName);
+  // }
+
+  // joinToManager(manager_id) {
+  //   this.socket.emit('joinToManager', manager_id);
+  // }
 
   // listeners
   // onMessage(): Observable<any> {

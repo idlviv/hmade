@@ -2517,7 +2517,7 @@ var SharedModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container chat\">\r\n\r\n  <!-- <section class=\"row chat__switch\" fxLayout=\"row\">\r\n    <div class=\"cell chat__switch_type_on\" fxFlex=\"100\">\r\n      <button mat-fab (click)=\"chatVisibleSwitch()\">\r\n        <mat-icon>chat_bubble</mat-icon>\r\n      </button>\r\n    </div>\r\n    <div class=\"cell chat__switch_type_off\" fxFlex=\"100\">\r\n      <button mat-fab (click)=\"chatVisibleSwitch()\">\r\n        <mat-icon>speaker_notes_off</mat-icon>\r\n      </button>\r\n    </div>\r\n  </section> -->\r\n\r\n  <section class=\"row chat__whatIsYourName\">\r\n    <form [formGroup]=\"getGuestNameForm\">\r\n      <mat-form-field>\r\n        <input matInput placeholder=\"Як Вас звати\" formControlName=\"getGuestName\" required>\r\n        <mat-error *ngIf=\"getGuestNameForm.get('getGuestName').errors?.required &&\r\n                            getGuestNameForm.get('getGuestName').touched\">\r\n          Введіть ім'я\r\n        </mat-error>\r\n      </mat-form-field>\r\n      <button [disabled]=\"!getGuestNameForm.get('getGuestName').valid\" (click)=\"guestName(getGuestNameForm.get('getGuestName').value)\">ok</button>\r\n    </form>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"chatVisible\" class=\"row chat__activeManagers\" fxLayout=\"row\">\r\n    <div class=\"cell\" *ngFor=\"let activeManager of activeManagers\" fxFlex>\r\n      <div>Active manager {{activeManager | json}}</div>\r\n      <button class=\"mat-raised-button\" (click)=\"joinToManager(activeManager._id)\">{{activeManager.login}}</button>\r\n    </div>\r\n  </section>\r\n\r\n  <section *ngIf=\"chatVisible\" class=\"row chat__dialog chDialog\" fxLayout=\"row\">\r\n    <div class=\"cell chDialog__wrapper\" fxFlex=\"100\">\r\n      <ul class=\"row chMessages\" fxLayout=\"row\">\r\n        <li *ngFor=\"let msg of msgs\" class=\"cell chMessages__item\" fxFlex=\"100\">\r\n          <div>{{msg | json}}</div>\r\n          <!-- <div class=\"chMessages__item_fromServer\">{{msg.message}}</div> -->\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </section>\r\n\r\n  <section *ngIf=\"chatVisible\" class=\"row chat__footer chControl\" fxLayout=\"row\">\r\n    <div class=\"cell chControl__input\" fxFlex=\"calc(100%-70px)\" fxLayoutAlign=\"start center\">\r\n      <input matInput [(ngModel)]=\"message\">\r\n    </div>\r\n    <div class=\"cell chControl__send\" fxFlex=\"70px\" fxLayoutAlign=\"center center\">\r\n      <button mat-mini-fab (click)=\"onSendMessage()\">\r\n        <mat-icon>send</mat-icon>\r\n      </button>\r\n    </div>\r\n  </section>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n<!-- <div class=\"container chat\">\r\n  <h2 class=\"mat-h2 chat__header\">chat works!</h2>\r\n\r\n  <div class=\"row chat__messages\" fxLayout=\"row\">\r\n    <div class=\"cell\" fxFlex>\r\n      <ul class=\"row messages\">\r\n        <li *ngFor=\"let msg of msgs\" class=\"cell messages__item\">\r\n          {{msg.message}}\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"130px\">\r\n        <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"room\">\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"70px\">\r\n        <button (click)=\"onJoin()\">Join</button>\r\n      </div>\r\n    </div>\r\n  <div class=\"chat__send-control row\" fxLayout=\"row\">\r\n    <div class=\"cell chat__input-message\" fxFlex=\"130px\">\r\n      <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"message\">\r\n    </div>\r\n    <div class=\"cell chat__send-button\" fxFlex=\"70px\">\r\n      <button (click)=\"onSendMessage()\">Send</button>\r\n    </div>\r\n  </div>\r\n\r\n</div> -->"
+module.exports = "<div class=\"container chat\">\r\n\r\n  <!-- <section class=\"row chat__switch\" fxLayout=\"row\">\r\n    <div class=\"cell chat__switch_type_on\" fxFlex=\"100\">\r\n      <button mat-fab (click)=\"chatVisibleSwitch()\">\r\n        <mat-icon>chat_bubble</mat-icon>\r\n      </button>\r\n    </div>\r\n    <div class=\"cell chat__switch_type_off\" fxFlex=\"100\">\r\n      <button mat-fab (click)=\"chatVisibleSwitch()\">\r\n        <mat-icon>speaker_notes_off</mat-icon>\r\n      </button>\r\n    </div>\r\n  </section> -->\r\n  <section class=\"row\">\r\n    <div class=\"cell\">\r\n      <p>Socket connected {{socketConnected}}</p>\r\n      <button class=\"mat-raised-button\" (click)=\"connect()\" [disabled]=\"socketConnected\">Connect</button>\r\n      <button class=\"mat-raised-button\" (click)=\"disconnect()\" [disabled]=\"!socketConnected\">Disconnect</button>\r\n      <button class=\"mat-raised-button\" (click)=\"em(true)\" [disabled]=\"!socketConnected\">Emitter true</button>\r\n      <button class=\"mat-raised-button\" (click)=\"em(false)\" [disabled]=\"!socketConnected\">Emitter false</button>\r\n\r\n    </div>\r\n  </section>\r\n\r\n\r\n  <section class=\"row chat__whatIsYourName\">\r\n    <form [formGroup]=\"getGuestNameForm\">\r\n      <mat-form-field>\r\n        <input matInput placeholder=\"Як Вас звати\" formControlName=\"getGuestName\" required>\r\n        <mat-error *ngIf=\"getGuestNameForm.get('getGuestName').errors?.required &&\r\n                            getGuestNameForm.get('getGuestName').touched\">\r\n          Введіть ім'я\r\n        </mat-error>\r\n      </mat-form-field>\r\n      <button [disabled]=\"!getGuestNameForm.get('getGuestName').valid\" (click)=\"guestName(getGuestNameForm.get('getGuestName').value)\">ok</button>\r\n    </form>\r\n\r\n  </section>\r\n\r\n  <section *ngIf=\"chatVisible\" class=\"row chat__activeManagers\" fxLayout=\"row\">\r\n    <div class=\"cell\" *ngFor=\"let activeManager of activeManagers\" fxFlex>\r\n      <div>Active manager {{activeManager | json}}</div>\r\n      <button class=\"mat-raised-button\" (click)=\"joinToManager(activeManager._id)\">{{activeManager.login}}</button>\r\n    </div>\r\n  </section>\r\n\r\n  <section *ngIf=\"chatVisible\" class=\"row chat__dialog chDialog\" fxLayout=\"row\">\r\n    <div class=\"cell chDialog__wrapper\" fxFlex=\"100\">\r\n      <ul class=\"row chMessages\" fxLayout=\"row\">\r\n        <li *ngFor=\"let msg of msgs\" class=\"cell chMessages__item\" fxFlex=\"100\">\r\n          <div>{{msg | json}}</div>\r\n          <!-- <div class=\"chMessages__item_fromServer\">{{msg.message}}</div> -->\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </section>\r\n\r\n  <section *ngIf=\"chatVisible\" class=\"row chat__footer chControl\" fxLayout=\"row\">\r\n    <div class=\"cell chControl__input\" fxFlex=\"calc(100%-70px)\" fxLayoutAlign=\"start center\">\r\n      <input matInput [(ngModel)]=\"message\">\r\n    </div>\r\n    <div class=\"cell chControl__send\" fxFlex=\"70px\" fxLayoutAlign=\"center center\">\r\n      <button mat-mini-fab (click)=\"onSendMessage()\">\r\n        <mat-icon>send</mat-icon>\r\n      </button>\r\n    </div>\r\n  </section>\r\n\r\n</div>\r\n\r\n\r\n\r\n\r\n<!-- <div class=\"container chat\">\r\n  <h2 class=\"mat-h2 chat__header\">chat works!</h2>\r\n\r\n  <div class=\"row chat__messages\" fxLayout=\"row\">\r\n    <div class=\"cell\" fxFlex>\r\n      <ul class=\"row messages\">\r\n        <li *ngFor=\"let msg of msgs\" class=\"cell messages__item\">\r\n          {{msg.message}}\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"130px\">\r\n        <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"room\">\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"70px\">\r\n        <button (click)=\"onJoin()\">Join</button>\r\n      </div>\r\n    </div>\r\n  <div class=\"chat__send-control row\" fxLayout=\"row\">\r\n    <div class=\"cell chat__input-message\" fxFlex=\"130px\">\r\n      <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"message\">\r\n    </div>\r\n    <div class=\"cell chat__send-button\" fxFlex=\"70px\">\r\n      <button (click)=\"onSendMessage()\">Send</button>\r\n    </div>\r\n  </div>\r\n\r\n</div> -->"
 
 /***/ }),
 
@@ -2566,6 +2566,8 @@ var ChatComponent = /** @class */ (function () {
         this.activeManagers = [];
         this.msgs = [];
         this.chatVisible = true;
+        this.firstConnection = true;
+        this.socketConnected = false;
     }
     ChatComponent.prototype.ngOnInit = function () {
         this.getGuestNameForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
@@ -2573,7 +2575,6 @@ var ChatComponent = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
             ]),
         });
-        this.socketService.initialConnection();
         // this.chatService.onMessage()
         //   .subscribe(data => {
         //     console.log(data);
@@ -2599,6 +2600,43 @@ var ChatComponent = /** @class */ (function () {
         //     console.log(data);
         //     this.joinToManagerRoom = data;
         //   });
+    };
+    ChatComponent.prototype.connect = function () {
+        var _this = this;
+        if (this.firstConnection) {
+            this.socketService.initialConnection()
+                .subscribe(function (result) {
+                _this.firstConnection = false;
+                _this.socketConnected = result;
+                _this.setListeners();
+                console.log('connection result', result);
+            }, function (err) {
+                _this.firstConnection = false;
+                console.log('error socket connection', err);
+                // this.socketService.reconnect();
+            });
+        }
+        else {
+            this.socketService.connect();
+        }
+    };
+    ChatComponent.prototype.setListeners = function () {
+        this.socketService.on('tmpEvent')
+            .subscribe(function (result) {
+            console.log('tmpEvent Result', result);
+        });
+    };
+    ChatComponent.prototype.disconnect = function () {
+        this.socketService.disconnect();
+    };
+    ChatComponent.prototype.em = function (data) {
+        this.socketService.emit('tmpEvent', data).subscribe(function (result) {
+            console.log('tmpEvent ', result);
+        }, function (error) {
+            console.log('tmpEvent ', error);
+        }, function () {
+            console.log('complete');
+        });
     };
     ChatComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -4129,8 +4167,9 @@ var SocialService = /** @class */ (function () {
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SocketService", function() { return SocketService; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
-/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_1__);
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! socket.io-client */ "./node_modules/socket.io-client/lib/index.js");
+/* harmony import */ var socket_io_client__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(socket_io_client__WEBPACK_IMPORTED_MODULE_2__);
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -4142,17 +4181,19 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 };
 
 
+
 var SocketService = /** @class */ (function () {
     function SocketService() {
         this.host = 'http://localhost:8081';
     }
     SocketService.prototype.initialConnection = function () {
         var _this = this;
-        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_1__(this.host);
-        this.socket.on('connect', function () { return _this.connected(); });
-        this.socket.on('disconnect', function () { return _this.disconnected(); });
-        this.socket.on('error', function (error) {
-            console.log("ERROR: \"" + error + "\" (" + _this.host + ")");
+        this.socket = socket_io_client__WEBPACK_IMPORTED_MODULE_2__(this.host);
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
+            _this.socket.on('connect', function () { return observer.next(true); });
+            _this.socket.on('disconnect', function () { return observer.next(false); });
+            _this.socket.on('error', function (err) { return observer.error(err); });
+            _this.socket.on('connect_error', function (err) { return observer.error(err.message); });
         });
     };
     SocketService.prototype.connect = function () {
@@ -4161,6 +4202,9 @@ var SocketService = /** @class */ (function () {
     SocketService.prototype.disconnect = function () {
         this.socket.disconnect();
     };
+    SocketService.prototype.reconnect = function () {
+        this.connect();
+    };
     SocketService.prototype.connected = function () {
         console.log('connected');
     };
@@ -4168,11 +4212,30 @@ var SocketService = /** @class */ (function () {
         console.log('disconnected');
     };
     // emitters
-    SocketService.prototype.guestName = function (guestName) {
-        this.socket.emit('guestName', guestName);
+    SocketService.prototype.emit = function (eventName, message) {
+        var _this = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
+            _this.socket.emit(eventName, message, function (success) {
+                if (success) {
+                    // Успех
+                    observer.next(success);
+                }
+                else {
+                    // Что-то пошло не так
+                    observer.error(success);
+                }
+                observer.complete();
+            });
+        });
     };
-    SocketService.prototype.joinToManager = function (manager_id) {
-        this.socket.emit('joinToManager', manager_id);
+    SocketService.prototype.on = function (eventName) {
+        var _this = this;
+        return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
+            _this.socket.off(eventName); // Если такое событие уже существует
+            _this.socket.on(eventName, function (data) {
+                observer.next(data);
+            });
+        });
     };
     SocketService = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"])({
@@ -4726,7 +4789,7 @@ module.exports = __webpack_require__(/*! C:\it\vs\hmade\frontend\src\main.ts */"
 
 /***/ }),
 
-/***/ 3:
+/***/ 1:
 /*!********************!*\
   !*** ws (ignored) ***!
   \********************/

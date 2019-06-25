@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { IChatMessage } from '../../../interfaces/interface';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { SocketService } from 'src/app/services/socket.service';
+import { retry } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat',
@@ -19,6 +20,9 @@ export class ChatComponent implements OnInit {
 
   getGuestNameForm: FormGroup;
 
+  firstConnection = true;
+  socketConnected = false;
+
   constructor(
     private socketService: SocketService,
   ) { }
@@ -30,7 +34,8 @@ export class ChatComponent implements OnInit {
       ]),
     });
 
-    this.socketService.initialConnection();
+
+
 
     // this.chatService.onMessage()
     //   .subscribe(data => {
@@ -63,7 +68,51 @@ export class ChatComponent implements OnInit {
     //   });
   }
 
-  
+  connect() {
+    if (this.firstConnection) {
+      this.socketService.initialConnection()
+        .subscribe(
+          result => {
+            this.firstConnection = false;
+            this.socketConnected = result;
+            this.setListeners();
+            console.log('connection result', result);
+          },
+          err => {
+            this.firstConnection = false;
+            console.log('error socket connection', err);
+            // this.socketService.reconnect();
+          },
+        );
+    } else {
+      this.socketService.connect();
+    }
+  }
+
+  setListeners() {
+    this.socketService.on('tmpEvent')
+      .subscribe(result => {
+        console.log('tmpEvent Result', result);
+      });
+  }
+
+  disconnect() {
+    this.socketService.disconnect();
+  }
+
+  em(data) {
+    this.socketService.emit('tmpEvent', data).subscribe(
+      (result) => {
+        console.log('tmpEvent ', result);
+      },
+      (error) => {
+        console.log('tmpEvent ', error);
+      },
+      () => {
+        console.log('complete');
+      }
+    );
+  }
   // guestName(name) {
   //   this.chatService.guestName(name);
   // }
