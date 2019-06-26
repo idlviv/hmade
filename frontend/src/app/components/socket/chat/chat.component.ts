@@ -90,36 +90,59 @@ export class ChatComponent implements OnInit {
   }
 
   setListeners() {
-    this.socketService.on('tmpEvent')
-      .subscribe(result => {
-        console.log('tmpEvent Result', result);
+    // this.socketService.on('tmpEvent')
+    //   .subscribe(result => {
+    //     console.log('tmpEvent Result', result);
+    //   });
+
+      this.socketService.on('message')
+      .subscribe(data => {
+        this.msgs.push(data);
+      });
+
+      this.socketService.on('getGuestName')
+      .subscribe(data => {
+        console.log(data);
+      });
+
+      this.socketService.on('activeManagers')
+      .subscribe(data => {
+        this.activeManagers = data;
+      });
+
+      this.socketService.on('disconnect')
+      .subscribe(data => {
+        this.msgs = [];
+        this.socketService.disconnect();
+      });
+
+      this.socketService.on('joinToManager')
+      .subscribe(data => {
+        this.joinToManagerRoom = data;
       });
   }
 
-  disconnect() {
-    this.socketService.disconnect();
-  }
-
-  em(data) {
-    this.socketService.emit('tmpEvent', data).subscribe(
-      (result) => {
-        console.log('tmpEvent ', result);
-      },
-      (error) => {
-        console.log('not delivered ', error);
-      },
-      () => {
-        // console.log('complete');
-      }
-    );
-  }
-  // guestName(name) {
-  //   this.chatService.guestName(name);
+  // em(data) {
+  //   this.socketService.emit('tmpEvent', data).subscribe(
+  //     (result) => {
+  //       console.log('tmpEvent ', result);
+  //     },
+  //     (error) => {
+  //       console.log('not delivered ', error);
+  //     },
+  //     () => {
+  //       // console.log('complete');
+  //     }
+  //   );
   // }
 
-  // joinToManager(manager_id) {
-  //   this.chatService.joinToManager(manager_id);
-  // }
+  guestName(name: string) {
+    this.socketService.emit('guestName', name);
+  }
+
+  joinToManager(manager_id: string) {
+    this.socketService.emit('joinToManager', manager_id);
+  }
 
   // connect() {
   //   this.chatService.connect();

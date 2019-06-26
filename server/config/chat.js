@@ -113,7 +113,7 @@ module.exports = (io) => {
     // });
 
 
-    socket.on('guestName', async (data) => {
+    on('guestName').subscribe(async (data) => {
       // casual (guest) user connected and called his name
       socket.request.payload.user.name = data;
       socket.emit('message', 'Hello ' + socket.request.payload.user.name);
@@ -127,7 +127,7 @@ module.exports = (io) => {
       socket.emit('activeManagers', connectedManagers);
     });
 
-    socket.on('disconnect', async function onDisconnect(reason) {
+    on('disconnect').subscribe(async (reason) => {
       try {
         connectedManagers = await chatHelper.getConnectedManagers(io);
       } catch (err) {
@@ -139,7 +139,7 @@ module.exports = (io) => {
       log.debug('This socket ' + socket.id + ' lost connection - reason: ' + reason);
     });
 
-    socket.on('joinToManager', async (manager_id) => {
+    on('joinToManager').subscribe(async (manager_id) => {
       let socketsByUser_id;
       try {
         socketsByUser_id = await chatHelper.getSocketsByUser_id(manager_id);

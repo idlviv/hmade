@@ -2621,22 +2621,51 @@ var ChatComponent = /** @class */ (function () {
         }
     };
     ChatComponent.prototype.setListeners = function () {
-        this.socketService.on('tmpEvent')
-            .subscribe(function (result) {
-            console.log('tmpEvent Result', result);
+        // this.socketService.on('tmpEvent')
+        //   .subscribe(result => {
+        //     console.log('tmpEvent Result', result);
+        //   });
+        var _this = this;
+        this.socketService.on('message')
+            .subscribe(function (data) {
+            _this.msgs.push(data);
+        });
+        this.socketService.on('getGuestName')
+            .subscribe(function (data) {
+            console.log(data);
+        });
+        this.socketService.on('activeManagers')
+            .subscribe(function (data) {
+            _this.activeManagers = data;
+        });
+        this.socketService.on('disconnect')
+            .subscribe(function (data) {
+            _this.msgs = [];
+            _this.socketService.disconnect();
+        });
+        this.socketService.on('joinToManager')
+            .subscribe(function (data) {
+            _this.joinToManagerRoom = data;
         });
     };
-    ChatComponent.prototype.disconnect = function () {
-        this.socketService.disconnect();
+    // em(data) {
+    //   this.socketService.emit('tmpEvent', data).subscribe(
+    //     (result) => {
+    //       console.log('tmpEvent ', result);
+    //     },
+    //     (error) => {
+    //       console.log('not delivered ', error);
+    //     },
+    //     () => {
+    //       // console.log('complete');
+    //     }
+    //   );
+    // }
+    ChatComponent.prototype.guestName = function (name) {
+        this.socketService.emit('guestName', name);
     };
-    ChatComponent.prototype.em = function (data) {
-        this.socketService.emit('tmpEvent', data).subscribe(function (result) {
-            console.log('tmpEvent ', result);
-        }, function (error) {
-            console.log('not delivered ', error);
-        }, function () {
-            // console.log('complete');
-        });
+    ChatComponent.prototype.joinToManager = function (manager_id) {
+        this.socketService.emit('joinToManager', manager_id);
     };
     ChatComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
