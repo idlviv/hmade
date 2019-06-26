@@ -106,10 +106,10 @@ export class ChatComponent implements OnInit {
         console.log('tmpEvent ', result);
       },
       (error) => {
-        console.log('tmpEvent ', error);
+        console.log('not delivered ', error);
       },
       () => {
-        console.log('complete');
+        // console.log('complete');
       }
     );
   }

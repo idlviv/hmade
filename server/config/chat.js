@@ -60,14 +60,28 @@ module.exports = (io) => {
       socket.emit('getGuestName', null);
     }
 
-    // listeners
+    // listener
     function on(eventName) {
       return new Observable((observer) => {
         socket.on(eventName, (message, callback) => {
           // send receive confirmation to front
-          callback(message);
+          callback(true);
           // pass message to function
           observer.next(message);
+        });
+      });
+    }
+
+    // emitter
+    function emit(eventName, message) {
+      return new Observable((observer) => {
+        socket.emit(eventName, message, function(success) {
+          if (success) {
+            observer.next(success);
+          } else {
+            observer.error(success);
+          }
+          observer.complete();
         });
       });
     }
@@ -75,6 +89,16 @@ module.exports = (io) => {
     on('tmpEvent')
         .subscribe((message) => {
           log.debug('message tmpEvent %o', message);
+          emit('tmpEvent', 'obs emitter')
+              .subscribe((result) => {
+                console.log('tmpEvent ', result);
+              },
+              (error) => {
+                console.log('not delivered ', error);
+              },
+              () => {
+                // console.log('complete');
+              });
         });
 
     // socket.on('tmpEvent', function(data, callback) {

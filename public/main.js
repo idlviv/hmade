@@ -2633,9 +2633,9 @@ var ChatComponent = /** @class */ (function () {
         this.socketService.emit('tmpEvent', data).subscribe(function (result) {
             console.log('tmpEvent ', result);
         }, function (error) {
-            console.log('tmpEvent ', error);
+            console.log('not delivered ', error);
         }, function () {
-            console.log('complete');
+            // console.log('complete');
         });
     };
     ChatComponent = __decorate([
@@ -4225,7 +4225,10 @@ var SocketService = /** @class */ (function () {
         return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
             // if event already exist
             _this.socket.off(eventName);
-            _this.socket.on(eventName, function (message) {
+            _this.socket.on(eventName, function (message, callback) {
+                // send receive confirmation to server
+                callback(true);
+                // pass message
                 observer.next(message);
             });
         });

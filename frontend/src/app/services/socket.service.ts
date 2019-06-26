@@ -49,7 +49,10 @@ export class SocketService {
     return new Observable<any>(observer => {
       // if event already exist
       this.socket.off(eventName);
-      this.socket.on(eventName, (message: any) => {
+      this.socket.on(eventName, (message: any, callback: any) => {
+        // send receive confirmation to server
+        callback(true);
+        // pass message
         observer.next(message);
       });
     });
