@@ -3,6 +3,7 @@ const ChatHelper = require('../helpers/chatHelper');
 const ApplicationError = require('../errors/applicationError');
 const ClientError = require('../errors/clientError');
 const uuidv4 = require('uuid/v4');
+const { Observable } = require('rxjs');
 
 module.exports = (io) => {
   let chatHelper = new ChatHelper();
@@ -60,16 +61,32 @@ module.exports = (io) => {
     }
 
     // listeners
-    socket.on('tmpEvent', function(data, callback) {
-      const success = data;
-      if (success) {
-        socket.emit('tmpEvent', success);
-        callback(success);
-      } else {
-        socket.emit('tmpEvent', success);
-        callback(success);
-      }
-    });
+    function on(eventName) {
+      return new Observable((observer) => {
+        socket.on(eventName, (message, callback) => {
+          // send receive confirmation to front
+          callback(message);
+          // pass message to function
+          observer.next(message);
+        });
+      });
+    }
+
+    on('tmpEvent')
+        .subscribe((message) => {
+          log.debug('message tmpEvent %o', message);
+        });
+
+    // socket.on('tmpEvent', function(data, callback) {
+    //   const success = data;
+    //   if (success) {
+    //     socket.emit('tmpEvent', success);
+    //     callback(success);
+    //   } else {
+    //     socket.emit('tmpEvent', success);
+    //     callback(success);
+    //   }
+    // });
 
 
     socket.on('guestName', async (data) => {

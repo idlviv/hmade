@@ -2,12 +2,13 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as io from 'socket.io-client';
 import { loadDirective } from '@angular/core/src/render3/instructions';
+import { config } from '../app.config';
 
 @Injectable({
   providedIn: 'root'
 })
 export class SocketService {
-  private host = 'http://localhost:8081';
+  private host = config.host;
   private socket: any;
 
   constructor() { }
@@ -29,27 +30,13 @@ export class SocketService {
     this.socket.disconnect();
   }
 
-  reconnect() {
-    this.connect();
-  }
-
-  connected() {
-    console.log('connected');
-  }
-
-  disconnected() {
-    console.log('disconnected');
-  }
-
-  // emitters
-  emit(eventName: string, message: any) {
-    return new Observable<any>(observer => {
+  // emitter
+  emit(eventName: string, message: any): Observable<boolean> {
+    return new Observable<boolean>(observer => {
       this.socket.emit(eventName, message, function (success: boolean) {
         if (success) {
-          // Успех
           observer.next(success);
         } else {
-          // Что-то пошло не так
           observer.error(success);
         }
         observer.complete();
@@ -57,14 +44,17 @@ export class SocketService {
     });
   }
 
-  on(eventName) {
+  // listener
+  on(eventName: string): Observable<any> {
     return new Observable<any>(observer => {
-      this.socket.off(eventName); // Если такое событие уже существует
-      this.socket.on(eventName, (data) => {
-        observer.next(data);
+      // if event already exist
+      this.socket.off(eventName);
+      this.socket.on(eventName, (message: any) => {
+        observer.next(message);
       });
     });
   }
+
   // guestName(guestName) {
   //   this.socket.emit('guestName', guestName);
   // }

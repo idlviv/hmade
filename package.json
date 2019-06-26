@@ -33,6 +33,7 @@
     "pug": "^2.0.3",
     "request": "^2.87.0",
     "request-promise-native": "^1.0.5",
+    "rxjs": "^6.5.2",
     "socket.io": "^2.2.0",
     "uuid": "^3.3.2",
     "winston": "^3.2.1"
