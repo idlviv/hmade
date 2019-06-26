@@ -65,7 +65,7 @@ module.exports = (io) => {
       return new Observable((observer) => {
         socket.on(eventName, (message, callback) => {
           // send receive confirmation to front
-          callback(true);
+          callback(message);
           // pass message to function
           observer.next(message);
         });
@@ -73,32 +73,45 @@ module.exports = (io) => {
     }
 
     // emitter
+    // function emit(eventName, message) {
+    //   return new Observable((observer) => {
+    //     socket.emit(eventName, message, function(success) {
+    //       if (success) {
+    //         observer.next(success);
+    //       } else {
+    //         observer.error(success);
+    //       }
+    //       observer.complete();
+    //     });
+    //   });
+    // }
+    
     function emit(eventName, message) {
-      return new Observable((observer) => {
-        socket.emit(eventName, message, function(success) {
-          if (success) {
-            observer.next(success);
-          } else {
-            observer.error(success);
-          }
-          observer.complete();
-        });
+      socket.emit(eventName, message, function(success) {
+        if (success) {
+          console.log('true');
+          return;
+        } else {
+          console.log('false');
+
+          return new ApplicationError('Message not delivered');
+        }
       });
     }
 
     on('tmpEvent')
         .subscribe((message) => {
           log.debug('message tmpEvent %o', message);
-          emit('tmpEvent', 'obs emitter')
-              .subscribe((result) => {
-                console.log('tmpEvent ', result);
-              },
-              (error) => {
-                console.log('not delivered ', error);
-              },
-              () => {
-                // console.log('complete');
-              });
+          emit('tmpEvent', message);
+          // .subscribe((result) => {
+          //   console.log('tmpEvent ', result);
+          // },
+          // (error) => {
+          //   console.log('not delivered ', error);
+          // },
+          // () => {
+          //   // console.log('complete');
+          // });
         });
 
     // socket.on('tmpEvent', function(data, callback) {

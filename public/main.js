@@ -2621,46 +2621,41 @@ var ChatComponent = /** @class */ (function () {
         }
     };
     ChatComponent.prototype.setListeners = function () {
-        // this.socketService.on('tmpEvent')
-        //   .subscribe(result => {
-        //     console.log('tmpEvent Result', result);
-        //   });
-        var _this = this;
-        this.socketService.on('message')
-            .subscribe(function (data) {
-            _this.msgs.push(data);
+        this.socketService.on('tmpEvent')
+            .subscribe(function (result) {
+            console.log('tmpEvent Result', result);
         });
-        this.socketService.on('getGuestName')
-            .subscribe(function (data) {
-            console.log(data);
-        });
-        this.socketService.on('activeManagers')
-            .subscribe(function (data) {
-            _this.activeManagers = data;
-        });
-        this.socketService.on('disconnect')
-            .subscribe(function (data) {
-            _this.msgs = [];
-            _this.socketService.disconnect();
-        });
-        this.socketService.on('joinToManager')
-            .subscribe(function (data) {
-            _this.joinToManagerRoom = data;
+        // this.socketService.on('message')
+        // .subscribe(data => {
+        //   this.msgs.push(data);
+        // });
+        // this.socketService.on('getGuestName')
+        // .subscribe(data => {
+        //   console.log(data);
+        // });
+        // this.socketService.on('activeManagers')
+        // .subscribe(data => {
+        //   this.activeManagers = data;
+        // });
+        // this.socketService.on('disconnect')
+        // .subscribe(data => {
+        //   this.msgs = [];
+        //   this.socketService.disconnect();
+        // });
+        // this.socketService.on('joinToManager')
+        // .subscribe(data => {
+        //   this.joinToManagerRoom = data;
+        // });
+    };
+    ChatComponent.prototype.em = function (data) {
+        this.socketService.emit('tmpEvent', data).subscribe(function (result) {
+            console.log('tmpEvent ', result);
+        }, function (error) {
+            console.log('not delivered ', error);
+        }, function () {
+            // console.log('complete');
         });
     };
-    // em(data) {
-    //   this.socketService.emit('tmpEvent', data).subscribe(
-    //     (result) => {
-    //       console.log('tmpEvent ', result);
-    //     },
-    //     (error) => {
-    //       console.log('not delivered ', error);
-    //     },
-    //     () => {
-    //       // console.log('complete');
-    //     }
-    //   );
-    // }
     ChatComponent.prototype.guestName = function (name) {
         this.socketService.emit('guestName', name);
     };
@@ -4249,6 +4244,18 @@ var SocketService = /** @class */ (function () {
         });
     };
     // listener
+    // on(eventName: string): Observable<any> {
+    //   return new Observable<any>(observer => {
+    //     // if event already exist
+    //     this.socket.off(eventName);
+    //     this.socket.on(eventName, (message: any, callback: any) => {
+    //       // send receive confirmation to server
+    //       callback(true);
+    //       // pass message
+    //       observer.next(message);
+    //     });
+    //   });
+    // }
     SocketService.prototype.on = function (eventName) {
         var _this = this;
         return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
@@ -4256,7 +4263,7 @@ var SocketService = /** @class */ (function () {
             _this.socket.off(eventName);
             _this.socket.on(eventName, function (message, callback) {
                 // send receive confirmation to server
-                callback(true);
+                callback(message);
                 // pass message
                 observer.next(message);
             });

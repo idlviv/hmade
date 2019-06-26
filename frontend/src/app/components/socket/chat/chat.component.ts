@@ -90,51 +90,51 @@ export class ChatComponent implements OnInit {
   }
 
   setListeners() {
-    // this.socketService.on('tmpEvent')
-    //   .subscribe(result => {
-    //     console.log('tmpEvent Result', result);
-    //   });
-
-      this.socketService.on('message')
-      .subscribe(data => {
-        this.msgs.push(data);
+    this.socketService.on('tmpEvent')
+      .subscribe(result => {
+        console.log('tmpEvent Result', result);
       });
 
-      this.socketService.on('getGuestName')
-      .subscribe(data => {
-        console.log(data);
-      });
+      // this.socketService.on('message')
+      // .subscribe(data => {
+      //   this.msgs.push(data);
+      // });
 
-      this.socketService.on('activeManagers')
-      .subscribe(data => {
-        this.activeManagers = data;
-      });
+      // this.socketService.on('getGuestName')
+      // .subscribe(data => {
+      //   console.log(data);
+      // });
 
-      this.socketService.on('disconnect')
-      .subscribe(data => {
-        this.msgs = [];
-        this.socketService.disconnect();
-      });
+      // this.socketService.on('activeManagers')
+      // .subscribe(data => {
+      //   this.activeManagers = data;
+      // });
 
-      this.socketService.on('joinToManager')
-      .subscribe(data => {
-        this.joinToManagerRoom = data;
-      });
+      // this.socketService.on('disconnect')
+      // .subscribe(data => {
+      //   this.msgs = [];
+      //   this.socketService.disconnect();
+      // });
+
+      // this.socketService.on('joinToManager')
+      // .subscribe(data => {
+      //   this.joinToManagerRoom = data;
+      // });
   }
 
-  // em(data) {
-  //   this.socketService.emit('tmpEvent', data).subscribe(
-  //     (result) => {
-  //       console.log('tmpEvent ', result);
-  //     },
-  //     (error) => {
-  //       console.log('not delivered ', error);
-  //     },
-  //     () => {
-  //       // console.log('complete');
-  //     }
-  //   );
-  // }
+  em(data) {
+    this.socketService.emit('tmpEvent', data).subscribe(
+      (result) => {
+        console.log('tmpEvent ', result);
+      },
+      (error) => {
+        console.log('not delivered ', error);
+      },
+      () => {
+        // console.log('complete');
+      }
+    );
+  }
 
   guestName(name: string) {
     this.socketService.emit('guestName', name);

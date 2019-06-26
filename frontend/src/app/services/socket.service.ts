@@ -45,13 +45,26 @@ export class SocketService {
   }
 
   // listener
+  // on(eventName: string): Observable<any> {
+  //   return new Observable<any>(observer => {
+  //     // if event already exist
+  //     this.socket.off(eventName);
+  //     this.socket.on(eventName, (message: any, callback: any) => {
+  //       // send receive confirmation to server
+  //       callback(true);
+  //       // pass message
+  //       observer.next(message);
+  //     });
+  //   });
+  // }
+
   on(eventName: string): Observable<any> {
     return new Observable<any>(observer => {
       // if event already exist
       this.socket.off(eventName);
       this.socket.on(eventName, (message: any, callback: any) => {
         // send receive confirmation to server
-        callback(true);
+        callback(message);
         // pass message
         observer.next(message);
       });
