@@ -16,6 +16,7 @@ module.exports = (io) => {
       return next(err);
     }
 
+
     try {
       await chatHelper.storePayloadInSocketSession(session, socket);
     } catch (err) {
@@ -27,7 +28,7 @@ module.exports = (io) => {
 
   io.on('connection', async (socket) => {
     chatHelper.logEvents(socket);
-
+    return next(new ApplicationError(404, 'Помилковий запит'));
     log.debug('socket connected %o', await chatHelper.getConnectedSockets(io));
     const regitredUsersRoles = ['guest', 'user', 'google', 'facebook'];
     const previleggedRoles = ['manager', 'admin']; // TODO: remove admin
@@ -94,7 +95,7 @@ module.exports = (io) => {
         } else {
           console.log('false');
 
-          return new ApplicationError('Message not delivered');
+          return new Error('Message not delivered');
         }
       });
     }
