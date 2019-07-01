@@ -8,7 +8,15 @@ const { Observable } = require('rxjs');
 module.exports = (io) => {
   let chatHelper = new ChatHelper();
 
+  // function errorListener(err) {
+  //   return
+  // }
+
   io.use(async (socket, next) => {
+    socket.on('myError', function(err) {
+      log.debug('error %o', err);
+    });
+
     let session;
     try {
       session = await chatHelper.getSessionBySocket(socket);
@@ -26,9 +34,13 @@ module.exports = (io) => {
     return next();
   });
 
+
+
   io.on('connection', async (socket) => {
     chatHelper.logEvents(socket);
-    return next(new ApplicationError(404, 'Помилковий запит'));
+    
+    socket.emit('myError', 'errrrr');
+    
     log.debug('socket connected %o', await chatHelper.getConnectedSockets(io));
     const regitredUsersRoles = ['guest', 'user', 'google', 'facebook'];
     const previleggedRoles = ['manager', 'admin']; // TODO: remove admin
