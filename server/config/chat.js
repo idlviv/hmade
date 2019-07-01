@@ -5,9 +5,9 @@ const ClientError = require('../errors/clientError');
 const uuidv4 = require('uuid/v4');
 const { Observable } = require('rxjs');
 
-module.exports = (io) => {
+module.exports = (io, callback) => {
   let chatHelper = new ChatHelper();
-
+  
   io.use(async (socket, next) => {
     let session;
     try {
@@ -41,6 +41,8 @@ module.exports = (io) => {
     const regitredUsersRoles = ['guest', 'user', 'google', 'facebook'];
     const previleggedRoles = ['manager', 'admin']; // TODO: remove admin
 
+    return callback(new ApplicationError('some error', 500));
+    
     if (socket.request.payload.user && previleggedRoles.indexOf(socket.request.payload.user.role) !== -1) {
       // manager connected
       socket.emit('message', 'Hello manager ' + socket.request.payload.user.name);

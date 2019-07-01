@@ -30,11 +30,19 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+function cbForSocket(err, success) {
+  if (err) {
+    console.log('cb err ', err.message);
+    app.use((req, res, next) => next(err));
+  } else {
+    console.log('cb ok ', success);
+  }
+}
 
 // config socket.io for chat
 io = require('socket.io').listen(server);
 
-require('../config/chat')(io);
+require('../config/chat')(io, cbForSocket);
 
 app.set('io', io);
 
