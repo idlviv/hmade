@@ -8,15 +8,7 @@ const { Observable } = require('rxjs');
 module.exports = (io) => {
   let chatHelper = new ChatHelper();
 
-  // function errorListener(err) {
-  //   return
-  // }
-
   io.use(async (socket, next) => {
-    socket.on('myError', function(err) {
-      log.debug('error %o', err);
-    });
-
     let session;
     try {
       session = await chatHelper.getSessionBySocket(socket);
@@ -34,12 +26,16 @@ module.exports = (io) => {
     return next();
   });
 
+  // io.on('error', function(err) {
+  //   log.debug('io on-error %o ', err);
+  // });
 
+  // io.on('myError', function(err) {
+  //   log.debug('io on-my-error %o ', err);
+  // });
 
   io.on('connection', async (socket) => {
     chatHelper.logEvents(socket);
-    
-    socket.emit('myError', 'errrrr');
     
     log.debug('socket connected %o', await chatHelper.getConnectedSockets(io));
     const regitredUsersRoles = ['guest', 'user', 'google', 'facebook'];
