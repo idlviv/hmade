@@ -42,7 +42,7 @@ function cbForSocket(err, success) {
 // config socket.io for chat
 io = require('socket.io').listen(server);
 
-require('../config/chat')(io, cbForSocket);
+require('../config/chat')(io);
 
 app.set('io', io);
 

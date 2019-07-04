@@ -22,6 +22,16 @@ class ChatHelper {
     };
   }
 
+  async test(param) {
+    return new Promise((resolve, reject) => {
+      if (param) {
+        resolve(param);
+      } else {
+        reject(new ClientError({ message: 'Помилка авторизації', status: 401 }));
+      }
+    });
+  }
+
   async getSessionBySocket(socket) {
     return new Promise((resolve, reject) => {
       const handshakeData = socket.request;

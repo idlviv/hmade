@@ -5,9 +5,9 @@ const ClientError = require('../errors/clientError');
 const uuidv4 = require('uuid/v4');
 const { Observable } = require('rxjs');
 
-module.exports = (io, callback) => {
+module.exports = (io) => {
   let chatHelper = new ChatHelper();
-  
+
   io.use(async (socket, next) => {
     let session;
     try {
@@ -34,6 +34,10 @@ module.exports = (io, callback) => {
   //   log.debug('io on-my-error %o ', err);
   // });
 
+  function errorListener(err) {
+    log.debug('errorListener %o', err);
+  }
+
   io.on('connection', async (socket) => {
     chatHelper.logEvents(socket);
     
@@ -41,7 +45,6 @@ module.exports = (io, callback) => {
     const regitredUsersRoles = ['guest', 'user', 'google', 'facebook'];
     const previleggedRoles = ['manager', 'admin']; // TODO: remove admin
 
-    return callback(new ApplicationError('some error', 500));
     
     if (socket.request.payload.user && previleggedRoles.indexOf(socket.request.payload.user.role) !== -1) {
       // manager connected
@@ -76,9 +79,11 @@ module.exports = (io, callback) => {
       return new Observable((observer) => {
         socket.on(eventName, (message, callback) => {
           // send receive confirmation to front
-          callback(message);
+          // callback(message);
           // pass message to function
-          observer.next(message);
+          log.debug('callback 0 - %o', callback);
+
+          observer.next({message, callback});
         });
       });
     }
@@ -111,9 +116,17 @@ module.exports = (io, callback) => {
     }
 
     on('tmpEvent')
-        .subscribe((message) => {
-          log.debug('message tmpEvent %o', message);
-          emit('tmpEvent', message);
+        .subscribe(async (obj) => {
+          const {message, callback} = obj;
+          log.debug('callback %o', callback);
+          try {
+            testMessage = await chatHelper.test(message);
+          } catch (err) {
+            callback(false);
+            return errorListener(err);
+          }
+          log.debug('message tmpEvent %o', testMessage);
+          emit('tmpEvent', testMessage);
           // .subscribe((result) => {
           //   console.log('tmpEvent ', result);
           // },
@@ -184,6 +197,7 @@ module.exports = (io, callback) => {
     // socket.emit('messageFromServer', {message: `wellcome to ${params.room}`});
     // socket.broadcast.to(params.room).emit('messageFromServer', { message: `new user joined to ${params.room}` });
     });
+    // return errorListener('some error');
   });
 };
 
