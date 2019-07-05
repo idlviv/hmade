@@ -1,7 +1,6 @@
 const log = require('../config/winston')(module);
 const ChatHelper = require('../helpers/chatHelper');
-const ApplicationError = require('../errors/applicationError');
-const ClientError = require('../errors/clientError');
+const SocketError = require('../errors/socketError');
 const uuidv4 = require('uuid/v4');
 const { Observable } = require('rxjs');
 
@@ -34,12 +33,15 @@ module.exports = (io) => {
   //   log.debug('io on-my-error %o ', err);
   // });
 
-  function errorListener(err) {
-    log.debug('errorListener %o', err);
-  }
+
 
   io.on('connection', async (socket) => {
     chatHelper.logEvents(socket);
+
+    function errorListener(err) {
+      log.debug('errorListener %o', err);
+      socket.emit('error', err);
+    }
     
     log.debug('socket connected %o', await chatHelper.getConnectedSockets(io));
     const regitredUsersRoles = ['guest', 'user', 'google', 'facebook'];
@@ -53,7 +55,7 @@ module.exports = (io) => {
       try {
         connectedManagers = await chatHelper.getConnectedManagers(io);
       } catch (err) {
-        return new ApplicationError(err);
+        return err;
       }
       // emit to all - updated managers list
       io.emit('activeManagers', connectedManagers);
@@ -64,7 +66,7 @@ module.exports = (io) => {
       try {
         connectedManagers = await chatHelper.getConnectedManagers(io);
       } catch (err) {
-        return new ApplicationError(err);
+        return err;
       }
       // emit to user - updated managers list
       socket.emit('activeManagers', connectedManagers);
@@ -79,11 +81,9 @@ module.exports = (io) => {
       return new Observable((observer) => {
         socket.on(eventName, (message, callback) => {
           // send receive confirmation to front
-          // callback(message);
+          callback(message);
           // pass message to function
-          log.debug('callback 0 - %o', callback);
-
-          observer.next({message, callback});
+          observer.next(message);
         });
       });
     }
@@ -105,12 +105,9 @@ module.exports = (io) => {
     function emit(eventName, message) {
       socket.emit(eventName, message, function(success) {
         if (success) {
-          console.log('true');
           return;
         } else {
-          console.log('false');
-
-          return new Error('Message not delivered');
+          return errorListener(new SocketError({ message: 'Message not delivered' }));
         }
       });
     }
@@ -158,7 +155,7 @@ module.exports = (io) => {
       try {
         connectedManagers = await chatHelper.getConnectedManagers(io);
       } catch (err) {
-        return new ApplicationError(err);
+        return new SocketError(err);
       }
       // emit to casual (guest) user - updated managers list
       socket.emit('activeManagers', connectedManagers);
@@ -168,7 +165,7 @@ module.exports = (io) => {
       try {
         connectedManagers = await chatHelper.getConnectedManagers(io);
       } catch (err) {
-        return new ApplicationError(err);
+        return new SocketError(err);
       }
       // emit to all - updated managers list
       io.emit('activeManagers', connectedManagers);
@@ -181,7 +178,7 @@ module.exports = (io) => {
       try {
         socketsByUser_id = await chatHelper.getSocketsByUser_id(manager_id);
       } catch (err) {
-        return new ApplicationError(err);
+        return new SocketError(err);
       }
       log.debug('socket rooms prev %o', socket.rooms);
 

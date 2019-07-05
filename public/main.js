@@ -4243,6 +4243,18 @@ var SocketService = /** @class */ (function () {
             });
         });
     };
+    // emit(eventName: string, message: any): Observable<boolean> {
+    //   return new Observable<boolean>(observer => {
+    //     this.socket.emit(eventName, message, function (success: boolean) {
+    //       if (success) {
+    //         observer.next(success);
+    //       } else {
+    //         observer.error(success);
+    //       }
+    //       observer.complete();
+    //     });
+    //   });
+    // }
     // listener
     // on(eventName: string): Observable<any> {
     //   return new Observable<any>(observer => {
