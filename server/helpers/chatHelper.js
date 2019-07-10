@@ -5,7 +5,7 @@ const cookie = require('cookie');
 const cookieParser = require('cookie-parser');
 const sessionStore = require('../config/session').sessionStore;
 const ClientError = require('../errors/clientError');
-const ApplicationError = require('../errors/applicationError');
+const ServerError = require('../errors/serverError');
 const DBHelper = require('./dbHelper');
 const log = require('../config/winston')(module);
 
@@ -90,7 +90,7 @@ class ChatHelper {
     return new Promise((resolve, reject) => {
       io.sockets.clients((err, clients) => {
         if (err) {
-          reject(new ApplicationError({ message: 'Помилка отримання активних коритстувачів чату', status: 500 }));
+          reject(new ServerError({ message: 'Помилка отримання активних коритстувачів чату', status: 500 }));
         }
         resolve(clients);
       });
@@ -288,7 +288,7 @@ class ChatHelper {
     return new Promise(async (resolve, reject) => {
       session.save(function(err) {
         if (err) {
-          reject(new ApplicationError({ message: 'Помилка збереження сесії', status: 500 }));
+          reject(new ServerError({ message: 'Помилка збереження сесії', status: 500 }));
         }
         resolve();
       });

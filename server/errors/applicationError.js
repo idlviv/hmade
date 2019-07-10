@@ -1,5 +1,6 @@
 /**
  * server errors
+ * !!!old
  *
  * @param {string} message
  * @param {number} status

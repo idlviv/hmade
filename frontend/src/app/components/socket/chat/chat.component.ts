@@ -13,15 +13,24 @@ export class ChatComponent implements OnInit {
   // msgs: IChatMessage[] = [];
   // @Input() message: string;
   // @Input() room: string;
+  tmp: any;
+
   activeManagers = [];
   msgs = [];
-  chatVisible = true;
+
+  showDialog = false;
   joinToManagerRoom: any;
 
   getGuestNameForm: FormGroup;
 
-  firstConnection = true;
+  // 1
   socketConnected = false;
+  // 2
+  gotConnectedManagers = false;
+  // 3
+  
+
+  firstConnection = true;
 
   constructor(
     private socketService: SocketService,
@@ -34,9 +43,7 @@ export class ChatComponent implements OnInit {
       ]),
     });
 
-
-
-
+    this.connect();
     // this.chatService.onMessage()
     //   .subscribe(data => {
     //     console.log(data);
