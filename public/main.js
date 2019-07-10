@@ -2608,9 +2608,9 @@ var ChatComponent = /** @class */ (function () {
         if (this.firstConnection) {
             this.socketService.initialConnection()
                 .subscribe(function (result) {
+                _this.setListeners();
                 _this.firstConnection = false;
                 _this.socketConnected = result;
-                _this.setListeners();
                 console.log('connection result', result);
             }, function (err) {
                 _this.firstConnection = false;
@@ -2623,9 +2623,9 @@ var ChatComponent = /** @class */ (function () {
         }
     };
     ChatComponent.prototype.setListeners = function () {
-        this.socketService.on('tmpEvent')
-            .subscribe(function (result) {
-            console.log('tmpEvent Result', result);
+        this.socketService.on('message')
+            .subscribe(function (msg) {
+            console.log('message Result', msg);
         });
         // this.socketService.on('message')
         // .subscribe(data => {
@@ -2659,10 +2659,10 @@ var ChatComponent = /** @class */ (function () {
         });
     };
     ChatComponent.prototype.guestName = function (name) {
-        this.socketService.emit('guestName', name);
+        this.socketService.emit('guestName', { message: 'guest name', payload: name });
     };
     ChatComponent.prototype.joinToManager = function (manager_id) {
-        this.socketService.emit('joinToManager', manager_id);
+        this.socketService.emit('joinToManager', { message: 'join to manager with id', payload: manager_id });
     };
     ChatComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -4234,56 +4234,30 @@ var SocketService = /** @class */ (function () {
     SocketService.prototype.disconnect = function () {
         this.socket.disconnect();
     };
-    // emitter
-    SocketService.prototype.emit = function (eventName, message) {
+    SocketService.prototype.emit = function (eventName, msg) {
         var _this = this;
         return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
-            _this.socket.emit(eventName, message, function (success) {
+            _this.socket.emit(eventName, msg, function (success) {
                 if (success) {
                     observer.next(success);
                 }
                 else {
-                    observer.error(success);
+                    observer.error("eventName: " + eventName + ", message: " + msg.message + " - not delivered");
                 }
                 observer.complete();
             });
         });
     };
-    // emit(eventName: string, message: any): Observable<boolean> {
-    //   return new Observable<boolean>(observer => {
-    //     this.socket.emit(eventName, message, function (success: boolean) {
-    //       if (success) {
-    //         observer.next(success);
-    //       } else {
-    //         observer.error(success);
-    //       }
-    //       observer.complete();
-    //     });
-    //   });
-    // }
-    // listener
-    // on(eventName: string): Observable<any> {
-    //   return new Observable<any>(observer => {
-    //     // if event already exist
-    //     this.socket.off(eventName);
-    //     this.socket.on(eventName, (message: any, callback: any) => {
-    //       // send receive confirmation to server
-    //       callback(true);
-    //       // pass message
-    //       observer.next(message);
-    //     });
-    //   });
-    // }
     SocketService.prototype.on = function (eventName) {
         var _this = this;
         return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
             // if event already exist
             _this.socket.off(eventName);
-            _this.socket.on(eventName, function (message, callback) {
-                // send receive confirmation to server
-                callback(message);
+            _this.socket.on(eventName, function (msg, callback) {
+                // send confirmation to server
+                callback(true);
                 // pass message
-                observer.next(message);
+                observer.next(msg);
             });
         });
     };

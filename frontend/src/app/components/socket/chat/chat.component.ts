@@ -1,5 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { IChatMessage } from '../../../interfaces/interface';
+import { IChatMsg } from '../../../interfaces/interface';
 import { FormControl, Validators, FormGroup } from '@angular/forms';
 import { SocketService } from 'src/app/services/socket.service';
 import { retry } from 'rxjs/operators';
@@ -77,12 +77,13 @@ export class ChatComponent implements OnInit {
 
   connect() {
     if (this.firstConnection) {
+
       this.socketService.initialConnection()
         .subscribe(
           result => {
+            this.setListeners();
             this.firstConnection = false;
             this.socketConnected = result;
-            this.setListeners();
             console.log('connection result', result);
           },
           err => {
@@ -97,9 +98,9 @@ export class ChatComponent implements OnInit {
   }
 
   setListeners() {
-    this.socketService.on('tmpEvent')
-      .subscribe(result => {
-        console.log('tmpEvent Result', result);
+    this.socketService.on('message')
+      .subscribe(msg => {
+        console.log('message Result', msg);
       });
 
       // this.socketService.on('message')
@@ -144,11 +145,11 @@ export class ChatComponent implements OnInit {
   }
 
   guestName(name: string) {
-    this.socketService.emit('guestName', name);
+    this.socketService.emit('guestName', {message: 'guest name', payload: name});
   }
 
   joinToManager(manager_id: string) {
-    this.socketService.emit('joinToManager', manager_id);
+    this.socketService.emit('joinToManager', { message: 'join to manager with id', payload: manager_id });
   }
 
   // connect() {

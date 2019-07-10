@@ -4,8 +4,21 @@ const SocketError = require('../errors/socketError');
 const uuidv4 = require('uuid/v4');
 const { Observable } = require('rxjs');
 
+class Msg {
+  constructor(message, payload = null) {
+    this.message = message;
+    this.payload = payload;
+  }
+}
+
 module.exports = (io) => {
   let chatHelper = new ChatHelper();
+
+  // listener for server side socket errors
+  function errorListener(err) {
+    log.debug('errorListener %o', err);
+    // socket.emit('error', err);
+  }
 
   io.use(async (socket, next) => {
     let session;
@@ -36,53 +49,87 @@ module.exports = (io) => {
   io.on('connection', async (socket) => {
     chatHelper.logEvents(socket);
 
+    emit('message', new Msg('Hello'))
+    // emit('message', {message: 'Hello'})
+        .subscribe(
+            (result) => log.debug('result message %o', result),
+            (err) => log.debug('result message erro %o', err)
+        );
 
-    // listener for server side socket errors
-    function errorListener(err) {
-      log.debug('errorListener %o', err);
-      // socket.emit('error', err);
-    }
 
     log.debug('socket connected %o', await chatHelper.getConnectedSockets(io));
-    const regitredUsersRoles = ['guest', 'user', 'google', 'facebook'];
-    const previleggedRoles = ['manager', 'admin']; // TODO: remove admin
+    // const regitredUsersRoles = ['guest', 'user', 'google', 'facebook'];
+    // const previleggedRoles = ['manager', 'admin']; // TODO: remove admin
 
-    if (socket.request.payload.user && previleggedRoles.indexOf(socket.request.payload.user.role) !== -1) {
-      // manager connected
-      socket.emit('message', 'Hello manager ' + socket.request.payload.user.name);
-      let connectedManagers;
-      try {
-        connectedManagers = await chatHelper.getConnectedManagers(io);
-      } catch (err) {
-        return err;
-      }
-      // emit to all - updated managers list
-      io.emit('activeManagers', connectedManagers);
-    } else if (socket.request.payload.user && regitredUsersRoles.indexOf(socket.request.payload.user.role) !== -1) {
-      // registred user connected
-      socket.emit('message', 'Hello ' + socket.request.payload.user.name);
-      let connectedManagers;
-      try {
-        connectedManagers = await chatHelper.getConnectedManagers(io);
-      } catch (err) {
-        return err;
-      }
-      // emit to user - updated managers list
-      socket.emit('activeManagers', connectedManagers);
-    } else {
-      // casual (guest) user connected
-      // ask for name
-      socket.emit('getGuestName', null);
+    // if (socket.request.payload.user && previleggedRoles.indexOf(socket.request.payload.user.role) !== -1) {
+    //   // manager connected
+    //   socket.emit('message', 'Hello manager ' + socket.request.payload.user.name);
+    //   let connectedManagers;
+    //   try {
+    //     connectedManagers = await chatHelper.getConnectedManagers(io);
+    //   } catch (err) {
+    //     return err;
+    //   }
+    //   // emit to all - updated managers list
+    //   io.emit('activeManagers', connectedManagers);
+    // } else if (socket.request.payload.user && regitredUsersRoles.indexOf(socket.request.payload.user.role) !== -1) {
+    //   // registred user connected
+    //   socket.emit('message', 'Hello ' + socket.request.payload.user.name);
+    //   let connectedManagers;
+    //   try {
+    //     connectedManagers = await chatHelper.getConnectedManagers(io);
+    //   } catch (err) {
+    //     return err;
+    //   }
+    //   // emit to user - updated managers list
+    //   socket.emit('activeManagers', connectedManagers);
+    // } else {
+    //   // casual (guest) user connected
+    //   // ask for name
+    //   socket.emit('getGuestName', null);
+    // }
+
+    /**
+     * @typedef {Object} IChatMsg
+     * @property {string} message
+     * @property {Object} [payload] //unnecessary param
+     */
+
+    /**
+     * Emitter
+     *
+     * @param {string} eventName
+     * @param {IChatMsg} msg
+     * @return {Observable<IChatMsg>}
+     */
+    function emit(eventName, msg) {
+      return new Observable((observer) => {
+        socket.emit(eventName, msg, function(success) {
+          if (success) {
+            observer.next();
+          } else {
+            observer.error(new SocketError({
+              message: `eventName: ${eventName}, message: ${msg.message} - not delivered`,
+            }));
+          }
+          observer.complete();
+        });
+      });
     }
 
-    // listener
+    /**
+     * Listener
+     *
+     * @param {string} eventName
+     * @return {Observervable<IChatMsg>}
+     */
     function on(eventName) {
       return new Observable((observer) => {
-        socket.on(eventName, (message, callback) => {
+        socket.on(eventName, (msg, callback) => {
           // send confirmation to front
           callback(true);
-          // pass message to function
-          observer.next(message);
+          // pass message
+          observer.next(msg);
         });
       });
     }
@@ -97,29 +144,6 @@ module.exports = (io) => {
           emit('managers', connectedManagers);
         });
 
-    // emitter
-    // function emit(eventName, message) {
-    //   return new Observable((observer) => {
-    //     socket.emit(eventName, message, function(success) {
-    //       if (success) {
-    //         observer.next(success);
-    //       } else {
-    //         observer.error(success);
-    //       }
-    //       observer.complete();
-    //     });
-    //   });
-    // }
-
-    function emit(eventName, message) {
-      socket.emit(eventName, message, function(success) {
-        if (success) {
-          return;
-        } else {
-          return errorListener(new SocketError({ message: 'Message not delivered' }));
-        }
-      });
-    }
 
     // on('tmpEvent')
     //     .subscribe(async (obj) => {

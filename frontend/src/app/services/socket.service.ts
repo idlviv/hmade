@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import * as io from 'socket.io-client';
-import { loadDirective } from '@angular/core/src/render3/instructions';
 import { config } from '../app.config';
+import { IChatMsg } from '../interfaces/interface';
 
 @Injectable({
   providedIn: 'root'
@@ -30,56 +30,28 @@ export class SocketService {
     this.socket.disconnect();
   }
 
-  // emitter
-  emit(eventName: string, message: any): Observable<boolean> {
+  emit(eventName: string, msg: IChatMsg): Observable<boolean> {
     return new Observable<boolean>(observer => {
-      this.socket.emit(eventName, message, function (success: boolean) {
+      this.socket.emit(eventName, msg, function (success: boolean) {
         if (success) {
           observer.next(success);
         } else {
-          observer.error(success);
+          observer.error(`eventName: ${eventName}, message: ${msg.message} - not delivered`);
         }
         observer.complete();
       });
     });
   }
 
-  // emit(eventName: string, message: any): Observable<boolean> {
-  //   return new Observable<boolean>(observer => {
-  //     this.socket.emit(eventName, message, function (success: boolean) {
-  //       if (success) {
-  //         observer.next(success);
-  //       } else {
-  //         observer.error(success);
-  //       }
-  //       observer.complete();
-  //     });
-  //   });
-  // }
-
-  // listener
-  // on(eventName: string): Observable<any> {
-  //   return new Observable<any>(observer => {
-  //     // if event already exist
-  //     this.socket.off(eventName);
-  //     this.socket.on(eventName, (message: any, callback: any) => {
-  //       // send receive confirmation to server
-  //       callback(true);
-  //       // pass message
-  //       observer.next(message);
-  //     });
-  //   });
-  // }
-
-  on(eventName: string): Observable<any> {
-    return new Observable<any>(observer => {
+  on(eventName: string): Observable<IChatMsg> {
+    return new Observable<IChatMsg>(observer => {
       // if event already exist
       this.socket.off(eventName);
-      this.socket.on(eventName, (message: any, callback: any) => {
-        // send receive confirmation to server
-        callback(message);
+      this.socket.on(eventName, (msg: IChatMsg, callback: any) => {
+        // send confirmation to server
+        callback(true);
         // pass message
-        observer.next(message);
+        observer.next(msg);
       });
     });
   }

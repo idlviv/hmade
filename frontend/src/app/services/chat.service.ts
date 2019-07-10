@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 // import { Socket } from 'ngx-socket-io';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { IChatMessage } from '../interfaces/interface';
+import { IChatMsg } from '../interfaces/interface';
 import { Router } from '@angular/router';
 
 @Injectable({
