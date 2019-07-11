@@ -27,4 +27,5 @@ module.exports = SocketError;
 
 //    messages
 // notDelivered - повідомлення не доставлено
-
+// timeout - not delivered, timeout error
+// rejected - rejected from client side

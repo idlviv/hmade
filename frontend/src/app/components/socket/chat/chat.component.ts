@@ -28,7 +28,7 @@ export class ChatComponent implements OnInit {
   // 2
   gotConnectedManagers = false;
   // 3
-  
+
 
   firstConnection = true;
 
@@ -100,61 +100,67 @@ export class ChatComponent implements OnInit {
   setListeners() {
     this.socketService.on('message')
       .subscribe(msg => {
-        console.log('message Result', msg);
+        this.msgs.push(msg);
       });
 
-      // this.socketService.on('message')
-      // .subscribe(data => {
-      //   this.msgs.push(data);
-      // });
+    this.socketService.on('activeManagers')
+      .subscribe(msg => {
+        this.activeManagers = msg.payload;
+      });
 
-      // this.socketService.on('getGuestName')
-      // .subscribe(data => {
-      //   console.log(data);
-      // });
+    this.socketService.on('getGuestName')
+      .subscribe(data => {
+        console.log(data);
+      });
+    // this.socketService.on('message')
+    // .subscribe(data => {
+    //   this.msgs.push(data);
+    // });
 
-      // this.socketService.on('activeManagers')
-      // .subscribe(data => {
-      //   this.activeManagers = data;
-      // });
+    // this.socketService.on('getGuestName')
+    // .subscribe(data => {
+    //   console.log(data);
+    // });
 
-      // this.socketService.on('disconnect')
-      // .subscribe(data => {
-      //   this.msgs = [];
-      //   this.socketService.disconnect();
-      // });
+    // this.socketService.on('activeManagers')
+    // .subscribe(data => {
+    //   this.activeManagers = data;
+    // });
 
-      // this.socketService.on('joinToManager')
-      // .subscribe(data => {
-      //   this.joinToManagerRoom = data;
-      // });
+    // this.socketService.on('disconnect')
+    // .subscribe(data => {
+    //   this.msgs = [];
+    //   this.socketService.disconnect();
+    // });
+
+    // this.socketService.on('joinToManager')
+    // .subscribe(data => {
+    //   this.joinToManagerRoom = data;
+    // });
   }
 
-  em(data) {
-    this.socketService.emit('tmpEvent', data).subscribe(
+  emit(eventName: string, msg: IChatMsg) {
+    this.socketService.emit(eventName, msg).subscribe(
       (result) => {
-        console.log('tmpEvent ', result);
+        console.log('message delivery confirmation ', result);
       },
-      (error) => {
-        console.log('not delivered ', error);
-      },
-      () => {
-        // console.log('complete');
+      (err) => {
+        console.log('message delivery error ', err);
       }
     );
   }
 
-  guestName(name: string) {
-    this.socketService.emit('guestName', {message: 'guest name', payload: name});
-  }
-
-  joinToManager(manager_id: string) {
-    this.socketService.emit('joinToManager', { message: 'join to manager with id', payload: manager_id });
-  }
-
-  // connect() {
-  //   this.chatService.connect();
+  // guestName(name: string) {
+  //   this.socketService.emit('guestName', { message: 'guest name', payload: name });
   // }
+
+  // joinToManager(manager_id: string) {
+  //   this.socketService.emit('joinToManager', { message: 'join to manager with id', payload: manager_id });
+  // }
+
+  disconnect() {
+    this.socketService.disconnect();
+  }
 
   //   this.chatService.onJoinToManager()
   //     .subscribe(requestFromUser => {

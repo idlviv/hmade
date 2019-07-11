@@ -44,8 +44,8 @@
             </div>
 
             <div class="cell chConnection__emitter" fxFlex="100">
-              <button mat-raised-button (click)="em(true)" [disabled]="!socketConnected">Emitter true</button>
-              <button mat-raised-button (click)="em(false)" [disabled]="!socketConnected">Emitter false</button>
+              <button mat-raised-button (click)="emit('message', {message: 'hello from client'})" [disabled]="!socketConnected">Emitter true</button>
+              <button mat-raised-button (click)="emit('message', {message: 'hello from client'})" [disabled]="!socketConnected">Emitter false</button>
             </div>
           </section>
 

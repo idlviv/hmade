@@ -2517,7 +2517,7 @@ var SharedModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"chat\">\r\n  <div class=\"container\">\r\n    <div class=\"row\">\r\n      <div class=\"cell\">\r\n        <div class=\"container chat__container\">\r\n          <section *ngIf=\"!showDialog\" class=\"row chat__connection chConnection\" fxLayout=\"row\">\r\n            <div class=\"cell chConnection__info\" fxFlex=\"100\">\r\n              <p>Socket connected {{socketConnected}}</p>\r\n\r\n            </div>\r\n\r\n            <div class=\"cell chConnection__control\" fxFlex=\"100\">\r\n              <div class=\"row\" fxLayout=\"row\">\r\n                <div class=\"cell\" *ngFor=\"let activeManager of activeManagers\" fxFlex=\"100\">\r\n                  <div>Active manager {{activeManager | json}}</div>\r\n                  <button mat-raised-button (click)=\"joinToManager(activeManager._id)\">{{activeManager.login}}</button>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"100\">\r\n                  <button mat-raised-button (click)=\"connect()\" [disabled]=\"socketConnected\">Connect</button>\r\n                  <button mat-raised-button (click)=\"disconnect()\" [disabled]=\"!socketConnected\">Disconnect</button>\r\n                </div>\r\n              </div>\r\n\r\n            </div>\r\n\r\n            <div class=\"cell chConnection__name\" fxFlex=\"100\">\r\n              <form class=\"row\" [formGroup]=\"getGuestNameForm\" fxFlex=\"row\">\r\n                <!-- <div class=\"cell\" fxFlex=\"70\"> -->\r\n                <mat-form-field class=\"cell\" fxFlex=\"70\">\r\n                  <input matInput placeholder=\"Як Вас звати\" formControlName=\"getGuestName\" required>\r\n                  <mat-error *ngIf=\"getGuestNameForm.get('getGuestName').errors?.required &&\r\n                                      getGuestNameForm.get('getGuestName').touched\">\r\n                    Введіть ім'я\r\n                  </mat-error>\r\n                </mat-form-field>\r\n                <!-- </div> -->\r\n\r\n                <div class=\"cell\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n                  <button mat-raised-button [disabled]=\"!getGuestNameForm.get('getGuestName').valid\"\r\n                    (click)=\"guestName(getGuestNameForm.get('getGuestName').value)\">ok</button>\r\n                </div>\r\n\r\n              </form>\r\n            </div>\r\n\r\n            <div class=\"cell chConnection__emitter\" fxFlex=\"100\">\r\n              <button mat-raised-button (click)=\"em(true)\" [disabled]=\"!socketConnected\">Emitter true</button>\r\n              <button mat-raised-button (click)=\"em(false)\" [disabled]=\"!socketConnected\">Emitter false</button>\r\n            </div>\r\n          </section>\r\n\r\n          <section *ngIf=\"showDialog\" class=\"row chat__dialog chDialog\" fxLayout=\"row\">\r\n            <div class=\"cell\" fxFlex=\"100\">\r\n              <div class=\"row chDialog__messages\" fxLayout=\"row\">\r\n                <ul>\r\n                  <li *ngFor=\"let msg of msgs\" class=\"cell\" fxFlex=\"100\">\r\n                    <div>{{msg | json}}</div>\r\n                    <!-- <div class=\"chMessages__item_fromServer\">{{msg.message}}</div> -->\r\n                  </li>\r\n                </ul>\r\n              </div>\r\n\r\n              <div class=\"row chDialog__control\" fxLayout=\"row\">\r\n                <div class=\"cell chDialog__control_input\" fxFlex=\"70\" fxLayoutAlign=\"start center\">\r\n                  <input [(ngModel)]=\"message\">\r\n                </div>\r\n                <div class=\"cell chDialog__control_send\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n                  <button mat-raised-button (click)=\"onSendMessage()\">Send</button>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </section>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n\r\n\r\n\r\n<!-- <div class=\"container chat\">\r\n  <h2 class=\"mat-h2 chat__header\">chat works!</h2>\r\n\r\n  <div class=\"row chat__messages\" fxLayout=\"row\">\r\n    <div class=\"cell\" fxFlex>\r\n      <ul class=\"row messages\">\r\n        <li *ngFor=\"let msg of msgs\" class=\"cell messages__item\">\r\n          {{msg.message}}\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"130px\">\r\n        <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"room\">\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"70px\">\r\n        <button (click)=\"onJoin()\">Join</button>\r\n      </div>\r\n    </div>\r\n  <div class=\"chat__send-control row\" fxLayout=\"row\">\r\n    <div class=\"cell chat__input-message\" fxFlex=\"130px\">\r\n      <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"message\">\r\n    </div>\r\n    <div class=\"cell chat__send-button\" fxFlex=\"70px\">\r\n      <button (click)=\"onSendMessage()\">Send</button>\r\n    </div>\r\n  </div>\r\n\r\n</div> -->"
+module.exports = "<div class=\"chat\">\r\n  <div class=\"container\">\r\n    <div class=\"row\">\r\n      <div class=\"cell\">\r\n        <div class=\"container chat__container\">\r\n          <section *ngIf=\"!showDialog\" class=\"row chat__connection chConnection\" fxLayout=\"row\">\r\n            <div class=\"cell chConnection__info\" fxFlex=\"100\">\r\n              <p>Socket connected {{socketConnected}}</p>\r\n\r\n            </div>\r\n\r\n            <div class=\"cell chConnection__control\" fxFlex=\"100\">\r\n              <div class=\"row\" fxLayout=\"row\">\r\n                <div class=\"cell\" *ngFor=\"let activeManager of activeManagers\" fxFlex=\"100\">\r\n                  <div>Active manager {{activeManager | json}}</div>\r\n                  <button mat-raised-button (click)=\"joinToManager(activeManager._id)\">{{activeManager.login}}</button>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"100\">\r\n                  <button mat-raised-button (click)=\"connect()\" [disabled]=\"socketConnected\">Connect</button>\r\n                  <button mat-raised-button (click)=\"disconnect()\" [disabled]=\"!socketConnected\">Disconnect</button>\r\n                </div>\r\n              </div>\r\n\r\n            </div>\r\n\r\n            <div class=\"cell chConnection__name\" fxFlex=\"100\">\r\n              <form class=\"row\" [formGroup]=\"getGuestNameForm\" fxFlex=\"row\">\r\n                <!-- <div class=\"cell\" fxFlex=\"70\"> -->\r\n                <mat-form-field class=\"cell\" fxFlex=\"70\">\r\n                  <input matInput placeholder=\"Як Вас звати\" formControlName=\"getGuestName\" required>\r\n                  <mat-error *ngIf=\"getGuestNameForm.get('getGuestName').errors?.required &&\r\n                                      getGuestNameForm.get('getGuestName').touched\">\r\n                    Введіть ім'я\r\n                  </mat-error>\r\n                </mat-form-field>\r\n                <!-- </div> -->\r\n\r\n                <div class=\"cell\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n                  <button mat-raised-button [disabled]=\"!getGuestNameForm.get('getGuestName').valid\"\r\n                    (click)=\"guestName(getGuestNameForm.get('getGuestName').value)\">ok</button>\r\n                </div>\r\n\r\n              </form>\r\n            </div>\r\n\r\n            <div class=\"cell chConnection__emitter\" fxFlex=\"100\">\r\n              <button mat-raised-button (click)=\"emit('message', {message: 'hello from client'})\" [disabled]=\"!socketConnected\">Emitter true</button>\r\n              <button mat-raised-button (click)=\"emit('message', {message: 'hello from client'})\" [disabled]=\"!socketConnected\">Emitter false</button>\r\n            </div>\r\n          </section>\r\n\r\n          <section *ngIf=\"showDialog\" class=\"row chat__dialog chDialog\" fxLayout=\"row\">\r\n            <div class=\"cell\" fxFlex=\"100\">\r\n              <div class=\"row chDialog__messages\" fxLayout=\"row\">\r\n                <ul>\r\n                  <li *ngFor=\"let msg of msgs\" class=\"cell\" fxFlex=\"100\">\r\n                    <div>{{msg | json}}</div>\r\n                    <!-- <div class=\"chMessages__item_fromServer\">{{msg.message}}</div> -->\r\n                  </li>\r\n                </ul>\r\n              </div>\r\n\r\n              <div class=\"row chDialog__control\" fxLayout=\"row\">\r\n                <div class=\"cell chDialog__control_input\" fxFlex=\"70\" fxLayoutAlign=\"start center\">\r\n                  <input [(ngModel)]=\"message\">\r\n                </div>\r\n                <div class=\"cell chDialog__control_send\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n                  <button mat-raised-button (click)=\"onSendMessage()\">Send</button>\r\n                </div>\r\n              </div>\r\n            </div>\r\n          </section>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n\r\n\r\n\r\n<!-- <div class=\"container chat\">\r\n  <h2 class=\"mat-h2 chat__header\">chat works!</h2>\r\n\r\n  <div class=\"row chat__messages\" fxLayout=\"row\">\r\n    <div class=\"cell\" fxFlex>\r\n      <ul class=\"row messages\">\r\n        <li *ngFor=\"let msg of msgs\" class=\"cell messages__item\">\r\n          {{msg.message}}\r\n        </li>\r\n      </ul>\r\n    </div>\r\n  </div>\r\n    <div class=\"row\" fxLayout=\"row\">\r\n      <div class=\"cell\" fxFlex=\"130px\">\r\n        <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"room\">\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"70px\">\r\n        <button (click)=\"onJoin()\">Join</button>\r\n      </div>\r\n    </div>\r\n  <div class=\"chat__send-control row\" fxLayout=\"row\">\r\n    <div class=\"cell chat__input-message\" fxFlex=\"130px\">\r\n      <input class=\"mat-input\" type=\"text\" [(ngModel)]=\"message\">\r\n    </div>\r\n    <div class=\"cell chat__send-button\" fxFlex=\"70px\">\r\n      <button (click)=\"onSendMessage()\">Send</button>\r\n    </div>\r\n  </div>\r\n\r\n</div> -->"
 
 /***/ }),
 
@@ -2623,9 +2623,18 @@ var ChatComponent = /** @class */ (function () {
         }
     };
     ChatComponent.prototype.setListeners = function () {
+        var _this = this;
         this.socketService.on('message')
             .subscribe(function (msg) {
-            console.log('message Result', msg);
+            _this.msgs.push(msg);
+        });
+        this.socketService.on('activeManagers')
+            .subscribe(function (msg) {
+            _this.activeManagers = msg.payload;
+        });
+        this.socketService.on('getGuestName')
+            .subscribe(function (data) {
+            console.log(data);
         });
         // this.socketService.on('message')
         // .subscribe(data => {
@@ -2649,20 +2658,21 @@ var ChatComponent = /** @class */ (function () {
         //   this.joinToManagerRoom = data;
         // });
     };
-    ChatComponent.prototype.em = function (data) {
-        this.socketService.emit('tmpEvent', data).subscribe(function (result) {
-            console.log('tmpEvent ', result);
-        }, function (error) {
-            console.log('not delivered ', error);
-        }, function () {
-            // console.log('complete');
+    ChatComponent.prototype.emit = function (eventName, msg) {
+        this.socketService.emit(eventName, msg).subscribe(function (result) {
+            console.log('message delivery confirmation ', result);
+        }, function (err) {
+            console.log('message delivery error ', err);
         });
     };
-    ChatComponent.prototype.guestName = function (name) {
-        this.socketService.emit('guestName', { message: 'guest name', payload: name });
-    };
-    ChatComponent.prototype.joinToManager = function (manager_id) {
-        this.socketService.emit('joinToManager', { message: 'join to manager with id', payload: manager_id });
+    // guestName(name: string) {
+    //   this.socketService.emit('guestName', { message: 'guest name', payload: name });
+    // }
+    // joinToManager(manager_id: string) {
+    //   this.socketService.emit('joinToManager', { message: 'join to manager with id', payload: manager_id });
+    // }
+    ChatComponent.prototype.disconnect = function () {
+        this.socketService.disconnect();
     };
     ChatComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
@@ -4237,19 +4247,23 @@ var SocketService = /** @class */ (function () {
     SocketService.prototype.emit = function (eventName, msg) {
         var _this = this;
         return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
-            var timeout = 3000;
+            // set timeout for message delivery
+            var timeout = 4000;
             var timer = setTimeout(function () {
-                observer.error(new Error("not delivered, timeout error - eventName: " + eventName + ", message: " + msg.message + " - not delivered"));
+                observer.error(new Error("not delivered, timeout error - eventName: " + eventName + ", message: " + msg.message));
             }, timeout);
             _this.socket.emit(eventName, msg, function (success) {
+                // if callback from server received, then cancel timeout error
                 clearTimeout(timer);
                 if (success) {
+                    // server accepted message
                     observer.next(success);
+                    observer.complete();
                 }
                 else {
-                    observer.error("eventName: " + eventName + ", message: " + msg.message + " - not delivered");
+                    // server rejected message
+                    observer.error(new Error("rejected from server - eventName: " + eventName + ", message: " + msg.message));
                 }
-                observer.complete();
             });
         });
     };
@@ -4260,7 +4274,9 @@ var SocketService = /** @class */ (function () {
             _this.socket.off(eventName);
             _this.socket.on(eventName, function (msg, callback) {
                 // send confirmation to server
-                // callback(true);
+                if (callback) {
+                    callback(true);
+                }
                 // pass message
                 observer.next(msg);
             });

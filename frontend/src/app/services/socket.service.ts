@@ -32,20 +32,28 @@ export class SocketService {
 
   emit(eventName: string, msg: IChatMsg): Observable<boolean> {
     return new Observable<boolean>(observer => {
-      const timeout = 3000;
-      let timer = setTimeout(function () {
+      // set timeout for message delivery
+      const timeout = 4000;
+      const timer = setTimeout(function () {
         observer.error(new Error(
-          `not delivered, timeout error - eventName: ${eventName}, message: ${msg.message} - not delivered`,
+          `not delivered, timeout error - eventName: ${eventName}, message: ${msg.message}`,
         ));
       }, timeout);
+
       this.socket.emit(eventName, msg, function (success: boolean) {
+        // if callback from server received, then cancel timeout error
         clearTimeout(timer);
         if (success) {
+          // server accepted message
           observer.next(success);
+          observer.complete();
         } else {
-          observer.error(`eventName: ${eventName}, message: ${msg.message} - not delivered`);
+          // server rejected message
+          observer.error(
+            new Error(
+              `rejected from server - eventName: ${eventName}, message: ${msg.message}`,
+          ));
         }
-        observer.complete();
       });
     });
   }
@@ -56,7 +64,9 @@ export class SocketService {
       this.socket.off(eventName);
       this.socket.on(eventName, (msg: IChatMsg, callback: any) => {
         // send confirmation to server
-        // callback(true);
+        if (callback) {
+          callback(true);
+        }
         // pass message
         observer.next(msg);
       });
