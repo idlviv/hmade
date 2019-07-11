@@ -1,6 +1,7 @@
 export interface IChatMsg {
   message: string;
   payload?: any;
+  room?: string;
 }
 
 

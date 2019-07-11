@@ -129,15 +129,11 @@ class ChatHelper {
       }
       const activeSockets = activeSockets_id.map((socket_id) => io.sockets.connected[socket_id]);
       activeSockets.forEach(async (socket) => {
-        log.debug('user_id %o', typeof user_id);
-        log.debug('user_id %o', socket.request.payload.user._id + '');
         const user_idFromSocket = socket.request.payload.user._id + '';
         if (user_idFromSocket !== user_id) {
-          log.debug('skip socket %o', socket.id);
           return;
         } else {
           socketsByUser_id.push(socket.id);
-          log.debug('push socket %o', socketsByUser_id);
         }
       });
       resolve(socketsByUser_id);

@@ -5,27 +5,26 @@
         <div class="container chat__container">
           <section *ngIf="!showDialog" class="row chat__connection chConnection" fxLayout="row">
             <div class="cell chConnection__info" fxFlex="100">
-              <p>Socket connected {{socketConnected}}</p>
+              Socket connected {{socketConnected}}<br>
+              Got active managers {{gotActiveManagers}}
 
             </div>
-
-            <div class="cell chConnection__control" fxFlex="100">
-              <div class="row" fxLayout="row">
-                <div class="cell" *ngFor="let activeManager of activeManagers" fxFlex="100">
-                  <div>Active manager {{activeManager | json}}</div>
-                  <button mat-raised-button (click)="joinToManager(activeManager._id)">{{activeManager.login}}</button>
-                </div>
                 <div class="cell" fxFlex="100">
                   <button mat-raised-button (click)="connect()" [disabled]="socketConnected">Connect</button>
                   <button mat-raised-button (click)="disconnect()" [disabled]="!socketConnected">Disconnect</button>
                 </div>
-              </div>
+            <div *ngIf="gotActiveManagers" class="cell chConnection__control" fxFlex="100">
+              <div class="row" fxLayout="row">
+                <div class="cell" *ngFor="let activeManager of activeManagers" fxFlex="100">
+                  <!-- <div>Active manager {{activeManager | json}}</div> -->
+                  <button mat-raised-button (click)="joinToManager(activeManager._id)">{{activeManager.login}}</button>
+                </div>
 
+              </div>
             </div>
 
-            <div class="cell chConnection__name" fxFlex="100">
+            <!-- <div class="cell chConnection__name" fxFlex="100">
               <form class="row" [formGroup]="getGuestNameForm" fxFlex="row">
-                <!-- <div class="cell" fxFlex="70"> -->
                 <mat-form-field class="cell" fxFlex="70">
                   <input matInput placeholder="Як Вас звати" formControlName="getGuestName" required>
                   <mat-error *ngIf="getGuestNameForm.get('getGuestName').errors?.required &&
@@ -33,7 +32,6 @@
                     Введіть ім'я
                   </mat-error>
                 </mat-form-field>
-                <!-- </div> -->
 
                 <div class="cell" fxFlex="30" fxLayoutAlign="center center">
                   <button mat-raised-button [disabled]="!getGuestNameForm.get('getGuestName').valid"
@@ -41,15 +39,15 @@
                 </div>
 
               </form>
-            </div>
+            </div> -->
 
-            <div class="cell chConnection__emitter" fxFlex="100">
+            <!-- <div class="cell chConnection__emitter" fxFlex="100">
               <button mat-raised-button (click)="emit('message', {message: 'hello from client'})" [disabled]="!socketConnected">Emitter true</button>
               <button mat-raised-button (click)="emit('message', {message: 'hello from client'})" [disabled]="!socketConnected">Emitter false</button>
-            </div>
+            </div> -->
           </section>
 
-          <section *ngIf="showDialog" class="row chat__dialog chDialog" fxLayout="row">
+          <section class="row chat__dialog chDialog" fxLayout="row">
             <div class="cell" fxFlex="100">
               <div class="row chDialog__messages" fxLayout="row">
                 <ul>
@@ -65,7 +63,7 @@
                   <input [(ngModel)]="message">
                 </div>
                 <div class="cell chDialog__control_send" fxFlex="30" fxLayoutAlign="center center">
-                  <button mat-raised-button (click)="onSendMessage()">Send</button>
+                  <button mat-raised-button (click)="sendMessage()">Send</button>
                 </div>
               </div>
             </div>

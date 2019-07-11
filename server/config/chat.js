@@ -42,6 +42,14 @@ module.exports = (io) => {
     chatHelper.logEvents(socket);
 
     log.debug('socket connected %o', await chatHelper.getConnectedSockets(io));
+
+    let connectedManagers;
+    try {
+      connectedManagers = await chatHelper.getConnectedManagers(io);
+    } catch (err) {
+      errorHandler(err);
+    }
+
     const regitredUsersRoles = ['guest', 'user', 'google', 'facebook'];
     const previleggedRoles = ['manager', 'admin']; // TODO: remove admin
 
@@ -55,25 +63,28 @@ module.exports = (io) => {
       } catch (err) {
         errorHandler(err);
       }
+
       // emit to all - updated managers list
       io.emit('activeManagers', new Msg('Update managers list', connectedManagers));
     } else if (socket.request.payload.user && regitredUsersRoles.indexOf(socket.request.payload.user.role) !== -1) {
       // registred user connected
       emit('message', new Msg('Hello ' + socket.request.payload.user.name))
           .subscribe(() => { }, (err) => errorHandler(err));
-      let connectedManagers;
-      try {
-        connectedManagers = await chatHelper.getConnectedManagers(io);
-      } catch (err) {
-        errorHandler(err);
-      }
+
       // emit to user - updated managers list
       socket.emit('activeManagers', new Msg('Managers list', connectedManagers));
     } else {
       // casual (guest) user connected
+      emit('message', new Msg('Hello'))
+          .subscribe(() => { }, (err) => errorHandler(err));
+
+      // emit to user - updated managers list
+      socket.emit('activeManagers', new Msg('Managers list', connectedManagers));
+
       // ask for name
-      socket.emit('getGuestName', null);
+      // socket.emit('getGuestName', null);
     }
+
 
     /**
      * @typedef {Object} IChatMsg
@@ -127,7 +138,7 @@ module.exports = (io) => {
       return new Observable((observer) => {
         socket.on(eventName, (msg, callback) => {
           // send confirmation to front
-          // callback(false);
+          callback(true);
           // pass message
           observer.next(msg);
         });
@@ -147,97 +158,103 @@ module.exports = (io) => {
     on('message')
         .subscribe(
             (msg) => {
+              if (msg.room) {
+                socket.broadcast.to(msg.room).emit('message', msg);
+              }
               log.debug('message %o', msg);
             },
-            (err) => {
-              errorHandler(err);
-            });
+            (err) => errorHandler(err)
+        );
 
-    // on('tmpEvent')
-    //     .subscribe(async (obj) => {
-    //       const {message, callback} = obj;
-    //       log.debug('callback %o', callback);
-    //       try {
-    //         testMessage = await chatHelper.test(message);
-    //       } catch (err) {
-    //         callback(false);
-    //         return errorHandler(err);
-    //       }
-    //       log.debug('message tmpEvent %o', testMessage);
-    //       emit('tmpEvent', testMessage);
-    //       // .subscribe((result) => {
-    //       //   console.log('tmpEvent ', result);
-    //       // },
-    //       // (error) => {
-    //       //   console.log('not delivered ', error);
-    //       // },
-    //       // () => {
-    //       //   // console.log('complete');
-    //       // });
-    //     });
+    on('joinToManager')
+        .subscribe(async (msg) => {
+          log.debug('join to manager %o', msg);
+          const manager_id = msg.payload;
+          let socketsByUser_id;
+          try {
+            socketsByUser_id = await chatHelper.getSocketsByUser_id(manager_id);
+          } catch (err) {
+            return errorHandler(err);
+          }
+          const room = uuidv4();
+          io.sockets.connected[socketsByUser_id[0]].join(room);
+          socket.join(room);
 
-    // // socket.on('tmpEvent', function(data, callback) {
-    // //   const success = data;
-    // //   if (success) {
-    // //     socket.emit('tmpEvent', success);
-    // //     callback(success);
-    // //   } else {
-    // //     socket.emit('tmpEvent', success);
-    // //     callback(success);
-    // //   }
-    // // });
+          emit('joinToManager', new Msg('Join to managers room', room))
+              .subscribe(() => { }, (err) => errorHandler(err));
 
-
-    // on('guestName').subscribe(async (data) => {
-    //   // casual (guest) user connected and called his name
-    //   socket.request.payload.user.name = data;
-    //   socket.emit('message', 'Hello ' + socket.request.payload.user.name);
-    //   let connectedManagers;
-    //   try {
-    //     connectedManagers = await chatHelper.getConnectedManagers(io);
-    //   } catch (err) {
-    //     return new SocketError(err);
-    //   }
-    //   // emit to casual (guest) user - updated managers list
-    //   socket.emit('activeManagers', connectedManagers);
-    // });
-
-    // on('disconnect').subscribe(async (reason) => {
-    //   try {
-    //     connectedManagers = await chatHelper.getConnectedManagers(io);
-    //   } catch (err) {
-    //     return new SocketError(err);
-    //   }
-    //   // emit to all - updated managers list
-    //   io.emit('activeManagers', connectedManagers);
-
-    //   log.debug('This socket ' + socket.id + ' lost connection - reason: ' + reason);
-    // });
-
-    // on('joinToManager').subscribe(async (manager_id) => {
-    //   let socketsByUser_id;
-    //   try {
-    //     socketsByUser_id = await chatHelper.getSocketsByUser_id(manager_id);
-    //   } catch (err) {
-    //     return new SocketError(err);
-    //   }
-    //   log.debug('socket rooms prev %o', socket.rooms);
-
-    //   const room = uuidv4();
-    //   io.sockets.connected[socketsByUser_id[0]].join(room);
-    //   socket.join(room);
-
-    //   socket.emit('joinToManager', room);
-    //   io.to(socketsByUser_id[0]).emit('joinToManager', room);
-    //   // log.debug('joinToManager %o', getSocketsByUser_id);
-    //   log.debug('socket rooms %o', socket.rooms);
-    // // socket.emit('joinToManager', manager_id);
-    // // socket.emit('messageFromServer', {message: `wellcome to ${params.room}`});
-    // // socket.broadcast.to(params.room).emit('messageFromServer', { message: `new user joined to ${params.room}` });
-    // });
-    // return errorHandler('some error');
+          io.to(socketsByUser_id[0]).emit('joinToManager', new Msg('Join to managers room', room));
+          // log.debug('joinToManager %o', getSocketsByUser_id);
+          log.debug('socket rooms %o', socket.rooms);
+          // socket.emit('joinToManager', manager_id);
+          // socket.emit('messageFromServer', {message: `wellcome to ${params.room}`});
+          // socket.broadcast.to(params.room).emit('messageFromServer', { message: `new user joined to ${params.room}` });
+        },
+        (err) => errorHandler(err)
+        );
   });
 };
+
+// on('tmpEvent')
+//     .subscribe(async (obj) => {
+//       const {message, callback} = obj;
+//       log.debug('callback %o', callback);
+//       try {
+//         testMessage = await chatHelper.test(message);
+//       } catch (err) {
+//         callback(false);
+//         return errorHandler(err);
+//       }
+//       log.debug('message tmpEvent %o', testMessage);
+//       emit('tmpEvent', testMessage);
+//       // .subscribe((result) => {
+//       //   console.log('tmpEvent ', result);
+//       // },
+//       // (error) => {
+//       //   console.log('not delivered ', error);
+//       // },
+//       // () => {
+//       //   // console.log('complete');
+//       // });
+//     });
+
+// // socket.on('tmpEvent', function(data, callback) {
+// //   const success = data;
+// //   if (success) {
+// //     socket.emit('tmpEvent', success);
+// //     callback(success);
+// //   } else {
+// //     socket.emit('tmpEvent', success);
+// //     callback(success);
+// //   }
+// // });
+
+
+// on('guestName').subscribe(async (data) => {
+//   // casual (guest) user connected and called his name
+//   socket.request.payload.user.name = data;
+//   socket.emit('message', 'Hello ' + socket.request.payload.user.name);
+//   let connectedManagers;
+//   try {
+//     connectedManagers = await chatHelper.getConnectedManagers(io);
+//   } catch (err) {
+//     return new SocketError(err);
+//   }
+//   // emit to casual (guest) user - updated managers list
+//   socket.emit('activeManagers', connectedManagers);
+// });
+
+// on('disconnect').subscribe(async (reason) => {
+//   try {
+//     connectedManagers = await chatHelper.getConnectedManagers(io);
+//   } catch (err) {
+//     return new SocketError(err);
+//   }
+//   // emit to all - updated managers list
+//   io.emit('activeManagers', connectedManagers);
+
+//   log.debug('This socket ' + socket.id + ' lost connection - reason: ' + reason);
+// });
 
 //   socket.broadcast.emit('messageFromServer', {
 //     message: `new user connected: ${socket.request.payload.user.login}`,

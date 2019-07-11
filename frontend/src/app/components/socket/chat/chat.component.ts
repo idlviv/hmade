@@ -11,8 +11,8 @@ import { retry } from 'rxjs/operators';
 })
 export class ChatComponent implements OnInit {
   // msgs: IChatMessage[] = [];
-  // @Input() message: string;
-  // @Input() room: string;
+  message: string;
+  room: string;
   tmp: any;
 
   activeManagers = [];
@@ -26,9 +26,8 @@ export class ChatComponent implements OnInit {
   // 1
   socketConnected = false;
   // 2
-  gotConnectedManagers = false;
+  gotActiveManagers = false;
   // 3
-
 
   firstConnection = true;
 
@@ -44,35 +43,6 @@ export class ChatComponent implements OnInit {
     });
 
     this.connect();
-    // this.chatService.onMessage()
-    //   .subscribe(data => {
-    //     console.log(data);
-    //     this.msgs.push(data);
-    //   });
-
-    // this.chatService.onGetGuestName()
-    //   .subscribe(data => {
-    //     console.log(data);
-    //     // this.msgs.push(msg);
-    //   });
-
-    // this.chatService.onActiveManagers()
-    //   .subscribe(data => {
-    //     console.log(data);
-    //     this.activeManagers = data;
-    //   });
-
-    // this.chatService.onDisconnect()
-    //   .subscribe(msg => {
-    //     this.msgs = [];
-    //     this.chatService.connect();
-    //   });
-
-    // this.chatService.onJoinToManager()
-    //   .subscribe(data => {
-    //     console.log(data);
-    //     this.joinToManagerRoom = data;
-    //   });
   }
 
   connect() {
@@ -100,17 +70,20 @@ export class ChatComponent implements OnInit {
   setListeners() {
     this.socketService.on('message')
       .subscribe(msg => {
+        console.log('msg', msg);
         this.msgs.push(msg);
       });
 
     this.socketService.on('activeManagers')
       .subscribe(msg => {
         this.activeManagers = msg.payload;
+        this.gotActiveManagers = true;
       });
 
-    this.socketService.on('getGuestName')
+    this.socketService.on('joinToManager')
       .subscribe(data => {
-        console.log(data);
+        console.log('joinToManager', data);
+        this.room = data.payload;
       });
     // this.socketService.on('message')
     // .subscribe(data => {
@@ -154,9 +127,15 @@ export class ChatComponent implements OnInit {
   //   this.socketService.emit('guestName', { message: 'guest name', payload: name });
   // }
 
-  // joinToManager(manager_id: string) {
-  //   this.socketService.emit('joinToManager', { message: 'join to manager with id', payload: manager_id });
-  // }
+  joinToManager(manager_id: string) {
+    console.log('emit');
+    this.emit('joinToManager', { message: 'join to manager with id', payload: manager_id });
+  }
+
+  sendMessage() {
+    this.emit('message', { message: this.message, payload: null, room: this.room });
+    this.message = '';
+  }
 
   disconnect() {
     this.socketService.disconnect();

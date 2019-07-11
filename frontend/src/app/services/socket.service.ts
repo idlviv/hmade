@@ -39,7 +39,7 @@ export class SocketService {
           `not delivered, timeout error - eventName: ${eventName}, message: ${msg.message}`,
         ));
       }, timeout);
-
+      console.log('emitter', eventName);
       this.socket.emit(eventName, msg, function (success: boolean) {
         // if callback from server received, then cancel timeout error
         clearTimeout(timer);
