@@ -4237,7 +4237,12 @@ var SocketService = /** @class */ (function () {
     SocketService.prototype.emit = function (eventName, msg) {
         var _this = this;
         return new rxjs__WEBPACK_IMPORTED_MODULE_1__["Observable"](function (observer) {
+            var timeout = 3000;
+            var timer = setTimeout(function () {
+                observer.error(new Error("not delivered, timeout error - eventName: " + eventName + ", message: " + msg.message + " - not delivered"));
+            }, timeout);
             _this.socket.emit(eventName, msg, function (success) {
+                clearTimeout(timer);
                 if (success) {
                     observer.next(success);
                 }
@@ -4255,7 +4260,7 @@ var SocketService = /** @class */ (function () {
             _this.socket.off(eventName);
             _this.socket.on(eventName, function (msg, callback) {
                 // send confirmation to server
-                callback(true);
+                // callback(true);
                 // pass message
                 observer.next(msg);
             });

@@ -38,19 +38,10 @@ module.exports = (io) => {
     return next();
   });
 
-  // io.on('error', function(err) {
-  //   log.debug('io on-error %o ', err);
-  // });
-
-  // io.on('myError', function(err) {
-  //   log.debug('io on-my-error %o ', err);
-  // });
-
   io.on('connection', async (socket) => {
     chatHelper.logEvents(socket);
 
     emit('message', new Msg('Hello'))
-    // emit('message', {message: 'Hello'})
         .subscribe(
             (result) => log.debug('result message %o', result),
             (err) => log.debug('result message erro %o', err)
@@ -104,12 +95,19 @@ module.exports = (io) => {
      */
     function emit(eventName, msg) {
       return new Observable((observer) => {
+        const timeout = 3000;
+        let timer = setTimeout(function() {
+          observer.error(new SocketError({
+            message: `not delivered, timeout error - eventName: ${eventName}, message: ${msg.message} - not delivered`,
+          }));
+        }, timeout);
         socket.emit(eventName, msg, function(success) {
+          clearTimeout(timer);
           if (success) {
-            observer.next();
+            observer.next(true);
           } else {
             observer.error(new SocketError({
-              message: `eventName: ${eventName}, message: ${msg.message} - not delivered`,
+              message: `error from client - eventName: ${eventName}, message: ${msg.message}`,
             }));
           }
           observer.complete();

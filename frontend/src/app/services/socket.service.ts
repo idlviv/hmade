@@ -32,7 +32,14 @@ export class SocketService {
 
   emit(eventName: string, msg: IChatMsg): Observable<boolean> {
     return new Observable<boolean>(observer => {
+      const timeout = 3000;
+      let timer = setTimeout(function () {
+        observer.error(new Error(
+          `not delivered, timeout error - eventName: ${eventName}, message: ${msg.message} - not delivered`,
+        ));
+      }, timeout);
       this.socket.emit(eventName, msg, function (success: boolean) {
+        clearTimeout(timer);
         if (success) {
           observer.next(success);
         } else {
@@ -49,7 +56,7 @@ export class SocketService {
       this.socket.off(eventName);
       this.socket.on(eventName, (msg: IChatMsg, callback: any) => {
         // send confirmation to server
-        callback(true);
+        // callback(true);
         // pass message
         observer.next(msg);
       });
