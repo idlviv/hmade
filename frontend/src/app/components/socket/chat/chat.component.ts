@@ -28,6 +28,7 @@ export class ChatComponent implements OnInit {
   // 2
   gotActiveManagers = false;
   // 3
+  requestOnJoin = false;
 
   firstConnection = true;
 
@@ -80,11 +81,21 @@ export class ChatComponent implements OnInit {
         this.gotActiveManagers = true;
       });
 
-    this.socketService.on('joinToManager')
-      .subscribe(data => {
-        console.log('joinToManager', data);
-        this.room = data.payload;
+    this.socketService.on('joinToManagerAccept')
+      .subscribe(msg => {
+        console.log('joinToManagerAccept', msg);
+        this.room = msg.room;
+        this.msgs.push(msg);
       });
+
+    this.socketService.on('joinToManagerRequest')
+      .subscribe(msg => {
+        console.log('joinToManagerRequest', msg);
+        this.room = msg.room;
+        this.requestOnJoin = true;
+      });
+
+  
     // this.socketService.on('message')
     // .subscribe(data => {
     //   this.msgs.push(data);
@@ -123,13 +134,12 @@ export class ChatComponent implements OnInit {
     );
   }
 
-  // guestName(name: string) {
-  //   this.socketService.emit('guestName', { message: 'guest name', payload: name });
-  // }
+  joinToManagerRequest(manager_id: string) {
+    this.emit('joinToManagerRequest', { message: 'request to join to manager with id', payload: manager_id });
+  }
 
-  joinToManager(manager_id: string) {
-    console.log('emit');
-    this.emit('joinToManager', { message: 'join to manager with id', payload: manager_id });
+  joinToManagerAccept() {
+    this.emit('joinToManagerAccept', { message: 'Accept request to join to room', room: this.room });
   }
 
   sendMessage() {

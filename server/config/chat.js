@@ -145,16 +145,6 @@ module.exports = (io) => {
       });
     }
 
-    // on('managers')
-    //     .subscribe(async (message) => {
-    //       try {
-    //         connectedManagers = await chatHelper.getConnectedManagers(io);
-    //       } catch (err) {
-    //         return errorHandler(err);
-    //       }
-    //       emit('managers', connectedManagers);
-    //     });
-
     on('message')
         .subscribe(
             (msg) => {
@@ -166,29 +156,53 @@ module.exports = (io) => {
             (err) => errorHandler(err)
         );
 
-    on('joinToManager')
+    on('joinToManagerRequest')
         .subscribe(async (msg) => {
-          log.debug('join to manager %o', msg);
           const manager_id = msg.payload;
+
+          // get all open sockets by manager_id
           let socketsByUser_id;
           try {
             socketsByUser_id = await chatHelper.getSocketsByUser_id(manager_id);
           } catch (err) {
             return errorHandler(err);
           }
+
+          // create room
           const room = uuidv4();
-          io.sockets.connected[socketsByUser_id[0]].join(room);
+
+          // join current user to room
           socket.join(room);
 
-          emit('joinToManager', new Msg('Join to managers room', room))
+          // send confirmation to user
+          // and wait for managers accept
+          emit('joinToManagerAccept', new Msg('Очікуйте відповіді', null, room))
               .subscribe(() => { }, (err) => errorHandler(err));
 
-          io.to(socketsByUser_id[0]).emit('joinToManager', new Msg('Join to managers room', room));
-          // log.debug('joinToManager %o', getSocketsByUser_id);
+          // send request to manager
+          io.to(socketsByUser_id[0]).emit('joinToManagerRequest', new Msg('Користувач чекає на відповідь', null, room));
+
+
+          // io.sockets.connected[socketsByUser_id[0]].join(room);
+          // io.to(socketsByUser_id[0]).emit('joinToManager', new Msg('Join to managers room', room));
           log.debug('socket rooms %o', socket.rooms);
-          // socket.emit('joinToManager', manager_id);
-          // socket.emit('messageFromServer', {message: `wellcome to ${params.room}`});
-          // socket.broadcast.to(params.room).emit('messageFromServer', { message: `new user joined to ${params.room}` });
+
+        },
+        (err) => errorHandler(err)
+        );
+
+    on('joinToManagerAccept')
+        .subscribe(async (msg) => {
+          const room = msg.payload;
+
+          // join manager to room
+          socket.join(room);
+
+          // send confirmation to manager
+          emit('joinToManagerAccept', new Msg('Ви приєдналися до чату', null, room))
+              .subscribe(() => { }, (err) => errorHandler(err));
+
+          socket.to(room).emit('joinToManagerAccept', new Msg('Менеджер приєднався до чату'));
         },
         (err) => errorHandler(err)
         );
