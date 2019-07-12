@@ -2656,6 +2656,7 @@ var ChatComponent = /** @class */ (function () {
     };
     ChatComponent.prototype.joinToManagerAccept = function () {
         this.emit('joinToManagerAccept', { message: 'Accept request to join to room', room: this.room });
+        this.requestOnJoin = false;
     };
     ChatComponent.prototype.sendMessage = function () {
         this.emit('message', { message: this.message, payload: null, room: this.room });

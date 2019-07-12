@@ -140,6 +140,8 @@ export class ChatComponent implements OnInit {
 
   joinToManagerAccept() {
     this.emit('joinToManagerAccept', { message: 'Accept request to join to room', room: this.room });
+    this.requestOnJoin = false;
+
   }
 
   sendMessage() {
