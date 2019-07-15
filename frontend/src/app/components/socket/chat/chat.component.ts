@@ -123,7 +123,7 @@ export class ChatComponent implements OnInit {
     // });
   }
 
-   emit(eventName: string, msg: IChatMsg) {
+  emit(eventName: string, msg: IChatMsg) {
     this.socketService.emit(eventName, msg).subscribe(
       (result) => {
         console.log('message delivery confirmation ', result);
