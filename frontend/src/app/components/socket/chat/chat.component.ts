@@ -1,6 +1,6 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { IChatMsg } from '../../../interfaces/interface';
-import { FormControl, Validators, FormGroup } from '@angular/forms';
+import { FormControl, Validators, FormGroup, FormGroupDirective } from '@angular/forms';
 import { SocketService } from 'src/app/services/socket.service';
 import { retry } from 'rxjs/operators';
 
@@ -10,7 +10,8 @@ import { retry } from 'rxjs/operators';
   styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-  // msgs: IChatMessage[] = [];
+  @ViewChild(FormGroupDirective) messageFormDirective: FormGroupDirective;
+
   message: string;
   room: string;
   tmp: any;
@@ -21,7 +22,7 @@ export class ChatComponent implements OnInit {
   showDialog = false;
   joinToManagerRoom: any;
 
-  getGuestNameForm: FormGroup;
+  messageForm: FormGroup;
 
   // 1
   socketConnected = false;
@@ -37,8 +38,8 @@ export class ChatComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getGuestNameForm = new FormGroup({
-      getGuestName: new FormControl('', [
+    this.messageForm = new FormGroup({
+      message: new FormControl('', [
         Validators.required,
       ]),
     });
@@ -145,8 +146,9 @@ export class ChatComponent implements OnInit {
   }
 
   sendMessage() {
+    this.message = this.messageForm.get('message').value;
     this.emit('message', { message: this.message, payload: null, room: this.room });
-    this.message = '';
+    this.messageFormDirective.resetForm();
   }
 
   disconnect() {

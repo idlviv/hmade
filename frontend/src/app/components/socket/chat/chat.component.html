@@ -47,10 +47,20 @@
       <div class="cell chDialog__control" fxFlex="100">
         <div class="row" fxLayout="row">
           <div class="cell chDialog__control_input" fxFlex="70" fxLayoutAlign="start center">
-            <input [(ngModel)]="message">
+            <form [formGroup]="messageForm" fxFlex="100">
+                <mat-form-field fxFlex="100">
+                  <input matInput  placeholder="Повідомлення" formControlName="message">
+                  <mat-error *ngIf="messageForm.get('message').errors?.required &&
+                                        messageForm.get('message').touched">
+                    Введіть повідомлення
+                  </mat-error>
+                </mat-form-field>
+            </form>
           </div>
           <div class="cell chDialog__control_send" fxFlex="30" fxLayoutAlign="center center">
-            <button mat-raised-button (click)="sendMessage()">Send</button>
+            <button mat-mini-fab (click)="sendMessage()" [disabled]="messageForm.get('message').errors">
+              <mat-icon class="mat-18">send</mat-icon>
+            </button>
           </div>
         </div>
       </div>
