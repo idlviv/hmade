@@ -68,15 +68,15 @@ module.exports = (io) => {
       io.emit('activeManagers', new Msg('Update managers list', connectedManagers));
     } else if (socket.request.payload.user && regitredUsersRoles.indexOf(socket.request.payload.user.role) !== -1) {
       // registred user connected
-      emit('message', new Msg('Hello ' + socket.request.payload.user.name))
-          .subscribe(() => { }, (err) => errorHandler(err));
+      // emit('message', new Msg('Hello ' + socket.request.payload.user.name))
+      //     .subscribe(() => { }, (err) => errorHandler(err));
 
       // emit to user - updated managers list
       socket.emit('activeManagers', new Msg('Managers list', connectedManagers));
     } else {
       // casual (guest) user connected
-      emit('message', new Msg('Hello'))
-          .subscribe(() => { }, (err) => errorHandler(err));
+      // emit('message', new Msg('Hello'))
+      //     .subscribe(() => { }, (err) => errorHandler(err));
 
       // emit to user - updated managers list
       socket.emit('activeManagers', new Msg('Managers list', connectedManagers));

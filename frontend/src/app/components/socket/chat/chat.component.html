@@ -1,116 +1,67 @@
 <div class="chat">
-  <div class="container">
-    <div class="row">
-      <div class="cell">
-        <div class="container chat__container">
-          <section *ngIf="!showDialog" class="row chat__connection chConnection" fxLayout="row">
-            <div class="cell chConnection__info" fxFlex="100">
-              Socket connected {{socketConnected}}<br>
-              Got active managers {{gotActiveManagers}}
-
-            </div>
-            <div class="cell" fxFlex="100">
-              <button mat-raised-button (click)="connect()" [disabled]="socketConnected">Connect</button>
-              <button mat-raised-button (click)="disconnect()" [disabled]="!socketConnected">Disconnect</button>
-            </div>
-            <div *ngIf="gotActiveManagers" class="cell chConnection__control" fxFlex="100">
-              <div class="row" fxLayout="row">
-                <div class="cell" *ngFor="let activeManager of activeManagers" fxFlex="100">
-                  <!-- <div>Active manager {{activeManager | json}}</div> -->
-                  <button mat-raised-button
-                    (click)="joinToManagerRequest(activeManager._id)">{{activeManager.login}}</button>
-                </div>
-
-              </div>
-            </div>
-            <div *ngIf="requestOnJoin" class="cell chConnection__requestOnJoin" fxFlex="100">
-              
-                  <button mat-raised-button (click)="joinToManagerAccept()">Підтвердити</button>
-                
-
-       
-            </div>
-
-            <!-- <div class="cell chConnection__name" fxFlex="100">
-              <form class="row" [formGroup]="getGuestNameForm" fxFlex="row">
-                <mat-form-field class="cell" fxFlex="70">
-                  <input matInput placeholder="Як Вас звати" formControlName="getGuestName" required>
-                  <mat-error *ngIf="getGuestNameForm.get('getGuestName').errors?.required &&
-                                      getGuestNameForm.get('getGuestName').touched">
-                    Введіть ім'я
-                  </mat-error>
-                </mat-form-field>
-
-                <div class="cell" fxFlex="30" fxLayoutAlign="center center">
-                  <button mat-raised-button [disabled]="!getGuestNameForm.get('getGuestName').valid"
-                    (click)="guestName(getGuestNameForm.get('getGuestName').value)">ok</button>
-                </div>
-
-              </form>
-            </div> -->
-
-            <!-- <div class="cell chConnection__emitter" fxFlex="100">
-              <button mat-raised-button (click)="emit('message', {message: 'hello from client'})" [disabled]="!socketConnected">Emitter true</button>
-              <button mat-raised-button (click)="emit('message', {message: 'hello from client'})" [disabled]="!socketConnected">Emitter false</button>
-            </div> -->
-          </section>
-
-          <section class="row chat__dialog chDialog" fxLayout="row">
-            <div class="cell" fxFlex="100">
-              <ul class="row chDialog__messages" fxLayout="row">
-                <li *ngFor="let msg of msgs" class="cell" fxFlex="100">
-                  <div>{{msg.message}}</div>
-                  <!-- <div class="chMessages__item_fromServer">{{msg.message}}</div> -->
-                </li>
-              </ul>
-
-              <div class="row chDialog__control" fxLayout="row">
-                <div class="cell chDialog__control_input" fxFlex="70" fxLayoutAlign="start center">
-                  <input [(ngModel)]="message">
-                </div>
-                <div class="cell chDialog__control_send" fxFlex="30" fxLayoutAlign="center center">
-                  <button mat-raised-button (click)="sendMessage()">Send</button>
-                </div>
-              </div>
-            </div>
-          </section>
-        </div>
-
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-<!-- <div class="container chat">
-  <h2 class="mat-h2 chat__header">chat works!</h2>
-
-  <div class="row chat__messages" fxLayout="row">
-    <div class="cell" fxFlex>
-      <ul class="row messages">
-        <li *ngFor="let msg of msgs" class="cell messages__item">
-          {{msg.message}}
-        </li>
-      </ul>
-    </div>
-  </div>
+  <!-- <div class="container">
     <div class="row" fxLayout="row">
-      <div class="cell" fxFlex="130px">
-        <input class="mat-input" type="text" [(ngModel)]="room">
+      <div class="cell" fxFlex="100"> -->
+  <section class="container chat__header">
+    <div class="row">
+      <div class="cell" fxFlex="calc(100%-60px)" fxLayoutAlign="center center">
+        <h2 class="mat-h2 margin-0">Чат</h2>
       </div>
-      <div class="cell" fxFlex="70px">
-        <button (click)="onJoin()">Join</button>
+      <div class="cell" fxFlex="60px" fxLayoutAlign="center center">
+        <!-- <button mat-raised-button (click)="connect()" [disabled]="socketConnected">Connect</button> -->
+        <button mat-mini-fab (click)="disconnect()" [disabled]="!socketConnected">
+          <mat-icon class="mat-18">close</mat-icon>
+        </button>
       </div>
     </div>
-  <div class="chat__send-control row" fxLayout="row">
-    <div class="cell chat__input-message" fxFlex="130px">
-      <input class="mat-input" type="text" [(ngModel)]="message">
-    </div>
-    <div class="cell chat__send-button" fxFlex="70px">
-      <button (click)="onSendMessage()">Send</button>
-    </div>
-  </div>
+  </section>
 
-</div> -->
+  <section *ngIf="!showDialog" class="container chat__connection">
+    <div class="row chConnection" fxLayout="row">
+      <div class="cell chConnection__joinToManager" fxFlex="100">
+        <div class="row">
+          <div *ngIf="!activeManagers.length && !gotActiveManagers" class="cell" fxFlex="100">
+            Завантажується список менеджерів
+          </div>
+          <div *ngIf="!activeManagers.length && gotActiveManagers" class="cell" fxFlex="100">
+            Нажаль менеджерів немає в мережі
+          </div>
+          <div class="cell" *ngFor="let activeManager of activeManagers" fxFlex="100">
+            <!-- <div>Active manager {{activeManager | json}}</div> -->
+            <button mat-raised-button (click)="joinToManagerRequest(activeManager._id)">{{activeManager.login}}</button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="requestOnJoin" class="cell chConnection__incomingConnectionCongirmation" fxFlex="100">
+        <button mat-raised-button (click)="joinToManagerAccept()">Підтвердити</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="container chat__dialog">
+    <div class="row chDialog" fxLayout="row">
+      <div class="cell chDialog__messages" fxFlex="100">
+        <ul class="row" fxLayout="row">
+          <li *ngFor="let msg of msgs" class="cell" fxFlex="100">
+            {{msg.message}}
+          </li>
+        </ul>
+      </div>
+      <div class="cell chDialog__control" fxFlex="100">
+        <div class="row" fxLayout="row">
+          <div class="cell chDialog__control_input" fxFlex="70" fxLayoutAlign="start center">
+            <input [(ngModel)]="message">
+          </div>
+          <div class="cell chDialog__control_send" fxFlex="30" fxLayoutAlign="center center">
+            <button mat-raised-button (click)="sendMessage()">Send</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- </div>
+    </div>
+  </div> -->
+</div>

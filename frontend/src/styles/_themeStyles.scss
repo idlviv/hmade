@@ -1488,20 +1488,21 @@ a.hover-button {
   height: 70%;
   border-radius: 16px 8px 8px 16px;
   border: 2px solid mat-color($background, status-bar) !important;
-  &__connection,
-  &__dialog {
-    overflow: auto;
-  }
+  // &__connection,
+  // &__dialog {
+  //   overflow: auto;
+  // }
 }
 
 .chConnection {
-  &__info {
-    background-color: #9d9d9d;
-  }
-  &__control {
+  &__joinToManager {
     background-color: #9cbdb9;
   }
   &__emitter {
     background-color: #606b6f;
   }
+}
+
+.test {
+  background-color: green;
 }
