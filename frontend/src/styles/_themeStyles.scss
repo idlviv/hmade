@@ -109,19 +109,24 @@ a:active {
   }
 }
 
+$space-gt-md: 12px;
+$space-md: 12px;
+$space-sm: 8px;
+$space-xs: 8px;
+
 .container {
   @include gt-md {
-    padding: 12px;
+    padding: $space-gt-md;
   }
   @include md {
-    padding: 12px;
+    padding: $space-md;
   }
   @include sm {
-    padding: 8px;
+    padding: $space-sm;
   }
   @include xs {
     // padding: 8px 0;
-    padding: 8px;
+    padding: $space-xs;
   }
 }
 
@@ -130,33 +135,33 @@ a:active {
   flex-wrap: wrap;
 
   @include gt-md {
-    margin: -12px;
+    margin: -($space-gt-md);
   }
   @include md {
-    margin: -12px;
+    margin: -($space-md);
   }
   @include sm {
-    margin: -8px;
+    margin: -($space-sm);
   }
   @include xs {
     // margin: -8px 0;
-    margin: -8px;
+    margin: -($space-xs);
   }
 }
 
 .cell {
   @include gt-md {
-    padding: 12px;
+    padding: $space-gt-md;
   }
   @include md {
-    padding: 12px;
+    padding: $space-md;
   }
   @include sm {
-    padding: 8px;
+    padding: $space-sm;
   }
   @include xs {
     // padding: 8px 0;
-    padding: 8px;
+    padding: $space-xs;
   }
 }
 
@@ -231,7 +236,7 @@ a:active {
     @include last {
       padding-right: 0;
     }
-    padding: 0 12px;
+    padding: 0 $space-gt-md;
   }
   @include md {
     @include first {
@@ -240,7 +245,7 @@ a:active {
     @include last {
       padding-right: 0;
     }
-    padding: 0 12px;
+    padding: 0 $space-md;
   }
   @include sm {
     @include first {
@@ -249,7 +254,7 @@ a:active {
     @include last {
       padding-right: 0;
     }
-    padding: 0 8px;
+    padding: 0 $space-sm;
   }
   @include xs {
     padding: 0;
@@ -1489,9 +1494,23 @@ a.hover-button {
   border-radius: 16px 8px 8px 16px;
   border: 2px solid mat-color($background, status-bar) !important;
   // &__connection,
-  // &__dialog {
-  //   overflow: auto;
-  // }
+  &__dialog {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+    // @include gt-md {
+    //   bottom: $space-gt-md;
+    // }
+    // @include md {
+    //   bottom: $space-md;
+    // }
+    // @include sm {
+    //   bottom: $space-sm;
+    // }
+    // @include xs {
+    //   bottom: $space-xs;
+    // }
+  }
 }
 
 .chConnection {
@@ -1501,6 +1520,9 @@ a.hover-button {
   &__emitter {
     background-color: #606b6f;
   }
+}
+
+.chDialog {
 }
 
 .test {
