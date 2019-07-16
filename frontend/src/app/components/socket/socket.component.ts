@@ -16,4 +16,8 @@ export class SocketComponent implements OnInit {
   onStartChat() {
     this.showChat = true;
   }
+
+  onDisconnectChat() {
+    this.showChat = false;
+  }
 }

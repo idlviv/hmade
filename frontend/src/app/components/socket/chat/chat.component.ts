@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { Component, OnInit, Input, ViewChild, Output, EventEmitter } from '@angular/core';
 import { IChatMsg } from '../../../interfaces/interface';
 import { FormControl, Validators, FormGroup, FormGroupDirective } from '@angular/forms';
 import { SocketService } from 'src/app/services/socket.service';
@@ -11,6 +11,8 @@ import { retry } from 'rxjs/operators';
 })
 export class ChatComponent implements OnInit {
   @ViewChild(FormGroupDirective) messageFormDirective: FormGroupDirective;
+
+  @Output() disconnectChat = new EventEmitter<boolean>();
 
   message: string;
   room: string;
@@ -152,7 +154,9 @@ export class ChatComponent implements OnInit {
   }
 
   disconnect() {
+    this.msgs = [];
     this.socketService.disconnect();
+    this.disconnectChat.emit();
   }
 
   //   this.chatService.onJoinToManager()
