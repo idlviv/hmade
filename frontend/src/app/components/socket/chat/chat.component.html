@@ -1,15 +1,21 @@
 <div class="chat">
   <section class="container chat__header">
     <div class="row">
-      <div class="cell" fxFlex="calc(100%-60px)" fxLayoutAlign="center center">
+      <div class="cell" fxFlex="calc(100%-80px)" fxLayoutAlign="center center">
         <h2 class="mat-h2 margin-0">Чат</h2>
       </div>
-      <div class="cell" fxFlex="60px" fxLayoutAlign="center center">
+      <div class="cell" fxFlex="40px" fxLayoutAlign="center center">
+        <button mat-icon-button (click)="hide()">
+          <mat-icon class="mat-18">minimize</mat-icon>
+        </button>
+      </div>
+      <div class="cell" fxFlex="40px" fxLayoutAlign="center center">
         <!-- <button mat-raised-button (click)="connect()" [disabled]="socketConnected">Connect</button> -->
-        <button mat-mini-fab (click)="disconnect()" [disabled]="!socketConnected">
+        <button mat-icon-button (click)="disconnect()" [disabled]="!socketConnected">
           <mat-icon class="mat-18">close</mat-icon>
         </button>
       </div>
+
     </div>
   </section>
 

@@ -1,5 +1,6 @@
-<app-chat *ngIf="showChat" (disconnectChat)="onDisconnectChat()"></app-chat>
-<div *ngIf="!showChat" class="startChat">
+<app-chat *ngIf="initChat" [ngStyle]="{'display': showChat ? 'block' : 'none'}" (hideChat)=" onHideChat()"
+    (disconnectChat)="onDisconnectChat()"></app-chat>
+<div [ngStyle]="{'display': showChat ? 'none' : 'block'}" class="startChat">
     <button mat-fab (click)="onStartChat()">
         <mat-icon class="mat-24">chat</mat-icon>
     </button>

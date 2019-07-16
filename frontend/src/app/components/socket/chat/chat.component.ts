@@ -12,6 +12,7 @@ import { retry } from 'rxjs/operators';
 export class ChatComponent implements OnInit {
   @ViewChild(FormGroupDirective) messageFormDirective: FormGroupDirective;
 
+  @Output() hideChat = new EventEmitter<boolean>();
   @Output() disconnectChat = new EventEmitter<boolean>();
 
   message: string;
@@ -45,6 +46,8 @@ export class ChatComponent implements OnInit {
         Validators.required,
       ]),
     });
+
+    console.log('onInit');
 
     this.connect();
   }
@@ -157,6 +160,10 @@ export class ChatComponent implements OnInit {
     this.msgs = [];
     this.socketService.disconnect();
     this.disconnectChat.emit();
+  }
+
+  hide() {
+    this.hideChat.emit();
   }
 
   //   this.chatService.onJoinToManager()

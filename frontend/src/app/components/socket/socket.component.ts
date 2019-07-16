@@ -7,6 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class SocketComponent implements OnInit {
   showChat = false;
+  initChat = false;
 
   constructor() { }
 
@@ -15,9 +16,15 @@ export class SocketComponent implements OnInit {
 
   onStartChat() {
     this.showChat = true;
+    this.initChat = true;
   }
 
   onDisconnectChat() {
+    this.initChat = false;
+    this.showChat = false;
+  }
+
+  onHideChat() {
     this.showChat = false;
   }
 }

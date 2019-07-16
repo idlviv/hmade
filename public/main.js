@@ -2517,7 +2517,7 @@ var SharedModule = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"chat\">\r\n  <section class=\"container chat__header\">\r\n    <div class=\"row\">\r\n      <div class=\"cell\" fxFlex=\"calc(100%-60px)\" fxLayoutAlign=\"center center\">\r\n        <h2 class=\"mat-h2 margin-0\">Чат</h2>\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"60px\" fxLayoutAlign=\"center center\">\r\n        <!-- <button mat-raised-button (click)=\"connect()\" [disabled]=\"socketConnected\">Connect</button> -->\r\n        <button mat-mini-fab (click)=\"disconnect()\" [disabled]=\"!socketConnected\">\r\n          <mat-icon class=\"mat-18\">close</mat-icon>\r\n        </button>\r\n      </div>\r\n    </div>\r\n  </section>\r\n\r\n  <section *ngIf=\"!showDialog\" class=\"container chat__connection\">\r\n    <div class=\"row chConnection\" fxLayout=\"row\">\r\n      <div class=\"cell chConnection__joinToManager\" fxFlex=\"100\">\r\n        <div class=\"row\">\r\n          <div *ngIf=\"!activeManagers.length && !gotActiveManagers\" class=\"cell\" fxFlex=\"100\">\r\n            Завантажується список менеджерів\r\n          </div>\r\n          <div *ngIf=\"!activeManagers.length && gotActiveManagers\" class=\"cell\" fxFlex=\"100\">\r\n            Нажаль менеджерів немає в мережі\r\n          </div>\r\n          <div class=\"cell\" *ngFor=\"let activeManager of activeManagers\" fxFlex=\"100\">\r\n            <!-- <div>Active manager {{activeManager | json}}</div> -->\r\n            <button mat-raised-button (click)=\"joinToManagerRequest(activeManager._id)\">{{activeManager.login}}</button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div *ngIf=\"requestOnJoin\" class=\"cell chConnection__incomingConnectionCongirmation\" fxFlex=\"100\">\r\n        <button mat-raised-button (click)=\"joinToManagerAccept()\">Підтвердити</button>\r\n      </div>\r\n    </div>\r\n  </section>\r\n\r\n  <section class=\"container chat__dialog\">\r\n    <div class=\"row chDialog\" fxLayout=\"row\">\r\n      <div class=\"cell chDialog__messages\" fxFlex=\"100\">\r\n        <ul class=\"row\" fxLayout=\"row\">\r\n          <li *ngFor=\"let msg of msgs\" class=\"cell\" fxFlex=\"100\">\r\n            {{msg.message}}\r\n          </li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"cell chDialog__control\" fxFlex=\"100\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <div class=\"cell chDialog__control_input\" fxFlex=\"70\" fxLayoutAlign=\"start center\">\r\n            <form [formGroup]=\"messageForm\" fxFlex=\"100\">\r\n                <mat-form-field fxFlex=\"100\">\r\n                  <input matInput  placeholder=\"Повідомлення\" formControlName=\"message\">\r\n                  <mat-error *ngIf=\"messageForm.get('message').errors?.required &&\r\n                                        messageForm.get('message').touched\">\r\n                    Введіть повідомлення\r\n                  </mat-error>\r\n                </mat-form-field>\r\n            </form>\r\n          </div>\r\n          <div class=\"cell chDialog__control_send\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n            <button mat-mini-fab (click)=\"sendMessage()\" [disabled]=\"messageForm.get('message').errors\">\r\n              <mat-icon class=\"mat-18\">send</mat-icon>\r\n            </button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </section>\r\n</div>"
+module.exports = "<div class=\"chat\">\r\n  <section class=\"container chat__header\">\r\n    <div class=\"row\">\r\n      <div class=\"cell\" fxFlex=\"calc(100%-80px)\" fxLayoutAlign=\"center center\">\r\n        <h2 class=\"mat-h2 margin-0\">Чат</h2>\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"40px\" fxLayoutAlign=\"center center\">\r\n        <button mat-icon-button (click)=\"hide()\">\r\n          <mat-icon class=\"mat-18\">minimize</mat-icon>\r\n        </button>\r\n      </div>\r\n      <div class=\"cell\" fxFlex=\"40px\" fxLayoutAlign=\"center center\">\r\n        <!-- <button mat-raised-button (click)=\"connect()\" [disabled]=\"socketConnected\">Connect</button> -->\r\n        <button mat-icon-button (click)=\"disconnect()\" [disabled]=\"!socketConnected\">\r\n          <mat-icon class=\"mat-18\">close</mat-icon>\r\n        </button>\r\n      </div>\r\n\r\n    </div>\r\n  </section>\r\n\r\n  <section *ngIf=\"!showDialog\" class=\"container chat__connection\">\r\n    <div class=\"row chConnection\" fxLayout=\"row\">\r\n      <div class=\"cell chConnection__joinToManager\" fxFlex=\"100\">\r\n        <div class=\"row\">\r\n          <div *ngIf=\"!activeManagers.length && !gotActiveManagers\" class=\"cell\" fxFlex=\"100\">\r\n            Завантажується список менеджерів\r\n          </div>\r\n          <div *ngIf=\"!activeManagers.length && gotActiveManagers\" class=\"cell\" fxFlex=\"100\">\r\n            Нажаль менеджерів немає в мережі\r\n          </div>\r\n          <div class=\"cell\" *ngFor=\"let activeManager of activeManagers\" fxFlex=\"100\">\r\n            <!-- <div>Active manager {{activeManager | json}}</div> -->\r\n            <button mat-raised-button (click)=\"joinToManagerRequest(activeManager._id)\">{{activeManager.login}}</button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n      <div *ngIf=\"requestOnJoin\" class=\"cell chConnection__incomingConnectionCongirmation\" fxFlex=\"100\">\r\n        <button mat-raised-button (click)=\"joinToManagerAccept()\">Підтвердити</button>\r\n      </div>\r\n    </div>\r\n  </section>\r\n\r\n  <section class=\"container chat__dialog\">\r\n    <div class=\"row chDialog\" fxLayout=\"row\">\r\n      <div class=\"cell chDialog__messages\" fxFlex=\"100\">\r\n        <ul class=\"row\" fxLayout=\"row\">\r\n          <li *ngFor=\"let msg of msgs\" class=\"cell\" fxFlex=\"100\">\r\n            {{msg.message}}\r\n          </li>\r\n        </ul>\r\n      </div>\r\n      <div class=\"cell chDialog__control\" fxFlex=\"100\">\r\n        <div class=\"row\" fxLayout=\"row\">\r\n          <div class=\"cell chDialog__control_input\" fxFlex=\"70\" fxLayoutAlign=\"start center\">\r\n            <form [formGroup]=\"messageForm\" fxFlex=\"100\">\r\n                <mat-form-field fxFlex=\"100\">\r\n                  <input matInput  placeholder=\"Повідомлення\" formControlName=\"message\">\r\n                  <mat-error *ngIf=\"messageForm.get('message').errors?.required &&\r\n                                        messageForm.get('message').touched\">\r\n                    Введіть повідомлення\r\n                  </mat-error>\r\n                </mat-form-field>\r\n            </form>\r\n          </div>\r\n          <div class=\"cell chDialog__control_send\" fxFlex=\"30\" fxLayoutAlign=\"center center\">\r\n            <button mat-mini-fab (click)=\"sendMessage()\" [disabled]=\"messageForm.get('message').errors\">\r\n              <mat-icon class=\"mat-18\">send</mat-icon>\r\n            </button>\r\n          </div>\r\n        </div>\r\n      </div>\r\n    </div>\r\n  </section>\r\n</div>"
 
 /***/ }),
 
@@ -2560,6 +2560,7 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var ChatComponent = /** @class */ (function () {
     function ChatComponent(socketService) {
         this.socketService = socketService;
+        this.hideChat = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.disconnectChat = new _angular_core__WEBPACK_IMPORTED_MODULE_0__["EventEmitter"]();
         this.activeManagers = [];
         this.msgs = [];
@@ -2578,6 +2579,7 @@ var ChatComponent = /** @class */ (function () {
                 _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
             ]),
         });
+        console.log('onInit');
         this.connect();
     };
     ChatComponent.prototype.connect = function () {
@@ -2669,10 +2671,17 @@ var ChatComponent = /** @class */ (function () {
         this.socketService.disconnect();
         this.disconnectChat.emit();
     };
+    ChatComponent.prototype.hide = function () {
+        this.hideChat.emit();
+    };
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])(_angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"]),
         __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"])
     ], ChatComponent.prototype, "messageFormDirective", void 0);
+    __decorate([
+        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
+        __metadata("design:type", Object)
+    ], ChatComponent.prototype, "hideChat", void 0);
     __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Output"])(),
         __metadata("design:type", Object)
@@ -2699,7 +2708,7 @@ var ChatComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<app-chat *ngIf=\"showChat\" (disconnectChat)=\"onDisconnectChat()\"></app-chat>\r\n<div *ngIf=\"!showChat\" class=\"startChat\">\r\n    <button mat-fab (click)=\"onStartChat()\">\r\n        <mat-icon class=\"mat-24\">chat</mat-icon>\r\n    </button>\r\n</div>\r\n"
+module.exports = "<app-chat *ngIf=\"initChat\" [ngStyle]=\"{'display': showChat ? 'block' : 'none'}\" (hideChat)=\" onHideChat()\"\r\n    (disconnectChat)=\"onDisconnectChat()\"></app-chat>\r\n<div [ngStyle]=\"{'display': showChat ? 'none' : 'block'}\" class=\"startChat\">\r\n    <button mat-fab (click)=\"onStartChat()\">\r\n        <mat-icon class=\"mat-24\">chat</mat-icon>\r\n    </button>\r\n</div>"
 
 /***/ }),
 
@@ -2738,13 +2747,19 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 var SocketComponent = /** @class */ (function () {
     function SocketComponent() {
         this.showChat = false;
+        this.initChat = false;
     }
     SocketComponent.prototype.ngOnInit = function () {
     };
     SocketComponent.prototype.onStartChat = function () {
         this.showChat = true;
+        this.initChat = true;
     };
     SocketComponent.prototype.onDisconnectChat = function () {
+        this.initChat = false;
+        this.showChat = false;
+    };
+    SocketComponent.prototype.onHideChat = function () {
         this.showChat = false;
     };
     SocketComponent = __decorate([
