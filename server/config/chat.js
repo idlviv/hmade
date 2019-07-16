@@ -75,8 +75,8 @@ module.exports = (io) => {
       socket.emit('activeManagers', new Msg('Managers list', connectedManagers));
     } else {
       // casual (guest) user connected
-      // emit('message', new Msg('Hello'))
-      //     .subscribe(() => { }, (err) => errorHandler(err));
+      emit('message', new Msg('Hello'))
+          .subscribe(() => { }, (err) => errorHandler(err));
 
       // emit to user - updated managers list
       socket.emit('activeManagers', new Msg('Managers list', connectedManagers));
@@ -102,7 +102,7 @@ module.exports = (io) => {
     function emit(eventName, msg) {
       return new Observable((observer) => {
         // set timeout for message delivery
-        const timeout = 4000;
+        const timeout = 5000;
         let timer = setTimeout(function() {
           observer.error(new SocketError({
             message: `not delivered, timeout error - eventName: ${eventName}, message: ${msg.message} - not delivered`,
