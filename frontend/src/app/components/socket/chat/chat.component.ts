@@ -20,7 +20,26 @@ export class ChatComponent implements OnInit {
   tmp: any;
 
   activeManagers = [];
-  msgs = [];
+  msgs = [
+    {
+      message: '1 - Lorem Ipsum является текст-заполнителum является текст-заполнител ь обычно',
+    },
+    {
+      message: '2 - Lorem Ipsum является текст-заполнитель обычно',
+    },
+    {
+      message: '3 - Lorem Ipsum является текст-заполнитель обычно',
+    },
+    {
+      message: '4 - Lorem Ipsum является текст-заполнитель обычно',
+    },
+    {
+      message: '5 - Lorem Ipsum является текст-заполнитель обычно',
+    },
+    {
+      message: '6 - Lorem Ipsum является текст-заполнитель обычно',
+    },
+  ];
 
   showDialog = false;
   joinToManagerRoom: any;

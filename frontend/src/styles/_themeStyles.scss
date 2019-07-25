@@ -21,6 +21,9 @@ $alternative-background-gradient2: linear-gradient(135deg, rgb(255, 255, 255) 50
 
 $alternative-background-pattern: url("/assets/other/pattern.svg");
 
+$incomingMsg: #acc0d8;
+$outgoingMsg: #cccccc;
+
 html {
   font-size: 16px;
   box-sizing: border-box;
@@ -128,6 +131,10 @@ $space-xs: 8px;
     // padding: 8px 0;
     padding: $space-xs;
   }
+
+  &_column {
+    height: 100%;
+  }
 }
 
 .row {
@@ -149,6 +156,28 @@ $space-xs: 8px;
   }
 }
 
+.column {
+  display: flex;
+  // flex-wrap: wrap;
+
+  @include gt-md {
+    margin: -($space-gt-md);
+    height: calc(100% + (2 * #{$space-gt-md}));
+  }
+  @include md {
+    margin: -($space-md);
+    height: calc(100% + (2 * #{$space-md}));
+  }
+  @include sm {
+    margin: -($space-sm);
+    height: calc(100% + (2 * #{$space-sm}));
+  }
+  @include xs {
+    margin: -($space-xs);
+    height: calc(100% + (2 * #{$space-xs}));
+  }
+}
+
 .cell {
   @include gt-md {
     padding: $space-gt-md;
@@ -162,6 +191,40 @@ $space-xs: 8px;
   @include xs {
     // padding: 8px 0;
     padding: $space-xs;
+  }
+}
+
+.item {
+  @include gt-md {
+    @include first {
+      padding-left: 0;
+    }
+    @include last {
+      padding-right: 0;
+    }
+    padding: 0 $space-gt-md;
+  }
+  @include md {
+    @include first {
+      padding-left: 0;
+    }
+    @include last {
+      padding-right: 0;
+    }
+    padding: 0 $space-md;
+  }
+  @include sm {
+    @include first {
+      padding-left: 0;
+    }
+    @include last {
+      padding-right: 0;
+    }
+    padding: 0 $space-sm;
+  }
+  @include xs {
+    padding: 0;
+    // padding: 0 8px;
   }
 }
 
@@ -225,40 +288,6 @@ $space-xs: 8px;
   @include xs {
     padding: 8px 0;
     //padding: 8px;
-  }
-}
-
-.item {
-  @include gt-md {
-    @include first {
-      padding-left: 0;
-    }
-    @include last {
-      padding-right: 0;
-    }
-    padding: 0 $space-gt-md;
-  }
-  @include md {
-    @include first {
-      padding-left: 0;
-    }
-    @include last {
-      padding-right: 0;
-    }
-    padding: 0 $space-md;
-  }
-  @include sm {
-    @include first {
-      padding-left: 0;
-    }
-    @include last {
-      padding-right: 0;
-    }
-    padding: 0 $space-sm;
-  }
-  @include xs {
-    padding: 0;
-    // padding: 0 8px;
   }
 }
 
@@ -1468,63 +1497,88 @@ a.hover-button {
   height: 100px;
   background-color: rgba(45, 95, 130, 0.3);
 }
-
-.startChat {
-  position: absolute;
-  right: 20px;
-  bottom: 20px;
-  z-index: 6;
-
-  // &__button {
-  //   position: absolute;
-  //   right: 20px;
-  //   bottom: 20px;
-  //   z-index: 6;
-  // }
-}
-
 .chat {
-  background-color: rgba(mat-color($background, background), 0.8);
+  background-color: rgba(mat-color($background, app-bar), 0.9);
   z-index: 5;
   position: fixed;
   bottom: 16px;
   right: 16px;
   width: 400px;
   height: 70%;
-  border-radius: 16px 8px 8px 16px;
-  border: 2px solid mat-color($background, status-bar) !important;
-  // &__connection,
-  &__dialog {
-    position: absolute;
-    bottom: 0;
-    width: 100%;
-    // @include gt-md {
-    //   bottom: $space-gt-md;
-    // }
-    // @include md {
-    //   bottom: $space-md;
-    // }
-    // @include sm {
-    //   bottom: $space-sm;
-    // }
-    // @include xs {
-    //   bottom: $space-xs;
-    // }
-  }
-}
+  max-height: 70%;
 
-.chConnection {
-  &__joinToManager {
-    background-color: #9cbdb9;
-  }
-  &__emitter {
-    background-color: #606b6f;
-  }
-}
+  @include radius(16px 8px 8px 16px);
+  // border: 2px solid mat-color($background, status-bar) !important;
 
-.chDialog {
-}
+  $chat__header-height: 32px;
+  $chat__footer-height: 64px;
+  $chat__main-height: calc(100% - ($chat__header-height + $chat__footer-height));
 
-.test {
-  background-color: green;
+  &__header {
+    @include gt-md {
+      flex: 0 0 $chat__main-height;
+    }
+    @include md {
+      flex: 0 0 $chat__main-height
+    }
+    @include sm {
+      flex: 0 0 $chat__main-height
+    }
+    @include xs {
+      flex: 0 0 $chat__main-height
+    }
+  }
+  &__main {
+    @include gt-md {
+      flex: 0 0 calc(chat__footer-height + (2 * #{$space-gt-md}));
+    }
+    @include md {
+      flex: 0 0 calc(chat__footer-height + (2 * #{$space-md}));
+    }
+    @include sm {
+      flex: 0 0 calc(chat__footer-height + (2 * #{$space-sm}));
+    }
+    @include xs {
+      flex: 0 0 calc(chat__footer-height + (2 * #{$space-xs}));
+    }
+    background-color: mat-color($background, status-bar);
+    overflow: auto;
+  }
+
+  &__footer {
+    @include gt-md {
+      flex: 0 0 calc(chat__footer-height + (2 * #{$space-gt-md}));
+    }
+    @include md {
+      flex: 0 0 calc(chat__footer-height + (2 * #{$space-md}));
+    }
+    @include sm {
+      flex: 0 0 calc(chat__footer-height + (2 * #{$space-sm}));
+    }
+    @include xs {
+      flex: 0 0 calc(chat__footer-height + (2 * #{$space-xs}));
+    }
+    form,
+    mat-form-field {
+      width: 100%;
+    }
+  }
+
+  .chatMain {
+    &__msg {
+      // @include radius(5px);
+      padding: 8px;
+      &_outgoing {
+        background-color: $outgoingMsg;
+        margin-right: 40px;
+        @include radius(10px 12px 12px 0);
+      }
+      &_incoming {
+
+        background-color: $incomingMsg;
+        margin-left: 40px;
+        @include radius(12px 10px 0 12px);
+      }
+    }
+  }
 }
