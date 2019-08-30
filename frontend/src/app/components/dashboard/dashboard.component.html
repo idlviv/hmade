@@ -1,54 +1,22 @@
 <div id="dashboard">
-  <!-- <div class="app-container-v">
-    <div class="container">
-      <div class="row" fxLayout="row"> -->
-        <mat-sidenav-container fxFlex fullscreen>
-          <mat-sidenav class="sidenav" #sidenav mode="side" [opened]="media.isActive('gt-sm')">
-
-              <div fxShow="true" fxHide.gt-sm="true" class="sidenav-mat-toolbar-row">
-                <a mat-button (click)="sidenav.toggle()" aria-label="arrow_left">
-                  <mat-icon>arrow_left</mat-icon>
-                </a>
-              </div>
-              <router-outlet name="dashboardSidenav"></router-outlet>
-          </mat-sidenav>
-          <mat-sidenav-content>
-            <div *ngIf="!sidenav.opened" class="menu-button" fxShow="true" fxHide.gt-sm="true">
-              <button mat-button (click)="sidenav.toggle()" aria-label="arrow_right">
-                <mat-icon>arrow_right</mat-icon>
-              </button>
-            </div>
-            <div>
-              <router-outlet></router-outlet>
-            </div>
-          </mat-sidenav-content>
-        </mat-sidenav-container>
-
-
-        <!-- <mat-sidenav-container fxFlex fullscreen>
-          <mat-sidenav class="sidenav" #sidenav mode="side" [opened]="media.isActive('gt-sm')">
-            <mat-toolbar>
-              <mat-toolbar-row fxShow="true" fxHide.gt-sm="true" class="sidenav-mat-toolbar-row">
-                <a mat-button (click)="sidenav.toggle()" aria-label="arrow_left">
-                  <mat-icon>arrow_left</mat-icon>
-                </a>
-              </mat-toolbar-row>
-              <router-outlet name="dashboardSidenav"></router-outlet>
-            </mat-toolbar>
-          </mat-sidenav>
-          <mat-sidenav-content>
-            <div *ngIf="!sidenav.opened" class="menu-button" fxShow="true" fxHide.gt-sm="true">
-              <button mat-button (click)="sidenav.toggle()" aria-label="arrow_right">
-                <mat-icon>arrow_right</mat-icon>
-              </button>
-            </div>
-            <div>
-              <router-outlet></router-outlet>
-            </div>
-          </mat-sidenav-content>
-        </mat-sidenav-container> -->
-        
-      <!-- </div>
-    </div>
-  </div> -->
+  <mat-sidenav-container fxFlex fullscreen>
+    <mat-sidenav class="sidenav" #sidenav mode="side" [opened]="media.isActive('gt-sm')">
+      <div fxShow="true" fxHide.gt-sm="true" class="sidenav-mat-toolbar-row">
+        <a mat-button (click)="sidenav.toggle()" aria-label="arrow_left">
+          <mat-icon>arrow_left</mat-icon>
+        </a>
+      </div>
+      <router-outlet name="dashboardSidenav"></router-outlet>
+    </mat-sidenav>
+    <mat-sidenav-content>
+      <div *ngIf="!sidenav.opened" class="menu-button" fxShow="true" fxHide.gt-sm="true">
+        <button mat-button (click)="sidenav.toggle()" aria-label="arrow_right">
+          <mat-icon>arrow_right</mat-icon>
+        </button>
+      </div>
+      <div>
+        <router-outlet></router-outlet>
+      </div>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

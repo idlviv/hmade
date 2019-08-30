@@ -4,11 +4,10 @@ const DbError = require('../errors/dbError');
 const ApplicationError = require('../errors/applicationError');
 const ObjectId = require('../config/mongoose').Types.ObjectId;
 const log = require('../config/winston')(module);
+const { ClientError } = require('user-man');
+
 
 module.exports.getMainMenu = function(req, res, next) {
-  // const item = ObjectId(req.query.item);
-  // item = req.query.item;
-  // console.log('item', item);
   CatalogModel.aggregate([
     {
       $facet: {

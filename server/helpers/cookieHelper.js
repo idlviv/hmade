@@ -1,5 +1,5 @@
-const createJWT = require('../helpers/sharedHelper').createJWT;
-const log = require('../config/winston')(module);
+const cryptHelper = require('user-man').cryptHelper;
+const config = require('../config');
 
 /**
  * set cookie with user credentials for frontend manipulations
@@ -10,7 +10,7 @@ const log = require('../config/winston')(module);
 function setUserCookie(user) {
   return function(req, res, next) {
     return new Promise((resolve, reject) => {
-      token = createJWT('', user, null, 'JWT_SECRET');
+      token = cryptHelper.createJWT('', user, null, config.get('JWT_SECRET'));
       res.cookie(
           'hmade',
           token,

@@ -12,13 +12,13 @@ export class CatalogService {
     private http: HttpClient
   ) { }
 
-  getMainMenu(): Observable<IResponse> {
+  getMainMenu(): Observable<IResponse | any> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
     };
-    return this.http.get<IResponse>(
+    return this.http.get<IResponse | any>(
       'api/catalog/get-main-menu',
       httpOptions
     );

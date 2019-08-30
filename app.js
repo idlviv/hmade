@@ -18,11 +18,9 @@ const log = require('./server/config/winston')(module);
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-const index = require('./server/routes');
-const routes = require('./server/routes/routes');
 const setUserCookie = require('./server/middleware/cookie').setUserCookie;
 
-const ApplicationError = require('./server/errors/applicationError');
+const { ClientError } = require('user-man');
 const errorHandler = require('./server/errors/errorHandler');
 
 const app = express();
@@ -83,6 +81,8 @@ app.use((req, res, next) => {
   return next();
 });
 
+const index = require('./server/routes');
+const routes = require('./server/routes/routes');
 /**
  * all apis, api/404 will be handled there
  */
@@ -99,11 +99,11 @@ app.use('*', function(req, res) {
   res.redirect('/');
 });
 
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  const err = new ApplicationError(404, 'Помилковий запит');
-  next(err);
-});
+// // catch 404 and forward to error handler
+// app.use(function(req, res, next) {
+//   const err = new ClientError({ message: 'Такої сторінки не існує ', status: 404});
+//   next(err);
+// });
 
 app.use(errorHandler);
 

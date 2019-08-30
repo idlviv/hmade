@@ -1,17 +1,16 @@
-      <div class="container">
-              <div class="row" fxLayout="row">
-        <div *ngFor="let dashboardSidenavItem of dashboardSidenavItems" [ngClass]="{'active': isActiveTemplateVariable.isActive}"
-          class="cell sidenav-menu-item" fxFlex="100" fxLayoutAlign="start center" (click)="onRouting(dashboardSidenavItem._id)">
-          <a  class="link"
-            [routerLinkActive]="['']" [routerLinkActiveOptions]="{exact: true}" 
-            #isActiveTemplateVariable="routerLinkActive"
-            [attr.aria-label]="dashboardSidenavItem.name"
-            [routerLink]="['/dashboard', dashboardSidenavItem._id]">
-            <span class="type2">
-              <!-- <mat-icon>edit</mat-icon> -->
-              <span>{{dashboardSidenavItem.name}}</span>
-            </span>
-          </a>
-        </div>
-      </div>
-      </div>
+<div class="container">
+  <div class="row" fxLayout="row">
+    <div *ngFor="let dashboardSidenavItem of dashboardSidenavItems"
+      [ngClass]="{'active': isActiveTemplateVariable.isActive}" class="cell sidenav-menu-item" fxFlex="100"
+      fxLayoutAlign="start center" (click)="onRouting(dashboardSidenavItem._id)">
+      <a class="link" [routerLinkActive]="['']" [routerLinkActiveOptions]="{exact: true}"
+        #isActiveTemplateVariable="routerLinkActive" [attr.aria-label]="dashboardSidenavItem.name"
+        [routerLink]="['/dashboard', dashboardSidenavItem._id]">
+        <span class="type2">
+          <!-- <mat-icon>edit</mat-icon> -->
+          <span>{{dashboardSidenavItem.name}}</span>
+        </span>
+      </a>
+    </div>
+  </div>
+</div>

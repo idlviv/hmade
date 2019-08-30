@@ -1,12 +1,15 @@
 const DbError = require('./dbError');
+const { ClientError, ServerError } = require('user-man');
+
 const ApplicationError = require('./applicationError');
-const ClientError = require('./clientError');
-const ServerError = require('./serverError');
+// const ClientError = require('./clientError');
+// const ServerError = require('./serverError');
 const log = require('../config/winston')(module);
 
 module.exports = function(err, req, res, next) {
+  // console.log('Error Handler ', err);
 
-  log.debug('Error', err);
+
 
   if (err.code === 'EBADCSRFTOKEN') {
     return res.status(403).json('Оновіть сторінку, вийшов час очікування(CSRF)');
@@ -42,7 +45,8 @@ module.exports = function(err, req, res, next) {
 
   // custom client error
   if (err instanceof ClientError) {
-    return res.status(err.status).json(err);
+    // console.log('clientError in err handler ', err);
+    return res.status(err.status).send(err);
   }
 
   // custom server error

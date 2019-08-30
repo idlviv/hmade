@@ -50,7 +50,7 @@
         position: relative;
         color: mat-color($foreground, text);
         background: mat-color($primary, 600);
-        height: 100px;
+        height: 60px;
         margin-bottom: 2px;
         &.active {
            background: mat-color($primary, 800);

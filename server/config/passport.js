@@ -30,7 +30,6 @@ module.exports = function(passport) {
         passwordField: 'password',
       },
       function(login, password, done) {
-        console.log('passport');
 
         let userCandidate = {
           login,

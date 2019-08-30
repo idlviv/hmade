@@ -2,7 +2,7 @@ const log = require('../config/winston')(module);
 const UserModel = require('../models/userModel');
 const ResObj = require('../libs/responseObject');
 const DbError = require('../errors/dbError');
-const ApplicationError = require('../errors/applicationError');
+// const ApplicationError = require('../errors/applicationError');
 const ServerError = require('../errors/serverError');
 const ClientError = require('../errors/clientError');
 const bcrypt = require('bcryptjs');
@@ -11,7 +11,9 @@ const config = require('../config');
 const transporter = require('../config/mailgun');
 const userHelper = require('../helpers/userHelper');
 const sharedHelper = require('../helpers/sharedHelper');
-const setUserCookie = require('../helpers/cookieHelper').setUserCookie;
+const cookieHelper = require('user-man').cookieHelper();
+
+// const setUserCookie = require('../helpers/cookieHelper').setUserCookie;
 const ChatHelper = require('../helpers/chatHelper');
 
 /**
@@ -191,7 +193,7 @@ const userEmailVerificationSend = function(req, res, next) {
 
   transporter.sendMail(mailOptions, (err, info) => {
     if (err) {
-      return next(new ApplicationError(err.message, err.status));
+      return next(new ServerError(err.message, err.status));
     }
     return res.status(200).json(new ResObj(true, 'На Вашу пошту відправлено листа'));
   });
@@ -302,12 +304,13 @@ const userLogout = async function(req, res, next) {
 
   await chatHelper.killSocketsBindedToSession(session_id, io);
 
-  setUserCookie(null)(req, res, next)
-      .then(() => {
+  cookieHelper.setUserCookie({ JWTSecret: config.get('JWT_SECRET'), cookieName: 'hmade' })(req, res, next);
+      // .then(() => {
         return res.status(200).json('Logged out');
-      });
+      // });
   // });
 };
+
 
 /**
  * After successful login  (passport local)
@@ -321,15 +324,15 @@ const userLogout = async function(req, res, next) {
  */
 const userLogin = async function(req, res, next) {
   if (req.user) {
-    const user = {
-      _id: req.user._doc._id,
-      login: req.user._doc.login,
-      name: req.user._doc.name,
-      surname: req.user._doc.surname,
-      avatar: req.user._doc.avatar,
-      provider: req.user._doc.provider,
-      role: req.user._doc.role,
-    };
+    // const user = {
+    //   _id: req.user._doc._id,
+    //   login: req.user._doc.login,
+    //   name: req.user._doc.name,
+    //   surname: req.user._doc.surname,
+    //   avatar: req.user._doc.avatar,
+    //   provider: req.user._doc.provider,
+    //   role: req.user._doc.role,
+    // };
 
     const session_id = req.session.id;
     const io = req.app.get('io');
@@ -337,11 +340,11 @@ const userLogin = async function(req, res, next) {
 
     await chatHelper.killSocketsBindedToSession(session_id, io);
 
-    setUserCookie(user)(req, res, next)
-        .then(() => {
+    cookieHelper.setUserCookie({ JWTSecret: config.get('JWT_SECRET'), cookieName: 'hmade' })(req, res, next);
+        // .then(() => {
           // const token = sharedHelper.createJWT('', user, 60, 'JWT_SECRET');
           return res.status(200).json('logged in');
-        });
+        // });
   } else {
     return next(new ClientError({message: 'Помилка авторизації', status: 401}));
   }

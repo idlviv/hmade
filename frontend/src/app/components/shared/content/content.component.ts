@@ -29,7 +29,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
   category_id: string;
   hierarchyCategory = [];
   unreadedCommentsLength: number;
-
+  error: any;
 
   constructor(
     private sharedService: SharedService,
@@ -70,7 +70,8 @@ export class ContentComponent implements OnInit, AfterViewInit {
           this.mainMenuSystemItems = menuItems.data.system;
         },
         err => {
-          console.log(err.error);
+          this.error = err;
+          console.log(err);
         });
   }
 
