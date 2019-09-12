@@ -1,41 +1,41 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["default~components-dashboard-dashboard-module~components-user-user-module"],{
 
-/***/ "./src/app/components/user/redirection-with-token/redirection-with-token.component.html":
-/*!**********************************************************************************************!*\
-  !*** ./src/app/components/user/redirection-with-token/redirection-with-token.component.html ***!
-  \**********************************************************************************************/
+/***/ "./src/app/components/user/redirection-after-oauth/redirection-after-oauth.component.html":
+/*!************************************************************************************************!*\
+  !*** ./src/app/components/user/redirection-after-oauth/redirection-after-oauth.component.html ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n  <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\r\n</div>\r\n</div>\r\n\r\n"
+module.exports = "<div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n    <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\n  </div>\n</div>"
 
 /***/ }),
 
-/***/ "./src/app/components/user/redirection-with-token/redirection-with-token.component.scss":
-/*!**********************************************************************************************!*\
-  !*** ./src/app/components/user/redirection-with-token/redirection-with-token.component.scss ***!
-  \**********************************************************************************************/
+/***/ "./src/app/components/user/redirection-after-oauth/redirection-after-oauth.component.scss":
+/*!************************************************************************************************!*\
+  !*** ./src/app/components/user/redirection-after-oauth/redirection-after-oauth.component.scss ***!
+  \************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvdXNlci9yZWRpcmVjdGlvbi13aXRoLXRva2VuL3JlZGlyZWN0aW9uLXdpdGgtdG9rZW4uY29tcG9uZW50LnNjc3MifQ== */"
+module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvdXNlci9yZWRpcmVjdGlvbi1hZnRlci1vYXV0aC9yZWRpcmVjdGlvbi1hZnRlci1vYXV0aC5jb21wb25lbnQuc2NzcyJ9 */"
 
 /***/ }),
 
-/***/ "./src/app/components/user/redirection-with-token/redirection-with-token.component.ts":
-/*!********************************************************************************************!*\
-  !*** ./src/app/components/user/redirection-with-token/redirection-with-token.component.ts ***!
-  \********************************************************************************************/
-/*! exports provided: RedirectionWithTokenComponent */
+/***/ "./src/app/components/user/redirection-after-oauth/redirection-after-oauth.component.ts":
+/*!**********************************************************************************************!*\
+  !*** ./src/app/components/user/redirection-after-oauth/redirection-after-oauth.component.ts ***!
+  \**********************************************************************************************/
+/*! exports provided: RedirectionAfterOauthComponent */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RedirectionWithTokenComponent", function() { return RedirectionWithTokenComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RedirectionAfterOauthComponent", function() { return RedirectionAfterOauthComponent; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -49,34 +49,31 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var RedirectionWithTokenComponent = /** @class */ (function () {
-    function RedirectionWithTokenComponent(router, route, userService, matSnackBar) {
+var RedirectionAfterOauthComponent = /** @class */ (function () {
+    function RedirectionAfterOauthComponent(router, route, userService) {
         this.router = router;
         this.route = route;
         this.userService = userService;
-        this.matSnackBar = matSnackBar;
     }
-    RedirectionWithTokenComponent.prototype.ngOnInit = function () {
+    RedirectionAfterOauthComponent.prototype.ngOnInit = function () {
         var _this = this;
-        this.route.params
-            .subscribe(function (params) {
-            // const token = params.token;
+        this.router.events.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["filter"])(function (event) { return event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouteConfigLoadEnd"]; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["take"])(1))
+            .subscribe(function (event) {
             _this.userService.logging();
             _this.router.navigate(['/user', 'profile']);
         }, function (err) { return console.log('err', err); });
     };
-    RedirectionWithTokenComponent = __decorate([
+    RedirectionAfterOauthComponent = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-redirection-with-token',
-            template: __webpack_require__(/*! ./redirection-with-token.component.html */ "./src/app/components/user/redirection-with-token/redirection-with-token.component.html"),
-            styles: [__webpack_require__(/*! ./redirection-with-token.component.scss */ "./src/app/components/user/redirection-with-token/redirection-with-token.component.scss")]
+            selector: 'app-redirection-after-oauth',
+            template: __webpack_require__(/*! ./redirection-after-oauth.component.html */ "./src/app/components/user/redirection-after-oauth/redirection-after-oauth.component.html"),
+            styles: [__webpack_require__(/*! ./redirection-after-oauth.component.scss */ "./src/app/components/user/redirection-after-oauth/redirection-after-oauth.component.scss")]
         }),
         __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
             _angular_router__WEBPACK_IMPORTED_MODULE_1__["ActivatedRoute"],
-            src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"]])
-    ], RedirectionWithTokenComponent);
-    return RedirectionWithTokenComponent;
+            src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"]])
+    ], RedirectionAfterOauthComponent);
+    return RedirectionAfterOauthComponent;
 }());
 
 
@@ -212,7 +209,7 @@ var UserCreateComponent = /** @class */ (function () {
         }, function (err) {
             // 422 or 400
             _this.recaptchaRef.reset();
-            _this.matSnackBar.open(err.error.message || 'Сталася полка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+            _this.matSnackBar.open(err.error.message || 'Сталася помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
         });
     };
     UserCreateComponent.prototype.onUserCreateReset = function () {
@@ -346,7 +343,7 @@ var UserDialogComponent = /** @class */ (function () {
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-module.exports = "<div class=\"container\">\r\n\r\n<div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n  <div fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\r\n\r\n  <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\r\n    <!--<div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\" fxFlexOffset.gt-xs=\"20\" fxFlexOffset.gt-md=\"30\">-->\r\n\r\n  <div class=\"centered-container\">\r\n    <mat-card  class=\"form-block\">\r\n      <mat-card-content>\r\n        <div class=\"padding-bottom\" fxLayout fxLayoutAlign=\"center center\">\r\n          <img class=\"responsive-image\" src=\"./assets/images/hmade_logo_dark.svg\" width=\"367px\" alt=\"HandMADE\">\r\n        </div>\r\n        <form [formGroup]=\"userLoginForm\" (submit)=\"onUserLoginSubmit()\">\r\n\r\n          <div fxLayout=\"row\">\r\n            <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n              <mat-icon color=\"primary\">account_circle</mat-icon>\r\n            </div>\r\n            <mat-form-field>\r\n              <input matInput placeholder=\"Логін\" formControlName=\"login\" required>\r\n              <mat-error\r\n                *ngIf=\"userLoginForm.get('login').errors?.required &&\r\n                      userLoginForm.get('login').touched\">\r\n                      Введіть логін\r\n              </mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <div fxLayout=\"row\">\r\n            <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n              <mat-icon color=\"primary\">lock_outline</mat-icon>\r\n            </div>\r\n            <mat-form-field>\r\n              <input matInput placeholder=\"Пароль\" formControlName=\"password\"\r\n                     required [type]=\"hidePassword ? 'password' : 'text'\">\r\n              <mat-icon class=\"muted\" matSuffix (click)=\"hidePassword = !hidePassword\">\r\n                {{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>\r\n              <mat-error\r\n                *ngIf=\"userLoginForm.get('password').errors?.required &&\r\n                          userLoginForm.get('password').touched\">\r\n                Введіть пароль\r\n              </mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- <div class=\"submit-button-wrapper\">\r\n            <button mat-raised-button class=\"full-width\" color=\"primary\" [disabled]=\"!userLoginForm.valid\">Увійти</button>       \r\n          </div> -->\r\n\r\n          <div class=\"links-wrapper\" fxLayoutAlign=\"center\">\r\n            <button class=\"google-button full-width\" mat-raised-button color=\"primary\" aria-label=\"Login\"\r\n            [disabled]=\"!userLoginForm.valid\">Увійти</button>       \r\n          </div>\r\n          <div fxLayout=\"row\" class=\"links-wrapper\">\r\n              <a [routerLink]=\"['/user/create']\">Зареєструватись</a>\r\n              <span fxFlex></span>\r\n              <a [routerLink]=\"['/user/password-reset']\">Забули пароль</a>\r\n          </div>\r\n\r\n          <div class=\"links-wrapper\" fxLayoutAlign=\"center\">\r\n            <!-- <button mat-stroked-button type=\"button\" (click)=\"userGoogleLogin()\">\r\n                <i class=\"fab fa-google\"></i> Signin with google\r\n            </button> -->\r\n            <!-- <a mat-stroked-button href=\"http://localhost:8081/api/user/auth/google\">\r\n              <i class=\"fab fa-google\"></i> Signin with google\r\n            </a> -->\r\n            <a class=\"google-button\" mat-raised-button href=\"{{config.host}/api/user/auth/google\" aria-label=\"Sign in with Google\">\r\n                <svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"18px\" height=\"18px\" viewBox=\"0 0 48 48\">\r\n                  <g>\r\n                    <path fill=\"#EA4335\" d=\"M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z\"></path>\r\n                    <path fill=\"#4285F4\" d=\"M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z\"></path>\r\n                    <path fill=\"#FBBC05\" d=\"M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z\"></path>\r\n                    <path fill=\"#34A853\" d=\"M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z\"></path>\r\n                    <path fill=\"none\" d=\"M0 0h48v48H0z\"></path>\r\n                  </g>\r\n                </svg>\r\n              Sign in with Google</a>\r\n          </div>\r\n\r\n         \r\n   \r\n        </form>\r\n      </mat-card-content>\r\n      <!--<img mat-card-image class=\"mat-card-image-bottom\" src=\"./assets/images/logo400x140-2.jpg\" alt=\"\">-->\r\n    </mat-card>\r\n  </div>\r\n\r\n\r\n  </div>\r\n</div>\r\n</div>"
+module.exports = "<div class=\"container\">\r\n\r\n<div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n  <div fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\r\n\r\n  <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\r\n    <!--<div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\" fxFlexOffset.gt-xs=\"20\" fxFlexOffset.gt-md=\"30\">-->\r\n\r\n  <div class=\"centered-container\">\r\n    <mat-card  class=\"form-block\">\r\n      <mat-card-content>\r\n        <div class=\"padding-bottom\" fxLayout fxLayoutAlign=\"center center\">\r\n          <img class=\"responsive-image\" src=\"./assets/images/hmade_logo_dark.svg\" width=\"367px\" alt=\"HandMADE\">\r\n        </div>\r\n        <form [formGroup]=\"userLoginForm\" (submit)=\"onUserLoginSubmit()\">\r\n\r\n          <div fxLayout=\"row\">\r\n            <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n              <mat-icon color=\"primary\">account_circle</mat-icon>\r\n            </div>\r\n            <mat-form-field>\r\n              <input matInput placeholder=\"Логін\" formControlName=\"login\" required>\r\n              <mat-error\r\n                *ngIf=\"userLoginForm.get('login').errors?.required &&\r\n                      userLoginForm.get('login').touched\">\r\n                      Введіть логін\r\n              </mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <div fxLayout=\"row\">\r\n            <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\r\n              <mat-icon color=\"primary\">lock_outline</mat-icon>\r\n            </div>\r\n            <mat-form-field>\r\n              <input matInput placeholder=\"Пароль\" formControlName=\"password\"\r\n                     required [type]=\"hidePassword ? 'password' : 'text'\">\r\n              <mat-icon class=\"muted\" matSuffix (click)=\"hidePassword = !hidePassword\">\r\n                {{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>\r\n              <mat-error\r\n                *ngIf=\"userLoginForm.get('password').errors?.required &&\r\n                          userLoginForm.get('password').touched\">\r\n                Введіть пароль\r\n              </mat-error>\r\n            </mat-form-field>\r\n          </div>\r\n\r\n          <!-- <div class=\"submit-button-wrapper\">\r\n            <button mat-raised-button class=\"full-width\" color=\"primary\" [disabled]=\"!userLoginForm.valid\">Увійти</button>       \r\n          </div> -->\r\n\r\n          <div class=\"links-wrapper\" fxLayoutAlign=\"center\">\r\n            <button class=\"google-button full-width\" mat-raised-button color=\"primary\" aria-label=\"Login\"\r\n            [disabled]=\"!userLoginForm.valid\">Увійти</button>       \r\n          </div>\r\n          <div fxLayout=\"row\" class=\"links-wrapper\">\r\n              <a [routerLink]=\"['/user/create']\">Зареєструватись</a>\r\n              <span fxFlex></span>\r\n              <a [routerLink]=\"['/user/password-reset']\">Забули пароль</a>\r\n          </div>\r\n\r\n          <div class=\"links-wrapper\" fxLayoutAlign=\"center\">\r\n            <!-- <button mat-stroked-button type=\"button\" (click)=\"userGoogleLogin()\">\r\n                <i class=\"fab fa-google\"></i> Signin with google\r\n            </button> -->\r\n            <!-- <a mat-stroked-button href=\"http://localhost:8081/api/user/auth/google\">\r\n              <i class=\"fab fa-google\"></i> Signin with google\r\n            </a> -->\r\n\r\n            <a class=\"google-button\" mat-raised-button href=\"{{config.host + '/api/user/auth/google'}}\" aria-label=\"Sign in with Google\">\r\n                <svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"18px\" height=\"18px\" viewBox=\"0 0 48 48\">\r\n                  <g>\r\n                    <path fill=\"#EA4335\" d=\"M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z\"></path>\r\n                    <path fill=\"#4285F4\" d=\"M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z\"></path>\r\n                    <path fill=\"#FBBC05\" d=\"M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z\"></path>\r\n                    <path fill=\"#34A853\" d=\"M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z\"></path>\r\n                    <path fill=\"none\" d=\"M0 0h48v48H0z\"></path>\r\n                  </g>\r\n                </svg>\r\n              Sign in with Google</a>\r\n          </div>\r\n\r\n         \r\n   \r\n        </form>\r\n      </mat-card-content>\r\n      <!--<img mat-card-image class=\"mat-card-image-bottom\" src=\"./assets/images/logo400x140-2.jpg\" alt=\"\">-->\r\n    </mat-card>\r\n  </div>\r\n\r\n\r\n  </div>\r\n</div>\r\n</div>"
 
 /***/ }),
 
@@ -1087,7 +1084,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../guards/auth.guard */ "./src/app/guards/auth.guard.ts");
 /* harmony import */ var _guards_no_auth_guard__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../guards/no-auth.guard */ "./src/app/guards/no-auth.guard.ts");
 /* harmony import */ var _shared_page_404_page_404_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../shared/page-404/page-404.component */ "./src/app/components/shared/page-404/page-404.component.ts");
-/* harmony import */ var _redirection_with_token_redirection_with_token_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./redirection-with-token/redirection-with-token.component */ "./src/app/components/user/redirection-with-token/redirection-with-token.component.ts");
+/* harmony import */ var _redirection_after_oauth_redirection_after_oauth_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./redirection-after-oauth/redirection-after-oauth.component */ "./src/app/components/user/redirection-after-oauth/redirection-after-oauth.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1131,8 +1128,8 @@ var userRoutes = [
                 component: _user_password_reset_user_password_reset_component__WEBPACK_IMPORTED_MODULE_6__["UserPasswordResetComponent"],
             },
             {
-                path: 'redirection-with-token/:token',
-                component: _redirection_with_token_redirection_with_token_component__WEBPACK_IMPORTED_MODULE_10__["RedirectionWithTokenComponent"],
+                path: 'redirection-after-oauth',
+                component: _redirection_after_oauth_redirection_after_oauth_component__WEBPACK_IMPORTED_MODULE_10__["RedirectionAfterOauthComponent"],
             },
             { path: '', component: _shared_page_404_page_404_component__WEBPACK_IMPORTED_MODULE_9__["Page404Component"] },
         ],
@@ -1245,7 +1242,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ng-recaptcha/forms */ "./node_modules/ng-recaptcha/forms.js");
 /* harmony import */ var ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_12___default = /*#__PURE__*/__webpack_require__.n(ng_recaptcha_forms__WEBPACK_IMPORTED_MODULE_12__);
 /* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/components/shared/shared.module.ts");
-/* harmony import */ var _redirection_with_token_redirection_with_token_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./redirection-with-token/redirection-with-token.component */ "./src/app/components/user/redirection-with-token/redirection-with-token.component.ts");
+/* harmony import */ var _redirection_after_oauth_redirection_after_oauth_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./redirection-after-oauth/redirection-after-oauth.component */ "./src/app/components/user/redirection-after-oauth/redirection-after-oauth.component.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1279,7 +1276,7 @@ var UserModule = /** @class */ (function () {
                 _user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_8__["UserProfileComponent"],
                 _user_dialog_user_dialog_component__WEBPACK_IMPORTED_MODULE_9__["UserDialogComponent"],
                 _user_password_reset_user_password_reset_component__WEBPACK_IMPORTED_MODULE_10__["UserPasswordResetComponent"],
-                _redirection_with_token_redirection_with_token_component__WEBPACK_IMPORTED_MODULE_14__["RedirectionWithTokenComponent"],
+                _redirection_after_oauth_redirection_after_oauth_component__WEBPACK_IMPORTED_MODULE_14__["RedirectionAfterOauthComponent"],
             ],
             imports: [
                 _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],

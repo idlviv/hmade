@@ -19,9 +19,10 @@
         (click)="showUnreadededComments()">
       <span class="type2" [matMenuTriggerFor]="settingsMenu" #settingsMenuTrigger="matMenuTrigger"
       (mouseover)="onSettingsMenuMouseover()">
-        <mat-icon class="mat-icon-aligner">settings</mat-icon>{{user.name}} {{user.surname}}
+        <mat-icon class="mat-icon-aligner">settings</mat-icon>{{user?.name}} {{user?.surname}}
       </span>
     </a>
+    
     <mat-menu #settingsMenu="matMenu" xPosition="after" yPosition="above" [overlapTrigger]="false">
       <span (mouseleave)="onSettingsMenuMouseleave()">
         <a *ngIf="allowTo('guest')" mat-menu-item [routerLink]="['/user/profile']" [routerLinkActive]="['accent']"

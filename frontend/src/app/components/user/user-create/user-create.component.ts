@@ -100,7 +100,7 @@ export class UserCreateComponent implements OnInit {
         err => {
           // 422 or 400
           this.recaptchaRef.reset();
-          this.matSnackBar.open(err.error.message || 'Сталася полка', '',
+          this.matSnackBar.open(err.error.message || 'Сталася помилка', '',
             {duration: 3000, panelClass: 'snack-bar-danger'});
         }
       );

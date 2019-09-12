@@ -390,7 +390,20 @@ export class UserService {
 
   logging() {
         const user = this.userCookieExtractor();
+        console.log('user', user);
         this._logging.next(user);
+  }
+
+  userManualUpdateCookie(): Observable<string> {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json',
+      }),
+    };
+    return this.http.get<string>(
+      'api/user/manual-update-cookie',
+      httpOptions
+    );
   }
 
   // create Observable for user login watch

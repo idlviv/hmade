@@ -1,6 +1,5 @@
 const rp = require('request-promise-native');
 const config = require('../config');
-const log = require('../config/winston')(module);
 const ClientError = require('../errors/clientError');
 
 module.exports = function(req, res, next) {

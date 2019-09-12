@@ -15,8 +15,8 @@ const sessionCookie = session({
     path: '/',
     httpOnly: true, // not reachable for js (XSS)
     // secure: config.get('NODE_ENV') === 'production',
-    sameSite: 'Strict',
-    maxAge: null, // never expires, but will be deleted after closing browser
+    sameSite: 'Lax',
+    // maxAge: null, // never expires, but will be deleted after closing browser
   },
   store: sessionStore,
 });

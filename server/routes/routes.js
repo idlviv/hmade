@@ -1,25 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const config = require('../config');
 
-const { ClientError } = require('user-man');
+const { ClientError, auth, recaptcha } = require('user-man');
+// const auth = require('user-man').auth;
+// const recaptcha = require('user-man').recaptcha;
 
-const auth = require('user-man').auth(config.get('permissions'));
-
-const passport = require('passport');
-const userController = require('../controllers/userController');
 const catalogController = require('../controllers/catalogController');
 const mcController = require('../controllers/mcController');
 const socialController = require('../controllers/socialController');
-const uploadController = require('../controllers/uploadController');
 const productController = require('../controllers/productController');
 const sharedController = require('../controllers/sharedController');
-const recaptcha = require('../middleware/recaptcha');
-// const authorization = require('../middleware/auth').authorization;
-// const authentication = require('../middleware/auth').authentication;
-const setUserCookie = require('../middleware/cookie').setUserCookie;
 
-// const notGuardExtarctUser_id = require('../middleware/auth').notGuardExtarctUser_id;
 const log = require('../config/winston')(module);
 
 /**
@@ -27,26 +18,26 @@ const log = require('../config/winston')(module);
  */
 
 router.delete('/social/delete-comment',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('manager'),
     socialController.deleteComment
 );
 
 router.post('/social/add-comment',
-    recaptcha,
-    auth.authentication,
+    recaptcha.mw(),
+    auth.authentication(),
     auth.authorization('user'),
     socialController.addComment
 );
 
 router.put('/social/display-comment',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('manager'),
     socialController.displayComment
 );
 
 router.put('/social/likes-set',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('user'),
     socialController.likesSet
 );
@@ -56,13 +47,13 @@ router.get('/social/get-comments',
 );
 
 router.get('/social/get-unreaded-comments-categories',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('user'),
     socialController.getUnreadedCommentsCategories
 );
 
 router.get('/social/get-unreaded-comments-length',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('user'),
     socialController.getUnreadedCommentsLength
 );
@@ -95,30 +86,30 @@ router.get('/mc/get-mcs-by-parent',
 );
 
 router.get('/mc/get-sku-list',
-    auth.authentication,
+    auth.authentication(),
     mcController.getSkuList
 );
 
 router.post('/mc/add-main-image',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('manager'),
     mcController.addMainImage
 );
 
 router.post('/mc/add-steps-pic',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('manager'),
     mcController.addStepsPic
 );
 
 router.post('/mc/upsert',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('manager'),
     mcController.mcUpsert
 );
 
 router.delete('/mc/delete/:_id',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('manager'),
     mcController.mcDelete
 );
@@ -161,13 +152,13 @@ router.get('/product/get-new-products',
 // );
 
 router.delete('/product/delete/:_id',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('manager'),
     productController.deleteProduct
 );
 
 router.post('/product/add-image',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('manager'),
     productController.productAddImage
 );
@@ -178,25 +169,25 @@ router.get('/product/increase-views',
 );
 
 router.post('/product/add-menu-image',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('manager'),
     productController.productAddMenuImage
 );
 
 router.post('/product/add-main-image',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('manager'),
     productController.productAddMainImage
 );
 
 router.post('/product/upsert',
-    auth.authentication,
+    auth.authentication(),
     auth.authorization('manager'),
     productController.productUpsert
 );
 
 router.get('/product/get-sku-list',
-    auth.authentication,
+    auth.authentication(),
     productController.getSkuList
 );
 
@@ -242,121 +233,11 @@ router.get('/catalog/get-children',
 );
 
 /**
- * users routes
- */
-
-router.post('/user/create',
-    recaptcha,
-    userController.userCreate,
-    passport.authenticate('localWithoutPassword'),
-    userController.userLogin,
-);
-
-router.get('/user/login',
-    passport.authenticate('local'),
-    userController.userLogin,
-);
-
-// 1step: on google authenticate buntton press
-router.get('/user/auth/google',
-    // 2step: passport redirects to google 'chose account' window
-    passport.authenticate(
-        'google',
-        {
-          scope: ['profile', 'email'],
-          accessType: 'offline',
-        },
-        {session: true})
-);
-
-// 3.step: after user chose his account google redirects here
-// this uri was saved on google api and in passport options
-router.get('/user/auth/google/redirect',
-    // 4.step: passport get code from google, extracts 'scope' info
-    // and passed it to the callback function (./config/passport)
-    passport.authenticate('google', {session: true}),
-    // 5.step: passport calls this callback with data
-    userController.userGoogleSignin
-);
-
-router.get('/user/logout',
-    userController.userLogout,
-);
-
-router.get('/user/profile',
-    auth.authentication,
-    userController.userProfile
-);
-
-router.get('/user/checkauthorization',
-    userController.userCheckAuthorization
-);
-
-router.get('/user/sync-token-to-session',
-    userController.syncTokenToSession
-);
-
-
-// edit 'local users' credentials (name, surname, password)
-router.put('/user/edit',
-    auth.authentication,
-    userController.userEdit
-);
-
-router.put('/user/editUnsecure',
-    auth.authentication,
-    auth.authorization('user'),
-    userController.userEditUnsecure
-);
-
-router.put('/user/edit-avatar',
-    auth.authentication,
-    uploadController.userEditAvatar
-);
-
-router.get('/user/email-verification-send',
-    auth.authentication,
-    userController.userEmailVerificationSend
-);
-
-router.get('/user/email-verification',
-    passport.authenticate('jwt.email.verification', {session: true}),
-    userController.userEmailVerificationReceive,
-);
-
-// first step to reset password
-router.get('/user/password-reset-check-email',
-    // logout if user already logged in
-    userController.userLogout,
-    // function(req, res, next) {
-    //   req.logout();
-    //   next();
-    // },
-    // setUserCookie,
-    recaptcha,
-    userController.passwordResetCheckEmail
-);
-
-// second step to reset password
-router.get('/user/password-reset-check-code',
-    passport.authenticate('jwt.passwordResetCheckCode', {session: false}),
-    userController.passwordResetCheckCode
-);
-
-// third step to reset password
-router.get('/user/password-reset',
-    passport.authenticate('jwt.passwordReset', {session: false}),
-    userController.passwordReset,
-    passport.authenticate('localWithoutPassword'),
-    userController.userLogin,
-);
-
-/**
  * shared routes
  */
 
 router.post('/shared/send-feedback-message',
-    recaptcha,
+    recaptcha.mw(),
     sharedController.sendFeedbackMessage
 );
 

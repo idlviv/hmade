@@ -5,7 +5,9 @@ const GoogleStrategy = require('passport-google-oauth').OAuth2Strategy;
 const LocalStrategy = require('passport-local').Strategy;
 const JwtStrategy = require('passport-jwt').Strategy;
 const ExtractJwt = require('passport-jwt').ExtractJwt;
+
 const UserModel = require('../models/userModel');
+
 const bcrypt = require('bcryptjs');
 const userHelper = require('../helpers/userHelper');
 
@@ -77,7 +79,7 @@ module.exports = function(passport) {
             callbackURL: config.get('SERVER_URL') + '/api/user/auth/google/redirect',
           },
           function(accessToken, refreshToken, profile, done) {
-            log.debug('server url', config.get('SERVER_URL'));
+            // log.debug('server url %o', config.get('SERVER_URL'));
             // extract 'account' email
             let email;
             for (let i = 0; i < profile.emails.length; i++) {
@@ -116,7 +118,9 @@ module.exports = function(passport) {
                     }).save();
                   }
                 })
-                .then((user) => done(null, user))
+                .then((user) => {
+                  return done(null, user);
+                })
                 .catch((err) => done(new DbError(err), false));
           }
       ));

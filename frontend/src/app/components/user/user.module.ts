@@ -12,7 +12,7 @@ import { UserPasswordResetComponent } from './user-password-reset/user-password-
 import { RecaptchaModule } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
 import { SharedModule } from '../shared/shared.module';
-import { RedirectionWithTokenComponent } from './redirection-with-token/redirection-with-token.component';
+import { RedirectionAfterOauthComponent } from './redirection-after-oauth/redirection-after-oauth.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { RedirectionWithTokenComponent } from './redirection-with-token/redirect
     UserProfileComponent,
     UserDialogComponent,
     UserPasswordResetComponent,
-    RedirectionWithTokenComponent,
+    RedirectionAfterOauthComponent,
   ],
   imports: [
     CommonModule,

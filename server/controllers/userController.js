@@ -11,10 +11,9 @@ const config = require('../config');
 const transporter = require('../config/mailgun');
 const userHelper = require('../helpers/userHelper');
 const sharedHelper = require('../helpers/sharedHelper');
-const cookieHelper = require('user-man').cookieHelper();
 
 // const setUserCookie = require('../helpers/cookieHelper').setUserCookie;
-const ChatHelper = require('../helpers/chatHelper');
+// const ChatHelper = require('../helpers/chatHelper');
 
 /**
  * First step to reset password
@@ -299,15 +298,15 @@ const userLogout = async function(req, res, next) {
   req.logout();
 
   const session_id = req.session.id;
-  const io = req.app.get('io');
-  const chatHelper = new ChatHelper();
+  // const io = req.app.get('io');
+  // const chatHelper = new ChatHelper();
+  // await chatHelper.killSocketsBindedToSession(session_id, io);
 
-  await chatHelper.killSocketsBindedToSession(session_id, io);
-
-  cookieHelper.setUserCookie({ JWTSecret: config.get('JWT_SECRET'), cookieName: 'hmade' })(req, res, next);
-      // .then(() => {
-        return res.status(200).json('Logged out');
-      // });
+  next();
+  // cookieHelper.setUserCookie({ JWTSecret: config.get('JWT_SECRET'), cookieName: 'hmade' })(req, res, next);
+  // .then(() => {
+  // return res.status(200).json('Logged out');
+  // });
   // });
 };
 
@@ -323,7 +322,7 @@ const userLogout = async function(req, res, next) {
  * @return {*}
  */
 const userLogin = async function(req, res, next) {
-  if (req.user) {
+  if (req.isAuthenticated()) {
     // const user = {
     //   _id: req.user._doc._id,
     //   login: req.user._doc.login,
@@ -335,16 +334,16 @@ const userLogin = async function(req, res, next) {
     // };
 
     const session_id = req.session.id;
-    const io = req.app.get('io');
-    const chatHelper = new ChatHelper();
+    // const io = req.app.get('io');
+    // const chatHelper = new ChatHelper();
 
-    await chatHelper.killSocketsBindedToSession(session_id, io);
+    // await chatHelper.killSocketsBindedToSession(session_id, io);
 
-    cookieHelper.setUserCookie({ JWTSecret: config.get('JWT_SECRET'), cookieName: 'hmade' })(req, res, next);
-        // .then(() => {
-          // const token = sharedHelper.createJWT('', user, 60, 'JWT_SECRET');
-          return res.status(200).json('logged in');
-        // });
+    // cookieHelper.setUserCookie({ JWTSecret: config.get('JWT_SECRET'), cookieName: 'hmade' })(req, res, next);
+    // .then(() => {
+    // const token = sharedHelper.createJWT('', user, 60, 'JWT_SECRET');
+    return res.status(200).json('logged in');
+    // });
   } else {
     return next(new ClientError({message: 'Помилка авторизації', status: 401}));
   }
@@ -377,17 +376,20 @@ const syncTokenToSession = function(req, res, next) {
  * @param {*} next
  */
 const userGoogleSignin = function(req, res, next) {
-  const sub = {
-    _id: req.user._doc._id,
-    login: req.user._doc.login,
-    name: req.user._doc.name,
-    surname: req.user._doc.surname,
-    avatar: req.user._doc.avatar,
-    provider: req.user._doc.provider,
-    role: req.user._doc.role,
-  };
-  const token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET');
-  res.redirect('/user/redirection-with-token/' + token);
+  // const sub = {
+  //   _id: req.user._doc._id,
+  //   login: req.user._doc.login,
+  //   name: req.user._doc.name,
+  //   surname: req.user._doc.surname,
+  //   avatar: req.user._doc.avatar,
+  //   provider: req.user._doc.provider,
+  //   role: req.user._doc.role,
+  // };
+
+  // const token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET');
+  // res.redirect('/user/redirection-with-token/' + token);
+
+  res.redirect('/user/redirection-with-token/noToken');
 };
 
 /**
@@ -430,6 +432,8 @@ const userCheckAuthorization = function(req, res, next) {
   }
 };
 
+
+
 /**
  * Middleware for user create
  * invokes 'next()' to login created user
@@ -443,6 +447,7 @@ const userCreate = function(req, res, next) {
   Object.assign(user, req.body);
   user.provider = 'local';
 
+  // userHelper.isEmailUnique(user.email, user.provider)
   userHelper.isEmailUnique(user.email, user.provider)
       .then(() => userHelper.isLoginUnique(user.login))
       .then(() => bcrypt.hash(req.body.password, 10))
@@ -457,8 +462,40 @@ const userCreate = function(req, res, next) {
       })
       // next to login created user
       .then(() => next())
+      // .catch((err) => next(new ClientError({ message: 'Помилка унікальності', status: 422, code: 'uniqueConflict' })));
       .catch((err) => next(err));
 };
+
+// /**
+//  * Middleware for user create
+//  * invokes 'next()' to login created user
+//  *
+//  * @param {*} req
+//  * @param {*} res
+//  * @param {*} next
+//  */
+// const userCreate = function (req, res, next) {
+//   let user = {};
+//   Object.assign(user, req.body);
+//   user.provider = 'local';
+
+//   userHelper.isEmailUnique(user.email, user.provider)
+//     .then(() => userHelper.isLoginUnique(user.login))
+//     .then(() => bcrypt.hah(req.body.password, 10))
+//     .then((hash) => {
+//       user.password = hash;
+//       user.role = 'guest';
+//       user.createdAt = Date.now();
+//       user.commentsReadedTill = Date.now();
+//       const userModel = new UserModel(user);
+//       // create new user
+//       return userModel.save();
+//     })
+//     // next to login created user
+//     .then(() => next())
+//     .catch((err) => next(new ClientError({ message: 'Помилка унікальності', status: 422, code: 'uniqueConflict' })));
+// };
+
 
 module.exports = {
   userCheckAuthorization,
