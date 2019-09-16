@@ -15,110 +15,110 @@ const sharedHelper = require('../helpers/sharedHelper');
 // const setUserCookie = require('../helpers/cookieHelper').setUserCookie;
 // const ChatHelper = require('../helpers/chatHelper');
 
-/**
- * First step to reset password
- * Send reset code on email and write its hash in db
- *
- * @param {*} req
- * @param {*} res
- * @param {*} next
- */
-const passwordResetCheckEmail = function(req, res, next) {
-  let email = req.query.email;
-  let user;
-  let code;
+// /**
+//  * First step to reset password
+//  * Send reset code on email and write its hash in db
+//  *
+//  * @param {*} req
+//  * @param {*} res
+//  * @param {*} next
+//  */
+// const passwordResetCheckEmail = function(req, res, next) {
+//   let email = req.query.email;
+//   let user;
+//   let code;
 
-  userHelper.isEmailExists(email, 'local')
-      .then((userFromDb) => {
-        code = Math.floor(Math.random() * (100000)) + '';
-        user = userFromDb;
-        return bcrypt.hash(code, 10);
-      })
-      .then((hash) => userHelper.updateDocument({_id: user._doc._id}, {$set: {code: hash, codeTries: 1}}))
-      .then((result) => {
-        const mailOptions = {
-          from: 'HandMADE <postmaster@hmade.work>',
-          to: email,
-          subject: 'Зміна пароля, код підтвердження',
-          text: 'Ваш код підтвердження: ' + code,
-          html: '<b>Ваш код підтвердження: </b>' + code,
-        };
-        return sharedHelper.sendMail(mailOptions);
-      })
-      .then((info) => {
-        const sub = {_id: user._id};
-        // token to identify user
-        const codeToken = sharedHelper.createJWT('JWT ', sub, 300, 'JWT_SECRET_CODE');
-        return res.status(200).json(codeToken);
-      })
-      .catch((err) => next(err));
-};
+//   userHelper.isEmailExists(email, 'local')
+//       .then((userFromDb) => {
+//         code = Math.floor(Math.random() * (100000)) + '';
+//         user = userFromDb;
+//         return bcrypt.hash(code, 10);
+//       })
+//       .then((hash) => userHelper.updateDocument({_id: user._doc._id}, {$set: {code: hash, codeTries: 1}}))
+//       .then((result) => {
+//         const mailOptions = {
+//           from: 'HandMADE <postmaster@hmade.work>',
+//           to: email,
+//           subject: 'Зміна пароля, код підтвердження',
+//           text: 'Ваш код підтвердження: ' + code,
+//           html: '<b>Ваш код підтвердження: </b>' + code,
+//         };
+//         return sharedHelper.sendMail(mailOptions);
+//       })
+//       .then((info) => {
+//         const sub = {_id: user._id};
+//         // token to identify user
+//         const codeToken = sharedHelper.createJWT('JWT ', sub, 300, 'JWT_SECRET_CODE');
+//         return res.status(200).json(codeToken);
+//       })
+//       .catch((err) => next(err));
+// };
 
-/**
- * Second step to reset password
- * Compare code from email with one in db
- *
- * @param {*} req
- * @param {*} res
- * @param {*} next
- */
-const passwordResetCheckCode = function(req, res, next) {
-  let code = req.query.code;
-  let user;
-  UserModel.findOne({_id: req.user._doc._id})
-      .then((userFromDb) => {
-        user = userFromDb;
-        if (!userFromDb) {
-          throw new ClientError({status: 401, code: 'noSuchuser'});
-        }
-        if (userFromDb.isCodeLocked) {
-          throw new ClientError({message: 'Кількість спроб вичерпано', status: 403, code: 'maxTries'});
-        }
-        // if code doesn't match then throw error with code 'wrongCredentials' here
-        return userHelper.isPasswordMatched(code, userFromDb._doc.code, userFromDb);
-      })
-      .then((userFromDb) => {
-        const sub = {_id: userFromDb._doc._id};
-        // token to identify user
-        const changePasswordToken = sharedHelper.createJWT('JWT ', sub, 300, 'JWT_SECRET_CHANGE_PASSWORD');
-        return res.status(200).json(changePasswordToken);
-      })
-      .catch((err) => {
-        if (err.code === 'wrongCredentials') {
-          userHelper.updatePasswordResetOptions(user)
-              .then(() => next(err));
-        } else {
-          next(err);
-        }
-      });
-};
+// /**
+//  * Second step to reset password
+//  * Compare code from email with one in db
+//  *
+//  * @param {*} req
+//  * @param {*} res
+//  * @param {*} next
+//  */
+// const passwordResetCheckCode = function(req, res, next) {
+//   let code = req.query.code;
+//   let user;
+//   UserModel.findOne({_id: req.user._doc._id})
+//       .then((userFromDb) => {
+//         user = userFromDb;
+//         if (!userFromDb) {
+//           throw new ClientError({status: 401, code: 'noSuchuser'});
+//         }
+//         if (userFromDb.isCodeLocked) {
+//           throw new ClientError({message: 'Кількість спроб вичерпано', status: 403, code: 'maxTries'});
+//         }
+//         // if code doesn't match then throw error with code 'wrongCredentials' here
+//         return userHelper.isPasswordMatched(code, userFromDb._doc.code, userFromDb);
+//       })
+//       .then((userFromDb) => {
+//         const sub = {_id: userFromDb._doc._id};
+//         // token to identify user
+//         const changePasswordToken = sharedHelper.createJWT('JWT ', sub, 300, 'JWT_SECRET_CHANGE_PASSWORD');
+//         return res.status(200).json(changePasswordToken);
+//       })
+//       .catch((err) => {
+//         if (err.code === 'wrongCredentials') {
+//           userHelper.updatePasswordResetOptions(user)
+//               .then(() => next(err));
+//         } else {
+//           next(err);
+//         }
+//       });
+// };
 
-/**
- * Third step to reset password
- * Middleware which invokes 'next()' to login this user
- *
- * @param {*} req
- * @param {*} res
- * @param {*} next
- */
-const passwordReset = function(req, res, next) {
-  let user = {};
-  Object.assign(user, req.user._doc);
-  const password = req.query.password;
-  bcrypt.hash(password, 10)
-      .then((hash) => userHelper.updateDocument(
-          {_id: user._id},
-          {$set: {
-            password: hash,
-            code: null,
-          }}
-      ))
-      .then((result) => {
-        req.body.login = user.login;
-        next();
-      })
-      .catch((err) => next(err));
-};
+// /**
+//  * Third step to reset password
+//  * Middleware which invokes 'next()' to login this user
+//  *
+//  * @param {*} req
+//  * @param {*} res
+//  * @param {*} next
+//  */
+// const passwordReset = function(req, res, next) {
+//   let user = {};
+//   Object.assign(user, req.user._doc);
+//   const password = req.query.password;
+//   bcrypt.hash(password, 10)
+//       .then((hash) => userHelper.updateDocument(
+//           {_id: user._id},
+//           {$set: {
+//             password: hash,
+//             code: null,
+//           }}
+//       ))
+//       .then((result) => {
+//         req.body.login = user.login;
+//         next();
+//       })
+//       .catch((err) => next(err));
+// };
 
 const userEmailVerificationReceive = function(req, res, next) {
   let user = {};
@@ -475,8 +475,8 @@ module.exports = {
   userEmailVerificationSend,
   // userGoogleSignin,
   userEmailVerificationReceive,
-  passwordReset,
-  passwordResetCheckCode,
-  passwordResetCheckEmail,
+  // passwordReset,
+  // passwordResetCheckCode,
+  // passwordResetCheckEmail,
   // userEditUnsecure,
 };

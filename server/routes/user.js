@@ -107,30 +107,30 @@ router.get('/user/email-verification',
     localUserController.userEmailVerificationReceive,
 );
 
-// first step to reset password
-router.get('/user/password-reset-check-email',
-    // logout if user already logged in
-    userController.logout(),
-    userController.setFrontendAuthCookie(),
-    sharedMiddleware.recaptcha(),
-    localUserController.passwordResetCheckEmail
-);
+// // first step to reset password
+// router.get('/user/password-reset-check-email',
+//     // logout if user already logged in
+//     userController.logout(),
+//     userController.setFrontendAuthCookie(),
+//     sharedMiddleware.recaptcha(),
+//     localUserController.passwordResetCheckEmail
+// );
 
-// second step to reset password
-router.get('/user/password-reset-check-code',
-    passport.authenticate('jwt.passwordResetCheckCode', { session: false }),
-    localUserController.passwordResetCheckCode
-);
+// // second step to reset password
+// router.get('/user/password-reset-check-code',
+//     passport.authenticate('jwt.passwordResetCheckCode', { session: false }),
+//     localUserController.passwordResetCheckCode
+// );
 
-// third step to reset password
-router.get('/user/password-reset',
-    passport.authenticate('jwt.passwordReset', { session: false }),
-    localUserController.passwordReset,
-    passport.authenticate('localWithoutPassword'),
-    userController.login()
+// // third step to reset password
+// router.get('/user/password-reset',
+//     passport.authenticate('jwt.passwordReset', { session: false }),
+//     localUserController.passwordReset,
+//     passport.authenticate('localWithoutPassword'),
+//     userController.login()
 
-    // localUserController.userLogin,
-);
+//     // localUserController.userLogin,
+// );
 
 module.exports = router;
 
