@@ -21,16 +21,7 @@ export class AuthGuard implements CanActivate {
     const requiredRoleForAuthorization = next.data.auth; // from routing.module
     return this.userService.userCheckAuthorization(requiredRoleForAuthorization)
       .pipe(
-        map((result) => {
-          // console.log('authguard');
-          // // set token for local login every time when check canActivate for router
-          // if (result.token) {
-          //   this.userService.userLocalLogin(result.token);
-          // } else {
-          //   this.userService.userLocalRemoveToken('token');
-          // }
-          return result.permission;
-        }),
+        map((permission) => permission),
         catchError(err => of(false))
       );
 

@@ -5,46 +5,46 @@ const ApplicationError = require('../errors/applicationError');
 const ClientError = require('../errors/clientError');
 const bcrypt = require('bcryptjs');
 
-/**
- * check pair: email - provider uniqueness
- *
- * @param {string} email
- * @param {string} provider
- * @return {Promise}
- */
-function isEmailUnique(email, provider) {
-  return new Promise((resolve, reject) => {
-    UserModel.find({email, provider})
-        .then((result) => {
-          if (!result.length) {
-            resolve();
-          } else {
-            reject(new ClientError({message: 'Цей email вже використовується', status: 422, code: 'uniqueConflict'}));
-          }
-        })
-        .catch((err) => reject(new DbError()));
-  });
-}
+// /**
+//  * check pair: email - provider uniqueness
+//  *
+//  * @param {string} email
+//  * @param {string} provider
+//  * @return {Promise}
+//  */
+// function isEmailUnique(email, provider) {
+//   return new Promise((resolve, reject) => {
+//     UserModel.find({email, provider})
+//         .then((result) => {
+//           if (!result.length) {
+//             resolve();
+//           } else {
+//             reject(new ClientError({message: 'Цей email вже використовується', status: 422, code: 'uniqueConflict'}));
+//           }
+//         })
+//         .catch((err) => reject(new DbError()));
+//   });
+// }
 
-/**
- * check login uniqueness
- *
- * @param {string} login
- * @return {Promise}
- */
-function isLoginUnique(login) {
-  return new Promise((resolve, reject) => {
-    UserModel.find({login})
-        .then((result) => {
-          if (!result.length) {
-            resolve();
-          } else {
-            reject(new ClientError({message: 'Цей логін вже використовується', status: 422, code: 'uniqueConflict'}));
-          }
-        })
-        .catch((err) => reject(new DbError()));
-  });
-}
+// /**
+//  * check login uniqueness
+//  *
+//  * @param {string} login
+//  * @return {Promise}
+//  */
+// function isLoginUnique(login) {
+//   return new Promise((resolve, reject) => {
+//     this.UserModel.find({login})
+//         .then((result) => {
+//           if (!result.length) {
+//             resolve();
+//           } else {
+//             reject(new ClientError({message: 'Цей логін вже використовується', status: 422, code: 'uniqueConflict'}));
+//           }
+//         })
+//         .catch((err) => reject(new DbError()));
+//   });
+// }
 
 /**
  * check pair: email-provider exists in db
@@ -211,8 +211,8 @@ function updatePasswordResetOptions(user) {
 }
 
 module.exports = {
-  isEmailUnique,
-  isLoginUnique,
+  // isEmailUnique,
+  // isLoginUnique,
   isEmailExists,
   isLoginExists,
   isPasswordLocked,

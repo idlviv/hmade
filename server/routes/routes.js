@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { ClientError, auth, recaptcha } = require('user-man');
+const { ClientError, sharedMiddleware } = require('user-man');
 // const auth = require('user-man').auth;
 // const recaptcha = require('user-man').recaptcha;
 
@@ -18,27 +18,27 @@ const log = require('../config/winston')(module);
  */
 
 router.delete('/social/delete-comment',
-    auth.authentication(),
-    auth.authorization('manager'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('manager'),
     socialController.deleteComment
 );
 
 router.post('/social/add-comment',
-    recaptcha.mw(),
-    auth.authentication(),
-    auth.authorization('user'),
+    sharedMiddleware.recaptcha(),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('user'),
     socialController.addComment
 );
 
 router.put('/social/display-comment',
-    auth.authentication(),
-    auth.authorization('manager'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('manager'),
     socialController.displayComment
 );
 
 router.put('/social/likes-set',
-    auth.authentication(),
-    auth.authorization('user'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('user'),
     socialController.likesSet
 );
 
@@ -47,14 +47,14 @@ router.get('/social/get-comments',
 );
 
 router.get('/social/get-unreaded-comments-categories',
-    auth.authentication(),
-    auth.authorization('user'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('user'),
     socialController.getUnreadedCommentsCategories
 );
 
 router.get('/social/get-unreaded-comments-length',
-    auth.authentication(),
-    auth.authorization('user'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('user'),
     socialController.getUnreadedCommentsLength
 );
 
@@ -86,31 +86,31 @@ router.get('/mc/get-mcs-by-parent',
 );
 
 router.get('/mc/get-sku-list',
-    auth.authentication(),
+    sharedMiddleware.authentication(),
     mcController.getSkuList
 );
 
 router.post('/mc/add-main-image',
-    auth.authentication(),
-    auth.authorization('manager'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('manager'),
     mcController.addMainImage
 );
 
 router.post('/mc/add-steps-pic',
-    auth.authentication(),
-    auth.authorization('manager'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('manager'),
     mcController.addStepsPic
 );
 
 router.post('/mc/upsert',
-    auth.authentication(),
-    auth.authorization('manager'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('manager'),
     mcController.mcUpsert
 );
 
 router.delete('/mc/delete/:_id',
-    auth.authentication(),
-    auth.authorization('manager'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('manager'),
     mcController.mcDelete
 );
 
@@ -123,7 +123,7 @@ router.get('/product/get-products-by-design-id',
 
 // router.post('/product/add-assets',
 //     passport.authenticate('jwt', {session: false}),
-//     auth.authorization('manager'),
+//     sharedMiddleware.authorization('manager'),
 //     productController.productAddAssets
 // );
 
@@ -141,25 +141,25 @@ router.get('/product/get-new-products',
 
 // router.post('/product/create',
 //     passport.authenticate('jwt', {session: false}),
-//     auth.authorization('manager'),
+//     sharedMiddleware.authorization('manager'),
 //     productController.productCreate
 // );
 
 // router.put('/product/edit',
 //     passport.authenticate('jwt', {session: false}),
-//     auth.authorization('manager'),
+//     sharedMiddleware.authorization('manager'),
 //     productController.productEdit
 // );
 
 router.delete('/product/delete/:_id',
-    auth.authentication(),
-    auth.authorization('manager'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('manager'),
     productController.deleteProduct
 );
 
 router.post('/product/add-image',
-    auth.authentication(),
-    auth.authorization('manager'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('manager'),
     productController.productAddImage
 );
 
@@ -169,25 +169,25 @@ router.get('/product/increase-views',
 );
 
 router.post('/product/add-menu-image',
-    auth.authentication(),
-    auth.authorization('manager'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('manager'),
     productController.productAddMenuImage
 );
 
 router.post('/product/add-main-image',
-    auth.authentication(),
-    auth.authorization('manager'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('manager'),
     productController.productAddMainImage
 );
 
 router.post('/product/upsert',
-    auth.authentication(),
-    auth.authorization('manager'),
+    sharedMiddleware.authentication(),
+    sharedMiddleware.authorization('manager'),
     productController.productUpsert
 );
 
 router.get('/product/get-sku-list',
-    auth.authentication(),
+    sharedMiddleware.authentication(),
     productController.getSkuList
 );
 
@@ -237,7 +237,7 @@ router.get('/catalog/get-children',
  */
 
 router.post('/shared/send-feedback-message',
-    recaptcha.mw(),
+    sharedMiddleware.recaptcha(),
     sharedController.sendFeedbackMessage
 );
 

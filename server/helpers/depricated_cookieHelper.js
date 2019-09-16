@@ -1,4 +1,4 @@
-const cryptHelper = require('user-man').cryptHelper;
+const cryptHelper = require('user-man').helper;
 const config = require('../config');
 
 /**
@@ -8,6 +8,7 @@ const config = require('../config');
  * @return {*}
  */
 function setUserCookie(user) {
+  
   return function(req, res, next) {
     return new Promise((resolve, reject) => {
       token = cryptHelper.createJWT('', user, null, config.get('JWT_SECRET'));

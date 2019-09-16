@@ -133,8 +133,7 @@ export class UserService {
    * @returns {Observable<{permission: boolean, token: string}>}
    * @memberof UserService
    */
-  userCheckAuthorization(requiredRoleForAuthentication: string): Observable<{permission: boolean, token: string}> {
-    // const token = this.userLocalGetToken('token');
+  userCheckAuthorization(requiredRoleForAuthentication: string): Observable<boolean> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
@@ -142,7 +141,7 @@ export class UserService {
       params: new HttpParams({fromString: `role=${requiredRoleForAuthentication}`})
 
     };
-    return this.http.get<{permission: boolean, token: string}>(
+    return this.http.get<boolean>(
       'api/user/checkAuthorization',
       httpOptions
     );
@@ -375,18 +374,6 @@ export class UserService {
       httpOptions
     );
   }
-
-  // syncTokenToSession(): Observable<string> {
-  //   const httpOptions = {
-  //     headers: new HttpHeaders({
-  //       'Content-Type':  'application/json',
-  //     })
-  //   };
-  //   return this.http.get<string>(
-  //     'api/user/sync-token-to-session',
-  //     httpOptions
-  //   );
-  // }
 
   logging() {
         const user = this.userCookieExtractor();

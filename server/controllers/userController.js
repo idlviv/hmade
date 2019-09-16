@@ -198,34 +198,34 @@ const userEmailVerificationSend = function(req, res, next) {
   });
 };
 
-/** Edit user fields without password confirmation
- *
- *
- * @param {*} req
- * @param {*} res
- * @param {*} next
- * @return {*}
- */
-const userEditUnsecure = function(req, res, next) {
-  let user = {};
-  let modificationRequest = {};
+// /** Edit user fields without password confirmation
+//  *
+//  *
+//  * @param {*} req
+//  * @param {*} res
+//  * @param {*} next
+//  * @return {*}
+//  */
+// const userEditUnsecure = function(req, res, next) {
+//   let user = {};
+//   let modificationRequest = {};
 
-  Object.assign(user, req.user._doc);
-  Object.assign(modificationRequest, req.body);
-  const date = Date.now();
+//   Object.assign(user, req.user._doc);
+//   Object.assign(modificationRequest, req.body);
+//   const date = Date.now();
 
-  if (modificationRequest.name === 'commentsReadedTill') {
-    userHelper.updateDocument(
-        {_id: user._id},
-        {$set: {
-          [modificationRequest.name]: date,
-        }})
-        .then((result) => res.status(200).json('Зміни внесено'))
-        .catch((err) => next(err));
-  } else {
-    return next(new ClientError({message: 'Помилка авторизації', status: 401}));
-  }
-};
+//   if (modificationRequest.name === 'commentsReadedTill') {
+//     userHelper.updateDocument(
+//         {_id: user._id},
+//         {$set: {
+//           [modificationRequest.name]: date,
+//         }})
+//         .then((result) => res.status(200).json('Зміни внесено'))
+//         .catch((err) => next(err));
+//   } else {
+//     return next(new ClientError({message: 'Помилка авторизації', status: 401}));
+//   }
+// };
 
 /** Edit user fields with password confirmation
  *
@@ -234,81 +234,82 @@ const userEditUnsecure = function(req, res, next) {
  * @param {*} res
  * @param {*} next
  */
-const userEdit = function(req, res, next) {
-  let user = {};
-  let modificationRequest = {};
+// const userEdit = function(req, res, next) {
+//   let user = {};
+//   let modificationRequest = {};
 
-  Object.assign(user, req.user._doc);
-  Object.assign(modificationRequest, req.body);
+//   Object.assign(user, req.user._doc);
+//   Object.assign(modificationRequest, req.body);
 
-  userHelper.isPasswordMatched(modificationRequest.password, user.password, user)
-      .then((user) => {
-        if (modificationRequest.name === 'password') {
-          return bcrypt.hash(modificationRequest.value, 10)
-              .then((hash) => userHelper.updateDocument(
-                  {_id: user._id},
-                  {$set: {
-                    password: hash,
-                    code: null,
-                  }}
-              ));
-        } else {
-          return userHelper.updateDocument(
-              {_id: user._id},
-              {$set: {
-                [modificationRequest.name]: modificationRequest.value,
-              }}
-          );
-        }
-      })
-      .then((result) => res.status(200).json('Зміни внесено'))
-      .catch((err) => next(err));
-};
 
-/**
- * Return users credentials
- *
- * @param {*} req
- * @param {*} res
- * @param {*} next
- * @return {UserModel}
- */
-const userProfile = function(req, res, next) {
-  let user = {
-    login: req.user._doc.login,
-    avatar: req.user._doc.avatar,
-    ban: req.user._doc.ban,
-    name: req.user._doc.name,
-    surname: req.user._doc.surname,
-    role: req.user._doc.role,
-    email: req.user._doc.email,
-  };
-  return res.status(200).json(user);
-};
+//   userHelper.isPasswordMatched(modificationRequest.password, user.password, user)
+//       .then((user) => {
+//         if (modificationRequest.name === 'password') {
+//           return bcrypt.hash(modificationRequest.value, 10)
+//               .then((hash) => userHelper.updateDocument(
+//                   {_id: user._id},
+//                   {$set: {
+//                     password: hash,
+//                     code: null,
+//                   }}
+//               ));
+//         } else {
+//           return userHelper.updateDocument(
+//               {_id: user._id},
+//               {$set: {
+//                 [modificationRequest.name]: modificationRequest.value,
+//               }}
+//           );
+//         }
+//       })
+//       .then((result) => res.status(200).json('Зміни внесено'))
+//       .catch((err) => next(err));
+// };
 
-/**
- * user logout from session
- *
- * @param {*} req
- * @param {*} res
- * @param {*} next
- * @return {*}
- */
-const userLogout = async function(req, res, next) {
-  req.logout();
+// /**
+//  * Return users credentials
+//  *
+//  * @param {*} req
+//  * @param {*} res
+//  * @param {*} next
+//  * @return {UserModel}
+//  */
+// const userProfile = function(req, res, next) {
+//   let user = {
+//     login: req.user._doc.login,
+//     avatar: req.user._doc.avatar,
+//     ban: req.user._doc.ban,
+//     name: req.user._doc.name,
+//     surname: req.user._doc.surname,
+//     role: req.user._doc.role,
+//     email: req.user._doc.email,
+//   };
+//   return res.status(200).json(user);
+// };
 
-  const session_id = req.session.id;
-  // const io = req.app.get('io');
-  // const chatHelper = new ChatHelper();
-  // await chatHelper.killSocketsBindedToSession(session_id, io);
+// /**
+//  * user logout from session
+//  *
+//  * @param {*} req
+//  * @param {*} res
+//  * @param {*} next
+//  * @return {*}
+//  */
+// const userLogout = async function(req, res, next) {
+//   req.logout();
 
-  next();
-  // cookieHelper.setUserCookie({ JWTSecret: config.get('JWT_SECRET'), cookieName: 'hmade' })(req, res, next);
-  // .then(() => {
-  // return res.status(200).json('Logged out');
-  // });
-  // });
-};
+//   const session_id = req.session.id;
+//   // const io = req.app.get('io');
+//   // const chatHelper = new ChatHelper();
+//   // await chatHelper.killSocketsBindedToSession(session_id, io);
+
+//   next();
+//   // cookieHelper.setUserCookie({ JWTSecret: config.get('JWT_SECRET'), cookieName: 'hmade' })(req, res, next);
+//   // .then(() => {
+//   // return res.status(200).json('Logged out');
+//   // });
+//   // });
+// };
 
 
 /**
@@ -321,150 +322,116 @@ const userLogout = async function(req, res, next) {
  * @param {*} next
  * @return {*}
  */
-const userLogin = async function(req, res, next) {
-  if (req.isAuthenticated()) {
-    // const user = {
-    //   _id: req.user._doc._id,
-    //   login: req.user._doc.login,
-    //   name: req.user._doc.name,
-    //   surname: req.user._doc.surname,
-    //   avatar: req.user._doc.avatar,
-    //   provider: req.user._doc.provider,
-    //   role: req.user._doc.role,
-    // };
+// const userLogin = async function(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     // const user = {
+//     //   _id: req.user._doc._id,
+//     //   login: req.user._doc.login,
+//     //   name: req.user._doc.name,
+//     //   surname: req.user._doc.surname,
+//     //   avatar: req.user._doc.avatar,
+//     //   provider: req.user._doc.provider,
+//     //   role: req.user._doc.role,
+//     // };
 
-    const session_id = req.session.id;
-    // const io = req.app.get('io');
-    // const chatHelper = new ChatHelper();
+//     const session_id = req.session.id;
+//     // const io = req.app.get('io');
+//     // const chatHelper = new ChatHelper();
 
-    // await chatHelper.killSocketsBindedToSession(session_id, io);
+//     // await chatHelper.killSocketsBindedToSession(session_id, io);
 
-    // cookieHelper.setUserCookie({ JWTSecret: config.get('JWT_SECRET'), cookieName: 'hmade' })(req, res, next);
-    // .then(() => {
-    // const token = sharedHelper.createJWT('', user, 60, 'JWT_SECRET');
-    return res.status(200).json('logged in');
-    // });
-  } else {
-    return next(new ClientError({message: 'Помилка авторизації', status: 401}));
-  }
-};
+//     // cookieHelper.setUserCookie({ JWTSecret: config.get('JWT_SECRET'), cookieName: 'hmade' })(req, res, next);
+//     // .then(() => {
+//     // const token = sharedHelper.createJWT('', user, 60, 'JWT_SECRET');
+//     return res.status(200).json('logged in');
+//     // });
+//   } else {
+//     return next(new ClientError({message: 'Помилка авторизації', status: 401}));
+//   }
+// };
 
-const syncTokenToSession = function(req, res, next) {
-  if (req.isAuthenticated()) {
-    const sub = {
-      _id: req.user._doc._id,
-      login: req.user._doc.login,
-      name: req.user._doc.name,
-      surname: req.user._doc.surname,
-      avatar: req.user._doc.avatar,
-      provider: req.user._doc.provider,
-      role: req.user._doc.role,
-    };
-    const token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET'); // 604800
-    return res.status(200).json(token);
-  } else {
-    res.status(200).json('');
-  }
-};
+// const syncTokenToSession = function(req, res, next) {
+//   if (req.isAuthenticated()) {
+//     const sub = {
+//       _id: req.user._doc._id,
+//       login: req.user._doc.login,
+//       name: req.user._doc.name,
+//       surname: req.user._doc.surname,
+//       avatar: req.user._doc.avatar,
+//       provider: req.user._doc.provider,
+//       role: req.user._doc.role,
+//     };
+//     const token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET'); // 604800
+//     return res.status(200).json(token);
+//   } else {
+//     res.status(200).json('');
+//   }
+// };
 
-/**
- * After successful google social signin
- * Returns basic user credentials, signed by JWT
- *
- * @param {*} req
- * @param {*} res
- * @param {*} next
- */
-const userGoogleSignin = function(req, res, next) {
-  // const sub = {
-  //   _id: req.user._doc._id,
-  //   login: req.user._doc.login,
-  //   name: req.user._doc.name,
-  //   surname: req.user._doc.surname,
-  //   avatar: req.user._doc.avatar,
-  //   provider: req.user._doc.provider,
-  //   role: req.user._doc.role,
-  // };
+// /**
+//  * After successful google social signin
+//  * Returns basic user credentials, signed by JWT
+//  *
+//  * @param {*} req
+//  * @param {*} res
+//  * @param {*} next
+//  */
+// const userGoogleSignin = function(req, res, next) {
+//   // const sub = {
+//   //   _id: req.user._doc._id,
+//   //   login: req.user._doc.login,
+//   //   name: req.user._doc.name,
+//   //   surname: req.user._doc.surname,
+//   //   avatar: req.user._doc.avatar,
+//   //   provider: req.user._doc.provider,
+//   //   role: req.user._doc.role,
+//   // };
 
-  // const token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET');
-  // res.redirect('/user/redirection-with-token/' + token);
+//   // const token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET');
+//   // res.redirect('/user/redirection-with-token/' + token);
 
-  res.redirect('/user/redirection-with-token/noToken');
-};
+//   res.redirect('/user/redirection-with-token/noToken');
+// };
 
 /**
  * Check users authorization to activate routes on frontend (canActivate)
- *
- * @param {*} req
- * @param {*} res
- * @param {*} next
- * @return {boolean}
+//  *
+//  * @param {*} req
+//  * @param {*} res
+//  * @param {*} next
+//  * @return {boolean}
  */
-const userCheckAuthorization = function(req, res, next) {
-  let roleFromSession;
+// const userCheckAuthorization = function(req, res, next) {
+//   let roleFromSession;
 
-  // if session active set token to frontend for local login
-  let token;
-  if (req.user) {
-    roleFromSession = req.user._doc.role || 'casual';
-    const sub = {
-      _id: req.user._doc._id,
-      login: req.user._doc.login,
-      name: req.user._doc.name,
-      surname: req.user._doc.surname,
-      avatar: req.user._doc.avatar,
-      provider: req.user._doc.provider,
-      role: req.user._doc.role,
-    };
-    token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET'); // 604800
-  } else {
-    roleFromSession = 'casual';
-    token = null;
-  }
-  const requiredRoleForAuthorization = req.query.role;
+//   // if session active set token to frontend for local login
+//   let token;
+//   if (req.isAuthenticated()) {
+//     roleFromSession = req.user._doc.role || 'casual';
+//     const sub = {
+//       _id: req.user._doc._id,
+//       login: req.user._doc.login,
+//       name: req.user._doc.name,
+//       surname: req.user._doc.surname,
+//       avatar: req.user._doc.avatar,
+//       provider: req.user._doc.provider,
+//       role: req.user._doc.role,
+//     };
+//     token = sharedHelper.createJWT('', sub, 60, 'JWT_SECRET'); // 604800
+//   } else {
+//     roleFromSession = 'casual';
+//     token = null;
+//   }
+//   const requiredRoleForAuthorization = req.query.role;
 
-  const permissions = config.get('permissions');
+//   const permissions = config.get('permissions');
 
-  if (permissions[roleFromSession].indexOf(requiredRoleForAuthorization) >= 0) {
-    return res.status(200).json({permission: true, token});
-  } else {
-    return res.status(200).json({permission: false, token});
-  }
-};
-
-
-
-/**
- * Middleware for user create
- * invokes 'next()' to login created user
- *
- * @param {*} req
- * @param {*} res
- * @param {*} next
- */
-const userCreate = function(req, res, next) {
-  let user = {};
-  Object.assign(user, req.body);
-  user.provider = 'local';
-
-  // userHelper.isEmailUnique(user.email, user.provider)
-  userHelper.isEmailUnique(user.email, user.provider)
-      .then(() => userHelper.isLoginUnique(user.login))
-      .then(() => bcrypt.hash(req.body.password, 10))
-      .then((hash) => {
-        user.password = hash;
-        user.role = 'guest';
-        user.createdAt = Date.now();
-        user.commentsReadedTill = Date.now();
-        const userModel = new UserModel(user);
-        // create new user
-        return userModel.save();
-      })
-      // next to login created user
-      .then(() => next())
-      // .catch((err) => next(new ClientError({ message: 'Помилка унікальності', status: 422, code: 'uniqueConflict' })));
-      .catch((err) => next(err));
-};
+//   if (permissions[roleFromSession].indexOf(requiredRoleForAuthorization) >= 0) {
+//     return res.status(200).json({permission: true, token});
+//   } else {
+//     return res.status(200).json({permission: false, token});
+//   }
+// };
 
 // /**
 //  * Middleware for user create
@@ -498,18 +465,18 @@ const userCreate = function(req, res, next) {
 
 
 module.exports = {
-  userCheckAuthorization,
-  syncTokenToSession,
-  userProfile,
-  userLogin,
-  userLogout,
-  userCreate,
-  userEdit,
+  // userCheckAuthorization,
+  // syncTokenToSession,
+  // userProfile,
+  // userLogin,
+  // userLogout,
+  // userCreate,
+  // userEdit,
   userEmailVerificationSend,
-  userGoogleSignin,
+  // userGoogleSignin,
   userEmailVerificationReceive,
   passwordReset,
   passwordResetCheckCode,
   passwordResetCheckEmail,
-  userEditUnsecure,
+  // userEditUnsecure,
 };

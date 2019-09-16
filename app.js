@@ -22,6 +22,8 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
+const { userController, UserRouter } = require('user-man');
+
 app.use(compression());
 
 // app.use(logger('tiny'));
@@ -63,8 +65,7 @@ app.use(csrfCookie);
 
 require('./server/config/user-man');
 
-const cookie = require('user-man').cookie;
-app.use(cookie.setUserCookie());
+app.use(userController.setFrontendAuthCookie());
 // app.use(cookie.setUserCookie({ JWTSecret: config.get('JWT_SECRET'), cookieName: 'hmade' }));
 
 // app.use(require('./server/config/user-man'));
@@ -90,12 +91,18 @@ app.use((req, res, next) => {
   return next();
 });
 
+const router = express.Router();
+const clouidanary = require('./server/config/cloudinary');
+
 const index = require('./server/routes');
 const routes = require('./server/routes/routes');
 const user = require('./server/routes/user');
+
+const userRouter = new UserRouter(router, passport, clouidanary);
 /**
  * all apis, api/404 will be handled there
  */
+app.use('/api', userRouter.routes());
 app.use('/api', user);
 app.use('/api', routes);
 

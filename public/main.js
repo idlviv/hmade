@@ -2953,16 +2953,7 @@ var AuthGuard = /** @class */ (function () {
     AuthGuard.prototype.canActivate = function (next, state) {
         var requiredRoleForAuthorization = next.data.auth; // from routing.module
         return this.userService.userCheckAuthorization(requiredRoleForAuthorization)
-            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (result) {
-            // console.log('authguard');
-            // // set token for local login every time when check canActivate for router
-            // if (result.token) {
-            //   this.userService.userLocalLogin(result.token);
-            // } else {
-            //   this.userService.userLocalRemoveToken('token');
-            // }
-            return result.permission;
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (err) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"])(false); }));
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(function (permission) { return permission; }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["catchError"])(function (err) { return Object(rxjs__WEBPACK_IMPORTED_MODULE_0__["of"])(false); }));
     };
     AuthGuard = __decorate([
         Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["Injectable"])({
@@ -4465,7 +4456,6 @@ var UserService = /** @class */ (function () {
      * @memberof UserService
      */
     UserService.prototype.userCheckAuthorization = function (requiredRoleForAuthentication) {
-        // const token = this.userLocalGetToken('token');
         var httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -4670,17 +4660,6 @@ var UserService = /** @class */ (function () {
         };
         return this.http.put('api/user/edit-avatar', formData, httpOptions);
     };
-    // syncTokenToSession(): Observable<string> {
-    //   const httpOptions = {
-    //     headers: new HttpHeaders({
-    //       'Content-Type':  'application/json',
-    //     })
-    //   };
-    //   return this.http.get<string>(
-    //     'api/user/sync-token-to-session',
-    //     httpOptions
-    //   );
-    // }
     UserService.prototype.logging = function () {
         var user = this.userCookieExtractor();
         console.log('user', user);
