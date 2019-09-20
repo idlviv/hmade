@@ -496,6 +496,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
 /* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/shared.service */ "./src/app/services/shared.service.ts");
 var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -512,12 +513,14 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
+
 var UserPasswordResetComponent = /** @class */ (function () {
-    function UserPasswordResetComponent(userService, validateService, matSnackBar, router) {
+    function UserPasswordResetComponent(userService, validateService, matSnackBar, router, sharedService) {
         this.userService = userService;
         this.validateService = validateService;
         this.matSnackBar = matSnackBar;
         this.router = router;
+        this.sharedService = sharedService;
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_6__["config"];
         this.hidePassword = true;
         this.processing = false;
@@ -615,10 +618,11 @@ var UserPasswordResetComponent = /** @class */ (function () {
         var passwordResetToken = this.userService.userLocalGetToken('passwordResetToken');
         this.userService.userPasswordReset(password, passwordResetToken)
             .subscribe(function (result) {
-            var token = result;
+            // const token = result;
             _this.processing = false;
             _this.userService.userLocalRemoveToken('passwordResetToken');
             _this.userService.logging();
+            _this.sharedService.sharingEventToReloadComments();
             _this.router.navigate(['/user', 'profile']);
             _this.matSnackBar.open('Пароль відновлено', '', { duration: 3000, panelClass: 'snack-bar-danger' });
         }, function (err) {
@@ -646,7 +650,8 @@ var UserPasswordResetComponent = /** @class */ (function () {
         __metadata("design:paramtypes", [_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"],
             _services_validate_service__WEBPACK_IMPORTED_MODULE_3__["ValidateService"],
             _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSnackBar"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"]])
+            _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"],
+            src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_7__["SharedService"]])
     ], UserPasswordResetComponent);
     return UserPasswordResetComponent;
 }());

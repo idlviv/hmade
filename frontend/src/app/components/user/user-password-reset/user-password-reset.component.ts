@@ -5,6 +5,7 @@ import { ValidateService } from '../../../services/validate.service';
 import { MatSnackBar, MatStepper } from '@angular/material';
 import { Router } from '@angular/router';
 import { config } from '../../../app.config';
+import { SharedService } from 'src/app/services/shared.service';
 
 
 @Component({
@@ -29,6 +30,7 @@ export class UserPasswordResetComponent implements OnInit {
     private validateService: ValidateService,
     private matSnackBar: MatSnackBar,
     private router: Router,
+    private sharedService: SharedService,
   ) { }
 
   ngOnInit() {
@@ -138,12 +140,14 @@ export class UserPasswordResetComponent implements OnInit {
     const password = this.passwordForm.get('password').value;
 
     const passwordResetToken = this.userService.userLocalGetToken('passwordResetToken');
+
     this.userService.userPasswordReset(password, passwordResetToken)
       .subscribe(result => {
-          const token = result;
+          // const token = result;
           this.processing = false;
           this.userService.userLocalRemoveToken('passwordResetToken');
           this.userService.logging();
+          this.sharedService.sharingEventToReloadComments();
           this.router.navigate(['/user', 'profile']);
           this.matSnackBar.open('Пароль відновлено', '',
             {duration: 3000, panelClass: 'snack-bar-danger'});
