@@ -65,8 +65,6 @@ module.exports = function(passport) {
       function(login, password, done) {
         userHelper.isLoginExists(login)
             .then((userFromDb) => {
-              console.log('userFromDb', userFromDb);
-              
               done(null, userFromDb);
             })
             .catch((err) => done(err, false));
