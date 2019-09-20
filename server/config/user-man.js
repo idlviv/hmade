@@ -10,6 +10,7 @@ const options = {
   JWTSecret: config.get('JWT_SECRET'),
   JWTSecretCode: config.get('JWT_SECRET_CODE'),
   JWTSecretChangePassword: config.get('JWT_SECRET_CHANGE_PASSWORD'),
+  JWTEmail: config.get('JWT_EMAIL'),
   cookieName: 'hmade',
   recaptchaSecret: config.get('RECAPTCHA_SECRET'),
   UserModel,
@@ -17,6 +18,9 @@ const options = {
   router,
   emailUser: config.get('EMAIL_USER'),
   emailPassword: config.get('EMAIL_PASS'),
+  googleClientID: config.get('GOOGLE_CLIENT_ID'),
+  googleClientSecret: config.get('GOOGLE_CLIENT_SECRET'),
+  googleCallbackURL: config.get('SERVER_URL'),
 };
 
 userMan.init(options);
