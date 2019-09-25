@@ -9,7 +9,7 @@ const ObjectId = require('../config/mongoose').Types.ObjectId;
 const formidable = require('formidable');
 const util = require('util');
 const log = require('../config/winston')(module);
-const cloudinary = require('../config/cloudinary');
+const { libs } = require('user-man');
 const catalogController = require('../controllers/catalogController');
 const sharedController = require('../controllers/sharedController');
 
@@ -83,7 +83,7 @@ module.exports.addMainImage = function(req, res, next) {
       );
     }
 
-    cloudinary.v2.uploader.upload(
+    libs.cloudinary.v2.uploader.upload(
         files.file.path,
         {
           public_id:
@@ -128,7 +128,7 @@ module.exports.addStepsPic = function(req, res, next) {
       );
     }
 
-    cloudinary.v2.uploader.upload(
+    libs.cloudinary.v2.uploader.upload(
         files.file.path,
         {
           public_id:

@@ -8,7 +8,7 @@ const ObjectId = require('../config/mongoose').Types.ObjectId;
 const formidable = require('formidable');
 const util = require('util');
 const log = require('../config/winston')(module);
-const cloudinary = require('../config/cloudinary');
+const { libs } = require('user-man');
 const catalogController = require('../controllers/catalogController');
 
 module.exports.getProductsByDesignId = function(req, res, next) {
@@ -75,7 +75,7 @@ module.exports.productAddImage = function(req, res, next) {
     log.verbose('date', Date.now());
     log.verbose('date-slice', String(Date.now()).slice(0, 7));
 
-    cloudinary.v2.uploader.upload(
+    libs.cloudinary.v2.uploader.upload(
         files.file.path,
         {
           public_id: 'product_' + fields.sku + '_' +
@@ -94,7 +94,6 @@ module.exports.productAddImage = function(req, res, next) {
                 )
             );
           }
-          console.log('product_img_cloudinary result', result);
           return res.status(200).json(
               new ResObj(true, 'Зображення завнтажене', result.public_id)
           );
@@ -161,7 +160,7 @@ module.exports.productAddAssets = function(req, res, next) {
       );
     }
 
-    cloudinary.v2.uploader.upload(
+    libs.cloudinary.v2.uploader.upload(
         files.file.path,
         {
           public_id: fields._id + '_assets_' +
@@ -180,7 +179,6 @@ module.exports.productAddAssets = function(req, res, next) {
                 )
             );
           }
-          console.log('product_img_cloudinary result', result);
           return res.status(200).json(
               new ResObj(true, 'Зображення завнтажене', result.public_id)
           ); // jscs:ignore requireCamelCaseOrUpperCaseIdentifiers
@@ -235,7 +233,7 @@ module.exports.productAddMenuImage = function(req, res, next) {
       );
     }
 
-    cloudinary.v2.uploader.upload(
+    libs.cloudinary.v2.uploader.upload(
         files.file.path,
         {
           public_id:
@@ -279,7 +277,7 @@ module.exports.productAddMainImage = function(req, res, next) {
       );
     }
 
-    cloudinary.v2.uploader.upload(
+    libs.cloudinary.v2.uploader.upload(
         files.file.path,
         {
           public_id:

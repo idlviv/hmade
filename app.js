@@ -1,9 +1,6 @@
 const express = require('express');
 const compression = require('compression');
 const path = require('path');
-const config = require('./server/config');
-
-
 
 // const cors = require('cors');
 const csrf = require('csurf');
@@ -22,13 +19,15 @@ const bodyParser = require('body-parser');
 
 const app = express();
 
-const { userController, UserRouter } = require('user-man');
 
 // init with curent project options
 require('./server/config/user-man');
 
+const { userController, UserRouter, libs } = require('user-man');
+const passport = libs.passport;
+
 // get passport
-const passport = require('user-man').config.passport;
+// const passport = require('user-man').config.passport;
 
 app.use(compression());
 
@@ -97,13 +96,13 @@ app.use((req, res, next) => {
 });
 
 const router = express.Router();
-const clouidanary = require('./server/config/cloudinary');
+// const clouidanary = require('./server/config/cloudinary');
 
 const index = require('./server/routes');
 const routes = require('./server/routes/routes');
 const user = require('./server/routes/user');
 
-const userRouter = new UserRouter(router, clouidanary);
+const userRouter = new UserRouter(router);
 /**
  * all apis, api/404 will be handled there
  */
