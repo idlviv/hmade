@@ -298,15 +298,15 @@ export class UserService {
     );
   }
 
-  userEmailVerification(): Observable<IResponse> {
-    const token = localStorage.getItem('token');
+  userEmailVerification(): Observable<string> {
+    // const token = localStorage.getItem('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': token
+        // 'Authorization': token
       })
     };
-    return this.http.get<IResponse>(
+    return this.http.get<string>(
       'api/user/email-verification-send',
       httpOptions
     );

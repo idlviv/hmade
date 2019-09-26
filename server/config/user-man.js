@@ -24,6 +24,18 @@ const options = {
   cloudinaryName: appConfig.get('CLOUDINARY_NAME'),
   cloudinaryKey: appConfig.get('CLOUDINARY_KEY'),
   cloudinarySecret: appConfig.get('CLOUDINARY_SECRET'),
+  mailOptionsEmailVerification: {
+    from: 'Hmade <noreply@hmade.work>',
+    subject: 'Підтвердіть пошту',
+    text: 'Будь ласка, перейдіть за посиланням ',
+    html: '<b>Будь ласка, перейдіть за посиланням </b>',
+  },
+  mailOptionsResetPassword: {
+    from: 'HandMADE <postmaster@hmade.work>',
+    subject: 'Зміна пароля, код підтвердження',
+    text: 'Ваш код підтвердження: ',
+    html: '<b>Ваш код підтвердження: </b>',
+  },
 };
 
 // set intial configuration of user-man

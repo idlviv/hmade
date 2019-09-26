@@ -8,7 +8,6 @@ import { UserDialogComponent } from '../user-dialog/user-dialog.component';
 import { AbstractControl, FormControl, FormGroup, Validators } from '@angular/forms';
 import { of } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { IResponse } from '../../../interfaces/server-response-interface';
 
 @Component({
   selector: 'app-user-profile',
@@ -51,20 +50,20 @@ export class UserProfileComponent implements OnInit {
   restrictTo(restrictedRoles: string[]): boolean {
     return this.userService.restrictTo(restrictedRoles);
   }
-  
+
   onVerificationSend() {
     this.verificationSent = true;
     this.processing = 'verification';
     this.userService.userEmailVerification()
-      .subscribe(result => {
+      .subscribe((result) => {
         this.processing = '';
-        this.matSnackBar.open(result.message, '',
+        this.matSnackBar.open(result, '',
           {duration: 3000});
       },
-        err => {
+        (err) => {
           this.processing = '';
-          // this.matSnackBar.open(err.error || 'Помилка', '',
-          //   {duration: 3000, panelClass: 'snack-bar-danger'});
+          this.matSnackBar.open(err.error || 'Помилка', '',
+            {duration: 3000, panelClass: 'snack-bar-danger'});
         }
 
       );

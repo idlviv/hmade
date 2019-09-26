@@ -97,15 +97,15 @@ const log = require('../config/winston')(module);
 //     uploadController.userEditAvatar
 // );
 
-router.get('/user/email-verification-send',
-    sharedMiddleware.authentication(),
-    localUserController.userEmailVerificationSend
-);
+// router.get('/user/email-verification-send',
+//     sharedMiddleware.authentication(),
+//     localUserController.userEmailVerificationSend
+// );
 
-router.get('/user/email-verification',
-    passport.authenticate('jwt.email.verification', { session: true }),
-    localUserController.userEmailVerificationReceive,
-);
+// router.get('/user/email-verification',
+//     passport.authenticate('jwt.email.verification', { session: true }),
+//     localUserController.userEmailVerificationReceive,
+// );
 
 // // first step to reset password
 // router.get('/user/password-reset-check-email',
