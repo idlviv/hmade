@@ -3,20 +3,46 @@
   "defaultProductImg": "default_product",
   "defaultAvatar": "default_avatar",
   "cookieCsrfOptions": {
-    "secure": false,
     "httpOnly": false,
-    "maxAge": 50000,
+    "maxAge": 10800000,
     "sameSite": "Strict",
     "path": "/"
   },
   "sessionSid": "hmade.sid",
   "permissions": {
-    "admin": ["casual", "guest", "user", "manager", "admin", "google"],
-    "manager": ["casual", "guest", "user", "manager", "google"],
-    "user": ["casual", "guest", "user", "google"],
-    "google": ["casual", "guest", "user", "google"],
-    "guest": ["casual", "guest"],
-    "casual": ["casual"]
+    "admin": [
+      "casual",
+      "guest",
+      "user",
+      "manager",
+      "admin",
+      "google"
+    ],
+    "manager": [
+      "casual",
+      "guest",
+      "user",
+      "manager",
+      "google"
+    ],
+    "user": [
+      "casual",
+      "guest",
+      "user",
+      "google"
+    ],
+    "google": [
+      "casual",
+      "guest",
+      "user",
+      "google"
+    ],
+    "guest": [
+      "casual",
+      "guest"
+    ],
+    "casual": [
+      "casual"
+    ]
   }
-
 }

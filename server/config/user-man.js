@@ -11,7 +11,7 @@ const options = {
   JWTSecretCode: appConfig.get('JWT_SECRET_CODE'),
   JWTSecretChangePassword: appConfig.get('JWT_SECRET_CHANGE_PASSWORD'),
   JWTEmail: appConfig.get('JWT_EMAIL'),
-  cookieName: 'hmade',
+  cookieName: 'hmade', // frontend auth cookie
   recaptchaSecret: appConfig.get('RECAPTCHA_SECRET'),
   UserModel,
   ObjectId,

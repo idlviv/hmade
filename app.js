@@ -2,10 +2,7 @@ const express = require('express');
 const compression = require('compression');
 const path = require('path');
 
-// const cors = require('cors');
-const csrf = require('csurf');
-// config custom cookie for angular XSRF-TOKEN
-const csrfCookie = require('./server/config/csrf');
+
 
 // const cors = require('./server/config/cors');
 const logger = require('morgan');
@@ -14,16 +11,12 @@ const log = require('./server/config/winston')(module);
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 
-// const setUserCookie = require('./server/middleware/cookie').setUserCookie;
-
-
 const app = express();
-
 
 // init with curent project options
 require('./server/config/user-man');
 
-const { userController, UserRouter, libs } = require('user-man');
+const { userController, UserRouter, libs, sharedMiddleware } = require('user-man');
 const passport = libs.passport;
 
 // get passport
@@ -34,8 +27,6 @@ app.use(compression());
 // app.use(logger('tiny'));
 // app.use(logger('dev'));
 
-// app.use(cors());
-
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(bodyParser.json());
@@ -45,42 +36,22 @@ app.use(cookieParser());
 // config session
 app.use(require('./server/config/session').sessionCookie);
 
-// const passport = require('passport');
-
-// passport configuration
-// require('./server/config/passport')(passport);
-
 app.use(passport.initialize());
 app.use(passport.session());
 
+// const cors = require('cors');
+const csrf = require('csurf');
 // check cookie, add req.csrfToken(),
 app.use(csrf({cookie: true}));
+
 // set custom cookie for angular XSRF-TOKEN
-app.use(csrfCookie);
+app.use(sharedMiddleware.setCSRFCookie());
 
-// app.use(function(req, res, next) {
-//   // console.log('request.url', req.url);
-//   if (req.session && req.session.passport && req.session.passport.user) {
-//     log.debug('session user %o', req.session.id);
-//   } else {
-//     log.debug('session - not user %o', req.session.id);
-//   } 
-//   next();
-// });
-
-
+// set frontend authentication cookie
 app.use(userController.setFrontendAuthCookie());
-// app.use(cookie.setUserCookie({ JWTSecret: config.get('JWT_SECRET'), cookieName: 'hmade' }));
-
-// app.use(require('./server/config/user-man'));
 
 // chat controller
 // app.use(require('./server/controllers/chatController'));
-
-// app.use((req, res, next) => {
-//   log.debug('cookie', req.session);
-//   next();
-// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'server/views'));
@@ -100,14 +71,12 @@ const router = express.Router();
 
 const index = require('./server/routes');
 const routes = require('./server/routes/routes');
-const user = require('./server/routes/user');
 
 const userRouter = new UserRouter(router);
 /**
  * all apis, api/404 will be handled there
  */
 app.use('/api', userRouter.routes());
-app.use('/api', user);
 app.use('/api', routes);
 
 /**
