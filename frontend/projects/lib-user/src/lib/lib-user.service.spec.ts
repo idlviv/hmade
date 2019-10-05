@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SocketService } from './socket.service';
+import { LibUserService } from './lib-user.service';
 
-describe('SocketService', () => {
+describe('LibUserService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: SocketService = TestBed.get(SocketService);
+    const service: LibUserService = TestBed.get(LibUserService);
     expect(service).toBeTruthy();
   });
 });

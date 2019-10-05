@@ -1,5 +1,5 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { MediaChange, ObservableMedia } from '@angular/flex-layout';
+import { MediaChange, MediaObserver } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-dashboard',
@@ -9,7 +9,7 @@ import { MediaChange, ObservableMedia } from '@angular/flex-layout';
 export class DashboardComponent implements OnInit {
   public state = '';
 
-  constructor(public media: ObservableMedia) { }
+  constructor(public media: MediaObserver) { }
 
   ngOnInit() {
     // this.media.asObservable()

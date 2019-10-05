@@ -27,7 +27,7 @@
             *ngFor="let categoryBlock of filterForm.get('parents')['controls']; let i = index" fxLayoutAlign="center center">
           <mat-form-field>
             <mat-select placeholder="Фільтр" formControlName="{{i}}"
-                        (selectionChange)="onSelectMcFilter($event.value, i, true, filter)">
+                        (selectionChange)="onSelectMcFilter($event.value, i, true, false)">
               <mat-option *ngFor="let child of children[i]" [value]="child._id">
                 {{child.name}}
               </mat-option>

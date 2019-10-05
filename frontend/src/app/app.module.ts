@@ -5,7 +5,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { HttpClientModule, HttpClientXsrfModule } from '@angular/common/http';
 import { RecaptchaModule } from 'ng-recaptcha';
-import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+import { RecaptchaFormsModule } from 'ng-recaptcha';
 
 import { AppComponent } from './app.component';
 
@@ -31,12 +31,6 @@ import { ImagePopupComponent } from './components/shared/image-popup/image-popup
 
 import { CookieService } from 'ngx-cookie-service';
 
-// import { SocketIoModule, SocketIoConfig } from 'ngx-socket-io';
-import { SocketModule } from './components/socket/socket.module';
-import { ChatService } from './services/chat.service';
-
-// const config: SocketIoConfig = { url: 'localhost:8081', options: {} };
-
 @NgModule({
   declarations: [
     AppComponent,
@@ -49,12 +43,11 @@ import { ChatService } from './services/chat.service';
     MaterialModule,
     AppRoutingModule,
     SharedModule,
-    SocketModule,
     RecaptchaModule.forRoot(),
     RecaptchaFormsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     ReactiveFormsModule,
-    // SocketIoModule.forRoot(config),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     // HttpClientXsrfModule.withOptions({
       // cookieName: '_csrf',
       // headerName: 'x-xsrf-token',
@@ -71,7 +64,6 @@ import { ChatService } from './services/chat.service';
     AuthGuard,
     NoAuthGuard,
     CookieService,
-    ChatService
   ],
   exports: [
   ],

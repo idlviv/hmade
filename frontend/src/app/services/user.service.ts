@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { IUser } from '../interfaces/user-interface';
 import { IResponse } from '../interfaces/server-response-interface';
-import { Observable ,  ReplaySubject } from 'rxjs';
+import { Observable, ReplaySubject } from 'rxjs';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { config } from '../app.config';
 import { mergeMap, map } from 'rxjs/operators';
@@ -34,11 +34,13 @@ export class UserService {
   userCreate(user: IUser, recaptcha: string): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       }),
-      params: new HttpParams({ fromObject: {
+      params: new HttpParams({
+        fromObject: {
           recaptcha
-        }})
+        }
+      })
     };
     return this.http.post<string>(
       'api/user/create',
@@ -57,12 +59,14 @@ export class UserService {
   userLogin(user: IUser): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       }),
-      params: new HttpParams({ fromObject: {
-        login: user.login,
-        password: user.password
-      }})
+      params: new HttpParams({
+        fromObject: {
+          login: user.login,
+          password: user.password
+        }
+      })
     };
     return this.http.get<string>(
       'api/user/login',
@@ -79,7 +83,7 @@ export class UserService {
   userGoogleLogin(): Observable<any> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       }),
     };
     return this.http.get<any>(
@@ -97,7 +101,7 @@ export class UserService {
   userGetProfile(): Observable<IUser> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       }),
     };
     return this.http.get<IUser>(
@@ -115,7 +119,7 @@ export class UserService {
   userLogout(): Observable<String> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       })
     };
     return this.http.get<String>(
@@ -136,9 +140,9 @@ export class UserService {
   userCheckAuthorization(requiredRoleForAuthentication: string): Observable<boolean> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       }),
-      params: new HttpParams({fromString: `role=${requiredRoleForAuthentication}`})
+      params: new HttpParams({ fromString: `role=${requiredRoleForAuthentication}` })
 
     };
     return this.http.get<boolean>(
@@ -153,7 +157,7 @@ export class UserService {
    * @returns {IUser|null}
    * @memberof UserService
    */
-  userCookieExtractor(): IUser|null {
+  userCookieExtractor(): IUser | null {
     if (this.cookieService.get('hmade')) {
       const helper = new JwtHelperService();
       return helper.decodeToken(this.cookieService.get('hmade')).sub;
@@ -185,7 +189,7 @@ export class UserService {
     } else {
       return false;
     }
- }
+  }
 
   restrictTo(restrictedRoles: string[]): boolean {
     const user = this.userCookieExtractor();
@@ -209,9 +213,9 @@ export class UserService {
    */
   checkFile(eventTarget: any): IResponse {
     if (!eventTarget.files[0]) {
-      return ({success: false, message: 'Виберіть файл'});
+      return ({ success: false, message: 'Виберіть файл' });
     } else if (eventTarget.files[0].size > 8400000) {
-      return ({success: false, message: 'Розмір файлу повинен бути менше 8Мб'});
+      return ({ success: false, message: 'Розмір файлу повинен бути менше 8Мб' });
     } else if (
       eventTarget.files[0].type !== 'image/jpg' &&
       eventTarget.files[0].type !== 'image/jpe' &&
@@ -219,9 +223,9 @@ export class UserService {
       eventTarget.files[0].type !== 'image/bmp' &&
       eventTarget.files[0].type !== 'image/png' &&
       eventTarget.files[0].type !== 'image/webp') {
-      return ({success: false, message: 'Виберіть інший тип файлу'});
+      return ({ success: false, message: 'Виберіть інший тип файлу' });
     } else {
-      return ({success: true,  message: ''});
+      return ({ success: true, message: '' });
     }
   }
 
@@ -237,11 +241,13 @@ export class UserService {
   userPasswordResetEmail(email: string, recaptcha: string): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       }),
-      params: new HttpParams({ fromObject: {
-        email, recaptcha
-      }})
+      params: new HttpParams({
+        fromObject: {
+          email, recaptcha
+        }
+      })
     };
     return this.http.get<string>(
       'api/user/password-reset-check-email',
@@ -261,12 +267,14 @@ export class UserService {
   userPasswordResetCode(code: string, codeToken: string): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         'Authorization': codeToken
       }),
-      params: new HttpParams({ fromObject: {
-        code,
-      }})
+      params: new HttpParams({
+        fromObject: {
+          code,
+        }
+      })
     };
     return this.http.get<string>(
       'api/user/password-reset-check-code',
@@ -285,12 +293,14 @@ export class UserService {
   userPasswordReset(password: string, passwordResetToken: string): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         'Authorization': passwordResetToken
       }),
-      params: new HttpParams({ fromObject: {
-        password,
-      }})
+      params: new HttpParams({
+        fromObject: {
+          password,
+        }
+      })
     };
     return this.http.get<string>(
       'api/user/password-reset',
@@ -302,7 +312,7 @@ export class UserService {
     // const token = localStorage.getItem('token');
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
         // 'Authorization': token
       })
     };
@@ -312,17 +322,17 @@ export class UserService {
     );
   }
 
-   /** Edit user fields without password confirmation
-   *
-   *
-   * @param {{name: string, value: string, password: string}} data
-   * @returns {Observable<string>}
-   * @memberof UserService
-   */
-  userEditUnsecure(data: {name: string, value?: string}): Observable<string> {
+  /** Edit user fields without password confirmation
+  *
+  *
+  * @param {{name: string, value: string, password: string}} data
+  * @returns {Observable<string>}
+  * @memberof UserService
+  */
+  userEditUnsecure(data: { name: string, value?: string }): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       })
     };
     return this.http.put<string>(
@@ -339,10 +349,10 @@ export class UserService {
    * @returns {Observable<string>}
    * @memberof UserService
    */
-  userEdit(data: {name: string, value: string, password: string}): Observable<string> {
+  userEdit(data: { name: string, value: string, password: string }): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       })
     };
     return this.http.put<string>(
@@ -376,9 +386,8 @@ export class UserService {
   }
 
   logging() {
-        const user = this.userCookieExtractor();
-        console.log('user', user);
-        this._logging.next(user);
+    const user = this.userCookieExtractor();
+    this._logging.next(user);
   }
 
   userManualUpdateCookie(): Observable<string> {
@@ -409,15 +418,15 @@ export class UserService {
   //   this._logging.next(user);
   // }
 
-  getUserLocal(): Observable<IUser|null> {
+  getUserLocal(): Observable<IUser | null> {
     // return this.userCookieExtractor();
     return this._logging.asObservable();
   }
   // end of observable
 
-   /**
-   * Token manipulations
-   */
+  /**
+  * Token manipulations
+  */
 
   userLocalSetToken(tokenKey, token): void {
     localStorage.setItem(tokenKey, token);

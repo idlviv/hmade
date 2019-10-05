@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
 import { IProduct } from '../../../interfaces/product-interface';
 import { CatalogService } from '../../../services/catalog.service';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 // import { Title, Meta } from '@angular/platform-browser';
 
 @Component({
@@ -27,7 +27,7 @@ export class ProductsListComponent implements OnInit {
     private route: ActivatedRoute,
     private productService: ProductService,
     private catalogService: CatalogService,
-    public media: ObservableMedia,
+    public media: MediaObserver,
     // private titleService: Title,
     // private metaService: Meta
   ) { }

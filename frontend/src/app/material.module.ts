@@ -1,5 +1,4 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import {
   MatInputModule, MatCardModule, MatButtonModule, MatToolbarModule,
   MatGridListModule, MatSidenavModule, MatSnackBarModule, MatTabsModule,

@@ -26,8 +26,8 @@ export class CommentsComponent implements OnInit {
   @Input() parentCategory: string;
 
   commentForm: FormGroup;
-  @ViewChild('f') mcFormDirective: FormGroupDirective;
-  @ViewChild('recaptchaRef') recaptchaRef;
+  @ViewChild('f', { static: false }) mcFormDirective: FormGroupDirective;
+  @ViewChild('recaptchaRef', { static: false }) recaptchaRef;
 
   constructor(
     private userService: UserService,

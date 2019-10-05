@@ -25,7 +25,7 @@ export class McEditorFormComponent implements OnInit {
   processingLoadStepsPic = -1;
   mc: IMc;
 
-  @ViewChild('f') mcFormDirective: FormGroupDirective;
+  @ViewChild('f', { static: false }) mcFormDirective: FormGroupDirective;
   mcForm: FormGroup;
 
   constructor(

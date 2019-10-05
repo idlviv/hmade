@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatStepper } from '@angular/material';
 import { config } from '../../../app.config';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-crsl',
@@ -10,15 +10,15 @@ import { ObservableMedia } from '@angular/flex-layout';
 })
 export class CrslComponent implements OnInit {
   config = config;
-  @ViewChild('stepper') matStepper: MatStepper;
-  @ViewChild('stepperHeader') matStepperHeader: MatStepper;
+  @ViewChild('stepper', { static: false }) matStepper: MatStepper;
+  @ViewChild('stepperHeader', { static: false }) matStepperHeader: MatStepper;
   stepperIndex: number;
   interval: any;
 
   homeBanner = config.homeBanner;
 
   constructor(
-    public media: ObservableMedia,
+    public media: MediaObserver,
   ) { }
 
 

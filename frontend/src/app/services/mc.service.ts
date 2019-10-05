@@ -4,7 +4,7 @@ import { IResponse } from '../interfaces/server-response-interface';
 import { Observable } from 'rxjs';
 import { IMc } from '../interfaces/interface';
 import { UserService } from './user.service';
-import { AnimationStyleNormalizer } from '@angular/animations/browser/src/dsl/style_normalization/animation_style_normalizer';
+// import { AnimationStyleNormalizer } from '@angular/animations/browser/src/dsl/style_normalization/animation_style_normalizer';
 
 @Injectable({
   providedIn: 'root'
@@ -74,7 +74,8 @@ export class McService {
         'Content-Type': 'application/json',
       }),
     };
-    return this.http.delete<AnimationStyleNormalizer>(
+    // return this.http.delete<AnimationStyleNormalizer>(
+    return this.http.delete<any>(
       'api/mc/delete/' + _id,
       httpOptions
     );

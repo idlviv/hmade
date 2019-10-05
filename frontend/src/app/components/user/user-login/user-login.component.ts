@@ -22,7 +22,7 @@ export class UserLoginComponent implements OnInit {
   /**
    * directive for reset form (invalid status)
    */
-  @ViewChild(FormGroupDirective) userCreateFormDirective: FormGroupDirective;
+  @ViewChild(FormGroupDirective, { static: false }) userCreateFormDirective: FormGroupDirective;
 
   constructor(
     private userService: UserService,

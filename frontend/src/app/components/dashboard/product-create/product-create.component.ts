@@ -28,7 +28,7 @@ export class ProductCreateComponent implements OnInit {
   /**
    * directive for reset form (invalid status)
    */
-  @ViewChild('f') productCreateFormDirective: FormGroupDirective;
+  @ViewChild('f', { static: false }) productCreateFormDirective: FormGroupDirective;
 
   constructor(
     private catalogService: CatalogService,

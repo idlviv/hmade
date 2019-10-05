@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { DesignPopupComponent } from '../design-popup/design-popup.component';
 import { IProduct } from '../../../interfaces/product-interface';
 import { ProductService } from '../../../services/product.service';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 import { IDesignPopUpData } from '../../../interfaces/interface';
 import { config } from '../../../app.config';
 
@@ -18,7 +18,7 @@ export class GalleryComponent implements OnInit {
 
   constructor(
     public dialog: MatDialog,
-    public media: ObservableMedia,
+    public media: MediaObserver,
     private productService: ProductService,
   ) { }
 

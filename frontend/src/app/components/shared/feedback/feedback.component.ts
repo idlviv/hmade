@@ -15,7 +15,7 @@ import { config } from '../../../app.config';
 export class FeedbackComponent implements OnInit {
   feedbackForm: FormGroup;
   feedback: IFeedback;
-  @ViewChild('fForm') fFormDirective: FormGroupDirective;
+  @ViewChild('fForm', { static: false }) fFormDirective: FormGroupDirective;
   processing = false;
   config = config;
 

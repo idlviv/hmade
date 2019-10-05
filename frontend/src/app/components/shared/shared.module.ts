@@ -11,7 +11,7 @@ import { CrslComponent } from './crsl/crsl.component';
 import { FeedbackComponent } from './feedback/feedback.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RecaptchaModule } from 'ng-recaptcha';
-import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+import { RecaptchaFormsModule } from 'ng-recaptcha';
 import { GalleryComponent } from './gallery/gallery.component';
 import { HeaderComponent } from './header/header.component';
 import { LandingComponent } from './landing/landing.component';

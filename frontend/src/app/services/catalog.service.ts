@@ -24,14 +24,14 @@ export class CatalogService {
     );
   }
 
-  getAllParents(category_id): Observable<{_id: string, name: string, hierarchy: ICatalog[]}> {
+  getAllParents(category_id): Observable<{ _id: string, name: string, hierarchy: ICatalog[] }> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       }),
       params: new HttpParams().set('category_id', category_id)
     };
-    return this.http.get<{_id: string, name: string, hierarchy: ICatalog[]}>(
+    return this.http.get<{ _id: string, name: string, hierarchy: ICatalog[] }>(
       'api/catalog/get-all-parents',
       httpOptions
     );
@@ -48,11 +48,13 @@ export class CatalogService {
   getPrefix(_id: string): Observable<IResponse> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       }),
-      params: new HttpParams({ fromObject: {
-        _id
-      }})
+      params: new HttpParams({
+        fromObject: {
+          _id
+        }
+      })
     };
     return this.http.get<IResponse>(
       'api/catalog/get-prefix',
@@ -60,21 +62,23 @@ export class CatalogService {
     );
   }
 
-    /**
-   *
-   *
-   * @param {string} _id
-   * @returns {Observable<IResponse>}
-   * @memberof CatalogService
-   */
+  /**
+ *
+ *
+ * @param {string} _id
+ * @returns {Observable<IResponse>}
+ * @memberof CatalogService
+ */
   getSiblings(_id: string): Observable<IResponse> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       }),
-      params: new HttpParams({ fromObject: {
-        _id
-      }})
+      params: new HttpParams({
+        fromObject: {
+          _id
+        }
+      })
     };
     return this.http.get<IResponse>(
       'api/catalog/get-siblings',
@@ -93,12 +97,14 @@ export class CatalogService {
   getDescendants(parent: string, depth: number): Observable<IResponse> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       }),
-      params: new HttpParams({ fromObject: {
-        parent,
-        depth: depth + ''
-      }})
+      params: new HttpParams({
+        fromObject: {
+          parent,
+          depth: depth + ''
+        }
+      })
     };
     return this.http.get<IResponse>(
       'api/catalog/get-descendants',
@@ -116,11 +122,13 @@ export class CatalogService {
   getChildren(parent: string): Observable<IResponse> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       }),
-      params: new HttpParams({ fromObject: {
-        parent
-      }})
+      params: new HttpParams({
+        fromObject: {
+          parent
+        }
+      })
     };
     return this.http.get<IResponse>(
       'api/catalog/get-Children',
@@ -138,11 +146,13 @@ export class CatalogService {
   getCategoryById(_id: string): Observable<IResponse> {
     const httpOptions = {
       headers: new HttpHeaders({
-        'Content-Type':  'application/json',
+        'Content-Type': 'application/json',
       }),
-      params: new HttpParams({ fromObject: {
+      params: new HttpParams({
+        fromObject: {
           _id
-      }})
+        }
+      })
     };
     return this.http.get<IResponse>(
       'api/catalog/get-category-by-id',

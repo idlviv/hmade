@@ -1,6 +1,6 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { config } from '../../../app.config';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 import { UserService } from 'src/app/services/user.service';
 import { MatDialog } from '@angular/material';
 import { IImagePopUpData, IConfirmPopupData } from 'src/app/interfaces/interface';
@@ -29,7 +29,7 @@ export class ProductItemBriefComponent implements OnInit {
   config = config;
 
   constructor(
-    public media: ObservableMedia,
+    public media: MediaObserver,
     private userService: UserService,
     public dialog: MatDialog,
     private productService: ProductService,

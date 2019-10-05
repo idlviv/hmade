@@ -36,15 +36,14 @@ export class McsFiltersComponent implements OnInit {
   ngOnInit() {
     this.filterForm = new FormGroup({
       mcSort: new FormControl([]),
-      parents : new FormArray([
+      parents: new FormArray([
         this.initParents()
       ]),
     });
 
-
     const initialMcSortValue = this.mcService.mcLocalGetFilter() ?
-    this.mcService.mcLocalGetFilter().mcSortValue : // use saved sort value
-    config.mcSortOptions[config.mcSortOptionsDefault].value;  // use default sort value
+      this.mcService.mcLocalGetFilter().mcSortValue : // use saved sort value
+      config.mcSortOptions[config.mcSortOptionsDefault].value;  // use default sort value
     this.mcSortValue = initialMcSortValue;
 
     if (this.mcService.mcLocalGetFilter()) {
@@ -66,53 +65,59 @@ export class McsFiltersComponent implements OnInit {
         return this.catalogService.getAllParents(this.mcFilterValue);
       })
     )
-    .subscribe(
-      result => {
-        result.hierarchy.splice(0, 2);
-        if (result.hierarchy.length > 0) {
-          result.hierarchy.map(
-            (value, index) => {
-              if (index !== 0) {
-                this.onSelectMcFilter(value._id, index - 1, false, true);
+      .subscribe(
+        result => {
+          result.hierarchy.splice(0, 2);
+          if (result.hierarchy.length > 0) {
+            result.hierarchy.map(
+              (value, index) => {
+                if (index !== 0) {
+                  // TODO: make orderc
+                  this.onSelectMcFilter(value._id, index - 1, false, true);
+                }
               }
-            }
-          );
-          this.onSelectMcFilter(result._id, result.hierarchy.length - 1, true, true);
-        } else {
-          this.navigateTo();
-        }
-      },
+            );
+            // TODO: make order
+            this.onSelectMcFilter(result._id, result.hierarchy.length - 1, true, true);
+          } else {
+            this.navigateTo();
+          }
+        },
         err => console.log('помилка завантаження категорій', err)
-    );
+      );
 
     this.route.queryParams.subscribe(() => this.navigateTo());
   }
 
-    onSelectMcSort(eventValue) {
-      this.mcSortValue = eventValue;
-      this.navigateTo();
+  onSelectMcSort(eventValue) {
+    this.mcSortValue = eventValue;
+    this.navigateTo();
 
+  }
+
+  onSelectMcFilter(eventValue, level, navigate, programmatic) {
+    console.log('programmatic', programmatic);
+    while (level + 1 < this.filterForm.get('parents')['controls'].length) {
+      this.removeParents(this.filterForm.get('parents')['controls'].length - 1);
     }
+    console.log('eventValue', eventValue);
 
-    onSelectMcFilter(eventValue, level, navigate, programmatic) {
-      while (level + 1 < this.filterForm.get('parents')['controls'].length) {
-        this.removeParents(this.filterForm.get('parents')['controls'].length - 1);
-      }
-
-      this.catalogService.getChildren(eventValue)
-        .subscribe(
-          children => {
-            if (!children.data.length) {
-              // if no children - show products
-              this.parent_id = eventValue;
-              this.noMoreChildren = 'true';
-              this.children[level + 1] = children.data;
+    this.catalogService.getChildren(eventValue)
+      .subscribe(
+        children => {
+          console.log('children', children);
+          if (!children.data.length) {
+            // if no children - show products
+            this.parent_id = eventValue;
+            this.noMoreChildren = 'true';
+            this.children[level + 1] = children.data;
           } else {
-              this.children[level + 1] = children.data;
-              this.noMoreChildren = 'false';
-              this.addParents();
+            this.children[level + 1] = children.data;
+            this.noMoreChildren = 'false';
+            this.addParents();
           }
           if (programmatic) {
+            console.log('level', level);
             this.filterForm.get('parents')['controls'][level].setValue(eventValue);
           }
           if (navigate) {
@@ -120,8 +125,8 @@ export class McsFiltersComponent implements OnInit {
             this.navigateTo();
           }
         },
-          err => console.log('помилка завантаження категорій', err)
-        );
+        err => console.log('помилка завантаження категорій', err)
+      );
   }
 
   resetFilters() {

@@ -13,6 +13,7 @@ import { SharedService } from 'src/app/services/shared.service';
   templateUrl: './user-password-reset.component.html',
   styleUrls: ['./user-password-reset.component.scss']
 })
+
 export class UserPasswordResetComponent implements OnInit {
   config = config;
   emailForm: FormGroup;
@@ -22,8 +23,8 @@ export class UserPasswordResetComponent implements OnInit {
   processing = false;
   // result = false;
   error: {};
-  @ViewChild('stepper') matStepper: MatStepper;
-  @ViewChild('recaptchaRef') recaptchaRef;
+  @ViewChild('stepper', { static: false }) matStepper: MatStepper;
+  @ViewChild('recaptchaRef', { static: false }) recaptchaRef;
 
   constructor(
     private userService: UserService,
@@ -133,6 +134,10 @@ export class UserPasswordResetComponent implements OnInit {
           }
         }
       );
+  }
+
+  refresh() {
+    console.log('refresh');
   }
 
   onPasswordSubmit() {

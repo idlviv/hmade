@@ -13,7 +13,7 @@ import { SharedService } from '../../../services/shared.service';
 })
 
 export class DesignPopupComponent implements OnInit {
-  @ViewChild('productSelect') productSelect;
+  @ViewChild('productSelect', { static: false }) productSelect;
   confirmPopupData: IConfirmPopupData;
   config = config;
   cloudinaryOptions: string;

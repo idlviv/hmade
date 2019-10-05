@@ -10,7 +10,7 @@ import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { UserPasswordResetComponent } from './user-password-reset/user-password-reset.component';
 import { RecaptchaModule } from 'ng-recaptcha';
-import { RecaptchaFormsModule } from 'ng-recaptcha/forms';
+import { RecaptchaFormsModule } from 'ng-recaptcha';
 import { SharedModule } from '../shared/shared.module';
 import { RedirectionAfterOauthComponent } from './redirection-after-oauth/redirection-after-oauth.component';
 

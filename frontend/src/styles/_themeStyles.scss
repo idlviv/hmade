@@ -24,6 +24,8 @@ $alternative-background-pattern: url("/assets/other/pattern.svg");
 $incomingMsg: #acc0d8;
 $outgoingMsg: #cccccc;
 
+// html, body { height: 100%; }
+// body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 html {
   font-size: 16px;
   box-sizing: border-box;

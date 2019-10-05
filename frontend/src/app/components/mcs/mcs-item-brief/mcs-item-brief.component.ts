@@ -10,7 +10,7 @@ import { McService } from 'src/app/services/mc.service';
 import { mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 
 @Component({
   selector: 'app-mcs-item-brief',
@@ -32,7 +32,7 @@ export class McsItemBriefComponent implements OnInit, OnChanges {
     private router: Router,
     public dialog: MatDialog,
     private matSnackBar: MatSnackBar,
-    public media: ObservableMedia,
+    public media: MediaObserver,
   ) { }
 
   ngOnInit() {

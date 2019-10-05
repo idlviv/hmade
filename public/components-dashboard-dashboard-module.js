@@ -1,5 +1,109 @@
 (window["webpackJsonp"] = window["webpackJsonp"] || []).push([["components-dashboard-dashboard-module"],{
 
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/dashboard-sidenav/dashboard-sidenav.component.html":
+/*!*******************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/dashboard-sidenav/dashboard-sidenav.component.html ***!
+  \*******************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"row\">\r\n    <div *ngFor=\"let dashboardSidenavItem of dashboardSidenavItems\"\r\n      [ngClass]=\"{'active': isActiveTemplateVariable.isActive}\" class=\"cell sidenav-menu-item\" fxFlex=\"100\"\r\n      fxLayoutAlign=\"start center\" (click)=\"onRouting(dashboardSidenavItem._id)\">\r\n      <a class=\"link\" [routerLinkActive]=\"['']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n        #isActiveTemplateVariable=\"routerLinkActive\" [attr.aria-label]=\"dashboardSidenavItem.name\"\r\n        [routerLink]=\"['/dashboard', dashboardSidenavItem._id]\">\r\n        <span class=\"type2\">\r\n          <!-- <mat-icon>edit</mat-icon> -->\r\n          <span>{{dashboardSidenavItem.name}}</span>\r\n        </span>\r\n      </a>\r\n    </div>\r\n  </div>\r\n</div>");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/dashboard.component.html":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/dashboard.component.html ***!
+  \*****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div id=\"dashboard\">\r\n  <mat-sidenav-container fxFlex fullscreen>\r\n    <mat-sidenav class=\"sidenav\" #sidenav mode=\"side\" [opened]=\"media.isActive('gt-sm')\">\r\n      <div fxShow=\"true\" fxHide.gt-sm=\"true\" class=\"sidenav-mat-toolbar-row\">\r\n        <a mat-button (click)=\"sidenav.toggle()\" aria-label=\"arrow_left\">\r\n          <mat-icon>arrow_left</mat-icon>\r\n        </a>\r\n      </div>\r\n      <router-outlet name=\"dashboardSidenav\"></router-outlet>\r\n    </mat-sidenav>\r\n    <mat-sidenav-content>\r\n      <div *ngIf=\"!sidenav.opened\" class=\"menu-button\" fxShow=\"true\" fxHide.gt-sm=\"true\">\r\n        <button mat-button (click)=\"sidenav.toggle()\" aria-label=\"arrow_right\">\r\n          <mat-icon>arrow_right</mat-icon>\r\n        </button>\r\n      </div>\r\n      <div>\r\n        <router-outlet></router-outlet>\r\n      </div>\r\n    </mat-sidenav-content>\r\n  </mat-sidenav-container>\r\n</div>");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.html":
+/*!*************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.html ***!
+  \*************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n    <div class=\"full-width-container\">\r\n      <mat-card class=\"form-block\">\r\n        <mat-card-header></mat-card-header>\r\n        <mat-card-title>\r\n          <h2 *ngIf=\"editMode\" class=\"mat-h2\">Редагувати майстерклас\r\n            <span class=\"accent\"> {{mcForm.get('name').value}}</span></h2>\r\n          <h2 *ngIf=\"!editMode\" class=\"mat-h2\">Створити майстерклас</h2>\r\n        </mat-card-title>\r\n\r\n        <mat-card-content>\r\n          <div class=\"container\">\r\n\r\n            <form [formGroup]=\"mcForm\" #f=\"ngForm\" novalidate>\r\n\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Ідентифікатор\"\r\n                      formControlName=\"_id\" required>\r\n                    <mat-error\r\n                      *ngIf=\"(mcForm.get('_id').errors?.minlength ||\r\n                      mcForm.get('_id').errors?.maxlength ||\r\n                      mcForm.get('_id').errors?.required) &&\r\n                      mcForm.get('_id').touched\">\r\n                      Довжина повинна бути 7 символів\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"mcForm.get('_id').errors?.pattern &&\r\n                      mcForm.get('_id').touched\">\r\n                      Не використовуйте спецсимволи\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Назва\" formControlName=\"name\"\r\n                      required>\r\n                    <mat-error\r\n                      *ngIf=\"(mcForm.get('name').errors?.minlength ||\r\n                      mcForm.get('name').errors?.maxlength ||\r\n                      mcForm.get('name').errors?.required) &&\r\n                      mcForm.get('name').touched\">\r\n                      Довжина повинна бути від 4 до 100 символів\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                  <mat-form-field>\r\n                    <mat-select placeholder=\"Публікувати\"\r\n                      formControlName=\"display\">\r\n                      <mat-option [value]=\"true\">Так</mat-option>\r\n                      <mat-option [value]=\"false\">Ні</mat-option>\r\n                    </mat-select>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                  <mat-form-field>\r\n                    <mat-select placeholder=\"На головній\"\r\n                      formControlName=\"onMainPage\">\r\n                      <mat-option [value]=\"true\">Так</mat-option>\r\n                      <mat-option [value]=\"false\">Ні</mat-option>\r\n                    </mat-select>\r\n                  </mat-form-field>\r\n                </div>\r\n              </div>\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"100\"\r\n                  fxFlex.gt-sm=\"50\">\r\n                  <mat-form-field>\r\n                    <textarea matInput placeholder=\"Головний опис\"\r\n                      formControlName=\"description\" required></textarea>\r\n                    <mat-error\r\n                      *ngIf=\"(mcForm.get('description').errors?.minlength ||\r\n                      mcForm.get('description').errors?.maxlength ||\r\n                      mcForm.get('description').errors?.required) &&\r\n                      mcForm.get('description').touched\">\r\n                      Довжина повинна бути від 4 до 500 символів\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"mcForm.get('description').errors?.pattern &&\r\n                      mcForm.get('description').touched\">\r\n                      Не використовуйте спеціальні символи\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n              </div>\r\n\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                <div class=\"cell-header\" fxLayout=\"row\" fxFlex=\"100\">\r\n                  <h3 class=\"mat-h3 margin-0\">Головне зображення</h3>\r\n                </div>\r\n                <div class=\"cell\" fxFlex.xs=\"100\" fxFlex=\"25\">\r\n                  <div class=\"preview-img-wrapper\">\r\n                    <img *ngIf=\"mcForm.get('mainImage').value\" src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_400,h_300,f_auto/' +\r\n                      mcForm.get('mainImage').value}}\"\r\n                      alt=\"Menu Image\">\r\n                    <img *ngIf=\"!mcForm.get('mainImage').value\"\r\n                      src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_400,h_300,f_auto/'+\r\n                      config.defaultProductImg}}\" alt=\"Menu Image\">\r\n                    <input #inputMainImage type=\"file\"\r\n                      (change)=\"addMainImage($event)\"\r\n                      accept=\".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif, .svg\"\r\n                      style=\"display:none;\">\r\n                    <div class=\"preview-div-processing\">\r\n                      <div *ngIf=\"processingLoadMainImage\"\r\n                        class=\"spinner-wrapper\">\r\n                        <mat-spinner [diameter]=\"24\"></mat-spinner>\r\n                      </div>\r\n                      <div *ngIf=\"!processingLoadMainImage\"\r\n                        class=\"button-wrapper\">\r\n                        <button mat-mini-fab color=\"primary\" type=\"button\" aria-label=\"add\"\r\n                          (click)=\"inputMainImage.click();\"\r\n                          [disabled]=\"processingLoadMainImage\">\r\n                          <mat-icon *ngIf=\"!mcForm.get('mainImage').value &&\r\n                            !processingLoadMainImage\">add</mat-icon>\r\n                          <mat-icon *ngIf=\"mcForm.get('mainImage').value &&\r\n                            !processingLoadMainImage\">redo</mat-icon>\r\n                        </button>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                <div class=\"cell-header\" fxLayout=\"row\">\r\n                  <h3 class=\"mat-h3 margin-0\">Кроки\r\n                    <span>\r\n                      <button *ngIf=\"mcForm.get('steps').value.length < 15\"\r\n                        mat-icon-button color=\"accent\" type=\"button\" aria-label=\"add\"\r\n                        (click)=\"addStepsControl()\"><mat-icon>add_circle</mat-icon></button>\r\n                    </span>\r\n                  </h3>\r\n                </div>\r\n\r\n\r\n                <div formArrayName=\"steps\" class=\"cell\" fxFlex=\"100\"\r\n                  *ngFor=\"let step of mcForm.get('steps')['controls'];\r\n                  let i= index\">\r\n                  <mat-card formGroupName=\"{{i}}\" fxLayout=\"row\" fxFlex=\"100\">\r\n\r\n\r\n                      <div class=\"item\" fxFlex=\"calc((100%-40px)-50%)\">\r\n                          <div class=\"preview-img-wrapper\">\r\n                            <img *ngIf=\"mcForm.get('steps').at(i).get('pic').value\" src=\"{{\r\n                              config.imgPath +\r\n                              config.cloudinary.cloud_name +\r\n                              '/c_fill,w_400,h_300,f_auto/' +\r\n                              mcForm.get('steps').at(i).get('pic').value}}\"\r\n                              alt=\"Menu Image\">\r\n                            <img *ngIf=\"!mcForm.get('steps').at(i).get('pic').value\"\r\n                              src=\"{{\r\n                              config.imgPath +\r\n                              config.cloudinary.cloud_name +\r\n                              '/c_fill,w_400,h_300,f_auto/'+\r\n                              config.defaultProductImg}}\" alt=\"Menu Image\">\r\n                            <input #inputStepsPic type=\"file\"\r\n                              (change)=\"addStepsPic($event, i)\"\r\n                              accept=\".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif, .svg\"\r\n                              style=\"display:none;\">\r\n                            <div class=\"preview-div-processing\">\r\n                              <div *ngIf=\"processingLoadStepsPic === i\"\r\n                                class=\"spinner-wrapper\">\r\n                                <mat-spinner [diameter]=\"24\"></mat-spinner>\r\n                              </div>\r\n                              <div *ngIf=\"processingLoadStepsPic !== i\"\r\n                                class=\"button-wrapper\">\r\n                                <button mat-mini-fab color=\"primary\" type=\"button\"\r\n                                  (click)=\"inputStepsPic.click();\" aria-label=\"add Picture\"\r\n                                  [disabled]=\"processingLoadStepsPic === i\">\r\n                                  <mat-icon *ngIf=\"!mcForm.get('steps').at(i).get('pic').value &&\r\n                                    processingLoadStepsPic !== i\">add</mat-icon>\r\n                                  <mat-icon *ngIf=\"mcForm.get('steps').at(i).get('pic').value &&\r\n                                  processingLoadStepsPic !== i\">redo</mat-icon>\r\n                                </button>\r\n                              </div>\r\n                            </div>\r\n                          </div>\r\n                        </div>\r\n\r\n                    <mat-form-field class=\"item\" fxFlex=\"calc((100%-40px)-67%)\">\r\n                      <textarea matInput placeholder=\"Опис\"\r\n                        formControlName=\"description\" required></textarea>\r\n                      <mat-error\r\n                        *ngIf=\"(mcForm.get('steps').at(i).get('description').errors?.minlength ||\r\n                        mcForm.get('steps').at(i).get('description').errors?.maxlength ||\r\n                        mcForm.get('steps').at(i).get('description').errors?.required) &&\r\n                        mcForm.get('steps').at(i).get('description').touched\">\r\n                        Довжина повинна бути від 4 до 600 символів\r\n                      </mat-error>\r\n                      <mat-error\r\n                        *ngIf=\"mcForm.get('steps').at(i).get('description').errors?.required\r\n                        &&\r\n                        mcForm.get('steps').at(i).get('description').touched\">\r\n                        Обов'язкове поле\r\n                      </mat-error>\r\n                    </mat-form-field>\r\n                    <div class=\"item\" fxFlex=\"40px\" fxLayoutAlign=\"center\r\n                      center\">\r\n                      <button class=\"text-align-center\"\r\n                        mat-icon-button color=\"accent\" type=\"button\" aria-label=\"remove\"\r\n                        (click)=\"removeControl('steps', i)\"><mat-icon>remove_circle</mat-icon></button>\r\n                    </div>\r\n                  </mat-card>\r\n                </div>\r\n                <div class=\"cell-header\" fxLayout=\"row\">\r\n                  <h4 class=\"mat-h4 margin-0\">Додати крок\r\n                    <span>\r\n                      <button *ngIf=\"mcForm.get('steps').value.length < 15\"\r\n                        mat-icon-button color=\"accent\" type=\"button\" aria-label=\"add\"\r\n                        (click)=\"addStepsControl()\"><mat-icon>add_circle</mat-icon></button>\r\n                    </span>\r\n                  </h4>\r\n                </div>\r\n              </div>\r\n\r\n\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                  <div class=\"cell-header\" fxLayout=\"row\">\r\n                    <h3 class=\"mat-h3 margin-0\">Необхідні матеріали\r\n                      <span>\r\n                        <button *ngIf=\"mcForm.get('materials').value.length <10\"\r\n                          mat-icon-button color=\"accent\" type=\"button\" aria-label=\"add\"\r\n                          (click)=\"addMaterialsControl()\"><mat-icon>add_circle</mat-icon></button>\r\n                      </span>\r\n                    </h3>\r\n                  </div>\r\n\r\n                  <div formArrayName=\"materials\" class=\"cell\" fxFlex=\"100\"\r\n                    *ngFor=\"let material of mcForm.get('materials')['controls'];\r\n                    let i= index\">\r\n                    <mat-card formGroupName=\"{{i}}\" fxLayout=\"row\" fxFlex=\"100\">\r\n                      <mat-form-field class=\"item\" fxFlex=\"calc((100%-40px)-67%)\">\r\n                        <input matInput placeholder=\"Матеріал\"\r\n                          formControlName=\"name\" required>\r\n                        <mat-error\r\n                          *ngIf=\"mcForm.get('materials').at(i).get('name').errors?.required\r\n                          &&\r\n                          mcForm.get('materials').at(i).get('name').touched\">\r\n                          Обов'язкове поле\r\n                        </mat-error>\r\n                        <mat-error\r\n                          *ngIf=\"(mcForm.get('materials').at(i).get('name').errors?.minlength\r\n                          ||\r\n                          mcForm.get('materials').at(i).get('name').errors?.maxlength\r\n                          ||\r\n                          mcForm.get('materials').at(i).get('name').errors?.required)\r\n                          &&\r\n                          mcForm.get('materials').at(i).get('name').touched\">\r\n                          Довжина повинна бути від 3 до 20 символів\r\n                        </mat-error>\r\n                      </mat-form-field>\r\n                      <mat-form-field class=\"item\" fxFlex=\"calc((100%-40px)-67%)\">\r\n                        <input matInput placeholder=\"Одиниці виміру\"\r\n                          formControlName=\"units\" required>\r\n                        <mat-error\r\n                          *ngIf=\"mcForm.get('materials').at(i).get('units').errors?.required\r\n                          &&\r\n                          mcForm.get('materials').at(i).get('units').touched\">\r\n                          Обов'язкове поле\r\n                        </mat-error>\r\n                        <mat-error\r\n                          *ngIf=\"(mcForm.get('materials').at(i).get('units').errors?.minlength\r\n                          ||\r\n                          mcForm.get('materials').at(i).get('units').errors?.maxlength\r\n                          ||\r\n                          mcForm.get('materials').at(i).get('units').errors?.required)\r\n                          &&\r\n                          mcForm.get('materials').at(i).get('units').touched\">\r\n                          Довжина повинна бути від 1 до 7 символів\r\n                        </mat-error>\r\n                      </mat-form-field>\r\n                      <mat-form-field class=\"item\" fxFlex=\"calc((100%-40px)-67%)\">\r\n                        <input matInput placeholder=\"Значення\"\r\n                          formControlName=\"value\" required>\r\n                        <mat-error\r\n                          *ngIf=\"mcForm.get('materials').at(i).get('value').errors?.required\r\n                          &&\r\n                          mcForm.get('materials').at(i).get('value').touched\">\r\n                          Обов'язкове поле\r\n                        </mat-error>\r\n                        <mat-error\r\n                          *ngIf=\"(mcForm.get('materials').at(i).get('value').errors?.minlength\r\n                          ||\r\n                          mcForm.get('materials').at(i).get('value').errors?.maxlength\r\n                          ||\r\n                          mcForm.get('materials').at(i).get('value').errors?.required)\r\n                          &&\r\n                          mcForm.get('materials').at(i).get('value').touched\">\r\n                          Довжина повинна бути від 1 до 4 символів\r\n                        </mat-error>\r\n                      </mat-form-field>\r\n                      <div class=\"item\" fxFlex=\"40px\" fxLayoutAlign=\"center\r\n                        center\">\r\n                        <button class=\"text-align-center\"\r\n                          mat-icon-button color=\"accent\" type=\"button\" aria-label=\"remove\"\r\n                          (click)=\"removeControl('materials', i)\"><mat-icon>remove_circle</mat-icon></button>\r\n                      </div>\r\n                    </mat-card>\r\n                  </div>\r\n                  <div class=\"cell-header\" fxLayout=\"row\">\r\n                    <h4 class=\"mat-h4 margin-0\">Додати матеріал\r\n                      <span>\r\n                        <button *ngIf=\"mcForm.get('materials').value.length <10\"\r\n                          mat-icon-button color=\"accent\" type=\"button\" aria-label=\"add\"\r\n                          (click)=\"addMaterialsControl()\"><mat-icon>add_circle</mat-icon></button>\r\n                      </span>\r\n                    </h4>\r\n                  </div>\r\n                </div>\r\n\r\n\r\n\r\n              <div class=\"submit-button-wrapper row\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"30\">\r\n\r\n                  <button mat-raised-button color=\"primary\" class=\"full-width\" aria-label=\"save\"\r\n                    type=\"button\" (click)=\"onMcFormSubmit(false)\"\r\n                    [disabled]=\"!mcForm.valid || processingLoadMainImage\">\r\n                    Зберегти</button>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"40\">\r\n\r\n                  <button *ngIf=\"editMode\" mat-raised-button color=\"primary\"\r\n                    class=\"full-width\" type=\"button\" aria-label=\"Save and return\"\r\n                    (click)=\"onMcFormSubmit(true)\"\r\n                    [disabled]=\"!mcForm.valid || processingLoadMainImage\">\r\n                    Зберегти і повернутись</button>\r\n                  <button *ngIf=\"!editMode\" mat-raised-button color=\"primary\"\r\n                    class=\"full-width\" type=\"button\" aria-label=\"Create and return\"\r\n                    (click)=\"onMcFormSubmit(true)\"\r\n                    [disabled]=\"!mcForm.valid || processingLoadMainImage\">\r\n                    Створити і повернутись</button>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"30\">\r\n                  <button mat-raised-button type=\"button\" (click)=\"goBack()\"\r\n                    class=\"full-width\" aria-label=\"Go back\"\r\n                    [disabled]=\"processingLoadMainImage\">Повернутись</button>\r\n                </div>\r\n\r\n              </div>\r\n            </form>\r\n          </div>\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </div>\r\n  </div>\r\n</div>\r\n</div>\r\n\r\n");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/mc-editor/mc-editor.component.html":
+/*!***************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/mc-editor/mc-editor.component.html ***!
+  \***************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- <div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\"> -->\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"cell\">\r\n          <h2 class=\"mat-h2\">Редактор майстеркласів</h2>\r\n        </div>\r\n      </div>\r\n      <form [formGroup]=\"catalogForm\" #f=\"ngForm\">\r\n        <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n          <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\r\n               *ngFor=\"let categoryBlock of catalogForm.get('parents')['controls']; let i = index\">\r\n\r\n                <mat-select placeholder=\"Виберіть категорію\" formControlName=\"{{i}}\" required\r\n                            (selectionChange)=\"onSelectCategory($event, i)\">\r\n                  <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\r\n                    {{child.name}}\r\n                  </mat-option>\r\n            </mat-select>\r\n          </div>\r\n\r\n        </div>\r\n      </form>\r\n\r\n      <div *ngIf=\"noMoreChildren\" class=\"row\">\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <div class=\"preview-img-wrapper\">\r\n            <img src=\"{{\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_180,h_180,f_auto/' +\r\n                        config.defaultProductImg}}\" alt=\"product\">\r\n            <div class=\"preview-div-processing\">\r\n              <div class=\"button-wrapper\">\r\n                <button mat-mini-fab color=\"primary\" type=\"button\" aria-label=\"add\"\r\n                        [routerLink]=\"['/dashboard', 'mc', 'new', parentCategory_id]\"\r\n                        [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n                  <mat-icon>add</mat-icon>\r\n                </button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div *ngFor=\"let mc of mcs\"  class=\"cell\" fxFlex=\"100\">\r\n          <app-mcs-item-brief [mc]=\"mc\" [parentCategory_id]=\"parentCategory_id\"></app-mcs-item-brief>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  <!-- </div>\r\n</div>\r\n</div> -->\r\n\r\n");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/product-create/product-create.component.html":
+/*!*************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/product-create/product-create.component.html ***!
+  \*************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n    <div class=\"item full-width-container\">\r\n      <mat-card  class=\"form-block\">\r\n        <mat-card-header></mat-card-header>\r\n        <mat-card-title></mat-card-title>\r\n\r\n        <mat-card-content>\r\n          <div class=\"container\">\r\n            <div class=\"row\">\r\n              <div class=\"cell\">\r\n                <h2 class=\"mat-h2\">Новий виріб</h2>\r\n              </div>\r\n            </div>\r\n\r\n          <form [formGroup]=\"productCreateForm\" #f=\"ngForm\" (submit)=\"onProductCreateSubmit()\">\r\n\r\n            <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n              <div class=\"cell\">\r\n                <button type=\"button\" mat-raised-button (click)=\"addCategory()\" aria-label=\"Add category\">Додати категорію</button>\r\n              </div>\r\n\r\n            </div>\r\n            <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n\r\n                <div formArrayName=\"parents\" class=\"cell\" fxFlex.gt-xs=\"50\"\r\n                     *ngFor=\"let categoryBlock of productCreateForm.get('parents')['controls']; let i = index\">\r\n                  <!--<div [formGroupName]=\"i\">-->\r\n                    <mat-form-field>\r\n                      <mat-select placeholder=\"Категорія\" formControlName=\"{{i}}\" required\r\n                                  (selectionChange)=\"onSelectParents($event)\">\r\n                        <mat-optgroup *ngFor=\"let category of categories\" [label]=\"category.name\">\r\n                          <mat-option *ngIf=\"category.numOfChildren === 0\" [value]=\"category._id\">\r\n                            {{ category.name }}\r\n                          </mat-option>\r\n                          <mat-option *ngFor=\"let subCategory of category.children\" [value]=\"subCategory._id\">\r\n                            {{ subCategory.name }}\r\n                          </mat-option>\r\n                        </mat-optgroup>\r\n                      </mat-select>\r\n                      <mat-hint *ngIf=\"i > 0\" align=\"end\" class=\"remove-field\" (click)=\"removeCategory(i)\">Видалити категорію</mat-hint>\r\n                      <mat-error *ngIf=\"productCreateForm.get('parents').at(i).errors?.required &&\r\n                        productCreateForm.get('parents').at(i).touched\">\r\n                        Виберіть категорію\r\n                      </mat-error>\r\n                    </mat-form-field>\r\n                  <!--</div>-->\r\n                </div>\r\n\r\n              <div class=\"cell\" fxFlex.gt-xs=\"50\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Найменування\" formControlName=\"name\" required>\r\n                    <mat-error\r\n                      *ngIf=\"(productCreateForm.get('name').errors?.minlength ||\r\n                      productCreateForm.get('name').errors?.maxlength ||\r\n                      productCreateForm.get('name').errors?.required) &&\r\n                      productCreateForm.get('name').touched\">\r\n                      Довжина повинна бути від 4 до 30 символів\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n              </div>\r\n\r\n              <div class=\"cell\" fxLayout=\"row\" fxFlex=\"50\">\r\n\r\n              <div class=\"item\" fxFlex=\"30\">\r\n                <div formGroupName=\"dimensions\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Ширина\" formControlName=\"width\">\r\n                    <span matSuffix>см</span>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('dimensions.width').errors?.maxlength &&\r\n                      productCreateForm.get('dimensions').get('width').touched\">\r\n                      Використовуйте не більше ніж три символа\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('dimensions').get('width').errors?.pattern &&\r\n                      productCreateForm.get('dimensions').get('width').touched\">\r\n                      Використовуйте тількі цифри\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n              </div>\r\n\r\n              <div class=\"item\" fxFlex=\"30\">\r\n                <div formGroupName=\"dimensions\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Висота\" formControlName=\"height\">\r\n                    <span matSuffix>см</span>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('dimensions.height').errors?.maxlength &&\r\n                      productCreateForm.get('dimensions').get('height').touched\">\r\n                      Використовуйте не більше ніж три символа\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('dimensions').get('height').errors?.pattern &&\r\n                      productCreateForm.get('dimensions').get('height').touched\">\r\n                      Використовуйте тількі цифри\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n              </div>\r\n                <div class=\"item\" fxFlex=\"40\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Артикул\" formControlName=\"_id\" required>\r\n                    <mat-error\r\n                      *ngIf=\"(productCreateForm.get('_id').errors?.minlength ||\r\n                        productCreateForm.get('_id').errors?.maxlength ||\r\n                        productCreateForm.get('_id').errors?.required) &&\r\n                        productCreateForm.get('_id').touched\">\r\n                      Довжина повинна бути 6 символів\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('_id').errors?.pattern &&\r\n                      productCreateForm.get('_id').touched\">\r\n                      Використовуйте тількі цифри і букви\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n\r\n            </div>\r\n\r\n              <div class=\"cell\" fxLayout=\"row\" fxFlex=\"50\">\r\n\r\n                <div class=\"item \" fxFlex=\"30\">\r\n                  <!--{{productCreateForm.get('price').errors | json}}-->\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Ціна\" formControlName=\"price\" >\r\n                    <span matSuffix>грн</span>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('price').errors?.pattern &&\r\n                      productCreateForm.get('price').touched\">\r\n                      Використовуйте тількі цифри більші 0\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div class=\"item\" fxFlex=\"30\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Знижка\" formControlName=\"discount\" >\r\n                    <span matSuffix>%</span>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('discount').errors?.pattern &&\r\n                      productCreateForm.get('discount').touched\">\r\n                      Знижка може бути від 0% до 99%\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div class=\"item\" fxFlex=\"40\">\r\n                  <div class=\"flex-left-container\">\r\n                    <mat-checkbox class=\"flex-left-item\" formControlName=\"onMainPage\">На головній</mat-checkbox>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n\r\n              <div class=\"cell\" fxFlex.gt-xs=\"50\">\r\n                <mat-form-field>\r\n                  <textarea matInput placeholder=\"Опис\" formControlName=\"description\" required></textarea>\r\n                  <mat-error\r\n                    *ngIf=\"(productCreateForm.get('description').errors?.minlength ||\r\n                      productCreateForm.get('description').errors?.maxlength ||\r\n                      productCreateForm.get('description').errors?.required) &&\r\n                      productCreateForm.get('description').touched\">\r\n                    Довжина повинна бути від 4 до 200 символів\r\n                  </mat-error>\r\n                  <mat-error\r\n                    *ngIf=\"productCreateForm.get('description').errors?.pattern &&\r\n                      productCreateForm.get('description').touched\">\r\n                    Використовуйте тількі цифри і букви\r\n                  </mat-error>\r\n                </mat-form-field>\r\n              </div>\r\n\r\n              <div class=\"row\" fxLayout=\"row\" fxFlex=\"100\">\r\n                <div formArrayName=\"assets\" class=\"cell\" fxFlex=\"25\" fxFlex.lt-md=\"50\"\r\n                     *ngFor=\"let fileBlock of productCreateForm.get('assets')['controls']; let i = index\">\r\n                  <div class=\"preview-img-wrapper\">\r\n\r\n                      <img *ngIf=\"processingLoadFile !== i class=\"responsive-image\" src=\"{{\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_180,h_180,f_auto/' +\r\n                        productCreateForm.get('assets').value[i] || defaultProductImgPath}}\"\r\n                                 alt=\"designImage\">\r\n\r\n                    <!--<img *ngIf=\"processingLoadFile !== i\" src=\"{{'https://res.cloudinary.com/hmm6pjfgk/image/upload/' +-->\r\n                    <!--productCreateForm.get('assets').value[i]}}\" alt=\"productImage\">-->\r\n                    <img *ngIf=\"processingLoadFile === i\" src=\"{{productCreateForm.get('assets').value[i]}}\" alt=\"productImage\">\r\n                    <div *ngIf=\"processingLoadFile === i\" class=\"preview-div-processing\">\r\n                      <div class=\"spinner-wrapper\">\r\n                        <mat-spinner [diameter]=\"24\"></mat-spinner>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                  <p *ngIf=\"processingLoadFile !== i\" class=\"remove-field text-center\" (click)=\"removeFile(i)\">\r\n                    Видалити зображення</p>\r\n\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"25\" fxFlex.lt-md=\"50\"\r\n                     *ngIf=\"productCreateForm.get('assets').value.length < 4\">\r\n                  <div class=\"preview-img-wrapper\">\r\n                    <img src=\"{{config.imgPath +\r\n                      config.cloudinary.cloud_name + '/c_fill,w_180,h_180,f_auto/' + config.defaultProductImg}}\" alt=\"productImage\">\r\n                    <input #inputFile type=\"file\" (change)=\"addPictures($event)\"\r\n                           accept=\".jpg, .jpe, .jpeg, .bmp, .webp, .png\" style=\"display:none;\">\r\n\r\n                    <div class=\"preview-div-processing\">\r\n                      <div class=\"button-wrapper\">\r\n                        <button mat-mini-fab color=\"primary\" type=\"button\" aria-label=\"add\"\r\n                                (click)=\"inputFile.click();\r\n                                this.productCreateForm.get('_id').disable();\r\n                                this.productCreateForm.get('parents').at(0).disable();\"\r\n                                [disabled]=\"!productCreateForm.get('_id').disabled &&\r\n                                !productCreateForm.get('_id').valid || processingLoadFile >= 0\">\r\n                          <mat-icon>add</mat-icon>\r\n                        </button>\r\n\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n\r\n\r\n            </div>\r\n            <div class=\"submit-button-wrapper\">\r\n              <!--<span fxFlex></span>-->\r\n              <button *ngIf=\"!editMode\" mat-raised-button class=\"full-width\" color=\"primary\" aria-label=\"Create\"\r\n                      [disabled]=\"!productCreateForm.valid || processingLoadFile >= 0\">Створити</button>\r\n              <button *ngIf=\"editMode\" mat-raised-button class=\"full-width\" color=\"primary\" aria-label=\"Save\"\r\n                      [disabled]=\"!productCreateForm.valid || processingLoadFile >= 0\">Зберегти</button>\r\n            </div>\r\n\r\n          </form>\r\n          </div>\r\n\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n</div>\r\n");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/product-editor-form/product-editor-form.component.html":
+/*!***********************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/product-editor-form/product-editor-form.component.html ***!
+  \***********************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n    <div class=\"full-width-container\">\r\n      <mat-card  class=\"form-block\">\r\n        <mat-card-header></mat-card-header>\r\n        <mat-card-title>\r\n          <h2 *ngIf=\"editMode\" class=\"mat-h2\">Редагувати колекцію\r\n            <span class=\"accent\">{{productForm.get('name').value}}</span> у розділі\r\n            <span class=\"accent\">{{paramParentName}}</span></h2>\r\n          <h2 *ngIf=\"!editMode\" class=\"mat-h2\">Створити колекцію у розділі <span class=\"accent\">{{paramParentName}}</span></h2>\r\n        </mat-card-title>\r\n\r\n        <mat-card-content>\r\n          <div class=\"container\">\r\n\r\n            <form [formGroup]=\"productForm\" #f=\"ngForm\" novalidate>\r\n\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                    <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                      <mat-form-field>\r\n                        <input matInput placeholder=\"Ідентифікатор\" formControlName=\"_id\" required>\r\n                        <mat-error\r\n                          *ngIf=\"(productForm.get('_id').errors?.minlength ||\r\n                                  productForm.get('_id').errors?.maxlength ||\r\n                                  productForm.get('_id').errors?.required) &&\r\n                                  productForm.get('_id').touched\">\r\n                          Довжина повинна бути 7 символів\r\n                        </mat-error>\r\n                        <mat-error\r\n                        *ngIf=\"productForm.get('_id').errors?.pattern &&\r\n                                productForm.get('_id').touched\">\r\n                          Не використовуйте спецсимволи\r\n                      </mat-error>\r\n                      </mat-form-field>\r\n                    </div>\r\n                    <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                      <mat-form-field>\r\n                        <input matInput placeholder=\"Назва\" formControlName=\"name\" required>\r\n                        <mat-error\r\n                          *ngIf=\"(productForm.get('name').errors?.minlength ||\r\n                                  productForm.get('name').errors?.maxlength ||\r\n                                  productForm.get('name').errors?.required) &&\r\n                                  productForm.get('name').touched\">\r\n                          Довжина повинна бути від 2 до 21 символа\r\n                        </mat-error>\r\n                      </mat-form-field>\r\n                    </div>\r\n                    <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                      <mat-form-field>\r\n                        <mat-select placeholder=\"Публікувати\" formControlName=\"display\">\r\n                          <mat-option [value]=\"true\">\r\n                            Так\r\n                          </mat-option>\r\n                          <mat-option [value]=\"false\">\r\n                            Ні\r\n                          </mat-option>\r\n                        </mat-select>\r\n                        <!-- <mat-error\r\n                          *ngIf=\"productForm.get('display').errors?.required &&\r\n                                  productForm.get('display').touched\">\r\n                          Обов'язкове поле\r\n                        </mat-error> -->\r\n                      </mat-form-field>\r\n                    </div>\r\n                    <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                        <mat-form-field>\r\n                          <mat-select placeholder=\"На головній\" formControlName=\"onMainPage\">\r\n                            <mat-option [value]=\"true\">\r\n                              Так\r\n                            </mat-option>\r\n                            <mat-option [value]=\"false\">\r\n                              Ні\r\n                            </mat-option>\r\n                          </mat-select>\r\n                          <!-- <mat-error\r\n                            *ngIf=\"productForm.get('display').errors?.required &&\r\n                                    productForm.get('display').touched\">\r\n                            Обов'язкове поле\r\n                          </mat-error> -->\r\n                        </mat-form-field>\r\n                      </div>\r\n              </div>\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\">\r\n                  <mat-form-field>\r\n                    <textarea matInput placeholder=\"Опис\" formControlName=\"description\" required></textarea>\r\n                    <mat-error\r\n                      *ngIf=\"(productForm.get('description').errors?.minlength ||\r\n                        productForm.get('description').errors?.maxlength ||\r\n                        productForm.get('description').errors?.required) &&\r\n                        productForm.get('description').touched\">\r\n                      Довжина повинна бути від 4 до 200 символів\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"productForm.get('description').errors?.pattern &&\r\n                        productForm.get('description').touched\">\r\n                      Не використовуйте спеціальні символи\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div class=\"cell wrap\" fxFlex=\"100\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" formGroupName=\"dimensions\">\r\n                    <div class=\"item\" fxFlex=\"100\" fxFlex.gt-xs=\"50\">\r\n                        <mat-form-field>\r\n                          <input matInput placeholder=\"Ширина\" formControlName=\"width\">\r\n                          <span matSuffix>см</span>\r\n                          <mat-error\r\n                            *ngIf=\"productForm.get('dimensions.width').errors?.maxlength &&\r\n                            productForm.get('dimensions').get('width').touched\">\r\n                            Використовуйте не більше ніж три символа\r\n                          </mat-error>\r\n                          <mat-error\r\n                            *ngIf=\"productForm.get('dimensions').get('width').errors?.pattern &&\r\n                            productForm.get('dimensions').get('width').touched\">\r\n                            Використовуйте тількі цифри\r\n                          </mat-error>\r\n                        </mat-form-field>\r\n                      </div>\r\n                  <div class=\"item\" fxFlex=\"100\" fxFlex.gt-xs=\"50\">\r\n                    <mat-form-field>\r\n                      <input matInput placeholder=\"Висота\" formControlName=\"height\">\r\n                      <span matSuffix>см</span>\r\n                      <mat-error\r\n                        *ngIf=\"productForm.get('dimensions.height').errors?.maxlength &&\r\n                        productForm.get('dimensions').get('height').touched\">\r\n                        Використовуйте не більше ніж три символа\r\n                      </mat-error>\r\n                      <mat-error\r\n                        *ngIf=\"productForm.get('dimensions').get('height').errors?.pattern &&\r\n                        productForm.get('dimensions').get('height').touched\">\r\n                        Використовуйте тількі цифри\r\n                      </mat-error>\r\n                    </mat-form-field>\r\n                  </div>\r\n\r\n                </div>\r\n\r\n                <div class=\"cell wrap\" fxFlex=\"100\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\">\r\n                    <div class=\"item\" fxFlex=\"100\" fxFlex.gt-xs=\"50\">\r\n                        <mat-form-field>\r\n                            <input matInput placeholder=\"Ціна\" formControlName=\"price\" >\r\n                            <span matSuffix>грн</span>\r\n                            <mat-error\r\n                              *ngIf=\"productForm.get('price').errors?.pattern &&\r\n                              productForm.get('price').touched\">\r\n                              Використовуйте тількі цифри більші 0\r\n                            </mat-error>\r\n                        </mat-form-field>\r\n                      </div>\r\n                  <div class=\"item\" fxFlex=\"100\" fxFlex.gt-xs=\"50\">\r\n                      <mat-form-field>\r\n                          <input matInput placeholder=\"Знижка\" formControlName=\"discount\" >\r\n                          <span matSuffix>%</span>\r\n                          <mat-error\r\n                            *ngIf=\"productForm.get('discount').errors?.pattern &&\r\n                            productForm.get('discount').touched\">\r\n                            Використовуйте тількі цифри більші 0\r\n                          </mat-error>\r\n                      </mat-form-field>\r\n                  </div>\r\n\r\n                </div>\r\n              </div>\r\n\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                    <div class=\"cell-header\" fxLayout=\"row\" fxFlex=\"100\">\r\n                        <h3 class=\"mat-h3 margin-0\">Зображення</h3>\r\n                      </div>\r\n                      <div class=\"cell\" fxFlex.xs=\"100\" fxFlex=\"25\">\r\n                        <div class=\"preview-img-wrapper\" >\r\n                          <img *ngIf=\"productForm.get('menuImage').value\" src=\"{{\r\n                              config.imgPath +\r\n                              config.cloudinary.cloud_name +\r\n                               '/c_fill,w_260,h_170,f_auto/' + productForm.get('menuImage').value}}\"\r\n                               alt=\"Menu Image\">\r\n                          <img *ngIf=\"!productForm.get('menuImage').value\"\r\n                               src=\"{{\r\n                               config.imgPath +\r\n                              config.cloudinary.cloud_name +\r\n                               '/c_fill,w_180,h_180,f_auto/'+\r\n                               config.defaultProductImg}}\" alt=\"Menu Image\">\r\n                          <input #inputMenuImage type=\"file\" (change)=\"addMenuImage($event)\"\r\n                                 accept=\".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif, .svg\" style=\"display:none;\">\r\n                          <div class=\"preview-div-processing\">\r\n                            <div *ngIf=\"processingLoadMenuImage\" class=\"spinner-wrapper\">\r\n                              <mat-spinner [diameter]=\"24\"></mat-spinner>\r\n                            </div>\r\n\r\n\r\n                            <div *ngIf=\"!processingLoadMenuImage\" class=\"button-wrapper\">\r\n                              <button mat-mini-fab color=\"primary\" type=\"button\" aria-label=\"add\"\r\n                                      (click)=\"inputMenuImage.click();\"\r\n                                      [disabled]=\"processingLoadMenuImage\">\r\n                                <mat-icon *ngIf=\"!productForm.get('menuImage').value && !processingLoadMenuImage\">add</mat-icon>\r\n                                <mat-icon *ngIf=\"productForm.get('menuImage').value && !processingLoadMenuImage\">redo</mat-icon>\r\n                              </button>\r\n\r\n                            </div>\r\n                          </div>\r\n                        </div>\r\n                        </div>\r\n              </div>\r\n\r\n              <div class=\"submit-button-wrapper row\" fxLayout=\"row\">\r\n                  <div class=\"cell\" fxFlex=\"40\">\r\n\r\n                    <button mat-raised-button color=\"primary\" class=\"full-width\" type=\"button\" (click)=\"onProductFormSubmit(false)\"\r\n                            [disabled]=\"!productForm.valid || processingLoadMenuImage\" aria-label=\"Save\">\r\n                      Зберегти</button>\r\n                  </div>\r\n                  <div class=\"cell\" fxFlex=\"40\">\r\n\r\n                    <button *ngIf=\"editMode\" mat-raised-button color=\"primary\" class=\"full-width\" type=\"button\" (click)=\"onProductFormSubmit(true)\"\r\n                              [disabled]=\"!productForm.valid || processingLoadMenuImag\" aria-label=\"Save and return\">\r\n                      Зберегти і повернутись</button>\r\n                    <button *ngIf=\"!editMode\" mat-raised-button color=\"primary\" class=\"full-width\" type=\"button\" (click)=\"onProductFormSubmit(true)\"\r\n                            [disabled]=\"!productForm.valid || processingLoadMenuImage\" aria-label=\"Create and return\">\r\n                      Створити і повернутись</button>\r\n                  </div>\r\n                    <div class=\"cell\" fxFlex=\"20\">\r\n                    <button mat-raised-button  type=\"button\" (click)=\"goBack()\" class=\"full-width\" aria-label=\"return\"\r\n                            [disabled]=\"processingLoadMenuImage\">Повернутись</button>\r\n                  </div>\r\n\r\n                </div>\r\n            </form>\r\n          </div>\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </div>\r\n  </div>\r\n</div>\r\n</div>\r\n\r\n");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/product-editor/product-editor.component.html":
+/*!*************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/product-editor/product-editor.component.html ***!
+  \*************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<!-- <div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\"> -->\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"cell\">\r\n          <h2 class=\"mat-h2\">Редактор виробів</h2>\r\n        </div>\r\n      </div>\r\n      <form [formGroup]=\"catalogForm\" #f=\"ngForm\">\r\n        <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n          <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\r\n               *ngFor=\"let categoryBlock of catalogForm.get('parents')['controls']; let i = index\">\r\n\r\n                <mat-select placeholder=\"Виберіть категорію\" formControlName=\"{{i}}\" required\r\n                            (selectionChange)=\"onSelectCategory($event, i)\">\r\n                  <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\r\n                    {{child.name}}\r\n                  </mat-option>\r\n            </mat-select>\r\n          </div>\r\n\r\n        </div>\r\n      </form>\r\n\r\n      <div *ngIf=\"noMoreChildren\" class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n        <div class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n          <div class=\"preview-img-wrapper\">\r\n            <img src=\"{{\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_180,h_180,f_auto/' +\r\n                        config.defaultProductImg}}\" alt=\"product\">\r\n            <div class=\"preview-div-processing\">\r\n              <div class=\"button-wrapper\">\r\n                <button mat-mini-fab color=\"primary\" type=\"button\" aria-label=\"Add\"\r\n                        [routerLink]=\"['/dashboard', 'product-editor-new', parentCategory_id, parentCategoryName]\"\r\n                        [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n                  <mat-icon>add</mat-icon>\r\n                </button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div *ngFor=\"let product of products\"  class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n          <app-product-item-brief [product]=\"product\" [parentCategory_id]=\"parentCategory_id\" [parentCategoryName]=\"parentCategoryName\"></app-product-item-brief>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  <!-- </div>\r\n</div> -->\r\n");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/tools/tools.component.html":
+/*!*******************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/tools/tools.component.html ***!
+  \*******************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"row\">\r\n\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"cell\">\r\n          <h2 class=\"mat-h2\">Інструменти</h2>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"100\" fxLayout=\"row\" >\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_400,h_300/' +\r\n                'test'}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">favicon32x32</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_32,h_32/' +\r\n                faviconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\"> Logo 250x90</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_250,h_90/' +\r\n                logoFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">Logo 140x50</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n                config.imgPath +\r\n                config.cloudinary.cloud_name +\r\n                '/c_fill,w_140,h_50/' +\r\n                logoFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n      </div>\r\n\r\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">512x512</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_512,h_512/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">384x384</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_384,h_384/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">192x192</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_192,h_192/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">152x152</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_152,h_152/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">144x144</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_144,h_144/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">128x128</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_128,h_128/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">96x96</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_96,h_96/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\r\n          <div fxFlex>\r\n            <h4 class=\"mat-h4\">72x72</h4>\r\n          </div>\r\n          <div fxFlex fxLayoutAlign=\"center center\">\r\n            <img fxflex class=\"product-detail-image\" src=\"{{\r\n              config.imgPath +\r\n              config.cloudinary.cloud_name +\r\n              '/c_fill,w_72,h_72/' +\r\n              iconFilename}}\"\r\n                 alt=\"icon\">\r\n          </div>\r\n        </div>\r\n\r\n\r\n\r\n      </div>\r\n    </div>\r\n\r\n  </div>\r\n</div>\r\n</div>\r\n\r\n");
+
+/***/ }),
+
 /***/ "./node_modules/rxjs/index.js":
 /*!************************************!*\
   !*** ./node_modules/rxjs/index.js ***!
@@ -45,7 +149,6 @@ var Subscriber_1 = __webpack_require__(/*! ./internal/Subscriber */ "./node_modu
 exports.Subscriber = Subscriber_1.Subscriber;
 var Notification_1 = __webpack_require__(/*! ./internal/Notification */ "./node_modules/rxjs/internal/Notification.js");
 exports.Notification = Notification_1.Notification;
-exports.NotificationKind = Notification_1.NotificationKind;
 var pipe_1 = __webpack_require__(/*! ./internal/util/pipe */ "./node_modules/rxjs/internal/util/pipe.js");
 exports.pipe = pipe_1.pipe;
 var noop_1 = __webpack_require__(/*! ./internal/util/noop */ "./node_modules/rxjs/internal/util/noop.js");
@@ -100,8 +203,6 @@ var onErrorResumeNext_1 = __webpack_require__(/*! ./internal/observable/onErrorR
 exports.onErrorResumeNext = onErrorResumeNext_1.onErrorResumeNext;
 var pairs_1 = __webpack_require__(/*! ./internal/observable/pairs */ "./node_modules/rxjs/internal/observable/pairs.js");
 exports.pairs = pairs_1.pairs;
-var partition_1 = __webpack_require__(/*! ./internal/observable/partition */ "./node_modules/rxjs/internal/observable/partition.js");
-exports.partition = partition_1.partition;
 var race_1 = __webpack_require__(/*! ./internal/observable/race */ "./node_modules/rxjs/internal/observable/race.js");
 exports.race = race_1.race;
 var range_1 = __webpack_require__(/*! ./internal/observable/range */ "./node_modules/rxjs/internal/observable/range.js");
@@ -114,8 +215,6 @@ var using_1 = __webpack_require__(/*! ./internal/observable/using */ "./node_mod
 exports.using = using_1.using;
 var zip_1 = __webpack_require__(/*! ./internal/observable/zip */ "./node_modules/rxjs/internal/observable/zip.js");
 exports.zip = zip_1.zip;
-var scheduled_1 = __webpack_require__(/*! ./internal/scheduled/scheduled */ "./node_modules/rxjs/internal/scheduled/scheduled.js");
-exports.scheduled = scheduled_1.scheduled;
 var empty_2 = __webpack_require__(/*! ./internal/observable/empty */ "./node_modules/rxjs/internal/observable/empty.js");
 exports.EMPTY = empty_2.EMPTY;
 var never_2 = __webpack_require__(/*! ./internal/observable/never */ "./node_modules/rxjs/internal/observable/never.js");
@@ -340,26 +439,26 @@ var Notification = (function () {
         this.kind = kind;
         this.value = value;
         this.error = error;
-        this.hasValue = kind === 'N';
+        this.hasValue = kind === "N";
     }
     Notification.prototype.observe = function (observer) {
         switch (this.kind) {
-            case 'N':
+            case "N":
                 return observer.next && observer.next(this.value);
-            case 'E':
+            case "E":
                 return observer.error && observer.error(this.error);
-            case 'C':
+            case "C":
                 return observer.complete && observer.complete();
         }
     };
     Notification.prototype.do = function (next, error, complete) {
         var kind = this.kind;
         switch (kind) {
-            case 'N':
+            case "N":
                 return next && next(this.value);
-            case 'E':
+            case "E":
                 return error && error(this.error);
-            case 'C':
+            case "C":
                 return complete && complete();
         }
     };
@@ -374,29 +473,29 @@ var Notification = (function () {
     Notification.prototype.toObservable = function () {
         var kind = this.kind;
         switch (kind) {
-            case 'N':
+            case "N":
                 return of_1.of(this.value);
-            case 'E':
+            case "E":
                 return throwError_1.throwError(this.error);
-            case 'C':
+            case "C":
                 return empty_1.empty();
         }
         throw new Error('unexpected notification kind value');
     };
     Notification.createNext = function (value) {
         if (typeof value !== 'undefined') {
-            return new Notification('N', value);
+            return new Notification("N", value);
         }
         return Notification.undefinedValueNotification;
     };
     Notification.createError = function (err) {
-        return new Notification('E', undefined, err);
+        return new Notification("E", undefined, err);
     };
     Notification.createComplete = function () {
         return Notification.completeNotification;
     };
-    Notification.completeNotification = new Notification('C');
-    Notification.undefinedValueNotification = new Notification('N', undefined);
+    Notification.completeNotification = new Notification("C");
+    Notification.undefinedValueNotification = new Notification("N", undefined);
     return Notification;
 }());
 exports.Notification = Notification;
@@ -910,6 +1009,9 @@ var ConnectableObservable = (function (_super) {
             if (connection.closed) {
                 this._connection = null;
                 connection = Subscription_1.Subscription.EMPTY;
+            }
+            else {
+                this._connection = connection;
             }
         }
         return connection;
@@ -1442,29 +1544,6 @@ exports.defer = defer;
 
 /***/ }),
 
-/***/ "./node_modules/rxjs/internal/observable/empty.js":
-/*!********************************************************!*\
-  !*** ./node_modules/rxjs/internal/observable/empty.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
-exports.EMPTY = new Observable_1.Observable(function (subscriber) { return subscriber.complete(); });
-function empty(scheduler) {
-    return scheduler ? emptyScheduled(scheduler) : exports.EMPTY;
-}
-exports.empty = empty;
-function emptyScheduled(scheduler) {
-    return new Observable_1.Observable(function (subscriber) { return scheduler.schedule(function () { return subscriber.complete(); }); });
-}
-//# sourceMappingURL=empty.js.map
-
-/***/ }),
-
 /***/ "./node_modules/rxjs/internal/observable/forkJoin.js":
 /*!***********************************************************!*\
   !*** ./node_modules/rxjs/internal/observable/forkJoin.js ***!
@@ -1474,76 +1553,141 @@ function emptyScheduled(scheduler) {
 
 "use strict";
 
+var __extends = (this && this.__extends) || (function () {
+    var extendStatics = function (d, b) {
+        extendStatics = Object.setPrototypeOf ||
+            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+        return extendStatics(d, b);
+    }
+    return function (d, b) {
+        extendStatics(d, b);
+        function __() { this.constructor = d; }
+        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+    };
+})();
 Object.defineProperty(exports, "__esModule", { value: true });
 var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
 var isArray_1 = __webpack_require__(/*! ../util/isArray */ "./node_modules/rxjs/internal/util/isArray.js");
+var empty_1 = __webpack_require__(/*! ./empty */ "./node_modules/rxjs/internal/observable/empty.js");
+var subscribeToResult_1 = __webpack_require__(/*! ../util/subscribeToResult */ "./node_modules/rxjs/internal/util/subscribeToResult.js");
+var OuterSubscriber_1 = __webpack_require__(/*! ../OuterSubscriber */ "./node_modules/rxjs/internal/OuterSubscriber.js");
 var map_1 = __webpack_require__(/*! ../operators/map */ "./node_modules/rxjs/internal/operators/map.js");
-var isObject_1 = __webpack_require__(/*! ../util/isObject */ "./node_modules/rxjs/internal/util/isObject.js");
-var from_1 = __webpack_require__(/*! ./from */ "./node_modules/rxjs/internal/observable/from.js");
 function forkJoin() {
     var sources = [];
     for (var _i = 0; _i < arguments.length; _i++) {
         sources[_i] = arguments[_i];
     }
-    if (sources.length === 1) {
-        var first_1 = sources[0];
-        if (isArray_1.isArray(first_1)) {
-            return forkJoinInternal(first_1, null);
-        }
-        if (isObject_1.isObject(first_1) && Object.getPrototypeOf(first_1) === Object.prototype) {
-            var keys = Object.keys(first_1);
-            return forkJoinInternal(keys.map(function (key) { return first_1[key]; }), keys);
-        }
-    }
+    var resultSelector;
     if (typeof sources[sources.length - 1] === 'function') {
-        var resultSelector_1 = sources.pop();
-        sources = (sources.length === 1 && isArray_1.isArray(sources[0])) ? sources[0] : sources;
-        return forkJoinInternal(sources, null).pipe(map_1.map(function (args) { return resultSelector_1.apply(void 0, args); }));
+        resultSelector = sources.pop();
     }
-    return forkJoinInternal(sources, null);
-}
-exports.forkJoin = forkJoin;
-function forkJoinInternal(sources, keys) {
+    if (sources.length === 1 && isArray_1.isArray(sources[0])) {
+        sources = sources[0];
+    }
+    if (sources.length === 0) {
+        return empty_1.EMPTY;
+    }
+    if (resultSelector) {
+        return forkJoin(sources).pipe(map_1.map(function (args) { return resultSelector.apply(void 0, args); }));
+    }
     return new Observable_1.Observable(function (subscriber) {
-        var len = sources.length;
-        if (len === 0) {
-            subscriber.complete();
-            return;
-        }
-        var values = new Array(len);
-        var completed = 0;
-        var emitted = 0;
-        var _loop_1 = function (i) {
-            var source = from_1.from(sources[i]);
-            var hasValue = false;
-            subscriber.add(source.subscribe({
-                next: function (value) {
-                    if (!hasValue) {
-                        hasValue = true;
-                        emitted++;
-                    }
-                    values[i] = value;
-                },
-                error: function (err) { return subscriber.error(err); },
-                complete: function () {
-                    completed++;
-                    if (completed === len || !hasValue) {
-                        if (emitted === len) {
-                            subscriber.next(keys ?
-                                keys.reduce(function (result, key, i) { return (result[key] = values[i], result); }, {}) :
-                                values);
-                        }
-                        subscriber.complete();
-                    }
-                }
-            }));
-        };
-        for (var i = 0; i < len; i++) {
-            _loop_1(i);
-        }
+        return new ForkJoinSubscriber(subscriber, sources);
     });
 }
+exports.forkJoin = forkJoin;
+var ForkJoinSubscriber = (function (_super) {
+    __extends(ForkJoinSubscriber, _super);
+    function ForkJoinSubscriber(destination, sources) {
+        var _this = _super.call(this, destination) || this;
+        _this.sources = sources;
+        _this.completed = 0;
+        _this.haveValues = 0;
+        var len = sources.length;
+        _this.values = new Array(len);
+        for (var i = 0; i < len; i++) {
+            var source = sources[i];
+            var innerSubscription = subscribeToResult_1.subscribeToResult(_this, source, null, i);
+            if (innerSubscription) {
+                _this.add(innerSubscription);
+            }
+        }
+        return _this;
+    }
+    ForkJoinSubscriber.prototype.notifyNext = function (outerValue, innerValue, outerIndex, innerIndex, innerSub) {
+        this.values[outerIndex] = innerValue;
+        if (!innerSub._hasValue) {
+            innerSub._hasValue = true;
+            this.haveValues++;
+        }
+    };
+    ForkJoinSubscriber.prototype.notifyComplete = function (innerSub) {
+        var _a = this, destination = _a.destination, haveValues = _a.haveValues, values = _a.values;
+        var len = values.length;
+        if (!innerSub._hasValue) {
+            destination.complete();
+            return;
+        }
+        this.completed++;
+        if (this.completed !== len) {
+            return;
+        }
+        if (haveValues === len) {
+            destination.next(values);
+        }
+        destination.complete();
+    };
+    return ForkJoinSubscriber;
+}(OuterSubscriber_1.OuterSubscriber));
 //# sourceMappingURL=forkJoin.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/internal/observable/from.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/rxjs/internal/observable/from.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
+var isPromise_1 = __webpack_require__(/*! ../util/isPromise */ "./node_modules/rxjs/internal/util/isPromise.js");
+var isArrayLike_1 = __webpack_require__(/*! ../util/isArrayLike */ "./node_modules/rxjs/internal/util/isArrayLike.js");
+var isInteropObservable_1 = __webpack_require__(/*! ../util/isInteropObservable */ "./node_modules/rxjs/internal/util/isInteropObservable.js");
+var isIterable_1 = __webpack_require__(/*! ../util/isIterable */ "./node_modules/rxjs/internal/util/isIterable.js");
+var fromArray_1 = __webpack_require__(/*! ./fromArray */ "./node_modules/rxjs/internal/observable/fromArray.js");
+var fromPromise_1 = __webpack_require__(/*! ./fromPromise */ "./node_modules/rxjs/internal/observable/fromPromise.js");
+var fromIterable_1 = __webpack_require__(/*! ./fromIterable */ "./node_modules/rxjs/internal/observable/fromIterable.js");
+var fromObservable_1 = __webpack_require__(/*! ./fromObservable */ "./node_modules/rxjs/internal/observable/fromObservable.js");
+var subscribeTo_1 = __webpack_require__(/*! ../util/subscribeTo */ "./node_modules/rxjs/internal/util/subscribeTo.js");
+function from(input, scheduler) {
+    if (!scheduler) {
+        if (input instanceof Observable_1.Observable) {
+            return input;
+        }
+        return new Observable_1.Observable(subscribeTo_1.subscribeTo(input));
+    }
+    if (input != null) {
+        if (isInteropObservable_1.isInteropObservable(input)) {
+            return fromObservable_1.fromObservable(input, scheduler);
+        }
+        else if (isPromise_1.isPromise(input)) {
+            return fromPromise_1.fromPromise(input, scheduler);
+        }
+        else if (isArrayLike_1.isArrayLike(input)) {
+            return fromArray_1.fromArray(input, scheduler);
+        }
+        else if (isIterable_1.isIterable(input) || typeof input === 'string') {
+            return fromIterable_1.fromIterable(input, scheduler);
+        }
+    }
+    throw new TypeError((input !== null && typeof input || input) + ' is not observable');
+}
+exports.from = from;
+//# sourceMappingURL=from.js.map
 
 /***/ }),
 
@@ -1665,6 +1809,146 @@ function fromEventPattern(addHandler, removeHandler, resultSelector) {
 }
 exports.fromEventPattern = fromEventPattern;
 //# sourceMappingURL=fromEventPattern.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/internal/observable/fromIterable.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs/internal/observable/fromIterable.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
+var Subscription_1 = __webpack_require__(/*! ../Subscription */ "./node_modules/rxjs/internal/Subscription.js");
+var iterator_1 = __webpack_require__(/*! ../symbol/iterator */ "./node_modules/rxjs/internal/symbol/iterator.js");
+var subscribeToIterable_1 = __webpack_require__(/*! ../util/subscribeToIterable */ "./node_modules/rxjs/internal/util/subscribeToIterable.js");
+function fromIterable(input, scheduler) {
+    if (!input) {
+        throw new Error('Iterable cannot be null');
+    }
+    if (!scheduler) {
+        return new Observable_1.Observable(subscribeToIterable_1.subscribeToIterable(input));
+    }
+    else {
+        return new Observable_1.Observable(function (subscriber) {
+            var sub = new Subscription_1.Subscription();
+            var iterator;
+            sub.add(function () {
+                if (iterator && typeof iterator.return === 'function') {
+                    iterator.return();
+                }
+            });
+            sub.add(scheduler.schedule(function () {
+                iterator = input[iterator_1.iterator]();
+                sub.add(scheduler.schedule(function () {
+                    if (subscriber.closed) {
+                        return;
+                    }
+                    var value;
+                    var done;
+                    try {
+                        var result = iterator.next();
+                        value = result.value;
+                        done = result.done;
+                    }
+                    catch (err) {
+                        subscriber.error(err);
+                        return;
+                    }
+                    if (done) {
+                        subscriber.complete();
+                    }
+                    else {
+                        subscriber.next(value);
+                        this.schedule();
+                    }
+                }));
+            }));
+            return sub;
+        });
+    }
+}
+exports.fromIterable = fromIterable;
+//# sourceMappingURL=fromIterable.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/internal/observable/fromObservable.js":
+/*!*****************************************************************!*\
+  !*** ./node_modules/rxjs/internal/observable/fromObservable.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
+var Subscription_1 = __webpack_require__(/*! ../Subscription */ "./node_modules/rxjs/internal/Subscription.js");
+var observable_1 = __webpack_require__(/*! ../symbol/observable */ "./node_modules/rxjs/internal/symbol/observable.js");
+var subscribeToObservable_1 = __webpack_require__(/*! ../util/subscribeToObservable */ "./node_modules/rxjs/internal/util/subscribeToObservable.js");
+function fromObservable(input, scheduler) {
+    if (!scheduler) {
+        return new Observable_1.Observable(subscribeToObservable_1.subscribeToObservable(input));
+    }
+    else {
+        return new Observable_1.Observable(function (subscriber) {
+            var sub = new Subscription_1.Subscription();
+            sub.add(scheduler.schedule(function () {
+                var observable = input[observable_1.observable]();
+                sub.add(observable.subscribe({
+                    next: function (value) { sub.add(scheduler.schedule(function () { return subscriber.next(value); })); },
+                    error: function (err) { sub.add(scheduler.schedule(function () { return subscriber.error(err); })); },
+                    complete: function () { sub.add(scheduler.schedule(function () { return subscriber.complete(); })); },
+                }));
+            }));
+            return sub;
+        });
+    }
+}
+exports.fromObservable = fromObservable;
+//# sourceMappingURL=fromObservable.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/internal/observable/fromPromise.js":
+/*!**************************************************************!*\
+  !*** ./node_modules/rxjs/internal/observable/fromPromise.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
+var Subscription_1 = __webpack_require__(/*! ../Subscription */ "./node_modules/rxjs/internal/Subscription.js");
+var subscribeToPromise_1 = __webpack_require__(/*! ../util/subscribeToPromise */ "./node_modules/rxjs/internal/util/subscribeToPromise.js");
+function fromPromise(input, scheduler) {
+    if (!scheduler) {
+        return new Observable_1.Observable(subscribeToPromise_1.subscribeToPromise(input));
+    }
+    else {
+        return new Observable_1.Observable(function (subscriber) {
+            var sub = new Subscription_1.Subscription();
+            sub.add(scheduler.schedule(function () { return input.then(function (value) {
+                sub.add(scheduler.schedule(function () {
+                    subscriber.next(value);
+                    sub.add(scheduler.schedule(function () { return subscriber.complete(); }));
+                }));
+            }, function (err) {
+                sub.add(scheduler.schedule(function () { return subscriber.error(err); }));
+            }); }));
+            return sub;
+        });
+    }
+}
+exports.fromPromise = fromPromise;
+//# sourceMappingURL=fromPromise.js.map
 
 /***/ }),
 
@@ -2017,31 +2301,6 @@ function dispatch(state) {
 }
 exports.dispatch = dispatch;
 //# sourceMappingURL=pairs.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/internal/observable/partition.js":
-/*!************************************************************!*\
-  !*** ./node_modules/rxjs/internal/observable/partition.js ***!
-  \************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-Object.defineProperty(exports, "__esModule", { value: true });
-var not_1 = __webpack_require__(/*! ../util/not */ "./node_modules/rxjs/internal/util/not.js");
-var subscribeTo_1 = __webpack_require__(/*! ../util/subscribeTo */ "./node_modules/rxjs/internal/util/subscribeTo.js");
-var filter_1 = __webpack_require__(/*! ../operators/filter */ "./node_modules/rxjs/internal/operators/filter.js");
-var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
-function partition(source, predicate, thisArg) {
-    return [
-        filter_1.filter(predicate, thisArg)(new Observable_1.Observable(subscribeTo_1.subscribeTo(source))),
-        filter_1.filter(not_1.not(predicate, thisArg))(new Observable_1.Observable(subscribeTo_1.subscribeTo(source)))
-    ];
-}
-exports.partition = partition;
-//# sourceMappingURL=partition.js.map
 
 /***/ }),
 
@@ -2591,74 +2850,6 @@ function concatAll() {
 }
 exports.concatAll = concatAll;
 //# sourceMappingURL=concatAll.js.map
-
-/***/ }),
-
-/***/ "./node_modules/rxjs/internal/operators/filter.js":
-/*!********************************************************!*\
-  !*** ./node_modules/rxjs/internal/operators/filter.js ***!
-  \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-var __extends = (this && this.__extends) || (function () {
-    var extendStatics = function (d, b) {
-        extendStatics = Object.setPrototypeOf ||
-            ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
-            function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
-        return extendStatics(d, b);
-    }
-    return function (d, b) {
-        extendStatics(d, b);
-        function __() { this.constructor = d; }
-        d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
-    };
-})();
-Object.defineProperty(exports, "__esModule", { value: true });
-var Subscriber_1 = __webpack_require__(/*! ../Subscriber */ "./node_modules/rxjs/internal/Subscriber.js");
-function filter(predicate, thisArg) {
-    return function filterOperatorFunction(source) {
-        return source.lift(new FilterOperator(predicate, thisArg));
-    };
-}
-exports.filter = filter;
-var FilterOperator = (function () {
-    function FilterOperator(predicate, thisArg) {
-        this.predicate = predicate;
-        this.thisArg = thisArg;
-    }
-    FilterOperator.prototype.call = function (subscriber, source) {
-        return source.subscribe(new FilterSubscriber(subscriber, this.predicate, this.thisArg));
-    };
-    return FilterOperator;
-}());
-var FilterSubscriber = (function (_super) {
-    __extends(FilterSubscriber, _super);
-    function FilterSubscriber(destination, predicate, thisArg) {
-        var _this = _super.call(this, destination) || this;
-        _this.predicate = predicate;
-        _this.thisArg = thisArg;
-        _this.count = 0;
-        return _this;
-    }
-    FilterSubscriber.prototype._next = function (value) {
-        var result;
-        try {
-            result = this.predicate.call(this.thisArg, value, this.count++);
-        }
-        catch (err) {
-            this.destination.error(err);
-            return;
-        }
-        if (result) {
-            this.destination.next(value);
-        }
-    };
-    return FilterSubscriber;
-}(Subscriber_1.Subscriber));
-//# sourceMappingURL=filter.js.map
 
 /***/ }),
 
@@ -3999,6 +4190,29 @@ exports.queue = new QueueScheduler_1.QueueScheduler(QueueAction_1.QueueAction);
 
 /***/ }),
 
+/***/ "./node_modules/rxjs/internal/symbol/iterator.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/rxjs/internal/symbol/iterator.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+function getSymbolIterator() {
+    if (typeof Symbol !== 'function' || !Symbol.iterator) {
+        return '@@iterator';
+    }
+    return Symbol.iterator;
+}
+exports.getSymbolIterator = getSymbolIterator;
+exports.iterator = getSymbolIterator();
+exports.$$iterator = exports.iterator;
+//# sourceMappingURL=iterator.js.map
+
+/***/ }),
+
 /***/ "./node_modules/rxjs/internal/util/ArgumentOutOfRangeError.js":
 /*!********************************************************************!*\
   !*** ./node_modules/rxjs/internal/util/ArgumentOutOfRangeError.js ***!
@@ -4138,6 +4352,59 @@ exports.identity = identity;
 
 /***/ }),
 
+/***/ "./node_modules/rxjs/internal/util/isArrayLike.js":
+/*!********************************************************!*\
+  !*** ./node_modules/rxjs/internal/util/isArrayLike.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.isArrayLike = (function (x) { return x && typeof x.length === 'number' && typeof x !== 'function'; });
+//# sourceMappingURL=isArrayLike.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/internal/util/isInteropObservable.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs/internal/util/isInteropObservable.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var observable_1 = __webpack_require__(/*! ../symbol/observable */ "./node_modules/rxjs/internal/symbol/observable.js");
+function isInteropObservable(input) {
+    return input && typeof input[observable_1.observable] === 'function';
+}
+exports.isInteropObservable = isInteropObservable;
+//# sourceMappingURL=isInteropObservable.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/internal/util/isIterable.js":
+/*!*******************************************************!*\
+  !*** ./node_modules/rxjs/internal/util/isIterable.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var iterator_1 = __webpack_require__(/*! ../symbol/iterator */ "./node_modules/rxjs/internal/symbol/iterator.js");
+function isIterable(input) {
+    return input && typeof input[iterator_1.iterator] === 'function';
+}
+exports.isIterable = isIterable;
+//# sourceMappingURL=isIterable.js.map
+
+/***/ }),
+
 /***/ "./node_modules/rxjs/internal/util/isNumeric.js":
 /*!******************************************************!*\
   !*** ./node_modules/rxjs/internal/util/isNumeric.js ***!
@@ -4176,26 +4443,163 @@ exports.isObservable = isObservable;
 
 /***/ }),
 
-/***/ "./node_modules/rxjs/internal/util/not.js":
-/*!************************************************!*\
-  !*** ./node_modules/rxjs/internal/util/not.js ***!
-  \************************************************/
+/***/ "./node_modules/rxjs/internal/util/isPromise.js":
+/*!******************************************************!*\
+  !*** ./node_modules/rxjs/internal/util/isPromise.js ***!
+  \******************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 Object.defineProperty(exports, "__esModule", { value: true });
-function not(pred, thisArg) {
-    function notPred() {
-        return !(notPred.pred.apply(notPred.thisArg, arguments));
-    }
-    notPred.pred = pred;
-    notPred.thisArg = thisArg;
-    return notPred;
+function isPromise(value) {
+    return !!value && typeof value.subscribe !== 'function' && typeof value.then === 'function';
 }
-exports.not = not;
-//# sourceMappingURL=not.js.map
+exports.isPromise = isPromise;
+//# sourceMappingURL=isPromise.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/internal/util/subscribeTo.js":
+/*!********************************************************!*\
+  !*** ./node_modules/rxjs/internal/util/subscribeTo.js ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
+var subscribeToArray_1 = __webpack_require__(/*! ./subscribeToArray */ "./node_modules/rxjs/internal/util/subscribeToArray.js");
+var subscribeToPromise_1 = __webpack_require__(/*! ./subscribeToPromise */ "./node_modules/rxjs/internal/util/subscribeToPromise.js");
+var subscribeToIterable_1 = __webpack_require__(/*! ./subscribeToIterable */ "./node_modules/rxjs/internal/util/subscribeToIterable.js");
+var subscribeToObservable_1 = __webpack_require__(/*! ./subscribeToObservable */ "./node_modules/rxjs/internal/util/subscribeToObservable.js");
+var isArrayLike_1 = __webpack_require__(/*! ./isArrayLike */ "./node_modules/rxjs/internal/util/isArrayLike.js");
+var isPromise_1 = __webpack_require__(/*! ./isPromise */ "./node_modules/rxjs/internal/util/isPromise.js");
+var isObject_1 = __webpack_require__(/*! ./isObject */ "./node_modules/rxjs/internal/util/isObject.js");
+var iterator_1 = __webpack_require__(/*! ../symbol/iterator */ "./node_modules/rxjs/internal/symbol/iterator.js");
+var observable_1 = __webpack_require__(/*! ../symbol/observable */ "./node_modules/rxjs/internal/symbol/observable.js");
+exports.subscribeTo = function (result) {
+    if (result instanceof Observable_1.Observable) {
+        return function (subscriber) {
+            if (result._isScalar) {
+                subscriber.next(result.value);
+                subscriber.complete();
+                return undefined;
+            }
+            else {
+                return result.subscribe(subscriber);
+            }
+        };
+    }
+    else if (!!result && typeof result[observable_1.observable] === 'function') {
+        return subscribeToObservable_1.subscribeToObservable(result);
+    }
+    else if (isArrayLike_1.isArrayLike(result)) {
+        return subscribeToArray_1.subscribeToArray(result);
+    }
+    else if (isPromise_1.isPromise(result)) {
+        return subscribeToPromise_1.subscribeToPromise(result);
+    }
+    else if (!!result && typeof result[iterator_1.iterator] === 'function') {
+        return subscribeToIterable_1.subscribeToIterable(result);
+    }
+    else {
+        var value = isObject_1.isObject(result) ? 'an invalid object' : "'" + result + "'";
+        var msg = "You provided " + value + " where a stream was expected."
+            + ' You can provide an Observable, Promise, Array, or Iterable.';
+        throw new TypeError(msg);
+    }
+};
+//# sourceMappingURL=subscribeTo.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/internal/util/subscribeToIterable.js":
+/*!****************************************************************!*\
+  !*** ./node_modules/rxjs/internal/util/subscribeToIterable.js ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var iterator_1 = __webpack_require__(/*! ../symbol/iterator */ "./node_modules/rxjs/internal/symbol/iterator.js");
+exports.subscribeToIterable = function (iterable) { return function (subscriber) {
+    var iterator = iterable[iterator_1.iterator]();
+    do {
+        var item = iterator.next();
+        if (item.done) {
+            subscriber.complete();
+            break;
+        }
+        subscriber.next(item.value);
+        if (subscriber.closed) {
+            break;
+        }
+    } while (true);
+    if (typeof iterator.return === 'function') {
+        subscriber.add(function () {
+            if (iterator.return) {
+                iterator.return();
+            }
+        });
+    }
+    return subscriber;
+}; };
+//# sourceMappingURL=subscribeToIterable.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/internal/util/subscribeToObservable.js":
+/*!******************************************************************!*\
+  !*** ./node_modules/rxjs/internal/util/subscribeToObservable.js ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var observable_1 = __webpack_require__(/*! ../symbol/observable */ "./node_modules/rxjs/internal/symbol/observable.js");
+exports.subscribeToObservable = function (obj) { return function (subscriber) {
+    var obs = obj[observable_1.observable]();
+    if (typeof obs.subscribe !== 'function') {
+        throw new TypeError('Provided object does not correctly implement Symbol.observable');
+    }
+    else {
+        return obs.subscribe(subscriber);
+    }
+}; };
+//# sourceMappingURL=subscribeToObservable.js.map
+
+/***/ }),
+
+/***/ "./node_modules/rxjs/internal/util/subscribeToPromise.js":
+/*!***************************************************************!*\
+  !*** ./node_modules/rxjs/internal/util/subscribeToPromise.js ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+Object.defineProperty(exports, "__esModule", { value: true });
+var hostReportError_1 = __webpack_require__(/*! ./hostReportError */ "./node_modules/rxjs/internal/util/hostReportError.js");
+exports.subscribeToPromise = function (promise) { return function (subscriber) {
+    promise.then(function (value) {
+        if (!subscriber.closed) {
+            subscriber.next(value);
+            subscriber.complete();
+        }
+    }, function (err) { return subscriber.error(err); })
+        .then(null, hostReportError_1.hostReportError);
+    return subscriber;
+}; };
+//# sourceMappingURL=subscribeToPromise.js.map
 
 /***/ }),
 
@@ -4211,14 +4615,10 @@ exports.not = not;
 Object.defineProperty(exports, "__esModule", { value: true });
 var InnerSubscriber_1 = __webpack_require__(/*! ../InnerSubscriber */ "./node_modules/rxjs/internal/InnerSubscriber.js");
 var subscribeTo_1 = __webpack_require__(/*! ./subscribeTo */ "./node_modules/rxjs/internal/util/subscribeTo.js");
-var Observable_1 = __webpack_require__(/*! ../Observable */ "./node_modules/rxjs/internal/Observable.js");
 function subscribeToResult(outerSubscriber, result, outerValue, outerIndex, destination) {
     if (destination === void 0) { destination = new InnerSubscriber_1.InnerSubscriber(outerSubscriber, outerValue, outerIndex); }
     if (destination.closed) {
-        return undefined;
-    }
-    if (result instanceof Observable_1.Observable) {
-        return result.subscribe(destination);
+        return;
     }
     return subscribeTo_1.subscribeTo(result)(destination);
 }
@@ -4237,23 +4637,18 @@ exports.subscribeToResult = subscribeToResult;
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardRoutingModule", function() { return DashboardRoutingModule; });
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _dashboard_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard.component */ "./src/app/components/dashboard/dashboard.component.ts");
-/* harmony import */ var _dashboard_sidenav_dashboard_sidenav_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dashboard-sidenav/dashboard-sidenav.component */ "./src/app/components/dashboard/dashboard-sidenav/dashboard-sidenav.component.ts");
-/* harmony import */ var _user_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../user/user-profile/user-profile.component */ "./src/app/components/user/user-profile/user-profile.component.ts");
-/* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../guards/auth.guard */ "./src/app/guards/auth.guard.ts");
-/* harmony import */ var _tools_tools_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./tools/tools.component */ "./src/app/components/dashboard/tools/tools.component.ts");
-/* harmony import */ var _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./product-editor/product-editor.component */ "./src/app/components/dashboard/product-editor/product-editor.component.ts");
-/* harmony import */ var _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./product-editor-form/product-editor-form.component */ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.ts");
-/* harmony import */ var _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./mc-editor/mc-editor.component */ "./src/app/components/dashboard/mc-editor/mc-editor.component.ts");
-/* harmony import */ var _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./mc-editor-form/mc-editor-form.component */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _dashboard_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dashboard.component */ "./src/app/components/dashboard/dashboard.component.ts");
+/* harmony import */ var _dashboard_sidenav_dashboard_sidenav_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./dashboard-sidenav/dashboard-sidenav.component */ "./src/app/components/dashboard/dashboard-sidenav/dashboard-sidenav.component.ts");
+/* harmony import */ var _user_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../user/user-profile/user-profile.component */ "./src/app/components/user/user-profile/user-profile.component.ts");
+/* harmony import */ var _guards_auth_guard__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../guards/auth.guard */ "./src/app/guards/auth.guard.ts");
+/* harmony import */ var _tools_tools_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./tools/tools.component */ "./src/app/components/dashboard/tools/tools.component.ts");
+/* harmony import */ var _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./product-editor/product-editor.component */ "./src/app/components/dashboard/product-editor/product-editor.component.ts");
+/* harmony import */ var _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./product-editor-form/product-editor-form.component */ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.ts");
+/* harmony import */ var _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./mc-editor/mc-editor.component */ "./src/app/components/dashboard/mc-editor/mc-editor.component.ts");
+/* harmony import */ var _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./mc-editor-form/mc-editor-form.component */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.ts");
 
 
 
@@ -4265,64 +4660,65 @@ var __decorate = (undefined && undefined.__decorate) || function (decorators, ta
 
 
 
-var dashboardRoutes = [
+
+const dashboardRoutes = [
     {
         path: '',
-        component: _dashboard_component__WEBPACK_IMPORTED_MODULE_2__["DashboardComponent"],
+        component: _dashboard_component__WEBPACK_IMPORTED_MODULE_3__["DashboardComponent"],
         children: [
             {
                 path: '',
-                component: _dashboard_sidenav_dashboard_sidenav_component__WEBPACK_IMPORTED_MODULE_3__["DashboardSidenavComponent"],
+                component: _dashboard_sidenav_dashboard_sidenav_component__WEBPACK_IMPORTED_MODULE_4__["DashboardSidenavComponent"],
                 outlet: 'dashboardSidenav',
-                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             {
                 path: '',
-                component: _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_7__["ProductEditorComponent"],
-                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                component: _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_8__["ProductEditorComponent"],
+                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             {
                 path: 'tools',
-                component: _tools_tools_component__WEBPACK_IMPORTED_MODULE_6__["ToolsComponent"],
-                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                component: _tools_tools_component__WEBPACK_IMPORTED_MODULE_7__["ToolsComponent"],
+                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             {
                 path: 'product-editor',
-                component: _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_7__["ProductEditorComponent"],
-                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                component: _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_8__["ProductEditorComponent"],
+                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             {
                 path: 'product-editor-new/:parentCategory_id/:parentCategoryName',
-                component: _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_8__["ProductEditorFormComponent"],
-                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                component: _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_9__["ProductEditorFormComponent"],
+                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             {
                 path: 'product-editor-edit/:parentCategory_id/:parentCategoryName/:_id',
-                component: _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_8__["ProductEditorFormComponent"],
-                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                component: _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_9__["ProductEditorFormComponent"],
+                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             {
                 path: 'mc-editor',
-                component: _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_9__["McEditorComponent"],
-                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                component: _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_10__["McEditorComponent"],
+                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             {
                 path: 'mc/new/:parent_id',
-                component: _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_10__["McEditorFormComponent"],
-                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                component: _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_11__["McEditorFormComponent"],
+                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             {
                 path: 'mc/edit/:_id',
-                component: _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_10__["McEditorFormComponent"],
-                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_5__["AuthGuard"]],
+                component: _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_11__["McEditorFormComponent"],
+                canActivate: [_guards_auth_guard__WEBPACK_IMPORTED_MODULE_6__["AuthGuard"]],
                 data: { auth: 'manager' },
             },
             // {
@@ -4349,37 +4745,23 @@ var dashboardRoutes = [
             // },
             {
                 path: 'profile',
-                component: _user_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_4__["UserProfileComponent"],
+                component: _user_user_profile_user_profile_component__WEBPACK_IMPORTED_MODULE_5__["UserProfileComponent"],
             },
         ]
     }
 ];
-var DashboardRoutingModule = /** @class */ (function () {
-    function DashboardRoutingModule() {
-    }
-    DashboardRoutingModule = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
-            imports: [
-                _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forChild(dashboardRoutes)
-            ],
-            exports: [_angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"]]
-        })
-    ], DashboardRoutingModule);
-    return DashboardRoutingModule;
-}());
+let DashboardRoutingModule = class DashboardRoutingModule {
+};
+DashboardRoutingModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
+        imports: [
+            _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forChild(dashboardRoutes)
+        ],
+        exports: [_angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"]]
+    })
+], DashboardRoutingModule);
 
 
-
-/***/ }),
-
-/***/ "./src/app/components/dashboard/dashboard-sidenav/dashboard-sidenav.component.html":
-/*!*****************************************************************************************!*\
-  !*** ./src/app/components/dashboard/dashboard-sidenav/dashboard-sidenav.component.html ***!
-  \*****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"row\">\r\n    <div *ngFor=\"let dashboardSidenavItem of dashboardSidenavItems\"\r\n      [ngClass]=\"{'active': isActiveTemplateVariable.isActive}\" class=\"cell sidenav-menu-item\" fxFlex=\"100\"\r\n      fxLayoutAlign=\"start center\" (click)=\"onRouting(dashboardSidenavItem._id)\">\r\n      <a class=\"link\" [routerLinkActive]=\"['']\" [routerLinkActiveOptions]=\"{exact: true}\"\r\n        #isActiveTemplateVariable=\"routerLinkActive\" [attr.aria-label]=\"dashboardSidenavItem.name\"\r\n        [routerLink]=\"['/dashboard', dashboardSidenavItem._id]\">\r\n        <span class=\"type2\">\r\n          <!-- <mat-icon>edit</mat-icon> -->\r\n          <span>{{dashboardSidenavItem.name}}</span>\r\n        </span>\r\n      </a>\r\n    </div>\r\n  </div>\r\n</div>"
 
 /***/ }),
 
@@ -4387,10 +4769,12 @@ module.exports = "<div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"r
 /*!*****************************************************************************************!*\
   !*** ./src/app/components/dashboard/dashboard-sidenav/dashboard-sidenav.component.scss ***!
   \*****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL2Rhc2hib2FyZC1zaWRlbmF2L2Rhc2hib2FyZC1zaWRlbmF2LmNvbXBvbmVudC5zY3NzIn0= */"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL2Rhc2hib2FyZC1zaWRlbmF2L2Rhc2hib2FyZC1zaWRlbmF2LmNvbXBvbmVudC5zY3NzIn0= */");
 
 /***/ }),
 
@@ -4404,61 +4788,43 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardSidenavComponent", function() { return DashboardSidenavComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
 
 
 
-var DashboardSidenavComponent = /** @class */ (function () {
-    function DashboardSidenavComponent(router, catalogService) {
+
+let DashboardSidenavComponent = class DashboardSidenavComponent {
+    constructor(router, catalogService) {
         this.router = router;
         this.catalogService = catalogService;
     }
-    DashboardSidenavComponent.prototype.ngOnInit = function () {
-        var _this = this;
+    ngOnInit() {
         this.catalogService.getChildren('dashboard')
-            .subscribe(function (menuItems) {
-            _this.dashboardSidenavItems = menuItems.data;
+            .subscribe(menuItems => {
+            this.dashboardSidenavItems = menuItems.data;
             // console.log('dashboardSidenavItems', this.dashboardSidenavItems);
         });
-    };
-    DashboardSidenavComponent.prototype.onRouting = function (link) {
+    }
+    onRouting(link) {
         this.router.navigate(['/dashboard', link]);
-    };
-    DashboardSidenavComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-dashboard-sidenav',
-            template: __webpack_require__(/*! ./dashboard-sidenav.component.html */ "./src/app/components/dashboard/dashboard-sidenav/dashboard-sidenav.component.html"),
-            styles: [__webpack_require__(/*! ./dashboard-sidenav.component.scss */ "./src/app/components/dashboard/dashboard-sidenav/dashboard-sidenav.component.scss")]
-        }),
-        __metadata("design:paramtypes", [_angular_router__WEBPACK_IMPORTED_MODULE_1__["Router"],
-            _services_catalog_service__WEBPACK_IMPORTED_MODULE_2__["CatalogService"]])
-    ], DashboardSidenavComponent);
-    return DashboardSidenavComponent;
-}());
+    }
+};
+DashboardSidenavComponent.ctorParameters = () => [
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+    { type: _services_catalog_service__WEBPACK_IMPORTED_MODULE_3__["CatalogService"] }
+];
+DashboardSidenavComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-dashboard-sidenav',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./dashboard-sidenav.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/dashboard-sidenav/dashboard-sidenav.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./dashboard-sidenav.component.scss */ "./src/app/components/dashboard/dashboard-sidenav/dashboard-sidenav.component.scss")).default]
+    })
+], DashboardSidenavComponent);
 
 
-
-/***/ }),
-
-/***/ "./src/app/components/dashboard/dashboard.component.html":
-/*!***************************************************************!*\
-  !*** ./src/app/components/dashboard/dashboard.component.html ***!
-  \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div id=\"dashboard\">\r\n  <mat-sidenav-container fxFlex fullscreen>\r\n    <mat-sidenav class=\"sidenav\" #sidenav mode=\"side\" [opened]=\"media.isActive('gt-sm')\">\r\n      <div fxShow=\"true\" fxHide.gt-sm=\"true\" class=\"sidenav-mat-toolbar-row\">\r\n        <a mat-button (click)=\"sidenav.toggle()\" aria-label=\"arrow_left\">\r\n          <mat-icon>arrow_left</mat-icon>\r\n        </a>\r\n      </div>\r\n      <router-outlet name=\"dashboardSidenav\"></router-outlet>\r\n    </mat-sidenav>\r\n    <mat-sidenav-content>\r\n      <div *ngIf=\"!sidenav.opened\" class=\"menu-button\" fxShow=\"true\" fxHide.gt-sm=\"true\">\r\n        <button mat-button (click)=\"sidenav.toggle()\" aria-label=\"arrow_right\">\r\n          <mat-icon>arrow_right</mat-icon>\r\n        </button>\r\n      </div>\r\n      <div>\r\n        <router-outlet></router-outlet>\r\n      </div>\r\n    </mat-sidenav-content>\r\n  </mat-sidenav-container>\r\n</div>"
 
 /***/ }),
 
@@ -4466,10 +4832,12 @@ module.exports = "<div id=\"dashboard\">\r\n  <mat-sidenav-container fxFlex full
 /*!***************************************************************!*\
   !*** ./src/app/components/dashboard/dashboard.component.scss ***!
   \***************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL2Rhc2hib2FyZC5jb21wb25lbnQuc2NzcyJ9 */"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL2Rhc2hib2FyZC5jb21wb25lbnQuc2NzcyJ9 */");
 
 /***/ }),
 
@@ -4483,40 +4851,34 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardComponent", function() { return DashboardComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_flex_layout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/flex-layout */ "./node_modules/@angular/flex-layout/esm5/flex-layout.es5.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_flex_layout__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/flex-layout */ "./node_modules/@angular/flex-layout/esm2015/flex-layout.js");
 
 
-var DashboardComponent = /** @class */ (function () {
-    function DashboardComponent(media) {
+
+let DashboardComponent = class DashboardComponent {
+    constructor(media) {
         this.media = media;
         this.state = '';
     }
-    DashboardComponent.prototype.ngOnInit = function () {
+    ngOnInit() {
         // this.media.asObservable()
         //   .subscribe((change: MediaChange) => {
         //     this.state = change ? `'${change.mqAlias}' = (${change.mediaQuery})` : '';
         //   });
-    };
-    DashboardComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-dashboard',
-            template: __webpack_require__(/*! ./dashboard.component.html */ "./src/app/components/dashboard/dashboard.component.html"),
-            styles: [__webpack_require__(/*! ./dashboard.component.scss */ "./src/app/components/dashboard/dashboard.component.scss")]
-        }),
-        __metadata("design:paramtypes", [_angular_flex_layout__WEBPACK_IMPORTED_MODULE_1__["ObservableMedia"]])
-    ], DashboardComponent);
-    return DashboardComponent;
-}());
+    }
+};
+DashboardComponent.ctorParameters = () => [
+    { type: _angular_flex_layout__WEBPACK_IMPORTED_MODULE_2__["MediaObserver"] }
+];
+DashboardComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-dashboard',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./dashboard.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/dashboard.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./dashboard.component.scss */ "./src/app/components/dashboard/dashboard.component.scss")).default]
+    })
+], DashboardComponent);
 
 
 
@@ -4532,86 +4894,68 @@ var DashboardComponent = /** @class */ (function () {
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DashboardModule", function() { return DashboardModule; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./dashboard-routing.module */ "./src/app/components/dashboard/dashboard-routing.module.ts");
-/* harmony import */ var _dashboard_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dashboard.component */ "./src/app/components/dashboard/dashboard.component.ts");
-/* harmony import */ var _material_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../material.module */ "./src/app/material.module.ts");
-/* harmony import */ var _dashboard_sidenav_dashboard_sidenav_component__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./dashboard-sidenav/dashboard-sidenav.component */ "./src/app/components/dashboard/dashboard-sidenav/dashboard-sidenav.component.ts");
-/* harmony import */ var _user_user_module__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../user/user.module */ "./src/app/components/user/user.module.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/components/shared/shared.module.ts");
-/* harmony import */ var _tools_tools_component__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./tools/tools.component */ "./src/app/components/dashboard/tools/tools.component.ts");
-/* harmony import */ var _product_create_product_create_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./product-create/product-create.component */ "./src/app/components/dashboard/product-create/product-create.component.ts");
-/* harmony import */ var _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./product-editor/product-editor.component */ "./src/app/components/dashboard/product-editor/product-editor.component.ts");
-/* harmony import */ var _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./product-editor-form/product-editor-form.component */ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.ts");
-/* harmony import */ var _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./mc-editor/mc-editor.component */ "./src/app/components/dashboard/mc-editor/mc-editor.component.ts");
-/* harmony import */ var _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./mc-editor-form/mc-editor-form.component */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.ts");
-/* harmony import */ var _mcs_mcs_module__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ../mcs/mcs.module */ "./src/app/components/mcs/mcs.module.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+/* harmony import */ var _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./dashboard-routing.module */ "./src/app/components/dashboard/dashboard-routing.module.ts");
+/* harmony import */ var _dashboard_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./dashboard.component */ "./src/app/components/dashboard/dashboard.component.ts");
+/* harmony import */ var _material_module__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../material.module */ "./src/app/material.module.ts");
+/* harmony import */ var _dashboard_sidenav_dashboard_sidenav_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./dashboard-sidenav/dashboard-sidenav.component */ "./src/app/components/dashboard/dashboard-sidenav/dashboard-sidenav.component.ts");
+/* harmony import */ var _user_user_module__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../user/user.module */ "./src/app/components/user/user.module.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _shared_shared_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ../shared/shared.module */ "./src/app/components/shared/shared.module.ts");
+/* harmony import */ var _tools_tools_component__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./tools/tools.component */ "./src/app/components/dashboard/tools/tools.component.ts");
+/* harmony import */ var _product_create_product_create_component__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./product-create/product-create.component */ "./src/app/components/dashboard/product-create/product-create.component.ts");
+/* harmony import */ var _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./product-editor/product-editor.component */ "./src/app/components/dashboard/product-editor/product-editor.component.ts");
+/* harmony import */ var _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./product-editor-form/product-editor-form.component */ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.ts");
+/* harmony import */ var _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./mc-editor/mc-editor.component */ "./src/app/components/dashboard/mc-editor/mc-editor.component.ts");
+/* harmony import */ var _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./mc-editor-form/mc-editor-form.component */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.ts");
+/* harmony import */ var _mcs_mcs_module__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ../mcs/mcs.module */ "./src/app/components/mcs/mcs.module.ts");
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+let DashboardModule = class DashboardModule {
 };
+DashboardModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
+        imports: [
+            _angular_common__WEBPACK_IMPORTED_MODULE_2__["CommonModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_8__["ReactiveFormsModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_8__["FormsModule"],
+            _material_module__WEBPACK_IMPORTED_MODULE_5__["MaterialModule"],
+            _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_3__["DashboardRoutingModule"],
+            _user_user_module__WEBPACK_IMPORTED_MODULE_7__["UserModule"],
+            _shared_shared_module__WEBPACK_IMPORTED_MODULE_9__["SharedModule"],
+            _mcs_mcs_module__WEBPACK_IMPORTED_MODULE_16__["McsModule"],
+        ],
+        declarations: [
+            _dashboard_component__WEBPACK_IMPORTED_MODULE_4__["DashboardComponent"],
+            _dashboard_sidenav_dashboard_sidenav_component__WEBPACK_IMPORTED_MODULE_6__["DashboardSidenavComponent"],
+            _tools_tools_component__WEBPACK_IMPORTED_MODULE_10__["ToolsComponent"],
+            _product_create_product_create_component__WEBPACK_IMPORTED_MODULE_11__["ProductCreateComponent"],
+            _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_12__["ProductEditorComponent"],
+            _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_13__["ProductEditorFormComponent"],
+            _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_14__["McEditorComponent"],
+            _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_15__["McEditorFormComponent"]
+        ]
+    })
+], DashboardModule);
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-var DashboardModule = /** @class */ (function () {
-    function DashboardModule() {
-    }
-    DashboardModule = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["NgModule"])({
-            imports: [
-                _angular_common__WEBPACK_IMPORTED_MODULE_1__["CommonModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["ReactiveFormsModule"],
-                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormsModule"],
-                _material_module__WEBPACK_IMPORTED_MODULE_4__["MaterialModule"],
-                _dashboard_routing_module__WEBPACK_IMPORTED_MODULE_2__["DashboardRoutingModule"],
-                _user_user_module__WEBPACK_IMPORTED_MODULE_6__["UserModule"],
-                _shared_shared_module__WEBPACK_IMPORTED_MODULE_8__["SharedModule"],
-                _mcs_mcs_module__WEBPACK_IMPORTED_MODULE_15__["McsModule"],
-            ],
-            declarations: [
-                _dashboard_component__WEBPACK_IMPORTED_MODULE_3__["DashboardComponent"],
-                _dashboard_sidenav_dashboard_sidenav_component__WEBPACK_IMPORTED_MODULE_5__["DashboardSidenavComponent"],
-                _tools_tools_component__WEBPACK_IMPORTED_MODULE_9__["ToolsComponent"],
-                _product_create_product_create_component__WEBPACK_IMPORTED_MODULE_10__["ProductCreateComponent"],
-                _product_editor_product_editor_component__WEBPACK_IMPORTED_MODULE_11__["ProductEditorComponent"],
-                _product_editor_form_product_editor_form_component__WEBPACK_IMPORTED_MODULE_12__["ProductEditorFormComponent"],
-                _mc_editor_mc_editor_component__WEBPACK_IMPORTED_MODULE_13__["McEditorComponent"],
-                _mc_editor_form_mc_editor_form_component__WEBPACK_IMPORTED_MODULE_14__["McEditorFormComponent"]
-            ]
-        })
-    ], DashboardModule);
-    return DashboardModule;
-}());
-
-
-
-/***/ }),
-
-/***/ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.html":
-/*!***********************************************************************************!*\
-  !*** ./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.html ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n    <div class=\"full-width-container\">\r\n      <mat-card class=\"form-block\">\r\n        <mat-card-header></mat-card-header>\r\n        <mat-card-title>\r\n          <h2 *ngIf=\"editMode\" class=\"mat-h2\">Редагувати майстерклас\r\n            <span class=\"accent\"> {{mcForm.get('name').value}}</span></h2>\r\n          <h2 *ngIf=\"!editMode\" class=\"mat-h2\">Створити майстерклас</h2>\r\n        </mat-card-title>\r\n\r\n        <mat-card-content>\r\n          <div class=\"container\">\r\n\r\n            <form [formGroup]=\"mcForm\" #f=\"ngForm\" novalidate>\r\n\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Ідентифікатор\"\r\n                      formControlName=\"_id\" required>\r\n                    <mat-error\r\n                      *ngIf=\"(mcForm.get('_id').errors?.minlength ||\r\n                      mcForm.get('_id').errors?.maxlength ||\r\n                      mcForm.get('_id').errors?.required) &&\r\n                      mcForm.get('_id').touched\">\r\n                      Довжина повинна бути 7 символів\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"mcForm.get('_id').errors?.pattern &&\r\n                      mcForm.get('_id').touched\">\r\n                      Не використовуйте спецсимволи\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Назва\" formControlName=\"name\"\r\n                      required>\r\n                    <mat-error\r\n                      *ngIf=\"(mcForm.get('name').errors?.minlength ||\r\n                      mcForm.get('name').errors?.maxlength ||\r\n                      mcForm.get('name').errors?.required) &&\r\n                      mcForm.get('name').touched\">\r\n                      Довжина повинна бути від 4 до 100 символів\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                  <mat-form-field>\r\n                    <mat-select placeholder=\"Публікувати\"\r\n                      formControlName=\"display\">\r\n                      <mat-option [value]=\"true\">Так</mat-option>\r\n                      <mat-option [value]=\"false\">Ні</mat-option>\r\n                    </mat-select>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                  <mat-form-field>\r\n                    <mat-select placeholder=\"На головній\"\r\n                      formControlName=\"onMainPage\">\r\n                      <mat-option [value]=\"true\">Так</mat-option>\r\n                      <mat-option [value]=\"false\">Ні</mat-option>\r\n                    </mat-select>\r\n                  </mat-form-field>\r\n                </div>\r\n              </div>\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"100\"\r\n                  fxFlex.gt-sm=\"50\">\r\n                  <mat-form-field>\r\n                    <textarea matInput placeholder=\"Головний опис\"\r\n                      formControlName=\"description\" required></textarea>\r\n                    <mat-error\r\n                      *ngIf=\"(mcForm.get('description').errors?.minlength ||\r\n                      mcForm.get('description').errors?.maxlength ||\r\n                      mcForm.get('description').errors?.required) &&\r\n                      mcForm.get('description').touched\">\r\n                      Довжина повинна бути від 4 до 500 символів\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"mcForm.get('description').errors?.pattern &&\r\n                      mcForm.get('description').touched\">\r\n                      Не використовуйте спеціальні символи\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n              </div>\r\n\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                <div class=\"cell-header\" fxLayout=\"row\" fxFlex=\"100\">\r\n                  <h3 class=\"mat-h3 margin-0\">Головне зображення</h3>\r\n                </div>\r\n                <div class=\"cell\" fxFlex.xs=\"100\" fxFlex=\"25\">\r\n                  <div class=\"preview-img-wrapper\">\r\n                    <img *ngIf=\"mcForm.get('mainImage').value\" src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_400,h_300,f_auto/' +\r\n                      mcForm.get('mainImage').value}}\"\r\n                      alt=\"Menu Image\">\r\n                    <img *ngIf=\"!mcForm.get('mainImage').value\"\r\n                      src=\"{{\r\n                      config.imgPath +\r\n                      config.cloudinary.cloud_name +\r\n                      '/c_fill,w_400,h_300,f_auto/'+\r\n                      config.defaultProductImg}}\" alt=\"Menu Image\">\r\n                    <input #inputMainImage type=\"file\"\r\n                      (change)=\"addMainImage($event)\"\r\n                      accept=\".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif, .svg\"\r\n                      style=\"display:none;\">\r\n                    <div class=\"preview-div-processing\">\r\n                      <div *ngIf=\"processingLoadMainImage\"\r\n                        class=\"spinner-wrapper\">\r\n                        <mat-spinner [diameter]=\"24\"></mat-spinner>\r\n                      </div>\r\n                      <div *ngIf=\"!processingLoadMainImage\"\r\n                        class=\"button-wrapper\">\r\n                        <button mat-mini-fab color=\"primary\" type=\"button\" aria-label=\"add\"\r\n                          (click)=\"inputMainImage.click();\"\r\n                          [disabled]=\"processingLoadMainImage\">\r\n                          <mat-icon *ngIf=\"!mcForm.get('mainImage').value &&\r\n                            !processingLoadMainImage\">add</mat-icon>\r\n                          <mat-icon *ngIf=\"mcForm.get('mainImage').value &&\r\n                            !processingLoadMainImage\">redo</mat-icon>\r\n                        </button>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                <div class=\"cell-header\" fxLayout=\"row\">\r\n                  <h3 class=\"mat-h3 margin-0\">Кроки\r\n                    <span>\r\n                      <button *ngIf=\"mcForm.get('steps').value.length < 15\"\r\n                        mat-icon-button color=\"accent\" type=\"button\" aria-label=\"add\"\r\n                        (click)=\"addStepsControl()\"><mat-icon>add_circle</mat-icon></button>\r\n                    </span>\r\n                  </h3>\r\n                </div>\r\n\r\n\r\n                <div formArrayName=\"steps\" class=\"cell\" fxFlex=\"100\"\r\n                  *ngFor=\"let step of mcForm.get('steps')['controls'];\r\n                  let i= index\">\r\n                  <mat-card formGroupName=\"{{i}}\" fxLayout=\"row\" fxFlex=\"100\">\r\n\r\n\r\n                      <div class=\"item\" fxFlex=\"calc((100%-40px)-50%)\">\r\n                          <div class=\"preview-img-wrapper\">\r\n                            <img *ngIf=\"mcForm.get('steps').at(i).get('pic').value\" src=\"{{\r\n                              config.imgPath +\r\n                              config.cloudinary.cloud_name +\r\n                              '/c_fill,w_400,h_300,f_auto/' +\r\n                              mcForm.get('steps').at(i).get('pic').value}}\"\r\n                              alt=\"Menu Image\">\r\n                            <img *ngIf=\"!mcForm.get('steps').at(i).get('pic').value\"\r\n                              src=\"{{\r\n                              config.imgPath +\r\n                              config.cloudinary.cloud_name +\r\n                              '/c_fill,w_400,h_300,f_auto/'+\r\n                              config.defaultProductImg}}\" alt=\"Menu Image\">\r\n                            <input #inputStepsPic type=\"file\"\r\n                              (change)=\"addStepsPic($event, i)\"\r\n                              accept=\".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif, .svg\"\r\n                              style=\"display:none;\">\r\n                            <div class=\"preview-div-processing\">\r\n                              <div *ngIf=\"processingLoadStepsPic === i\"\r\n                                class=\"spinner-wrapper\">\r\n                                <mat-spinner [diameter]=\"24\"></mat-spinner>\r\n                              </div>\r\n                              <div *ngIf=\"processingLoadStepsPic !== i\"\r\n                                class=\"button-wrapper\">\r\n                                <button mat-mini-fab color=\"primary\" type=\"button\"\r\n                                  (click)=\"inputStepsPic.click();\" aria-label=\"add Picture\"\r\n                                  [disabled]=\"processingLoadStepsPic === i\">\r\n                                  <mat-icon *ngIf=\"!mcForm.get('steps').at(i).get('pic').value &&\r\n                                    processingLoadStepsPic !== i\">add</mat-icon>\r\n                                  <mat-icon *ngIf=\"mcForm.get('steps').at(i).get('pic').value &&\r\n                                  processingLoadStepsPic !== i\">redo</mat-icon>\r\n                                </button>\r\n                              </div>\r\n                            </div>\r\n                          </div>\r\n                        </div>\r\n\r\n                    <mat-form-field class=\"item\" fxFlex=\"calc((100%-40px)-67%)\">\r\n                      <textarea matInput placeholder=\"Опис\"\r\n                        formControlName=\"description\" required></textarea>\r\n                      <mat-error\r\n                        *ngIf=\"(mcForm.get('steps').at(i).get('description').errors?.minlength ||\r\n                        mcForm.get('steps').at(i).get('description').errors?.maxlength ||\r\n                        mcForm.get('steps').at(i).get('description').errors?.required) &&\r\n                        mcForm.get('steps').at(i).get('description').touched\">\r\n                        Довжина повинна бути від 4 до 600 символів\r\n                      </mat-error>\r\n                      <mat-error\r\n                        *ngIf=\"mcForm.get('steps').at(i).get('description').errors?.required\r\n                        &&\r\n                        mcForm.get('steps').at(i).get('description').touched\">\r\n                        Обов'язкове поле\r\n                      </mat-error>\r\n                    </mat-form-field>\r\n                    <div class=\"item\" fxFlex=\"40px\" fxLayoutAlign=\"center\r\n                      center\">\r\n                      <button class=\"text-align-center\"\r\n                        mat-icon-button color=\"accent\" type=\"button\" aria-label=\"remove\"\r\n                        (click)=\"removeControl('steps', i)\"><mat-icon>remove_circle</mat-icon></button>\r\n                    </div>\r\n                  </mat-card>\r\n                </div>\r\n                <div class=\"cell-header\" fxLayout=\"row\">\r\n                  <h4 class=\"mat-h4 margin-0\">Додати крок\r\n                    <span>\r\n                      <button *ngIf=\"mcForm.get('steps').value.length < 15\"\r\n                        mat-icon-button color=\"accent\" type=\"button\" aria-label=\"add\"\r\n                        (click)=\"addStepsControl()\"><mat-icon>add_circle</mat-icon></button>\r\n                    </span>\r\n                  </h4>\r\n                </div>\r\n              </div>\r\n\r\n\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                  <div class=\"cell-header\" fxLayout=\"row\">\r\n                    <h3 class=\"mat-h3 margin-0\">Необхідні матеріали\r\n                      <span>\r\n                        <button *ngIf=\"mcForm.get('materials').value.length <10\"\r\n                          mat-icon-button color=\"accent\" type=\"button\" aria-label=\"add\"\r\n                          (click)=\"addMaterialsControl()\"><mat-icon>add_circle</mat-icon></button>\r\n                      </span>\r\n                    </h3>\r\n                  </div>\r\n\r\n                  <div formArrayName=\"materials\" class=\"cell\" fxFlex=\"100\"\r\n                    *ngFor=\"let material of mcForm.get('materials')['controls'];\r\n                    let i= index\">\r\n                    <mat-card formGroupName=\"{{i}}\" fxLayout=\"row\" fxFlex=\"100\">\r\n                      <mat-form-field class=\"item\" fxFlex=\"calc((100%-40px)-67%)\">\r\n                        <input matInput placeholder=\"Матеріал\"\r\n                          formControlName=\"name\" required>\r\n                        <mat-error\r\n                          *ngIf=\"mcForm.get('materials').at(i).get('name').errors?.required\r\n                          &&\r\n                          mcForm.get('materials').at(i).get('name').touched\">\r\n                          Обов'язкове поле\r\n                        </mat-error>\r\n                        <mat-error\r\n                          *ngIf=\"(mcForm.get('materials').at(i).get('name').errors?.minlength\r\n                          ||\r\n                          mcForm.get('materials').at(i).get('name').errors?.maxlength\r\n                          ||\r\n                          mcForm.get('materials').at(i).get('name').errors?.required)\r\n                          &&\r\n                          mcForm.get('materials').at(i).get('name').touched\">\r\n                          Довжина повинна бути від 3 до 20 символів\r\n                        </mat-error>\r\n                      </mat-form-field>\r\n                      <mat-form-field class=\"item\" fxFlex=\"calc((100%-40px)-67%)\">\r\n                        <input matInput placeholder=\"Одиниці виміру\"\r\n                          formControlName=\"units\" required>\r\n                        <mat-error\r\n                          *ngIf=\"mcForm.get('materials').at(i).get('units').errors?.required\r\n                          &&\r\n                          mcForm.get('materials').at(i).get('units').touched\">\r\n                          Обов'язкове поле\r\n                        </mat-error>\r\n                        <mat-error\r\n                          *ngIf=\"(mcForm.get('materials').at(i).get('units').errors?.minlength\r\n                          ||\r\n                          mcForm.get('materials').at(i).get('units').errors?.maxlength\r\n                          ||\r\n                          mcForm.get('materials').at(i).get('units').errors?.required)\r\n                          &&\r\n                          mcForm.get('materials').at(i).get('units').touched\">\r\n                          Довжина повинна бути від 1 до 7 символів\r\n                        </mat-error>\r\n                      </mat-form-field>\r\n                      <mat-form-field class=\"item\" fxFlex=\"calc((100%-40px)-67%)\">\r\n                        <input matInput placeholder=\"Значення\"\r\n                          formControlName=\"value\" required>\r\n                        <mat-error\r\n                          *ngIf=\"mcForm.get('materials').at(i).get('value').errors?.required\r\n                          &&\r\n                          mcForm.get('materials').at(i).get('value').touched\">\r\n                          Обов'язкове поле\r\n                        </mat-error>\r\n                        <mat-error\r\n                          *ngIf=\"(mcForm.get('materials').at(i).get('value').errors?.minlength\r\n                          ||\r\n                          mcForm.get('materials').at(i).get('value').errors?.maxlength\r\n                          ||\r\n                          mcForm.get('materials').at(i).get('value').errors?.required)\r\n                          &&\r\n                          mcForm.get('materials').at(i).get('value').touched\">\r\n                          Довжина повинна бути від 1 до 4 символів\r\n                        </mat-error>\r\n                      </mat-form-field>\r\n                      <div class=\"item\" fxFlex=\"40px\" fxLayoutAlign=\"center\r\n                        center\">\r\n                        <button class=\"text-align-center\"\r\n                          mat-icon-button color=\"accent\" type=\"button\" aria-label=\"remove\"\r\n                          (click)=\"removeControl('materials', i)\"><mat-icon>remove_circle</mat-icon></button>\r\n                      </div>\r\n                    </mat-card>\r\n                  </div>\r\n                  <div class=\"cell-header\" fxLayout=\"row\">\r\n                    <h4 class=\"mat-h4 margin-0\">Додати матеріал\r\n                      <span>\r\n                        <button *ngIf=\"mcForm.get('materials').value.length <10\"\r\n                          mat-icon-button color=\"accent\" type=\"button\" aria-label=\"add\"\r\n                          (click)=\"addMaterialsControl()\"><mat-icon>add_circle</mat-icon></button>\r\n                      </span>\r\n                    </h4>\r\n                  </div>\r\n                </div>\r\n\r\n\r\n\r\n              <div class=\"submit-button-wrapper row\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"30\">\r\n\r\n                  <button mat-raised-button color=\"primary\" class=\"full-width\" aria-label=\"save\"\r\n                    type=\"button\" (click)=\"onMcFormSubmit(false)\"\r\n                    [disabled]=\"!mcForm.valid || processingLoadMainImage\">\r\n                    Зберегти</button>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"40\">\r\n\r\n                  <button *ngIf=\"editMode\" mat-raised-button color=\"primary\"\r\n                    class=\"full-width\" type=\"button\" aria-label=\"Save and return\"\r\n                    (click)=\"onMcFormSubmit(true)\"\r\n                    [disabled]=\"!mcForm.valid || processingLoadMainImage\">\r\n                    Зберегти і повернутись</button>\r\n                  <button *ngIf=\"!editMode\" mat-raised-button color=\"primary\"\r\n                    class=\"full-width\" type=\"button\" aria-label=\"Create and return\"\r\n                    (click)=\"onMcFormSubmit(true)\"\r\n                    [disabled]=\"!mcForm.valid || processingLoadMainImage\">\r\n                    Створити і повернутись</button>\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"30\">\r\n                  <button mat-raised-button type=\"button\" (click)=\"goBack()\"\r\n                    class=\"full-width\" aria-label=\"Go back\"\r\n                    [disabled]=\"processingLoadMainImage\">Повернутись</button>\r\n                </div>\r\n\r\n              </div>\r\n            </form>\r\n          </div>\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </div>\r\n  </div>\r\n</div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -4619,10 +4963,12 @@ module.exports = "<div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"r
 /*!***********************************************************************************!*\
   !*** ./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.scss ***!
   \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL21jLWVkaXRvci1mb3JtL21jLWVkaXRvci1mb3JtLmNvbXBvbmVudC5zY3NzIn0= */"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL21jLWVkaXRvci1mb3JtL21jLWVkaXRvci1mb3JtLmNvbXBvbmVudC5zY3NzIn0= */");
 
 /***/ }),
 
@@ -4636,26 +4982,18 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McEditorFormComponent", function() { return McEditorFormComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var src_app_services_catalog_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/services/catalog.service */ "./src/app/services/catalog.service.ts");
-/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/services/shared.service */ "./src/app/services/shared.service.ts");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var src_app_services_catalog_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/services/catalog.service */ "./src/app/services/catalog.service.ts");
+/* harmony import */ var src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! src/app/services/shared.service */ "./src/app/services/shared.service.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
 
 
 
@@ -4667,96 +5005,95 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var McEditorFormComponent = /** @class */ (function () {
-    function McEditorFormComponent(mcService, catalogService, route, location, sharedService, matSnackBar) {
+
+let McEditorFormComponent = class McEditorFormComponent {
+    constructor(mcService, catalogService, route, location, sharedService, matSnackBar) {
         this.mcService = mcService;
         this.catalogService = catalogService;
         this.route = route;
         this.location = location;
         this.sharedService = sharedService;
         this.matSnackBar = matSnackBar;
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_7__["config"];
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_8__["config"];
         this.processingLoadMainImage = false;
         this.processingLoadStepsPic = -1;
     }
-    McEditorFormComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.mcForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
-            _id: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]({ value: '', disabled: false }, [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-z0-9]+'),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(7),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(7),
+    ngOnInit() {
+        this.mcForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormGroup"]({
+            _id: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormControl"]({ value: '', disabled: false }, [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].pattern('[a-z0-9]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].minLength(7),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].maxLength(7),
             ]),
-            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(4),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(100),
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].maxLength(100),
             ]),
-            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(4),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(500),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].maxLength(500),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
             ]),
-            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormArray"]([]),
-            display: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](true, []),
-            onMainPage: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](false, []),
-            mainImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](this.config.defaultProductImg, []),
+            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormArray"]([]),
+            display: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormControl"](true, []),
+            onMainPage: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormControl"](false, []),
+            mainImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormControl"](this.config.defaultProductImg, []),
             // pics : new FormArray([]),
-            materials: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormArray"]([]),
-            steps: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormArray"]([])
+            materials: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormArray"]([]),
+            steps: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormArray"]([])
         });
-        this.route.url.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function (url) {
+        this.route.url.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["mergeMap"])(url => {
             switch (url[1].path) {
                 case 'new':
-                    _this.editMode = false;
+                    this.editMode = false;
                     break;
                 case 'edit':
-                    _this.editMode = true;
+                    this.editMode = true;
                     break;
                 default: throw new Error('url error');
             }
-            return _this.route.paramMap;
-        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(function (params) {
-            if (_this.editMode) {
-                _this.paramEdited_id = params.get('_id');
-                return _this.mcService.getMcById(_this.paramEdited_id);
+            return this.route.paramMap;
+        }), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["mergeMap"])(params => {
+            if (this.editMode) {
+                this.paramEdited_id = params.get('_id');
+                return this.mcService.getMcById(this.paramEdited_id);
             }
             else {
-                _this.paramParent_id = params.get('parent_id');
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_5__["of"])(null);
+                this.paramParent_id = params.get('parent_id');
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_6__["of"])(null);
             }
         }))
-            .subscribe(function (mc) {
+            .subscribe(mc => {
             console.log('mc', mc);
-            if (_this.editMode) {
+            if (this.editMode) {
                 // mc.pics.forEach(element => this.addControl('pics'));
-                mc.materials.forEach(function (element) { return _this.addMaterialsControl(); });
-                mc.steps.forEach(function (element) { return _this.addStepsControl(); });
-                mc.parents.forEach(function (element) { return _this.addControl('parents'); });
-                _this.mcForm.patchValue(mc);
-                _this.mcForm.get('_id').disable();
+                mc.materials.forEach(element => this.addMaterialsControl());
+                mc.steps.forEach(element => this.addStepsControl());
+                mc.parents.forEach(element => this.addControl('parents'));
+                this.mcForm.patchValue(mc);
+                this.mcForm.get('_id').disable();
             }
             else {
-                _this.addControl('parents');
-                _this.mcForm.get('parents').setValue([_this.paramParent_id]);
-                _this.addMaterialsControl();
-                _this._createSku();
+                this.addControl('parents');
+                this.mcForm.get('parents').setValue([this.paramParent_id]);
+                this.addMaterialsControl();
+                this._createSku();
             }
-        }, function (err) { return console.log(err.message); });
-    };
-    McEditorFormComponent.prototype._createSku = function () {
-        var _this = this;
+        }, err => console.log(err.message));
+    }
+    _createSku() {
         this.mcService.getSkuList()
-            .subscribe(function (result) {
-            var prefix = _app_config__WEBPACK_IMPORTED_MODULE_7__["config"].mcPrefix;
-            var skuList = result
-                .map(function (item) { return item._id; }) // create [] from {}
-                .filter(function (item) { return item.slice(0, 3) === prefix; }) // take elems with needed prefix
-                .map(function (item) { return +item.slice(3); }); // concat prefix, take only numbers
-            var freeNumber = 1;
-            for (var i = 0; i < skuList.length; i++) {
+            .subscribe(result => {
+            const prefix = _app_config__WEBPACK_IMPORTED_MODULE_8__["config"].mcPrefix;
+            const skuList = result
+                .map(item => item._id) // create [] from {}
+                .filter(item => item.slice(0, 3) === prefix) // take elems with needed prefix
+                .map(item => +item.slice(3)); // concat prefix, take only numbers
+            let freeNumber = 1;
+            for (let i = 0; i < skuList.length; i++) {
                 if (skuList[i] - (i + 1) >= 1) {
                     freeNumber = i + 1;
                     break;
@@ -4765,57 +5102,54 @@ var McEditorFormComponent = /** @class */ (function () {
                     freeNumber = skuList.length + 1;
                 }
             }
-            var sku = freeNumber.toString();
+            let sku = freeNumber.toString();
             while (sku.length < 4) {
                 sku = '0' + sku;
             }
             sku = prefix + sku;
-            _this.mcForm.patchValue({ _id: sku });
-        }, function (err) { return console.log(err.error); });
-    };
-    McEditorFormComponent.prototype.addMainImage = function (event) {
-        var _this = this;
+            this.mcForm.patchValue({ _id: sku });
+        }, err => console.log(err.error));
+    }
+    addMainImage(event) {
         this.processingLoadMainImage = true;
-        var file = event.target.files[0];
-        var checkFile = this.sharedService.checkFile(file);
+        const file = event.target.files[0];
+        const checkFile = this.sharedService.checkFile(file);
         if (!checkFile.success) {
             this.matSnackBar.open(checkFile.message || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
             this.processingLoadMainImage = false;
         }
         else {
             this.mcService.addMainImage(file, this.mcForm.get('_id').value)
-                .subscribe(function (result) {
-                _this.mcForm.get('mainImage').setValue(result);
-                _this.processingLoadMainImage = false;
-            }, function (err) {
-                _this.matSnackBar.open(err.error || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
-                _this.processingLoadMainImage = false;
+                .subscribe(result => {
+                this.mcForm.get('mainImage').setValue(result);
+                this.processingLoadMainImage = false;
+            }, err => {
+                this.matSnackBar.open(err.error || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+                this.processingLoadMainImage = false;
             });
         }
-    };
-    McEditorFormComponent.prototype.addStepsPic = function (event, i) {
-        var _this = this;
+    }
+    addStepsPic(event, i) {
         this.processingLoadStepsPic = i;
-        var file = event.target.files[0];
-        var checkFile = this.sharedService.checkFile(file);
+        const file = event.target.files[0];
+        const checkFile = this.sharedService.checkFile(file);
         if (!checkFile.success) {
             this.matSnackBar.open(checkFile.message || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
             this.processingLoadStepsPic = -1;
         }
         else {
             this.mcService.addStepsPic(file, this.mcForm.get('_id').value)
-                .subscribe(function (result) {
-                console.log('this.mcForm.get(steps).controls', _this.mcForm.get('steps')['controls']);
-                _this.mcForm.get('steps')['controls'][i].get('pic').setValue(result);
-                _this.processingLoadStepsPic = -1;
-            }, function (err) {
-                _this.matSnackBar.open(err.error || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
-                _this.processingLoadStepsPic = -1;
+                .subscribe(result => {
+                console.log('this.mcForm.get(steps).controls', this.mcForm.get('steps')['controls']);
+                this.mcForm.get('steps')['controls'][i].get('pic').setValue(result);
+                this.processingLoadStepsPic = -1;
+            }, err => {
+                this.matSnackBar.open(err.error || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+                this.processingLoadStepsPic = -1;
             });
         }
-    };
-    McEditorFormComponent.prototype.onMcFormSubmit = function (goBackAndReset) {
-        var _this = this;
+    }
+    onMcFormSubmit(goBackAndReset) {
         this.mc = {
             parents: this.mcForm.get('parents').value,
             _id: this.mcForm.getRawValue()._id,
@@ -4828,61 +5162,61 @@ var McEditorFormComponent = /** @class */ (function () {
             materials: this.mcForm.get('materials').value
         };
         this.mcService.mcUpsert(this.mc)
-            .subscribe(function (result) {
-            _this.matSnackBar.open(result.message, '', { duration: 3000 });
+            .subscribe(result => {
+            this.matSnackBar.open(result.message, '', { duration: 3000 });
             if (goBackAndReset) {
-                _this.goBack();
-                _this.resetForm();
-                _this.editMode = false;
+                this.goBack();
+                this.resetForm();
+                this.editMode = false;
             }
             else {
-                _this.editMode = true;
+                this.editMode = true;
             }
-        }, function (err) { return _this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }); });
-    };
-    McEditorFormComponent.prototype.resetForm = function () {
+        }, err => this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }));
+    }
+    resetForm() {
         this.mcFormDirective.resetForm();
-    };
-    McEditorFormComponent.prototype.goBack = function () {
+    }
+    goBack() {
         this.location.back();
-    };
-    McEditorFormComponent.prototype.addStepsControl = function () {
-        var control = this.mcForm.get('steps');
-        control.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
-            pic: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+    }
+    addStepsControl() {
+        const control = this.mcForm.get('steps');
+        control.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormGroup"]({
+            pic: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].required,
             ]),
-            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(4),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(600),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
-            ]),
-        }));
-    };
-    McEditorFormComponent.prototype.addMaterialsControl = function () {
-        var control = this.mcForm.get('materials');
-        return control.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
-            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(3),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(20),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
-            ]),
-            value: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[0-9]+'),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(1),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(4),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
-            ]),
-            units: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(1),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(7),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].maxLength(600),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
             ]),
         }));
-    };
+    }
+    addMaterialsControl() {
+        const control = this.mcForm.get('materials');
+        return control.push(new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormGroup"]({
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].minLength(3),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].maxLength(20),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].required,
+            ]),
+            value: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].pattern('[0-9]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].minLength(1),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].maxLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].required,
+            ]),
+            units: new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].minLength(1),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].maxLength(7),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_7__["Validators"].required,
+            ]),
+        }));
+    }
     /**
      *
      *
@@ -4891,12 +5225,10 @@ var McEditorFormComponent = /** @class */ (function () {
      * @param {ValidatorFn[]} [validators=[]] //validators
      * @memberof McEditorFormComponent
      */
-    McEditorFormComponent.prototype.addControl = function (formField, formState, validators) {
-        if (formState === void 0) { formState = null; }
-        if (validators === void 0) { validators = []; }
-        var control = this.mcForm.get(formField);
+    addControl(formField, formState = null, validators = []) {
+        const control = this.mcForm.get(formField);
         control.push(this.initControl(validators, formState));
-    };
+    }
     /**
      *
      *
@@ -4904,46 +5236,34 @@ var McEditorFormComponent = /** @class */ (function () {
      * @param {number} position // position which removes
      * @memberof McEditorFormComponent
      */
-    McEditorFormComponent.prototype.removeControl = function (formField, position) {
-        var control = this.mcForm.get(formField);
+    removeControl(formField, position) {
+        const control = this.mcForm.get(formField);
         control.removeAt(position);
-    };
-    McEditorFormComponent.prototype.initControl = function (validators, formState) {
-        if (formState === void 0) { formState = null; }
-        return new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"](formState, validators);
-    };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('f'),
-        __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroupDirective"])
-    ], McEditorFormComponent.prototype, "mcFormDirective", void 0);
-    McEditorFormComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-mc-editor-form',
-            template: __webpack_require__(/*! ./mc-editor-form.component.html */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.html"),
-            styles: [__webpack_require__(/*! ./mc-editor-form.component.scss */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.scss")]
-        }),
-        __metadata("design:paramtypes", [src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_2__["McService"],
-            src_app_services_catalog_service__WEBPACK_IMPORTED_MODULE_8__["CatalogService"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"],
-            _angular_common__WEBPACK_IMPORTED_MODULE_1__["Location"],
-            src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_9__["SharedService"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_10__["MatSnackBar"]])
-    ], McEditorFormComponent);
-    return McEditorFormComponent;
-}());
+    }
+    initControl(validators, formState = null) {
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_7__["FormControl"](formState, validators);
+    }
+};
+McEditorFormComponent.ctorParameters = () => [
+    { type: src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_3__["McService"] },
+    { type: src_app_services_catalog_service__WEBPACK_IMPORTED_MODULE_9__["CatalogService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["ActivatedRoute"] },
+    { type: _angular_common__WEBPACK_IMPORTED_MODULE_2__["Location"] },
+    { type: src_app_services_shared_service__WEBPACK_IMPORTED_MODULE_10__["SharedService"] },
+    { type: _angular_material__WEBPACK_IMPORTED_MODULE_11__["MatSnackBar"] }
+];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('f', { static: false })
+], McEditorFormComponent.prototype, "mcFormDirective", void 0);
+McEditorFormComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-mc-editor-form',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./mc-editor-form.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./mc-editor-form.component.scss */ "./src/app/components/dashboard/mc-editor-form/mc-editor-form.component.scss")).default]
+    })
+], McEditorFormComponent);
 
 
-
-/***/ }),
-
-/***/ "./src/app/components/dashboard/mc-editor/mc-editor.component.html":
-/*!*************************************************************************!*\
-  !*** ./src/app/components/dashboard/mc-editor/mc-editor.component.html ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<!-- <div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\"> -->\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"cell\">\r\n          <h2 class=\"mat-h2\">Редактор майстеркласів</h2>\r\n        </div>\r\n      </div>\r\n      <form [formGroup]=\"catalogForm\" #f=\"ngForm\">\r\n        <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n          <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\r\n               *ngFor=\"let categoryBlock of catalogForm.get('parents')['controls']; let i = index\">\r\n\r\n                <mat-select placeholder=\"Виберіть категорію\" formControlName=\"{{i}}\" required\r\n                            (selectionChange)=\"onSelectCategory($event, i)\">\r\n                  <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\r\n                    {{child.name}}\r\n                  </mat-option>\r\n            </mat-select>\r\n          </div>\r\n\r\n        </div>\r\n      </form>\r\n\r\n      <div *ngIf=\"noMoreChildren\" class=\"row\">\r\n        <div class=\"cell\" fxFlex=\"100\">\r\n          <div class=\"preview-img-wrapper\">\r\n            <img src=\"{{\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_180,h_180,f_auto/' +\r\n                        config.defaultProductImg}}\" alt=\"product\">\r\n            <div class=\"preview-div-processing\">\r\n              <div class=\"button-wrapper\">\r\n                <button mat-mini-fab color=\"primary\" type=\"button\" aria-label=\"add\"\r\n                        [routerLink]=\"['/dashboard', 'mc', 'new', parentCategory_id]\"\r\n                        [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n                  <mat-icon>add</mat-icon>\r\n                </button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div *ngFor=\"let mc of mcs\"  class=\"cell\" fxFlex=\"100\">\r\n          <app-mcs-item-brief [mc]=\"mc\" [parentCategory_id]=\"parentCategory_id\"></app-mcs-item-brief>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  <!-- </div>\r\n</div>\r\n</div> -->\r\n\r\n"
 
 /***/ }),
 
@@ -4951,10 +5271,12 @@ module.exports = "<!-- <div class=\"container\">\r\n  <div class=\"row\" fxLayou
 /*!*************************************************************************!*\
   !*** ./src/app/components/dashboard/mc-editor/mc-editor.component.scss ***!
   \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL21jLWVkaXRvci9tYy1lZGl0b3IuY29tcG9uZW50LnNjc3MifQ== */"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL21jLWVkaXRvci9tYy1lZGl0b3IuY29tcG9uZW50LnNjc3MifQ== */");
 
 /***/ }),
 
@@ -4968,23 +5290,15 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "McEditorComponent", function() { return McEditorComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var rxjs_index__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/index */ "./node_modules/rxjs/index.js");
-/* harmony import */ var rxjs_index__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(rxjs_index__WEBPACK_IMPORTED_MODULE_1__);
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var rxjs_index__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/index */ "./node_modules/rxjs/index.js");
+/* harmony import */ var rxjs_index__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(rxjs_index__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
 
 
 
@@ -4992,83 +5306,72 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var McEditorComponent = /** @class */ (function () {
-    function McEditorComponent(catalogService, mcService) {
+
+let McEditorComponent = class McEditorComponent {
+    constructor(catalogService, mcService) {
         this.catalogService = catalogService;
         this.mcService = mcService;
         this.children = [];
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_6__["config"];
         this.noMoreChildren = false;
     }
-    McEditorComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.catalogForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormGroup"]({
-            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormArray"]([this.initParents()]),
+    ngOnInit() {
+        this.catalogForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
+            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormArray"]([this.initParents()]),
         });
         this.catalogService.getChildren('products')
-            .subscribe(function (result) { return _this.children[0] = result.data; }, function (err) { return console.log('помилка завантаження категорій', err); });
-    };
-    McEditorComponent.prototype.onSelectCategory = function (event, level) {
-        var _this = this;
+            .subscribe(result => this.children[0] = result.data, err => console.log('помилка завантаження категорій', err));
+    }
+    onSelectCategory(event, level) {
         while (level + 1 < this.catalogForm.get('parents')['controls'].length) {
             this.removeParents(this.catalogForm.get('parents')['controls'].length - 1);
         }
-        this.catalogService.getChildren(event.value).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])(function (children) {
+        this.catalogService.getChildren(event.value).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_3__["mergeMap"])(children => {
             if (!children.data.length) {
                 // if no children - show products
-                _this.parentCategory_id = event.value;
-                _this.noMoreChildren = true;
-                _this.children[level + 1] = children.data;
-                return _this.mcService.getMcsByParent(event.value, false);
+                this.parentCategory_id = event.value;
+                this.noMoreChildren = true;
+                this.children[level + 1] = children.data;
+                return this.mcService.getMcsByParent(event.value, false);
             }
             else {
-                _this.children[level + 1] = children.data;
-                _this.noMoreChildren = false;
-                _this.addParents();
-                return Object(rxjs_index__WEBPACK_IMPORTED_MODULE_1__["of"])(null);
+                this.children[level + 1] = children.data;
+                this.noMoreChildren = false;
+                this.addParents();
+                return Object(rxjs_index__WEBPACK_IMPORTED_MODULE_2__["of"])(null);
             }
         }))
-            .subscribe(function (result) {
-            _this.mcs = result;
-        }, function (err) { return console.log('помилка завантаження категорій', err); });
-    };
-    McEditorComponent.prototype.addParents = function () {
-        var control = this.catalogForm.get('parents');
+            .subscribe(result => {
+            this.mcs = result;
+        }, err => console.log('помилка завантаження категорій', err));
+    }
+    addParents() {
+        const control = this.catalogForm.get('parents');
         control.push(this.initParents());
-    };
-    McEditorComponent.prototype.removeParents = function (i) {
-        var control = this.catalogForm.get('parents');
+    }
+    removeParents(i) {
+        const control = this.catalogForm.get('parents');
         control.removeAt(i);
-    };
-    McEditorComponent.prototype.initParents = function () {
-        return new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]('', [
-            _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required,
+    }
+    initParents() {
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
+            _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
         ]);
-    };
-    McEditorComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-mc-editor',
-            template: __webpack_require__(/*! ./mc-editor.component.html */ "./src/app/components/dashboard/mc-editor/mc-editor.component.html"),
-            styles: [__webpack_require__(/*! ./mc-editor.component.scss */ "./src/app/components/dashboard/mc-editor/mc-editor.component.scss")]
-        }),
-        __metadata("design:paramtypes", [_services_catalog_service__WEBPACK_IMPORTED_MODULE_3__["CatalogService"],
-            src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_6__["McService"]])
-    ], McEditorComponent);
-    return McEditorComponent;
-}());
+    }
+};
+McEditorComponent.ctorParameters = () => [
+    { type: _services_catalog_service__WEBPACK_IMPORTED_MODULE_4__["CatalogService"] },
+    { type: src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_7__["McService"] }
+];
+McEditorComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-mc-editor',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./mc-editor.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/mc-editor/mc-editor.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./mc-editor.component.scss */ "./src/app/components/dashboard/mc-editor/mc-editor.component.scss")).default]
+    })
+], McEditorComponent);
 
 
-
-/***/ }),
-
-/***/ "./src/app/components/dashboard/product-create/product-create.component.html":
-/*!***********************************************************************************!*\
-  !*** ./src/app/components/dashboard/product-create/product-create.component.html ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n    <div class=\"item full-width-container\">\r\n      <mat-card  class=\"form-block\">\r\n        <mat-card-header></mat-card-header>\r\n        <mat-card-title></mat-card-title>\r\n\r\n        <mat-card-content>\r\n          <div class=\"container\">\r\n            <div class=\"row\">\r\n              <div class=\"cell\">\r\n                <h2 class=\"mat-h2\">Новий виріб</h2>\r\n              </div>\r\n            </div>\r\n\r\n          <form [formGroup]=\"productCreateForm\" #f=\"ngForm\" (submit)=\"onProductCreateSubmit()\">\r\n\r\n            <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n              <div class=\"cell\">\r\n                <button type=\"button\" mat-raised-button (click)=\"addCategory()\" aria-label=\"Add category\">Додати категорію</button>\r\n              </div>\r\n\r\n            </div>\r\n            <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n\r\n                <div formArrayName=\"parents\" class=\"cell\" fxFlex.gt-xs=\"50\"\r\n                     *ngFor=\"let categoryBlock of productCreateForm.get('parents')['controls']; let i = index\">\r\n                  <!--<div [formGroupName]=\"i\">-->\r\n                    <mat-form-field>\r\n                      <mat-select placeholder=\"Категорія\" formControlName=\"{{i}}\" required\r\n                                  (selectionChange)=\"onSelectParents($event)\">\r\n                        <mat-optgroup *ngFor=\"let category of categories\" [label]=\"category.name\">\r\n                          <mat-option *ngIf=\"category.numOfChildren === 0\" [value]=\"category._id\">\r\n                            {{ category.name }}\r\n                          </mat-option>\r\n                          <mat-option *ngFor=\"let subCategory of category.children\" [value]=\"subCategory._id\">\r\n                            {{ subCategory.name }}\r\n                          </mat-option>\r\n                        </mat-optgroup>\r\n                      </mat-select>\r\n                      <mat-hint *ngIf=\"i > 0\" align=\"end\" class=\"remove-field\" (click)=\"removeCategory(i)\">Видалити категорію</mat-hint>\r\n                      <mat-error *ngIf=\"productCreateForm.get('parents').at(i).errors?.required &&\r\n                        productCreateForm.get('parents').at(i).touched\">\r\n                        Виберіть категорію\r\n                      </mat-error>\r\n                    </mat-form-field>\r\n                  <!--</div>-->\r\n                </div>\r\n\r\n              <div class=\"cell\" fxFlex.gt-xs=\"50\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Найменування\" formControlName=\"name\" required>\r\n                    <mat-error\r\n                      *ngIf=\"(productCreateForm.get('name').errors?.minlength ||\r\n                      productCreateForm.get('name').errors?.maxlength ||\r\n                      productCreateForm.get('name').errors?.required) &&\r\n                      productCreateForm.get('name').touched\">\r\n                      Довжина повинна бути від 4 до 30 символів\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n              </div>\r\n\r\n              <div class=\"cell\" fxLayout=\"row\" fxFlex=\"50\">\r\n\r\n              <div class=\"item\" fxFlex=\"30\">\r\n                <div formGroupName=\"dimensions\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Ширина\" formControlName=\"width\">\r\n                    <span matSuffix>см</span>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('dimensions.width').errors?.maxlength &&\r\n                      productCreateForm.get('dimensions').get('width').touched\">\r\n                      Використовуйте не більше ніж три символа\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('dimensions').get('width').errors?.pattern &&\r\n                      productCreateForm.get('dimensions').get('width').touched\">\r\n                      Використовуйте тількі цифри\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n              </div>\r\n\r\n              <div class=\"item\" fxFlex=\"30\">\r\n                <div formGroupName=\"dimensions\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Висота\" formControlName=\"height\">\r\n                    <span matSuffix>см</span>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('dimensions.height').errors?.maxlength &&\r\n                      productCreateForm.get('dimensions').get('height').touched\">\r\n                      Використовуйте не більше ніж три символа\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('dimensions').get('height').errors?.pattern &&\r\n                      productCreateForm.get('dimensions').get('height').touched\">\r\n                      Використовуйте тількі цифри\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n              </div>\r\n                <div class=\"item\" fxFlex=\"40\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Артикул\" formControlName=\"_id\" required>\r\n                    <mat-error\r\n                      *ngIf=\"(productCreateForm.get('_id').errors?.minlength ||\r\n                        productCreateForm.get('_id').errors?.maxlength ||\r\n                        productCreateForm.get('_id').errors?.required) &&\r\n                        productCreateForm.get('_id').touched\">\r\n                      Довжина повинна бути 6 символів\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('_id').errors?.pattern &&\r\n                      productCreateForm.get('_id').touched\">\r\n                      Використовуйте тількі цифри і букви\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n\r\n            </div>\r\n\r\n              <div class=\"cell\" fxLayout=\"row\" fxFlex=\"50\">\r\n\r\n                <div class=\"item \" fxFlex=\"30\">\r\n                  <!--{{productCreateForm.get('price').errors | json}}-->\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Ціна\" formControlName=\"price\" >\r\n                    <span matSuffix>грн</span>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('price').errors?.pattern &&\r\n                      productCreateForm.get('price').touched\">\r\n                      Використовуйте тількі цифри більші 0\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div class=\"item\" fxFlex=\"30\">\r\n                  <mat-form-field>\r\n                    <input matInput placeholder=\"Знижка\" formControlName=\"discount\" >\r\n                    <span matSuffix>%</span>\r\n                    <mat-error\r\n                      *ngIf=\"productCreateForm.get('discount').errors?.pattern &&\r\n                      productCreateForm.get('discount').touched\">\r\n                      Знижка може бути від 0% до 99%\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div class=\"item\" fxFlex=\"40\">\r\n                  <div class=\"flex-left-container\">\r\n                    <mat-checkbox class=\"flex-left-item\" formControlName=\"onMainPage\">На головній</mat-checkbox>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n\r\n              <div class=\"cell\" fxFlex.gt-xs=\"50\">\r\n                <mat-form-field>\r\n                  <textarea matInput placeholder=\"Опис\" formControlName=\"description\" required></textarea>\r\n                  <mat-error\r\n                    *ngIf=\"(productCreateForm.get('description').errors?.minlength ||\r\n                      productCreateForm.get('description').errors?.maxlength ||\r\n                      productCreateForm.get('description').errors?.required) &&\r\n                      productCreateForm.get('description').touched\">\r\n                    Довжина повинна бути від 4 до 200 символів\r\n                  </mat-error>\r\n                  <mat-error\r\n                    *ngIf=\"productCreateForm.get('description').errors?.pattern &&\r\n                      productCreateForm.get('description').touched\">\r\n                    Використовуйте тількі цифри і букви\r\n                  </mat-error>\r\n                </mat-form-field>\r\n              </div>\r\n\r\n              <div class=\"row\" fxLayout=\"row\" fxFlex=\"100\">\r\n                <div formArrayName=\"assets\" class=\"cell\" fxFlex=\"25\" fxFlex.lt-md=\"50\"\r\n                     *ngFor=\"let fileBlock of productCreateForm.get('assets')['controls']; let i = index\">\r\n                  <div class=\"preview-img-wrapper\">\r\n\r\n                      <img *ngIf=\"processingLoadFile !== i class=\"responsive-image\" src=\"{{\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_180,h_180,f_auto/' +\r\n                        productCreateForm.get('assets').value[i] || defaultProductImgPath}}\"\r\n                                 alt=\"designImage\">\r\n\r\n                    <!--<img *ngIf=\"processingLoadFile !== i\" src=\"{{'https://res.cloudinary.com/hmm6pjfgk/image/upload/' +-->\r\n                    <!--productCreateForm.get('assets').value[i]}}\" alt=\"productImage\">-->\r\n                    <img *ngIf=\"processingLoadFile === i\" src=\"{{productCreateForm.get('assets').value[i]}}\" alt=\"productImage\">\r\n                    <div *ngIf=\"processingLoadFile === i\" class=\"preview-div-processing\">\r\n                      <div class=\"spinner-wrapper\">\r\n                        <mat-spinner [diameter]=\"24\"></mat-spinner>\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                  <p *ngIf=\"processingLoadFile !== i\" class=\"remove-field text-center\" (click)=\"removeFile(i)\">\r\n                    Видалити зображення</p>\r\n\r\n                </div>\r\n                <div class=\"cell\" fxFlex=\"25\" fxFlex.lt-md=\"50\"\r\n                     *ngIf=\"productCreateForm.get('assets').value.length < 4\">\r\n                  <div class=\"preview-img-wrapper\">\r\n                    <img src=\"{{config.imgPath +\r\n                      config.cloudinary.cloud_name + '/c_fill,w_180,h_180,f_auto/' + config.defaultProductImg}}\" alt=\"productImage\">\r\n                    <input #inputFile type=\"file\" (change)=\"addPictures($event)\"\r\n                           accept=\".jpg, .jpe, .jpeg, .bmp, .webp, .png\" style=\"display:none;\">\r\n\r\n                    <div class=\"preview-div-processing\">\r\n                      <div class=\"button-wrapper\">\r\n                        <button mat-mini-fab color=\"primary\" type=\"button\" aria-label=\"add\"\r\n                                (click)=\"inputFile.click();\r\n                                this.productCreateForm.get('_id').disable();\r\n                                this.productCreateForm.get('parents').at(0).disable();\"\r\n                                [disabled]=\"!productCreateForm.get('_id').disabled &&\r\n                                !productCreateForm.get('_id').valid || processingLoadFile >= 0\">\r\n                          <mat-icon>add</mat-icon>\r\n                        </button>\r\n\r\n                      </div>\r\n                    </div>\r\n                  </div>\r\n                </div>\r\n              </div>\r\n\r\n\r\n            </div>\r\n            <div class=\"submit-button-wrapper\">\r\n              <!--<span fxFlex></span>-->\r\n              <button *ngIf=\"!editMode\" mat-raised-button class=\"full-width\" color=\"primary\" aria-label=\"Create\"\r\n                      [disabled]=\"!productCreateForm.valid || processingLoadFile >= 0\">Створити</button>\r\n              <button *ngIf=\"editMode\" mat-raised-button class=\"full-width\" color=\"primary\" aria-label=\"Save\"\r\n                      [disabled]=\"!productCreateForm.valid || processingLoadFile >= 0\">Зберегти</button>\r\n            </div>\r\n\r\n          </form>\r\n          </div>\r\n\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </div>\r\n  </div>\r\n</div>\r\n\r\n</div>\r\n"
 
 /***/ }),
 
@@ -5076,10 +5379,12 @@ module.exports = "<div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"r
 /*!***********************************************************************************!*\
   !*** ./src/app/components/dashboard/product-create/product-create.component.scss ***!
   \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL3Byb2R1Y3QtY3JlYXRlL3Byb2R1Y3QtY3JlYXRlLmNvbXBvbmVudC5zY3NzIn0= */"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL3Byb2R1Y3QtY3JlYXRlL3Byb2R1Y3QtY3JlYXRlLmNvbXBvbmVudC5zY3NzIn0= */");
 
 /***/ }),
 
@@ -5093,22 +5398,14 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductCreateComponent", function() { return ProductCreateComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/product.service */ "./src/app/services/product.service.ts");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
+/* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/product.service */ "./src/app/services/product.service.ts");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
 
 
 
@@ -5116,138 +5413,136 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var ProductCreateComponent = /** @class */ (function () {
-    function ProductCreateComponent(catalogService, productService, matSnackBar, route) {
+
+let ProductCreateComponent = class ProductCreateComponent {
+    constructor(catalogService, productService, matSnackBar, route) {
         this.catalogService = catalogService;
         this.productService = productService;
         this.matSnackBar = matSnackBar;
         this.route = route;
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_6__["config"];
         this.processingLoadFile = -1;
         this.editMode = false;
     }
-    ProductCreateComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.productCreateForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
-            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormArray"]([this.initParents()]),
-            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(30),
+    ngOnInit() {
+        this.productCreateForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
+            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormArray"]([this.initParents()]),
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(30),
             ]),
-            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(4),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(150),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(150),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
             ]),
-            dimensions: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroup"]({
-                width: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('[0-9]+'),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(3),
+            dimensions: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
+                width: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[0-9]+'),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(3),
                 ]),
-                height: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('[0-9]+'),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(3),
+                height: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[0-9]+'),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(3),
                 ]),
             }),
-            _id: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]({ value: '', disabled: false }, [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ]+'),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].minLength(6),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].maxLength(6),
+            _id: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]({ value: '', disabled: false }, [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(6),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(6),
             ]),
-            price: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^\\d*\\.?\\d+$'),
+            price: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('^\\d*\\.?\\d+$'),
             ]),
-            discount: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].pattern('^\\d*\\.?\\d+$'),
+            discount: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('^\\d*\\.?\\d+$'),
             ]),
-            assets: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormArray"]([]),
-            onMainPage: new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
+            assets: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormArray"]([]),
+            onMainPage: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
             // Validators.required,
             ]),
         });
         this.catalogService.getDescendants('products', 0)
-            .subscribe(function (descendants) {
+            .subscribe(descendants => {
             console.log('descendants.data', descendants.data);
-            _this.categories = descendants.data;
-        }, function (err) { return _this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }); });
+            this.categories = descendants.data;
+        }, err => this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }));
         this.route.paramMap
-            .subscribe(function (paramMap) {
+            .subscribe(paramMap => {
             if (paramMap.get('_id')) {
                 console.log('product editor(create) _id', paramMap.get('_id'));
-                _this.edited_id = paramMap.get('_id');
-                _this.editMode = true;
-                _this.productService.getProductById(_this.edited_id, 'products', null)
-                    .subscribe(function (product) {
-                    for (var i = 1; i < product.data.categories.length; i++) {
-                        _this.addParents();
+                this.edited_id = paramMap.get('_id');
+                this.editMode = true;
+                this.productService.getProductById(this.edited_id, 'products', null)
+                    .subscribe(product => {
+                    for (let i = 1; i < product.data.categories.length; i++) {
+                        this.addParents();
                     }
-                    for (var i = 0; i < product.data.files.length; i++) {
-                        _this.addAssets();
+                    for (let i = 0; i < product.data.files.length; i++) {
+                        this.addAssets();
                     }
-                    _this.productCreateForm.patchValue(product.data);
-                }, function (err) { return console.log('Помилка завантаження товару для редагування', err); });
+                    this.productCreateForm.patchValue(product.data);
+                }, err => console.log('Помилка завантаження товару для редагування', err));
             }
         });
-    };
-    ProductCreateComponent.prototype.resetForm = function () {
+    }
+    resetForm() {
         if (this.productCreateFormDirective) {
             // enabling disabled fields
             this.productCreateForm.get('_id').enable();
             this.productCreateForm.get('parents')['controls'][0].enable();
             // deleting needless controls
             // categories controls array has one item on init
-            for (var i = this.productCreateForm.get('parents')['controls'].length; i > 1; i--) {
+            for (let i = this.productCreateForm.get('parents')['controls'].length; i > 1; i--) {
                 this.removeParents(i - 1);
             }
             // files controls array don't has elems on init
-            for (var i = this.productCreateForm.get('assets')['controls'].length; i > 0; i--) {
+            for (let i = this.productCreateForm.get('assets')['controls'].length; i > 0; i--) {
                 this.removeAssets(i - 1);
             }
             this.productCreateFormDirective.resetForm();
         }
-    };
-    ProductCreateComponent.prototype.addPictures = function (event) {
-        var _this = this;
+    }
+    addPictures(event) {
         this.processingLoadFile = this.productCreateForm.get('assets').value.length;
-        var file = event.target.files[0];
-        var checkFile = this.productService.checkFile(file);
+        const file = event.target.files[0];
+        const checkFile = this.productService.checkFile(file);
         if (!checkFile.success) {
             this.matSnackBar.open(checkFile.message || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
             this.processingLoadFile = -1;
         }
         else {
-            var filesLinks_1 = this.productCreateForm.get('assets').value;
-            filesLinks_1.push(_app_config__WEBPACK_IMPORTED_MODULE_5__["config"].imgPath + _app_config__WEBPACK_IMPORTED_MODULE_5__["config"].cloudinary + _app_config__WEBPACK_IMPORTED_MODULE_5__["config"].defaultProductImg);
+            const filesLinks = this.productCreateForm.get('assets').value;
+            filesLinks.push(_app_config__WEBPACK_IMPORTED_MODULE_6__["config"].imgPath + _app_config__WEBPACK_IMPORTED_MODULE_6__["config"].cloudinary + _app_config__WEBPACK_IMPORTED_MODULE_6__["config"].defaultProductImg);
             this.addAssets();
-            this.productCreateForm.get('assets').setValue(filesLinks_1);
+            this.productCreateForm.get('assets').setValue(filesLinks);
             this.productService.productAddImage(file, this.productCreateForm.get('_id').value)
-                .subscribe(function (result) {
+                .subscribe(result => {
                 // this.previewProductImages.pop();
-                filesLinks_1.pop();
-                filesLinks_1.push(result.data);
-                _this.productCreateForm.get('assets').setValue(filesLinks_1);
-                console.log('this.productCreateForm.get(\'files\').value', _this.productCreateForm.get('assets').value);
+                filesLinks.pop();
+                filesLinks.push(result.data);
+                this.productCreateForm.get('assets').setValue(filesLinks);
+                console.log('this.productCreateForm.get(\'files\').value', this.productCreateForm.get('assets').value);
                 // this.previewProductImages = filesLinks;
                 // console.log('this.previewProductImages', this.previewProductImages);
                 console.log(result);
-                _this.processingLoadFile = -1;
-            }, function (err) {
-                _this.matSnackBar.open(err.error || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
-                _this.removeAssets(_this.productCreateForm.get('assets').value.length - 1);
+                this.processingLoadFile = -1;
+            }, err => {
+                this.matSnackBar.open(err.error || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+                this.removeAssets(this.productCreateForm.get('assets').value.length - 1);
                 // this.previewProductImages.pop();
-                filesLinks_1.pop();
-                _this.processingLoadFile = -1;
+                filesLinks.pop();
+                this.processingLoadFile = -1;
             });
         }
-    };
-    ProductCreateComponent.prototype.onProductCreateSubmit = function () {
-        var _this = this;
+    }
+    onProductCreateSubmit() {
         // remove duplicates
-        var uniqueParents = [];
+        const uniqueParents = [];
         this.productCreateForm.getRawValue().parents
-            .forEach(function (item) {
+            .forEach((item) => {
             if (uniqueParents.indexOf(item) === -1) {
                 uniqueParents.push(item);
             }
@@ -5270,26 +5565,26 @@ var ProductCreateComponent = /** @class */ (function () {
             // edit
             this.product._id = this.edited_id;
             this.productService.productEdit(this.product)
-                .subscribe(function (result) {
-                _this.matSnackBar.open(result.message, '', { duration: 3000 });
-                _this.resetForm();
-                _this.editMode = false;
-            }, function (err) { return _this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }); });
+                .subscribe(result => {
+                this.matSnackBar.open(result.message, '', { duration: 3000 });
+                this.resetForm();
+                this.editMode = false;
+            }, err => this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }));
         }
         else {
             this.productService.productCreate(this.product)
-                .subscribe(function (result) {
-                _this.matSnackBar.open(result.message, '', { duration: 3000 });
-                _this.resetForm();
-            }, function (err) { return _this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }); });
+                .subscribe(result => {
+                this.matSnackBar.open(result.message, '', { duration: 3000 });
+                this.resetForm();
+            }, err => this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }));
         }
-    };
-    ProductCreateComponent.prototype.onSelectParents = function (event) {
+    }
+    onSelectParents(event) {
         if (event.source.ngControl.name === '0') {
             this.createSku(event.value);
         }
-    };
-    ProductCreateComponent.prototype.createSku = function (category) {
+    }
+    createSku(category) {
         // const getPrefix$ = this.catalogService.getPrefix(category);
         // const getSkuList$ = this.productService.getSkuList(category);
         // observableForkJoin(getPrefix$, getSkuList$).subscribe(result => {
@@ -5319,65 +5614,54 @@ var ProductCreateComponent = /** @class */ (function () {
         //       err => this.matSnackBar.open(err.error, '',
         //         {duration: 3000, panelClass: 'snack-bar-danger'})
         //   );
-    };
-    ProductCreateComponent.prototype.addParents = function () {
-        var control = this.productCreateForm.get('parents');
+    }
+    addParents() {
+        const control = this.productCreateForm.get('parents');
         control.push(this.initParents());
-    };
-    ProductCreateComponent.prototype.removeParents = function (i) {
-        var control = this.productCreateForm.get('parents');
+    }
+    removeParents(i) {
+        const control = this.productCreateForm.get('parents');
         control.removeAt(i);
-    };
-    ProductCreateComponent.prototype.initParents = function () {
-        return new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('', [
-            _angular_forms__WEBPACK_IMPORTED_MODULE_1__["Validators"].required,
+    }
+    initParents() {
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
+            _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
         ]);
-    };
-    ProductCreateComponent.prototype.addCategory = function () {
-    };
-    ProductCreateComponent.prototype.addAssets = function () {
-        var control = this.productCreateForm.get('assets');
+    }
+    addCategory() {
+    }
+    addAssets() {
+        const control = this.productCreateForm.get('assets');
         control.push(this.initAssets());
-    };
-    ProductCreateComponent.prototype.removeAssets = function (i) {
-        var control = this.productCreateForm.get('assets');
+    }
+    removeAssets(i) {
+        const control = this.productCreateForm.get('assets');
         control.removeAt(i);
-    };
-    ProductCreateComponent.prototype.initAssets = function () {
-        return new _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormControl"]('file', [
+    }
+    initAssets() {
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('file', [
         // Validators.required,
         ]);
-    };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('f'),
-        __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_1__["FormGroupDirective"])
-    ], ProductCreateComponent.prototype, "productCreateFormDirective", void 0);
-    ProductCreateComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-product-create',
-            template: __webpack_require__(/*! ./product-create.component.html */ "./src/app/components/dashboard/product-create/product-create.component.html"),
-            styles: [__webpack_require__(/*! ./product-create.component.scss */ "./src/app/components/dashboard/product-create/product-create.component.scss")]
-        }),
-        __metadata("design:paramtypes", [_services_catalog_service__WEBPACK_IMPORTED_MODULE_2__["CatalogService"],
-            _services_product_service__WEBPACK_IMPORTED_MODULE_4__["ProductService"],
-            _angular_material__WEBPACK_IMPORTED_MODULE_3__["MatSnackBar"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_6__["ActivatedRoute"]])
-    ], ProductCreateComponent);
-    return ProductCreateComponent;
-}());
+    }
+};
+ProductCreateComponent.ctorParameters = () => [
+    { type: _services_catalog_service__WEBPACK_IMPORTED_MODULE_3__["CatalogService"] },
+    { type: _services_product_service__WEBPACK_IMPORTED_MODULE_5__["ProductService"] },
+    { type: _angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSnackBar"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_7__["ActivatedRoute"] }
+];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('f', { static: false })
+], ProductCreateComponent.prototype, "productCreateFormDirective", void 0);
+ProductCreateComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-product-create',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./product-create.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/product-create/product-create.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./product-create.component.scss */ "./src/app/components/dashboard/product-create/product-create.component.scss")).default]
+    })
+], ProductCreateComponent);
 
 
-
-/***/ }),
-
-/***/ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.html":
-/*!*********************************************************************************************!*\
-  !*** ./src/app/components/dashboard/product-editor-form/product-editor-form.component.html ***!
-  \*********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\">\r\n    <div class=\"full-width-container\">\r\n      <mat-card  class=\"form-block\">\r\n        <mat-card-header></mat-card-header>\r\n        <mat-card-title>\r\n          <h2 *ngIf=\"editMode\" class=\"mat-h2\">Редагувати колекцію\r\n            <span class=\"accent\">{{productForm.get('name').value}}</span> у розділі\r\n            <span class=\"accent\">{{paramParentName}}</span></h2>\r\n          <h2 *ngIf=\"!editMode\" class=\"mat-h2\">Створити колекцію у розділі <span class=\"accent\">{{paramParentName}}</span></h2>\r\n        </mat-card-title>\r\n\r\n        <mat-card-content>\r\n          <div class=\"container\">\r\n\r\n            <form [formGroup]=\"productForm\" #f=\"ngForm\" novalidate>\r\n\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                    <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                      <mat-form-field>\r\n                        <input matInput placeholder=\"Ідентифікатор\" formControlName=\"_id\" required>\r\n                        <mat-error\r\n                          *ngIf=\"(productForm.get('_id').errors?.minlength ||\r\n                                  productForm.get('_id').errors?.maxlength ||\r\n                                  productForm.get('_id').errors?.required) &&\r\n                                  productForm.get('_id').touched\">\r\n                          Довжина повинна бути 7 символів\r\n                        </mat-error>\r\n                        <mat-error\r\n                        *ngIf=\"productForm.get('_id').errors?.pattern &&\r\n                                productForm.get('_id').touched\">\r\n                          Не використовуйте спецсимволи\r\n                      </mat-error>\r\n                      </mat-form-field>\r\n                    </div>\r\n                    <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                      <mat-form-field>\r\n                        <input matInput placeholder=\"Назва\" formControlName=\"name\" required>\r\n                        <mat-error\r\n                          *ngIf=\"(productForm.get('name').errors?.minlength ||\r\n                                  productForm.get('name').errors?.maxlength ||\r\n                                  productForm.get('name').errors?.required) &&\r\n                                  productForm.get('name').touched\">\r\n                          Довжина повинна бути від 2 до 21 символа\r\n                        </mat-error>\r\n                      </mat-form-field>\r\n                    </div>\r\n                    <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                      <mat-form-field>\r\n                        <mat-select placeholder=\"Публікувати\" formControlName=\"display\">\r\n                          <mat-option [value]=\"true\">\r\n                            Так\r\n                          </mat-option>\r\n                          <mat-option [value]=\"false\">\r\n                            Ні\r\n                          </mat-option>\r\n                        </mat-select>\r\n                        <!-- <mat-error\r\n                          *ngIf=\"productForm.get('display').errors?.required &&\r\n                                  productForm.get('display').touched\">\r\n                          Обов'язкове поле\r\n                        </mat-error> -->\r\n                      </mat-form-field>\r\n                    </div>\r\n                    <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"50\" fxFlex.gt-sm=\"25\">\r\n                        <mat-form-field>\r\n                          <mat-select placeholder=\"На головній\" formControlName=\"onMainPage\">\r\n                            <mat-option [value]=\"true\">\r\n                              Так\r\n                            </mat-option>\r\n                            <mat-option [value]=\"false\">\r\n                              Ні\r\n                            </mat-option>\r\n                          </mat-select>\r\n                          <!-- <mat-error\r\n                            *ngIf=\"productForm.get('display').errors?.required &&\r\n                                    productForm.get('display').touched\">\r\n                            Обов'язкове поле\r\n                          </mat-error> -->\r\n                        </mat-form-field>\r\n                      </div>\r\n              </div>\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                <div class=\"cell\" fxFlex=\"100\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\">\r\n                  <mat-form-field>\r\n                    <textarea matInput placeholder=\"Опис\" formControlName=\"description\" required></textarea>\r\n                    <mat-error\r\n                      *ngIf=\"(productForm.get('description').errors?.minlength ||\r\n                        productForm.get('description').errors?.maxlength ||\r\n                        productForm.get('description').errors?.required) &&\r\n                        productForm.get('description').touched\">\r\n                      Довжина повинна бути від 4 до 200 символів\r\n                    </mat-error>\r\n                    <mat-error\r\n                      *ngIf=\"productForm.get('description').errors?.pattern &&\r\n                        productForm.get('description').touched\">\r\n                      Не використовуйте спеціальні символи\r\n                    </mat-error>\r\n                  </mat-form-field>\r\n                </div>\r\n                <div class=\"cell wrap\" fxFlex=\"100\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" formGroupName=\"dimensions\">\r\n                    <div class=\"item\" fxFlex=\"100\" fxFlex.gt-xs=\"50\">\r\n                        <mat-form-field>\r\n                          <input matInput placeholder=\"Ширина\" formControlName=\"width\">\r\n                          <span matSuffix>см</span>\r\n                          <mat-error\r\n                            *ngIf=\"productForm.get('dimensions.width').errors?.maxlength &&\r\n                            productForm.get('dimensions').get('width').touched\">\r\n                            Використовуйте не більше ніж три символа\r\n                          </mat-error>\r\n                          <mat-error\r\n                            *ngIf=\"productForm.get('dimensions').get('width').errors?.pattern &&\r\n                            productForm.get('dimensions').get('width').touched\">\r\n                            Використовуйте тількі цифри\r\n                          </mat-error>\r\n                        </mat-form-field>\r\n                      </div>\r\n                  <div class=\"item\" fxFlex=\"100\" fxFlex.gt-xs=\"50\">\r\n                    <mat-form-field>\r\n                      <input matInput placeholder=\"Висота\" formControlName=\"height\">\r\n                      <span matSuffix>см</span>\r\n                      <mat-error\r\n                        *ngIf=\"productForm.get('dimensions.height').errors?.maxlength &&\r\n                        productForm.get('dimensions').get('height').touched\">\r\n                        Використовуйте не більше ніж три символа\r\n                      </mat-error>\r\n                      <mat-error\r\n                        *ngIf=\"productForm.get('dimensions').get('height').errors?.pattern &&\r\n                        productForm.get('dimensions').get('height').touched\">\r\n                        Використовуйте тількі цифри\r\n                      </mat-error>\r\n                    </mat-form-field>\r\n                  </div>\r\n\r\n                </div>\r\n\r\n                <div class=\"cell wrap\" fxFlex=\"100\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\">\r\n                    <div class=\"item\" fxFlex=\"100\" fxFlex.gt-xs=\"50\">\r\n                        <mat-form-field>\r\n                            <input matInput placeholder=\"Ціна\" formControlName=\"price\" >\r\n                            <span matSuffix>грн</span>\r\n                            <mat-error\r\n                              *ngIf=\"productForm.get('price').errors?.pattern &&\r\n                              productForm.get('price').touched\">\r\n                              Використовуйте тількі цифри більші 0\r\n                            </mat-error>\r\n                        </mat-form-field>\r\n                      </div>\r\n                  <div class=\"item\" fxFlex=\"100\" fxFlex.gt-xs=\"50\">\r\n                      <mat-form-field>\r\n                          <input matInput placeholder=\"Знижка\" formControlName=\"discount\" >\r\n                          <span matSuffix>%</span>\r\n                          <mat-error\r\n                            *ngIf=\"productForm.get('discount').errors?.pattern &&\r\n                            productForm.get('discount').touched\">\r\n                            Використовуйте тількі цифри більші 0\r\n                          </mat-error>\r\n                      </mat-form-field>\r\n                  </div>\r\n\r\n                </div>\r\n              </div>\r\n\r\n              <div class=\"row padding-bottom\" fxLayout=\"row\">\r\n                    <div class=\"cell-header\" fxLayout=\"row\" fxFlex=\"100\">\r\n                        <h3 class=\"mat-h3 margin-0\">Зображення</h3>\r\n                      </div>\r\n                      <div class=\"cell\" fxFlex.xs=\"100\" fxFlex=\"25\">\r\n                        <div class=\"preview-img-wrapper\" >\r\n                          <img *ngIf=\"productForm.get('menuImage').value\" src=\"{{\r\n                              config.imgPath +\r\n                              config.cloudinary.cloud_name +\r\n                               '/c_fill,w_260,h_170,f_auto/' + productForm.get('menuImage').value}}\"\r\n                               alt=\"Menu Image\">\r\n                          <img *ngIf=\"!productForm.get('menuImage').value\"\r\n                               src=\"{{\r\n                               config.imgPath +\r\n                              config.cloudinary.cloud_name +\r\n                               '/c_fill,w_180,h_180,f_auto/'+\r\n                               config.defaultProductImg}}\" alt=\"Menu Image\">\r\n                          <input #inputMenuImage type=\"file\" (change)=\"addMenuImage($event)\"\r\n                                 accept=\".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif, .svg\" style=\"display:none;\">\r\n                          <div class=\"preview-div-processing\">\r\n                            <div *ngIf=\"processingLoadMenuImage\" class=\"spinner-wrapper\">\r\n                              <mat-spinner [diameter]=\"24\"></mat-spinner>\r\n                            </div>\r\n\r\n\r\n                            <div *ngIf=\"!processingLoadMenuImage\" class=\"button-wrapper\">\r\n                              <button mat-mini-fab color=\"primary\" type=\"button\" aria-label=\"add\"\r\n                                      (click)=\"inputMenuImage.click();\"\r\n                                      [disabled]=\"processingLoadMenuImage\">\r\n                                <mat-icon *ngIf=\"!productForm.get('menuImage').value && !processingLoadMenuImage\">add</mat-icon>\r\n                                <mat-icon *ngIf=\"productForm.get('menuImage').value && !processingLoadMenuImage\">redo</mat-icon>\r\n                              </button>\r\n\r\n                            </div>\r\n                          </div>\r\n                        </div>\r\n                        </div>\r\n              </div>\r\n\r\n              <div class=\"submit-button-wrapper row\" fxLayout=\"row\">\r\n                  <div class=\"cell\" fxFlex=\"40\">\r\n\r\n                    <button mat-raised-button color=\"primary\" class=\"full-width\" type=\"button\" (click)=\"onProductFormSubmit(false)\"\r\n                            [disabled]=\"!productForm.valid || processingLoadMenuImage\" aria-label=\"Save\">\r\n                      Зберегти</button>\r\n                  </div>\r\n                  <div class=\"cell\" fxFlex=\"40\">\r\n\r\n                    <button *ngIf=\"editMode\" mat-raised-button color=\"primary\" class=\"full-width\" type=\"button\" (click)=\"onProductFormSubmit(true)\"\r\n                              [disabled]=\"!productForm.valid || processingLoadMenuImag\" aria-label=\"Save and return\">\r\n                      Зберегти і повернутись</button>\r\n                    <button *ngIf=\"!editMode\" mat-raised-button color=\"primary\" class=\"full-width\" type=\"button\" (click)=\"onProductFormSubmit(true)\"\r\n                            [disabled]=\"!productForm.valid || processingLoadMenuImage\" aria-label=\"Create and return\">\r\n                      Створити і повернутись</button>\r\n                  </div>\r\n                    <div class=\"cell\" fxFlex=\"20\">\r\n                    <button mat-raised-button  type=\"button\" (click)=\"goBack()\" class=\"full-width\" aria-label=\"return\"\r\n                            [disabled]=\"processingLoadMenuImage\">Повернутись</button>\r\n                  </div>\r\n\r\n                </div>\r\n            </form>\r\n          </div>\r\n        </mat-card-content>\r\n      </mat-card>\r\n    </div>\r\n  </div>\r\n</div>\r\n</div>\r\n\r\n"
 
 /***/ }),
 
@@ -5385,10 +5669,12 @@ module.exports = "<div class=\"container\">\r\n  <div class=\"row\" fxLayout=\"r
 /*!*********************************************************************************************!*\
   !*** ./src/app/components/dashboard/product-editor-form/product-editor-form.component.scss ***!
   \*********************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL3Byb2R1Y3QtZWRpdG9yLWZvcm0vcHJvZHVjdC1lZGl0b3ItZm9ybS5jb21wb25lbnQuc2NzcyJ9 */"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL3Byb2R1Y3QtZWRpdG9yLWZvcm0vcHJvZHVjdC1lZGl0b3ItZm9ybS5jb21wb25lbnQuc2NzcyJ9 */");
 
 /***/ }),
 
@@ -5402,25 +5688,17 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductEditorFormComponent", function() { return ProductEditorFormComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm5/common.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm5/material.es5.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm5/router.js");
-/* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../services/product.service */ "./src/app/services/product.service.ts");
-/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm5/index.js");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ../../../services/product.service */ "./src/app/services/product.service.ts");
+/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 
 
 
@@ -5432,109 +5710,108 @@ var __metadata = (undefined && undefined.__metadata) || function (k, v) {
 
 
 
-var ProductEditorFormComponent = /** @class */ (function () {
-    function ProductEditorFormComponent(matSnackBar, route, location, productService, catalogService) {
+
+let ProductEditorFormComponent = class ProductEditorFormComponent {
+    constructor(matSnackBar, route, location, productService, catalogService) {
         this.matSnackBar = matSnackBar;
         this.route = route;
         this.location = location;
         this.productService = productService;
         this.catalogService = catalogService;
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_3__["config"];
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_4__["config"];
         this.editMode = false;
         this.processingLoadAssets = -1;
         this.processingLoadMainImage = false;
         this.processingLoadMenuImage = false;
     }
-    ProductEditorFormComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.productForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
-            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormArray"]([]),
-            assets: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormArray"]([]),
-            _id: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]({ value: '', disabled: false }, [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[a-z0-9]+'),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(7),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(7),
+    ngOnInit() {
+        this.productForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]({
+            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormArray"]([]),
+            assets: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormArray"]([]),
+            _id: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]({ value: '', disabled: false }, [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('[a-z0-9]+'),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].minLength(7),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].maxLength(7),
             ]),
-            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(2),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(21),
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].minLength(2),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].maxLength(21),
             ]),
-            display: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](true, []),
-            onMainPage: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](false, []),
-            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].minLength(4),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(200),
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
+            display: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](true, []),
+            onMainPage: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](false, []),
+            description: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].maxLength(200),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ,."@%-_\' ]+'),
             ]),
-            dimensions: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
-                width: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[0-9]+'),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(3),
+            dimensions: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]({
+                width: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('[0-9]+'),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].maxLength(3),
                 ]),
-                height: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[0-9]+'),
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].maxLength(3),
+                height: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('[0-9]+'),
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].maxLength(3),
                 ]),
             }),
-            price: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('^\\d*\\.?\\d+$'),
+            price: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('^\\d*\\.?\\d+$'),
             ]),
-            discount: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](0, [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].pattern('[0-9]{1,2}'),
+            discount: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](0, [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].pattern('[0-9]{1,2}'),
             ]),
-            mainImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.config.defaultProductImg, []),
-            menuImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"](this.config.defaultProductImg, []),
+            mainImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](this.config.defaultProductImg, []),
+            menuImage: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"](this.config.defaultProductImg, []),
         });
-        this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_8__["mergeMap"])(function (params) {
-            _this.paramEdited_id = params.get('_id');
-            _this.paramParent_id = params.get('parentCategory_id');
-            _this.paramParentName = params.get('parentCategoryName');
-            if (!_this.paramEdited_id) {
-                return Object(rxjs__WEBPACK_IMPORTED_MODULE_9__["of"])(null);
+        this.route.paramMap.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_9__["mergeMap"])(params => {
+            this.paramEdited_id = params.get('_id');
+            this.paramParent_id = params.get('parentCategory_id');
+            this.paramParentName = params.get('parentCategoryName');
+            if (!this.paramEdited_id) {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["of"])(null);
             }
-            return _this.productService.getProductById(_this.paramEdited_id, 'products', false);
+            return this.productService.getProductById(this.paramEdited_id, 'products', false);
         }))
-            .subscribe(function (result) {
+            .subscribe(result => {
             if (result) {
                 // edit product
                 console.log('result edit', result);
-                _this.editMode = true;
+                this.editMode = true;
                 // this.parents = result.data.parents;
-                for (var i = 0; i < result.data.assets.length; i++) {
-                    _this.addAssetsControl();
+                for (let i = 0; i < result.data.assets.length; i++) {
+                    this.addAssetsControl();
                 }
                 console.log(' result.data.parents.length', result.data.parents.length);
-                for (var i = 0; i < result.data.parents.length; i++) {
-                    _this.addParentsControl();
+                for (let i = 0; i < result.data.parents.length; i++) {
+                    this.addParentsControl();
                 }
-                _this.productForm.patchValue(result.data);
-                _this.productForm.get('_id').disable();
+                this.productForm.patchValue(result.data);
+                this.productForm.get('_id').disable();
             }
             else {
                 // new product
                 console.log('result new', result);
                 // this.parents = [this.paramParent_id];
-                _this.addParentsControl();
-                _this.productForm.get('parents').setValue([_this.paramParent_id]);
-                _this._createSku(_this.paramParent_id);
+                this.addParentsControl();
+                this.productForm.get('parents').setValue([this.paramParent_id]);
+                this._createSku(this.paramParent_id);
             }
-        }, function (err) { return console.log('Помилка', err); });
-    };
-    ProductEditorFormComponent.prototype._createSku = function (parent) {
-        var _this = this;
-        var getPrefix$ = this.catalogService.getPrefix(parent);
-        var getSkuList$ = this.productService.getSkuList();
-        Object(rxjs__WEBPACK_IMPORTED_MODULE_9__["forkJoin"])(getPrefix$, getSkuList$).subscribe(function (result) {
-            var prefix = result[0].data.prefix;
-            var skuList = result[1]
-                .map(function (item) { return item._id; }) // create [] from {}
-                .filter(function (item) { return item.slice(0, 3) === prefix; }) // take elems with needed prefix
-                .map(function (item) { return +item.slice(3); }); // concat prefix, take only numbers
-            var freeNumber = 1;
-            for (var i = 0; i < skuList.length; i++) {
+        }, err => console.log('Помилка', err));
+    }
+    _createSku(parent) {
+        const getPrefix$ = this.catalogService.getPrefix(parent);
+        const getSkuList$ = this.productService.getSkuList();
+        Object(rxjs__WEBPACK_IMPORTED_MODULE_10__["forkJoin"])(getPrefix$, getSkuList$).subscribe(result => {
+            const prefix = result[0].data.prefix;
+            const skuList = result[1]
+                .map(item => item._id) // create [] from {}
+                .filter(item => item.slice(0, 3) === prefix) // take elems with needed prefix
+                .map(item => +item.slice(3)); // concat prefix, take only numbers
+            let freeNumber = 1;
+            for (let i = 0; i < skuList.length; i++) {
                 if (skuList[i] - (i + 1) >= 1) {
                     freeNumber = i + 1;
                     break;
@@ -5543,14 +5820,14 @@ var ProductEditorFormComponent = /** @class */ (function () {
                     freeNumber = skuList.length + 1;
                 }
             }
-            var sku = freeNumber.toString();
+            let sku = freeNumber.toString();
             while (sku.length < 4) {
                 sku = '0' + sku;
             }
             sku = prefix + sku;
-            _this.productForm.patchValue({ _id: sku });
-        }, function (err) { return _this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }); });
-    };
+            this.productForm.patchValue({ _id: sku });
+        }, err => this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }));
+    }
     // addMainImage(event) {
     //   this.processingLoadMainImage = true;
     //   const file = event.target.files[0];
@@ -5573,28 +5850,26 @@ var ProductEditorFormComponent = /** @class */ (function () {
     //       );
     //   }
     // }
-    ProductEditorFormComponent.prototype.addMenuImage = function (event) {
-        var _this = this;
+    addMenuImage(event) {
         this.processingLoadMenuImage = true;
-        var file = event.target.files[0];
-        var checkFile = this.productService.checkFile(file);
+        const file = event.target.files[0];
+        const checkFile = this.productService.checkFile(file);
         if (!checkFile.success) {
             this.matSnackBar.open(checkFile.message || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
             this.processingLoadMenuImage = false;
         }
         else {
             this.productService.productAddMenuImage(file, this.productForm.get('_id').value)
-                .subscribe(function (result) {
-                _this.productForm.get('menuImage').setValue(result.data);
-                _this.processingLoadMenuImage = false;
-            }, function (err) {
-                _this.matSnackBar.open(err.error || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
-                _this.processingLoadMenuImage = false;
+                .subscribe(result => {
+                this.productForm.get('menuImage').setValue(result.data);
+                this.processingLoadMenuImage = false;
+            }, err => {
+                this.matSnackBar.open(err.error || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+                this.processingLoadMenuImage = false;
             });
         }
-    };
-    ProductEditorFormComponent.prototype.onProductFormSubmit = function (goBackAndReset) {
-        var _this = this;
+    }
+    onProductFormSubmit(goBackAndReset) {
         this.product = {
             parents: this.productForm.get('parents').value,
             _id: this.productForm.getRawValue()._id,
@@ -5613,81 +5888,70 @@ var ProductEditorFormComponent = /** @class */ (function () {
             }
         };
         this.productService.productUpsert(this.product)
-            .subscribe(function (result) {
-            _this.matSnackBar.open(result, '', { duration: 3000 });
+            .subscribe(result => {
+            this.matSnackBar.open(result, '', { duration: 3000 });
             if (goBackAndReset) {
-                _this.goBack();
-                _this.resetForm();
-                _this.editMode = false;
+                this.goBack();
+                this.resetForm();
+                this.editMode = false;
             }
             else {
-                _this.editMode = true;
+                this.editMode = true;
             }
-        }, function (err) { return _this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }); });
-    };
-    ProductEditorFormComponent.prototype.resetForm = function () {
+        }, err => this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' }));
+    }
+    resetForm() {
         this.productFormDirective.resetForm();
-    };
-    ProductEditorFormComponent.prototype.goBack = function () {
+    }
+    goBack() {
         this.location.back();
-    };
-    ProductEditorFormComponent.prototype.addParentsControl = function () {
-        var control = this.productForm.get('parents');
+    }
+    addParentsControl() {
+        const control = this.productForm.get('parents');
         control.push(this.initParentsControl());
-    };
-    ProductEditorFormComponent.prototype.removeParentsControl = function (i) {
-        var control = this.productForm.get('parents');
+    }
+    removeParentsControl(i) {
+        const control = this.productForm.get('parents');
         control.removeAt(i);
-    };
-    ProductEditorFormComponent.prototype.initParentsControl = function () {
-        return new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', [
-            _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required,
+    }
+    initParentsControl() {
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
+            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
         ]);
-    };
-    ProductEditorFormComponent.prototype.addAssetsControl = function () {
-        var control = this.productForm.get('assets');
+    }
+    addAssetsControl() {
+        const control = this.productForm.get('assets');
         control.push(this.initAssetsControl());
-    };
-    ProductEditorFormComponent.prototype.removeAssetsControl = function (i) {
-        var control = this.productForm.get('assets');
+    }
+    removeAssetsControl(i) {
+        const control = this.productForm.get('assets');
         control.removeAt(i);
-    };
-    ProductEditorFormComponent.prototype.initAssetsControl = function () {
-        return new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('file', [
+    }
+    initAssetsControl() {
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('file', [
         // Validators.required,
         ]);
-    };
-    __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"])('f'),
-        __metadata("design:type", _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroupDirective"])
-    ], ProductEditorFormComponent.prototype, "productFormDirective", void 0);
-    ProductEditorFormComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-product-editor-form',
-            template: __webpack_require__(/*! ./product-editor-form.component.html */ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.html"),
-            styles: [__webpack_require__(/*! ./product-editor-form.component.scss */ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.scss")]
-        }),
-        __metadata("design:paramtypes", [_angular_material__WEBPACK_IMPORTED_MODULE_4__["MatSnackBar"],
-            _angular_router__WEBPACK_IMPORTED_MODULE_5__["ActivatedRoute"],
-            _angular_common__WEBPACK_IMPORTED_MODULE_1__["Location"],
-            _services_product_service__WEBPACK_IMPORTED_MODULE_6__["ProductService"],
-            _services_catalog_service__WEBPACK_IMPORTED_MODULE_7__["CatalogService"]])
-    ], ProductEditorFormComponent);
-    return ProductEditorFormComponent;
-}());
+    }
+};
+ProductEditorFormComponent.ctorParameters = () => [
+    { type: _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatSnackBar"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__["ActivatedRoute"] },
+    { type: _angular_common__WEBPACK_IMPORTED_MODULE_2__["Location"] },
+    { type: _services_product_service__WEBPACK_IMPORTED_MODULE_7__["ProductService"] },
+    { type: _services_catalog_service__WEBPACK_IMPORTED_MODULE_8__["CatalogService"] }
+];
+tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('f', { static: false })
+], ProductEditorFormComponent.prototype, "productFormDirective", void 0);
+ProductEditorFormComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-product-editor-form',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./product-editor-form.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/product-editor-form/product-editor-form.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./product-editor-form.component.scss */ "./src/app/components/dashboard/product-editor-form/product-editor-form.component.scss")).default]
+    })
+], ProductEditorFormComponent);
 
 
-
-/***/ }),
-
-/***/ "./src/app/components/dashboard/product-editor/product-editor.component.html":
-/*!***********************************************************************************!*\
-  !*** ./src/app/components/dashboard/product-editor/product-editor.component.html ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<!-- <div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"cell\" fxFlex=\"100\"> -->\r\n\r\n    <div class=\"container\">\r\n      <div class=\"row\">\r\n        <div class=\"cell\">\r\n          <h2 class=\"mat-h2\">Редактор виробів</h2>\r\n        </div>\r\n      </div>\r\n      <form [formGroup]=\"catalogForm\" #f=\"ngForm\">\r\n        <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n          <div formArrayName=\"parents\" class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\"\r\n               *ngFor=\"let categoryBlock of catalogForm.get('parents')['controls']; let i = index\">\r\n\r\n                <mat-select placeholder=\"Виберіть категорію\" formControlName=\"{{i}}\" required\r\n                            (selectionChange)=\"onSelectCategory($event, i)\">\r\n                  <mat-option *ngFor=\"let child of children[i]\" [value]=\"child._id\">\r\n                    {{child.name}}\r\n                  </mat-option>\r\n            </mat-select>\r\n          </div>\r\n\r\n        </div>\r\n      </form>\r\n\r\n      <div *ngIf=\"noMoreChildren\" class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\r\n        <div class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n          <div class=\"preview-img-wrapper\">\r\n            <img src=\"{{\r\n                        config.imgPath +\r\n                        config.cloudinary.cloud_name +\r\n                        '/c_fill,w_180,h_180,f_auto/' +\r\n                        config.defaultProductImg}}\" alt=\"product\">\r\n            <div class=\"preview-div-processing\">\r\n              <div class=\"button-wrapper\">\r\n                <button mat-mini-fab color=\"primary\" type=\"button\" aria-label=\"Add\"\r\n                        [routerLink]=\"['/dashboard', 'product-editor-new', parentCategory_id, parentCategoryName]\"\r\n                        [routerLinkActive]=\"['accent-background']\" [routerLinkActiveOptions]=\"{exact: true}\">\r\n                  <mat-icon>add</mat-icon>\r\n                </button>\r\n              </div>\r\n            </div>\r\n          </div>\r\n        </div>\r\n        <div *ngFor=\"let product of products\"  class=\"cell\" fxFlex.sm=\"50\" fxFlex.md=\"33.3\" fxFlex.gt-md=\"25\">\r\n          <app-product-item-brief [product]=\"product\" [parentCategory_id]=\"parentCategory_id\" [parentCategoryName]=\"parentCategoryName\"></app-product-item-brief>\r\n        </div>\r\n\r\n      </div>\r\n    </div>\r\n  <!-- </div>\r\n</div> -->\r\n"
 
 /***/ }),
 
@@ -5695,10 +5959,12 @@ module.exports = "<!-- <div class=\"row\" fxLayout=\"row\">\r\n  <div class=\"ce
 /*!***********************************************************************************!*\
   !*** ./src/app/components/dashboard/product-editor/product-editor.component.scss ***!
   \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL3Byb2R1Y3QtZWRpdG9yL3Byb2R1Y3QtZWRpdG9yLmNvbXBvbmVudC5zY3NzIn0= */"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL3Byb2R1Y3QtZWRpdG9yL3Byb2R1Y3QtZWRpdG9yLmNvbXBvbmVudC5zY3NzIn0= */");
 
 /***/ }),
 
@@ -5712,105 +5978,86 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProductEditorComponent", function() { return ProductEditorComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm5/operators/index.js");
-/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm5/forms.js");
-/* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/product.service */ "./src/app/services/product.service.ts");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _services_product_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../services/product.service */ "./src/app/services/product.service.ts");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
 
 
 
 
 
 
-var ProductEditorComponent = /** @class */ (function () {
-    function ProductEditorComponent(catalogService, productService) {
+
+let ProductEditorComponent = class ProductEditorComponent {
+    constructor(catalogService, productService) {
         this.catalogService = catalogService;
         this.productService = productService;
         this.children = [];
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_6__["config"];
         this.noMoreChildren = false;
     }
-    ProductEditorComponent.prototype.ngOnInit = function () {
-        var _this = this;
-        this.catalogForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormGroup"]({
-            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormArray"]([this.initParents()]),
+    ngOnInit() {
+        this.catalogForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormGroup"]({
+            parents: new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormArray"]([this.initParents()]),
         });
         this.catalogService.getChildren('products')
-            .subscribe(function (result) { return _this.children[0] = result.data; }, function (err) { return console.log('помилка завантаження категорій', err); });
-    };
-    ProductEditorComponent.prototype.onSelectCategory = function (event, level) {
-        var _this = this;
+            .subscribe(result => this.children[0] = result.data, err => console.log('помилка завантаження категорій', err));
+    }
+    onSelectCategory(event, level) {
         while (level + 1 < this.catalogForm.get('parents')['controls'].length) {
             this.removeParents(this.catalogForm.get('parents')['controls'].length - 1);
         }
-        this.catalogService.getChildren(event.value).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["mergeMap"])(function (children) {
+        this.catalogService.getChildren(event.value).pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_2__["mergeMap"])(children => {
             if (!children.data.length) {
                 // if no children - show products
-                _this.parentCategory_id = event.value;
-                _this.parentCategoryName = event.source.triggerValue;
-                _this.noMoreChildren = true;
-                _this.children[level + 1] = children.data;
-                return _this.productService.getProductsByParent(event.value, 'products', false, -1, 0, 99999);
+                this.parentCategory_id = event.value;
+                this.parentCategoryName = event.source.triggerValue;
+                this.noMoreChildren = true;
+                this.children[level + 1] = children.data;
+                return this.productService.getProductsByParent(event.value, 'products', false, -1, 0, 99999);
             }
             else {
-                _this.children[level + 1] = children.data;
-                _this.noMoreChildren = false;
-                _this.addParents();
-                return _this.productService.getProductsByParent(null, 'products', true, -1, 0, 99999);
+                this.children[level + 1] = children.data;
+                this.noMoreChildren = false;
+                this.addParents();
+                return this.productService.getProductsByParent(null, 'products', true, -1, 0, 99999);
             }
         }))
-            .subscribe(function (result) {
-            _this.products = result[0].products;
-        }, function (err) { return console.log('помилка завантаження категорій', err); });
-    };
-    ProductEditorComponent.prototype.addParents = function () {
-        var control = this.catalogForm.get('parents');
+            .subscribe(result => {
+            this.products = result[0].products;
+        }, err => console.log('помилка завантаження категорій', err));
+    }
+    addParents() {
+        const control = this.catalogForm.get('parents');
         control.push(this.initParents());
-    };
-    ProductEditorComponent.prototype.removeParents = function (i) {
-        var control = this.catalogForm.get('parents');
+    }
+    removeParents(i) {
+        const control = this.catalogForm.get('parents');
         control.removeAt(i);
-    };
-    ProductEditorComponent.prototype.initParents = function () {
-        return new _angular_forms__WEBPACK_IMPORTED_MODULE_3__["FormControl"]('', [
-            _angular_forms__WEBPACK_IMPORTED_MODULE_3__["Validators"].required,
+    }
+    initParents() {
+        return new _angular_forms__WEBPACK_IMPORTED_MODULE_4__["FormControl"]('', [
+            _angular_forms__WEBPACK_IMPORTED_MODULE_4__["Validators"].required,
         ]);
-    };
-    ProductEditorComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-product-editor',
-            template: __webpack_require__(/*! ./product-editor.component.html */ "./src/app/components/dashboard/product-editor/product-editor.component.html"),
-            styles: [__webpack_require__(/*! ./product-editor.component.scss */ "./src/app/components/dashboard/product-editor/product-editor.component.scss")]
-        }),
-        __metadata("design:paramtypes", [_services_catalog_service__WEBPACK_IMPORTED_MODULE_2__["CatalogService"],
-            _services_product_service__WEBPACK_IMPORTED_MODULE_4__["ProductService"]])
-    ], ProductEditorComponent);
-    return ProductEditorComponent;
-}());
+    }
+};
+ProductEditorComponent.ctorParameters = () => [
+    { type: _services_catalog_service__WEBPACK_IMPORTED_MODULE_3__["CatalogService"] },
+    { type: _services_product_service__WEBPACK_IMPORTED_MODULE_5__["ProductService"] }
+];
+ProductEditorComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-product-editor',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./product-editor.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/product-editor/product-editor.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./product-editor.component.scss */ "./src/app/components/dashboard/product-editor/product-editor.component.scss")).default]
+    })
+], ProductEditorComponent);
 
 
-
-/***/ }),
-
-/***/ "./src/app/components/dashboard/tools/tools.component.html":
-/*!*****************************************************************!*\
-  !*** ./src/app/components/dashboard/tools/tools.component.html ***!
-  \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "<div class=\"container\">\n  <div class=\"row\" fxLayout=\"row\">\n\n  <div class=\"cell\" fxFlex=\"100\">\n\n    <div class=\"container\">\n      <div class=\"row\">\n        <div class=\"cell\">\n          <h2 class=\"mat-h2\">Інструменти</h2>\n        </div>\n      </div>\n\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"100\" fxLayout=\"row\" >\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_400,h_300/' +\n                'test'}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n      </div>\n\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">favicon32x32</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_32,h_32/' +\n                faviconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n      </div>\n\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\"> Logo 250x90</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_250,h_90/' +\n                logoFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">Logo 140x50</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n                config.imgPath +\n                config.cloudinary.cloud_name +\n                '/c_fill,w_140,h_50/' +\n                logoFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n      </div>\n\n      <div class=\"row\" fxLayout=\"row\" fxLayout.gt-xs=\"row\">\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">512x512</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_512,h_512/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">384x384</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_384,h_384/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">192x192</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_192,h_192/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">152x152</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_152,h_152/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">144x144</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_144,h_144/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">128x128</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_128,h_128/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">96x96</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_96,h_96/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n        <div class=\"cell\" fxFlex.sm=\"100\" fxFlex.gt-sm=\"50\" fxLayout=\"row\" >\n          <div fxFlex>\n            <h4 class=\"mat-h4\">72x72</h4>\n          </div>\n          <div fxFlex fxLayoutAlign=\"center center\">\n            <img fxflex class=\"product-detail-image\" src=\"{{\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_72,h_72/' +\n              iconFilename}}\"\n                 alt=\"icon\">\n          </div>\n        </div>\n\n\n\n      </div>\n    </div>\n\n  </div>\n</div>\n</div>\n\n"
 
 /***/ }),
 
@@ -5818,10 +6065,12 @@ module.exports = "<div class=\"container\">\n  <div class=\"row\" fxLayout=\"row
 /*!*****************************************************************!*\
   !*** ./src/app/components/dashboard/tools/tools.component.scss ***!
   \*****************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL3Rvb2xzL3Rvb2xzLmNvbXBvbmVudC5zY3NzIn0= */"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvZGFzaGJvYXJkL3Rvb2xzL3Rvb2xzLmNvbXBvbmVudC5zY3NzIn0= */");
 
 /***/ }),
 
@@ -5835,38 +6084,29 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ToolsComponent", function() { return ToolsComponent; });
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm5/core.js");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
-var __decorate = (undefined && undefined.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (undefined && undefined.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
 
 
-var ToolsComponent = /** @class */ (function () {
-    function ToolsComponent() {
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"];
+
+let ToolsComponent = class ToolsComponent {
+    constructor() {
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"];
     }
-    ToolsComponent.prototype.ngOnInit = function () {
-        this.iconFilename = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].icon + '.png';
-        this.faviconFilename = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].icon + '.ico';
-        this.logoFilename = _app_config__WEBPACK_IMPORTED_MODULE_1__["config"].logoDark + '.svg';
-    };
-    ToolsComponent = __decorate([
-        Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"])({
-            selector: 'app-tools',
-            template: __webpack_require__(/*! ./tools.component.html */ "./src/app/components/dashboard/tools/tools.component.html"),
-            styles: [__webpack_require__(/*! ./tools.component.scss */ "./src/app/components/dashboard/tools/tools.component.scss")]
-        }),
-        __metadata("design:paramtypes", [])
-    ], ToolsComponent);
-    return ToolsComponent;
-}());
+    ngOnInit() {
+        this.iconFilename = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"].icon + '.png';
+        this.faviconFilename = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"].icon + '.ico';
+        this.logoFilename = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"].logoDark + '.svg';
+    }
+};
+ToolsComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-tools',
+        template: tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! raw-loader!./tools.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/dashboard/tools/tools.component.html")).default,
+        styles: [tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"](__webpack_require__(/*! ./tools.component.scss */ "./src/app/components/dashboard/tools/tools.component.scss")).default]
+    })
+], ToolsComponent);
 
 
 

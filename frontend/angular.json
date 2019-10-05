@@ -4,15 +4,15 @@
   "newProjectRoot": "projects",
   "projects": {
     "hmade": {
-      "root": "",
-      "sourceRoot": "src",
       "projectType": "application",
-      "prefix": "app",
-	  "schematics": {
+      "schematics": {
         "@schematics/angular:component": {
-          "styleext": "scss"
+          "style": "scss"
         }
       },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
@@ -21,19 +21,18 @@
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.app.json",
+            "tsConfig": "tsconfig.app.json",
+            "aot": false,
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.json"
+              "src/manifest.webmanifest"
             ],
             "styles": [
               "src/styles/styles.scss",
-              "./node_modules/aos/dist/aos.css"  
+              "./node_modules/aos/dist/aos.css"
             ],
-            "scripts": [
-              "./node_modules/aos/dist/aos.js"
-            ]
+            "scripts": []
           },
           "configurations": {
             "production": {
@@ -45,14 +44,27 @@
               ],
               "optimization": true,
               "outputHashing": "all",
-              "sourceMap": true,
+              "sourceMap": false,
               "extractCss": true,
               "namedChunks": false,
               "aot": true,
               "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
-              "serviceWorker": true
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
+                }
+              ],
+              "serviceWorker": true,
+              "ngswConfigPath": "ngsw-config.json"
             }
           }
         },
@@ -78,37 +90,33 @@
           "options": {
             "main": "src/test.ts",
             "polyfills": "src/polyfills.ts",
-            "tsConfig": "src/tsconfig.spec.json",
-            "karmaConfig": "src/karma.conf.js",
-            "styles": [
-              "src/styles/styles.scss"
-            ],
-            "scripts": [],
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/manifest.json"
-            ]
+              "src/manifest.webmanifest"
+            ],
+            "styles": [
+              "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
+              "src/styles.scss"
+            ],
+            "scripts": []
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": [
-              "src/tsconfig.app.json",
-              "src/tsconfig.spec.json"
+              "tsconfig.app.json",
+              "tsconfig.spec.json",
+              "e2e/tsconfig.json"
             ],
             "exclude": [
               "**/node_modules/**"
             ]
           }
-        }
-      }
-    },
-    "hmade-e2e": {
-      "root": "e2e/",
-      "projectType": "application",
-      "architect": {
+        },
         "e2e": {
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
@@ -120,11 +128,37 @@
               "devServerTarget": "hmade:serve:production"
             }
           }
+        }
+      }
+    },
+    "lib-user": {
+      "projectType": "library",
+      "root": "projects/lib-user",
+      "sourceRoot": "projects/lib-user/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-ng-packagr:build",
+          "options": {
+            "tsConfig": "projects/lib-user/tsconfig.lib.json",
+            "project": "projects/lib-user/ng-package.json"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/lib-user/src/test.ts",
+            "tsConfig": "projects/lib-user/tsconfig.spec.json",
+            "karmaConfig": "projects/lib-user/karma.conf.js"
+          }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": "e2e/tsconfig.e2e.json",
+            "tsConfig": [
+              "projects/lib-user/tsconfig.lib.json",
+              "projects/lib-user/tsconfig.spec.json"
+            ],
             "exclude": [
               "**/node_modules/**"
             ]

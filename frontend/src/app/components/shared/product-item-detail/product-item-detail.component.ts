@@ -6,7 +6,7 @@ import { ConfirmPopupComponent } from '../confirm-popup/confirm-popup.component'
 import { mergeMap } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { DesignPopupComponent } from '../design-popup/design-popup.component';
-import { ObservableMedia } from '@angular/flex-layout';
+import { MediaObserver } from '@angular/flex-layout';
 import { ProductService } from '../../../services/product.service';
 import { IProduct } from '../../../interfaces/product-interface';
 import { ActivatedRoute } from '@angular/router';
@@ -25,7 +25,7 @@ export class ProductItemDetailComponent implements OnInit, OnChanges {
 
   constructor(
     public dialog: MatDialog,
-    public media: ObservableMedia,
+    public media: MediaObserver,
     private productService: ProductService,
     private route: ActivatedRoute,
   ) { }

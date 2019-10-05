@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SocketComponent } from './socket.component';
+import { LibUserComponent } from './lib-user.component';
 
-describe('SocketComponent', () => {
-  let component: SocketComponent;
-  let fixture: ComponentFixture<SocketComponent>;
+describe('LibUserComponent', () => {
+  let component: LibUserComponent;
+  let fixture: ComponentFixture<LibUserComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ SocketComponent ]
+      declarations: [ LibUserComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(SocketComponent);
+    fixture = TestBed.createComponent(LibUserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

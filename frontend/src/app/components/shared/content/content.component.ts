@@ -21,9 +21,9 @@ export class ContentComponent implements OnInit, AfterViewInit {
   user: IUser;
   mainMenuCommonItems: ICatalog[];
   mainMenuSystemItems: ICatalog[];
-  @ViewChild('settingsMenuTrigger') settingsMenuTrigger: MatMenuTrigger;
-  @ViewChild('settingsSideMenuTrigger') settingsSideMenuTrigger: MatMenuTrigger;
-  @ViewChild('sidenav') sidenav: MatDrawerContainer;
+  @ViewChild('settingsMenuTrigger', { static: false }) settingsMenuTrigger: MatMenuTrigger;
+  @ViewChild('settingsSideMenuTrigger', { static: false }) settingsSideMenuTrigger: MatMenuTrigger;
+  @ViewChild('sidenav', { static: false }) sidenav: MatDrawerContainer;
 
   category: any;
   category_id: string;

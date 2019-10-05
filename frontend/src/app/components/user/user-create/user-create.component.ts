@@ -23,8 +23,8 @@ export class UserCreateComponent implements OnInit {
   /**
    * directive for reset form (invalid status)
    */
-  @ViewChild(FormGroupDirective) userCreateFormDirective: FormGroupDirective;
-  @ViewChild(RecaptchaComponent) recaptchaRef: RecaptchaComponent;
+  @ViewChild(FormGroupDirective, { static: false }) userCreateFormDirective: FormGroupDirective;
+  @ViewChild(RecaptchaComponent, { static: false }) recaptchaRef: RecaptchaComponent;
 
   constructor(
     private validateService: ValidateService,
