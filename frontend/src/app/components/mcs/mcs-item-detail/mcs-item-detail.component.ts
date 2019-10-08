@@ -38,15 +38,16 @@ export class McsItemDetailComponent implements OnInit {
           this.mc_id = params._id;
           return this.mcService.getMcByIdAndIncViews(params._id);
         })
-      )
+    )
       .subscribe((result) => {
+        console.log('mc', result);
         this.mc = result;
       },
-      (err) => console.log('err', err)
+        (err) => console.log('err', err)
       );
 
-      this.sharedService.getEventToReloadComments()
-        .subscribe(event => this.getMcById());
+    this.sharedService.getEventToReloadComments()
+      .subscribe(event => this.getMcById());
   }
 
   getMcById() {
@@ -54,7 +55,7 @@ export class McsItemDetailComponent implements OnInit {
       .subscribe((result) => {
         this.mc = result;
       },
-      (err) => console.log('err', err)
+        (err) => console.log('err', err)
       );
   }
 
@@ -71,28 +72,28 @@ export class McsItemDetailComponent implements OnInit {
       return;
     } else {
       // action is true for like, is false for dislike
-    const parent_id = this.mc._id;
-    const parentCategory = 'mc';
-    this.socialService.likesSet(parent_id, parentCategory, action)
-      .pipe(
-        mergeMap(
-          (result) => {
+      const parent_id = this.mc._id;
+      const parentCategory = 'mc';
+      this.socialService.likesSet(parent_id, parentCategory, action)
+        .pipe(
+          mergeMap(
+            (result) => {
               if (result) {
                 return this.mcService.getMcById(parent_id);
               } else {
                 return of(null);
               }
             }
+          )
         )
-        )
-      .subscribe(
-        (result) => {
-          if (result) {
-            this.mc = result;
-          }
-        },
-        (err) => console.log('err', err)
-      );
+        .subscribe(
+          (result) => {
+            if (result) {
+              this.mc = result;
+            }
+          },
+          (err) => console.log('err', err)
+        );
 
     }
   }

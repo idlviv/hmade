@@ -74,7 +74,7 @@ export class ProductItemBriefComponent implements OnInit {
             seoMeta: child.seoMeta
           }
         }
-       );
+      );
     }
   }
 
@@ -103,7 +103,7 @@ export class ProductItemBriefComponent implements OnInit {
         if (result) {
           this.refreshProducts.emit();
           this.matSnackBar.open(result, '',
-            { duration: 3000, panelClass: 'snack-bar-danger' })
+            { duration: 3000, panelClass: 'snack-bar-danger' });
         }
       },
         err => this.matSnackBar.open(err.error.message || 'Сталася помилка', '',

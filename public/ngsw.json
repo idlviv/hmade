@@ -1,0 +1,126 @@
+{
+  "configVersion": 1,
+  "timestamp": 1570533238818,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/1-es2015.5fdf19eeb0fddf507996.js",
+        "/1-es5.5fdf19eeb0fddf507996.js",
+        "/10-es2015.7bfcc37c0ba7bc8d5c6b.js",
+        "/10-es5.7bfcc37c0ba7bc8d5c6b.js",
+        "/11-es2015.3900762fd6a2a3a60591.js",
+        "/11-es5.3900762fd6a2a3a60591.js",
+        "/12-es2015.7bfb131938f9a489bd90.js",
+        "/12-es5.7bfb131938f9a489bd90.js",
+        "/2-es2015.0206a5b5ec58fbb643e6.js",
+        "/2-es5.0206a5b5ec58fbb643e6.js",
+        "/3-es2015.72c76155131e1f511e29.js",
+        "/3-es5.72c76155131e1f511e29.js",
+        "/8-es2015.93b845d38b342de181ca.js",
+        "/8-es5.93b845d38b342de181ca.js",
+        "/9-es2015.0dfddc515d405d8b6919.js",
+        "/9-es5.0dfddc515d405d8b6919.js",
+        "/assets/images/hmade_logo_dark.svg",
+        "/assets/images/hmade_logo_light.svg",
+        "/assets/other/pattern.svg",
+        "/favicon.ico",
+        "/index.html",
+        "/main-es2015.bf840ec9786bcf812a70.js",
+        "/main-es5.bf840ec9786bcf812a70.js",
+        "/manifest.webmanifest",
+        "/polyfills-es2015.7952f3f7814d73bc3b15.js",
+        "/polyfills-es5.d8b61d57b9e8e2de2d9d.js",
+        "/runtime-es2015.fd9731ca6414df188dc3.js",
+        "/runtime-es5.fd9731ca6414df188dc3.js",
+        "/styles.4e7d1593c09d5105a773.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/images/loading.svg",
+        "/assets/images/my-photo180x180.png",
+        "/assets/other/btn_google_signin_light_normal_web.png",
+        "/assets/other/btn_google_signin_light_normal_web@2x.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/1-es2015.5fdf19eeb0fddf507996.js": "ee7a649871e9ad73fc7a53d9d4a6bddcb6a8a0ec",
+    "/1-es5.5fdf19eeb0fddf507996.js": "7ff8c39b5c58e8a03b4ee8b80f6f6b691d3a3ad3",
+    "/10-es2015.7bfcc37c0ba7bc8d5c6b.js": "931569d7b448af37af830c2bceca06cf8bdd090b",
+    "/10-es5.7bfcc37c0ba7bc8d5c6b.js": "931569d7b448af37af830c2bceca06cf8bdd090b",
+    "/11-es2015.3900762fd6a2a3a60591.js": "a25d2f458eb24e2f301468055a813c77a471e25b",
+    "/11-es5.3900762fd6a2a3a60591.js": "a25d2f458eb24e2f301468055a813c77a471e25b",
+    "/12-es2015.7bfb131938f9a489bd90.js": "bc8fc5d6b34220d4aa6548c8133e81bebcb043da",
+    "/12-es5.7bfb131938f9a489bd90.js": "bc8fc5d6b34220d4aa6548c8133e81bebcb043da",
+    "/2-es2015.0206a5b5ec58fbb643e6.js": "d35439920cf1b7e9d8cec8032842948f039956fd",
+    "/2-es5.0206a5b5ec58fbb643e6.js": "f85cc448536ca0d841375ed1181f86883a3ace79",
+    "/3-es2015.72c76155131e1f511e29.js": "52ff0b015a52d9e05efdccdf103927bdcb410265",
+    "/3-es5.72c76155131e1f511e29.js": "b8c0037981139d39ce185d177be12e2997967647",
+    "/8-es2015.93b845d38b342de181ca.js": "8cc8a1c1c00401751cd9384091feb3074f8f5a35",
+    "/8-es5.93b845d38b342de181ca.js": "d0176def0772883a7b242a874804e267f3052b33",
+    "/9-es2015.0dfddc515d405d8b6919.js": "42d44bbe567ffb2cbb040557a0146e97e7cb882c",
+    "/9-es5.0dfddc515d405d8b6919.js": "4c0ca49b865f782c182f0ebc669e4235a1b4e73d",
+    "/assets/icons/icon-128x128.png": "f4add257111f856b15292518b01b1a7a3e491f9e",
+    "/assets/icons/icon-144x144.png": "1652aa9c18fc3967d2d82c438240405e8eb6a5b1",
+    "/assets/icons/icon-152x152.png": "920a38cd367caa60a2e5cf08feb153c79ef97591",
+    "/assets/icons/icon-192x192.png": "eb83a864bd30e4a692f75131db4321eddbc96f9d",
+    "/assets/icons/icon-384x384.png": "bf49d65d85724c5deef712803339b72bfc3ece63",
+    "/assets/icons/icon-512x512.png": "f83a9c2c59cd9aaf84512a432bf9d0bc121e66a5",
+    "/assets/icons/icon-72x72.png": "9baf4ca7f1de30e6f06f779c79b08835d0634fe2",
+    "/assets/icons/icon-96x96.png": "f5513f8cec37c41204b0e52fe7558de9fbac7d46",
+    "/assets/images/hmade_logo_dark.svg": "3d8cdad6d5a2a9461055c5ca618d2e8b8b197b2c",
+    "/assets/images/hmade_logo_light.svg": "41855ebb46f02b658a3ff27e919f57973d4928a4",
+    "/assets/images/loading.svg": "e515b13cc79c383c3fe0594e593cc24b669ca81c",
+    "/assets/images/my-photo180x180.png": "8dece4bc5ac4dbd9d8a4e50e425245d7791b4a06",
+    "/assets/other/btn_google_signin_light_normal_web.png": "67d90cdf681b4c211582d5a6e27ea47debaa4782",
+    "/assets/other/btn_google_signin_light_normal_web@2x.png": "bbf56c48cbc340ba0c67e094f0bd6d2af8043e0d",
+    "/assets/other/pattern.svg": "f1ec5e596593b5b2c7c5ed7af895c64a57bdf71b",
+    "/favicon.ico": "3581640704ffb32dca6a10acca86bcca2471514a",
+    "/index.html": "8aeafb4e9866974a14dfdaa9ec285b021b2caea0",
+    "/main-es2015.bf840ec9786bcf812a70.js": "ee7f19b29e77804b1e527c0035a7f837205398b9",
+    "/main-es5.bf840ec9786bcf812a70.js": "c0f79011aef07ad6f7dbb653d31068469f74539e",
+    "/manifest.webmanifest": "9b9d77959ba1df1926b3a45b2305905906877227",
+    "/polyfills-es2015.7952f3f7814d73bc3b15.js": "aa4037e89598f5094da33ad98305d319af4859e2",
+    "/polyfills-es5.d8b61d57b9e8e2de2d9d.js": "7bcd7e3d8c2c185ed65254ef230b37c80e61d851",
+    "/runtime-es2015.fd9731ca6414df188dc3.js": "45b9ad5a300c4957aaefde12de59760f1a5d6d9f",
+    "/runtime-es5.fd9731ca6414df188dc3.js": "8e6516367b846bf3965ec96231fc9589cdcfc096",
+    "/styles.4e7d1593c09d5105a773.css": "d093a754483948f55b56079af24ae51b760a4418"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

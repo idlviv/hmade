@@ -89,7 +89,7 @@ export class LandingComponent implements OnInit {
   }
 
   @HostListener('window:scroll', ['$event'])
-  checkScroll() {
+  checkScroll(event) {
     const componentPosition = this.el.nativeElement.offsetTop;
     const scrollPosition = window.pageYOffset;
 

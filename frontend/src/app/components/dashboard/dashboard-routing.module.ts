@@ -6,8 +6,6 @@ import { UserProfileComponent } from '../user/user-profile/user-profile.componen
 import { AuthGuard } from '../../guards/auth.guard';
 import { ProductsComponent } from '../products/products.component';
 import { ToolsComponent } from './tools/tools.component';
-import { UserCreateComponent } from '../user/user-create/user-create.component';
-import { ProductCreateComponent } from './product-create/product-create.component';
 import { ProductEditorComponent } from './product-editor/product-editor.component';
 import { ProductEditorFormComponent } from './product-editor-form/product-editor-form.component';
 import { McEditorComponent } from './mc-editor/mc-editor.component';

@@ -88,7 +88,7 @@ export interface IMc {
   ];
   createdAt?: number;
   updatedAt?: number;
-  likes?: number;
+  likes?: ILikes;
   likedBy?: string[];
   dislikes?: number;
   dislikedBy?: string[];

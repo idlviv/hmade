@@ -151,13 +151,14 @@
 
                       <div class="item" fxFlex="calc((100%-40px)-50%)">
                           <div class="preview-img-wrapper">
-                            <img *ngIf="mcForm.get('steps').at(i).get('pic').value" src="{{
+                            <!-- <img *ngIf="mcForm.get('steps').at(i).get('pic').value" src="{{ -->
+                            <img *ngIf="_getArrayControlAt(mcForm, 'steps', i).get('pic').value" src="{{
                               config.imgPath +
                               config.cloudinary.cloud_name +
                               '/c_fill,w_400,h_300,f_auto/' +
-                              mcForm.get('steps').at(i).get('pic').value}}"
+                              _getArrayControlAt(mcForm, 'steps', i).get('pic').value}}"
                               alt="Menu Image">
-                            <img *ngIf="!mcForm.get('steps').at(i).get('pic').value"
+                            <img *ngIf="!_getArrayControlAt(mcForm, 'steps', i).get('pic').value"
                               src="{{
                               config.imgPath +
                               config.cloudinary.cloud_name +
@@ -177,9 +178,9 @@
                                 <button mat-mini-fab color="primary" type="button"
                                   (click)="inputStepsPic.click();" aria-label="add Picture"
                                   [disabled]="processingLoadStepsPic === i">
-                                  <mat-icon *ngIf="!mcForm.get('steps').at(i).get('pic').value &&
+                                  <mat-icon *ngIf="!_getArrayControlAt(mcForm, 'steps', i).get('pic').value &&
                                     processingLoadStepsPic !== i">add</mat-icon>
-                                  <mat-icon *ngIf="mcForm.get('steps').at(i).get('pic').value &&
+                                  <mat-icon *ngIf="_getArrayControlAt(mcForm, 'steps', i).get('pic').value &&
                                   processingLoadStepsPic !== i">redo</mat-icon>
                                 </button>
                               </div>
@@ -191,16 +192,16 @@
                       <textarea matInput placeholder="Опис"
                         formControlName="description" required></textarea>
                       <mat-error
-                        *ngIf="(mcForm.get('steps').at(i).get('description').errors?.minlength ||
-                        mcForm.get('steps').at(i).get('description').errors?.maxlength ||
-                        mcForm.get('steps').at(i).get('description').errors?.required) &&
-                        mcForm.get('steps').at(i).get('description').touched">
+                        *ngIf="(_getArrayControlAt(mcForm, 'steps', i).get('description').errors?.minlength ||
+                        _getArrayControlAt(mcForm, 'steps', i).get('description').errors?.maxlength ||
+                        _getArrayControlAt(mcForm, 'steps', i).get('description').errors?.required) &&
+                        _getArrayControlAt(mcForm, 'steps', i).get('description').touched">
                         Довжина повинна бути від 4 до 600 символів
                       </mat-error>
                       <mat-error
-                        *ngIf="mcForm.get('steps').at(i).get('description').errors?.required
+                        *ngIf="_getArrayControlAt(mcForm, 'steps', i).get('description').errors?.required
                         &&
-                        mcForm.get('steps').at(i).get('description').touched">
+                        _getArrayControlAt(mcForm, 'steps', i).get('description').touched">
                         Обов'язкове поле
                       </mat-error>
                     </mat-form-field>
@@ -243,19 +244,19 @@
                         <input matInput placeholder="Матеріал"
                           formControlName="name" required>
                         <mat-error
-                          *ngIf="mcForm.get('materials').at(i).get('name').errors?.required
+                          *ngIf="_getArrayControlAt(mcForm, 'materials', i).get('name').errors?.required
                           &&
-                          mcForm.get('materials').at(i).get('name').touched">
+                          _getArrayControlAt(mcForm, 'materials', i).get('name').touched">
                           Обов'язкове поле
                         </mat-error>
                         <mat-error
-                          *ngIf="(mcForm.get('materials').at(i).get('name').errors?.minlength
+                          *ngIf="(_getArrayControlAt(mcForm, 'materials', i).get('name').errors?.minlength
                           ||
-                          mcForm.get('materials').at(i).get('name').errors?.maxlength
+                          _getArrayControlAt(mcForm, 'materials', i).get('name').errors?.maxlength
                           ||
-                          mcForm.get('materials').at(i).get('name').errors?.required)
+                          _getArrayControlAt(mcForm, 'materials', i).get('name').errors?.required)
                           &&
-                          mcForm.get('materials').at(i).get('name').touched">
+                          _getArrayControlAt(mcForm, 'materials', i).get('name').touched">
                           Довжина повинна бути від 3 до 20 символів
                         </mat-error>
                       </mat-form-field>
@@ -263,19 +264,19 @@
                         <input matInput placeholder="Одиниці виміру"
                           formControlName="units" required>
                         <mat-error
-                          *ngIf="mcForm.get('materials').at(i).get('units').errors?.required
+                          *ngIf="_getArrayControlAt(mcForm, 'materials', i).get('units').errors?.required
                           &&
-                          mcForm.get('materials').at(i).get('units').touched">
+                          _getArrayControlAt(mcForm, 'materials', i).get('units').touched">
                           Обов'язкове поле
                         </mat-error>
                         <mat-error
-                          *ngIf="(mcForm.get('materials').at(i).get('units').errors?.minlength
+                          *ngIf="(_getArrayControlAt(mcForm, 'materials', i).get('units').errors?.minlength
                           ||
-                          mcForm.get('materials').at(i).get('units').errors?.maxlength
+                          _getArrayControlAt(mcForm, 'materials', i).get('units').errors?.maxlength
                           ||
-                          mcForm.get('materials').at(i).get('units').errors?.required)
+                          _getArrayControlAt(mcForm, 'materials', i).get('units').errors?.required)
                           &&
-                          mcForm.get('materials').at(i).get('units').touched">
+                          _getArrayControlAt(mcForm, 'materials', i).get('units').touched">
                           Довжина повинна бути від 1 до 7 символів
                         </mat-error>
                       </mat-form-field>
@@ -283,19 +284,19 @@
                         <input matInput placeholder="Значення"
                           formControlName="value" required>
                         <mat-error
-                          *ngIf="mcForm.get('materials').at(i).get('value').errors?.required
+                          *ngIf="_getArrayControlAt(mcForm, 'materials', i).get('value').errors?.required
                           &&
-                          mcForm.get('materials').at(i).get('value').touched">
+                          _getArrayControlAt(mcForm, 'materials', i).get('value').touched">
                           Обов'язкове поле
                         </mat-error>
                         <mat-error
-                          *ngIf="(mcForm.get('materials').at(i).get('value').errors?.minlength
+                          *ngIf="(_getArrayControlAt(mcForm, 'materials', i).get('value').errors?.minlength
                           ||
-                          mcForm.get('materials').at(i).get('value').errors?.maxlength
+                          _getArrayControlAt(mcForm, 'materials', i).get('value').errors?.maxlength
                           ||
-                          mcForm.get('materials').at(i).get('value').errors?.required)
+                          _getArrayControlAt(mcForm, 'materials', i).get('value').errors?.required)
                           &&
-                          mcForm.get('materials').at(i).get('value').touched">
+                          _getArrayControlAt(mcForm, 'materials', i).get('value').touched">
                           Довжина повинна бути від 1 до 4 символів
                         </mat-error>
                       </mat-form-field>

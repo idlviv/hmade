@@ -1,0 +1,242 @@
+<div class="container">
+  <div class="row" fxLayout="row">
+  <div class="cell" fxFlex="100">
+    <div class="item full-width-container">
+      <mat-card  class="form-block">
+        <mat-card-header></mat-card-header>
+        <mat-card-title></mat-card-title>
+
+        <mat-card-content>
+          <div class="container">
+            <div class="row">
+              <div class="cell">
+                <h2 class="mat-h2">Новий виріб</h2>
+              </div>
+            </div>
+
+          <form [formGroup]="productCreateForm" #f="ngForm" (submit)="onProductCreateSubmit()">
+
+            <div class="row" fxLayout="column" fxLayout.gt-xs="row">
+              <div class="cell">
+                <button type="button" mat-raised-button (click)="addCategory()" aria-label="Add category">Додати категорію</button>
+              </div>
+
+            </div>
+            <div class="row" fxLayout="column" fxLayout.gt-xs="row">
+
+                <div formArrayName="parents" class="cell" fxFlex.gt-xs="50"
+                     *ngFor="let categoryBlock of productCreateForm.get('parents')['controls']; let i = index">
+                  <!--<div [formGroupName]="i">-->
+                    <mat-form-field>
+                      <mat-select placeholder="Категорія y" formControlName="{{i}}" required
+                                  (selectionChange)="onSelectParents($event)">
+                        <mat-optgroup *ngFor="let category of categories" [label]="category.name">
+                          <mat-option *ngIf="category.numOfChildren === 0" [value]="category._id">
+                            {{ category.name }}
+                          </mat-option>
+                          <mat-option *ngFor="let subCategory of category.children" [value]="subCategory._id">
+                            {{ subCategory.name }}
+                          </mat-option>
+                        </mat-optgroup>
+                      </mat-select>
+                      <mat-hint *ngIf="i > 0" align="end" class="remove-field" (click)="removeCategory(i)">Видалити категорію</mat-hint>
+                      <mat-error *ngIf="productCreateForm.get('parents').at(i).errors?.required &&
+                        productCreateForm.get('parents').at(i).touched">
+                        Виберіть категорію
+                      </mat-error>
+                    </mat-form-field>
+                  <!--</div>-->
+                </div>
+
+              <div class="cell" fxFlex.gt-xs="50">
+                  <mat-form-field>
+                    <input matInput placeholder="Найменування" formControlName="name" required>
+                    <mat-error
+                      *ngIf="(productCreateForm.get('name').errors?.minlength ||
+                      productCreateForm.get('name').errors?.maxlength ||
+                      productCreateForm.get('name').errors?.required) &&
+                      productCreateForm.get('name').touched">
+                      Довжина повинна бути від 4 до 30 символів
+                    </mat-error>
+                  </mat-form-field>
+              </div>
+
+              <div class="cell" fxLayout="row" fxFlex="50">
+
+              <div class="item" fxFlex="30">
+                <div formGroupName="dimensions">
+                  <mat-form-field>
+                    <input matInput placeholder="Ширина" formControlName="width">
+                    <span matSuffix>см</span>
+                    <mat-error
+                      *ngIf="productCreateForm.get('dimensions.width').errors?.maxlength &&
+                      productCreateForm.get('dimensions').get('width').touched">
+                      Використовуйте не більше ніж три символа
+                    </mat-error>
+                    <mat-error
+                      *ngIf="productCreateForm.get('dimensions').get('width').errors?.pattern &&
+                      productCreateForm.get('dimensions').get('width').touched">
+                      Використовуйте тількі цифри
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+
+              <div class="item" fxFlex="30">
+                <div formGroupName="dimensions">
+                  <mat-form-field>
+                    <input matInput placeholder="Висота" formControlName="height">
+                    <span matSuffix>см</span>
+                    <mat-error
+                      *ngIf="productCreateForm.get('dimensions.height').errors?.maxlength &&
+                      productCreateForm.get('dimensions').get('height').touched">
+                      Використовуйте не більше ніж три символа
+                    </mat-error>
+                    <mat-error
+                      *ngIf="productCreateForm.get('dimensions').get('height').errors?.pattern &&
+                      productCreateForm.get('dimensions').get('height').touched">
+                      Використовуйте тількі цифри
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+              </div>
+                <div class="item" fxFlex="40">
+                  <mat-form-field>
+                    <input matInput placeholder="Артикул" formControlName="_id" required>
+                    <mat-error
+                      *ngIf="(productCreateForm.get('_id').errors?.minlength ||
+                        productCreateForm.get('_id').errors?.maxlength ||
+                        productCreateForm.get('_id').errors?.required) &&
+                        productCreateForm.get('_id').touched">
+                      Довжина повинна бути 6 символів
+                    </mat-error>
+                    <mat-error
+                      *ngIf="productCreateForm.get('_id').errors?.pattern &&
+                      productCreateForm.get('_id').touched">
+                      Використовуйте тількі цифри і букви
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+
+            </div>
+
+              <div class="cell" fxLayout="row" fxFlex="50">
+
+                <div class="item " fxFlex="30">
+                  <!--{{productCreateForm.get('price').errors | json}}-->
+                  <mat-form-field>
+                    <input matInput placeholder="Ціна" formControlName="price" >
+                    <span matSuffix>грн</span>
+                    <mat-error
+                      *ngIf="productCreateForm.get('price').errors?.pattern &&
+                      productCreateForm.get('price').touched">
+                      Використовуйте тількі цифри більші 0
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="item" fxFlex="30">
+                  <mat-form-field>
+                    <input matInput placeholder="Знижка" formControlName="discount" >
+                    <span matSuffix>%</span>
+                    <mat-error
+                      *ngIf="productCreateForm.get('discount').errors?.pattern &&
+                      productCreateForm.get('discount').touched">
+                      Знижка може бути від 0% до 99%
+                    </mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="item" fxFlex="40">
+                  <div class="flex-left-container">
+                    <mat-checkbox class="flex-left-item" formControlName="onMainPage">На головній</mat-checkbox>
+                  </div>
+                </div>
+              </div>
+
+              <div class="cell" fxFlex.gt-xs="50">
+                <mat-form-field>
+                  <textarea matInput placeholder="Опис" formControlName="description" required></textarea>
+                  <mat-error
+                    *ngIf="(productCreateForm.get('description').errors?.minlength ||
+                      productCreateForm.get('description').errors?.maxlength ||
+                      productCreateForm.get('description').errors?.required) &&
+                      productCreateForm.get('description').touched">
+                    Довжина повинна бути від 4 до 200 символів
+                  </mat-error>
+                  <mat-error
+                    *ngIf="productCreateForm.get('description').errors?.pattern &&
+                      productCreateForm.get('description').touched">
+                    Використовуйте тількі цифри і букви
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div class="row" fxLayout="row" fxFlex="100">
+                <div formArrayName="assets" class="cell" fxFlex="25" fxFlex.lt-md="50"
+                     *ngFor="let fileBlock of productCreateForm.get('assets')['controls']; let i = index">
+                  <div class="preview-img-wrapper">
+
+                      <img *ngIf="processingLoadFile !== i class="responsive-image" src="{{
+                        config.imgPath +
+                        config.cloudinary.cloud_name +
+                        '/c_fill,w_180,h_180,f_auto/' +
+                        productCreateForm.get('assets').value[i] || defaultProductImgPath}}"
+                                 alt="designImage">
+
+                    <!--<img *ngIf="processingLoadFile !== i" src="{{'https://res.cloudinary.com/hmm6pjfgk/image/upload/' +-->
+                    <!--productCreateForm.get('assets').value[i]}}" alt="productImage">-->
+                    <img *ngIf="processingLoadFile === i" src="{{productCreateForm.get('assets').value[i]}}" alt="productImage">
+                    <div *ngIf="processingLoadFile === i" class="preview-div-processing">
+                      <div class="spinner-wrapper">
+                        <mat-spinner [diameter]="24"></mat-spinner>
+                      </div>
+                    </div>
+                  </div>
+                  <p *ngIf="processingLoadFile !== i" class="remove-field text-center" (click)="removeFile(i)">
+                    Видалити зображення</p>
+
+                </div>
+                <div class="cell" fxFlex="25" fxFlex.lt-md="50"
+                     *ngIf="productCreateForm.get('assets').value.length < 4">
+                  <div class="preview-img-wrapper">
+                    <img src="{{config.imgPath +
+                      config.cloudinary.cloud_name + '/c_fill,w_180,h_180,f_auto/' + config.defaultProductImg}}" alt="productImage">
+                    <input #inputFile type="file" (change)="addPictures($event)"
+                           accept=".jpg, .jpe, .jpeg, .bmp, .webp, .png" style="display:none;">
+
+                    <div class="preview-div-processing">
+                      <div class="button-wrapper">
+                        <button mat-mini-fab color="primary" type="button" aria-label="add"
+                                (click)="inputFile.click();
+                                this.productCreateForm.get('_id').disable();
+                                this.productCreateForm.get('parents').at(0).disable();"
+                                [disabled]="!productCreateForm.get('_id').disabled &&
+                                !productCreateForm.get('_id').valid || processingLoadFile >= 0">
+                          <mat-icon>add</mat-icon>
+                        </button>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+            </div>
+            <div class="submit-button-wrapper">
+              <!--<span fxFlex></span>-->
+              <button *ngIf="!editMode" mat-raised-button class="full-width" color="primary" aria-label="Create"
+                      [disabled]="!productCreateForm.valid || processingLoadFile >= 0">Створити</button>
+              <button *ngIf="editMode" mat-raised-button class="full-width" color="primary" aria-label="Save"
+                      [disabled]="!productCreateForm.valid || processingLoadFile >= 0">Зберегти</button>
+            </div>
+
+          </form>
+          </div>
+
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+</div>
+
+</div>

@@ -3,7 +3,8 @@ import { config } from '../../../app.config';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { CatalogService } from 'src/app/services/catalog.service';
-import { mergeMap } from 'rxjs/operators';
+import { mergeMap, map } from 'rxjs/operators';
+import { concat } from 'rxjs';
 import { UserService } from 'src/app/services/user.service';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { McService } from 'src/app/services/mc.service';
@@ -67,18 +68,22 @@ export class McsFiltersComponent implements OnInit {
     )
       .subscribe(
         result => {
+          const sequenceOfObservables = [];
           result.hierarchy.splice(0, 2);
           if (result.hierarchy.length > 0) {
             result.hierarchy.map(
               (value, index) => {
                 if (index !== 0) {
-                  // TODO: make orderc
-                  this.onSelectMcFilter(value._id, index - 1, false, true);
+                  // if exists, run first
+                  sequenceOfObservables.push(this.onSelectMcFilter(value._id, index - 1, false, true));
                 }
               }
             );
-            // TODO: make order
-            this.onSelectMcFilter(result._id, result.hierarchy.length - 1, true, true);
+            // run second
+            sequenceOfObservables.push(this.onSelectMcFilter(result._id, result.hierarchy.length - 1, true, true));
+
+            // execute chain of observables
+            concat(...sequenceOfObservables).subscribe();
           } else {
             this.navigateTo();
           }
@@ -96,16 +101,12 @@ export class McsFiltersComponent implements OnInit {
   }
 
   onSelectMcFilter(eventValue, level, navigate, programmatic) {
-    console.log('programmatic', programmatic);
     while (level + 1 < this.filterForm.get('parents')['controls'].length) {
       this.removeParents(this.filterForm.get('parents')['controls'].length - 1);
     }
-    console.log('eventValue', eventValue);
-
-    this.catalogService.getChildren(eventValue)
-      .subscribe(
+    return this.catalogService.getChildren(eventValue)
+      .pipe(map(
         children => {
-          console.log('children', children);
           if (!children.data.length) {
             // if no children - show products
             this.parent_id = eventValue;
@@ -117,7 +118,6 @@ export class McsFiltersComponent implements OnInit {
             this.addParents();
           }
           if (programmatic) {
-            console.log('level', level);
             this.filterForm.get('parents')['controls'][level].setValue(eventValue);
           }
           if (navigate) {
@@ -126,7 +126,9 @@ export class McsFiltersComponent implements OnInit {
           }
         },
         err => console.log('помилка завантаження категорій', err)
+      )
       );
+
   }
 
   resetFilters() {

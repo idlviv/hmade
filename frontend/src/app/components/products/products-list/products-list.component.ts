@@ -14,7 +14,7 @@ import { MediaObserver } from '@angular/flex-layout';
   styleUrls: ['./products-list.component.scss']
 })
 export class ProductsListComponent implements OnInit {
-  products = <IProduct[]>[];
+  products = [] as IProduct[];
   category_id: string;
   children: string;
   category: any;
@@ -33,7 +33,10 @@ export class ProductsListComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.initialSetOfProducts();
+  }
 
+  initialSetOfProducts() {
     if (this.media.isActive('xs')) {
       this.portionOfProducts = 3;
       this.refreshProducts(-1, this.products.length, this.portionOfProducts);

@@ -211,7 +211,7 @@
                   <div class="cell" fxFlex="40">
 
                     <button *ngIf="editMode" mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(true)"
-                              [disabled]="!productForm.valid || processingLoadMenuImag" aria-label="Save and return">
+                              [disabled]="!productForm.valid || processingLoadMenuImage" aria-label="Save and return">
                       Зберегти і повернутись</button>
                     <button *ngIf="!editMode" mat-raised-button color="primary" class="full-width" type="button" (click)="onProductFormSubmit(true)"
                             [disabled]="!productForm.valid || processingLoadMenuImage" aria-label="Create and return">

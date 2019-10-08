@@ -13,7 +13,7 @@
             [ngClass]="{animationAppear1s: i <= skip + portionOfProducts}" fxFlex.xs="100" fxFlex.sm="50"
             fxFlex.md="33.3" fxFlex.gt-md="25">
             <app-product-item-brief [product]="product" [category_id]="category_id"
-              (refreshProducts)="refreshProducts()"></app-product-item-brief>
+              (refreshProducts)="initialSetOfProducts()"></app-product-item-brief>
           </div>
 
           <div *ngFor="let child of children" class="cell animationAppear1s" fxFlex.xs="100" fxFlex.sm="50"

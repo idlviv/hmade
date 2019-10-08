@@ -8,7 +8,7 @@ import { UserModule } from '../user/user.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ToolsComponent } from './tools/tools.component';
-import { ProductCreateComponent } from './product-create/product-create.component';
+// import { ProductCreateComponent } from './product-create/product-create.component';
 import { ProductEditorComponent } from './product-editor/product-editor.component';
 import { ProductEditorFormComponent } from './product-editor-form/product-editor-form.component';
 import { McEditorComponent } from './mc-editor/mc-editor.component';
@@ -30,7 +30,7 @@ import { McsModule } from '../mcs/mcs.module';
     DashboardComponent,
     DashboardSidenavComponent,
     ToolsComponent,
-    ProductCreateComponent,
+    // ProductCreateComponent,
     ProductEditorComponent,
     ProductEditorFormComponent,
     McEditorComponent,
