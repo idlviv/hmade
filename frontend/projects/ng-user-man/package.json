@@ -1,0 +1,13 @@
+{
+  "name": "ng-user-man",
+  "version": "0.0.1",
+  "peerDependencies": {
+    "@angular/common": "^8.2.8",
+    "@angular/core": "^8.2.8",
+    "@angular/cdk": "~8.2.2",
+    "@angular/material": "^8.2.2",
+    "@auth0/angular-jwt": "^3.0.0",
+    "ngx-cookie-service": "^2.2.0",
+    "@angular/flex-layout": "^8.0.0-beta.27"
+  }
+}

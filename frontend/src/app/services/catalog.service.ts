@@ -5,7 +5,9 @@ import { IResponse } from '../interfaces/server-response-interface';
 import { Observable } from 'rxjs';
 import { ICatalog } from '../interfaces/catalog-interface';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class CatalogService {
 
   constructor(

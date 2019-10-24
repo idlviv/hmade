@@ -8,7 +8,7 @@ import { config } from 'src/app/app.config';
 import { UserService } from 'src/app/services/user.service';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { SocialService } from 'src/app/services/social.service';
-import { SharedService } from 'src/app/services/shared.service';
+import { SharedService } from 'ng-user-man';
 
 @Component({
   selector: 'app-mcs-item-detail',

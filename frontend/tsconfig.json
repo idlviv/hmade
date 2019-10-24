@@ -19,11 +19,11 @@
       "dom"
     ],
     "paths": {
-      "lib-user": [
-        "dist/lib-user"
+      "ng-user-man": [
+        "dist/ng-user-man",
       ],
-      "lib-user/*": [
-        "dist/lib-user/*"
+      "ng-user-man/*": [
+        "dist/ng-user-man/*",
       ]
     }
   },

@@ -9,7 +9,7 @@ import { SocialService } from 'src/app/services/social.service';
 import { mergeMap } from 'rxjs/operators';
 // import { MatDialog } from '@angular/material';
 // import { ConfirmPopupComponent } from '../../shared/confirm-popup/confirm-popup.component';
-import { SharedService } from '../../../services/shared.service';
+import { SharedService } from 'ng-user-man';
 
 @Component({
   selector: 'app-comments',

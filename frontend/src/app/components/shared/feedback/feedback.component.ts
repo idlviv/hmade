@@ -3,7 +3,7 @@ import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular
 import { Router } from '@angular/router';
 import { IFeedback } from '../../../interfaces/interface';
 import { Location } from '@angular/common';
-import { SharedService } from '../../../services/shared.service';
+import { SharedService } from 'ng-user-man';
 import { MatSnackBar } from '@angular/material';
 import { config } from '../../../app.config';
 

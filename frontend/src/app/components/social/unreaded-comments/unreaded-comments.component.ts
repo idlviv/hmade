@@ -2,7 +2,7 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { UserService } from 'src/app/services/user.service';
 import { SocialService } from 'src/app/services/social.service';
-import { SharedService } from 'src/app/services/shared.service';
+import { SharedService } from 'ng-user-man';
 import { mergeMap } from 'rxjs/operators';
 
 @Component({

@@ -6,7 +6,7 @@ import { CatalogService } from '../../../services/catalog.service';
 import { ICatalog } from '../../../interfaces/catalog-interface';
 import { MatDrawerContainer, MatMenuTrigger } from '@angular/material';
 import { config } from '../../../app.config';
-import { SharedService } from '../../../services/shared.service';
+import { SharedService } from 'ng-user-man';
 import { Observable } from 'rxjs';
 import { SocialService } from 'src/app/services/social.service';
 

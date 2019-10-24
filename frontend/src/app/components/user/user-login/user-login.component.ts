@@ -1,78 +1,37 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular/forms';
-import { IUser } from '../../../interfaces/user-interface';
+import { Component, OnInit, Injector } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
-import { config } from '../../../app.config';
-import { SharedService } from 'src/app/services/shared.service';
+import { SharedService } from 'ng-user-man';
 declare const gapi: any;
+import { LoginComponent } from 'ng-user-man';
+import { NgUserManService } from 'ng-user-man';
 
 @Component({
   selector: 'app-user-login',
   templateUrl: './user-login.component.html',
   styleUrls: ['./user-login.component.scss']
 })
-export class UserLoginComponent implements OnInit {
-  config = config;
-  userLoginForm: FormGroup;
-  user: IUser;
-  hidePassword = true;
-
-  /**
-   * directive for reset form (invalid status)
-   */
-  @ViewChild(FormGroupDirective, { static: false }) userCreateFormDirective: FormGroupDirective;
+export class UserLoginComponent extends LoginComponent implements OnInit {
 
   constructor(
     private userService: UserService,
-    private sharedService: SharedService,
-    private matSnackBar: MatSnackBar,
-    private router: Router,
-  ) { }
+    protected sharedService: SharedService,
+    protected matSnackBar: MatSnackBar,
+    protected router: Router,
+    protected injector: Injector,
+    protected ngUserManService: NgUserManService,
+  ) {
+    super(
+      matSnackBar,
+      ngUserManService,
+      sharedService,
+      injector,
+      router
+      );
+   }
 
   ngOnInit() {
-    this.userLoginForm = new FormGroup({
-        login: new FormControl('', [
-          Validators.required,
-        ]),
-        password: new FormControl('', [
-          Validators.required,
-        ]),
-      },
-    );
+    super.ngOnInit();
   }
-
-  onUserLoginSubmit() {
-    this.user = <IUser>{
-      login: this.userLoginForm.get('login').value,
-      password: this.userLoginForm.get('password').value,
-    };
-
-    this.userService.userLogin(this.user)
-      .subscribe(
-        result => {
-          if (result === 'logged in') {
-            this.resetForm();
-            this.userService.logging();
-            this.sharedService.sharingEventToReloadComments();
-
-            // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
-            this.matSnackBar.open(`${this.user.login}, ви увійшли на сайт`, '', {duration: 5000});
-            this.router.navigate(['/user', 'profile']);
-          }
-        },
-        err => {
-          this.matSnackBar.open(err.error.message || 'Сталася помилка', '',
-            {duration: 5000, panelClass: 'snack-bar-danger'});
-        }
-      );
-  }
-
-  resetForm() {
-    if (this.userCreateFormDirective) {
-      this.userCreateFormDirective.resetForm();
-    }
-  }
-
 }

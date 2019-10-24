@@ -8,7 +8,9 @@ import { config } from '../app.config';
 import { IDesign } from '../interfaces/interface';
 
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ProductService {
   config = config;
 

@@ -5,7 +5,7 @@ import { mergeMap } from 'rxjs/operators';
 import { IConfirmPopupData, IComment } from 'src/app/interfaces/interface';
 import { MatDialog } from '@angular/material';
 import { ConfirmPopupComponent } from '../../shared/confirm-popup/confirm-popup.component';
-import { SharedService } from 'src/app/services/shared.service';
+import { SharedService } from 'ng-user-man';
 import { UserService } from 'src/app/services/user.service';
 import { IUser } from 'src/app/interfaces/user-interface';
 

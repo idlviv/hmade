@@ -13,6 +13,7 @@ import { RecaptchaModule } from 'ng-recaptcha';
 import { RecaptchaFormsModule } from 'ng-recaptcha';
 import { SharedModule } from '../shared/shared.module';
 import { RedirectionAfterOauthComponent } from './redirection-after-oauth/redirection-after-oauth.component';
+import { NgUserManModule } from 'ng-user-man';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,8 @@ import { RedirectionAfterOauthComponent } from './redirection-after-oauth/redire
     FormsModule,
     RecaptchaModule,
     RecaptchaFormsModule,
-    SharedModule
+    SharedModule,
+    NgUserManModule
   ],
   exports: [
   ],

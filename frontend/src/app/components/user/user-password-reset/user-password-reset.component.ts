@@ -5,7 +5,7 @@ import { ValidateService } from '../../../services/validate.service';
 import { MatSnackBar, MatStepper } from '@angular/material';
 import { Router } from '@angular/router';
 import { config } from '../../../app.config';
-import { SharedService } from 'src/app/services/shared.service';
+import { SharedService } from 'ng-user-man';
 
 
 @Component({
@@ -137,6 +137,7 @@ export class UserPasswordResetComponent implements OnInit {
   }
 
   refresh() {
+    // TODO: make refresh logic
     console.log('refresh');
   }
 

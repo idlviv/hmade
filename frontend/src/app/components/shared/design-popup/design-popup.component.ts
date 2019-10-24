@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { config } from '../../../app.config';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SharedService } from '../../../services/shared.service';
+import { SharedService } from 'ng-user-man';
 
 @Component({
   selector: 'app-design-popup',

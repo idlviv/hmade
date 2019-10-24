@@ -7,7 +7,7 @@ import { of, forkJoin as observableForkJoin } from 'rxjs';
 import { FormGroupDirective, FormGroup, FormArray, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { config } from '../../../app.config';
 import { CatalogService } from 'src/app/services/catalog.service';
-import { SharedService } from 'src/app/services/shared.service';
+import { SharedService } from 'ng-user-man';
 import { MatSnackBar } from '@angular/material';
 import { IMc } from 'src/app/interfaces/interface';
 

@@ -12,12 +12,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './components/shared/shared.module';
 
-import { ValidateService } from './services/validate.service';
-import { UserService } from './services/user.service';
-import { CatalogService } from './services/catalog.service';
-import { ProductService } from './services/product.service';
-import { SharedService } from './services/shared.service';
-
 import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
 import { ServiceWorkerModule } from '@angular/service-worker';
@@ -30,6 +24,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ImagePopupComponent } from './components/shared/image-popup/image-popup.component';
 
 import { CookieService } from 'ngx-cookie-service';
+
+import { NgUserManService } from 'ng-user-man';
+import { SharedService } from 'ng-user-man';
 
 @NgModule({
   declarations: [
@@ -47,23 +44,29 @@ import { CookieService } from 'ngx-cookie-service';
     RecaptchaFormsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     ReactiveFormsModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
     // HttpClientXsrfModule.withOptions({
-      // cookieName: '_csrf',
-      // headerName: 'x-xsrf-token',
+    // cookieName: '_csrf',
+    // headerName: 'x-xsrf-token',
     // }),
   ],
   providers: [
-    ValidateService,
-    UserService,
+    // ValidateService,
+    // UserService,
     RecaptchaModule,
     RecaptchaFormsModule,
-    CatalogService,
-    ProductService,
-    SharedService,
-    AuthGuard,
-    NoAuthGuard,
+    // CatalogService,
+    // ProductService,
+    // SharedService,
+    // AuthGuard,
+    // NoAuthGuard,
     CookieService,
+    // { provide: SharedService, useClass: SharedService },
+    {
+      provide: 'config', useValue: environment
+    },
+    NgUserManService,
+    SharedService
+
   ],
   exports: [
   ],
@@ -72,6 +75,6 @@ import { CookieService } from 'ngx-cookie-service';
     DesignPopupComponent,
     ImagePopupComponent,
   ],
-  bootstrap: [ AppComponent ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }

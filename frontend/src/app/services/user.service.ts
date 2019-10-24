@@ -9,9 +9,12 @@ import { mergeMap, map } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { CookieService } from 'ngx-cookie-service';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class UserService {
   user: IUser;
+  
   private _logging: ReplaySubject<IUser> = new ReplaySubject(1);
   tokenSyncronizatonProgress = false;
 
@@ -26,10 +29,6 @@ export class UserService {
   /**
    * Create new user
    *
-   * @param {IUser} user
-   * @param {string} recaptcha
-   * @returns {Observable<string>}
-   * @memberof UserService
    */
   userCreate(user: IUser, recaptcha: string): Observable<string> {
     const httpOptions = {
@@ -52,10 +51,8 @@ export class UserService {
   /**
    * Login with username and password
    *
-   * @param {IUser} user
-   * @returns {Observable<IUser>}
-   * @memberof UserService
    */
+
   userLogin(user: IUser): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -77,8 +74,6 @@ export class UserService {
   /**
    * Login with google social sin in
    *
-   * @returns {Observable<any>}
-   * @memberof UserService
    */
   userGoogleLogin(): Observable<any> {
     const httpOptions = {
@@ -95,8 +90,6 @@ export class UserService {
   /**
    * Get profile
    *
-   * @returns {Observable<IResponse>}
-   * @memberof UserService
    */
   userGetProfile(): Observable<IUser> {
     const httpOptions = {
@@ -113,16 +106,14 @@ export class UserService {
   /** Session
    * User logout
    *
-   * @returns {Observable<String>}
-   * @memberof UserService
    */
-  userLogout(): Observable<String> {
+  userLogout(): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
       })
     };
-    return this.http.get<String>(
+    return this.http.get<string>(
       'api/user/logout',
       httpOptions
     );
@@ -133,9 +124,6 @@ export class UserService {
   /** Session
    * Used for router guard (canActivate)
    *
-   * @param {string} requiredRoleForAuthentication
-   * @returns {Observable<{permission: boolean, token: string}>}
-   * @memberof UserService
    */
   userCheckAuthorization(requiredRoleForAuthentication: string): Observable<boolean> {
     const httpOptions = {
@@ -154,8 +142,6 @@ export class UserService {
   /**
    * Extract user from cookie
    *
-   * @returns {IUser|null}
-   * @memberof UserService
    */
   userCookieExtractor(): IUser | null {
     if (this.cookieService.get('hmade')) {
@@ -170,9 +156,6 @@ export class UserService {
    * Check user permittion for some restricted actions
    * like menu displaying..
    *
-   * @param {string} permitedRole
-   * @returns {boolean}
-   * @memberof UserService
    */
   allowTo(permitedRole: string): boolean {
     const user = this.userCookieExtractor();
@@ -207,9 +190,6 @@ export class UserService {
   /**
    * Helper for checking image file before uploading
    *
-   * @param {*} eventTarget
-   * @returns {IResponse}
-   * @memberof UserService
    */
   checkFile(eventTarget: any): IResponse {
     if (!eventTarget.files[0]) {
@@ -233,10 +213,6 @@ export class UserService {
    * First step to reset password
    * Send reset code on email and write its hash in db
    *
-   * @param {string} email
-   * @param {string} recaptcha
-   * @returns {Observable<string>}
-   * @memberof UserService
    */
   userPasswordResetEmail(email: string, recaptcha: string): Observable<string> {
     const httpOptions = {
@@ -259,16 +235,12 @@ export class UserService {
    * Second step to reset password
    * Compare code from email with one in db
    *
-   * @param {string} code
-   * @param {string} codeToken
-   * @returns {Observable<string>}
-   * @memberof UserService
    */
   userPasswordResetCode(code: string, codeToken: string): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': codeToken
+        Authorization: codeToken
       }),
       params: new HttpParams({
         fromObject: {
@@ -285,16 +257,12 @@ export class UserService {
   /**
    *
    *
-   * @param {string} password
-   * @param {string} passwordResetToken
-   * @returns {Observable<string>}
-   * @memberof UserService
    */
   userPasswordReset(password: string, passwordResetToken: string): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
-        'Authorization': passwordResetToken
+        Authorization: passwordResetToken
       }),
       params: new HttpParams({
         fromObject: {
@@ -322,12 +290,9 @@ export class UserService {
     );
   }
 
-  /** Edit user fields without password confirmation
+ /**
+  * Edit user fields without password confirmation
   *
-  *
-  * @param {{name: string, value: string, password: string}} data
-  * @returns {Observable<string>}
-  * @memberof UserService
   */
   userEditUnsecure(data: { name: string, value?: string }): Observable<string> {
     const httpOptions = {
@@ -345,9 +310,6 @@ export class UserService {
   /** Edit user fields with password confirmation
    *
    *
-   * @param {{name: string, value: string, password: string}} data
-   * @returns {Observable<string>}
-   * @memberof UserService
    */
   userEdit(data: { name: string, value: string, password: string }): Observable<string> {
     const httpOptions = {
@@ -365,11 +327,8 @@ export class UserService {
   /**
    *
    *
-   * @param {*} file
-   * @returns {Observable<string>}
-   * @memberof UserService
    */
-  userEditAvatar(file): Observable<string> {
+  userEditAvatar(file: any): Observable<string> {
     const formData: FormData = new FormData();
     formData.append('file', file, file.name);
 
@@ -402,30 +361,14 @@ export class UserService {
     );
   }
 
-  // create Observable for user login watch
-  // userLocalLogin(token) {
-  //   user = this.userCookieExtractor();
-  //   // if (token) {
-  //   //   this.userLocalSetToken('token', token);
-  //   // }
-  //   // this.userLocalGetCredentials();
-  //   this._logging.next(user);
-  // }
-
-  // userLocalLogout() {
-  //   this.userLocalRemoveToken('token');
-  //   const user = null;
-  //   this._logging.next(user);
-  // }
-
   getUserLocal(): Observable<IUser | null> {
     // return this.userCookieExtractor();
     return this._logging.asObservable();
   }
-  // end of observable
 
-  /**
+ /*
   * Token manipulations
+  *
   */
 
   userLocalSetToken(tokenKey, token): void {
