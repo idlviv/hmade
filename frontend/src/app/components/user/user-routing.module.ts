@@ -6,8 +6,8 @@ import { UserCreateComponent } from './user-create/user-create.component';
 import { UserLoginComponent } from './user-login/user-login.component';
 import { UserProfileComponent } from './user-profile/user-profile.component';
 import { UserPasswordResetComponent } from './user-password-reset/user-password-reset.component';
-import { AuthGuard } from '../../guards/auth.guard';
-import { NoAuthGuard } from '../../guards/no-auth.guard';
+import { AuthGuard } from 'ng-user-man';
+import { NoAuthGuard } from 'ng-user-man';
 import { Page404Component } from '../shared/page-404/page-404.component';
 import { RedirectionAfterOauthComponent } from './redirection-after-oauth/redirection-after-oauth.component';
 

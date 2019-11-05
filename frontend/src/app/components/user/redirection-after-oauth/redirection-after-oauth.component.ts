@@ -1,33 +1,38 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router, NavigationEnd, NavigationStart, RouteConfigLoadEnd } from '@angular/router';
-import { UserService } from 'src/app/services/user.service';
-import { filter, map, mergeMap, take } from 'rxjs/operators';
+import { Component, OnInit, Injector } from '@angular/core';
+// import { Router, RouteConfigLoadEnd } from '@angular/router';
+// import { NgUserManService } from 'ng-user-man';
+// import { filter, take } from 'rxjs/operators';
+import { RedirAfterOauthComponent } from 'ng-user-man';
 
 @Component({
   selector: 'app-redirection-after-oauth',
   templateUrl: './redirection-after-oauth.component.html',
   styleUrls: ['./redirection-after-oauth.component.scss']
 })
-export class RedirectionAfterOauthComponent implements OnInit {
+export class RedirectionAfterOauthComponent extends RedirAfterOauthComponent implements OnInit {
 
   constructor(
-    private router: Router,
-    private route: ActivatedRoute,
-    private userService: UserService,
-  ) { }
+    protected injector: Injector,
+
+    // private router: Router,
+    // private userService: UserService,
+  ) {
+    super(injector);
+   }
 
   ngOnInit() {
-    this.router.events.pipe(
-      filter((event) => event instanceof RouteConfigLoadEnd),
-      take(1)
-    )
-      .subscribe(
-        (event) => {
-          this.userService.logging();
-          this.router.navigate(['/user', 'profile']);
-        },
-        (err) => console.log('err', err)
-      );
+    super.ngOnInit();
+    // this.router.events.pipe(
+    //   filter((event) => event instanceof RouteConfigLoadEnd),
+    //   take(1)
+    // )
+    //   .subscribe(
+    //     (event) => {
+    //       this.userService.logging();
+    //       this.router.navigate(['/user', 'profile']);
+    //     },
+    //     (err) => console.log('err', err)
+    //   );
   }
 
 }

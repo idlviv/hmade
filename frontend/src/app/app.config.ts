@@ -1,12 +1,22 @@
 import { environment } from '../environments/environment';
 
-export class Config {
-  get conf() {
-    return config;
-  }
-}
-
-export const config = {
+export let config;
+config = {
+  icons: {
+    login: 'account_box',
+    password: 'lock_outline',
+    passwordMatch: 'verified_user',
+    name: 'account_circle',
+    surname: 'supervised_user_circle',
+    email: 'mail_outline',
+    code: 'settings_ethernet',
+    visible: 'visibility',
+    unvisible: 'visibility_off'
+  },
+  logo: {
+    formsLogo: './assets/images/hmade_logo_dark.svg'
+  },
+  googleSignin: true,
   host: environment.host,
   serverUrl: '/',
   defaultProductImg: 'default_product',

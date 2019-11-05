@@ -6,7 +6,7 @@ import { IConfirmPopupData, IComment } from 'src/app/interfaces/interface';
 import { MatDialog } from '@angular/material';
 import { ConfirmPopupComponent } from '../../shared/confirm-popup/confirm-popup.component';
 import { SharedService } from 'ng-user-man';
-import { UserService } from 'src/app/services/user.service';
+import { NgUserManService } from 'ng-user-man';
 import { IUser } from 'src/app/interfaces/user-interface';
 
 @Component({
@@ -26,7 +26,7 @@ export class CommentsListComponent implements OnInit {
   user: IUser;
 
   constructor(
-    private userService: UserService,
+    private ngUserManService: NgUserManService,
     private socialService: SocialService,
     public dialog: MatDialog,
     private sharedService: SharedService,
@@ -173,12 +173,12 @@ export class CommentsListComponent implements OnInit {
   }
 
   allowTo(permitedRole: string): boolean {
-    this.user = this.userService.userCookieExtractor();
-    return this.userService.allowTo(permitedRole);
+    this.user = this.ngUserManService.userCookieExtractor();
+    return this.ngUserManService.allowTo(permitedRole);
   }
 
   restrictTo(restrictedRoles: string[]): boolean {
-    this.user = this.userService.userCookieExtractor();
-    return this.userService.restrictTo(restrictedRoles);
+    this.user = this.ngUserManService.userCookieExtractor();
+    return this.ngUserManService.restrictTo(restrictedRoles);
   }
 }

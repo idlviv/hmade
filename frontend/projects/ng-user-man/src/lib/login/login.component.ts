@@ -15,11 +15,12 @@ export class LoginComponent implements OnInit {
   userLoginForm: FormGroup;
   user: IUser;
   hidePassword = true;
-  // config = config;
+
   public config: any;
-  // public sharedService: SharedService;
-  // private ngUserManService: NgUserManService;
-  // userService;
+  protected ngUserManService: NgUserManService;
+  protected sharedService: SharedService;
+  protected router: Router;
+  protected matSnackBar: MatSnackBar;
 
   /*
   * directive for reset form (invalid status)
@@ -27,18 +28,17 @@ export class LoginComponent implements OnInit {
   @ViewChild(FormGroupDirective, { static: false }) userCreateFormDirective: FormGroupDirective;
 
   constructor(
-    protected matSnackBar: MatSnackBar,
-    protected ngUserManService: NgUserManService,
-    protected sharedService: SharedService,
+    // protected matSnackBar: MatSnackBar,
+    // protected ngUserManService: NgUserManService,
+    // protected sharedService: SharedService,
     protected injector: Injector,
-    protected router: Router,
-    // @Inject('config') public config1: string,
+    // protected router: Router,
   ) {
-    // this.config = config;
-    // this.userService = injector.get('UserService');
-    // this.ngUserManService = injector.get('NgUserManService');
     this.config = injector.get('config');
-    // this.sharingService = sharingService;
+    this.ngUserManService = injector.get(NgUserManService);
+    this.sharedService = injector.get(SharedService);
+    this.router = injector.get(Router);
+    this.matSnackBar = injector.get(MatSnackBar);
   }
 
   ngOnInit() {
@@ -64,10 +64,9 @@ export class LoginComponent implements OnInit {
         result => {
           if (result === 'logged in') {
             this.resetForm();
-            this.ngUserManService.logging();
+            // this.ngUserManService.logging();
             this.sharedService.sharingEventToReloadComments();
 
-            // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
             this.matSnackBar.open(`${this.user.login}, ви увійшли на сайт`, '', { duration: 5000 });
             this.router.navigate(['/user', 'profile']);
           }

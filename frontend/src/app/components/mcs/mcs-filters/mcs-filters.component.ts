@@ -5,7 +5,7 @@ import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { CatalogService } from 'src/app/services/catalog.service';
 import { mergeMap, map } from 'rxjs/operators';
 import { concat } from 'rxjs';
-import { UserService } from 'src/app/services/user.service';
+import { NgUserManService } from 'ng-user-man';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { McService } from 'src/app/services/mc.service';
 
@@ -30,7 +30,7 @@ export class McsFiltersComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private catalogService: CatalogService,
-    private userService: UserService,
+    private ngUserManService: NgUserManService,
     private mcService: McService,
   ) { }
 
@@ -159,7 +159,7 @@ export class McsFiltersComponent implements OnInit {
   }
 
   allowTo(permitedRole: string): boolean {
-    return this.userService.allowTo(permitedRole);
+    return this.ngUserManService.allowTo(permitedRole);
   }
 
   addMcsItem(parent_id) {

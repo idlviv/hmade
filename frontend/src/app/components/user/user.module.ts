@@ -7,10 +7,9 @@ import { UserLoginComponent } from './user-login/user-login.component';
 import { MaterialModule } from '../../material.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserProfileComponent } from './user-profile/user-profile.component';
-import { UserDialogComponent } from './user-dialog/user-dialog.component';
+// import { UserDialogComponent } from './user-dialog/user-dialog.component';
 import { UserPasswordResetComponent } from './user-password-reset/user-password-reset.component';
-import { RecaptchaModule } from 'ng-recaptcha';
-import { RecaptchaFormsModule } from 'ng-recaptcha';
+import { RecaptchaModule, RecaptchaFormsModule } from 'ng-recaptcha';
 import { SharedModule } from '../shared/shared.module';
 import { RedirectionAfterOauthComponent } from './redirection-after-oauth/redirection-after-oauth.component';
 import { NgUserManModule } from 'ng-user-man';
@@ -21,7 +20,7 @@ import { NgUserManModule } from 'ng-user-man';
     UserCreateComponent,
     UserLoginComponent,
     UserProfileComponent,
-    UserDialogComponent,
+    // UserDialogComponent,
     UserPasswordResetComponent,
     RedirectionAfterOauthComponent,
   ],
@@ -38,9 +37,9 @@ import { NgUserManModule } from 'ng-user-man';
   ],
   exports: [
   ],
-  entryComponents: [
-    UserDialogComponent,
-  ]
+  // entryComponents: [
+  //   UserDialogComponent,
+  // ]
 })
 
 export class UserModule { }

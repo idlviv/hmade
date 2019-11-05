@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { config } from '../../../app.config';
 import { MediaObserver } from '@angular/flex-layout';
-import { UserService } from 'src/app/services/user.service';
+import { NgUserManService } from 'ng-user-man';
 import { MatDialog } from '@angular/material';
 import { IImagePopUpData, IConfirmPopupData } from 'src/app/interfaces/interface';
 import { ImagePopupComponent } from '../image-popup/image-popup.component';
@@ -30,7 +30,7 @@ export class ProductItemBriefComponent implements OnInit {
 
   constructor(
     public media: MediaObserver,
-    private userService: UserService,
+    private ngUserManService: NgUserManService,
     public dialog: MatDialog,
     private productService: ProductService,
     private matSnackBar: MatSnackBar,
@@ -41,7 +41,7 @@ export class ProductItemBriefComponent implements OnInit {
   }
 
   allowTo(permitedRole: string): boolean {
-    return this.userService.allowTo(permitedRole);
+    return this.ngUserManService.allowTo(permitedRole);
   }
 
   openDialog(image, cloudinaryOptions, title): void {

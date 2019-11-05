@@ -9,6 +9,7 @@ import { config } from '../../../app.config';
 import { SharedService } from 'ng-user-man';
 import { Observable } from 'rxjs';
 import { SocialService } from 'src/app/services/social.service';
+import { NgUserManService } from 'ng-user-man';
 
 @Component({
   selector: 'app-content',
@@ -33,7 +34,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
   constructor(
     private sharedService: SharedService,
-    private userService: UserService,
+    private ngUserManService: NgUserManService,
     private router: Router,
     private catalogService: CatalogService,
     private cd: ChangeDetectorRef,
@@ -86,9 +87,9 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   userLogout() {
-    this.userService.userLogout()
+    this.ngUserManService.userLogout()
       .subscribe(message => {
-        this.userService.logging();
+        // this.ngUserManService.logging();
         this.sharedService.sharingEventToReloadComments();
         // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
         this.router.navigate(['/user', 'login']);
@@ -102,7 +103,7 @@ export class ContentComponent implements OnInit, AfterViewInit {
     if (!this.unreadedCommentsLength) {
       return;
     }
-    this.userService.userEditUnsecure({name: 'commentsReadedTill'})
+    this.ngUserManService.userEditUnsecure({name: 'commentsReadedTill'})
     .subscribe(
       res => {
         this.sharedService.sharingEventToReloadComments();
@@ -133,13 +134,13 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   allowTo(permitedRole: string): boolean {
-    this.user = this.userService.userCookieExtractor();
-    return this.userService.allowTo(permitedRole);
+    this.user = this.ngUserManService.userCookieExtractor();
+    return this.ngUserManService.allowTo(permitedRole);
   }
 
   restrictTo(restrictedRoles: string[]): boolean {
-    this.user = this.userService.userCookieExtractor();
-    return this.userService.restrictTo(restrictedRoles);
+    this.user = this.ngUserManService.userCookieExtractor();
+    return this.ngUserManService.restrictTo(restrictedRoles);
   }
 
 }

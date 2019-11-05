@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
+import { NgModule, Injector } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
@@ -16,6 +16,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { NoAuthGuard } from './guards/no-auth.guard';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { config } from './app.config';
 import { ConfirmPopupComponent } from './components/shared/confirm-popup/confirm-popup.component';
 import { DesignPopupComponent } from './components/shared/design-popup/design-popup.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -24,9 +25,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ImagePopupComponent } from './components/shared/image-popup/image-popup.component';
 
 import { CookieService } from 'ngx-cookie-service';
-
 import { NgUserManService } from 'ng-user-man';
-import { SharedService } from 'ng-user-man';
 
 @NgModule({
   declarations: [
@@ -62,11 +61,8 @@ import { SharedService } from 'ng-user-man';
     CookieService,
     // { provide: SharedService, useClass: SharedService },
     {
-      provide: 'config', useValue: environment
+      provide: 'config', useValue: config,
     },
-    NgUserManService,
-    SharedService
-
   ],
   exports: [
   ],
@@ -77,4 +73,5 @@ import { SharedService } from 'ng-user-man';
   ],
   bootstrap: [AppComponent]
 })
+
 export class AppModule { }

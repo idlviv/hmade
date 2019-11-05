@@ -2,7 +2,9 @@ import { Injectable } from '@angular/core';
 import { AbstractControl } from '@angular/forms';
 import { Observable } from 'rxjs';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class ValidateService {
 
   constructor() { }

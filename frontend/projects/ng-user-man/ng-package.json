@@ -4,6 +4,7 @@
   "lib": {
     "entryFile": "src/public-api.ts",
     "umdModuleIds": {
+      "ng-recaptcha": "ngRecaptcha",
       "ngx-cookie-service": "ngx-cookie-service",
       "@auth0/angular-jwt": "angular-jwt",
       "@auth0/angular-jwt/src/jwthelper.service": "jwthelper_service"

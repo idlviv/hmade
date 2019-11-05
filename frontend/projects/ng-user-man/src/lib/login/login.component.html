@@ -1,5 +1,3 @@
-
-<!-- {{config | json}} -->
 <div class="container">
   <div class="row" fxLayout="column" fxLayout.gt-xs="row">
     <div fxFlex.gt-xs="20" fxFlex.gt-md="30"></div>
@@ -11,13 +9,13 @@
           <mat-card-content>
 
             <div class="padding-bottom" fxLayout fxLayoutAlign="center center">
-              <img class="responsive-image" [src]="config.loginComponent.logo" width="367px" alt="HandMADE">
+              <img class="responsive-image" [src]="config.logo.formsLogo" width="367px" alt="HandMADE">
             </div>
             <form [formGroup]="userLoginForm" (submit)="onUserLoginSubmit()">
 
               <div fxLayout="row">
                 <div fxFlexAlign="center" class="mat-icon-wrapper">
-                  <mat-icon color="primary">{{config.loginComponent.loginIcon}}</mat-icon>
+                  <mat-icon color="primary">{{config.icons.login}}</mat-icon>
                 </div>
                 <mat-form-field>
                   <input matInput placeholder="Логін" formControlName="login" required>
@@ -30,20 +28,19 @@
 
               <div fxLayout="row">
                 <div fxFlexAlign="center" class="mat-icon-wrapper">
-                  <mat-icon color="primary">{{config.loginComponent.passwordIcon}}</mat-icon>
+                  <mat-icon color="primary">{{config.icons.password}}</mat-icon>
                 </div>
                 <mat-form-field>
                   <input matInput placeholder="Пароль" formControlName="password" required
                     [type]="hidePassword ? 'password' : 'text'">
                   <mat-icon class="muted" matSuffix (click)="hidePassword = !hidePassword">
-                    {{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>
+                    {{hidePassword ? config.icons.visible : config.icons.unvisible}}</mat-icon>
                   <mat-error *ngIf="userLoginForm.get('password').errors?.required &&
                           userLoginForm.get('password').touched">
                     Введіть пароль
                   </mat-error>
                 </mat-form-field>
               </div>
-
 
               <div class="links-wrapper" fxLayoutAlign="center">
                 <button class="google-button full-width" mat-raised-button color="primary" aria-label="Login"
@@ -55,9 +52,8 @@
                 <a [routerLink]="['/user/password-reset']">Забули пароль</a>
               </div>
 
-              <div class="links-wrapper" fxLayoutAlign="center">
-                <!-- <a class="google-button" mat-raised-button href="{{config.host + '/api/user/auth/google'}}" -->
-                <a class="google-button" mat-raised-button href="{{'/api/user/auth/google'}}"
+              <div *ngIf='config.googleSignin' class="links-wrapper" fxLayoutAlign="center">
+                <a class="google-button" mat-raised-button href="{{config.host + '/api/user/auth/google'}}"
                   aria-label="Sign in with Google">
                   <svg version="1.1" xmlns="http://www.w3.org/2000/svg" width="18px" height="18px" viewBox="0 0 48 48">
                     <g>
@@ -78,15 +74,10 @@
                   </svg>
                   Sign in with Google</a>
               </div>
-
-
-
             </form>
           </mat-card-content>
         </mat-card>
       </div>
-
-
     </div>
   </div>
 </div>

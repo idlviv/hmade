@@ -53,7 +53,7 @@ module.exports = function(err, req, res, next) {
   if (err instanceof ServerError) {
     return res.status(err.status).json(err);
   }
-
+  console.log('err', err);
 
   // all other errors
   return res.status(500).json('Помилка сервера');

@@ -59,27 +59,39 @@ module.exports = webpackAsyncContext;
 /*!**************************************************!*\
   !*** ./dist/ng-user-man/fesm2015/ng-user-man.js ***!
   \**************************************************/
-/*! exports provided: LoginComponent, NgUserManComponent, NgUserManModule, NgUserManService, SharedService, ɵa */
+/*! exports provided: AuthGuard, CreateComponent, DialogComponent, LoginComponent, NgUserManComponent, NgUserManModule, NgUserManService, NoAuthGuard, PasswordResetComponent, ProfileComponent, RedirAfterOauthComponent, SharedService, ValidateService, ɵa */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthGuard", function() { return AuthGuard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CreateComponent", function() { return CreateComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "DialogComponent", function() { return DialogComponent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginComponent", function() { return LoginComponent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgUserManComponent", function() { return NgUserManComponent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgUserManModule", function() { return NgUserManModule; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NgUserManService", function() { return NgUserManService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "NoAuthGuard", function() { return NoAuthGuard; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "PasswordResetComponent", function() { return PasswordResetComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ProfileComponent", function() { return ProfileComponent; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "RedirAfterOauthComponent", function() { return RedirAfterOauthComponent; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SharedService", function() { return SharedService; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ValidateService", function() { return ValidateService; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ɵa", function() { return MaterialModule; });
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/ngx-cookie-service.js");
-/* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/index.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/ngx-cookie-service.js");
+/* harmony import */ var _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @auth0/angular-jwt */ "./node_modules/@auth0/angular-jwt/index.js");
+/* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
 /* harmony import */ var _angular_flex_layout__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! @angular/flex-layout */ "./node_modules/@angular/flex-layout/esm2015/flex-layout.js");
 /* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var ng_recaptcha__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ng-recaptcha */ "./node_modules/ng-recaptcha/fesm2015/ng-recaptcha.js");
+
+
 
 
 
@@ -96,6 +108,11 @@ __webpack_require__.r(__webpack_exports__);
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
 class NgUserManService {
+    // private _logging: ReplaySubject<IUser> = new ReplaySubject(1);
+    // tokenSyncronizatonProgress = false;
+    // count = 0;
+    // private eventToReloadUser: ReplaySubject<IUser> = new ReplaySubject(1);
+    // eventToReloadUser$ = this.eventToReloadUser.asObservable();
     /**
      * @param {?} http
      * @param {?} cookieService
@@ -105,16 +122,12 @@ class NgUserManService {
         this.http = http;
         this.cookieService = cookieService;
         this.injector = injector;
-        this._logging = new rxjs__WEBPACK_IMPORTED_MODULE_2__["ReplaySubject"](1);
-        this.tokenSyncronizatonProgress = false;
-        this.eventToReloadUser = new rxjs__WEBPACK_IMPORTED_MODULE_2__["ReplaySubject"](1);
-        this.eventToReloadUser$ = this.eventToReloadUser.asObservable();
         this.config = injector.get('config');
     }
     /*
-      * Create new user
-      *
-      */
+       * Create new user
+       *
+       */
     /**
      * @param {?} user
      * @param {?} recaptcha
@@ -223,7 +236,7 @@ class NgUserManService {
     userCookieExtractor() {
         if (this.cookieService.get('hmade')) {
             /** @type {?} */
-            const helper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_4__["JwtHelperService"]();
+            const helper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__["JwtHelperService"]();
             return helper.decodeToken(this.cookieService.get('hmade')).sub;
         }
         return null;
@@ -275,6 +288,25 @@ class NgUserManService {
             return true;
         }
     }
+    // logging() {
+    //   const user = this.userCookieExtractor();
+    //   this._logging.next(user);
+    // }
+    // userManualUpdateCookie(): Observable<string> {
+    //   const httpOptions = {
+    //     headers: new HttpHeaders({
+    //       'Content-Type': 'application/json',
+    //     }),
+    //   };
+    //   return this.http.get<string>(
+    //     'api/user/manual-update-cookie',
+    //     httpOptions
+    //   );
+    // }
+    // getUserLocal(): Observable<IUser | null> {
+    //   // return this.userCookieExtractor();
+    //   return this._logging.asObservable();
+    // }
     /**
      * Helper for checking image file before uploading
      *
@@ -429,33 +461,6 @@ class NgUserManService {
         };
         return this.http.put('api/user/edit-avatar', formData, httpOptions);
     }
-    /**
-     * @return {?}
-     */
-    logging() {
-        /** @type {?} */
-        const user = this.userCookieExtractor();
-        this._logging.next(user);
-    }
-    /**
-     * @return {?}
-     */
-    userManualUpdateCookie() {
-        /** @type {?} */
-        const httpOptions = {
-            headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpHeaders"]({
-                'Content-Type': 'application/json',
-            }),
-        };
-        return this.http.get('api/user/manual-update-cookie', httpOptions);
-    }
-    /**
-     * @return {?}
-     */
-    getUserLocal() {
-        // return this.userCookieExtractor();
-        return this._logging.asObservable();
-    }
     /*
        * Token manipulations
        *
@@ -486,7 +491,7 @@ class NgUserManService {
             return true;
         }
         /** @type {?} */
-        const helper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_4__["JwtHelperService"]();
+        const helper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__["JwtHelperService"]();
         return helper.isTokenExpired(token);
     }
     /**
@@ -512,7 +517,7 @@ class NgUserManService {
         /** @type {?} */
         const token = localStorage.getItem(tokenKey);
         /** @type {?} */
-        const helper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_4__["JwtHelperService"]();
+        const helper = new _auth0_angular_jwt__WEBPACK_IMPORTED_MODULE_3__["JwtHelperService"]();
         return helper.getTokenExpirationDate(token);
     }
 }
@@ -524,10 +529,10 @@ NgUserManService.decorators = [
 /** @nocollapse */
 NgUserManService.ctorParameters = () => [
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"] },
-    { type: ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__["CookieService"] },
+    { type: ngx_cookie_service__WEBPACK_IMPORTED_MODULE_2__["CookieService"] },
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"] }
 ];
-/** @nocollapse */ NgUserManService.ngInjectableDef = Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"])({ factory: function NgUserManService_Factory() { return new NgUserManService(Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"])(ngx_cookie_service__WEBPACK_IMPORTED_MODULE_3__["CookieService"]), Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"])(_angular_core__WEBPACK_IMPORTED_MODULE_0__["INJECTOR"])); }, token: NgUserManService, providedIn: "root" });
+/** @nocollapse */ NgUserManService.ngInjectableDef = Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"])({ factory: function NgUserManService_Factory() { return new NgUserManService(Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"])(_angular_common_http__WEBPACK_IMPORTED_MODULE_1__["HttpClient"]), Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"])(ngx_cookie_service__WEBPACK_IMPORTED_MODULE_2__["CookieService"]), Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"])(_angular_core__WEBPACK_IMPORTED_MODULE_0__["INJECTOR"])); }, token: NgUserManService, providedIn: "root" });
 if (false) {}
 
 /**
@@ -540,9 +545,9 @@ class SharedService {
      */
     constructor(http) {
         this.http = http;
-        this.shareEvent = new rxjs__WEBPACK_IMPORTED_MODULE_2__["ReplaySubject"](1);
+        this.shareEvent = new rxjs__WEBPACK_IMPORTED_MODULE_4__["ReplaySubject"](1);
         this.shareEvent$ = this.shareEvent.asObservable();
-        this.eventToReloadComments = new rxjs__WEBPACK_IMPORTED_MODULE_2__["Subject"]();
+        this.eventToReloadComments = new rxjs__WEBPACK_IMPORTED_MODULE_4__["Subject"]();
         this.eventToReloadComments$ = this.eventToReloadComments.asObservable();
     }
     // sharing data between components
@@ -643,6 +648,144 @@ if (false) {}
  * @fileoverview added by tsickle
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
+class ValidateService {
+    constructor() { }
+    /**
+     * @param {?} abstractControl
+     * @return {?}
+     */
+    matchPassword(abstractControl) {
+        /** @type {?} */
+        const password = abstractControl.get('password').value;
+        /** @type {?} */
+        const passwordConfirm = abstractControl.get('passwordConfirm').value;
+        if (password === passwordConfirm) {
+            abstractControl.get('passwordConfirm').setErrors(null);
+            return null;
+        }
+        else {
+            /**
+             * set error to 'passwordConfirm' element
+             */
+            abstractControl.get('passwordConfirm').setErrors({ mismatch: true });
+            /**
+             * and don't set error (null) to formGroup
+             */
+            return null;
+        }
+    }
+    /**
+     * @param {?} abstractControl
+     * @return {?}
+     */
+    maxTries(abstractControl) {
+        // set error to form control
+        // !! abstractControl.value
+        abstractControl.get('code').setErrors({ maxTries: true });
+        return null; // set no errors to form
+        // return {maxTries: true};
+    }
+}
+ValidateService.decorators = [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"], args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+ValidateService.ctorParameters = () => [];
+/** @nocollapse */ ValidateService.ngInjectableDef = Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"])({ factory: function ValidateService_Factory() { return new ValidateService(); }, token: ValidateService, providedIn: "root" });
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class AuthGuard {
+    /**
+     * @param {?} ngUsermanService
+     */
+    constructor(ngUsermanService) {
+        this.ngUsermanService = ngUsermanService;
+    }
+    /**
+     * @param {?} next
+     * @param {?} state
+     * @return {?}
+     */
+    canActivate(next, state) {
+        /** @type {?} */
+        const requiredRoleForAuthorization = next.data.auth;
+        return this.ngUsermanService.userCheckAuthorization(requiredRoleForAuthorization)
+            .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["map"])((/**
+         * @param {?} permission
+         * @return {?}
+         */
+        (permission) => permission)), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["catchError"])((/**
+         * @param {?} err
+         * @return {?}
+         */
+        err => Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(false))));
+    }
+}
+AuthGuard.decorators = [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"], args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+AuthGuard.ctorParameters = () => [
+    { type: NgUserManService }
+];
+/** @nocollapse */ AuthGuard.ngInjectableDef = Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"])({ factory: function AuthGuard_Factory() { return new AuthGuard(Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"])(NgUserManService)); }, token: AuthGuard, providedIn: "root" });
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class NoAuthGuard {
+    /**
+     * @param {?} ngUsermanService
+     */
+    constructor(ngUsermanService) {
+        this.ngUsermanService = ngUsermanService;
+    }
+    /**
+     * @param {?} next
+     * @param {?} state
+     * @return {?}
+     */
+    canActivate(next, state) {
+        // access permitted for all roles included 'null'
+        // access denied from next.data.auth
+        /** @type {?} */
+        const restrictedRoleForAuthorization = next.data.auth;
+        // from routing.module
+        /** @type {?} */
+        const user = this.ngUsermanService.userCookieExtractor();
+        if (!user) {
+            return true;
+        }
+        else {
+            return !(restrictedRoleForAuthorization.indexOf(user.role) >= 0);
+        }
+    }
+}
+NoAuthGuard.decorators = [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injectable"], args: [{
+                providedIn: 'root'
+            },] }
+];
+/** @nocollapse */
+NoAuthGuard.ctorParameters = () => [
+    { type: NgUserManService }
+];
+/** @nocollapse */ NoAuthGuard.ngInjectableDef = Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵdefineInjectable"])({ factory: function NoAuthGuard_Factory() { return new NoAuthGuard(Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["ɵɵinject"])(NgUserManService)); }, token: NoAuthGuard, providedIn: "root" });
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class NgUserManComponent {
     constructor() { }
     /**
@@ -663,103 +806,6 @@ NgUserManComponent.decorators = [
 ];
 /** @nocollapse */
 NgUserManComponent.ctorParameters = () => [];
-
-/**
- * @fileoverview added by tsickle
- * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
- */
-class LoginComponent {
-    /**
-     * @param {?} matSnackBar
-     * @param {?} ngUserManService
-     * @param {?} sharedService
-     * @param {?} injector
-     * @param {?} router
-     */
-    constructor(matSnackBar, ngUserManService, sharedService, injector, router) {
-        this.matSnackBar = matSnackBar;
-        this.ngUserManService = ngUserManService;
-        this.sharedService = sharedService;
-        this.injector = injector;
-        this.router = router;
-        this.hidePassword = true;
-        // this.config = config;
-        // this.userService = injector.get('UserService');
-        // this.ngUserManService = injector.get('NgUserManService');
-        this.config = injector.get('config');
-        // this.sharingService = sharingService;
-    }
-    /**
-     * @return {?}
-     */
-    ngOnInit() {
-        this.userLoginForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroup"]({
-            login: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
-            ]),
-            password: new _angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormControl"]('', [
-                _angular_forms__WEBPACK_IMPORTED_MODULE_5__["Validators"].required,
-            ]),
-        });
-    }
-    /**
-     * @return {?}
-     */
-    onUserLoginSubmit() {
-        this.user = (/** @type {?} */ ({
-            login: this.userLoginForm.get('login').value,
-            password: this.userLoginForm.get('password').value,
-        }));
-        this.ngUserManService.userLogin(this.user)
-            .subscribe((/**
-         * @param {?} result
-         * @return {?}
-         */
-        result => {
-            if (result === 'logged in') {
-                this.resetForm();
-                this.ngUserManService.logging();
-                this.sharedService.sharingEventToReloadComments();
-                // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
-                this.matSnackBar.open(`${this.user.login}, ви увійшли на сайт`, '', { duration: 5000 });
-                this.router.navigate(['/user', 'profile']);
-            }
-        }), (/**
-         * @param {?} err
-         * @return {?}
-         */
-        err => {
-            this.matSnackBar.open(err.error.message || 'Сталася помилка', '', { duration: 5000, panelClass: 'snack-bar-danger' });
-        }));
-    }
-    /**
-     * @return {?}
-     */
-    resetForm() {
-        if (this.userCreateFormDirective) {
-            this.userCreateFormDirective.resetForm();
-        }
-    }
-}
-LoginComponent.decorators = [
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{
-                selector: 'lib-login',
-                template: "\n<!-- {{config | json}} -->\n<div class=\"container\">\n  <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n    <div fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\n\n    <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\n\n      <div class=\"centered-container\">\n        <mat-card class=\"form-block\">\n          <mat-card-content>\n\n            <div class=\"padding-bottom\" fxLayout fxLayoutAlign=\"center center\">\n              <img class=\"responsive-image\" [src]=\"config.loginComponent.logo\" width=\"367px\" alt=\"HandMADE\">\n            </div>\n            <form [formGroup]=\"userLoginForm\" (submit)=\"onUserLoginSubmit()\">\n\n              <div fxLayout=\"row\">\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                  <mat-icon color=\"primary\">{{config.loginComponent.loginIcon}}</mat-icon>\n                </div>\n                <mat-form-field>\n                  <input matInput placeholder=\"\u041B\u043E\u0433\u0456\u043D\" formControlName=\"login\" required>\n                  <mat-error *ngIf=\"userLoginForm.get('login').errors?.required &&\n                      userLoginForm.get('login').touched\">\n                    \u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043B\u043E\u0433\u0456\u043D\n                  </mat-error>\n                </mat-form-field>\n              </div>\n\n              <div fxLayout=\"row\">\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                  <mat-icon color=\"primary\">{{config.loginComponent.passwordIcon}}</mat-icon>\n                </div>\n                <mat-form-field>\n                  <input matInput placeholder=\"\u041F\u0430\u0440\u043E\u043B\u044C\" formControlName=\"password\" required\n                    [type]=\"hidePassword ? 'password' : 'text'\">\n                  <mat-icon class=\"muted\" matSuffix (click)=\"hidePassword = !hidePassword\">\n                    {{hidePassword ? 'visibility' : 'visibility_off'}}</mat-icon>\n                  <mat-error *ngIf=\"userLoginForm.get('password').errors?.required &&\n                          userLoginForm.get('password').touched\">\n                    \u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043F\u0430\u0440\u043E\u043B\u044C\n                  </mat-error>\n                </mat-form-field>\n              </div>\n\n\n              <div class=\"links-wrapper\" fxLayoutAlign=\"center\">\n                <button class=\"google-button full-width\" mat-raised-button color=\"primary\" aria-label=\"Login\"\n                  [disabled]=\"!userLoginForm.valid\">\u0423\u0432\u0456\u0439\u0442\u0438</button>\n              </div>\n              <div fxLayout=\"row\" class=\"links-wrapper\">\n                <a [routerLink]=\"['/user/create']\">\u0417\u0430\u0440\u0435\u0454\u0441\u0442\u0440\u0443\u0432\u0430\u0442\u0438\u0441\u044C</a>\n                <span fxFlex></span>\n                <a [routerLink]=\"['/user/password-reset']\">\u0417\u0430\u0431\u0443\u043B\u0438 \u043F\u0430\u0440\u043E\u043B\u044C</a>\n              </div>\n\n              <div class=\"links-wrapper\" fxLayoutAlign=\"center\">\n                <!-- <a class=\"google-button\" mat-raised-button href=\"{{config.host + '/api/user/auth/google'}}\" -->\n                <a class=\"google-button\" mat-raised-button href=\"{{'/api/user/auth/google'}}\"\n                  aria-label=\"Sign in with Google\">\n                  <svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"18px\" height=\"18px\" viewBox=\"0 0 48 48\">\n                    <g>\n                      <path fill=\"#EA4335\"\n                        d=\"M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z\">\n                      </path>\n                      <path fill=\"#4285F4\"\n                        d=\"M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z\">\n                      </path>\n                      <path fill=\"#FBBC05\"\n                        d=\"M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z\">\n                      </path>\n                      <path fill=\"#34A853\"\n                        d=\"M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z\">\n                      </path>\n                      <path fill=\"none\" d=\"M0 0h48v48H0z\"></path>\n                    </g>\n                  </svg>\n                  Sign in with Google</a>\n              </div>\n\n\n\n            </form>\n          </mat-card-content>\n        </mat-card>\n      </div>\n\n\n    </div>\n  </div>\n</div>",
-                styles: [".bg{background-color:#deb887}"]
-            }] }
-];
-/** @nocollapse */
-LoginComponent.ctorParameters = () => [
-    { type: _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSnackBar"] },
-    { type: NgUserManService },
-    { type: SharedService },
-    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_6__["Router"] }
-];
-LoginComponent.propDecorators = {
-    userCreateFormDirective: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: [_angular_forms__WEBPACK_IMPORTED_MODULE_5__["FormGroupDirective"], { static: false },] }]
-};
-if (false) {}
 
 /**
  * @fileoverview added by tsickle
@@ -829,8 +875,965 @@ MaterialModule.decorators = [
  * @fileoverview added by tsickle
  * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
  */
-// import { NgUserManService } from './ng-user-man.service';
-// import { SharedService } from './shared.service';
+class LoginComponent {
+    /**
+     * @param {?} injector
+     */
+    constructor(injector) {
+        this.injector = injector;
+        this.hidePassword = true;
+        this.config = injector.get('config');
+        this.ngUserManService = injector.get(NgUserManService);
+        this.sharedService = injector.get(SharedService);
+        this.router = injector.get(_angular_router__WEBPACK_IMPORTED_MODULE_10__["Router"]);
+        this.matSnackBar = injector.get(_angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSnackBar"]);
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        this.userLoginForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+            login: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+            ]),
+            password: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+            ]),
+        });
+    }
+    /**
+     * @return {?}
+     */
+    onUserLoginSubmit() {
+        this.user = (/** @type {?} */ ({
+            login: this.userLoginForm.get('login').value,
+            password: this.userLoginForm.get('password').value,
+        }));
+        this.ngUserManService.userLogin(this.user)
+            .subscribe((/**
+         * @param {?} result
+         * @return {?}
+         */
+        result => {
+            if (result === 'logged in') {
+                this.resetForm();
+                // this.ngUserManService.logging();
+                this.sharedService.sharingEventToReloadComments();
+                this.matSnackBar.open(`${this.user.login}, ви увійшли на сайт`, '', { duration: 5000 });
+                this.router.navigate(['/user', 'profile']);
+            }
+        }), (/**
+         * @param {?} err
+         * @return {?}
+         */
+        err => {
+            this.matSnackBar.open(err.error.message || 'Сталася помилка', '', { duration: 5000, panelClass: 'snack-bar-danger' });
+        }));
+    }
+    /**
+     * @return {?}
+     */
+    resetForm() {
+        if (this.userCreateFormDirective) {
+            this.userCreateFormDirective.resetForm();
+        }
+    }
+}
+LoginComponent.decorators = [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{
+                selector: 'lib-login',
+                template: "<div class=\"container\">\n  <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n    <div fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\n\n    <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\n\n      <div class=\"centered-container\">\n        <mat-card class=\"form-block\">\n          <mat-card-content>\n\n            <div class=\"padding-bottom\" fxLayout fxLayoutAlign=\"center center\">\n              <img class=\"responsive-image\" [src]=\"config.logo.formsLogo\" width=\"367px\" alt=\"HandMADE\">\n            </div>\n            <form [formGroup]=\"userLoginForm\" (submit)=\"onUserLoginSubmit()\">\n\n              <div fxLayout=\"row\">\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                  <mat-icon color=\"primary\">{{config.icons.login}}</mat-icon>\n                </div>\n                <mat-form-field>\n                  <input matInput placeholder=\"\u041B\u043E\u0433\u0456\u043D\" formControlName=\"login\" required>\n                  <mat-error *ngIf=\"userLoginForm.get('login').errors?.required &&\n                      userLoginForm.get('login').touched\">\n                    \u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043B\u043E\u0433\u0456\u043D\n                  </mat-error>\n                </mat-form-field>\n              </div>\n\n              <div fxLayout=\"row\">\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                  <mat-icon color=\"primary\">{{config.icons.password}}</mat-icon>\n                </div>\n                <mat-form-field>\n                  <input matInput placeholder=\"\u041F\u0430\u0440\u043E\u043B\u044C\" formControlName=\"password\" required\n                    [type]=\"hidePassword ? 'password' : 'text'\">\n                  <mat-icon class=\"muted\" matSuffix (click)=\"hidePassword = !hidePassword\">\n                    {{hidePassword ? config.icons.visible : config.icons.unvisible}}</mat-icon>\n                  <mat-error *ngIf=\"userLoginForm.get('password').errors?.required &&\n                          userLoginForm.get('password').touched\">\n                    \u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043F\u0430\u0440\u043E\u043B\u044C\n                  </mat-error>\n                </mat-form-field>\n              </div>\n\n              <div class=\"links-wrapper\" fxLayoutAlign=\"center\">\n                <button class=\"google-button full-width\" mat-raised-button color=\"primary\" aria-label=\"Login\"\n                  [disabled]=\"!userLoginForm.valid\">\u0423\u0432\u0456\u0439\u0442\u0438</button>\n              </div>\n              <div fxLayout=\"row\" class=\"links-wrapper\">\n                <a [routerLink]=\"['/user/create']\">\u0417\u0430\u0440\u0435\u0454\u0441\u0442\u0440\u0443\u0432\u0430\u0442\u0438\u0441\u044C</a>\n                <span fxFlex></span>\n                <a [routerLink]=\"['/user/password-reset']\">\u0417\u0430\u0431\u0443\u043B\u0438 \u043F\u0430\u0440\u043E\u043B\u044C</a>\n              </div>\n\n              <div *ngIf='config.googleSignin' class=\"links-wrapper\" fxLayoutAlign=\"center\">\n                <a class=\"google-button\" mat-raised-button href=\"{{config.host + '/api/user/auth/google'}}\"\n                  aria-label=\"Sign in with Google\">\n                  <svg version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" width=\"18px\" height=\"18px\" viewBox=\"0 0 48 48\">\n                    <g>\n                      <path fill=\"#EA4335\"\n                        d=\"M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z\">\n                      </path>\n                      <path fill=\"#4285F4\"\n                        d=\"M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z\">\n                      </path>\n                      <path fill=\"#FBBC05\"\n                        d=\"M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z\">\n                      </path>\n                      <path fill=\"#34A853\"\n                        d=\"M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.15 1.45-4.92 2.3-8.16 2.3-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z\">\n                      </path>\n                      <path fill=\"none\" d=\"M0 0h48v48H0z\"></path>\n                    </g>\n                  </svg>\n                  Sign in with Google</a>\n              </div>\n            </form>\n          </mat-card-content>\n        </mat-card>\n      </div>\n    </div>\n  </div>\n</div>",
+                styles: [""]
+            }] }
+];
+/** @nocollapse */
+LoginComponent.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"] }
+];
+LoginComponent.propDecorators = {
+    userCreateFormDirective: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroupDirective"], { static: false },] }]
+};
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class DialogComponent {
+    /**
+     * @param {?} dialogRef
+     * @param {?} data
+     */
+    constructor(dialogRef, data) {
+        this.dialogRef = dialogRef;
+        this.data = data;
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        this.userEditForm = this.data.initForm();
+    }
+    /**
+     * @return {?}
+     */
+    onNoClick() {
+        this.dialogRef.close();
+    }
+    /**
+     * @return {?}
+     */
+    onSubmit() {
+        this.dialogRef.close({
+            name: this.data.payload[0].name,
+            value: this.userEditForm.get(this.data.payload[0].name).value,
+            password: this.data.payload[0].name === 'password' ?
+                this.userEditForm.get(this.data.payload[2].name).value :
+                this.userEditForm.get(this.data.payload[1].name).value
+        });
+    }
+}
+DialogComponent.decorators = [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{
+                selector: 'lib-dialog',
+                template: "<h1 mat-dialog-title>\u0412\u043D\u0435\u0441\u0442\u0438 \u0437\u043C\u0456\u043D\u0438</h1>\n<div class=\"form-block\">\n  <form [formGroup]=\"userEditForm\" (submit)=\"onSubmit()\">\n\n    <div fxLayout=\"row\" *ngFor=\"let dataPayload of data.payload\">\n      <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n        <mat-icon color=\"primary\">{{dataPayload.icon}}</mat-icon>\n      </div>\n      <mat-form-field>\n        <input matInput placeholder=\"{{dataPayload.label}}\" formControlName=\"{{dataPayload.name}}\" autocomplete=\"false\"\n          type=\"{{dataPayload.type}}\" required>\n        <mat-error *ngFor=\"let validator of dataPayload.validators\">\n          <div *ngIf=\"(validator.name === 'length' &&\n                (userEditForm.get(dataPayload.name).errors?.minlength ||\n                userEditForm.get(dataPayload.name).errors?.maxlength ||\n                userEditForm.get(dataPayload.name).errors?.required) &&\n                userEditForm.get(dataPayload.name).touched)\">\n            {{validator.message}}\n          </div>\n          <div *ngIf=\"(validator.name === 'pattern' &&\n                userEditForm.get(dataPayload.name).errors?.pattern &&\n                userEditForm.get(dataPayload.name).touched)\">\n            {{validator.message}}\n          </div>\n          <div *ngIf=\"(validator.name === 'require' &&\n                userEditForm.get(dataPayload.name).errors?.required &&\n                userEditForm.get(dataPayload.name).touched)\">\n            {{validator.message}}\n          </div>\n          <div *ngIf=\"(validator.name === 'match' &&\n                userEditForm.get(dataPayload.name).errors?.mismatch &&\n                userEditForm.get(dataPayload.name).touched)\">\n            {{validator.message}}\n          </div>\n        </mat-error>\n      </mat-form-field>\n\n    </div>\n    <div class=\"submit-button-wrapper\">\n      <button type=\"reset\" mat-button color=\"primary\" (click)=\"onNoClick()\" aria-label=\"Back\">\u041F\u043E\u0432\u0435\u0440\u043D\u0443\u0442\u0438\u0441\u044C</button>\n      <span fxFlex></span>\n      <button mat-raised-button color=\"primary\" [disabled]=\"!userEditForm.valid\" aria-label=\"Ok\">Ok</button>\n    </div>\n\n  </form>\n  <p *ngIf=\"data.oldValue\" class=\"mat-body-1\">\u043F\u043E\u0442\u043E\u0447\u043D\u0435 \u0437\u043D\u0430\u0447\u0435\u043D\u043D\u044F: <span class=\"mat-body-2\">{{data.oldValue}}</span></p>\n\n</div>\n\n",
+                styles: [""]
+            }] }
+];
+/** @nocollapse */
+DialogComponent.ctorParameters = () => [
+    { type: _angular_material__WEBPACK_IMPORTED_MODULE_7__["MatDialogRef"] },
+    { type: undefined, decorators: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Inject"], args: [_angular_material__WEBPACK_IMPORTED_MODULE_7__["MAT_DIALOG_DATA"],] }] }
+];
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class CreateComponent {
+    /**
+     * @param {?} injector
+     */
+    constructor(injector) {
+        this.injector = injector;
+        this.hidePassword = true;
+        this.config = injector.get('config');
+        this.validateService = injector.get(ValidateService);
+        this.ngUserManService = injector.get(NgUserManService);
+        this.matSnackBar = injector.get(_angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSnackBar"]);
+        this.router = injector.get(_angular_router__WEBPACK_IMPORTED_MODULE_10__["Router"]);
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        /** @type {?} */
+        const emailPattern = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        this.userCreateForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+            login: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(4),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(15),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9]+'),
+            ]),
+            password: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(6),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(15),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9]+'),
+            ]),
+            passwordConfirm: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+            ]),
+            name: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(2),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(20),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ\' ]+'),
+            ]),
+            surname: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(2),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(20),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ\' ]+'),
+            ]),
+            email: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(5),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(50),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern(emailPattern),
+            ]),
+            recaptcha: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required
+            ])
+        }, this.validateService.matchPassword);
+    }
+    /**
+     * @return {?}
+     */
+    onUserCreateSubmit() {
+        this.user = (/** @type {?} */ ({
+            login: this.userCreateForm.get('login').value,
+            password: this.userCreateForm.get('password').value,
+            email: this.userCreateForm.get('email').value,
+            name: this.userCreateForm.get('name').value,
+            surname: this.userCreateForm.get('surname').value
+        }));
+        // create user
+        this.ngUserManService.userCreate(this.user, this.userCreateForm.get('recaptcha').value)
+            .subscribe((/**
+         * @param {?} result
+         * @return {?}
+         */
+        result => {
+            /** @type {?} */
+            const token = result;
+            this.resetForm();
+            this.matSnackBar.open('Користувача створено, вхід виконано', '', { duration: 3000 });
+            // login new user
+            // this.ngUserManService.logging();
+            this.router.navigate(['/user', 'profile']);
+        }), (/**
+         * @param {?} err
+         * @return {?}
+         */
+        err => {
+            // 422 or 400
+            this.recaptchaRef.reset();
+            this.matSnackBar.open(err.error.message || 'Сталася помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+        }));
+    }
+    /**
+     * @return {?}
+     */
+    onUserCreateReset() {
+        this.resetForm();
+        // MAKE redirect
+    }
+    /**
+     * @return {?}
+     */
+    resetForm() {
+        if (this.userCreateFormDirective) {
+            this.userCreateFormDirective.resetForm();
+        }
+    }
+}
+CreateComponent.decorators = [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{
+                selector: 'lib-create',
+                template: "<div class=\"container\">\n\n  <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n    <div fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\n\n    <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\n\n      <div class=\"centered-container\">\n        <mat-card class=\"form-block\">\n          <mat-card-content>\n            <div class=\"padding-bottom\" fxLayout fxLayoutAlign=\"center center\">\n              <img class=\"responsive-image\" [src]=\"config.logo.formsLogo\" width=\"367px\" alt=\"HandMADE\">\n            </div>\n\n            <form [formGroup]=\"userCreateForm\" (submit)=\"onUserCreateSubmit()\">\n              <div fxLayout=\"row\">\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                  <mat-icon color=\"primary\">{{config.icons.login}}</mat-icon>\n                </div>\n                <mat-form-field>\n                  <input matInput placeholder=\"\u041B\u043E\u0433\u0456\u043D\" formControlName=\"login\" required>\n                  <mat-error *ngIf=\"(userCreateForm.get('login').errors?.minlength ||\n                      userCreateForm.get('login').errors?.maxlength ||\n                      userCreateForm.get('login').errors?.required) &&\n                      userCreateForm.get('login').touched\">\n                    \u0414\u043E\u0432\u0436\u0438\u043D\u0430 \u043F\u043E\u0432\u0438\u043D\u043D\u0430 \u0431\u0443\u0442\u0438 \u0432\u0456\u0434 4 \u0434\u043E 15 \u0441\u0438\u043C\u0432\u043E\u043B\u0456\u0432\n                  </mat-error>\n                  <mat-error *ngIf=\"userCreateForm.get('login').errors?.pattern &&\n                     userCreateForm.get('login').touched\">\n                    \u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0439\u0442\u0435 \u0442\u0456\u043B\u044C\u043A\u0438 \u043B\u0430\u0442\u0438\u043D\u0441\u044C\u043A\u0456 \u0441\u0438\u043C\u0432\u043E\u043B\u0438 \u0456 \u0446\u0438\u0444\u0440\u0438\n                  </mat-error>\n                </mat-form-field>\n              </div>\n\n              <div fxLayout=\"row\">\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                  <mat-icon color=\"primary\">{{config.icons.name}}</mat-icon>\n                </div>\n                <mat-form-field>\n                  <input matInput placeholder=\"\u0406\u043C'\u044F\" formControlName=\"name\" required>\n                  <mat-error *ngIf=\"(userCreateForm.get('name').errors?.minlength ||\n                      userCreateForm.get('name').errors?.maxlength ||\n                      userCreateForm.get('name').errors?.required) &&\n                      userCreateForm.get('name').touched\">\n                    \u0414\u043E\u0432\u0436\u0438\u043D\u0430 \u043F\u043E\u0432\u0438\u043D\u043D\u0430 \u0431\u0443\u0442\u0438 \u0432\u0456\u0434 2 \u0434\u043E 20 \u0441\u0438\u043C\u0432\u043E\u043B\u0456\u0432\n                  </mat-error>\n                  <mat-error *ngIf=\"userCreateForm.get('name').errors?.pattern &&\n                     userCreateForm.get('name').touched\">\n                    \u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0439\u0442\u0435 \u0442\u0456\u043B\u044C\u043A\u0438 \u0431\u0443\u043A\u0432\u0438 \u0456 \u0446\u0438\u0444\u0440\u0438\n                  </mat-error>\n                </mat-form-field>\n              </div>\n\n              <div fxLayout=\"row\">\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                  <mat-icon color=\"primary\">{{config.icons.surname}}</mat-icon>\n                </div>\n                <mat-form-field>\n                  <input matInput placeholder=\"\u041F\u0440\u0456\u0437\u0432\u0438\u0449\u0435\" formControlName=\"surname\" required>\n                  <mat-error *ngIf=\"(userCreateForm.get('surname').errors?.minlength ||\n                      userCreateForm.get('surname').errors?.maxlength ||\n                      userCreateForm.get('surname').errors?.required) &&\n                      userCreateForm.get('surname').touched\">\n                    \u0414\u043E\u0432\u0436\u0438\u043D\u0430 \u043F\u043E\u0432\u0438\u043D\u043D\u0430 \u0431\u0443\u0442\u0438 \u0432\u0456\u0434 2 \u0434\u043E 20 \u0441\u0438\u043C\u0432\u043E\u043B\u0456\u0432\n                  </mat-error>\n                  <mat-error *ngIf=\"userCreateForm.get('surname').errors?.pattern &&\n                     userCreateForm.get('surname').touched\">\n                    \u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0439\u0442\u0435 \u0442\u0456\u043B\u044C\u043A\u0438 \u0431\u0443\u043A\u0432\u0438 \u0456 \u0446\u0438\u0444\u0440\u0438\n                  </mat-error>\n                </mat-form-field>\n              </div>\n\n              <div fxLayout=\"row\">\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                  <mat-icon color=\"primary\">{{config.icons.password}}</mat-icon>\n                </div>\n                <mat-form-field>\n                  <input matInput placeholder=\"\u041F\u0430\u0440\u043E\u043B\u044C\" formControlName=\"password\" required\n                    [type]=\"hidePassword ? 'password' : 'text'\">\n                  <mat-icon color=\"accent\" matSuffix (click)=\"hidePassword = !hidePassword\">\n                    {{hidePassword ? config.icons.visible : config.icons.unvisible}}</mat-icon>\n                  <mat-error *ngIf=\"(userCreateForm.get('password').errors?.minlength ||\n                          userCreateForm.get('password').errors?.maxlength ||\n                          userCreateForm.get('password').errors?.required) &&\n                          userCreateForm.get('password').touched\">\n                    \u0414\u043E\u0432\u0436\u0438\u043D\u0430 \u043F\u043E\u0432\u0438\u043D\u043D\u0430 \u0431\u0443\u0442\u0438 \u0432\u0456\u0434 6 \u0434\u043E 15 \u0441\u0438\u043C\u0432\u043E\u043B\u0456\u0432\n                  </mat-error>\n                  <mat-error *ngIf=\"userCreateForm.get('password').errors?.pattern &&\n                         userCreateForm.get('password').touched\">\n                    \u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0439\u0442\u0435 \u0442\u0456\u043B\u044C\u043A\u0438 \u043B\u0430\u0442\u0438\u043D\u0441\u044C\u043A\u0456 \u0441\u0438\u043C\u0432\u043E\u043B\u0438 \u0442\u0430 \u0446\u0438\u0444\u0440\u0438\n                  </mat-error>\n                </mat-form-field>\n              </div>\n\n              <div fxLayout=\"row\">\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                </div>\n                <mat-form-field>\n                  <input matInput placeholder=\"\u041F\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0456\u0442\u044C \u043F\u0430\u0440\u043E\u043B\u044C\" formControlName=\"passwordConfirm\" required\n                    [type]=\"hidePassword ? 'password' : 'text'\">\n\n                  <mat-icon\n                    *ngIf=\"!userCreateForm.get('passwordConfirm').errors?.mismatch && !userCreateForm.get('password').errors\"\n                    matSuffix color=\"accent\">{{config.icons.passwordMatch}}</mat-icon>\n\n                  <mat-error *ngIf=\"userCreateForm.get('passwordConfirm').errors?.mismatch &&\n                      userCreateForm.get('passwordConfirm').touched\">\n                    \u041F\u0430\u0440\u043E\u043B\u044C \u043D\u0435 \u0437\u0431\u0456\u0433\u0430\u0454\u0442\u044C\u0441\u044F\n                  </mat-error>\n                </mat-form-field>\n              </div>\n\n\n              <div fxLayout=\"row\">\n                <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                  <mat-icon color=\"primary\">{{config.icons.email}}</mat-icon>\n                </div>\n                <mat-form-field>\n                  <input matInput placeholder=\"Email\" formControlName=\"email\" type=\"email\" required>\n                  <mat-error *ngIf=\"(userCreateForm.get('email').errors?.minlength ||\n                        userCreateForm.get('email').errors?.maxlength ||\n                        userCreateForm.get('email').errors?.required) &&\n                        userCreateForm.get('email').touched\">\n                    \u0414\u043E\u0432\u0436\u0438\u043D\u0430 \u043F\u043E\u0432\u0438\u043D\u043D\u0430 \u0431\u0443\u0442\u0438 \u0432\u0456\u0434 5 \u0434\u043E 50 \u0441\u0438\u043C\u0432\u043E\u043B\u0456\u0432\n                  </mat-error>\n                  <mat-error *ngIf=\"userCreateForm.get('email').errors?.pattern &&\n                       userCreateForm.get('email').touched\">\n                    \u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043F\u0440\u0430\u0432\u0456\u043B\u044C\u043D\u0443 \u0430\u0434\u0440\u0435\u0441\u0443\n                  </mat-error>\n                </mat-form-field>\n              </div>\n\n              <re-captcha [ngClass]=\"{'display-none':\n          !userCreateForm.get('email').valid || !userCreateForm.get('login').valid ||\n          !userCreateForm.get('password').valid || !userCreateForm.get('passwordConfirm').valid}\"\n                [formControlName]=\"'recaptcha'\" #recaptchaRef siteKey=\"{{config.recaptchaSiteKey}}\">\n              </re-captcha>\n\n              <div class=\"submit-button-wrapper\">\n                <span fxFlex></span>\n                <button mat-raised-button color=\"primary\" [disabled]=\"!userCreateForm.valid\"\n                  aria-label=\"Register\">\u0417\u0430\u0440\u0435\u0454\u0441\u0442\u0440\u0443\u0432\u0430\u0442\u0438\u0441\u044C</button>\n              </div>\n\n            </form>\n          </mat-card-content>\n        </mat-card>\n      </div>\n\n\n    </div>\n  </div>\n</div>\n",
+                styles: [""]
+            }] }
+];
+/** @nocollapse */
+CreateComponent.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"] }
+];
+CreateComponent.propDecorators = {
+    userCreateFormDirective: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: [_angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroupDirective"], { static: false },] }],
+    recaptchaRef: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: [ng_recaptcha__WEBPACK_IMPORTED_MODULE_11__["RecaptchaComponent"], { static: false },] }]
+};
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class PasswordResetComponent {
+    /**
+     * @param {?} injector
+     */
+    constructor(injector) {
+        this.injector = injector;
+        this.hidePassword = true;
+        this.processing = false;
+        this.config = injector.get('config');
+        this.validateService = injector.get(ValidateService);
+        this.ngUserManService = injector.get(NgUserManService);
+        this.sharedService = injector.get(SharedService);
+        this.matSnackBar = injector.get(_angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSnackBar"]);
+        this.router = injector.get(_angular_router__WEBPACK_IMPORTED_MODULE_10__["Router"]);
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        /** @type {?} */
+        const emailPattern = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+        this.emailForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+            email: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(5),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(30),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern(emailPattern),
+            ]),
+            recaptcha: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required
+            ])
+        });
+        this.codeForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+            code: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+            ]),
+        });
+        this.passwordForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+            password: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(6),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(15),
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9]+'),
+            ]),
+            passwordConfirm: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+            ]),
+        }, this.validateService.matchPassword);
+    }
+    /**
+     * @param {?} stepper
+     * @return {?}
+     */
+    onEmailSubmit(stepper) {
+        this.processing = true;
+        this.ngUserManService.userLocalRemoveToken('token');
+        this.ngUserManService.userLocalRemoveToken('codeToken');
+        this.ngUserManService.userLocalRemoveToken('passwordResetToken');
+        /** @type {?} */
+        const email = this.emailForm.get('email').value;
+        /** @type {?} */
+        const recaptcha = this.emailForm.get('recaptcha').value;
+        this.ngUserManService.userPasswordResetEmail(email, recaptcha)
+            .subscribe((/**
+         * @param {?} result
+         * @return {?}
+         */
+        result => {
+            this.processing = false;
+            this.emailForm.get('email').setErrors(null);
+            this.matStepper.next();
+            /** @type {?} */
+            const codeToken = result;
+            this.ngUserManService.userLocalSetToken('codeToken', codeToken);
+        }), (/**
+         * @param {?} err
+         * @return {?}
+         */
+        err => {
+            this.processing = false;
+            if (err.error.code === 'wrongCredentials') {
+                this.emailForm.get('email').setErrors({ invalidEmail: true });
+            }
+            else {
+                this.matStepper.reset();
+                this.matSnackBar.open('Сталася помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+            }
+        }));
+    }
+    /**
+     * @return {?}
+     */
+    onCodeSubmit() {
+        this.processing = true;
+        /** @type {?} */
+        const code = this.codeForm.get('code').value;
+        /** @type {?} */
+        const codeToken = this.ngUserManService.userLocalGetToken('codeToken');
+        this.ngUserManService.userPasswordResetCode(code, codeToken)
+            .subscribe((/**
+         * @param {?} passwordResetToken
+         * @return {?}
+         */
+        passwordResetToken => {
+            this.processing = false;
+            this.codeForm.get('code').setErrors(null);
+            this.matStepper.next();
+            this.ngUserManService.userLocalRemoveToken('codeToken');
+            this.ngUserManService.userLocalSetToken('passwordResetToken', passwordResetToken);
+        }), (/**
+         * @param {?} err
+         * @return {?}
+         */
+        err => {
+            this.processing = false;
+            if (err.error.code === 'wrongCredentials') {
+                this.codeForm.get('code').setErrors({ invalidCode: true });
+            }
+            else if (err.error.code === 'maxTries') {
+                this.codeForm.get('code').setErrors({ maxTries: true });
+                this.codeForm.setValidators(this.validateService.maxTries);
+                setTimeout((/**
+                 * @return {?}
+                 */
+                () => {
+                    this.router.navigate(['/']);
+                }), 3000);
+                this.matSnackBar.open('Код невірний, спрпобуйте пізніше', '', { duration: 4000, panelClass: 'snack-bar-danger' });
+            }
+            else {
+                this.codeForm.get('code').setErrors({ unrecognizedError: true });
+            }
+        }));
+    }
+    /**
+     * @return {?}
+     */
+    refresh() {
+        // TODO: make refresh logic
+        console.log('refresh');
+    }
+    /**
+     * @return {?}
+     */
+    onPasswordSubmit() {
+        this.processing = true;
+        /** @type {?} */
+        const password = this.passwordForm.get('password').value;
+        /** @type {?} */
+        const passwordResetToken = this.ngUserManService.userLocalGetToken('passwordResetToken');
+        this.ngUserManService.userPasswordReset(password, passwordResetToken)
+            .subscribe((/**
+         * @param {?} result
+         * @return {?}
+         */
+        result => {
+            // const token = result;
+            this.processing = false;
+            this.ngUserManService.userLocalRemoveToken('passwordResetToken');
+            // this.ngUserManService.logging();
+            this.sharedService.sharingEventToReloadComments();
+            this.router.navigate(['/user', 'profile']);
+            this.matSnackBar.open('Пароль відновлено', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+        }), (/**
+         * @param {?} err
+         * @return {?}
+         */
+        err => {
+            this.processing = false;
+            this.matSnackBar.open(err.error.message || 'Сталася помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+        }));
+    }
+    /**
+     * @return {?}
+     */
+    goHomePage() {
+        this.router.navigate(['/']);
+    }
+}
+PasswordResetComponent.decorators = [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{
+                selector: 'lib-password-reset',
+                template: "<div class=\"container\">\n\n  <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n    <div class=\"cell\" fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\n\n    <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\n\n      <div class=\"item centered-container\">\n        <mat-card class=\"form-block\">\n          <mat-card-header>\n            <mat-card-title>\n              <h2 class=\"mat-h2\">\u0412\u0456\u0434\u043D\u043E\u0432\u043B\u0435\u043D\u043D\u044F \u043F\u0430\u0440\u043E\u043B\u044E</h2>\n            </mat-card-title>\n          </mat-card-header>\n\n          <mat-card-content>\n            <div class=\"padding-bottom\" fxLayout fxLayoutAlign=\"center center\">\n              <img class=\"responsive-image\" [src]=\"config.logo.formsLogo\" width=\"367px\" alt=\"HandMADE\">\n            </div>\n            <div *ngIf=\"processing\" class=\"row\" fxLayout=\"row\" fxLayoutAlign=\"center center\">\n              <div class=\"cell\" fxFlex=\"100\">\n                <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\n              </div>\n            </div>\n            <mat-vertical-stepper #stepper linear>\n              <mat-step [stepControl]=\"emailForm\" editable=\"false\">\n                <form [formGroup]=\"emailForm\" validate (submit)=\"onEmailSubmit(stepper)\">\n                  <ng-template matStepLabel>\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u0441\u0432\u0456\u0439 email</ng-template>\n                  <div fxLayout=\"row\">\n                    <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                      <mat-icon color=\"primary\">{{config.icons.email}}</mat-icon>\n                    </div>\n                    <mat-form-field>\n                      <input matInput placeholder=\"Email\" formControlName=\"email\" type=\"email\" required>\n\n                      <mat-error *ngIf=\"(emailForm.get('email').errors?.minlength ||\n                        emailForm.get('email').errors?.maxlength ||\n                        emailForm.get('email').errors?.required) &&\n                        emailForm.get('email').touched\">\n                        \u0414\u043E\u0432\u0436\u0438\u043D\u0430 \u043F\u043E\u0432\u0438\u043D\u043D\u0430 \u0431\u0443\u0442\u0438 \u0432\u0456\u0434 5 \u0434\u043E 30 \u0441\u0438\u043C\u0432\u043E\u043B\u0456\u0432\n                      </mat-error>\n                      <mat-error *ngIf=\"emailForm.get('email').errors?.pattern &&\n                        emailForm.get('email').touched\">\n                        \u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043F\u0440\u0430\u0432\u0456\u043B\u044C\u043D\u0443 \u0430\u0434\u0440\u0435\u0441\u0443\n                      </mat-error>\n                      <mat-error *ngIf=\"emailForm.get('email').errors?.invalidEmail &&\n                        emailForm.get('email').touched\">\n                        \u041A\u043E\u0440\u0438\u0441\u0442\u0443\u0432\u0430\u0447 \u0437 \u0442\u0430\u043A\u043E\u044E \u043F\u043E\u0448\u0442\u043E\u044E \u043D\u0435 \u0437\u0430\u0440\u0435\u0454\u0441\u0442\u0440\u043E\u0432\u0430\u043D\u0438\u0439\n                      </mat-error>\n                      <mat-error *ngIf=\"emailForm.get('email').errors?.unrecognizedError &&\n                        emailForm.get('email').touched\">\n                        '\u0421\u0442\u0430\u043B\u0430\u0441\u044F \u043F\u043E\u043C\u0438\u043B\u043A\u0430'\n                      </mat-error>\n                    </mat-form-field>\n                  </div>\n\n                  <re-captcha [ngClass]=\"{'display-none': !emailForm.get('email').valid}\"\n                    [formControlName]=\"'recaptcha'\" #recaptchaRef siteKey=\"{{config.recaptchaSiteKey}}\">\n                  </re-captcha>\n                  <div>\n                    <button mat-button [disabled]=\"!emailForm.valid || processing\" aria-label=\"Next\">\u0414\u0430\u043B\u0456</button>\n                  </div>\n                </form>\n              </mat-step>\n\n              <mat-step [stepControl]=\"codeForm\" editable=\"false\">\n\n                <form [formGroup]=\"codeForm\" (submit)=\"onCodeSubmit()\">\n                  <!--<div *ngIf=\"codeForm.get('code').errors\">field {{codeForm.get('code').errors | json}}</div>-->\n                  <!--<div *ngIf=\"codeForm.errors\">form {{codeForm.errors | json}}</div>-->\n\n                  <ng-template matStepLabel>\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043A\u043E\u0434, \u0449\u043E \u043D\u0430\u0434\u0456\u0439\u0448\u043E\u0432 \u043D\u0430 email</ng-template>\n                  <div fxLayout=\"row\">\n                    <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                      <mat-icon color=\"primary\">{{config.icons.code}}</mat-icon>\n                    </div>\n                    <mat-form-field>\n                      <input matInput placeholder=\"\u041A\u043E\u0434 \u043F\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0436\u0435\u043D\u043D\u044F\" formControlName=\"code\" required>\n                      <mat-error *ngIf=\"codeForm.get('code').errors?.required &&\n                    codeForm.get('code').touched\">\n                        \u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043A\u043E\u0434\n                      </mat-error>\n                      <mat-error *ngIf=\"codeForm.get('code').errors?.invalidCode &&\n                        codeForm.get('code').touched\">\n                        \u041A\u043E\u0434 \u0432\u0432\u0435\u0434\u0435\u043D\u043E \u043D\u0435 \u0432\u0456\u0440\u043D\u043E\n                      </mat-error>\n                      <mat-error *ngIf=\"codeForm.get('code').errors?.maxTries\">\n                        \u0412\u0438 \u0437\u0440\u043E\u0431\u0438\u043B\u0438 \u043C\u0430\u043A\u0441\u0438\u043C\u0430\u043B\u044C\u043D\u0443 \u043A\u0456\u043B\u044C\u043A\u0456\u0441\u0442\u044C \u0441\u043F\u0440\u043E\u0431\n                      </mat-error>\n                      <mat-error *ngIf=\"codeForm.get('code').errors?.unrecognizedError &&\n                        codeForm.get('code').touched\">\n                        \u0421\u0442\u0430\u043B\u0430\u0441\u044F \u043F\u043E\u043C\u0438\u043B\u043A\u0430\n                      </mat-error>\n                    </mat-form-field>\n                  </div>\n                  <div>\n                    <button mat-button [disabled]=\"!codeForm.valid || processing\" aria-label=\"Next\">\u0414\u0430\u043B\u0456</button>\n                    <button *ngIf=\"codeForm.get('code').errors?.maxTries\" aria-label=\"Refresh\" mat-button\n                      (click)=\"refresh()\">\u041E\u043D\u043E\u0432\u0438\u0442\u0438 \u0441\u0442\u043E\u0440\u0456\u043D\u043A\u0443</button>\n                  </div>\n                </form>\n              </mat-step>\n              <mat-step [stepControl]=\"passwordForm\" editable=\"false\">\n                <form [formGroup]=\"passwordForm\" (submit)=\"onPasswordSubmit()\">\n                  <ng-template matStepLabel>\u0412\u0432\u0435\u0434\u0456\u0442\u044C \u043D\u043E\u0432\u0438\u0439 \u043F\u0430\u0440\u043E\u043B\u044C</ng-template>\n                  <div fxLayout=\"row\">\n                    <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                      <mat-icon color=\"primary\">{{config.icons.password}}</mat-icon>\n                    </div>\n                    <mat-form-field>\n                      <input matInput placeholder=\"\u041F\u0430\u0440\u043E\u043B\u044C\" formControlName=\"password\" required\n                        [type]=\"hidePassword ? 'password' : 'text'\">\n                      <mat-icon class=\"muted\" matSuffix (click)=\"hidePassword = !hidePassword\">\n                        {{hidePassword ? config.icons.visible : config.icons.unvisible}}\n                      </mat-icon>\n                      <mat-error *ngIf=\"(passwordForm.get('password').errors?.minlength ||\n                          passwordForm.get('password').errors?.maxlength ||\n                          passwordForm.get('password').errors?.required) &&\n                          passwordForm.get('password').touched\">\n                        \u0414\u043E\u0432\u0436\u0438\u043D\u0430 \u043F\u043E\u0432\u0438\u043D\u043D\u0430 \u0431\u0443\u0442\u0438 \u0432\u0456\u0434 6 \u0434\u043E 15 \u0441\u0438\u043C\u0432\u043E\u043B\u0456\u0432\n                      </mat-error>\n                      <mat-error *ngIf=\"passwordForm.get('password').errors?.pattern &&\n                         passwordForm.get('password').touched\">\n                        \u0412\u0438\u043A\u043E\u0440\u0438\u0441\u0442\u043E\u0432\u0443\u0439\u0442\u0435 \u0442\u0456\u043B\u044C\u043A\u0438 \u043B\u0430\u0442\u0438\u043D\u0441\u044C\u043A\u0456 \u0441\u0438\u043C\u0432\u043E\u043B\u0438 \u0442\u0430 \u0446\u0438\u0444\u0440\u0438\n                      </mat-error>\n                    </mat-form-field>\n                  </div>\n\n                  <div fxLayout=\"row\">\n                    <div fxFlexAlign=\"center\" class=\"mat-icon-wrapper\">\n                      <!--<mat-icon color=\"primary\">lock</mat-icon>-->\n                    </div>\n                    <mat-form-field>\n                      <input matInput placeholder=\"\u041F\u0456\u0434\u0442\u0432\u0435\u0440\u0434\u0456\u0442\u044C \u043F\u0430\u0440\u043E\u043B\u044C\" formControlName=\"passwordConfirm\" required\n                        [type]=\"hidePassword ? 'password' : 'text'\">\n                      <mat-error *ngIf=\"passwordForm.get('passwordConfirm').errors?.mismatch &&\n                      passwordForm.get('passwordConfirm').touched\">\n                        \u041F\u0430\u0440\u043E\u043B\u044C \u043D\u0435 \u0437\u0431\u0456\u0433\u0430\u0454\u0442\u044C\u0441\u044F\n                      </mat-error>\n                    </mat-form-field>\n                  </div>\n                  <div>\n                    <button mat-button [disabled]=\"!passwordForm.valid || processing\"\n                      aria-label=\"Finish\">\u0417\u0430\u0432\u0435\u0440\u0448\u0438\u0442\u0438</button>\n                  </div>\n                </form>\n              </mat-step>\n            </mat-vertical-stepper>\n          </mat-card-content>\n        </mat-card>\n      </div>\n    </div>\n  </div>\n</div>\n",
+                styles: [""]
+            }] }
+];
+/** @nocollapse */
+PasswordResetComponent.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"] }
+];
+PasswordResetComponent.propDecorators = {
+    matStepper: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: ['stepper', { static: false },] }],
+    recaptchaRef: [{ type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["ViewChild"], args: ['recaptchaRef', { static: false },] }]
+};
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class ProfileComponent {
+    /**
+     * @param {?} injector
+     */
+    constructor(injector) {
+        this.injector = injector;
+        this.editAvatar = false;
+        this.processingChangeAvatar = false;
+        this.verificationSent = false;
+        this.config = injector.get('config');
+        this.ngUserManService = injector.get(NgUserManService);
+        this.matSnackBar = injector.get(_angular_material__WEBPACK_IMPORTED_MODULE_7__["MatSnackBar"]);
+        this.matDialog = injector.get(_angular_material__WEBPACK_IMPORTED_MODULE_7__["MatDialog"]);
+        this.router = injector.get(_angular_router__WEBPACK_IMPORTED_MODULE_10__["Router"]);
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        this.getProfile();
+        this.changeAvatarForm = new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+            file: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(4),
+            ]),
+        });
+    }
+    /**
+     * @param {?} permitedRole
+     * @return {?}
+     */
+    allowTo(permitedRole) {
+        return this.ngUserManService.allowTo(permitedRole);
+    }
+    /**
+     * @param {?} restrictedRoles
+     * @return {?}
+     */
+    restrictTo(restrictedRoles) {
+        return this.ngUserManService.restrictTo(restrictedRoles);
+    }
+    /**
+     * @return {?}
+     */
+    onVerificationSend() {
+        this.verificationSent = true;
+        this.processing = 'verification';
+        this.ngUserManService.userEmailVerification()
+            .subscribe((/**
+         * @param {?} result
+         * @return {?}
+         */
+        (result) => {
+            this.processing = '';
+            this.matSnackBar.open(result, '', { duration: 3000 });
+        }), (/**
+         * @param {?} err
+         * @return {?}
+         */
+        (err) => {
+            this.processing = '';
+            this.matSnackBar.open(err.error || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+        }));
+    }
+    /**
+     * @return {?}
+     */
+    onSubmitChangeAvatarForm() {
+        this.processingChangeAvatar = true;
+        this.ngUserManService.userEditAvatar(this.changeAvatarForm.get('file').value)
+            .subscribe((/**
+         * @param {?} result
+         * @return {?}
+         */
+        result => {
+            this.matSnackBar.open(result, '', { duration: 3000 });
+            this.getProfile();
+            this.previewAvatarUrl = null;
+            this.processingChangeAvatar = false;
+            this.editAvatar = false;
+        }), (/**
+         * @param {?} err
+         * @return {?}
+         */
+        err => this.matSnackBar.open(err.error.message || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' })));
+    }
+    /**
+     * @param {?} event
+     * @return {?}
+     */
+    changeAvatar(event) {
+        this.editAvatar = true;
+        /** @type {?} */
+        const checkFile = this.ngUserManService.checkFile(event.target);
+        if (!checkFile.success) {
+            this.cancelChangeAvatar();
+            this.matSnackBar.open(checkFile.message || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+        }
+        else {
+            this.changeAvatarForm.get('file').setValue(event.target.files[0]);
+            /** @type {?} */
+            const reader = new FileReader();
+            reader.addEventListener('load', (/**
+             * @param {?} readerEvent
+             * @return {?}
+             */
+            (readerEvent) => {
+                // .jpg, .jpe, .jpeg, .bmp, .webp, .png
+                this.previewAvatarUrl = readerEvent.target.result;
+            }));
+            reader.readAsDataURL(event.target.files[0]);
+        }
+    }
+    /**
+     * @return {?}
+     */
+    cancelChangeAvatar() {
+        this.changeAvatarForm.get('file').setValue(null);
+        this.editAvatar = false;
+        this.previewAvatarUrl = null;
+    }
+    /**
+     * @return {?}
+     */
+    getProfile() {
+        this.ngUserManService.userGetProfile()
+            .subscribe((/**
+         * @param {?} user
+         * @return {?}
+         */
+        user => {
+            this.user = user;
+        }), (/**
+         * @param {?} err
+         * @return {?}
+         */
+        err => {
+            this.matSnackBar.open(err.error, '', { duration: 3000, panelClass: 'snack-bar-danger' });
+            this.router.navigate(['/user', 'login']);
+        }));
+    }
+    /**
+     * @param {?} object
+     * @return {?}
+     */
+    openDialog(object) {
+        /** @type {?} */
+        const dialogRef = this.matDialog.open(DialogComponent, {
+            width: '400px',
+            data: object,
+        });
+        dialogRef.afterClosed().pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["mergeMap"])((/**
+         * @param {?} result
+         * @return {?}
+         */
+        result => {
+            if (result) {
+                return this.ngUserManService.userEdit(result);
+            }
+            else {
+                return Object(rxjs__WEBPACK_IMPORTED_MODULE_4__["of"])(null);
+            }
+        })))
+            .subscribe((/**
+         * @param {?} result
+         * @return {?}
+         */
+        result => {
+            this.processing = null;
+            if (!result) {
+                // didn't get data from dialog
+                return;
+            }
+            else {
+                this.matSnackBar.open(result, '', { duration: 3000 });
+                this.getProfile();
+            }
+        }), (/**
+         * @param {?} err
+         * @return {?}
+         */
+        err => {
+            this.processing = null;
+            this.matSnackBar.open(err.error.message || 'Помилка', '', { duration: 3000, panelClass: 'snack-bar-danger' });
+        }));
+    }
+    /**
+     * @return {?}
+     */
+    makePasswordObject() {
+        this.processing = 'password';
+        return {
+            payload: [{
+                    name: 'password',
+                    label: 'Новий пароль',
+                    type: 'password',
+                    icon: 'lock_outline',
+                    validators: [
+                        {
+                            name: 'length',
+                            message: 'Довжина повинна бути від 6 до 15 символів'
+                        },
+                        {
+                            name: 'pattern',
+                            message: 'Використовуйте тільки латинські символи та цифри'
+                        },
+                    ],
+                },
+                {
+                    name: 'passwordConfirm',
+                    label: 'Підтвердіть пароль',
+                    type: 'password',
+                    icon: '',
+                    validators: [
+                        {
+                            name: 'require',
+                            message: 'Це поле не може бути пустим'
+                        },
+                        {
+                            name: 'match',
+                            message: 'Пароль не збігається'
+                        },
+                    ]
+                },
+                {
+                    name: 'passwordCurrent',
+                    label: 'Діючий пароль',
+                    type: 'password',
+                    icon: '',
+                    validators: [
+                        {
+                            name: 'require',
+                            message: 'Це поле не може бути пустим'
+                        }
+                    ],
+                }],
+            initForm: (/**
+             * @return {?}
+             */
+            function () {
+                return new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+                    password: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(6),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(15),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9]+'),
+                    ]),
+                    passwordConfirm: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                    ]),
+                    passwordCurrent: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                    ]),
+                }, (/**
+                 * @param {?} abstractControl
+                 * @return {?}
+                 */
+                function matchPassword(abstractControl) {
+                    /** @type {?} */
+                    const password = abstractControl.get('password').value;
+                    /** @type {?} */
+                    const passwordConfirm = abstractControl.get('passwordConfirm').value;
+                    if (password === passwordConfirm) {
+                        abstractControl.get('passwordConfirm').setErrors(null);
+                        return null;
+                    }
+                    else {
+                        abstractControl.get('passwordConfirm').setErrors({ mismatch: true });
+                        return null;
+                    }
+                }));
+            })
+        };
+    }
+    // makeEmailObject() {
+    //   this.processing = 'email';
+    //   const emailPattern = new RegExp(/^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
+    //   return {
+    //     payload: [{
+    //       name: 'email',
+    //       label: 'Email',
+    //       type: 'email',
+    //       icon: 'mail_outline',
+    //       oldValue: this.user.email,
+    //       validators: [
+    //         {
+    //           name: 'length',
+    //           message: 'Довжина повинна бути від 5 до 30 символів'
+    //         },
+    //         {
+    //           name: 'pattern',
+    //           message: 'Введіть правільну адресу'
+    //         }
+    //       ],
+    //       },
+    //       {
+    //       name: 'passwordCurrent',
+    //       label: 'Введіть пароль',
+    //       type: 'password',
+    //       icon: '',
+    //       validators: [
+    //         {
+    //           name: 'require',
+    //           message : 'Це поле не може бути пустим'
+    //         }
+    //       ],
+    //     }],
+    //     initForm: function () {
+    //       return new FormGroup({
+    //         email: new FormControl('', [
+    //           Validators.required,
+    //           Validators.minLength(5),
+    //           Validators.maxLength(30),
+    //           Validators.pattern(emailPattern),
+    //         ]),
+    //         passwordCurrent: new FormControl('', [
+    //           Validators.required,
+    //         ]),
+    //       });
+    //     },
+    //   };
+    // }
+    /**
+     * @return {?}
+     */
+    makeNameObject() {
+        this.processing = 'name';
+        return {
+            payload: [{
+                    name: 'name',
+                    label: 'Ім\'я',
+                    type: '',
+                    icon: 'perm_identity',
+                    oldValue: this.user.name,
+                    validators: [
+                        {
+                            name: 'length',
+                            message: 'Довжина повинна бути від 2 до 20 символів'
+                        },
+                        {
+                            name: 'pattern',
+                            message: 'Використовуйте букви і цифри'
+                        }
+                    ],
+                },
+                {
+                    name: 'passwordCurrent',
+                    label: 'Введіть пароль',
+                    type: 'password',
+                    icon: '',
+                    validators: [
+                        {
+                            name: 'require',
+                            message: 'Це поле не може бути пустим'
+                        }
+                    ],
+                }],
+            initForm: (/**
+             * @return {?}
+             */
+            function () {
+                return new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+                    name: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(2),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(20),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ\' ]+'),
+                    ]),
+                    passwordCurrent: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                    ]),
+                });
+            }),
+        };
+    }
+    /**
+     * @return {?}
+     */
+    makeSurnameObject() {
+        this.processing = 'surname';
+        return {
+            payload: [{
+                    name: 'surname',
+                    label: 'Прізвище',
+                    type: '',
+                    icon: 'perm_identity',
+                    oldValue: this.user.surname,
+                    validators: [
+                        {
+                            name: 'length',
+                            message: 'Довжина повинна бути від 2 до 20 символів'
+                        },
+                        {
+                            name: 'pattern',
+                            message: 'Використовуйте букви і цифри'
+                        }
+                    ],
+                },
+                {
+                    name: 'passwordCurrent',
+                    label: 'Введіть пароль',
+                    type: 'password',
+                    icon: '',
+                    validators: [
+                        {
+                            name: 'require',
+                            message: 'Це поле не може бути пустим'
+                        }
+                    ],
+                }],
+            initForm: (/**
+             * @return {?}
+             */
+            function () {
+                return new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormGroup"]({
+                    surname: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].minLength(2),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].maxLength(20),
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].pattern('[a-zA-Z0-9а-яА-ЯіїєІЇЄ\' ]+'),
+                    ]),
+                    passwordCurrent: new _angular_forms__WEBPACK_IMPORTED_MODULE_6__["FormControl"]('', [
+                        _angular_forms__WEBPACK_IMPORTED_MODULE_6__["Validators"].required,
+                    ]),
+                });
+            }),
+        };
+    }
+}
+ProfileComponent.decorators = [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{
+                selector: 'lib-profile',
+                template: "<div class=\"container\">\n\n  <div class=\"row\" fxLayout=\"column\" fxLayout.gt-xs=\"row\">\n    <div class=\"cell\" fxFlex.gt-xs=\"20\" fxFlex.gt-md=\"30\"></div>\n\n    <div class=\"cell\" fxFlex.gt-xs=\"60\" fxFlex.gt-md=\"40\">\n\n      <div class=\"item centered-container\" *ngIf=\"user\">\n        <div class=\"info-block mat-elevation-z4\">\n\n          <div class=\"avatar-block\">\n            <form [formGroup]=\"changeAvatarForm\" (submit)=\"onSubmitChangeAvatarForm()\">\n\n              <div class=\"avatar-img-wrapper\">\n                <img *ngIf=\"!previewAvatarUrl\" src=\"{{user.role === 'google' ? \n              user.avatar :\n              config.imgPath +\n              config.cloudinary.cloud_name +\n              '/c_fill,w_180,h_180,f_auto/' +\n              user.avatar}}\" alt=\"avatar\">\n                <img *ngIf=\"previewAvatarUrl\" src=\"{{previewAvatarUrl}}\" alt=\"avatar\">\n\n                <div *ngIf=\"processingChangeAvatar\" class=\"avatar-div-processing\">\n                  <div class=\"spinner-wrapper\">\n                    <mat-spinner [diameter]=\"24\"></mat-spinner>\n                  </div>\n                </div>\n\n                <div *ngIf=\"!editAvatar && !processingChangeAvatar && restrictTo(['google', 'facebook'])\"\n                  class=\"avatar-div-change\"></div>\n                <div *ngIf=\"!editAvatar && !processingChangeAvatar && restrictTo(['google', 'facebook'])\"\n                  class=\"avatar-button-change\">\n                  <input type=\"file\" accept=\".jpg, .jpe, .jpeg, .bmp, .webp, .png, .gif\" (change)=\"changeAvatar($event)\"\n                    id=\"input-file\">\n                  <label for=\"input-file\">\u0417\u043C\u0456\u043D\u0438\u0442\u0438\n                  </label>\n                </div>\n\n                <div *ngIf=\"editAvatar && !processingChangeAvatar\">\n                  <div class=\"avatar-div-ok\">\n                  </div>\n                  <div class=\"avatar-div-cancel\">\n                  </div>\n                  <button class=\"avatar-button-ok\" [disabled]=\"!changeAvatarForm.valid\" aria-label=\"Done\">\n                    <mat-icon>done</mat-icon>\n                  </button>\n                  <button type=\"button\" class=\"avatar-button-cancel\" (click)=\"cancelChangeAvatar()\" aria-label=\"Cancel\">\n                    <mat-icon>cancel</mat-icon>\n                  </button>\n                </div>\n              </div>\n            </form>\n          </div>\n\n          <div class=\"info-block-row-wrapper\">\n            <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\n              <div class=\"info-block-row-title mat-title\">{{user.name}} {{user.surname}}</div>\n            </div>\n          </div>\n\n          <div class=\"info-block-row-wrapper\">\n            <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\n              <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">Email</div>\n              <div class=\"mat-body-1 muted\" fxFlex=\"60%\">{{user.email}}</div>\n              <mat-spinner *ngIf=\"processing === 'email'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\n            </div>\n          </div>\n\n          <div *ngIf=\"user.role === 'guest' && !verificationSent\" class=\"info-block-row-wrapper border-0\">\n            <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row mail-verification\">\n              <div class=\"mat-body-1\" fxFlex=\"100%\">\n                <p>\u041F\u043E\u0448\u0442\u0443 \u043D\u0435 \u0432\u0435\u0440\u0438\u0444\u0456\u043A\u043E\u0432\u0430\u043D\u043E, \u043D\u0430\u0434\u0456\u0441\u043B\u0430\u0442\u0438 \u043A\u043E\u0434.</p>\n                <p>\u0414\u0435\u044F\u043A\u0456 \u0444\u0443\u043D\u043A\u0446\u0456\u0457 \u0431\u0443\u0434\u0443\u0442\u044C \u043D\u0435\u0434\u043E\u0441\u0442\u0443\u043F\u043D\u0456. \u041D\u0430\u043F\u0440\u0438\u043A\u043B\u0430\u0434, \u0432\u0456\u0434\u043F\u0440\u0430\u0432\u043A\u0430 \u043A\u043E\u043C\u0435\u043D\u0442\u0430\u0440\u0456\u0432</p>\n              </div>\n              <mat-icon *ngIf=\"processing !== 'verification'\" fxFlex=\"30px\" (click)=\"onVerificationSend()\">mail\n              </mat-icon>\n              <mat-spinner *ngIf=\"processing === 'verification'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\n            </div>\n          </div>\n\n          <div *ngIf=\"user.role === 'guest' && verificationSent\" class=\"info-block-row-wrapper border-0\">\n            <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row mail-verification\">\n              <div class=\"mat-body-1 muted\" fxFlex=\"100%\">\u041D\u0430 \u043F\u043E\u0448\u0442\u0443 \u043D\u0430\u0434\u0456\u0441\u043B\u0430\u043D\u043E \u043F\u043E\u0441\u0438\u043B\u0430\u043D\u043D\u044F</div>\n              <mat-icon *ngIf=\"processing !== 'verification'\" fxFlex=\"30px\" class=\"muted\"\n                (click)=\"onVerificationSend()\">refresh</mat-icon>\n              <mat-spinner *ngIf=\"processing === 'verification'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\n            </div>\n          </div>\n\n          <div class=\"info-block-row-wrapper\">\n            <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\n              <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">\u0406\u043C'\u044F</div>\n              <div class=\"mat-subheading-2 muted\" fxFlex=\"60%\">{{user.name}}</div>\n              <mat-icon *ngIf=\"processing !== 'name' && restrictTo(['google', 'facebook'])\" fxFlex=\"30px\"\n                (click)=\"openDialog(makeNameObject())\" class=\"muted\">edit</mat-icon>\n              <mat-spinner *ngIf=\"processing === 'name'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\n\n            </div>\n          </div>\n          <div class=\"info-block-row-wrapper\">\n            <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\n              <div class=\"info-block-row-title mat-subheading-1\" fxFlex=\"40%\">\u041F\u0440\u0456\u0437\u0432\u0438\u0449\u0435</div>\n              <div class=\"mat-subheading-2 muted\" fxFlex=\"60%\">{{user.surname}}</div>\n              <mat-icon *ngIf=\"processing !== 'surname' && restrictTo(['google', 'facebook'])\" fxFlex=\"30px\"\n                (click)=\"openDialog(makeSurnameObject())\" class=\"muted\">edit</mat-icon>\n              <mat-spinner *ngIf=\"processing === 'surname'\" fxFlex=\"30px\" [diameter]=\"24\"></mat-spinner>\n\n            </div>\n          </div>\n          <div *ngIf=\"restrictTo(['google', 'facebook'])\" class=\"info-block-row-wrapper\">\n            <div fxLayout=\"row\" fxLayoutAlign=\"center\" class=\"info-block-row\">\n              <div fxFlex=\"60%\"></div>\n              <div fxFlex=\"40%\">\n                <button mat-button (click)=\"openDialog(makePasswordObject())\" aria-label=\"Change password\">\n                  <span *ngIf=\"processing !== 'password'\">\u0417\u043C\u0456\u043D\u0438\u0442\u0438 \u043F\u0430\u0440\u043E\u043B\u044C</span>\n                  <mat-spinner *ngIf=\"processing === 'password'\" [diameter]=\"24\"></mat-spinner>\n                </button>\n              </div>\n            </div>\n          </div>\n\n        </div>\n      </div>\n    </div>\n  </div>\n</div>\n",
+                styles: [""]
+            }] }
+];
+/** @nocollapse */
+ProfileComponent.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"] }
+];
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
+class RedirAfterOauthComponent {
+    /**
+     * @param {?} injector
+     */
+    constructor(injector) {
+        this.injector = injector;
+        this.ngUserManService = injector.get(NgUserManService);
+        this.router = injector.get(_angular_router__WEBPACK_IMPORTED_MODULE_10__["Router"]);
+    }
+    /**
+     * @return {?}
+     */
+    ngOnInit() {
+        this.router.events.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["filter"])((/**
+         * @param {?} event
+         * @return {?}
+         */
+        (event) => event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_10__["RouteConfigLoadEnd"])), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["take"])(1))
+            .subscribe((/**
+         * @param {?} event
+         * @return {?}
+         */
+        (event) => {
+            // this.ngUserManService.logging();
+            this.router.navigate(['/user', 'profile']);
+        }), (/**
+         * @param {?} err
+         * @return {?}
+         */
+        (err) => console.log('err', err)));
+    }
+}
+RedirAfterOauthComponent.decorators = [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Component"], args: [{
+                selector: 'lib-redir-after-oauth',
+                template: "<div class=\"row\" fxLayout=\"row\">\n  <div class=\"cell\" fxFlex=\"100\">\n    <mat-progress-bar mode=\"indeterminate\"></mat-progress-bar>\n  </div>\n</div>\n",
+                styles: [""]
+            }] }
+];
+/** @nocollapse */
+RedirAfterOauthComponent.ctorParameters = () => [
+    { type: _angular_core__WEBPACK_IMPORTED_MODULE_0__["Injector"] }
+];
+if (false) {}
+
+/**
+ * @fileoverview added by tsickle
+ * @suppress {checkTypes,constantProperty,extraRequire,missingOverride,missingReturn,unusedPrivateMembers,uselessCode} checked by tsc
+ */
 class NgUserManModule {
 }
 NgUserManModule.decorators = [
@@ -838,20 +1841,31 @@ NgUserManModule.decorators = [
                 declarations: [
                     NgUserManComponent,
                     LoginComponent,
+                    DialogComponent,
+                    CreateComponent,
+                    PasswordResetComponent,
+                    ProfileComponent,
+                    RedirAfterOauthComponent,
                 ],
-                providers: [
-                // NgUserManService,
-                // SharedService
-                ],
+                providers: [],
                 imports: [
                     _angular_common__WEBPACK_IMPORTED_MODULE_9__["CommonModule"],
-                    _angular_forms__WEBPACK_IMPORTED_MODULE_5__["ReactiveFormsModule"],
-                    _angular_router__WEBPACK_IMPORTED_MODULE_6__["RouterModule"],
-                    MaterialModule
+                    _angular_forms__WEBPACK_IMPORTED_MODULE_6__["ReactiveFormsModule"],
+                    _angular_router__WEBPACK_IMPORTED_MODULE_10__["RouterModule"],
+                    MaterialModule,
+                    ng_recaptcha__WEBPACK_IMPORTED_MODULE_11__["RecaptchaModule"],
+                    ng_recaptcha__WEBPACK_IMPORTED_MODULE_11__["RecaptchaFormsModule"],
                 ],
                 exports: [
                     NgUserManComponent,
                     LoginComponent,
+                    CreateComponent,
+                    PasswordResetComponent,
+                    ProfileComponent,
+                    RedirAfterOauthComponent
+                ],
+                entryComponents: [
+                    DialogComponent,
                 ]
             },] }
 ];
@@ -1466,13 +2480,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
 /* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
 /* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./app.config */ "./src/app/app.config.ts");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-// import 'rxjs/add/operator/filter';
-// import 'rxjs/add/operator/map';
-// import 'rxjs/add/operator/mergeMap';
 
 
 
@@ -1482,8 +2493,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let AppComponent = class AppComponent {
-    constructor(userService, router, route, titleService, metaService) {
-        this.userService = userService;
+    constructor(ngUserManService, router, route, titleService, metaService) {
+        this.ngUserManService = ngUserManService;
         this.router = router;
         this.route = route;
         this.titleService = titleService;
@@ -1493,7 +2504,7 @@ let AppComponent = class AppComponent {
     }
     ngOnInit() {
         // login user
-        this.userService.logging();
+        // this.ngUserManService.logging();
         // add seo (title and meta description)
         const $routerEvents = this.router.events.pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["filter"])((event) => event instanceof _angular_router__WEBPACK_IMPORTED_MODULE_3__["NavigationEnd"]), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])(() => this.route), Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_1__["map"])((route) => {
             while (route.firstChild) {
@@ -1519,7 +2530,7 @@ let AppComponent = class AppComponent {
     }
 };
 AppComponent.ctorParameters = () => [
-    { type: _services_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"] },
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_4__["NgUserManService"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] },
     { type: _angular_platform_browser__WEBPACK_IMPORTED_MODULE_5__["Title"] },
@@ -1541,23 +2552,33 @@ AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*!*******************************!*\
   !*** ./src/app/app.config.ts ***!
   \*******************************/
-/*! exports provided: Config, config */
+/*! exports provided: config */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "Config", function() { return Config; });
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "config", function() { return config; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
 
 
-class Config {
-    get conf() {
-        return config;
-    }
-}
-const config = {
+let config;
+config = {
+    icons: {
+        login: 'account_box',
+        password: 'lock_outline',
+        passwordMatch: 'verified_user',
+        name: 'account_circle',
+        surname: 'supervised_user_circle',
+        email: 'mail_outline',
+        code: 'settings_ethernet',
+        visible: 'visibility',
+        unvisible: 'visibility_off'
+    },
+    logo: {
+        formsLogo: './assets/images/hmade_logo_dark.svg'
+    },
+    googleSignin: true,
     host: _environments_environment__WEBPACK_IMPORTED_MODULE_1__["environment"].host,
     serverUrl: '/',
     defaultProductImg: 'default_product',
@@ -1811,12 +2832,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _components_shared_shared_module__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/shared/shared.module */ "./src/app/components/shared/shared.module.ts");
 /* harmony import */ var _angular_service_worker__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! @angular/service-worker */ "./node_modules/@angular/service-worker/fesm2015/service-worker.js");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
-/* harmony import */ var _components_shared_confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/shared/confirm-popup/confirm-popup.component */ "./src/app/components/shared/confirm-popup/confirm-popup.component.ts");
-/* harmony import */ var _components_shared_design_popup_design_popup_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/shared/design-popup/design-popup.component */ "./src/app/components/shared/design-popup/design-popup.component.ts");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
-/* harmony import */ var _components_shared_image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/shared/image-popup/image-popup.component */ "./src/app/components/shared/image-popup/image-popup.component.ts");
-/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/ngx-cookie-service.js");
-/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./app.config */ "./src/app/app.config.ts");
+/* harmony import */ var _components_shared_confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/shared/confirm-popup/confirm-popup.component */ "./src/app/components/shared/confirm-popup/confirm-popup.component.ts");
+/* harmony import */ var _components_shared_design_popup_design_popup_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/shared/design-popup/design-popup.component */ "./src/app/components/shared/design-popup/design-popup.component.ts");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var _components_shared_image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./components/shared/image-popup/image-popup.component */ "./src/app/components/shared/image-popup/image-popup.component.ts");
+/* harmony import */ var ngx_cookie_service__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ngx-cookie-service */ "./node_modules/ngx-cookie-service/ngx-cookie-service.js");
+
 
 
 
@@ -1836,8 +2858,6 @@ __webpack_require__.r(__webpack_exports__);
 // import { ScrollingDirective } from './directives/scrolling.directive';
 
 
-
-
 let AppModule = class AppModule {
 };
 AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -1855,7 +2875,7 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             ng_recaptcha__WEBPACK_IMPORTED_MODULE_6__["RecaptchaModule"].forRoot(),
             ng_recaptcha__WEBPACK_IMPORTED_MODULE_6__["RecaptchaFormsModule"],
             _angular_service_worker__WEBPACK_IMPORTED_MODULE_10__["ServiceWorkerModule"].register('/ngsw-worker.js', { enabled: _environments_environment__WEBPACK_IMPORTED_MODULE_11__["environment"].production }),
-            _angular_forms__WEBPACK_IMPORTED_MODULE_14__["ReactiveFormsModule"],
+            _angular_forms__WEBPACK_IMPORTED_MODULE_15__["ReactiveFormsModule"],
         ],
         providers: [
             // ValidateService,
@@ -1867,19 +2887,17 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
             // SharedService,
             // AuthGuard,
             // NoAuthGuard,
-            ngx_cookie_service__WEBPACK_IMPORTED_MODULE_16__["CookieService"],
+            ngx_cookie_service__WEBPACK_IMPORTED_MODULE_17__["CookieService"],
             // { provide: SharedService, useClass: SharedService },
             {
-                provide: 'config', useValue: _environments_environment__WEBPACK_IMPORTED_MODULE_11__["environment"]
+                provide: 'config', useValue: _app_config__WEBPACK_IMPORTED_MODULE_12__["config"],
             },
-            ng_user_man__WEBPACK_IMPORTED_MODULE_17__["NgUserManService"],
-            ng_user_man__WEBPACK_IMPORTED_MODULE_17__["SharedService"]
         ],
         exports: [],
         entryComponents: [
-            _components_shared_confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_12__["ConfirmPopupComponent"],
-            _components_shared_design_popup_design_popup_component__WEBPACK_IMPORTED_MODULE_13__["DesignPopupComponent"],
-            _components_shared_image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_15__["ImagePopupComponent"],
+            _components_shared_confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_13__["ConfirmPopupComponent"],
+            _components_shared_design_popup_design_popup_component__WEBPACK_IMPORTED_MODULE_14__["DesignPopupComponent"],
+            _components_shared_image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_16__["ImagePopupComponent"],
         ],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_7__["AppComponent"]]
     })
@@ -2020,12 +3038,11 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ContentComponent", function() { return ContentComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/user.service */ "./src/app/services/user.service.ts");
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
-/* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
+/* harmony import */ var _services_catalog_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../services/catalog.service */ "./src/app/services/catalog.service.ts");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
+/* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
 
 
 
@@ -2035,14 +3052,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ContentComponent = class ContentComponent {
-    constructor(sharedService, userService, router, catalogService, cd, socialService) {
+    constructor(sharedService, ngUserManService, router, catalogService, cd, socialService) {
         this.sharedService = sharedService;
-        this.userService = userService;
+        this.ngUserManService = ngUserManService;
         this.router = router;
         this.catalogService = catalogService;
         this.cd = cd;
         this.socialService = socialService;
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_4__["config"];
         this.hierarchyCategory = [];
     }
     ngAfterViewInit() {
@@ -2080,9 +3097,9 @@ let ContentComponent = class ContentComponent {
         }
     }
     userLogout() {
-        this.userService.userLogout()
+        this.ngUserManService.userLogout()
             .subscribe(message => {
-            this.userService.logging();
+            // this.ngUserManService.logging();
             this.sharedService.sharingEventToReloadComments();
             // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
             this.router.navigate(['/user', 'login']);
@@ -2094,7 +3111,7 @@ let ContentComponent = class ContentComponent {
         if (!this.unreadedCommentsLength) {
             return;
         }
-        this.userService.userEditUnsecure({ name: 'commentsReadedTill' })
+        this.ngUserManService.userEditUnsecure({ name: 'commentsReadedTill' })
             .subscribe(res => {
             this.sharedService.sharingEventToReloadComments();
         }, err => console.log('err', err));
@@ -2116,21 +3133,21 @@ let ContentComponent = class ContentComponent {
         this.settingsSideMenuTrigger.closeMenu();
     }
     allowTo(permitedRole) {
-        this.user = this.userService.userCookieExtractor();
-        return this.userService.allowTo(permitedRole);
+        this.user = this.ngUserManService.userCookieExtractor();
+        return this.ngUserManService.allowTo(permitedRole);
     }
     restrictTo(restrictedRoles) {
-        this.user = this.userService.userCookieExtractor();
-        return this.userService.restrictTo(restrictedRoles);
+        this.user = this.ngUserManService.userCookieExtractor();
+        return this.ngUserManService.restrictTo(restrictedRoles);
     }
 };
 ContentComponent.ctorParameters = () => [
-    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_6__["SharedService"] },
-    { type: _services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"] },
-    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] },
-    { type: _services_catalog_service__WEBPACK_IMPORTED_MODULE_4__["CatalogService"] },
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_5__["SharedService"] },
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_5__["NgUserManService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
+    { type: _services_catalog_service__WEBPACK_IMPORTED_MODULE_3__["CatalogService"] },
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["ChangeDetectorRef"] },
-    { type: src_app_services_social_service__WEBPACK_IMPORTED_MODULE_7__["SocialService"] }
+    { type: src_app_services_social_service__WEBPACK_IMPORTED_MODULE_6__["SocialService"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('settingsMenuTrigger', { static: false })
@@ -2951,7 +3968,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
 /* harmony import */ var _angular_flex_layout__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/flex-layout */ "./node_modules/@angular/flex-layout/esm2015/flex-layout.js");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
 /* harmony import */ var _image_popup_image_popup_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../image-popup/image-popup.component */ "./src/app/components/shared/image-popup/image-popup.component.ts");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
@@ -2974,9 +3991,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ProductItemBriefComponent = class ProductItemBriefComponent {
-    constructor(media, userService, dialog, productService, matSnackBar, router) {
+    constructor(media, ngUserManService, dialog, productService, matSnackBar, router) {
         this.media = media;
-        this.userService = userService;
+        this.ngUserManService = ngUserManService;
         this.dialog = dialog;
         this.productService = productService;
         this.matSnackBar = matSnackBar;
@@ -2987,7 +4004,7 @@ let ProductItemBriefComponent = class ProductItemBriefComponent {
     ngOnInit() {
     }
     allowTo(permitedRole) {
-        return this.userService.allowTo(permitedRole);
+        return this.ngUserManService.allowTo(permitedRole);
     }
     openDialog(image, cloudinaryOptions, title) {
         const imageObject = {
@@ -3040,7 +4057,7 @@ let ProductItemBriefComponent = class ProductItemBriefComponent {
 };
 ProductItemBriefComponent.ctorParameters = () => [
     { type: _angular_flex_layout__WEBPACK_IMPORTED_MODULE_3__["MediaObserver"] },
-    { type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"] },
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_4__["NgUserManService"] },
     { type: _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatDialog"] },
     { type: src_app_services_product_service__WEBPACK_IMPORTED_MODULE_9__["ProductService"] },
     { type: _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatSnackBar"] },
@@ -3747,16 +4764,16 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-/* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./user.service */ "./src/app/services/user.service.ts");
-
+/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
 
 
 
 // import { AnimationStyleNormalizer } from '@angular/animations/browser/src/dsl/style_normalization/animation_style_normalizer';
+
 let McService = class McService {
-    constructor(http, userService) {
+    constructor(http, ngUserManService) {
         this.http = http;
-        this.userService = userService;
+        this.ngUserManService = ngUserManService;
     }
     /**
      *
@@ -3791,7 +4808,7 @@ let McService = class McService {
     //   );
     // }
     mcUpsert(mc) {
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -3832,7 +4849,7 @@ let McService = class McService {
    * @memberof McService
    */
     getMcByIdAndIncViews(_id) {
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -3875,7 +4892,7 @@ let McService = class McService {
      * @memberof McService
      */
     getMcsByFilter(parent = 'products', sort, sortOrder = 1, skip = 0, limit = 10, noMoreChildren) {
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -3899,7 +4916,7 @@ let McService = class McService {
         const formData = new FormData();
         formData.append('file', file, file.name);
         formData.append('_id', _id);
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Authorization': token
@@ -3919,7 +4936,7 @@ let McService = class McService {
         const formData = new FormData();
         formData.append('file', file, file.name);
         formData.append('_id', _id);
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Authorization': token
@@ -3934,7 +4951,7 @@ let McService = class McService {
      * @memberof McService
      */
     getSkuList() {
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -3955,7 +4972,7 @@ let McService = class McService {
 };
 McService.ctorParameters = () => [
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
-    { type: _user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"] }
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_3__["NgUserManService"] }
 ];
 McService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -3981,8 +4998,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-/* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./user.service */ "./src/app/services/user.service.ts");
-/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../app.config */ "./src/app/app.config.ts");
+/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
 
 
 
@@ -3990,10 +5007,10 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let ProductService = class ProductService {
-    constructor(http, userService) {
+    constructor(http, ngUserManService) {
         this.http = http;
-        this.userService = userService;
-        this.config = _app_config__WEBPACK_IMPORTED_MODULE_5__["config"];
+        this.ngUserManService = ngUserManService;
+        this.config = _app_config__WEBPACK_IMPORTED_MODULE_4__["config"];
     }
     // getProductById(_id) {
     //   const httpOptions = {
@@ -4074,7 +5091,7 @@ let ProductService = class ProductService {
         const formData = new FormData();
         formData.append('file', file, file.name);
         formData.append('sku', sku);
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Authorization': token
@@ -4083,7 +5100,7 @@ let ProductService = class ProductService {
         return this.http.post('api/product/add-image', formData, httpOptions);
     }
     productCreate(product) {
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -4094,7 +5111,7 @@ let ProductService = class ProductService {
     }
     productEdit(product) {
         console.log('prodEdit', product);
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -4116,7 +5133,7 @@ let ProductService = class ProductService {
         const formData = new FormData();
         formData.append('file', file, file.name);
         formData.append('_id', _id);
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Authorization': token
@@ -4129,7 +5146,7 @@ let ProductService = class ProductService {
         const formData = new FormData();
         formData.append('file', file, file.name);
         formData.append('_id', _id);
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Authorization': token
@@ -4148,7 +5165,7 @@ let ProductService = class ProductService {
         const formData = new FormData();
         formData.append('file', file, file.name);
         formData.append('_id', _id);
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Authorization': token
@@ -4234,7 +5251,7 @@ let ProductService = class ProductService {
         const formData = new FormData();
         formData.append('file', file, file.name);
         formData.append('_id', _id);
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Authorization': token
@@ -4292,7 +5309,7 @@ let ProductService = class ProductService {
      * @memberof ProductService
      */
     getSkuList() {
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -4355,7 +5372,7 @@ let ProductService = class ProductService {
 };
 ProductService.ctorParameters = () => [
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] },
-    { type: _user_service__WEBPACK_IMPORTED_MODULE_4__["UserService"] }
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_5__["NgUserManService"] }
 ];
 ProductService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
@@ -4380,18 +5397,18 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _angular_common_http__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common/http */ "./node_modules/@angular/common/fesm2015/http.js");
-/* harmony import */ var _user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
 
 
 
 
 let SocialService = class SocialService {
-    constructor(userService, http) {
-        this.userService = userService;
+    constructor(ngUserManService, http) {
+        this.ngUserManService = ngUserManService;
         this.http = http;
     }
     deleteComment(parent_id, parentCategory, comment_id) {
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -4405,7 +5422,7 @@ let SocialService = class SocialService {
         return this.http.delete('api/social/delete-comment/', httpOptions);
     }
     addComment(parent_id, parentCategory, comment, recaptcha) {
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -4464,7 +5481,7 @@ let SocialService = class SocialService {
         return this.http.get('api/social/get-unreaded-comments-length', httpOptions);
     }
     displayComment(parent_id, parentCategory, display, comment_id) {
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -4475,7 +5492,7 @@ let SocialService = class SocialService {
     }
     likesSet(parent_id, parentCategory, action) {
         // action is true for like, is false for dislike
-        const token = this.userService.userLocalGetToken('token');
+        const token = this.ngUserManService.userLocalGetToken('token');
         const httpOptions = {
             headers: new _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpHeaders"]({
                 'Content-Type': 'application/json',
@@ -4486,7 +5503,7 @@ let SocialService = class SocialService {
     }
 };
 SocialService.ctorParameters = () => [
-    { type: _user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"] },
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_3__["NgUserManService"] },
     { type: _angular_common_http__WEBPACK_IMPORTED_MODULE_2__["HttpClient"] }
 ];
 SocialService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -4871,11 +5888,6 @@ const environment = {
     production: false,
     cloud_name: 'hd1oejweg',
     host: 'http://localhost:8081',
-    loginComponent: {
-        logo: './assets/images/hmade_logo_dark.svg',
-        loginIcon: 'account_circle',
-        passwordIcon: 'lock_outline',
-    }
 };
 /*
  * In development mode, to ignore zone related error stack frames such as

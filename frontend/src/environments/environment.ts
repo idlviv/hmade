@@ -6,11 +6,6 @@ export const environment = {
   production: false,
   cloud_name: 'hd1oejweg',
   host: 'http://localhost:8081',
-  loginComponent: {
-    logo: './assets/images/hmade_logo_dark.svg',
-    loginIcon: 'account_circle',
-    passwordIcon: 'lock_outline',
-  }
 };
 
 /*

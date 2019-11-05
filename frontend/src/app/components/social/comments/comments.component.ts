@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
 import { IComment, IConfirmPopupData, IConfirmPopupChoise } from 'src/app/interfaces/interface';
-import { UserService } from 'src/app/services/user.service';
+import { NgUserManService } from 'ng-user-man';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { config } from '../../../app.config';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
@@ -30,7 +30,7 @@ export class CommentsComponent implements OnInit {
   @ViewChild('recaptchaRef', { static: false }) recaptchaRef;
 
   constructor(
-    private userService: UserService,
+    private ngUserManService: NgUserManService,
     private socialService: SocialService,
     // public dialog: MatDialog,
     private sharedService: SharedService,
@@ -75,12 +75,12 @@ export class CommentsComponent implements OnInit {
   }
 
   allowTo(permitedRole: string): boolean {
-    this.user = this.userService.userCookieExtractor();
-    return this.userService.allowTo(permitedRole);
+    this.user = this.ngUserManService.userCookieExtractor();
+    return this.ngUserManService.allowTo(permitedRole);
   }
 
   restrictTo(restrictedRoles: string[]): boolean {
-    this.user = this.userService.userCookieExtractor();
-    return this.userService.restrictTo(restrictedRoles);
+    this.user = this.ngUserManService.userCookieExtractor();
+    return this.ngUserManService.restrictTo(restrictedRoles);
   }
 }

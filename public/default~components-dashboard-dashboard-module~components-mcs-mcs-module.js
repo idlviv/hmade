@@ -96,7 +96,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var src_app_services_catalog_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/catalog.service */ "./src/app/services/catalog.service.ts");
 /* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
 /* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
 
 
@@ -109,11 +109,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let McsFiltersComponent = class McsFiltersComponent {
-    constructor(router, route, catalogService, userService, mcService) {
+    constructor(router, route, catalogService, ngUserManService, mcService) {
         this.router = router;
         this.route = route;
         this.catalogService = catalogService;
-        this.userService = userService;
+        this.ngUserManService = ngUserManService;
         this.mcService = mcService;
         this.children = [];
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_2__["config"];
@@ -225,7 +225,7 @@ let McsFiltersComponent = class McsFiltersComponent {
         });
     }
     allowTo(permitedRole) {
-        return this.userService.allowTo(permitedRole);
+        return this.ngUserManService.allowTo(permitedRole);
     }
     addMcsItem(parent_id) {
         this.router.navigate(['/dashboard', 'mc', 'new', parent_id]);
@@ -248,7 +248,7 @@ McsFiltersComponent.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["ActivatedRoute"] },
     { type: src_app_services_catalog_service__WEBPACK_IMPORTED_MODULE_5__["CatalogService"] },
-    { type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_8__["UserService"] },
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_8__["NgUserManService"] },
     { type: src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_9__["McService"] }
 ];
 McsFiltersComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
@@ -289,7 +289,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
 /* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
 /* harmony import */ var _shared_confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../shared/confirm-popup/confirm-popup.component */ "./src/app/components/shared/confirm-popup/confirm-popup.component.ts");
@@ -310,8 +310,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let McsItemBriefComponent = class McsItemBriefComponent {
-    constructor(userService, mcService, router, dialog, matSnackBar, media) {
-        this.userService = userService;
+    constructor(ngUserManService, mcService, router, dialog, matSnackBar, media) {
+        this.ngUserManService = ngUserManService;
         this.mcService = mcService;
         this.router = router;
         this.dialog = dialog;
@@ -323,7 +323,7 @@ let McsItemBriefComponent = class McsItemBriefComponent {
     ngOnInit() {
     }
     allowTo(permitedRole) {
-        return this.userService.allowTo(permitedRole);
+        return this.ngUserManService.allowTo(permitedRole);
     }
     ngOnChanges(changes) {
         const productChange = changes.mc;
@@ -363,7 +363,7 @@ let McsItemBriefComponent = class McsItemBriefComponent {
     }
 };
 McsItemBriefComponent.ctorParameters = () => [
-    { type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_3__["UserService"] },
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_3__["NgUserManService"] },
     { type: src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_7__["McService"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] },
     { type: _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatDialog"] },
@@ -421,9 +421,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var rxjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs */ "./node_modules/rxjs/_esm2015/index.js");
 /* harmony import */ var src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/mc.service */ "./src/app/services/mc.service.ts");
 /* harmony import */ var src_app_app_config__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! src/app/app.config */ "./src/app/app.config.ts");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
 /* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
-/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
 
 
 
@@ -435,11 +434,11 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let McsItemDetailComponent = class McsItemDetailComponent {
-    constructor(route, router, mcService, userService, socialService, sharedService) {
+    constructor(route, router, mcService, ngUserManService, socialService, sharedService) {
         this.route = route;
         this.router = router;
         this.mcService = mcService;
-        this.userService = userService;
+        this.ngUserManService = ngUserManService;
         this.socialService = socialService;
         this.sharedService = sharedService;
         this.config = src_app_app_config__WEBPACK_IMPORTED_MODULE_6__["config"];
@@ -463,7 +462,7 @@ let McsItemDetailComponent = class McsItemDetailComponent {
         }, (err) => console.log('err', err));
     }
     allowTo(permitedRole) {
-        return this.userService.allowTo(permitedRole);
+        return this.ngUserManService.allowTo(permitedRole);
     }
     goToMcs() {
         this.router.navigate(['/mcs', 'ch']);
@@ -497,9 +496,9 @@ McsItemDetailComponent.ctorParameters = () => [
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["ActivatedRoute"] },
     { type: _angular_router__WEBPACK_IMPORTED_MODULE_2__["Router"] },
     { type: src_app_services_mc_service__WEBPACK_IMPORTED_MODULE_5__["McService"] },
-    { type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_7__["UserService"] },
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_7__["NgUserManService"] },
     { type: src_app_services_social_service__WEBPACK_IMPORTED_MODULE_8__["SocialService"] },
-    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_9__["SharedService"] }
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_7__["SharedService"] }
 ];
 McsItemDetailComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({

@@ -6,6 +6,7 @@ import { IProduct } from '../interfaces/product-interface';
 import { UserService } from './user.service';
 import { config } from '../app.config';
 import { IDesign } from '../interfaces/interface';
+import { NgUserManService } from 'ng-user-man';
 
 
 @Injectable({
@@ -16,7 +17,7 @@ export class ProductService {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService,
+    private ngUserManService: NgUserManService,
   ) { }
 
 
@@ -120,7 +121,7 @@ export class ProductService {
     formData.append('file', file, file.name);
     formData.append('sku', sku);
 
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': token
@@ -134,7 +135,7 @@ export class ProductService {
   }
 
   productCreate(product: IProduct): Observable<IResponse> {
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -150,7 +151,7 @@ export class ProductService {
 
   productEdit(product: IProduct): Observable<IResponse> {
     console.log('prodEdit', product);
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -182,7 +183,7 @@ export class ProductService {
     formData.append('file', file, file.name);
     formData.append('_id', _id);
 
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': token
@@ -201,7 +202,7 @@ export class ProductService {
     formData.append('file', file, file.name);
     formData.append('_id', _id);
 
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': token
@@ -228,7 +229,7 @@ export class ProductService {
     formData.append('file', file, file.name);
     formData.append('_id', _id);
 
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': token
@@ -340,7 +341,7 @@ export class ProductService {
     formData.append('file', file, file.name);
     formData.append('_id', _id);
 
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': token
@@ -407,7 +408,7 @@ export class ProductService {
    * @memberof ProductService
    */
   getSkuList(): Observable<{ _id: string }[]> {
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

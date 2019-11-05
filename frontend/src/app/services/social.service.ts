@@ -3,6 +3,7 @@ import { HttpHeaders, HttpParams, HttpClient } from '@angular/common/http';
 import { UserService } from './user.service';
 import { IComment } from '../interfaces/interface';
 import { Observable } from 'rxjs';
+import { NgUserManService } from 'ng-user-man';
 
 @Injectable({
   providedIn: 'root'
@@ -10,12 +11,12 @@ import { Observable } from 'rxjs';
 export class SocialService {
 
   constructor(
-    private userService: UserService,
+    private ngUserManService: NgUserManService,
     private http: HttpClient,
   ) { }
 
   deleteComment(parent_id: string, parentCategory: string, comment_id: string): Observable<boolean> {
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -33,7 +34,7 @@ export class SocialService {
   }
 
   addComment(parent_id: string, parentCategory: string, comment: string, recaptcha): Observable<boolean> {
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -114,7 +115,7 @@ export class SocialService {
   }
 
   displayComment(parent_id: string, parentCategory: string, display: boolean, comment_id: string): Observable<boolean> {
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -131,7 +132,7 @@ export class SocialService {
   likesSet(parent_id: string, parentCategory: string, action: boolean) {
 
     // action is true for like, is false for dislike
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { IUser } from 'src/app/interfaces/user-interface';
-import { UserService } from 'src/app/services/user.service';
+import { NgUserManService } from 'ng-user-man';
 import { SocialService } from 'src/app/services/social.service';
 import { SharedService } from 'ng-user-man';
 import { mergeMap } from 'rxjs/operators';
@@ -17,7 +17,7 @@ export class UnreadedCommentsComponent implements OnInit, AfterViewInit {
   pageLoaded = false;
 
   constructor(
-    private userService: UserService,
+    private ngUserManService: NgUserManService,
     private socialService: SocialService,
     private sharedService: SharedService,
   ) { }
@@ -59,7 +59,7 @@ export class UnreadedCommentsComponent implements OnInit, AfterViewInit {
   }
 
   markCommentsAsReaded() {
-    this.userService.userEditUnsecure({name: 'commentsReadedTill'})
+    this.ngUserManService.userEditUnsecure({name: 'commentsReadedTill'})
     .subscribe(
       res => {
         this.sharedService.sharingEventToReloadComments();
@@ -86,7 +86,7 @@ export class UnreadedCommentsComponent implements OnInit, AfterViewInit {
   }
 
   allowTo(permitedRole: string): boolean {
-    this.user = this.userService.userCookieExtractor();
-    return this.userService.allowTo(permitedRole);
+    this.user = this.ngUserManService.userCookieExtractor();
+    return this.ngUserManService.allowTo(permitedRole);
   }
 }

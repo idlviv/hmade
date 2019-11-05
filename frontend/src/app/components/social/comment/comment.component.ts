@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { IComment } from 'src/app/interfaces/interface';
-import { UserService } from 'src/app/services/user.service';
+import { NgUserManService } from 'ng-user-man';
 import { config } from '../../../app.config';
 
 @Component({
@@ -16,7 +16,7 @@ export class CommentComponent implements OnInit {
   config = config;
 
   constructor(
-    private userService: UserService,
+    private ngUserManService: NgUserManService,
   ) { }
 
   ngOnInit() {
@@ -31,12 +31,12 @@ export class CommentComponent implements OnInit {
   }
 
   allowTo(permitedRole: string): boolean {
-    // this.user = this.userService.userCookieExtractor();
-    return this.userService.allowTo(permitedRole);
+    // this.user = this.ngUserManService.userCookieExtractor();
+    return this.ngUserManService.allowTo(permitedRole);
   }
 
   restrictTo(restrictedRoles: string[]): boolean {
-    // this.user = this.userService.userCookieExtractor();
-    return this.userService.restrictTo(restrictedRoles);
+    // this.user = this.ngUserManService.userCookieExtractor();
+    return this.ngUserManService.restrictTo(restrictedRoles);
   }
 }

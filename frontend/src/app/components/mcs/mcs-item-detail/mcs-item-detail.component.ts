@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 import { McService } from 'src/app/services/mc.service';
 import { IMc } from 'src/app/interfaces/interface';
 import { config } from 'src/app/app.config';
-import { UserService } from 'src/app/services/user.service';
+import { NgUserManService } from 'ng-user-man';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { SocialService } from 'src/app/services/social.service';
 import { SharedService } from 'ng-user-man';
@@ -25,7 +25,7 @@ export class McsItemDetailComponent implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private mcService: McService,
-    private userService: UserService,
+    private ngUserManService: NgUserManService,
     private socialService: SocialService,
     private sharedService: SharedService,
   ) { }
@@ -60,7 +60,7 @@ export class McsItemDetailComponent implements OnInit {
   }
 
   allowTo(permitedRole): boolean {
-    return this.userService.allowTo(permitedRole);
+    return this.ngUserManService.allowTo(permitedRole);
   }
 
   goToMcs() {

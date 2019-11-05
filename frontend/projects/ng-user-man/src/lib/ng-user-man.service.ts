@@ -9,13 +9,15 @@ import { JwtHelperService } from '@auth0/angular-jwt';
   providedIn: 'root'
 })
 export class NgUserManService {
-  user: IUser;
+  // user: IUser;
   config: any;
-  private _logging: ReplaySubject<IUser> = new ReplaySubject(1);
-  tokenSyncronizatonProgress = false;
 
-  private eventToReloadUser: ReplaySubject<IUser> = new ReplaySubject(1);
-  eventToReloadUser$ = this.eventToReloadUser.asObservable();
+  // private _logging: ReplaySubject<IUser> = new ReplaySubject(1);
+  // tokenSyncronizatonProgress = false;
+  // count = 0;
+
+  // private eventToReloadUser: ReplaySubject<IUser> = new ReplaySubject(1);
+  // eventToReloadUser$ = this.eventToReloadUser.asObservable();
 
   constructor(
     private http: HttpClient,
@@ -23,12 +25,13 @@ export class NgUserManService {
     public injector: Injector,
   ) {
     this.config = injector.get('config');
-   }
+  }
 
- /*
-  * Create new user
-  *
-  */
+
+  /*
+   * Create new user
+   *
+   */
   userCreate(user: IUser, recaptcha: string): Observable<string> {
     const httpOptions = {
       headers: new HttpHeaders({
@@ -118,8 +121,6 @@ export class NgUserManService {
     );
   }
 
-
-
   /** Session
    * Used for router guard (canActivate)
    *
@@ -185,6 +186,28 @@ export class NgUserManService {
       return true;
     }
   }
+
+  // logging() {
+  //   const user = this.userCookieExtractor();
+  //   this._logging.next(user);
+  // }
+
+  // userManualUpdateCookie(): Observable<string> {
+  //   const httpOptions = {
+  //     headers: new HttpHeaders({
+  //       'Content-Type': 'application/json',
+  //     }),
+  //   };
+  //   return this.http.get<string>(
+  //     'api/user/manual-update-cookie',
+  //     httpOptions
+  //   );
+  // }
+
+  // getUserLocal(): Observable<IUser | null> {
+  //   // return this.userCookieExtractor();
+  //   return this._logging.asObservable();
+  // }
 
   /**
    * Helper for checking image file before uploading
@@ -343,33 +366,10 @@ export class NgUserManService {
     );
   }
 
-  logging() {
-    const user = this.userCookieExtractor();
-    this._logging.next(user);
-  }
-
-  userManualUpdateCookie(): Observable<string> {
-    const httpOptions = {
-      headers: new HttpHeaders({
-        'Content-Type': 'application/json',
-      }),
-    };
-    return this.http.get<string>(
-      'api/user/manual-update-cookie',
-      httpOptions
-    );
-  }
-
-  getUserLocal(): Observable<IUser | null> {
-    // return this.userCookieExtractor();
-    return this._logging.asObservable();
-  }
-
   /*
    * Token manipulations
    *
    */
-
   userLocalSetToken(tokenKey, token): void {
     localStorage.setItem(tokenKey, token);
   }

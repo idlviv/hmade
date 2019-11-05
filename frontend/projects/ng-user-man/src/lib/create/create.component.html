@@ -1,0 +1,153 @@
+<div class="container">
+
+  <div class="row" fxLayout="column" fxLayout.gt-xs="row">
+    <div fxFlex.gt-xs="20" fxFlex.gt-md="30"></div>
+
+    <div class="cell" fxFlex.gt-xs="60" fxFlex.gt-md="40">
+
+      <div class="centered-container">
+        <mat-card class="form-block">
+          <mat-card-content>
+            <div class="padding-bottom" fxLayout fxLayoutAlign="center center">
+              <img class="responsive-image" [src]="config.logo.formsLogo" width="367px" alt="HandMADE">
+            </div>
+
+            <form [formGroup]="userCreateForm" (submit)="onUserCreateSubmit()">
+              <div fxLayout="row">
+                <div fxFlexAlign="center" class="mat-icon-wrapper">
+                  <mat-icon color="primary">{{config.icons.login}}</mat-icon>
+                </div>
+                <mat-form-field>
+                  <input matInput placeholder="Логін" formControlName="login" required>
+                  <mat-error *ngIf="(userCreateForm.get('login').errors?.minlength ||
+                      userCreateForm.get('login').errors?.maxlength ||
+                      userCreateForm.get('login').errors?.required) &&
+                      userCreateForm.get('login').touched">
+                    Довжина повинна бути від 4 до 15 символів
+                  </mat-error>
+                  <mat-error *ngIf="userCreateForm.get('login').errors?.pattern &&
+                     userCreateForm.get('login').touched">
+                    Використовуйте тільки латинські символи і цифри
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="row">
+                <div fxFlexAlign="center" class="mat-icon-wrapper">
+                  <mat-icon color="primary">{{config.icons.name}}</mat-icon>
+                </div>
+                <mat-form-field>
+                  <input matInput placeholder="Ім'я" formControlName="name" required>
+                  <mat-error *ngIf="(userCreateForm.get('name').errors?.minlength ||
+                      userCreateForm.get('name').errors?.maxlength ||
+                      userCreateForm.get('name').errors?.required) &&
+                      userCreateForm.get('name').touched">
+                    Довжина повинна бути від 2 до 20 символів
+                  </mat-error>
+                  <mat-error *ngIf="userCreateForm.get('name').errors?.pattern &&
+                     userCreateForm.get('name').touched">
+                    Використовуйте тільки букви і цифри
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="row">
+                <div fxFlexAlign="center" class="mat-icon-wrapper">
+                  <mat-icon color="primary">{{config.icons.surname}}</mat-icon>
+                </div>
+                <mat-form-field>
+                  <input matInput placeholder="Прізвище" formControlName="surname" required>
+                  <mat-error *ngIf="(userCreateForm.get('surname').errors?.minlength ||
+                      userCreateForm.get('surname').errors?.maxlength ||
+                      userCreateForm.get('surname').errors?.required) &&
+                      userCreateForm.get('surname').touched">
+                    Довжина повинна бути від 2 до 20 символів
+                  </mat-error>
+                  <mat-error *ngIf="userCreateForm.get('surname').errors?.pattern &&
+                     userCreateForm.get('surname').touched">
+                    Використовуйте тільки букви і цифри
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="row">
+                <div fxFlexAlign="center" class="mat-icon-wrapper">
+                  <mat-icon color="primary">{{config.icons.password}}</mat-icon>
+                </div>
+                <mat-form-field>
+                  <input matInput placeholder="Пароль" formControlName="password" required
+                    [type]="hidePassword ? 'password' : 'text'">
+                  <mat-icon color="accent" matSuffix (click)="hidePassword = !hidePassword">
+                    {{hidePassword ? config.icons.visible : config.icons.unvisible}}</mat-icon>
+                  <mat-error *ngIf="(userCreateForm.get('password').errors?.minlength ||
+                          userCreateForm.get('password').errors?.maxlength ||
+                          userCreateForm.get('password').errors?.required) &&
+                          userCreateForm.get('password').touched">
+                    Довжина повинна бути від 6 до 15 символів
+                  </mat-error>
+                  <mat-error *ngIf="userCreateForm.get('password').errors?.pattern &&
+                         userCreateForm.get('password').touched">
+                    Використовуйте тільки латинські символи та цифри
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <div fxLayout="row">
+                <div fxFlexAlign="center" class="mat-icon-wrapper">
+                </div>
+                <mat-form-field>
+                  <input matInput placeholder="Підтвердіть пароль" formControlName="passwordConfirm" required
+                    [type]="hidePassword ? 'password' : 'text'">
+
+                  <mat-icon
+                    *ngIf="!userCreateForm.get('passwordConfirm').errors?.mismatch && !userCreateForm.get('password').errors"
+                    matSuffix color="accent">{{config.icons.passwordMatch}}</mat-icon>
+
+                  <mat-error *ngIf="userCreateForm.get('passwordConfirm').errors?.mismatch &&
+                      userCreateForm.get('passwordConfirm').touched">
+                    Пароль не збігається
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+
+              <div fxLayout="row">
+                <div fxFlexAlign="center" class="mat-icon-wrapper">
+                  <mat-icon color="primary">{{config.icons.email}}</mat-icon>
+                </div>
+                <mat-form-field>
+                  <input matInput placeholder="Email" formControlName="email" type="email" required>
+                  <mat-error *ngIf="(userCreateForm.get('email').errors?.minlength ||
+                        userCreateForm.get('email').errors?.maxlength ||
+                        userCreateForm.get('email').errors?.required) &&
+                        userCreateForm.get('email').touched">
+                    Довжина повинна бути від 5 до 50 символів
+                  </mat-error>
+                  <mat-error *ngIf="userCreateForm.get('email').errors?.pattern &&
+                       userCreateForm.get('email').touched">
+                    Введіть правільну адресу
+                  </mat-error>
+                </mat-form-field>
+              </div>
+
+              <re-captcha [ngClass]="{'display-none':
+          !userCreateForm.get('email').valid || !userCreateForm.get('login').valid ||
+          !userCreateForm.get('password').valid || !userCreateForm.get('passwordConfirm').valid}"
+                [formControlName]="'recaptcha'" #recaptchaRef siteKey="{{config.recaptchaSiteKey}}">
+              </re-captcha>
+
+              <div class="submit-button-wrapper">
+                <span fxFlex></span>
+                <button mat-raised-button color="primary" [disabled]="!userCreateForm.valid"
+                  aria-label="Register">Зареєструватись</button>
+              </div>
+
+            </form>
+          </mat-card-content>
+        </mat-card>
+      </div>
+
+
+    </div>
+  </div>
+</div>

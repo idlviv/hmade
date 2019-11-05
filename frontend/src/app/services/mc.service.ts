@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { IMc } from '../interfaces/interface';
 import { UserService } from './user.service';
 // import { AnimationStyleNormalizer } from '@angular/animations/browser/src/dsl/style_normalization/animation_style_normalizer';
+import { NgUserManService } from 'ng-user-man';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class McService {
 
   constructor(
     private http: HttpClient,
-    private userService: UserService,
+    private ngUserManService: NgUserManService,
   ) { }
 
   /**
@@ -54,7 +55,7 @@ export class McService {
   // }
 
   mcUpsert(mc: IMc): Observable<IResponse> {
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -108,7 +109,7 @@ export class McService {
    * @memberof McService
    */
   getMcByIdAndIncViews(_id: string): Observable<IMc>  {
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -163,7 +164,7 @@ export class McService {
   getMcsByFilter(
     parent: string = 'products', sort: string, sortOrder: number = 1, skip: number = 0, limit: number = 10, noMoreChildren: string
     ): Observable<IMc[]> {
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',
@@ -192,7 +193,7 @@ export class McService {
     formData.append('file', file, file.name);
     formData.append('_id', _id);
 
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': token
@@ -218,7 +219,7 @@ export class McService {
     formData.append('file', file, file.name);
     formData.append('_id', _id);
 
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Authorization': token
@@ -238,7 +239,7 @@ export class McService {
    * @memberof McService
    */
   getSkuList():  Observable<{_id: string}[]> {
-    const token = this.userService.userLocalGetToken('token');
+    const token = this.ngUserManService.userLocalGetToken('token');
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type': 'application/json',

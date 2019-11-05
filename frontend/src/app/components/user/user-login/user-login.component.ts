@@ -1,11 +1,9 @@
 import { Component, OnInit, Injector } from '@angular/core';
-import { UserService } from '../../../services/user.service';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
 import { SharedService } from 'ng-user-man';
-declare const gapi: any;
 import { LoginComponent } from 'ng-user-man';
-import { NgUserManService } from 'ng-user-man';
+// import { NgUserManService } from 'ng-user-man';
 
 @Component({
   selector: 'app-user-login',
@@ -15,21 +13,20 @@ import { NgUserManService } from 'ng-user-man';
 export class UserLoginComponent extends LoginComponent implements OnInit {
 
   constructor(
-    private userService: UserService,
-    protected sharedService: SharedService,
-    protected matSnackBar: MatSnackBar,
-    protected router: Router,
+    // protected sharedService: SharedService,
+    // protected matSnackBar: MatSnackBar,
+    // protected router: Router,
     protected injector: Injector,
-    protected ngUserManService: NgUserManService,
+    // protected ngUserManService: NgUserManService,
   ) {
     super(
-      matSnackBar,
-      ngUserManService,
-      sharedService,
+      // matSnackBar,
+      // ngUserManService,
+      // sharedService,
       injector,
-      router
-      );
-   }
+      // router
+    );
+  }
 
   ngOnInit() {
     super.ngOnInit();

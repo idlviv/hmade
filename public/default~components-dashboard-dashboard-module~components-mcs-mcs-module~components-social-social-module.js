@@ -90,15 +90,15 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CommentComponent", function() { return CommentComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
 /* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
 
 
 
 
 let CommentComponent = class CommentComponent {
-    constructor(userService) {
-        this.userService = userService;
+    constructor(ngUserManService) {
+        this.ngUserManService = ngUserManService;
         this.deleteCommentEmitter = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
         this.displayCommentEmitter = new _angular_core__WEBPACK_IMPORTED_MODULE_1__["EventEmitter"]();
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_3__["config"];
@@ -112,16 +112,16 @@ let CommentComponent = class CommentComponent {
         this.displayCommentEmitter.emit({ display, comment_id });
     }
     allowTo(permitedRole) {
-        // this.user = this.userService.userCookieExtractor();
-        return this.userService.allowTo(permitedRole);
+        // this.user = this.ngUserManService.userCookieExtractor();
+        return this.ngUserManService.allowTo(permitedRole);
     }
     restrictTo(restrictedRoles) {
-        // this.user = this.userService.userCookieExtractor();
-        return this.userService.restrictTo(restrictedRoles);
+        // this.user = this.ngUserManService.userCookieExtractor();
+        return this.ngUserManService.restrictTo(restrictedRoles);
     }
 };
 CommentComponent.ctorParameters = () => [
-    { type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"] }
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_2__["NgUserManService"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
@@ -175,7 +175,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_material__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/material */ "./node_modules/@angular/material/esm2015/material.js");
 /* harmony import */ var _shared_confirm_popup_confirm_popup_component__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ../../shared/confirm-popup/confirm-popup.component */ "./src/app/components/shared/confirm-popup/confirm-popup.component.ts");
 /* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
 
 
 
@@ -186,8 +185,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let CommentsListComponent = class CommentsListComponent {
-    constructor(userService, socialService, dialog, sharedService) {
-        this.userService = userService;
+    constructor(ngUserManService, socialService, dialog, sharedService) {
+        this.ngUserManService = ngUserManService;
         this.socialService = socialService;
         this.dialog = dialog;
         this.sharedService = sharedService;
@@ -302,16 +301,16 @@ let CommentsListComponent = class CommentsListComponent {
         }, err => console.log('add comment err', err));
     }
     allowTo(permitedRole) {
-        this.user = this.userService.userCookieExtractor();
-        return this.userService.allowTo(permitedRole);
+        this.user = this.ngUserManService.userCookieExtractor();
+        return this.ngUserManService.allowTo(permitedRole);
     }
     restrictTo(restrictedRoles) {
-        this.user = this.userService.userCookieExtractor();
-        return this.userService.restrictTo(restrictedRoles);
+        this.user = this.ngUserManService.userCookieExtractor();
+        return this.ngUserManService.restrictTo(restrictedRoles);
     }
 };
 CommentsListComponent.ctorParameters = () => [
-    { type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_8__["UserService"] },
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_7__["NgUserManService"] },
     { type: src_app_services_social_service__WEBPACK_IMPORTED_MODULE_3__["SocialService"] },
     { type: _angular_material__WEBPACK_IMPORTED_MODULE_5__["MatDialog"] },
     { type: ng_user_man__WEBPACK_IMPORTED_MODULE_7__["SharedService"] }
@@ -368,11 +367,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "CommentsComponent", function() { return CommentsComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
 /* harmony import */ var _app_config__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../app.config */ "./src/app/app.config.ts");
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
 /* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
-/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
 
 
 
@@ -383,10 +381,10 @@ __webpack_require__.r(__webpack_exports__);
 // import { ConfirmPopupComponent } from '../../shared/confirm-popup/confirm-popup.component';
 
 let CommentsComponent = class CommentsComponent {
-    constructor(userService, socialService, 
+    constructor(ngUserManService, socialService, 
     // public dialog: MatDialog,
     sharedService) {
-        this.userService = userService;
+        this.ngUserManService = ngUserManService;
         this.socialService = socialService;
         this.sharedService = sharedService;
         this.config = _app_config__WEBPACK_IMPORTED_MODULE_3__["config"];
@@ -423,18 +421,18 @@ let CommentsComponent = class CommentsComponent {
         }, err => console.log('add comment err', err));
     }
     allowTo(permitedRole) {
-        this.user = this.userService.userCookieExtractor();
-        return this.userService.allowTo(permitedRole);
+        this.user = this.ngUserManService.userCookieExtractor();
+        return this.ngUserManService.allowTo(permitedRole);
     }
     restrictTo(restrictedRoles) {
-        this.user = this.userService.userCookieExtractor();
-        return this.userService.restrictTo(restrictedRoles);
+        this.user = this.ngUserManService.userCookieExtractor();
+        return this.ngUserManService.restrictTo(restrictedRoles);
     }
 };
 CommentsComponent.ctorParameters = () => [
-    { type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"] },
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_2__["NgUserManService"] },
     { type: src_app_services_social_service__WEBPACK_IMPORTED_MODULE_5__["SocialService"] },
-    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_6__["SharedService"] }
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_2__["SharedService"] }
 ];
 tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Input"])()
@@ -646,10 +644,9 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UnreadedCommentsComponent", function() { return UnreadedCommentsComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 /* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/user.service */ "./src/app/services/user.service.ts");
+/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
 /* harmony import */ var src_app_services_social_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/social.service */ "./src/app/services/social.service.ts");
-/* harmony import */ var ng_user_man__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ng-user-man */ "./dist/ng-user-man/fesm2015/ng-user-man.js");
-/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
+/* harmony import */ var rxjs_operators__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! rxjs/operators */ "./node_modules/rxjs/_esm2015/operators/index.js");
 
 
 
@@ -657,8 +654,8 @@ __webpack_require__.r(__webpack_exports__);
 
 
 let UnreadedCommentsComponent = class UnreadedCommentsComponent {
-    constructor(userService, socialService, sharedService) {
-        this.userService = userService;
+    constructor(ngUserManService, socialService, sharedService) {
+        this.ngUserManService = ngUserManService;
         this.socialService = socialService;
         this.sharedService = sharedService;
         this.processedUnreadedCommentsParents = [];
@@ -679,7 +676,7 @@ let UnreadedCommentsComponent = class UnreadedCommentsComponent {
                 this.pageLoaded = true;
             }, err => console.log('err', err));
             this.sharedService.getEventToReloadComments()
-                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_5__["mergeMap"])(() => this.socialService.getUnreadedCommentsCategories()))
+                .pipe(Object(rxjs_operators__WEBPACK_IMPORTED_MODULE_4__["mergeMap"])(() => this.socialService.getUnreadedCommentsCategories()))
                 .subscribe(result => {
                 this.processedUnreadedCommentsParents = [];
                 this.unreadedCommentsParents = [];
@@ -692,7 +689,7 @@ let UnreadedCommentsComponent = class UnreadedCommentsComponent {
         }
     }
     markCommentsAsReaded() {
-        this.userService.userEditUnsecure({ name: 'commentsReadedTill' })
+        this.ngUserManService.userEditUnsecure({ name: 'commentsReadedTill' })
             .subscribe(res => {
             this.sharedService.sharingEventToReloadComments();
         }, err => console.log('err', err));
@@ -714,14 +711,14 @@ let UnreadedCommentsComponent = class UnreadedCommentsComponent {
         }
     }
     allowTo(permitedRole) {
-        this.user = this.userService.userCookieExtractor();
-        return this.userService.allowTo(permitedRole);
+        this.user = this.ngUserManService.userCookieExtractor();
+        return this.ngUserManService.allowTo(permitedRole);
     }
 };
 UnreadedCommentsComponent.ctorParameters = () => [
-    { type: src_app_services_user_service__WEBPACK_IMPORTED_MODULE_2__["UserService"] },
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_2__["NgUserManService"] },
     { type: src_app_services_social_service__WEBPACK_IMPORTED_MODULE_3__["SocialService"] },
-    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_4__["SharedService"] }
+    { type: ng_user_man__WEBPACK_IMPORTED_MODULE_2__["SharedService"] }
 ];
 UnreadedCommentsComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
