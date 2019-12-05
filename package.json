@@ -35,7 +35,7 @@
     "request-promise-native": "^1.0.5",
     "rxjs": "^6.5.2",
     "socket.io": "^2.2.0",
-    "user-man": "^1.0.21",
+    "user-man": "^1.0.23",
     "uuid": "^3.3.2",
     "winston": "^3.2.1"
   },
