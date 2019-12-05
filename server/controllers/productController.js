@@ -33,10 +33,39 @@ module.exports.getProductsByDesignId = function(req, res, next) {
       .catch((err) => next(new DbError()));
 };
 
+function _getDescendants(parent, depth = 0) {
+  return (req, res, next) => {
+    return new Promise((resolve, reject) => {
+      this.CatalogModel.aggregate([
+        {
+          $match: { parent },
+        },
+        {
+          $sort: { order: 1 },
+        },
+        {
+          $graphLookup: {
+            from: 'catalogs',
+            startWith: '$_id',
+            connectFromField: '_id',
+            connectToField: 'parent',
+            as: 'children',
+            maxDepth: depth,
+          },
+        },
+        {
+          $addFields: { numOfChildren: { $size: '$children' } },
+        },
+      ]).then((result) => resolve(result))
+        .catch((err) => reject(new DbError()));
+    });
+  };
+}
+
 module.exports.getProducts = function(req, res, next) {
   let category = req.query.category;
   let categories = [];
-  catalogController._getDescendants(category, 1)
+  _getDescendants(category, 1)
       .then((result) => {
         if (result.length > 0) {
           categories = result.map(function(item) {

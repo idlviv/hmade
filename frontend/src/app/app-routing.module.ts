@@ -37,7 +37,7 @@ const appRoutes: Routes = [
   },
   {
     path: 'user',
-    loadChildren: './components/user/user.module#UserModule'
+    loadChildren: './components/user/user-auth.module#UserAuthModule'
   },
   {
     path: 'feedback',

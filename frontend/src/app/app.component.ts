@@ -2,7 +2,6 @@ import { filter, map, mergeMap } from 'rxjs/operators';
 
 import { Component, OnInit } from '@angular/core';
 import { Router, NavigationEnd, ActivatedRoute } from '@angular/router';
-import { NgUserManService } from 'ng-user-man';
 import { Title, Meta } from '@angular/platform-browser';
 import { config } from './app.config';
 import { forkJoin, combineLatest } from 'rxjs';
@@ -17,7 +16,6 @@ export class AppComponent implements OnInit {
   showHeader = false;
 
   constructor(
-    private ngUserManService: NgUserManService,
     private router: Router,
     private route: ActivatedRoute,
     private titleService: Title,
@@ -25,10 +23,6 @@ export class AppComponent implements OnInit {
    ) { }
 
   ngOnInit() {
-
-    // login user
-    // this.ngUserManService.logging();
-
     // add seo (title and meta description)
     const $routerEvents = this.router.events.pipe(
       filter((event) => event instanceof NavigationEnd),

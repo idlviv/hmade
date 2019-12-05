@@ -9,40 +9,12 @@
     "path": "/"
   },
   "sessionSid": "hmade.sid",
-  "permissions": {
-    "admin": [
-      "casual",
-      "guest",
-      "user",
-      "manager",
-      "admin",
-      "google"
-    ],
-    "manager": [
-      "casual",
-      "guest",
-      "user",
-      "manager",
-      "google"
-    ],
-    "user": [
-      "casual",
-      "guest",
-      "user",
-      "google"
-    ],
-    "google": [
-      "casual",
-      "guest",
-      "user",
-      "google"
-    ],
-    "guest": [
-      "casual",
-      "guest"
-    ],
-    "casual": [
-      "casual"
-    ]
+    "permissions": {
+    "admin": ["casual", "guest", "user", "manager", "admin", "google"],
+    "manager": ["casual", "guest", "user", "manager", "google"],
+    "user": ["casual", "guest", "user", "google"],
+    "google": ["casual", "guest", "user", "google"],
+    "guest": ["casual", "guest"],
+    "casual": ["casual"]
   }
 }

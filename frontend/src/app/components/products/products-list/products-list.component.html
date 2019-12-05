@@ -1,3 +1,5 @@
+<!-- <lib-catalog-main></lib-catalog-main> -->
+
 <div id="products">
   <div class="container">
     <div class="app-container-h app-container-v">
@@ -5,7 +7,38 @@
         <div class="row" fxLayout="row">
           <div class="cell">
             <h1 class="mat-h1 title">Мої роботи</h1>
+          </div>
+        </div>
+        <div class="row" fxLayout="row">
+          <div *ngFor="let item of items; let i = index" class="cell"
+            [ngClass]="{animationAppear1s: i <= skip + portionOfItems}" fxFlex.xs="100" fxFlex.sm="50" fxFlex.md="33.3"
+            fxFlex.gt-md="25">
+            <!-- item {{item}} -->
+            <app-product-item-brief [item]="item"
+              (refreshProducts)="initialSetOfItems()"></app-product-item-brief>
+          </div>
 
+          <div *ngFor="let child of children" class="cell animationAppear1s" fxFlex.xs="100" fxFlex.sm="50"
+            fxFlex.md="33.3" fxFlex.gt-md="25">
+            <app-product-item-brief [child]="child"></app-product-item-brief>
+          </div>
+        </div>
+        <div *ngIf="processing && items && items.length" class="row" fxLayout="row" fxLayoutAlign="center center">
+          <div class="cell" fxFlex="100">
+            <mat-progress-bar mode="query" color="accent"></mat-progress-bar>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div id="products">
+  <div class="container">
+    <div class="app-container-h app-container-v">
+      <div class="container">
+        <div class="row" fxLayout="row">
+          <div class="cell">
+            <h1 class="mat-h1 title">Мої роботи</h1>
           </div>
         </div>
         <div class="row" fxLayout="row">
@@ -29,4 +62,4 @@
       </div>
     </div>
   </div>
-</div>
+</div> -->

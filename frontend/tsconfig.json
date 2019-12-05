@@ -19,11 +19,8 @@
       "dom"
     ],
     "paths": {
-      "ng-user-man": [
-        "dist/ng-user-man",
-      ],
-      "ng-user-man/*": [
-        "dist/ng-user-man/*",
+      "@angular/*": [
+        "./node_modules/@angular/*"
       ]
     }
   },

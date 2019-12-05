@@ -7,7 +7,7 @@ import { of, forkJoin as observableForkJoin } from 'rxjs';
 import { FormGroupDirective, FormGroup, FormArray, FormControl, Validators, ValidatorFn, AbstractControl } from '@angular/forms';
 import { config } from '../../../app.config';
 import { CatalogService } from 'src/app/services/catalog.service';
-import { SharedService } from 'ng-user-man';
+import { NgUserManService } from 'ng-user-man';
 import { MatSnackBar } from '@angular/material';
 import { IMc } from 'src/app/interfaces/interface';
 
@@ -33,7 +33,7 @@ export class McEditorFormComponent implements OnInit {
     private catalogService: CatalogService,
     private route: ActivatedRoute,
     private location: Location,
-    private sharedService: SharedService,
+    private ngUserManService: NgUserManService,
     private matSnackBar: MatSnackBar,
   ) { }
 
@@ -153,7 +153,7 @@ export class McEditorFormComponent implements OnInit {
   addMainImage(event): void {
     this.processingLoadMainImage = true;
     const file = event.target.files[0];
-    const checkFile = this.sharedService.checkFile(file);
+    const checkFile = this.ngUserManService.checkFile(file);
 
     if (!checkFile.success) {
       this.matSnackBar.open(checkFile.message || 'Помилка', '',
@@ -177,7 +177,7 @@ export class McEditorFormComponent implements OnInit {
   addStepsPic(event, i): void {
     this.processingLoadStepsPic = i;
     const file = event.target.files[0];
-    const checkFile = this.sharedService.checkFile(file);
+    const checkFile = this.ngUserManService.checkFile(file);
 
     if (!checkFile.success) {
       this.matSnackBar.open(checkFile.message || 'Помилка', '',

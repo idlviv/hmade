@@ -24,33 +24,19 @@ const productsRoutes: Routes = [
         outlet: 'breadcrumb',
       },
       {
-        path: ':category_id',
+        path: ':parent',
         component: ProductsListComponent,
       },
       {
-        path: ':category_id',
+        path: ':parent',
         component: BreadcrumbComponent,
         outlet: 'breadcrumb',
       },
       // {
-      //   path: ':category_id',
-      //   children: [
-      //     {
-      //       path: '',
-      //       component: ProductsListComponent,
-      //     },
-      //     {
-      //       path: '',
-      //       component: BreadcrumbComponent,
-      //       outlet: 'breadcrumb',
-      //     },
-      //   ]
+      //   path: ':parent/details/:product_id',
+      //   component: BreadcrumbComponent,
+      //   outlet: 'breadcrumb',
       // },
-      {
-        path: ':category_id/details/:product_id',
-        component: BreadcrumbComponent,
-        outlet: 'breadcrumb',
-      },
     ],
   },
   // {

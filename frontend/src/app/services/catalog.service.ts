@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
-import { IUser } from '../interfaces/user-interface';
 import { IResponse } from '../interfaces/server-response-interface';
 import { Observable } from 'rxjs';
 import { ICatalog } from '../interfaces/catalog-interface';
@@ -43,9 +42,6 @@ export class CatalogService {
   /**
    *
    *
-   * @param {string} _id
-   * @returns {Observable<IResponse>}
-   * @memberof CatalogService
    */
   getPrefix(_id: string): Observable<IResponse> {
     const httpOptions = {

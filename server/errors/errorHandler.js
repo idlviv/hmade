@@ -1,5 +1,4 @@
-const DbError = require('./dbError');
-const { ClientError, ServerError } = require('user-man');
+const { ClientError, ServerError, DbError } = require('user-man');
 
 const ApplicationError = require('./applicationError');
 // const ClientError = require('./clientError');
@@ -17,10 +16,8 @@ module.exports = function(err, req, res, next) {
 
   // handle db errors
   if (err instanceof DbError) {
-
     // duplicate index error
     if (err.code === 11000) {
-
       if (new RegExp(/login_1\b/).test(err.message)) {
         return res.status(422).json('Цей логін вже використовується');
         // return res.status(422).json(new ResObj(false, 'Цей логін вже використовується', err));
@@ -34,8 +31,7 @@ module.exports = function(err, req, res, next) {
     }
 
     // other db errors
-    return res.status(400).json('Помилка звернення до БД');
-    // return res.status(400).json(new ResObj(false, 'Помилка звернення до БД', err));
+    return res.status(err.status).send(err);
   }
 
   // custom application error

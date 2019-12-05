@@ -1,7 +1,4 @@
 import { Component, OnInit, Injector } from '@angular/core';
-// import { Router, RouteConfigLoadEnd } from '@angular/router';
-// import { NgUserManService } from 'ng-user-man';
-// import { filter, take } from 'rxjs/operators';
 import { RedirAfterOauthComponent } from 'ng-user-man';
 
 @Component({

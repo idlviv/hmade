@@ -2,14 +2,10 @@ const express = require('express');
 const router = express.Router();
 
 const { ClientError, sharedMiddleware } = require('user-man');
-// const auth = require('user-man').auth;
-// const recaptcha = require('user-man').recaptcha;
-
 const catalogController = require('../controllers/catalogController');
 const mcController = require('../controllers/mcController');
 const socialController = require('../controllers/socialController');
 const productController = require('../controllers/productController');
-const sharedController = require('../controllers/sharedController');
 
 const log = require('../config/winston')(module);
 
@@ -199,38 +195,38 @@ router.get('/product/get-products-by-parent',
     productController.getProductsByParent
 );
 
-/**
- * catalog routes
- */
+// /**
+//  * catalog routes
+//  */
 
-router.get('/catalog/get-main-menu',
-    catalogController.getMainMenu
-);
+// router.get('/catalog/get-main-menu',
+//     catalogController.getMainMenu
+// );
 
-router.get('/catalog/get-all-parents',
-    catalogController.getAllParents
-);
+// router.get('/catalog/get-all-parents',
+//     catalogController.getAllParents
+// );
 
-// hmade
-router.get('/catalog/get-prefix',
-    catalogController.getPrefix
-);
+// // hmade
+// router.get('/catalog/get-prefix',
+//     catalogController.getPrefix
+// );
 
-router.get('/catalog/get-siblings',
-    catalogController.getSiblings
-);
+// router.get('/catalog/get-siblings',
+//     catalogController.getSiblings
+// );
 
-router.get('/catalog/get-category-by-id',
-    catalogController.getCategoryById
-);
+// router.get('/catalog/get-category-by-id',
+//     catalogController.getCategoryById
+// );
 
-router.get('/catalog/get-descendants',
-    catalogController.getDescendants
-);
+// router.get('/catalog/get-descendants',
+//     catalogController.getDescendants
+// );
 
-router.get('/catalog/get-children',
-    catalogController.getChildren
-);
+// router.get('/catalog/get-children',
+//     catalogController.getChildren
+// );
 
 /**
  * shared routes
@@ -238,7 +234,7 @@ router.get('/catalog/get-children',
 
 router.post('/shared/send-feedback-message',
     sharedMiddleware.recaptcha(),
-    sharedController.sendFeedbackMessage
+    sharedMiddleware.sendFeedbackMessage(),
 );
 
 /**

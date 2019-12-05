@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const sessionStore = require('../config/session').sessionStore;
 const sessionCookie = require('../config/session').sessionCookie;
 const config = require('../config');
-const UserModel = require('../models/userModel');
 
 const ChatHelper = require('../helpers/chatHelper');
 

@@ -1,5 +1,5 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule, Injector } from '@angular/core';
+import { NgModule } from '@angular/core';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
@@ -12,8 +12,6 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { SharedModule } from './components/shared/shared.module';
 
-import { AuthGuard } from './guards/auth.guard';
-import { NoAuthGuard } from './guards/no-auth.guard';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { config } from './app.config';
@@ -25,7 +23,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ImagePopupComponent } from './components/shared/image-popup/image-popup.component';
 
 import { CookieService } from 'ngx-cookie-service';
-import { NgUserManService } from 'ng-user-man';
 
 @NgModule({
   declarations: [
@@ -43,10 +40,6 @@ import { NgUserManService } from 'ng-user-man';
     RecaptchaFormsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     ReactiveFormsModule,
-    // HttpClientXsrfModule.withOptions({
-    // cookieName: '_csrf',
-    // headerName: 'x-xsrf-token',
-    // }),
   ],
   providers: [
     // ValidateService,

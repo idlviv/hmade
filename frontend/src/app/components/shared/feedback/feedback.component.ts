@@ -3,7 +3,7 @@ import { FormControl, FormGroup, FormGroupDirective, Validators } from '@angular
 import { Router } from '@angular/router';
 import { IFeedback } from '../../../interfaces/interface';
 import { Location } from '@angular/common';
-import { SharedService } from 'ng-user-man';
+import { NgUserManService } from 'ng-user-man';
 import { MatSnackBar } from '@angular/material';
 import { config } from '../../../app.config';
 
@@ -21,7 +21,7 @@ export class FeedbackComponent implements OnInit {
 
   constructor(
     private location: Location,
-    private sharedService: SharedService,
+    private ngUserManService: NgUserManService,
     private matSnackBar: MatSnackBar,
 
   ) { }
@@ -48,7 +48,7 @@ export class FeedbackComponent implements OnInit {
   onFeedbackFormSubmit() {
     this.processing = true;
     this.feedback = this.feedbackForm.value;
-    this.sharedService.sendFeedbackMessage(this.feedback, this.feedbackForm.get('recaptcha').value)
+    this.ngUserManService.sendFeedbackMessage(this.feedback, this.feedbackForm.get('recaptcha').value)
       .subscribe(
         res => {
           // console.log('feedback ', res);

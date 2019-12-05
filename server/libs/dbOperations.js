@@ -1,8 +1,9 @@
-const UserModel = require('../models/userModel');
+// const UserModel = require('../models/userModel');
 const ResObj = require('../libs/responseObject');
 const DbError = require('../errors/dbError');
 const ApplicationError = require('../errors/applicationError');
 const config = require('../config');
+const UserModel = require('mongoose').models.users;
 
 /**
  *

@@ -1,14 +1,32 @@
 {
-    "extends": "google",
-    "env": { "es6": true, "browser": true },
-    "parserOptions": {
-      "ecmaVersion": 8
+  "extends": "google",
+  "env": {
+    "es6": true,
+    "browser": true
+  },
+  "parserOptions": {
+    "ecmaVersion": 8
+  },
+  "rules": {
+    "linebreak-style": 0,
+    "object-curly-spacing": 0,
+    "require-jsdoc": 0,
+    "camelcase": 0,
+    "variable-name": {
+      "options": [
+        "ban-keywords",
+        "check-format",
+        "allow-leading-underscore",
+        "allow-snake-case"
+      ]
     },
-    "rules":{
-      "linebreak-style": 0,
-      "object-curly-spacing": 0,
-      "require-jsdoc": 0,
-      "camelcase": 0,
-      "max-len": [2, {"code": 120, "tabWidth": 2, "ignoreUrls": true}]
-    }
+    "max-len": [
+      2,
+      {
+        "code": 120,
+        "tabWidth": 2,
+        "ignoreUrls": true
+      }
+    ]
+  }
 }

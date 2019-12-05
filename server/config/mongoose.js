@@ -2,6 +2,27 @@ const mongoose = require('mongoose');
 const config = require('../config');
 const log = require('../config/winston')(module);
 
+// class Mongoose {
+//   constructor(url, options) {
+//     this._mongoose = mongoose;
+//     this.mongoose.connect(url, options);
+//   }
+
+//   get get() {
+//     return this._mongoose;
+//   }
+
+//   createModel(name, schemaObject, virtuals) {
+//     const UserSchema = new Schema(schemaObject);
+//     // if (virtuals) {
+//     //   virtuals.forEach((virt) => {
+
+//     //   });
+//     // }
+//     return this._mongoose.model(name, UserSchema);
+//   }
+// }
+
 const options = {
   autoReconnect: true,
   autoIndex: process.env.NODE_ENV !== 'production',
@@ -12,10 +33,14 @@ const options = {
   // If not connected, return errors immediately rather than waiting for reconnect
   bufferMaxEntries: 0,
   useNewUrlParser: true,
-
+  useUnifiedTopology: true,
+  useCreateIndex: true,
 };
 
 const url = config.get('DB_URL');
+
+// module.exports = new Mongoose(url, options);
+
 
 mongoose.connect(url, options)
     .then(() => log.verbose('Connected to db '),
@@ -24,9 +49,9 @@ mongoose.connect(url, options)
           process.exit(1);
         }
     );
+// mongoose.set('useCreateIndex', true);
 
 
-mongoose.set('useCreateIndex', true);
 // mongoose.connection.on('error', function(err) {
 //   console.log('on error', err);
 // });

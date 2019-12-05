@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ViewChild, HostListener } from '@angular/core';
 import { IComment, IConfirmPopupData, IConfirmPopupChoise } from 'src/app/interfaces/interface';
-import { NgUserManService } from 'ng-user-man';
+import { NgUserManService, UserService } from 'ng-user-man';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { config } from '../../../app.config';
 import { FormGroup, FormControl, Validators, FormGroupDirective } from '@angular/forms';
@@ -9,7 +9,6 @@ import { SocialService } from 'src/app/services/social.service';
 import { mergeMap } from 'rxjs/operators';
 // import { MatDialog } from '@angular/material';
 // import { ConfirmPopupComponent } from '../../shared/confirm-popup/confirm-popup.component';
-import { SharedService } from 'ng-user-man';
 
 @Component({
   selector: 'app-comments',
@@ -20,7 +19,7 @@ import { SharedService } from 'ng-user-man';
 export class CommentsComponent implements OnInit {
   config = config;
   user: IUser;
-  comments = <IComment[]>[];
+  comments = [] as IComment[];
   commentsTotalLength: number;
   @Input() parent_id: string;
   @Input() parentCategory: string;
@@ -31,9 +30,8 @@ export class CommentsComponent implements OnInit {
 
   constructor(
     private ngUserManService: NgUserManService,
+    private userService: UserService,
     private socialService: SocialService,
-    // public dialog: MatDialog,
-    private sharedService: SharedService,
   ) { }
 
   ngOnInit() {
@@ -50,9 +48,9 @@ export class CommentsComponent implements OnInit {
           Validators.minLength(3),
           Validators.maxLength(150),
         ]),
-        recaptcha: new FormControl('', [
-          Validators.required
-        ])
+      recaptcha: new FormControl('', [
+        Validators.required
+      ])
     });
   }
 
@@ -62,25 +60,25 @@ export class CommentsComponent implements OnInit {
 
     this.socialService.addComment(this.parent_id, this.parentCategory, comment, recaptcha)
       .subscribe(result => {
-          this.mcFormDirective.resetForm();
-          this.sharedService.sharingEventToReloadComments({
-            sort: -1,
-            skip: 0,
-            limit: 5,
-            displayFilter: !this.allowTo('manager'),
-          });
+        this.mcFormDirective.resetForm();
+        this.ngUserManService.sharingEventToReloadComments({
+          sort: -1,
+          skip: 0,
+          limit: 5,
+          displayFilter: !this.allowTo('manager'),
+        });
       },
-      err => console.log('add comment err', err)
-    );
+        err => console.log('add comment err', err)
+      );
   }
 
   allowTo(permitedRole: string): boolean {
-    this.user = this.ngUserManService.userCookieExtractor();
-    return this.ngUserManService.allowTo(permitedRole);
+    this.user = this.userService.userCookieExtractor();
+    return this.userService.allowTo(permitedRole);
   }
 
   restrictTo(restrictedRoles: string[]): boolean {
-    this.user = this.ngUserManService.userCookieExtractor();
-    return this.ngUserManService.restrictTo(restrictedRoles);
+    this.user = this.userService.userCookieExtractor();
+    return this.userService.restrictTo(restrictedRoles);
   }
 }

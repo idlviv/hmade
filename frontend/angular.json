@@ -33,7 +33,9 @@
               "src/styles/styles.scss",
               "./node_modules/aos/dist/aos.css"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/aos/dist/aos.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -128,41 +130,6 @@
             "production": {
               "devServerTarget": "hmade:serve:production"
             }
-          }
-        }
-      }
-    },
-    "ng-user-man": {
-      "projectType": "library",
-      "root": "projects/ng-user-man",
-      "sourceRoot": "projects/ng-user-man/src",
-      "prefix": "lib",
-      "architect": {
-        "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
-          "options": {
-            "tsConfig": "projects/ng-user-man/tsconfig.lib.json",
-            "project": "projects/ng-user-man/ng-package.json"
-          }
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "main": "projects/ng-user-man/src/test.ts",
-            "tsConfig": "projects/ng-user-man/tsconfig.spec.json",
-            "karmaConfig": "projects/ng-user-man/karma.conf.js"
-          }
-        },
-        "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
-          "options": {
-            "tsConfig": [
-              "projects/ng-user-man/tsconfig.lib.json",
-              "projects/ng-user-man/tsconfig.spec.json"
-            ],
-            "exclude": [
-              "**/node_modules/**"
-            ]
           }
         }
       }

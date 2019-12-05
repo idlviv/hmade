@@ -2,10 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { config } from '../../../app.config';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
-import { CatalogService } from 'src/app/services/catalog.service';
+import { CatalogService, ICatalog } from 'ng-user-man';
 import { mergeMap, map } from 'rxjs/operators';
 import { concat } from 'rxjs';
-import { NgUserManService } from 'ng-user-man';
+import { UserService } from 'ng-user-man';
 import { IUser } from 'src/app/interfaces/user-interface';
 import { McService } from 'src/app/services/mc.service';
 
@@ -30,7 +30,7 @@ export class McsFiltersComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private catalogService: CatalogService,
-    private ngUserManService: NgUserManService,
+    private userService: UserService,
     private mcService: McService,
   ) { }
 
@@ -59,8 +59,8 @@ export class McsFiltersComponent implements OnInit {
       this.noMoreChildren = initialNoMoreChildrenValue;
     }
     this.catalogService.getChildren('products').pipe(
-      mergeMap(result => {
-        this.children[0] = result.data;
+      mergeMap((result: ICatalog[]) => {
+        this.children[0] = result;
         // initialize select values
         this.filterForm.get('mcSort').setValue(this.mcSortValue);
         return this.catalogService.getAllParents(this.mcFilterValue);
@@ -106,14 +106,14 @@ export class McsFiltersComponent implements OnInit {
     }
     return this.catalogService.getChildren(eventValue)
       .pipe(map(
-        children => {
-          if (!children.data.length) {
+        (children: ICatalog[]) => {
+          if (!children.length) {
             // if no children - show products
             this.parent_id = eventValue;
             this.noMoreChildren = 'true';
-            this.children[level + 1] = children.data;
+            this.children[level + 1] = children;
           } else {
-            this.children[level + 1] = children.data;
+            this.children[level + 1] = children;
             this.noMoreChildren = 'false';
             this.addParents();
           }
@@ -159,7 +159,7 @@ export class McsFiltersComponent implements OnInit {
   }
 
   allowTo(permitedRole: string): boolean {
-    return this.ngUserManService.allowTo(permitedRole);
+    return this.userService.allowTo(permitedRole);
   }
 
   addMcsItem(parent_id) {

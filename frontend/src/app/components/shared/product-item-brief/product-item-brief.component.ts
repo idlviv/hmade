@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { config } from '../../../app.config';
 import { MediaObserver } from '@angular/flex-layout';
-import { NgUserManService } from 'ng-user-man';
+import { UserService } from 'ng-user-man';
 import { MatDialog } from '@angular/material';
 import { IImagePopUpData, IConfirmPopupData } from 'src/app/interfaces/interface';
 import { ImagePopupComponent } from '../image-popup/image-popup.component';
@@ -11,6 +11,7 @@ import { ProductService } from 'src/app/services/product.service';
 import { of } from 'rxjs/internal/observable/of';
 import { MatSnackBar } from '@angular/material';
 import { Router } from '@angular/router';
+import { IProduct } from 'ng-user-man';
 
 @Component({
   selector: 'app-product-item-brief',
@@ -19,8 +20,8 @@ import { Router } from '@angular/router';
 })
 
 export class ProductItemBriefComponent implements OnInit {
-  @Input() product;
-  @Input() category_id;
+  @Input() item: IProduct;
+  // @Input() category_id;
   @Input() parentCategory_id;
   @Input() parentCategoryName;
   @Input() child;
@@ -30,7 +31,7 @@ export class ProductItemBriefComponent implements OnInit {
 
   constructor(
     public media: MediaObserver,
-    private ngUserManService: NgUserManService,
+    private userService: UserService,
     public dialog: MatDialog,
     private productService: ProductService,
     private matSnackBar: MatSnackBar,
@@ -41,16 +42,16 @@ export class ProductItemBriefComponent implements OnInit {
   }
 
   allowTo(permitedRole: string): boolean {
-    return this.ngUserManService.allowTo(permitedRole);
+    return this.userService.allowTo(permitedRole);
   }
 
   openDialog(image, cloudinaryOptions, title): void {
 
-    const imageObject = <IImagePopUpData>{
+    const imageObject = {
       image,
       cloudinaryOptions,
       title
-    };
+    } as IImagePopUpData;
 
     const dialogRef = this.dialog.open(ImagePopupComponent, {
       data: imageObject,
@@ -80,10 +81,10 @@ export class ProductItemBriefComponent implements OnInit {
 
   deleteProductItem(_id: string, name: string) {
     console.log('_id, name', _id, name);
-    const confirmObject = <IConfirmPopupData>{
+    const confirmObject = {
       message: `Дійсно видалити: ${name} ?`,
       payload: { _id }
-    };
+    } as IConfirmPopupData;
 
     const dialogRef = this.dialog.open(ConfirmPopupComponent, {
       data: confirmObject,

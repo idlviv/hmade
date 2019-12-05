@@ -1,0 +1,128 @@
+{
+  "configVersion": 1,
+  "timestamp": 1575539034542,
+  "index": "/index.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "urls": [
+        "/1-es2015.b7bb56b19d7aa587ac77.js",
+        "/1-es5.b7bb56b19d7aa587ac77.js",
+        "/10-es2015.ddbb00007f961828fac6.js",
+        "/10-es5.ddbb00007f961828fac6.js",
+        "/11-es2015.3900762fd6a2a3a60591.js",
+        "/11-es5.3900762fd6a2a3a60591.js",
+        "/12-es2015.7bfb131938f9a489bd90.js",
+        "/12-es5.7bfb131938f9a489bd90.js",
+        "/2-es2015.9b3c39af408218ab7525.js",
+        "/2-es5.9b3c39af408218ab7525.js",
+        "/3-es2015.8d0e0575d5586ebcd310.js",
+        "/3-es5.8d0e0575d5586ebcd310.js",
+        "/8-es2015.37d0c0a8c20e5917b607.js",
+        "/8-es5.37d0c0a8c20e5917b607.js",
+        "/9-es2015.113e7a613b44c2906eff.js",
+        "/9-es5.113e7a613b44c2906eff.js",
+        "/assets/images/hmade_logo_dark.svg",
+        "/assets/images/hmade_logo_light.svg",
+        "/assets/other/pattern.svg",
+        "/favicon.ico",
+        "/index.html",
+        "/main-es2015.f2ce92b830347216dc93.js",
+        "/main-es5.f2ce92b830347216dc93.js",
+        "/manifest.webmanifest",
+        "/polyfills-es2015.7952f3f7814d73bc3b15.js",
+        "/polyfills-es5.d8b61d57b9e8e2de2d9d.js",
+        "/runtime-es2015.58436e02d8f2e0c8b21b.js",
+        "/runtime-es5.58436e02d8f2e0c8b21b.js",
+        "/scripts.9b1207587ef3aa866146.js",
+        "/styles.d836252ccedc740a10c8.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "urls": [
+        "/assets/icons/icon-128x128.png",
+        "/assets/icons/icon-144x144.png",
+        "/assets/icons/icon-152x152.png",
+        "/assets/icons/icon-192x192.png",
+        "/assets/icons/icon-384x384.png",
+        "/assets/icons/icon-512x512.png",
+        "/assets/icons/icon-72x72.png",
+        "/assets/icons/icon-96x96.png",
+        "/assets/images/loading.svg",
+        "/assets/images/my-photo180x180.png",
+        "/assets/other/btn_google_signin_light_normal_web.png",
+        "/assets/other/btn_google_signin_light_normal_web@2x.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [],
+  "hashTable": {
+    "/1-es2015.b7bb56b19d7aa587ac77.js": "d8efb2633554c653c870a42aa8fae2adf4d44de2",
+    "/1-es5.b7bb56b19d7aa587ac77.js": "c6ab80775f619e91cabb691a00cef6ade6e22fbb",
+    "/10-es2015.ddbb00007f961828fac6.js": "74b962ac185b424efb9445cbe971e8d76928a2f8",
+    "/10-es5.ddbb00007f961828fac6.js": "74b962ac185b424efb9445cbe971e8d76928a2f8",
+    "/11-es2015.3900762fd6a2a3a60591.js": "a25d2f458eb24e2f301468055a813c77a471e25b",
+    "/11-es5.3900762fd6a2a3a60591.js": "a25d2f458eb24e2f301468055a813c77a471e25b",
+    "/12-es2015.7bfb131938f9a489bd90.js": "bc8fc5d6b34220d4aa6548c8133e81bebcb043da",
+    "/12-es5.7bfb131938f9a489bd90.js": "bc8fc5d6b34220d4aa6548c8133e81bebcb043da",
+    "/2-es2015.9b3c39af408218ab7525.js": "825bd0e19e3d6c9e7cd7775c59aec94c31ef77ff",
+    "/2-es5.9b3c39af408218ab7525.js": "def441a975608ece140efee0fe6cfdaf3b40609e",
+    "/3-es2015.8d0e0575d5586ebcd310.js": "ba33310b7e3df01a6e2b6d38ab53284a6728b49a",
+    "/3-es5.8d0e0575d5586ebcd310.js": "e6d37935b8d57c6e130322f572829f34853adc3f",
+    "/8-es2015.37d0c0a8c20e5917b607.js": "b9ccfd2f0dd6f0c5a3847bd4b570d79f93519875",
+    "/8-es5.37d0c0a8c20e5917b607.js": "f31f3f6f722c4e9e7f31ca27452f2c3e958c4e51",
+    "/9-es2015.113e7a613b44c2906eff.js": "ab8fe0dc82f74fea6e33f3f49661d611ae4a3071",
+    "/9-es5.113e7a613b44c2906eff.js": "2eadd52257c59b88f928c177f6e99b66d398eda5",
+    "/assets/icons/icon-128x128.png": "f4add257111f856b15292518b01b1a7a3e491f9e",
+    "/assets/icons/icon-144x144.png": "1652aa9c18fc3967d2d82c438240405e8eb6a5b1",
+    "/assets/icons/icon-152x152.png": "920a38cd367caa60a2e5cf08feb153c79ef97591",
+    "/assets/icons/icon-192x192.png": "eb83a864bd30e4a692f75131db4321eddbc96f9d",
+    "/assets/icons/icon-384x384.png": "bf49d65d85724c5deef712803339b72bfc3ece63",
+    "/assets/icons/icon-512x512.png": "f83a9c2c59cd9aaf84512a432bf9d0bc121e66a5",
+    "/assets/icons/icon-72x72.png": "9baf4ca7f1de30e6f06f779c79b08835d0634fe2",
+    "/assets/icons/icon-96x96.png": "f5513f8cec37c41204b0e52fe7558de9fbac7d46",
+    "/assets/images/hmade_logo_dark.svg": "3d8cdad6d5a2a9461055c5ca618d2e8b8b197b2c",
+    "/assets/images/hmade_logo_light.svg": "41855ebb46f02b658a3ff27e919f57973d4928a4",
+    "/assets/images/loading.svg": "e515b13cc79c383c3fe0594e593cc24b669ca81c",
+    "/assets/images/my-photo180x180.png": "8dece4bc5ac4dbd9d8a4e50e425245d7791b4a06",
+    "/assets/other/btn_google_signin_light_normal_web.png": "67d90cdf681b4c211582d5a6e27ea47debaa4782",
+    "/assets/other/btn_google_signin_light_normal_web@2x.png": "bbf56c48cbc340ba0c67e094f0bd6d2af8043e0d",
+    "/assets/other/pattern.svg": "f1ec5e596593b5b2c7c5ed7af895c64a57bdf71b",
+    "/favicon.ico": "3581640704ffb32dca6a10acca86bcca2471514a",
+    "/index.html": "a049958541c333d464b41b4391ed10ef2dea5101",
+    "/main-es2015.f2ce92b830347216dc93.js": "3da64dde8850a0b57fddee116723d146edf6f300",
+    "/main-es5.f2ce92b830347216dc93.js": "f4470d125a0fa85e8401b7036e341812773d26da",
+    "/manifest.webmanifest": "9b9d77959ba1df1926b3a45b2305905906877227",
+    "/polyfills-es2015.7952f3f7814d73bc3b15.js": "aa4037e89598f5094da33ad98305d319af4859e2",
+    "/polyfills-es5.d8b61d57b9e8e2de2d9d.js": "7bcd7e3d8c2c185ed65254ef230b37c80e61d851",
+    "/runtime-es2015.58436e02d8f2e0c8b21b.js": "b2e65c7e06bf153344b44cba76d7899ceeb8814a",
+    "/runtime-es5.58436e02d8f2e0c8b21b.js": "54e9b8246c1cfd7d149341306481c59a3d91d100",
+    "/scripts.9b1207587ef3aa866146.js": "85f29f2ab08494944719c077988b751f7ea27b5d",
+    "/styles.d836252ccedc740a10c8.css": "d4c0380ead26c0d86180f9a31b0ce0b946f1861c"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ]
+}

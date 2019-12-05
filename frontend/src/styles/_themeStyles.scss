@@ -1463,6 +1463,10 @@ a.hover-button {
   }
 }
 
+.animationAppear03s {
+  @include animation(fadeIn 0.5s forwards);
+}
+
 .animationAppear05s {
   @include animation(fadeIn 0.5s forwards);
 }
@@ -1585,3 +1589,4 @@ a.hover-button {
     }
   }
 }
+

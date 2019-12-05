@@ -2,9 +2,10 @@ const config = require('../config');
 const ClientError = require('../errors/clientError');
 const ApplicationError = require('../errors/applicationError');
 const DBError = require('../errors/dbError');
-const UserModel = require('../models/userModel');
-const ChatActiveUserModel = require('../models/chatActiveUserModel');
+// const UserModel = require('../models/userModel');
+// const ChatActiveUserModel = require('../models/chatActiveUserModel');
 const log = require('../config/winston')(module);
+const mongoose = require('mongoose');
 
 class DBHelper {
   constructor() { }
@@ -12,11 +13,12 @@ class DBHelper {
   static chooseModel(model) {
     switch (model) {
       case 'UserModel':
-        return require('../models/userModel');
+        // const { UserModel } = require('user-man').UserModel;
+        return mongoose.models.users;
     }
     switch (model) {
       case 'ChatActiveUserModel':
-        return require('../models/chatActiveUserModel');
+        return mongoose.models.chatActiveUsers;
     }
   }
 

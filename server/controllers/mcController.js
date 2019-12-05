@@ -5,13 +5,9 @@ const ResObj = require('../libs/responseObject');
 
 const DbError = require('../errors/dbError');
 const ApplicationError = require('../errors/applicationError');
-const ObjectId = require('../config/mongoose').Types.ObjectId;
 const formidable = require('formidable');
-const util = require('util');
 const log = require('../config/winston')(module);
 const { libs } = require('user-man');
-const catalogController = require('../controllers/catalogController');
-const sharedController = require('../controllers/sharedController');
 
 // module.exports.getMcs = function(req, res, next) { // tmp
 //   McModel.find()

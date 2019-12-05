@@ -4,7 +4,7 @@ import { DashboardRoutingModule } from './dashboard-routing.module';
 import { DashboardComponent } from './dashboard.component';
 import { MaterialModule } from '../../material.module';
 import { DashboardSidenavComponent } from './dashboard-sidenav/dashboard-sidenav.component';
-import { UserModule } from '../user/user.module';
+import { UserAuthModule } from '../user/user-auth.module';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../shared/shared.module';
 import { ToolsComponent } from './tools/tools.component';
@@ -22,7 +22,7 @@ import { McsModule } from '../mcs/mcs.module';
     FormsModule,
     MaterialModule,
     DashboardRoutingModule,
-    UserModule,
+    UserAuthModule,
     SharedModule,
     McsModule,
   ],

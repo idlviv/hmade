@@ -5,8 +5,7 @@ import { mergeMap } from 'rxjs/operators';
 import { IConfirmPopupData, IComment } from 'src/app/interfaces/interface';
 import { MatDialog } from '@angular/material';
 import { ConfirmPopupComponent } from '../../shared/confirm-popup/confirm-popup.component';
-import { SharedService } from 'ng-user-man';
-import { NgUserManService } from 'ng-user-man';
+import { NgUserManService, UserService } from 'ng-user-man';
 import { IUser } from 'src/app/interfaces/user-interface';
 
 @Component({
@@ -15,7 +14,7 @@ import { IUser } from 'src/app/interfaces/user-interface';
   styleUrls: ['./comments-list.component.scss']
 })
 export class CommentsListComponent implements OnInit {
-  comments = <IComment[]>[];
+  comments = [] as IComment[];
   commentsTotalLength: number;
   @Input() parent_id: string;
   @Input() parentCategory: string;
@@ -27,13 +26,13 @@ export class CommentsListComponent implements OnInit {
 
   constructor(
     private ngUserManService: NgUserManService,
+    private userService: UserService,
     private socialService: SocialService,
     public dialog: MatDialog,
-    private sharedService: SharedService,
   ) { }
 
   ngOnInit() {
-    this.sharedService.getEventToReloadComments()
+    this.ngUserManService.getEventToReloadComments()
       .pipe(
         mergeMap(result => {
           if (result) {
@@ -113,8 +112,7 @@ export class CommentsListComponent implements OnInit {
               mergeMap(result => {
                 if (result) {
                   // successfuly delete
-                  this.sharedService.sharingEventToReloadComments();
-                  // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
+                  this.ngUserManService.sharingEventToReloadComments();
                   return this.socialService.getComments(
                     this.parent_id, this.parentCategory, -1, 0, this.comments.length,
                     !this.allowTo('manager'), this.commentsReadedTillFilter
@@ -149,8 +147,7 @@ export class CommentsListComponent implements OnInit {
         mergeMap(result => {
           if (result) {
             // successfuly updated
-            this.sharedService.sharingEventToReloadComments();
-            // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
+            this.ngUserManService.sharingEventToReloadComments();
             return this.socialService.getComments(
               this.parent_id, this.parentCategory, -1, 0, this.comments.length, !this.allowTo('manager'), this.commentsReadedTillFilter
             );
@@ -173,12 +170,12 @@ export class CommentsListComponent implements OnInit {
   }
 
   allowTo(permitedRole: string): boolean {
-    this.user = this.ngUserManService.userCookieExtractor();
-    return this.ngUserManService.allowTo(permitedRole);
+    this.user = this.userService.userCookieExtractor();
+    return this.userService.allowTo(permitedRole);
   }
 
   restrictTo(restrictedRoles: string[]): boolean {
-    this.user = this.ngUserManService.userCookieExtractor();
-    return this.ngUserManService.restrictTo(restrictedRoles);
+    this.user = this.userService.userCookieExtractor();
+    return this.userService.restrictTo(restrictedRoles);
   }
 }

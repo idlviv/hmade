@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs/index';
 import { mergeMap } from 'rxjs/operators';
-import { CatalogService } from '../../../services/catalog.service';
+import { CatalogService, ICatalog } from 'ng-user-man';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../../services/product.service';
 import { config } from '../../../app.config';
@@ -33,7 +33,7 @@ export class ProductEditorComponent implements OnInit {
 
     this.catalogService.getChildren('products')
       .subscribe(
-        result => this.children[0] = result.data,
+        (result: ICatalog[]) => this.children[0] = result,
         err => console.log('помилка завантаження категорій', err)
       );
   }
@@ -44,16 +44,16 @@ export class ProductEditorComponent implements OnInit {
     }
 
     this.catalogService.getChildren(event.value).pipe(
-      mergeMap(children => {
-        if (!children.data.length) {
+      mergeMap((children: ICatalog[]) => {
+        if (!children.length) {
           // if no children - show products
           this.parentCategory_id = event.value;
           this.parentCategoryName = event.source.triggerValue;
           this.noMoreChildren = true;
-          this.children[level + 1] = children.data;
+          this.children[level + 1] = children;
           return this.productService.getProductsByParent(event.value, 'products', false, -1, 0, 99999);
        } else {
-          this.children[level + 1] = children.data;
+          this.children[level + 1] = children;
           this.noMoreChildren = false;
           this.addParents();
           return this.productService.getProductsByParent(null, 'products', true, -1, 0, 99999);

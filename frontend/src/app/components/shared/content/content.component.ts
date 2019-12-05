@@ -1,15 +1,12 @@
 import { Component, OnInit, ViewChild, ChangeDetectorRef, AfterViewChecked, AfterViewInit } from '@angular/core';
-import { UserService } from '../../../services/user.service';
 import { IUser } from '../../../interfaces/user-interface';
 import { Router } from '@angular/router';
-import { CatalogService } from '../../../services/catalog.service';
-import { ICatalog } from '../../../interfaces/catalog-interface';
 import { MatDrawerContainer, MatMenuTrigger } from '@angular/material';
 import { config } from '../../../app.config';
-import { SharedService } from 'ng-user-man';
 import { Observable } from 'rxjs';
 import { SocialService } from 'src/app/services/social.service';
-import { NgUserManService } from 'ng-user-man';
+import { NgUserManService, UserService, CatalogService, ITopMenu, ICatalog } from 'ng-user-man';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-content',
@@ -33,8 +30,8 @@ export class ContentComponent implements OnInit, AfterViewInit {
   error: any;
 
   constructor(
-    private sharedService: SharedService,
     private ngUserManService: NgUserManService,
+    private userService: UserService,
     private router: Router,
     private catalogService: CatalogService,
     private cd: ChangeDetectorRef,
@@ -43,36 +40,35 @@ export class ContentComponent implements OnInit, AfterViewInit {
 
 
   ngAfterViewInit() {
-  // Solve error ExpressionChangedAfterItHasBeenCheckedError
-  // After redirection from auth2 signin (server) view changes (*ngIf)
-  // was user=null becomes user which logged
+    // Solve error ExpressionChangedAfterItHasBeenCheckedError
+    // After redirection from auth2 signin (server) view changes (*ngIf)
+    // was user=null becomes user which logged
     this.cd.detectChanges();
   }
 
   ngOnInit() {
-    this.sharedService.getSharingEvent()
+    this.ngUserManService.getSharingEvent()
       .subscribe(event => {
         if (event[0] === 'closeSidenav') {
           this.sidenav.close();
-        // } else if (event[0] === 'userChangeStatusEmitter') {
-        //   this.getUnreadedCommentsLength();
+          // } else if (event[0] === 'userChangeStatusEmitter') {
+          //   this.getUnreadedCommentsLength();
         }
       });
 
-    this.sharedService.getEventToReloadComments()
+    this.ngUserManService.getEventToReloadComments()
       .subscribe(event => this.getUnreadedCommentsLength());
 
     this.getUnreadedCommentsLength();
 
     // get main menu items
-    this.catalogService.getMainMenu()
-      .subscribe(menuItems => {
-          this.mainMenuCommonItems = menuItems.data.common;
-          this.mainMenuSystemItems = menuItems.data.system;
-        },
-        err => {
-          this.error = err;
-          console.log(err);
+    this.catalogService.getTopMenu()
+      .subscribe((menuItems: ITopMenu) => {
+        this.mainMenuCommonItems = menuItems.common;
+        this.mainMenuSystemItems = menuItems.system;
+      },
+        (err: HttpErrorResponse) => {
+          console.log('err', err.error.message);
         });
   }
 
@@ -87,29 +83,27 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   userLogout() {
-    this.ngUserManService.userLogout()
+    this.userService.userLogout()
       .subscribe(message => {
-        // this.ngUserManService.logging();
-        this.sharedService.sharingEventToReloadComments();
-        // this.sharedService.sharingEvent(['userChangeStatusEmitter']);
+        this.ngUserManService.sharingEventToReloadComments();
         this.router.navigate(['/user', 'login']);
       },
-    err => {
-      console.log(err.error);
-    });
+        err => {
+          console.log(err.error);
+        });
   }
 
   markCommentsAsReaded() {
     if (!this.unreadedCommentsLength) {
       return;
     }
-    this.ngUserManService.userEditUnsecure({name: 'commentsReadedTill'})
-    .subscribe(
-      res => {
-        this.sharedService.sharingEventToReloadComments();
-      },
-      err => console.log('err', err)
-    );
+    this.userService.userEditUnsecure({ name: 'commentsReadedTill' })
+      .subscribe(
+        res => {
+          this.ngUserManService.sharingEventToReloadComments();
+        },
+        err => console.log('err', err)
+      );
   }
 
   showUnreadededComments() {
@@ -134,13 +128,13 @@ export class ContentComponent implements OnInit, AfterViewInit {
   }
 
   allowTo(permitedRole: string): boolean {
-    this.user = this.ngUserManService.userCookieExtractor();
-    return this.ngUserManService.allowTo(permitedRole);
+    this.user = this.userService.userCookieExtractor();
+    return this.userService.allowTo(permitedRole);
   }
 
   restrictTo(restrictedRoles: string[]): boolean {
-    this.user = this.ngUserManService.userCookieExtractor();
-    return this.ngUserManService.restrictTo(restrictedRoles);
+    this.user = this.userService.userCookieExtractor();
+    return this.userService.restrictTo(restrictedRoles);
   }
 
 }

@@ -15,42 +15,42 @@
               config.cloudinary.cloud_name +
               '/c_fill,w_590,h_443,f_auto/' +
               child.assets[0]}}" alt="Image">
-      <img *ngIf="media.isActive('gt-sm') && product" class="responsive-image-stretch " src="{{
+      <img *ngIf="media.isActive('gt-sm') && item" class="responsive-image-stretch " src="{{
       config.imgPath +
       config.cloudinary.cloud_name +
       '/c_fill,w_400,h_300,f_auto/' +
       'w_200,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
-      product.menuImage}}" alt="Image" (click)="openDialog(product.menuImage, 
-      '/c_fill,w_1100,h_825,f_auto/w_550,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)">
-      <img *ngIf="media.isActive('sm') && product" class="responsive-image-stretch" src="{{
+      item.menuImage}}" alt="Image" (click)="openDialog(item.menuImage, 
+      '/c_fill,w_1100,h_825,f_auto/w_550,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', item.name)">
+      <img *ngIf="media.isActive('sm') && item" class="responsive-image-stretch" src="{{
       config.imgPath +
       config.cloudinary.cloud_name +
       '/c_fill,w_460,h_345,f_auto/' +
       'w_230,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
-      product.menuImage}}" alt="Image" (click)="openDialog(product.menuImage,
-      '/c_fill,w_900,h_675,f_auto/w_450,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)">
-      <img *ngIf="media.isActive('xs') && product" class="responsive-image-stretch" src="{{
+      item.menuImage}}" alt="Image" (click)="openDialog(item.menuImage,
+      '/c_fill,w_900,h_675,f_auto/w_450,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', item.name)">
+      <img *ngIf="media.isActive('xs') && item" class="responsive-image-stretch" src="{{
       config.imgPath +
       config.cloudinary.cloud_name +
       '/c_fill,w_590,h_443,f_auto/' +
       'w_295,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/' +
-      product.menuImage}}" alt="Image" (click)="openDialog(product.menuImage, 
-      '/c_fill,w_590,h_443,f_auto/w_295,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', product.name)">
+      item.menuImage}}" alt="Image" (click)="openDialog(item.menuImage, 
+      '/c_fill,w_590,h_443,f_auto/w_295,g_south_east,x_5,y_5,l_hmade_logo_light_watermark/', item.name)">
 
   </section>
   <section class="product-item-brief-content">
-    <h2 class="mat-h1 title" *ngIf="!child && product">{{product.name}}</h2>
-    <p class="mat-body-1" *ngIf="!child && product">{{product.description}}</p>
-    <p *ngIf="product?.updatedAt" class="mat-caption">{{product.updatedAt | date:'dd MM yyyy'}}</p>
+    <h2 class="mat-h1 title" *ngIf="!child && item">{{item.name}}</h2>
+    <p class="mat-body-1" *ngIf="!child && item">{{item.description}}</p>
+    <p *ngIf="item?.updatedAt" class="mat-caption">{{item.updatedAt | date:'dd MM yyyy'}}</p>
     <div fxLayout="row">
       <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Edit" fxFlex="50" color="accent"
-        [routerLink]="['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, product._id]"
-        [queryParams]="{seoTitle: product.seoTitle, seoMeta: product.seoMeta}"
+        [routerLink]="['/dashboard', 'product-editor-edit', parentCategory_id, parentCategoryName, item._id]"
+        [queryParams]="{seoTitle: item.seoTitle, seoMeta: item.seoMeta}"
         [routerLinkActive]="['accent-background']" [routerLinkActiveOptions]="{exact: true}">
         Редагувати
       </a>
       <a *ngIf="!child && allowTo('manager')" mat-button aria-label="Delete" fxFlex="50" color="accent"
-        (click)="deleteProductItem(product._id, product.name)">
+        (click)="deleteProductItem(item._id, item.name)">
         Видалити
       </a>
       <a *ngIf="child" 

@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ICatalog } from '../../../interfaces/catalog-interface';
 import { Router } from '@angular/router';
-import { CatalogService } from '../../../services/catalog.service';
+import { CatalogService, ICatalog } from 'ng-user-man';
 
 @Component({
   selector: 'app-dashboard-sidenav',
@@ -9,7 +8,7 @@ import { CatalogService } from '../../../services/catalog.service';
   styleUrls: ['./dashboard-sidenav.component.scss']
 })
 export class DashboardSidenavComponent implements OnInit {
-dashboardSidenavItems: ICatalog;
+  dashboardSidenavItems: ICatalog[];
 
   constructor(
     private router: Router,
@@ -18,9 +17,8 @@ dashboardSidenavItems: ICatalog;
 
   ngOnInit() {
     this.catalogService.getChildren('dashboard')
-      .subscribe(menuItems => {
-        this.dashboardSidenavItems = menuItems.data;
-        // console.log('dashboardSidenavItems', this.dashboardSidenavItems);
+      .subscribe((menuItems: ICatalog[]) => {
+        this.dashboardSidenavItems = menuItems;
       });
   }
 

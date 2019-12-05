@@ -6,6 +6,7 @@ import { ProductsListComponent } from './products-list/products-list.component';
 import { ProductsRoutingModule } from './products-routing.module';
 import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 import { ProductsComponent } from './products.component';
+import { CatalogModule } from 'ng-user-man';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { ProductsComponent } from './products.component';
     ProductsRoutingModule,
     MaterialModule,
     SharedModule,
+    CatalogModule,
   ],
   exports: [],
   declarations: [

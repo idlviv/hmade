@@ -5,10 +5,10 @@ import { config } from '../../../app.config';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
 import { ProductService } from '../../../services/product.service';
-import { CatalogService } from '../../../services/catalog.service';
+import { CatalogService } from 'ng-user-man';
 import { mergeMap } from 'rxjs/operators';
 import { of } from 'rxjs';
-import { forkJoin as observableForkJoin,  Observable } from 'rxjs';
+import { forkJoin as observableForkJoin, Observable } from 'rxjs';
 import { IProduct } from '../../../interfaces/product-interface';
 
 @Component({
@@ -44,10 +44,10 @@ export class ProductEditorFormComponent implements OnInit {
 
   ngOnInit() {
     this.productForm = new FormGroup({
-      parents : new FormArray([]),
+      parents: new FormArray([]),
       assets: new FormArray([]),
 
-      _id: new FormControl({value: '', disabled: false}, [
+      _id: new FormControl({ value: '', disabled: false }, [
         Validators.required,
         Validators.pattern('[a-z0-9]+'),
         Validators.minLength(7),
@@ -99,17 +99,16 @@ export class ProductEditorFormComponent implements OnInit {
         return this.productService.getProductById(this.paramEdited_id, 'products', false);
       })
     )
-    .subscribe(result => {
+      .subscribe(result => {
         if (result) {
           // edit product
-          console.log('result edit', result);
           this.editMode = true;
           // this.parents = result.data.parents;
 
           for (let i = 0; i < result.data.assets.length; i++) {
             this.addAssetsControl();
           }
-          console.log(' result.data.parents.length',  result.data.parents.length);
+          console.log(' result.data.parents.length', result.data.parents.length);
           for (let i = 0; i < result.data.parents.length; i++) {
             this.addParentsControl();
           }
@@ -124,8 +123,8 @@ export class ProductEditorFormComponent implements OnInit {
           this._createSku(this.paramParent_id);
         }
       },
-      err => console.log('Помилка', err)
-    );
+        err => console.log('Помилка', err)
+      );
   }
 
   _createSku(parent: string) {
@@ -133,58 +132,34 @@ export class ProductEditorFormComponent implements OnInit {
     const getSkuList$ = this.productService.getSkuList();
 
     observableForkJoin(getPrefix$, getSkuList$).subscribe(result => {
-      const prefix = result[0].data.prefix;
+      const prefix = result[0];
 
       const skuList = result[1]
         .map(item => item._id) // create [] from {}
         .filter(item => item.slice(0, 3) === prefix) // take elems with needed prefix
         .map(item => +item.slice(3)); // concat prefix, take only numbers
 
-        let freeNumber = 1;
-        for (let i = 0; i < skuList.length; i++) {
-          if (skuList[i] - (i + 1) >= 1) {
-            freeNumber = i + 1;
-            break;
-          }
-          if (i === skuList.length - 1) {
-            freeNumber = skuList.length + 1;
-          }
+      let freeNumber = 1;
+      for (let i = 0; i < skuList.length; i++) {
+        if (skuList[i] - (i + 1) >= 1) {
+          freeNumber = i + 1;
+          break;
         }
-        let sku = freeNumber.toString();
-        while (sku.length < 4) {
-          sku = '0' + sku;
+        if (i === skuList.length - 1) {
+          freeNumber = skuList.length + 1;
         }
-        sku = prefix + sku;
-        this.productForm.patchValue({_id: sku});
+      }
+      let sku = freeNumber.toString();
+      while (sku.length < 4) {
+        sku = '0' + sku;
+      }
+      sku = prefix + sku;
+      this.productForm.patchValue({ _id: sku });
     },
-          err => this.matSnackBar.open(err.error, '',
-            {duration: 3000, panelClass: 'snack-bar-danger'})
-      );
+      err => this.matSnackBar.open(err.error, '',
+        { duration: 3000, panelClass: 'snack-bar-danger' })
+    );
   }
-
-  // addMainImage(event) {
-  //   this.processingLoadMainImage = true;
-  //   const file = event.target.files[0];
-  //   const checkFile = this.productService.checkFile(file);
-
-  //   if (!checkFile.success) {
-  //     this.matSnackBar.open(checkFile.message || 'Помилка', '',
-  //       {duration: 3000, panelClass: 'snack-bar-danger'});
-  //     this.processingLoadMainImage = false;
-  //   } else {
-  //     this.productService.productAddMainImage(file, this.productForm.get('_id').value)
-  //       .subscribe(result => {
-  //           this.productForm.get('mainImage').setValue(result.data);
-  //           this.processingLoadMainImage = false;
-  //         },
-  //         err => {
-  //           this.matSnackBar.open(err.error || 'Помилка', '',
-  //             {duration: 3000, panelClass: 'snack-bar-danger'});
-  //           this.processingLoadMainImage = false;
-  //         }
-  //       );
-  //   }
-  // }
 
   addMenuImage(event) {
     this.processingLoadMenuImage = true;
@@ -193,17 +168,17 @@ export class ProductEditorFormComponent implements OnInit {
 
     if (!checkFile.success) {
       this.matSnackBar.open(checkFile.message || 'Помилка', '',
-        {duration: 3000, panelClass: 'snack-bar-danger'});
+        { duration: 3000, panelClass: 'snack-bar-danger' });
       this.processingLoadMenuImage = false;
     } else {
       this.productService.productAddMenuImage(file, this.productForm.get('_id').value)
         .subscribe(result => {
-            this.productForm.get('menuImage').setValue(result.data);
-            this.processingLoadMenuImage = false;
-          },
+          this.productForm.get('menuImage').setValue(result.data);
+          this.processingLoadMenuImage = false;
+        },
           err => {
             this.matSnackBar.open(err.error || 'Помилка', '',
-              {duration: 3000, panelClass: 'snack-bar-danger'});
+              { duration: 3000, panelClass: 'snack-bar-danger' });
             this.processingLoadMenuImage = false;
           }
         );
@@ -211,15 +186,14 @@ export class ProductEditorFormComponent implements OnInit {
   }
 
   onProductFormSubmit(goBackAndReset: boolean): void {
-
-    this.product = <IProduct>{
+    this.product = {
       parents: this.productForm.get('parents').value,
       _id: this.productForm.getRawValue()._id, // raw because may be disabled
       name: this.productForm.get('name').value,
       price: this.productForm.get('price').value,
       discount: this.productForm.get('discount').value,
       // assets : this.productForm.get('assets').value,
-      description : this.productForm.get('description').value,
+      description: this.productForm.get('description').value,
       onMainPage: this.productForm.get('onMainPage').value,
       display: this.productForm.get('display').value,
       // mainImage: this.productForm.get('mainImage').value,
@@ -231,9 +205,9 @@ export class ProductEditorFormComponent implements OnInit {
     };
 
     this.productService.productUpsert(this.product)
-    .subscribe(result => {
+      .subscribe(result => {
         this.matSnackBar.open(result, '',
-          {duration: 3000});
+          { duration: 3000 });
         if (goBackAndReset) {
           this.goBack();
           this.resetForm();
@@ -242,9 +216,9 @@ export class ProductEditorFormComponent implements OnInit {
           this.editMode = true;
         }
       },
-      err => this.matSnackBar.open(err.error, '',
-        {duration: 3000, panelClass: 'snack-bar-danger'})
-    );
+        err => this.matSnackBar.open(err.error, '',
+          { duration: 3000, panelClass: 'snack-bar-danger' })
+      );
 
   }
 
@@ -268,9 +242,9 @@ export class ProductEditorFormComponent implements OnInit {
 
   initParentsControl() {
     return new FormControl('', [
-        Validators.required,
-      ])
-    ;
+      Validators.required,
+    ])
+      ;
   }
 
   addAssetsControl() {
@@ -285,8 +259,8 @@ export class ProductEditorFormComponent implements OnInit {
 
   initAssetsControl() {
     return new FormControl('file', [
-        // Validators.required,
-      ]);
+      // Validators.required,
+    ]);
   }
 
 }

@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, Output, OnChanges, SimpleChanges, SimpleChange, EventEmitter } from '@angular/core';
 import { config } from '../../../app.config';
 import { IUser } from 'src/app/interfaces/user-interface';
-import { NgUserManService } from 'ng-user-man';
+import { UserService } from 'ng-user-man';
 import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { IConfirmPopupData } from 'src/app/interfaces/interface';
@@ -27,7 +27,7 @@ export class McsItemBriefComponent implements OnInit, OnChanges {
   @Output() refreshMcs = new EventEmitter<boolean>();
 
   constructor(
-    private ngUserManService: NgUserManService,
+    private userService: UserService,
     private mcService: McService,
     private router: Router,
     public dialog: MatDialog,
@@ -39,7 +39,7 @@ export class McsItemBriefComponent implements OnInit, OnChanges {
   }
 
   allowTo(permitedRole): boolean {
-    return this.ngUserManService.allowTo(permitedRole);
+    return this.userService.allowTo(permitedRole);
   }
 
   ngOnChanges(changes: SimpleChanges) {

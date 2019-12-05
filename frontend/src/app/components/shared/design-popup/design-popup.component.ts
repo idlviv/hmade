@@ -4,7 +4,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { config } from '../../../app.config';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SharedService } from 'ng-user-man';
+import { NgUserManService } from 'ng-user-man';
 
 @Component({
   selector: 'app-design-popup',
@@ -21,7 +21,7 @@ export class DesignPopupComponent implements OnInit {
   // productForm: FormGroup;
 
   constructor(
-    private sharedService: SharedService,
+    private ngUserManService: NgUserManService,
     private router: Router,
     public dialogRef: MatDialogRef<DesignPopupComponent>,
     @Inject(MAT_DIALOG_DATA) public data: IDesignPopUpData
@@ -41,7 +41,7 @@ export class DesignPopupComponent implements OnInit {
 
   onProductSelect(product) {
     if (this.data.closer) {
-      this.sharedService.sharingEvent(['closeSidenav']);
+      this.ngUserManService.sharingEvent(['closeSidenav']);
     }
     this.onClose();
     this.router.navigate(['/products', 'ch', {outlets: {primary: [product.category_id[0], 'details', product._id],

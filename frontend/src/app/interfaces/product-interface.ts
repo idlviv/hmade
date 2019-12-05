@@ -5,7 +5,7 @@ export interface IProduct {
   parents: string[];
   display: boolean;
   onMainPage: boolean;
-  mainImage: string;
+  mainImage?: string;
   menuImage: string;
   assets?: string[];
   price?: number;
@@ -17,7 +17,7 @@ export interface IProduct {
   createdAt?: number;
   updatedAt?: number;
   likes?: number;
-  likedBy?: String;
+  likedBy?: string;
   dislikes?: number;
   dislikedBy?: string;
   views?: number;

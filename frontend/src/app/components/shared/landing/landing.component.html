@@ -73,7 +73,7 @@
         <div *ngFor="let product of products; let i = index" class="cell" [attr.id]="'product' + i" data-aos="fade-down"
           data-aos-offset="100" data-aos-easing="ease-in-out" data-aos-duration="800" fxFlex.xs="100" fxFlex.sm="50"
           fxFlex.md="33.3" fxFlex.gt-md="25">
-          <app-product-item-brief [product]="product"></app-product-item-brief>
+          <app-product-item-brief [item]="product"></app-product-item-brief>
         </div>
       </section>
     </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { of } from 'rxjs/index';
 import { mergeMap } from 'rxjs/operators';
-import { CatalogService } from '../../../services/catalog.service';
+import { CatalogService, ICatalog } from 'ng-user-man';
 import { FormArray, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ProductService } from '../../../services/product.service';
 import { config } from '../../../app.config';
@@ -34,8 +34,8 @@ export class McEditorComponent implements OnInit {
 
     this.catalogService.getChildren('products')
       .subscribe(
-        result => this.children[0] = result.data,
-        err => console.log('помилка завантаження категорій', err)
+        (result: ICatalog[]) => this.children[0] = result,
+        err => console.log(err.error.message)
       );
   }
 
@@ -45,15 +45,15 @@ export class McEditorComponent implements OnInit {
     }
 
     this.catalogService.getChildren(event.value).pipe(
-      mergeMap(children => {
-        if (!children.data.length) {
+      mergeMap((children: ICatalog[]) => {
+        if (!children.length) {
           // if no children - show products
           this.parentCategory_id = event.value;
           this.noMoreChildren = true;
-          this.children[level + 1] = children.data;
+          this.children[level + 1] = children;
           return this.mcService.getMcsByParent(event.value, false);
        } else {
-          this.children[level + 1] = children.data;
+          this.children[level + 1] = children;
           this.noMoreChildren = false;
           this.addParents();
           return of(null);
@@ -68,12 +68,12 @@ export class McEditorComponent implements OnInit {
   }
 
   addParents() {
-    const control = <FormArray>this.catalogForm.get('parents');
+    const control = this.catalogForm.get('parents') as FormArray;
     control.push(this.initParents());
   }
 
   removeParents(i: number) {
-    const control = <FormArray>this.catalogForm.get('parents');
+    const control = this.catalogForm.get('parents') as FormArray;
     control.removeAt(i);
   }
 
