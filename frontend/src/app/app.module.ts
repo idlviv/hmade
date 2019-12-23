@@ -23,6 +23,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ImagePopupComponent } from './components/shared/image-popup/image-popup.component';
 
 import { CookieService } from 'ngx-cookie-service';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   declarations: [
@@ -40,6 +41,9 @@ import { CookieService } from 'ngx-cookie-service';
     RecaptchaFormsModule,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production }),
     ReactiveFormsModule,
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyDJGNCJrp_eBY-QuVo4z6wB5aQ9IYPM004'
+    })
   ],
   providers: [
     // ValidateService,

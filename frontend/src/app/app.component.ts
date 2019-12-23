@@ -6,6 +6,8 @@ import { Title, Meta } from '@angular/platform-browser';
 import { config } from './app.config';
 import { forkJoin, combineLatest } from 'rxjs';
 
+declare let gtag: Function;
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -20,12 +22,19 @@ export class AppComponent implements OnInit {
     private route: ActivatedRoute,
     private titleService: Title,
     private metaService: Meta
-   ) { }
+  ) { }
 
   ngOnInit() {
     // add seo (title and meta description)
     const $routerEvents = this.router.events.pipe(
-      filter((event) => event instanceof NavigationEnd),
+     filter((event) => event instanceof NavigationEnd),
+      map((event: NavigationEnd) => {
+        gtag('config', 'UA-151728431-1',
+          {
+            page_path: event.urlAfterRedirects
+          }
+        );
+      }),
       map(() => this.route),
       map((route) => {
         while (route.firstChild) {
@@ -35,10 +44,10 @@ export class AppComponent implements OnInit {
       }),
       filter(route => route.outlet === 'primary'));
 
-      combineLatest(
-        $routerEvents.pipe(mergeMap((route) => route.queryParamMap)), // query params
-        $routerEvents.pipe(mergeMap((route) => route.data)) // routing.module data
-      )
+    combineLatest(
+      $routerEvents.pipe(mergeMap((route) => route.queryParamMap)), // query params
+      $routerEvents.pipe(mergeMap((route) => route.data)) // routing.module data
+    )
       .subscribe((result) => {
         const paramMap = result[0];
         const data = result[1];
@@ -52,6 +61,6 @@ export class AppComponent implements OnInit {
         const attributeSelector = 'name="description"';
         this.metaService.removeTag(attributeSelector);
         this.metaService.addTag(tag, false);
-    });
+      });
   }
 }

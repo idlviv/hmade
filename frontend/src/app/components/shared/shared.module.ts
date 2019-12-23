@@ -25,6 +25,7 @@ import { ScrollingDirective } from 'src/app/directives/scrolling.directive';
 import { PrivacyComponent } from './privacy/privacy.component';
 import { LiteratureComponent } from './literature/literature.component';
 import { FormsModule } from '@angular/forms';
+import { AgmCoreModule } from '@agm/core';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { FormsModule } from '@angular/forms';
     RecaptchaModule,
     RecaptchaFormsModule,
     FormsModule,
+    AgmCoreModule,
   ],
   declarations: [
     Page404Component,

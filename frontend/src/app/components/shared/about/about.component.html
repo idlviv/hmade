@@ -1,40 +1,46 @@
 <article id="about">
-    <div class="container">
-      <div class="app-container-h app-container-v">
-        <div class="container">
-          <div class="row" fxLayout="row">
-            <div class="cell" fxFlex="100">
-                <section>
-                  <h1 class="mat-display-2 title">Вітаю в творчій майстерні!</h1>
-                  <!-- <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo"> -->
-                  <div class="avatar-big-block">
-                    <img class="avatar-big" src="{{
+  <div class="container">
+    <div class="app-container-h app-container-v">
+      <div class="container">
+        <div class="row" fxLayout="row">
+          <div class="cell" fxFlex="100">
+            <section>
+              <h1 class="mat-display-2 title">Вітаю в творчій майстерні!</h1>
+              <!-- <img class="avatar-big" src="./assets/images/my-photo180x180.png" alt="my photo"> -->
+              <div class="avatar-big-block">
+                <img class="avatar-big" src="{{
                       config.imgPath +
                       config.cloudinary.cloud_name +
                       '/c_fill,w_180,h_180,f_auto/' +
                       'my-photo180x180'}}" alt="my photo">
-                </div>
-                  <p class="text-justify muted mat-body-1">
-                    Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.
-                      Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка -
-                      в'яжемо теплі шарфики для іграшок, шиємо та розмальовуємо кавові іграшки. 
-                      Свято у школі - новий віночок.. Ще багато можна писати про себе та мої захоплення, але згодом.. 
-                      Завітайте у мою майстерню.
-                  </p>
-                  <p class="text-justify muted mat-body-1">
-                    Зв'язатись зі мною можна за допомогою електорнної пошти: <a class="bold" href="mailto:info@hmade.work">info@hmade.work</a>
+              </div>
+              <p class="text-justify muted mat-body-1">
+                Мене звати Ірина, я мама чудової донечки, саме Вона надихає мене на нові цікаві витвори.
+                Канікули у школі - творимо маленький театр ляльок. Вільна хвилинка -
+                в'яжемо теплі шарфики для іграшок, шиємо та розмальовуємо кавові іграшки.
+                Свято у школі - новий віночок.. Ще багато можна писати про себе та мої захоплення, але згодом..
+                Завітайте у мою майстерню.
+              </p>
+              <p class="text-justify muted mat-body-1">
+                Зв'язатись зі мною можна за допомогою електорнної пошти: <a class="bold"
+                  href="mailto:info@hmade.work">info@hmade.work</a>
 
-                  </p>
+              </p>
 
-                  <p class="text-justify muted mat-body-1">
-                    або скориставшись <a [routerLink]="['/feedback']" class="bold" aria-label="Feedback"
-                    [routerLinkActive]="['accent']" [routerLinkActiveOptions]="{exact: true}">
-                   формою зворотнього зв'язку</a>
-                  </p>
-                </section>
-            </div>
+              <p class="text-justify muted mat-body-1">
+                або скориставшись <a [routerLink]="['/feedback']" class="bold" aria-label="Feedback"
+                  [routerLinkActive]="['accent']" [routerLinkActiveOptions]="{exact: true}">
+                  формою зворотнього зв'язку</a>
+              </p>
+            </section>
+          </div>
+          <div class="cell" fxFlex fxLayoutAlign="center center">
+            <agm-map [latitude]="49.793154" [longitude]="24.056398" [zoom]="15" fxFlex="100" fxFlex.gt-xs="80">
+              <!-- <agm-marker>Marker</agm-marker> -->
+            </agm-map>
           </div>
         </div>
+      </div>
     </div>
   </div>
 
